@@ -20,29 +20,12 @@ import {
   placeHolderImage8,
   placeHolderImage9,
 } from "../../images";
+import AppBar from "../../components/AppBar/AppBar";
 
 export const Home = () => {
   return (
     <div className="flex flex-col w-[360px] items-center relative bg-light-grey mx-auto">
-      <header className="flex flex-col w-[360px] h-16 items-start relative bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
-        <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
-          <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative">
-            <VerticalLine3 className="!relative !w-6 !h-6" />
-          </div>
-          <div className="inline-flex items-start relative flex-[0_0_auto]">
-            <div className="inline-flex items-start relative flex-[0_0_auto]">
-              <div className="inline-flex items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Source_Serif_Pro',Helvetica] font-bold text-[#1b4f4a] text-[28px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
-                  thegood.deals
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative">
-            <UserAlt4 className="!relative !w-6 !h-6" />
-          </div>
-        </div>
-      </header>
+      <AppBar />
       <div className="w-[360px] items-center gap-[30px] pt-4 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]">
           <div className="flex w-[1355px] h-[169px] items-start gap-4 absolute top-0 -left-7">
