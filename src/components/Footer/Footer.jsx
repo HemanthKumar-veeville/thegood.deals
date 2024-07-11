@@ -11,6 +11,7 @@ import { IconLinkedin3 } from "../../icons/IconLinkedin3";
 import { IconTwitter4 } from "../../icons/IconTwitter4";
 import { Button } from "../RoundedButton";
 import { TextInput } from "../TextInput";
+import ScrollIntoView from "react-scroll-into-view";
 
 export const Footer = ({
   breakpoint,
@@ -95,31 +96,45 @@ export const Footer = ({
               {text}
             </div>
             <div className="w-full flex self-stretch flex-col items-start flex-[0_0_auto] relative">
-              <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative">
-                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                  {text1}
+              <ScrollIntoView selector="#about">
+                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative cursor-pointer">
+                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                    {text1}
+                  </div>
                 </div>
-              </div>
-              <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative">
-                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                  {text2}
+              </ScrollIntoView>
+
+              <ScrollIntoView selector="#how">
+                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer">
+                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                    {text2}
+                  </div>
                 </div>
-              </div>
-              <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative">
-                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                  {text3}
+              </ScrollIntoView>
+
+              <ScrollIntoView selector="#order">
+                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer">
+                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                    {text3}
+                  </div>
                 </div>
-              </div>
-              <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative">
-                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                  {text4}
+              </ScrollIntoView>
+
+              <ScrollIntoView selector="#contact">
+                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer">
+                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                    {text4}
+                  </div>
                 </div>
-              </div>
-              <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative">
-                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                  {text5}
+              </ScrollIntoView>
+
+              <ScrollIntoView selector="#faq">
+                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative cursor-pointer">
+                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                    {text5}
+                  </div>
                 </div>
-              </div>
+              </ScrollIntoView>
             </div>
           </div>
           <div

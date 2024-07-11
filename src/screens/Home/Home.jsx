@@ -22,6 +22,7 @@ import {
 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
+import ScrollIntoView from "react-scroll-into-view";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -30,7 +31,10 @@ export const Home = () => {
     <div className="flex flex-col w-[360px] items-center relative bg-light-grey mx-auto">
       <AppBar />
       <div className="w-[360px] items-center gap-[30px] pt-4 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
-        <div className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]">
+        <div
+          id="how"
+          className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]"
+        >
           <div className="flex w-[1355px] h-[169px] items-start gap-4 absolute top-0 -left-7">
             <img
               className="w-[206.38px] mb-[-1388.00px] ml-[-2319.42px] relative self-stretch"
@@ -96,7 +100,10 @@ export const Home = () => {
             />
           </div>
         </div>
-        <div className="items-center gap-2 flex flex-col relative self-stretch w-full flex-[0_0_auto]">
+        <div
+          id="order"
+          className="items-center gap-2 flex flex-col relative self-stretch w-full flex-[0_0_auto]"
+        >
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
             <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
               Exceptional products at friendly prices
@@ -149,7 +156,10 @@ export const Home = () => {
         text5="Deliver the Marchandise"
         text6="This includes the preparation of the packages by the craftsman and their delivery to you. Make sure that your loved ones receive the products under the best conditions."
       />
-      <div className="flex items-center gap-2.5 px-5 py-0 relative self-stretch w-full flex-[0_0_auto]">
+      <div
+        id="about"
+        className="flex items-center gap-2.5 px-5 py-0 relative self-stretch w-full flex-[0_0_auto]"
+      >
         <Header
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
@@ -180,7 +190,10 @@ export const Home = () => {
         text5="Support and promotion of local artisans"
         text6="By favoring products from local crafts, you contribute to maintaining and promoting the unique know-how of our regions."
       />
-      <div className="flex w-[360px] items-center gap-2.5 px-5 py-0 relative flex-[0_0_auto]">
+      <div
+        id="faq"
+        className="flex w-[360px] items-center gap-2.5 px-5 py-0 relative flex-[0_0_auto]"
+      >
         <Faq
           breakpoint="mobile"
           buttonStylePrimarySmallClassName="!self-stretch !mr-[-1.00px] !ml-[-1.00px] !mb-[-1.00px] !flex-[0_0_auto] !flex !w-full"

@@ -29,6 +29,7 @@ export const BreakpointDesktopWrapper = ({
 }) => {
   return (
     <div
+      id="contact"
       className={`flex flex-col bg-light-grey relative ${
         breakpoint === "mobile" ? "w-[375px]" : "w-[1440px]"
       } ${breakpoint === "mobile" ? "items-start" : "items-center"} ${
