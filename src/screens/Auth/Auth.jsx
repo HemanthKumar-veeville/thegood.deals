@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../../components/Button/Button.jsx";
 import { TabMenuStyle } from "../../components/TabMenuStyle/TabMenuStyle.jsx";
 import { AppleBrand1 } from "../../icons/AppleBrand1/AppleBrand1.jsx";
@@ -9,15 +9,30 @@ import { UserAlt4 } from "../../icons/UserAlt4/UserAlt4.jsx";
 import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3.jsx";
 import { SignIn } from "../SignIn/SignIn.jsx";
 import { SignUp } from "../SignUp/SignUp.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const [isLoginTab, setIsLoginTab] = useState(true);
+  const navigate = useNavigate();
+
   const switchToLogin = () => {
     setIsLoginTab(true);
+    navigate("/auth?login");
   };
   const switchToSignUp = () => {
     setIsLoginTab(false);
+    navigate("/auth?signup");
   };
+
+  useEffect(() => {
+    const url = window.location.href;
+    const params = url.split("?")[1];
+    if (params === "login") {
+      setIsLoginTab(true);
+    } else {
+      setIsLoginTab(false);
+    }
+  }, []);
 
   return (
     <div className="relative w-[360px] h-screen bg-primary-background mx-auto">
@@ -35,7 +50,10 @@ const Auth = () => {
               </div>
             </div>
           </div>
-          <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer">
+          <div
+            className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             <UserAlt4 className="!relative !w-6 !h-6" />
           </div>
         </div>
