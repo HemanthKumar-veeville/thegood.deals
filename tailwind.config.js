@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        blue: "var(--blue)",
         blueblue: "var(--blueblue)",
         "blueblue-dark": "var(--blueblue-dark)",
         "blueblue-light": "var(--blueblue-light)",
@@ -31,6 +32,7 @@ export default {
         "graygray-5": "var(--graygray-5)",
         "graygray-6": "var(--graygray-6)",
         "graygray-7": "var(--graygray-7)",
+        green: "var(--green)",
         greengreen: "var(--greengreen)",
         "greengreen-dark": "var(--greengreen-dark)",
         "greengreen-light": "var(--greengreen-light)",
@@ -39,6 +41,9 @@ export default {
         "greengreen-light-4": "var(--greengreen-light-4)",
         "greengreen-light-5": "var(--greengreen-light-5)",
         "greengreen-light-6": "var(--greengreen-light-6)",
+        "light-grey": "var(--light-grey)",
+        "neutraldark-gray": "var(--neutraldark-gray)",
+        orange: "var(--orange)",
         orangeorange: "var(--orangeorange)",
         "orangeorange-dark": "var(--orangeorange-dark)",
         "orangeorange-light": "var(--orangeorange-light)",
@@ -79,6 +84,9 @@ export default {
         "tealteal-light": "var(--tealteal-light)",
         "tealteal-light-2": "var(--tealteal-light-2)",
         "tealteal-light-3": "var(--tealteal-light-3)",
+        "variable-collection-light-green":
+          "var(--variable-collection-light-green)",
+        white: "var(--white)",
         whitewhite: "var(--whitewhite)",
         yellowyellow: "var(--yellowyellow)",
         "yellowyellow-dark": "var(--yellowyellow-dark)",
@@ -89,7 +97,6 @@ export default {
         "yellowyellow-light-4": "var(--yellowyellow-light-4)",
       },
       fontFamily: {
-        "16-medium": "var(--16-medium-font-family)",
         "body-extra-small-text-medium":
           "var(--body-extra-small-text-medium-font-family)",
         "body-extra-small-text-regular":
@@ -110,6 +117,14 @@ export default {
         "heading-4": "var(--heading-4-font-family)",
         "heading-5": "var(--heading-5-font-family)",
         "heading-6": "var(--heading-6-font-family)",
+        "heading-h1": "var(--heading-h1-font-family)",
+        "heading-h1-mobile": "var(--heading-h1-mobile-font-family)",
+        "heading-h2": "var(--heading-h2-font-family)",
+        "heading-h2-mobile": "var(--heading-h2-mobile-font-family)",
+        "heading-h3": "var(--heading-h3-font-family)",
+        "heading-h3-mobile": "var(--heading-h3-mobile-font-family)",
+        "heading-h5": "var(--heading-h5-font-family)",
+        "heading-h6": "var(--heading-h6-font-family)",
         "text-medium-normal": "var(--text-medium-normal-font-family)",
       },
       boxShadow: {
