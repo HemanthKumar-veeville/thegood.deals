@@ -12,6 +12,12 @@ import { SignUp } from "../SignUp/SignUp.jsx";
 
 const Auth = () => {
   const [isLoginTab, setIsLoginTab] = useState(true);
+  const switchToLogin = () => {
+    setIsLoginTab(true);
+  };
+  const switchToSignUp = () => {
+    setIsLoginTab(false);
+  };
 
   return (
     <div className="relative w-[360px] h-screen bg-primary-background mx-auto">
@@ -43,7 +49,7 @@ const Auth = () => {
             isLoginTab ? "!text-[#1b4f4a]" : "!text-[#637381]"
           } !tracking-[0] !text-base ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-6`}
           text="To log in"
-          onClick={() => setIsLoginTab(true)}
+          onClick={switchToLogin}
         />
         <TabMenuStyle
           className={`${
@@ -53,7 +59,7 @@ const Auth = () => {
             !isLoginTab ? "!text-[#1b4f4a]" : "!text-[#637381]"
           } !tracking-[0] !text-base ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-6`}
           text="Create an account"
-          onClick={() => setIsLoginTab(false)}
+          onClick={switchToSignUp}
         />
       </div>
       {isLoginTab ? <SignIn /> : <SignUp />}
