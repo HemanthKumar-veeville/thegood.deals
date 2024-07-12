@@ -21,6 +21,7 @@ const SignIn = () => {
     }),
     onSubmit: (values) => {
       console.log("Form values:", values);
+      formik.resetForm();
       // Handle form submission (e.g., send values to the server)
     },
   });
