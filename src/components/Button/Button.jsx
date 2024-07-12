@@ -7,9 +7,10 @@ const Button = ({
   state,
   round,
   className,
+  type,
 }) => {
   return (
-    <button
+    <div
       className={`all-[unset] box-border inline-flex items-center gap-2.5 px-7 py-[13px] justify-center relative ${
         (color === "secondary" && kind === "primary" && state === "default") ||
         (color === "secondary" && kind === "primary" && state === "hover") ||
@@ -173,10 +174,11 @@ const Button = ({
             ? "leading-[var(--body-medium-medium-line-height)]"
             : "leading-6"
         }`}
+        type={type}
       >
         {buttonText}
       </button>
-    </button>
+    </div>
   );
 };
 
