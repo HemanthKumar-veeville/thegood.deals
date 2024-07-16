@@ -6,10 +6,11 @@ import { AppleBrand1 } from "../../icons/AppleBrand1/AppleBrand1.jsx";
 import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8.jsx";
 import { FacebookFill } from "../../icons/FacebookFill/FacebookFill.jsx";
 import { Google } from "../../icons/Google/Google.jsx";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -20,6 +21,7 @@ const SignIn = () => {
       password: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
+      navigate("/verify", { state: { email: values.email } });
       console.log("Form values:", values);
       formik.resetForm();
       // Handle form submission (e.g., send values to the server)

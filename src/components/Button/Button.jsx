@@ -10,7 +10,7 @@ const Button = ({
   type,
 }) => {
   return (
-    <div
+    <button
       className={`all-[unset] box-border inline-flex items-center gap-2.5 px-7 py-[13px] justify-center relative ${
         (color === "secondary" && kind === "primary" && state === "default") ||
         (color === "secondary" && kind === "primary" && state === "hover") ||
@@ -77,7 +77,7 @@ const Button = ({
           : kind === "primary" &&
             (color === "primary" || state === "active") &&
             ["hover", "active"].includes(state)
-          ? "bg-[#1b43c7]"
+          ? "bg-[#1b4f4a]"
           : state === "active" && kind === "secondary"
           ? "bg-blueblue-light-3"
           : (color === "primary" || kind === "tertiary") &&
@@ -105,8 +105,9 @@ const Button = ({
           ? "bg-graygray-2"
           : ""
       } ${className}`}
+      type={type}
     >
-      <button
+      <div
         className={`all-[unset] box-border w-fit mt-[-1.00px] text-center whitespace-nowrap relative ${
           color === "primary" &&
           state === "hover" &&
@@ -177,8 +178,8 @@ const Button = ({
         type={type}
       >
         {buttonText}
-      </button>
-    </div>
+      </div>
+    </button>
   );
 };
 

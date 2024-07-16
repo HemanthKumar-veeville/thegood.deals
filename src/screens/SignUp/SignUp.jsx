@@ -3,11 +3,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button } from "../../components/Button/Button";
 import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -42,6 +43,7 @@ export const SignUp = () => {
       ),
     }),
     onSubmit: (values) => {
+      navigate("/verify", { state: { email: values.email } });
       console.log("Form values:", values);
       formik.resetForm();
       setShowPassword(false); // Reset password visibility state
