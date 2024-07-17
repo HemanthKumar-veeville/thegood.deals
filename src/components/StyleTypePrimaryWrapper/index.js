@@ -1,0 +1,1 @@
+export { StyleTypePrimaryWrapper } from "./StyleTypePrimaryWrapper";
