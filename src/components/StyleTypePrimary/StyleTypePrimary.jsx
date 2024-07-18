@@ -5,6 +5,7 @@ Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcN
 
 import PropTypes from "prop-types";
 import React from "react";
+import { Line_60_3 } from "../../images";
 
 export const StyleTypePrimary = ({
   className,
@@ -12,18 +13,24 @@ export const StyleTypePrimary = ({
   groupClassName,
   overlapGroupClassName,
   lineClassName,
-  line = "/img/line-60-3.svg",
+  line = { Line_60_3 },
   divClassName,
   text = "80%",
 }) => {
   return (
     <div className={`w-[470px] h-5 ${className}`}>
       <div className={`relative h-5 -top-px ${overlapClassName}`}>
-        <div className={`absolute w-[470px] h-px top-[19px] left-0 ${groupClassName}`}>
+        <div
+          className={`absolute w-[470px] h-px top-[19px] left-0 ${groupClassName}`}
+        >
           <div
             className={`relative h-4 -top-4 bg-[url(/static/img/line-59-4.svg)] bg-[100%_100%] ${overlapGroupClassName}`}
           >
-            <img className={`absolute w-[357px] h-4 top-0 left-0 ${lineClassName}`} alt="Line" src={line} />
+            <img
+              className={`absolute w-[357px] h-4 top-0 left-0 ${lineClassName}`}
+              alt="Line"
+              src={line}
+            />
           </div>
         </div>
         <div

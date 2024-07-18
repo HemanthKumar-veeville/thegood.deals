@@ -6,7 +6,7 @@ import { Line63 } from "../../images";
 
 export const ThanksToAdmin = () => {
   return (
-    <div className="flex flex-col w-[360px] h-[640px] items-start relative bg-primary-background mx-auto">
+    <div className="flex flex-col w-[360px] h-screen items-start relative bg-primary-background mx-auto">
       <header className="flex flex-col w-[360px] h-16 items-start relative bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
         <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
           <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative">

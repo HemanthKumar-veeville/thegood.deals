@@ -34,6 +34,12 @@ import Polygon1 from "../../static/img/polygon-1.svg";
 import Polygon_1_1 from "../../static/img/polygon-1-1.svg";
 import Line_59_1 from "../../static/img/line-59-1.svg";
 import Vector from "../../static/img/vector.svg";
+import blogImage from "../../static/img/blog-image.png";
+import Line69 from "../../static/img/line-69.svg";
+import Line_571_1 from "../../static/img/line-571-1.svg";
+import Line_570_1 from "../../static/img/line-570-1.svg";
+import Line571 from "../../static/img/line-571.svg";
+import Line_60_3 from "../../static/img/line-60-3.svg";
 
 export {
   placeHolderImage14,
@@ -71,4 +77,10 @@ export {
   Polygon_1_1,
   Line_59_1,
   Vector,
+  blogImage,
+  Line69,
+  Line_571_1,
+  Line_570_1,
+  Line571,
+  Line_60_3,
 };
