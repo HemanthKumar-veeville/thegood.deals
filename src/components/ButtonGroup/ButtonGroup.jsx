@@ -18,12 +18,14 @@ export const ButtonGroup = ({
     <div
       className={`border border-solid inline-flex items-center gap-2 px-[15px] py-2.5 justify-center relative ${
         state === "active" ? "border-primary-color" : "border-stroke"
-      } ${state === "active" ? "bg-primary-color" : "bg-whitewhite"} ${className}`}
+      } ${
+        state === "active" ? "bg-primary-color" : "bg-whitewhite"
+      } ${className}`}
     >
       {icon}
       <button
         className={`all-[unset] box-border [font-family:'Inter',Helvetica] w-fit mt-[-0.50px] tracking-[0] text-base font-medium leading-6 whitespace-nowrap relative ${
-          state === "active" ? "text-whitewhite" : "text-darkdark"
+          state === "active" ? "text-whitewhite" : "text-[#1B4F4A]"
         } ${buttonClassName}`}
       >
         {text}
