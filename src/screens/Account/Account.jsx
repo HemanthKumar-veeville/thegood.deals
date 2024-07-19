@@ -12,16 +12,18 @@ import { Users3 } from "../../icons/Users3";
 import { ChatAlt6 } from "../../icons/ChatAlt6";
 import { Line63, Line_60_1, Line_59_2 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
+import { useNavigate } from "react-router-dom";
 
 export const Account = () => {
   const [activeTab, setActiveTab] = useState("created");
+  const navigate = useNavigate();
 
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
   };
 
   const handleCreateDeal = () => {
-    alert("Create a good deal");
+    navigate("/create-deal");
   };
 
   const handleMyInformation = () => {
