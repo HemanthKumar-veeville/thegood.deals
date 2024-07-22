@@ -1,0 +1,1 @@
+export { CopyAlt } from "./CopyAlt";

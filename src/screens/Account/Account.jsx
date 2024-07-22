@@ -31,7 +31,7 @@ export const Account = () => {
   };
 
   const handleWalletDetails = () => {
-    alert("Wallet details");
+    navigate("/admin-wallet");
   };
 
   const handleSettings = () => {
@@ -43,11 +43,11 @@ export const Account = () => {
   };
 
   const handleSignOut = () => {
-    alert("Sign out");
+    navigate("/auth?login");
   };
 
   const handleCardClick = () => {
-    alert("Displaying detailed page");
+    navigate("/admin-active-deal");
   };
 
   return (
