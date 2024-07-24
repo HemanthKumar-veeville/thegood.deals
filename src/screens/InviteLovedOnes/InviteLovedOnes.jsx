@@ -26,8 +26,8 @@ export const InviteLovedOnes = () => {
   };
 
   const handleSendInvitations = () => {
-    alert(`Invitations sent to: ${emails.join(", ")}`);
     setEmails([]);
+    navigate("/admin-invitations-sent");
   };
 
   const handleCopyLink = () => {

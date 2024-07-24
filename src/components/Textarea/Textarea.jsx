@@ -4,14 +4,14 @@ Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcN
 */
 
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
 export const Textarea = ({
   typeHelperText = "Helper Text",
   secondLabelText = "0/50",
   placeholder = "Placeholder",
   label = "Label",
-  state,
+  state = "default",
   helperText,
   label1,
   secondLabel,
@@ -20,17 +20,42 @@ export const Textarea = ({
   divClassNameOverride,
   groupClassName,
 }) => {
+  const [value, setValue] = useState("");
+  const [focusState, setFocusState] = useState(state);
+
+  const handleFocus = () => {
+    if (focusState !== "disabled") {
+      setFocusState("focused");
+    }
+  };
+
+  const handleBlur = () => {
+    if (focusState !== "disabled") {
+      setFocusState("default");
+    }
+  };
+
+  const handleChange = (e) => {
+    if (focusState !== "disabled") {
+      setValue(e.target.value);
+    }
+  };
+
   return (
-    <div className={`w-[500px] flex flex-col items-start gap-2.5 h-[220px] relative ${className}`}>
-      {label1 === "on" && (helperText === "on" || secondLabel === "on") && ["on", "off"].includes(secondLabel) && (
-        <div
-          className={`[font-family:'Inter',Helvetica] w-fit mt-[-1.00px] tracking-[0] text-base font-medium leading-6 whitespace-nowrap relative ${
-            state === "disabled" ? "text-darkdark-5" : "text-[#111928]"
-          } ${divClassName}`}
-        >
-          {label}
-        </div>
-      )}
+    <div
+      className={`w-[500px] flex flex-col items-start gap-2.5 h-[220px] relative ${className}`}
+    >
+      {label1 === "on" &&
+        (helperText === "on" || secondLabel === "on") &&
+        ["on", "off"].includes(secondLabel) && (
+          <div
+            className={`[font-family:'Inter',Helvetica] w-fit mt-[-1.00px] tracking-[0] text-base font-medium leading-6 whitespace-nowrap relative ${
+              focusState === "disabled" ? "text-darkdark-5" : "text-[#111928]"
+            } ${divClassName}`}
+          >
+            {label}
+          </div>
+        )}
 
       {((helperText === "off" && label1 === "off" && secondLabel === "off") ||
         (helperText === "on" && label1 === "on" && secondLabel === "off") ||
@@ -38,113 +63,140 @@ export const Textarea = ({
         <div className="w-full flex self-stretch flex-col items-start grow flex-1 relative">
           <div
             className={`flex items-start flex-1 p-5 relative w-full grow rounded-md gap-2.5 self-stretch ${
-              state === "hover" ? "border-[#1b4f4a]" : state === "focused" ? "border-blueblue-light-4" : "border-stroke"
-            } ${state === "focused" ? "mt-[-3.00px]" : ""} ${state === "focused" ? "mr-[-3.00px]" : ""} ${
-              state === "focused" ? "ml-[-3.00px]" : ""
-            } ${state === "disabled" ? "bg-graygray-2" : "bg-white"} ${state === "focused" ? "mb-[-3.00px]" : ""} ${
-              state === "hover"
+              focusState === "hover"
+                ? "border-[#1b4f4a]"
+                : focusState === "focused"
+                ? "border-blueblue-light-4"
+                : "border-stroke"
+            } ${focusState === "focused" ? "mt-[-3.00px]" : ""} ${
+              focusState === "focused" ? "mr-[-3.00px]" : ""
+            } ${focusState === "focused" ? "ml-[-3.00px]" : ""} ${
+              focusState === "disabled" ? "bg-graygray-2" : "bg-white"
+            } ${focusState === "focused" ? "mb-[-3.00px]" : ""} ${
+              focusState === "hover"
                 ? "border-[1.5px] border-solid"
-                : state === "focused"
+                : focusState === "focused"
                 ? "border-[3px] border-solid"
                 : "border border-solid"
             }`}
           >
-            <div
-              className={`font-body-medium-regular w-fit tracking-[var(--body-medium-regular-letter-spacing)] text-[length:var(--body-medium-regular-font-size)] [font-style:var(--body-medium-regular-font-style)] text-darkdark-6 font-[number:var(--body-medium-regular-font-weight)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap relative ${
-                ["default", "disabled"].includes(state) ? "mt-[-1.00px]" : state === "hover" ? "mt-[-1.50px]" : ""
-              } ${label1 === "on" ? divClassNameOverride : undefined}`}
-            >
-              {placeholder}
-            </div>
+            <textarea
+              value={value}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              placeholder={placeholder}
+              className={`w-full h-full bg-transparent border-none focus:outline-none text-darkdark-6 text-base leading-6 resize-none`}
+              disabled={focusState === "disabled"}
+            />
           </div>
         </div>
       )}
 
-      {label1 === "on" && (helperText === "on" || secondLabel === "on") && ["on", "off"].includes(secondLabel) && (
-        <div
-          className={`w-full flex self-stretch flex-[0_0_auto] relative ${
-            helperText === "on" && secondLabel === "on" ? "items-center" : "items-end"
-          } ${helperText === "off" || secondLabel === "off" ? "gap-[5px]" : ""} ${
-            helperText === "off" ? "justify-end" : "justify-between"
-          }`}
-        >
-          {(helperText === "off" || secondLabel === "off") && (
-            <div
-              className={`h-[22px] relative ${secondLabel === "on" ? "w-[34px]" : "w-[79px]"} ${
-                secondLabel === "on" ? "mr-[-2.00px]" : ""
-              } ${groupClassName}`}
-            >
+      {label1 === "on" &&
+        (helperText === "on" || secondLabel === "on") &&
+        ["on", "off"].includes(secondLabel) && (
+          <div
+            className={`w-full flex self-stretch flex-[0_0_auto] relative ${
+              helperText === "on" && secondLabel === "on"
+                ? "items-center"
+                : "items-end"
+            } ${
+              helperText === "off" || secondLabel === "off" ? "gap-[5px]" : ""
+            } ${helperText === "off" ? "justify-end" : "justify-between"}`}
+          >
+            {(helperText === "off" || secondLabel === "off") && (
               <div
-                className={`[font-family:'Inter',Helvetica] left-0 tracking-[0] text-sm top-0 text-primary-text-color font-normal whitespace-nowrap leading-[22px] absolute ${
-                  secondLabel === "on" ? "text-right" : ""
-                }`}
+                className={`h-[22px] relative ${
+                  secondLabel === "on" ? "w-[34px]" : "w-[79px]"
+                } ${
+                  secondLabel === "on" ? "mr-[-2.00px]" : ""
+                } ${groupClassName}`}
               >
-                {helperText === "on" && <>{typeHelperText}</>}
+                <div
+                  className={`[font-family:'Inter',Helvetica] left-0 tracking-[0] text-sm top-0 text-primary-text-color font-normal whitespace-nowrap leading-[22px] absolute ${
+                    secondLabel === "on" ? "text-right" : ""
+                  }`}
+                >
+                  {helperText === "on" && <>{typeHelperText}</>}
 
-                {secondLabel === "on" && <>{secondLabelText}</>}
-              </div>
-            </div>
-          )}
-
-          {helperText === "on" && secondLabel === "on" && (
-            <>
-              <div className="w-[79px] h-[22px] relative">
-                <div className="[font-family:'Inter',Helvetica] left-0 tracking-[0] text-sm top-0 text-primary-text-color font-normal leading-[22px] whitespace-nowrap absolute">
-                  {typeHelperText}
+                  {secondLabel === "on" && <>{secondLabelText}</>}
                 </div>
               </div>
-              <div className="w-[34px] mr-[-2.00px] h-[22px] relative">
-                <div className="[font-family:'Inter',Helvetica] left-0 tracking-[0] text-sm top-0 text-primary-text-color font-normal text-right whitespace-nowrap leading-[22px] absolute">
-                  {secondLabelText}
+            )}
+
+            {helperText === "on" && secondLabel === "on" && (
+              <>
+                <div className="w-[79px] h-[22px] relative">
+                  <div className="[font-family:'Inter',Helvetica] left-0 tracking-[0] text-sm top-0 text-primary-text-color font-normal leading-[22px] whitespace-nowrap absolute">
+                    {typeHelperText}
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
-        </div>
-      )}
+                <div className="w-[34px] mr-[-2.00px] h-[22px] relative">
+                  <div className="[font-family:'Inter',Helvetica] left-0 tracking-[0] text-sm top-0 text-primary-text-color font-normal text-right whitespace-nowrap leading-[22px] absolute">
+                    {secondLabelText}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
 
       {((helperText === "off" && label1 === "on" && secondLabel === "off") ||
         (helperText === "on" && label1 === "off") ||
         (label1 === "off" && secondLabel === "on")) && (
         <>
           <div
-            className={`relative ${label1 === "off" ? "flex" : ""} ${label1 === "on" ? "mt-[-1.00px]" : ""} ${
-              label1 === "off" ? "items-start" : ""
-            } ${label1 === "off" ? "flex-1" : ""} ${
-              label1 === "on" && ["default", "focused", "hover"].includes(state)
+            className={`relative ${label1 === "off" ? "flex" : ""} ${
+              label1 === "on" ? "mt-[-1.00px]" : ""
+            } ${label1 === "off" ? "items-start" : ""} ${
+              label1 === "off" ? "flex-1" : ""
+            } ${
+              label1 === "on" &&
+              ["default", "focused", "hover"].includes(focusState)
                 ? "text-[#111928]"
-                : state === "disabled" && label1 === "on"
+                : focusState === "disabled" && label1 === "on"
                 ? "text-darkdark-5"
                 : ""
-            } ${label1 === "on" ? "[font-family:'Inter',Helvetica]" : ""} ${label1 === "on" ? "leading-6" : ""} ${
-              label1 === "on" ? "w-fit" : "w-full"
-            } ${label1 === "off" ? "flex-col" : ""} ${label1 === "off" ? "grow" : ""} ${
+            } ${label1 === "on" ? "[font-family:'Inter',Helvetica]" : ""} ${
+              label1 === "on" ? "leading-6" : ""
+            } ${label1 === "on" ? "w-fit" : "w-full"} ${
+              label1 === "off" ? "flex-col" : ""
+            } ${label1 === "off" ? "grow" : ""} ${
               label1 === "on" ? "font-medium" : ""
-            } ${label1 === "on" ? "whitespace-nowrap" : ""} ${label1 === "on" ? "text-base" : ""} ${
-              label1 === "off" ? "self-stretch" : ""
-            } ${label1 === "on" ? "tracking-[0]" : ""}`}
+            } ${label1 === "on" ? "whitespace-nowrap" : ""} ${
+              label1 === "on" ? "text-base" : ""
+            } ${label1 === "off" ? "self-stretch" : ""} ${
+              label1 === "on" ? "tracking-[0]" : ""
+            }`}
           >
             {label1 === "off" && (
               <div
                 className={`flex items-start flex-1 p-5 relative w-full grow rounded-md gap-2.5 self-stretch ${
-                  state === "hover"
+                  focusState === "hover"
                     ? "border-[#1b4f4a]"
-                    : state === "focused"
+                    : focusState === "focused"
                     ? "border-blueblue-light-4"
                     : "border-stroke"
-                } ${state === "focused" ? "mt-[-3.00px]" : ""} ${state === "focused" ? "mr-[-3.00px]" : ""} ${
-                  state === "focused" ? "ml-[-3.00px]" : ""
-                } ${state === "disabled" ? "bg-graygray-2" : "bg-white"} ${state === "focused" ? "mb-[-3.00px]" : ""} ${
-                  state === "hover"
+                } ${focusState === "focused" ? "mt-[-3.00px]" : ""} ${
+                  focusState === "focused" ? "mr-[-3.00px]" : ""
+                } ${focusState === "focused" ? "ml-[-3.00px]" : ""} ${
+                  focusState === "disabled" ? "bg-graygray-2" : "bg-white"
+                } ${focusState === "focused" ? "mb-[-3.00px]" : ""} ${
+                  focusState === "hover"
                     ? "border-[1.5px] border-solid"
-                    : state === "focused"
+                    : focusState === "focused"
                     ? "border-[3px] border-solid"
                     : "border border-solid"
                 }`}
               >
                 <div
                   className={`font-body-medium-regular w-fit tracking-[var(--body-medium-regular-letter-spacing)] text-[length:var(--body-medium-regular-font-size)] [font-style:var(--body-medium-regular-font-style)] text-darkdark-6 font-[number:var(--body-medium-regular-font-weight)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap relative ${
-                    ["default", "disabled"].includes(state) ? "mt-[-1.00px]" : state === "hover" ? "mt-[-1.50px]" : ""
+                    ["default", "disabled"].includes(focusState)
+                      ? "mt-[-1.00px]"
+                      : focusState === "hover"
+                      ? "mt-[-1.50px]"
+                      : ""
                   }`}
                 >
                   {placeholder}
@@ -155,65 +207,111 @@ export const Textarea = ({
             {label1 === "on" && <>{label}</>}
           </div>
           <div
-            className={`w-full flex self-stretch relative ${label1 === "on" ? "flex-col" : ""} ${
-              label1 === "on" ? "items-start" : "items-end"
-            } ${label1 === "on" ? "grow" : ""} ${label1 === "off" ? "gap-[5px]" : ""} ${
+            className={`w-full flex self-stretch relative ${
+              label1 === "on" ? "flex-col" : ""
+            } ${label1 === "on" ? "items-start" : "items-end"} ${
+              label1 === "on" ? "grow" : ""
+            } ${label1 === "off" ? "gap-[5px]" : ""} ${
               label1 === "on" ? "flex-1" : "flex-[0_0_auto]"
             } ${secondLabel === "on" ? "justify-end" : ""}`}
           >
             <div
               className={`relative ${
-                label1 === "on" && ["default", "disabled"].includes(state)
+                label1 === "on" && ["default", "disabled"].includes(focusState)
                   ? "border-stroke"
-                  : label1 === "on" && state === "hover"
+                  : label1 === "on" && focusState === "hover"
                   ? "border-[#1b4f4a]"
-                  : label1 === "on" && state === "focused"
+                  : label1 === "on" && focusState === "focused"
                   ? "border-blueblue-light-4"
                   : ""
-              } ${label1 === "on" ? "flex" : ""} ${label1 === "on" && state === "focused" ? "mt-[-3.00px]" : ""} ${
-                label1 === "on" ? "items-start" : ""
-              } ${label1 === "on" ? "flex-1" : ""} ${label1 === "on" ? "p-5" : ""} ${
-                helperText === "on" ? "w-[79px]" : label1 === "on" ? "w-full" : secondLabel === "on" ? "w-[34px]" : ""
+              } ${label1 === "on" ? "flex" : ""} ${
+                label1 === "on" && focusState === "focused"
+                  ? "mt-[-3.00px]"
+                  : ""
+              } ${label1 === "on" ? "items-start" : ""} ${
+                label1 === "on" ? "flex-1" : ""
+              } ${label1 === "on" ? "p-5" : ""} ${
+                helperText === "on"
+                  ? "w-[79px]"
+                  : label1 === "on"
+                  ? "w-full"
+                  : secondLabel === "on"
+                  ? "w-[34px]"
+                  : ""
               } ${label1 === "on" ? "grow" : ""} ${
-                label1 === "on" && state === "focused" ? "mr-[-3.00px]" : secondLabel === "on" ? "mr-[-2.00px]" : ""
-              } ${label1 === "on" ? "rounded-md" : ""} ${label1 === "on" ? "gap-2.5" : ""} ${
-                label1 === "on" && state === "focused" ? "ml-[-3.00px]" : ""
+                label1 === "on" && focusState === "focused"
+                  ? "mr-[-3.00px]"
+                  : secondLabel === "on"
+                  ? "mr-[-2.00px]"
+                  : ""
+              } ${label1 === "on" ? "rounded-md" : ""} ${
+                label1 === "on" ? "gap-2.5" : ""
               } ${
-                label1 === "on" && ["default", "focused", "hover"].includes(state)
+                label1 === "on" && focusState === "focused"
+                  ? "ml-[-3.00px]"
+                  : ""
+              } ${
+                label1 === "on" &&
+                ["default", "focused", "hover"].includes(focusState)
                   ? "bg-white"
-                  : state === "disabled" && label1 === "on"
+                  : focusState === "disabled" && label1 === "on"
                   ? "bg-graygray-2"
                   : ""
-              } ${label1 === "on" && state === "focused" ? "mb-[-3.00px]" : ""} ${
-                label1 === "on" && ["default", "disabled"].includes(state)
+              } ${
+                label1 === "on" && focusState === "focused"
+                  ? "mb-[-3.00px]"
+                  : ""
+              } ${
+                label1 === "on" && ["default", "disabled"].includes(focusState)
                   ? "border border-solid"
-                  : label1 === "on" && state === "hover"
+                  : label1 === "on" && focusState === "hover"
                   ? "border-[1.5px] border-solid"
-                  : label1 === "on" && state === "focused"
+                  : label1 === "on" && focusState === "focused"
                   ? "border-[3px] border-solid"
                   : ""
-              } ${label1 === "on" ? "self-stretch" : ""} ${label1 === "off" ? "h-[22px]" : ""}`}
+              } ${label1 === "on" ? "self-stretch" : ""} ${
+                label1 === "off" ? "h-[22px]" : ""
+              }`}
             >
               <div
                 className={`whitespace-nowrap ${
-                  label1 === "on" ? "font-body-medium-regular" : "[font-family:'Inter',Helvetica]"
-                } ${label1 === "on" ? "w-fit" : ""} ${label1 === "off" ? "left-0" : ""} ${
-                  label1 === "on" ? "tracking-[var(--body-medium-regular-letter-spacing)]" : "tracking-[0]"
+                  label1 === "on"
+                    ? "font-body-medium-regular"
+                    : "[font-family:'Inter',Helvetica]"
+                } ${label1 === "on" ? "w-fit" : ""} ${
+                  label1 === "off" ? "left-0" : ""
                 } ${
-                  label1 === "on" && ["default", "disabled"].includes(state)
+                  label1 === "on"
+                    ? "tracking-[var(--body-medium-regular-letter-spacing)]"
+                    : "tracking-[0]"
+                } ${
+                  label1 === "on" &&
+                  ["default", "disabled"].includes(focusState)
                     ? "mt-[-1.00px]"
-                    : label1 === "on" && state === "hover"
+                    : label1 === "on" && focusState === "hover"
                     ? "mt-[-1.50px]"
                     : ""
-                } ${label1 === "on" ? "text-[length:var(--body-medium-regular-font-size)]" : "text-sm"} ${
-                  label1 === "on" ? "[font-style:var(--body-medium-regular-font-style)]" : ""
+                } ${
+                  label1 === "on"
+                    ? "text-[length:var(--body-medium-regular-font-size)]"
+                    : "text-sm"
+                } ${
+                  label1 === "on"
+                    ? "[font-style:var(--body-medium-regular-font-style)]"
+                    : ""
                 } ${label1 === "off" ? "top-0" : ""} ${
-                  label1 === "on" ? "text-darkdark-6" : "text-primary-text-color"
-                } ${label1 === "on" ? "font-[number:var(--body-medium-regular-font-weight)]" : "font-normal"} ${
-                  secondLabel === "on" ? "text-right" : ""
-                } ${label1 === "on" ? "leading-[var(--body-medium-regular-line-height)]" : "leading-[22px]"} ${
-                  label1 === "on" ? "relative" : "absolute"
-                }`}
+                  label1 === "on"
+                    ? "text-darkdark-6"
+                    : "text-primary-text-color"
+                } ${
+                  label1 === "on"
+                    ? "font-[number:var(--body-medium-regular-font-weight)]"
+                    : "font-normal"
+                } ${secondLabel === "on" ? "text-right" : ""} ${
+                  label1 === "on"
+                    ? "leading-[var(--body-medium-regular-line-height)]"
+                    : "leading-[22px]"
+                } ${label1 === "on" ? "relative" : "absolute"}`}
               >
                 {helperText === "on" && <>{typeHelperText}</>}
 
@@ -239,3 +337,5 @@ Textarea.propTypes = {
   label1: PropTypes.oneOf(["off", "on"]),
   secondLabel: PropTypes.oneOf(["off", "on"]),
 };
+
+export default Textarea;

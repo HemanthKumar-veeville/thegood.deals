@@ -20,6 +20,7 @@ import { Orders } from "./screens/Orders/Orders";
 import { ViewGoodDeal } from "./screens/ViewGoodDeal/ViewGoodDeal";
 import { ThanksForWithdrawal } from "./screens/ThanksForWithdrawal/ThanksForWithdrawal";
 import { InviteLovedOnes } from "./screens/InviteLovedOnes/InviteLovedOnes";
+import { InvitationSent } from "./screens/InvitationSent/InvitationSent";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
   {
     path: "/invite-loved-ones",
     element: <InviteLovedOnes />,
+  },
+  {
+    path: "/admin-invitations-sent",
+    element: <InvitationSent />,
   },
 ]);
 
