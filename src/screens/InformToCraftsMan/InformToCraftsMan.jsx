@@ -25,9 +25,9 @@ export const InformToCraftsMan = () => {
   };
 
   return (
-    <div className="flex flex-col w-[360px] h-screen items-start relative bg-primary-background mx-auto ">
+    <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto ">
       <AppBar />
-      <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
+      <div className="flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
         <p className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           Confirm the good deal with the craftsman
         </p>

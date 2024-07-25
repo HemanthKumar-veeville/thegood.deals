@@ -68,10 +68,10 @@ const CreateDeal = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col w-[360px] items-start relative bg-primary-background mx-auto"
+      className="flex flex-col w-screen items-start relative bg-primary-background mx-auto"
     >
       <AppBar />
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
           Create a good deal
         </div>

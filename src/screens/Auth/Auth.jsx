@@ -35,8 +35,8 @@ const Auth = () => {
   }, []);
 
   return (
-    <div className="relative w-[360px] h-screen bg-primary-background mx-auto">
-      <header className="flex flex-col w-[360px] h-16 items-start absolute top-0 left-0 bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
+    <div className="relative w-screen h-screen bg-primary-background mx-auto">
+      <header className="flex flex-col w-screen h-16 items-start absolute top-0 left-0 bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
         <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
           <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer">
             <VerticalLine3 className="!relative !w-6 !h-6" />
@@ -58,7 +58,7 @@ const Auth = () => {
           </div>
         </div>
       </header>
-      <div className="flex w-[360px] items-start justify-center gap-[35px] px-[25px] py-0 absolute top-16 left-0 border-b [border-bottom-style:solid] border-stroke">
+      <div className="flex w-screen items-start justify-center gap-[35px] px-[25px] py-0 absolute top-16 left-0 border-b [border-bottom-style:solid] border-stroke">
         <TabMenuStyle
           className={`${
             isLoginTab ? "!border-[#1b4f4a]" : "!border-transparent"

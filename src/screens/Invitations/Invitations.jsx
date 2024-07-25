@@ -47,9 +47,9 @@ export const Invitations = () => {
   };
 
   return (
-    <div className="flex flex-col w-[360px] items-start relative bg-primary-background mx-auto h-screen">
+    <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto h-screen">
       <AppBar />
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div
           className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
           onClick={handleBackToDeal}
