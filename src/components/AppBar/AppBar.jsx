@@ -7,7 +7,7 @@ function AppBar() {
   const navigate = useNavigate();
 
   return (
-    <header className="flex flex-col w-[360px] h-16 items-start relative bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
+    <header className="flex flex-col w-screen h-16 items-start relative bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
       <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
         <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer">
           <VerticalLine3 className="!relative !w-6 !h-6" />

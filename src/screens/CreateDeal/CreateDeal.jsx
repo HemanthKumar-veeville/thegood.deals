@@ -293,15 +293,15 @@ const CreateDeal = () => {
             I accept the General Conditions of Sale
           </p>
         </div>
-        <div className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer">
-          <button
-            type="submit"
-            className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap"
-          >
+        <button
+          type="submit"
+          className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
+        >
+          <div className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
             Next step
-          </button>
+          </div>
           <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
-        </div>
+        </button>
       </div>
     </form>
   );
