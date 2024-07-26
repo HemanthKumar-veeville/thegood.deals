@@ -1,10 +1,5 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../RoundedButton";
 import { plus14 } from "../../images";
 
@@ -15,15 +10,33 @@ export const Faq = ({
   text = "Vous trouverez des réponses aux questions les plus courantes concernant notre plateforme de commande groupée de produits artisanaux.",
   buttonText = "Des intérrogations ? Contactez-nous",
   buttonStylePrimarySmallClassName,
-  text1 = "Comment fonctionne la commande groupée sur votre plateforme ?",
   questionClassName,
-  text2 = "Qui sont les artisans partenaires ?",
-  text3 = "Comment inviter mes proches à rejoindre une commande groupée ?",
-  text4 = "Comment est calculé le prix des produits ?",
-  text5 = "Comment fonctionne la livraison ?",
+  que1,
+  que2,
+  que3,
+  que4,
+  que5,
+  ans1,
+  ans2,
+  ans3,
+  ans4,
+  ans5,
   buttonDivClassName,
   questionClassNameOverride,
 }) => {
+  const [openQuestion, setOpenQuestion] = useState(null);
+
+  const toggleQuestion = (question) => {
+    if (openQuestion === question) {
+      setOpenQuestion(null);
+    } else {
+      setOpenQuestion(question);
+    }
+  };
+
+  const questions = [que1, que2, que3, que4, que5];
+  const answers = [ans1, ans2, ans3, ans4, ans5];
+
   return (
     <div
       className={`flex flex-col items-start overflow-hidden rounded-[30px] bg-blue relative ${
@@ -99,72 +112,40 @@ export const Faq = ({
             breakpoint === "desktop" ? "grow" : ""
           } ${breakpoint === "mobile" ? "flex-[0_0_auto]" : "flex-1"}`}
         >
-          <div
-            className={`border border-solid border-green w-full flex self-stretch items-center flex-[0_0_auto] rounded-[100px] relative ${
-              breakpoint === "mobile" ? "px-5 py-4" : "px-6 py-5"
-            } ${breakpoint === "desktop" ? "justify-center" : ""}`}
-          >
-            <p
-              className={`[font-family:'Rethink_Sans',Helvetica] tracking-[0] text-base flex-1 text-green font-bold leading-6 relative ${
-                breakpoint === "mobile" ? "mt-[-1.00px]" : ""
-              }`}
-            >
-              {text1}
-            </p>
-            <img className="w-8 h-8 relative" alt="Plus" src={plus14} />
-          </div>
-          <div
-            className={`border border-solid border-green w-full flex self-stretch items-center flex-[0_0_auto] rounded-[100px] relative ${
-              breakpoint === "mobile" ? "px-5 py-4" : "px-6 py-5"
-            } ${breakpoint === "desktop" ? "justify-center" : ""}`}
-          >
-            <p
-              className={`[font-family:'Rethink_Sans',Helvetica] tracking-[0] text-base flex-1 text-green font-bold leading-6 relative ${questionClassName}`}
-            >
-              {text2}
-            </p>
-            <img className="w-8 h-8 relative" alt="Plus" src={plus14} />
-          </div>
-          <div
-            className={`border border-solid border-green w-full flex self-stretch items-center flex-[0_0_auto] rounded-[100px] relative ${
-              breakpoint === "mobile" ? "px-5 py-4" : "px-6 py-5"
-            } ${breakpoint === "desktop" ? "justify-center" : ""}`}
-          >
-            <p
-              className={`[font-family:'Rethink_Sans',Helvetica] tracking-[0] text-base flex-1 text-green font-bold leading-6 relative ${
-                breakpoint === "mobile" ? "mt-[-1.00px]" : ""
-              }`}
-            >
-              {text3}
-            </p>
-            <img className="w-8 h-8 relative" alt="Plus" src={plus14} />
-          </div>
-          <div
-            className={`border border-solid border-green w-full flex self-stretch items-center flex-[0_0_auto] rounded-[100px] relative ${
-              breakpoint === "mobile" ? "px-5 py-4" : "px-6 py-5"
-            } ${breakpoint === "desktop" ? "justify-center" : ""}`}
-          >
-            <p
-              className={`[font-family:'Rethink_Sans',Helvetica] tracking-[0] text-base flex-1 text-green font-bold leading-6 relative ${
-                breakpoint === "mobile" ? "mt-[-1.00px]" : ""
-              }`}
-            >
-              {text4}
-            </p>
-            <img className="w-8 h-8 relative" alt="Plus" src={plus14} />
-          </div>
-          <div
-            className={`border border-solid border-green w-full flex self-stretch items-center flex-[0_0_auto] rounded-[100px] relative ${
-              breakpoint === "mobile" ? "px-5 py-4" : "px-6 py-5"
-            } ${breakpoint === "desktop" ? "justify-center" : ""}`}
-          >
-            <p
-              className={`[font-family:'Rethink_Sans',Helvetica] tracking-[0] text-base flex-1 text-green font-bold leading-6 relative ${questionClassNameOverride}`}
-            >
-              {text5}
-            </p>
-            <img className="w-8 h-8 relative" alt="Plus" src={plus14} />
-          </div>
+          {questions.map((question, index) => (
+            <div key={index} className="w-full">
+              <div
+                className={`border border-solid border-green w-full flex flex-col self-stretch items-start flex-[0_0_auto] ${
+                  openQuestion === index ? "rounded-[30px]" : "rounded-[100px]"
+                } relative ${
+                  breakpoint === "mobile" ? "px-5 py-4" : "px-6 py-5"
+                } ${breakpoint === "desktop" ? "justify-center" : ""}`}
+                onClick={() => toggleQuestion(index)}
+              >
+                <div className="flex items-center w-full cursor-pointer">
+                  <p
+                    className={`[font-family:'Rethink_Sans',Helvetica] tracking-[0] text-base flex-1 text-green font-bold leading-6 relative ${
+                      breakpoint === "mobile" ? "mt-[-1.00px]" : ""
+                    }`}
+                  >
+                    {question}
+                  </p>
+                  <img
+                    className={`w-8 h-8 relative transition-transform duration-300 ${
+                      openQuestion === index ? "rotate-45" : ""
+                    }`}
+                    alt="Plus"
+                    src={plus14}
+                  />
+                </div>
+                {openQuestion === index && (
+                  <p className="mt-4 text-green w-full break-words">
+                    {answers[index]}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -175,9 +156,20 @@ Faq.propTypes = {
   breakpoint: PropTypes.oneOf(["desktop", "mobile"]),
   text: PropTypes.string,
   buttonText: PropTypes.string,
-  text1: PropTypes.string,
-  text2: PropTypes.string,
-  text3: PropTypes.string,
-  text4: PropTypes.string,
-  text5: PropTypes.string,
+  que1: PropTypes.string.isRequired,
+  que2: PropTypes.string.isRequired,
+  que3: PropTypes.string.isRequired,
+  que4: PropTypes.string.isRequired,
+  que5: PropTypes.string.isRequired,
+  ans1: PropTypes.string.isRequired,
+  ans2: PropTypes.string.isRequired,
+  ans3: PropTypes.string.isRequired,
+  ans4: PropTypes.string.isRequired,
+  ans5: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  divClassName: PropTypes.string,
+  buttonStylePrimarySmallClassName: PropTypes.string,
+  buttonDivClassName: PropTypes.string,
+  questionClassName: PropTypes.string,
+  questionClassNameOverride: PropTypes.string,
 };

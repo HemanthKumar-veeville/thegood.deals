@@ -1,8 +1,12 @@
 // TitleInput.js
 import React, { useState } from "react";
 
-const TitleInput = () => {
+const TitleInput = ({ dealTitle, setDealTitle }) => {
   const [title, setTitle] = useState("");
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    setDealTitle(e.target.value);
+  };
 
   return (
     <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full">
@@ -16,7 +20,7 @@ const TitleInput = () => {
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={handleTitleChange}
             placeholder="ex. Wine Boxes"
             className="flex-1 bg-transparent border-none focus:outline-none text-darkdark-6 text-base leading-6"
           />

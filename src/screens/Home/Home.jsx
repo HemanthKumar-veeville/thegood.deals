@@ -202,11 +202,16 @@ export const Home = () => {
           divClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
           questionClassName="!mt-[-1.00px]"
           text="You will find answers to the most common questions regarding our bulk ordering platform for artisan products."
-          text1="How does bulk ordering work on your platform?"
-          text2="Who are the partner artisans?"
-          text3="How do I invite my loved ones to join a group order?"
-          text4="How is the price of products calculated?"
-          text5="How does delivery work?"
+          que1="How does bulk ordering work on your platform?"
+          que2="Who are the partner artisans?"
+          que3="How do I invite my loved ones to join a group order?"
+          que4="How is the price of products calculated?"
+          que5="How does delivery work?"
+          ans1="This is a very long answer for the question from the faqlistmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"
+          ans2="This is a very long answer for the question from the faqlistmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm"
+          ans3="This is a very long answer for the question from the faqlist"
+          ans4="This is a very long answer for the question from the faqlistmnnnnnnnnnnnnnnn"
+          ans5="This is a very long answer for the question from the faqlistnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
         />
       </div>
       <Footer

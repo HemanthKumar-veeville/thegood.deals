@@ -23,6 +23,7 @@ export const CardDeal = ({
   divClassNameOverride,
   badgesText = "Bientôt en rupture",
   badgesDivClassName,
+  participantsCount,
   override = (
     <StyleTypePrimary
       className="!self-stretch !w-full !relative"
@@ -68,7 +69,7 @@ export const CardDeal = ({
             <div
               className={`relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)] ${divClassNameOverride}`}
             >
-              13 participants
+              {participantsCount}
             </div>
           </div>
         </div>

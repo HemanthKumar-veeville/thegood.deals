@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Write2 } from "../../icons/Write2";
 
-const BankingInfo = ({ label, placeholder }) => {
+const BankingInfo = ({ label, placeholder, onChange, type }) => {
   const [value, setValue] = useState("");
 
   const handleCopy = () => {
@@ -16,6 +16,11 @@ const BankingInfo = ({ label, placeholder }) => {
       });
   };
 
+  const handleChange = (e) => {
+    onChange(type, e);
+    setValue(e.target.value);
+  };
+
   return (
     <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke">
       <div onClick={handleCopy}>
@@ -27,7 +32,7 @@ const BankingInfo = ({ label, placeholder }) => {
       <input
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={handleChange}
         placeholder={placeholder}
         className="flex-1 bg-transparent border-none focus:outline-none text-darkdark-6 text-base leading-6"
       />

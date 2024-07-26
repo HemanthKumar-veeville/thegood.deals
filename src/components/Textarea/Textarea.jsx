@@ -19,6 +19,8 @@ export const Textarea = ({
   divClassName,
   divClassNameOverride,
   groupClassName,
+  onChange,
+  type,
 }) => {
   const [value, setValue] = useState("");
   const [focusState, setFocusState] = useState(state);
@@ -36,6 +38,7 @@ export const Textarea = ({
   };
 
   const handleChange = (e) => {
+    onChange(type, e);
     if (focusState !== "disabled") {
       setValue(e.target.value);
     }

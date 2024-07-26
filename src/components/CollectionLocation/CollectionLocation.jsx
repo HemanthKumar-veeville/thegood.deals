@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { CheckBox } from "../../components/CheckBox";
 
-const CollectionLocation = () => {
+const CollectionLocation = ({ type, onChange }) => {
   const [isAtHome, setIsAtHome] = useState(true);
 
   const handleAtHomeChange = () => {
     setIsAtHome(true);
+    onChange("At my house");
   };
 
   const handleProvideLocationChange = () => {
     setIsAtHome(false);
+    onChange("I provide another location");
   };
 
   return (

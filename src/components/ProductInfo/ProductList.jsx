@@ -29,6 +29,9 @@ const ProductList = ({ products }) => {
             <p className="text-darkdark-6 text-sm">
               Good Deal Price: {product.goodDealPrice}
             </p>
+            <p className="text-darkdark-6 text-sm">
+              Estimated Discount: {product.estimatedDiscount}
+            </p>
           </div>
         ))
       )}

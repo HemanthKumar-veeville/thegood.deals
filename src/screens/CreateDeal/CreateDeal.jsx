@@ -19,6 +19,8 @@ import { Plus3 } from "../../icons/Plus3";
 import { Minus1 } from "../../icons/Minus1";
 import { Plus1 } from "../../icons/Plus1";
 import ProductList from "../../components/ProductInfo/ProductList";
+import { useSelector, useDispatch } from "react-redux";
+import { addDeal } from "../../redux/app/deals/dealSlice";
 
 const CreateDeal = () => {
   const [formData, setFormData] = useState({
@@ -31,24 +33,45 @@ const CreateDeal = () => {
     dealExpiration: "",
     acceptConditions: false,
     minProducts: 2,
+    collectionLocation: "",
+    pictures: [],
   });
 
   const [products, setProducts] = useState([]);
   const [addMode, setAddMode] = useState(true);
+  const [title, setTitle] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
 
-  useEffect(() => {
-    console.log({ formData });
-  }, formData);
+  const handleChange = (type, e) => {
+    if (type === "acceptConditions") {
+      setFormData((prevState) => ({
+        ...prevState,
+        acceptConditions: !formData.acceptConditions,
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [type]: e.target.value,
+      }));
+    }
+  };
 
-  const handleChange = (e) => {
+  const handleAddPictures = (pictures) => {
     setFormData((prevState) => ({
       ...prevState,
-      acceptConditions: !formData.acceptConditions,
+      pictures,
+    }));
+  };
+
+  const handleLocationChange = (collectionLocation) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      collectionLocation,
     }));
   };
 
@@ -61,7 +84,8 @@ const CreateDeal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log({ ...formData, title, products });
+    dispatch(addDeal({ ...formData, title, products }));
     navigate("/inform-deal");
   };
 
@@ -75,11 +99,12 @@ const CreateDeal = () => {
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
           Create a good deal
         </div>
-        <AddPictures />
-        <TitleInput />
+        <AddPictures onChange={handleAddPictures} />
+        <TitleInput dealTitle={title} setDealTitle={setTitle} />
         <div className="w-full">
           <Textarea
             name="description"
+            type="description"
             value={formData.description}
             onChange={handleChange}
             className="!self-stretch !w-full"
@@ -100,7 +125,10 @@ const CreateDeal = () => {
           alt="Line"
           src={Line63}
         />
-        <CollectionLocation />
+        <CollectionLocation
+          type="collectionLocation"
+          onChange={handleLocationChange}
+        />
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
           Approximate collection date
         </div>
@@ -108,7 +136,7 @@ const CreateDeal = () => {
           <DatePicker
             name="collectionDate"
             value={formData.collectionDate}
-            onChange={handleChange}
+            onChange={() => handleChange("collectionDate")}
           />
         </div>
         <img
@@ -119,6 +147,7 @@ const CreateDeal = () => {
         <div className="w-full">
           <Textarea
             name="contentDescription"
+            type="contentDescription"
             value={formData.contentDescription}
             onChange={handleChange}
             className="!self-stretch !w-full"
@@ -142,6 +171,7 @@ const CreateDeal = () => {
         <div className="w-full">
           <Textarea
             name="manufacturerInfo"
+            type="manufacturerInfo"
             value={formData.manufacturerInfo}
             onChange={handleChange}
             className="!self-stretch !w-full"
@@ -168,6 +198,7 @@ const CreateDeal = () => {
         <div className="w-full">
           <BankingInfo
             name="iban"
+            type="iban"
             value={formData.iban}
             onChange={handleChange}
             label="IBAN"
@@ -177,6 +208,7 @@ const CreateDeal = () => {
         <div className="w-full">
           <BankingInfo
             name="bic"
+            type="bic"
             value={formData.bic}
             onChange={handleChange}
             label="BIC"
@@ -193,7 +225,7 @@ const CreateDeal = () => {
           <DatePicker
             name="dealExpiration"
             value={formData.dealExpiration}
-            onChange={handleChange}
+            onChange={() => handleChange("dealExpiration")}
           />
         </div>
         <img
@@ -282,7 +314,7 @@ const CreateDeal = () => {
           <CheckBox
             name="acceptConditions"
             checked={formData.acceptConditions ? "ON" : "OFF"}
-            onChange={handleChange}
+            onChange={() => handleChange("acceptConditions")}
             checkedOffStyleClassName="!flex-[0_0_auto]"
             divClassName="!text-primary-text-color !tracking-[0] !text-base ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 cursor-pointer"
             style="two"

@@ -17,6 +17,7 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
       minQuantity,
       maxQuantity,
       goodDealPrice,
+      estimatedDiscount: 50,
     };
     addProduct(newProduct);
     setProductTitle("");

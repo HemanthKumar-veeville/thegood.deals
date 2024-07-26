@@ -13,10 +13,13 @@ import { ChatAlt6 } from "../../icons/ChatAlt6";
 import { Line63, Line_60_1, Line_59_2 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Account = () => {
   const [activeTab, setActiveTab] = useState("created");
   const navigate = useNavigate();
+  const dealsState = useSelector((state) => state.deals);
+  const { deals } = dealsState;
 
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
@@ -49,6 +52,45 @@ export const Account = () => {
   const handleCardClick = () => {
     navigate("/admin-active-deal");
   };
+
+  const DEALS = [
+    {
+      deal_id: "0x001",
+      dealStatus: "out_of_stock",
+      participantsCount: 14,
+      dealTitle: "Miracles of Wine",
+      initialQuantity: 100,
+      availableQuantity: 10,
+      region: "FR",
+    },
+    {
+      deal_id: "0x002",
+      dealStatus: "finished",
+      participantsCount: 9,
+      dealTitle: "Miracles of Wine",
+      initialQuantity: 100,
+      availableQuantity: 10,
+      region: "FR",
+    },
+    {
+      deal_id: "0x003",
+      dealStatus: "waiting",
+      participantsCount: 10,
+      dealTitle: "Miracles of Wine",
+      initialQuantity: 100,
+      availableQuantity: 10,
+      region: "FR",
+    },
+    {
+      deal_id: "0x004",
+      dealStatus: "draft",
+      participantsCount: 12,
+      dealTitle: "Miracles of Wine",
+      initialQuantity: 100,
+      availableQuantity: 10,
+      region: "FR",
+    },
+  ];
 
   return (
     <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto">
@@ -119,30 +161,35 @@ export const Account = () => {
           </div>
         </div>
         {activeTab === "created" ? (
-          <div onClick={handleCardClick} className="cursor-pointer">
-            <CardDeal
-              badgesColor="success"
-              badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-              badgesText1="Finished"
-              caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
-              className="!flex-[0_0_auto]"
-              divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
-              divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
-              override={
-                <StyleTypePrimaryWrapper
-                  className="!self-stretch !w-full !relative"
-                  divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !left-[92px] !leading-5"
-                  groupClassName="!w-[260px]"
-                  line={Line_60_1}
-                  lineClassName="!w-[232px]"
-                  overlapClassName="!w-[260px]"
-                  overlapGroupClassName={`bg-[url(${Line_59_2})]`}
+          <>
+            {DEALS?.map((deal) => (
+              <div onClick={handleCardClick} className="cursor-pointer">
+                <CardDeal
+                  badgesColor="success"
+                  badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+                  badgesText1="Finished"
+                  caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
+                  className="!flex-[0_0_auto]"
+                  divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
+                  divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
+                  override={
+                    <StyleTypePrimaryWrapper
+                      className="!self-stretch !w-full !relative"
+                      divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !left-[92px] !leading-5"
+                      groupClassName="!w-[260px]"
+                      line={Line_60_1}
+                      lineClassName="!w-[232px]"
+                      overlapClassName="!w-[260px]"
+                      overlapGroupClassName={`bg-[url(${Line_59_2})]`}
+                    />
+                  }
+                  text={deal.dealTitle}
+                  text1={deal.dealStatus}
+                  participantsCount={deal.participantsCount}
                 />
-              }
-              text="Wine cratesDomaine de Cigaluse"
-              text1="Deal finished"
-            />
-          </div>
+              </div>
+            ))}
+          </>
         ) : (
           <div onClick={handleCardClick} className="cursor-pointer">
             <CardDeal

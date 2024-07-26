@@ -31,15 +31,15 @@ const DatePicker = () => {
   };
 
   return (
-    <div class="relative max-w-sm">
-      <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+    <div className="relative max-w-sm">
+      <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
         <CalenderAlt1 />
       </div>
       <input
         datepicker
         id="default-datepicker"
         type="text"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 focus:outline-none"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 focus:outline-none"
         placeholder="Select date"
         onChange={handleDateChange}
       />
