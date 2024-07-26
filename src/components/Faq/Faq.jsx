@@ -115,11 +115,13 @@ export const Faq = ({
           {questions.map((question, index) => (
             <div key={index} className="w-full">
               <div
-                className={`border border-solid border-green w-full flex flex-col self-stretch items-start flex-[0_0_auto] ${
-                  openQuestion === index ? "rounded-[30px]" : "rounded-[100px]"
-                } relative ${
-                  breakpoint === "mobile" ? "px-5 py-4" : "px-6 py-5"
-                } ${breakpoint === "desktop" ? "justify-center" : ""}`}
+                className={`border border-solid border-green w-full flex flex-col self-stretch items-start flex-[0_0_auto] overflow-hidden transition-all duration-500 ${
+                  openQuestion === index
+                    ? "rounded-[30px] py-6"
+                    : "rounded-[100px] py-4"
+                } relative ${breakpoint === "mobile" ? "px-5" : "px-6"} ${
+                  breakpoint === "desktop" ? "justify-center" : ""
+                }`}
                 onClick={() => toggleQuestion(index)}
               >
                 <div className="flex items-center w-full cursor-pointer">
@@ -131,7 +133,7 @@ export const Faq = ({
                     {question}
                   </p>
                   <img
-                    className={`w-8 h-8 relative transition-transform duration-300 ${
+                    className={`w-8 h-8 relative transition-transform duration-500 ${
                       openQuestion === index ? "rotate-45" : ""
                     }`}
                     alt="Plus"

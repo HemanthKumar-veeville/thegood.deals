@@ -23,13 +23,21 @@ import {
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 import ScrollIntoView from "react-scroll-into-view";
+import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
 
 export const Home = () => {
   const navigate = useNavigate();
+  const IMAGES = [
+    "https://picsum.photos/seed/picsum/50/50",
+    "https://picsum.photos/seed/picsum/50/50",
+    "https://picsum.photos/seed/picsum/50/50",
+    "https://picsum.photos/seed/picsum/50/50",
+  ];
 
   return (
     <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">
       <AppBar />
+      <ImageCarousel images={IMAGES} />
       <div className="w-screen items-center gap-[30px] pt-4 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
           id="how"
