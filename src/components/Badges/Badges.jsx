@@ -130,7 +130,7 @@ export const Badges = ({
 
           {color === "success" && <>{text2}</>}
 
-          {color === "info" && <>{text3}</>}
+          {color === "info" && <>{text1}</>}
 
           {color === "gray" && <>Gray</>}
 

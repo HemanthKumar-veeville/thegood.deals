@@ -11,6 +11,13 @@ import {
   FranceFlag,
 } from "../../images";
 
+const statusBanner = {
+  out_of_stock: { text: "Soon to be out of stock", color: "warning" },
+  finished: { text: "Finished", color: "success" },
+  waiting: { text: "Waiting for the craftsman", color: "warning" },
+  draft: { text: "Draft", color: "info" },
+};
+
 export const CardDeal = ({
   className,
   styleTypePrimaryText = "80% vendus",
@@ -21,7 +28,7 @@ export const CardDeal = ({
   divClassName,
   text1 = "fin dans 12 jours",
   divClassNameOverride,
-  badgesText = "Bientôt en rupture",
+  badgesText = statusBanner[text1].text,
   badgesDivClassName,
   participantsCount,
   override = (
@@ -37,7 +44,7 @@ export const CardDeal = ({
     />
   ),
   badgesColor = "warning",
-  badgesText1,
+  badgesText1 = statusBanner[text1].text,
 }) => {
   return (
     <div
@@ -50,33 +57,37 @@ export const CardDeal = ({
       />
       <div className="flex flex-col items-center gap-2.5 p-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-          {override}
+          {!(text1 === "draft" || text1 === "waiting") && override}
           <p
             className={`relative self-stretch font-body-medium-bold font-[number:var(--body-medium-bold-font-weight)] text-primary-color text-[length:var(--body-medium-bold-font-size)] tracking-[var(--body-medium-bold-letter-spacing)] leading-[var(--body-medium-bold-line-height)] [font-style:var(--body-medium-bold-font-style)] ${caissesDeVinsClassName}`}
           >
             {text}
           </p>
-          <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-            <ClockAlt12 className="!relative !w-5 !h-5" color="#1B4F4A" />
-            <div
-              className={`relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)] ${divClassName}`}
-            >
-              {text1}
+          {!(text1 === "draft" || text1 === "waiting") && (
+            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
+              <ClockAlt12 className="!relative !w-5 !h-5" color="#1B4F4A" />
+              <div
+                className={`relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)] ${divClassName}`}
+              >
+                {text1}
+              </div>
             </div>
-          </div>
-          <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-            <Users22 className="!relative !w-5 !h-5" />
-            <div
-              className={`relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)] ${divClassNameOverride}`}
-            >
-              {participantsCount}
+          )}
+          {participantsCount !== 0 && (
+            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
+              <Users22 className="!relative !w-5 !h-5" />
+              <div
+                className={`relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)] ${divClassNameOverride}`}
+              >
+                {`${participantsCount} participants`}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <Badges
         className="!left-[15px] !absolute !top-[15px]"
-        color={badgesColor}
+        color={statusBanner[text1].color}
         divClassName={badgesDivClassName}
         round="semi-round"
         state="duo-tone"

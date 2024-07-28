@@ -75,7 +75,7 @@ export const Account = () => {
     {
       deal_id: "0x003",
       dealStatus: "waiting",
-      participantsCount: 10,
+      participantsCount: 0,
       dealTitle: "Miracles of Wine",
       initialQuantity: 100,
       availableQuantity: 10,
@@ -84,7 +84,7 @@ export const Account = () => {
     {
       deal_id: "0x004",
       dealStatus: "draft",
-      participantsCount: 12,
+      participantsCount: 0,
       dealTitle: "Miracles of Wine",
       initialQuantity: 100,
       availableQuantity: 10,
