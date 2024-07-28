@@ -35,7 +35,11 @@ const ImageCarousel = ({ images }) => {
       >
         {images.map((image, index) => (
           <div key={index} className="w-full flex-shrink-0">
-            <img src={image} alt={`Slide ${index}`} className="w-full h-auto" />
+            <img
+              src={image}
+              alt={`Slide ${index}`}
+              className="w-full h-[300px]"
+            />
           </div>
         ))}
       </div>

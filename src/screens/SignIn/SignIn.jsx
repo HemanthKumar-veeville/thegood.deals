@@ -21,7 +21,7 @@ const SignIn = () => {
       password: Yup.string().required("Required"),
     }),
     onSubmit: (values) => {
-      navigate("/verify", { state: { email: values.email } });
+      navigate("/account");
       console.log("Form values:", values);
       formik.resetForm();
       // Handle form submission (e.g., send values to the server)

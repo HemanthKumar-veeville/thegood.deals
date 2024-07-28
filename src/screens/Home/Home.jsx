@@ -19,6 +19,12 @@ import {
   placeHolderImage2,
   placeHolderImage8,
   placeHolderImage9,
+  picture1,
+  picture2,
+  picture3,
+  picture4,
+  picture5,
+  picture6,
 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
@@ -27,12 +33,7 @@ import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
 
 export const Home = () => {
   const navigate = useNavigate();
-  const IMAGES = [
-    "https://picsum.photos/seed/picsum/50/50",
-    "https://picsum.photos/seed/picsum/50/50",
-    "https://picsum.photos/seed/picsum/50/50",
-    "https://picsum.photos/seed/picsum/50/50",
-  ];
+  const IMAGES = [picture1, picture2, picture3, picture4];
 
   return (
     <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">

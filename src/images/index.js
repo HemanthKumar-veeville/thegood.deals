@@ -41,6 +41,13 @@ import Line_570_1 from "../../static/img/line-570-1.svg";
 import Line571 from "../../static/img/line-571.svg";
 import Line_60_3 from "../../static/img/line-60-3.svg";
 
+import picture1 from "../../static/img/picture1.jpg";
+import picture2 from "../../static/img/picture2.jpg";
+import picture3 from "../../static/img/picture3.jpg";
+import picture4 from "../../static/img/picture4.jpg";
+import picture5 from "../../static/img/picture5.png";
+import picture6 from "../../static/img/picture6.png";
+
 export {
   placeHolderImage14,
   placeHolderImage13,
@@ -83,4 +90,10 @@ export {
   Line_570_1,
   Line571,
   Line_60_3,
+  picture1,
+  picture2,
+  picture3,
+  picture4,
+  picture5,
+  picture6,
 };
