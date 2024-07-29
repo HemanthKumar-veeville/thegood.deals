@@ -115,36 +115,34 @@ export const Faq = ({
           {questions.map((question, index) => (
             <div key={index} className="w-full">
               <div
-                className={`border border-solid border-green w-full flex flex-col self-stretch items-start flex-[0_0_auto] overflow-hidden transition-all duration-500 ${
-                  openQuestion === index
-                    ? "rounded-[30px] py-6"
-                    : "rounded-[100px] py-4"
-                } relative ${breakpoint === "mobile" ? "px-5" : "px-6"} ${
-                  breakpoint === "desktop" ? "justify-center" : ""
-                }`}
+                className={`border border-solid border-green w-full flex flex-col self-stretch items-start flex-[0_0_auto] overflow-hidden transition-all duration-1000 rounded-[30px] relative ${
+                  breakpoint === "mobile" ? "px-5 py-4" : "px-6 py-4"
+                } ${breakpoint === "desktop" ? "justify-center" : ""}`}
                 onClick={() => toggleQuestion(index)}
               >
-                <div className="flex items-center w-full cursor-pointer">
+                <div className="flex items-center !w-full cursor-pointer relative justify-between">
                   <p
                     className={`[font-family:'Rethink_Sans',Helvetica] tracking-[0] text-base flex-1 text-green font-bold leading-6 relative ${
                       breakpoint === "mobile" ? "mt-[-1.00px]" : ""
-                    }`}
+                    } max-w-[calc(100%-2rem)]`} // Ensures wrapping and space for the icon
                   >
                     {question}
                   </p>
                   <img
-                    className={`w-8 h-8 relative transition-transform duration-500 ${
+                    className={`w-8 h-8 absolute right-0 transition-transform duration-500 ${
                       openQuestion === index ? "rotate-45" : ""
                     }`}
                     alt="Plus"
                     src={plus14}
                   />
                 </div>
-                {openQuestion === index && (
-                  <p className="mt-4 text-green w-full break-words">
-                    {answers[index]}
-                  </p>
-                )}
+                <div
+                  className={`text-green w-full break-words transition-max-height duration-1000 overflow-hidden ${
+                    openQuestion === index ? "max-h-96 mt-4 " : "max-h-0"
+                  }`}
+                >
+                  <p>{answers[index]}</p>
+                </div>
               </div>
             </div>
           ))}

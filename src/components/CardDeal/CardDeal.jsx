@@ -45,7 +45,20 @@ export const CardDeal = ({
   ),
   badgesColor = "warning",
   badgesText1 = statusBanner[text1].text,
+  dealExpiryDate,
 }) => {
+  const calculateDaysLeft = (expiryDate) => {
+    const now = new Date();
+    const timeDifference = expiryDate - now;
+    const daysLeft = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    return daysLeft;
+  };
+
+  const daysLeft = calculateDaysLeft(dealExpiryDate);
+  const statusCaption = {
+    out_of_stock: `ends in ${daysLeft} days`,
+    finished: "Deal finished",
+  };
   return (
     <div
       className={`flex flex-col w-[290px] items-start relative rounded-lg overflow-hidden shadow-shadow-1 ${className}`}
@@ -69,7 +82,7 @@ export const CardDeal = ({
               <div
                 className={`relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)] ${divClassName}`}
               >
-                {text1}
+                {statusCaption[text1]}
               </div>
             </div>
           )}

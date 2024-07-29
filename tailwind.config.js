@@ -135,6 +135,20 @@ export default {
         "shadow-5": "var(--shadow-5)",
         "shadow-6": "var(--shadow-6)",
       },
+      keyframes: {
+        scrollLeft: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        scrollRight: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        scrollLeft: "scrollLeft 20s linear infinite",
+        scrollRight: "scrollRight 20s linear infinite",
+      },
     },
   },
   plugins: [],

@@ -22,7 +22,7 @@ const ImageCarousel = ({ images }) => {
 
   useEffect(() => {
     if (isPlaying) {
-      const interval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+      const interval = setInterval(nextSlide, 1000); // Change slide every 3 seconds
       return () => clearInterval(interval);
     }
   }, [isPlaying, currentIndex]);

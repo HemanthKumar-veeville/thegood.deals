@@ -30,6 +30,7 @@ import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 import ScrollIntoView from "react-scroll-into-view";
 import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
+import ImageRotator from "../../components/ImageRotator/ImageRotator";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -38,7 +39,8 @@ export const Home = () => {
   return (
     <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">
       <AppBar />
-      <ImageCarousel images={IMAGES} />
+      <ImageRotator images={IMAGES} direction="left" />
+      <ImageRotator images={IMAGES} direction="right" />
       <div className="w-screen items-center gap-[30px] pt-4 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
           id="how"

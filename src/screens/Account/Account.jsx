@@ -62,6 +62,7 @@ export const Account = () => {
       initialQuantity: 100,
       availableQuantity: 10,
       region: "FR",
+      dealExpiryDate: new Date("2024-08-05"),
     },
     {
       deal_id: "0x002",
@@ -186,6 +187,7 @@ export const Account = () => {
                   text={deal.dealTitle}
                   text1={deal.dealStatus}
                   participantsCount={deal.participantsCount}
+                  dealExpiryDate={deal?.dealExpiryDate}
                 />
               </div>
             ))}
