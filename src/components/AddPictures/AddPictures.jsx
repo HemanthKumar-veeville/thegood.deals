@@ -17,7 +17,14 @@ const AddPictures = ({ onChange }) => {
     }
 
     const newPictures = files.map((file) => URL.createObjectURL(file));
-    setPictures((prevPictures) => [...prevPictures, ...newPictures]);
+    setPictures((prevPictures) => {
+      const updatedPictures = [...prevPictures, ...newPictures];
+      // Set the first image as starred by default
+      if (updatedPictures.length === newPictures.length) {
+        setStarredIndex(0);
+      }
+      return updatedPictures;
+    });
   };
 
   const handleDelete = (index, event) => {
@@ -38,7 +45,14 @@ const AddPictures = ({ onChange }) => {
   const toggleStar = (index, event) => {
     event.preventDefault();
     event.stopPropagation();
-    setStarredIndex(starredIndex === index ? null : index); // Toggle star status
+    setPictures((prevPictures) => {
+      const updatedPictures = [...prevPictures];
+      const starredPicture = updatedPictures.splice(index, 1)[0];
+      updatedPictures.unshift(starredPicture);
+      return updatedPictures;
+    });
+    setStarredIndex(0); // Set the starred index to the first position
+    setCurrentIndex(0); // Set the current index to the first position
   };
 
   const prevSlide = (event) => {
