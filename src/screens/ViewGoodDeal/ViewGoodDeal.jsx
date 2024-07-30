@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Badges } from "../../components/Badges";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
@@ -24,6 +24,10 @@ import {
 import AppBar from "../../components/AppBar/AppBar";
 
 export const ViewGoodDeal = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto">
       <AppBar />

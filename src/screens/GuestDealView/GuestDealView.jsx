@@ -27,24 +27,16 @@ import { Badges } from "../../components/Badges";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 
-export const ActiveDeal = () => {
+export const GuestDealView = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleBack = () => {
-    navigate("/account");
+    navigate("/account", { state: { activeTab: "guests" } });
   };
 
   const handleMyOrders = () => {
     navigate("/admin-orders");
-  };
-
-  const handleManageLovedOnes = () => {
-    navigate("/admin-invitations");
-  };
-
-  const handleEditDeal = () => {
-    alert("Editing the deal!");
   };
 
   const statusBanner = {
@@ -128,6 +120,11 @@ export const ActiveDeal = () => {
               Domaine de Cigalus 11200 Bizanet
             </p>
           </div>
+          <img
+            className="relative self-stretch w-full h-[2px] object-cover"
+            alt="Line"
+            src={Line69}
+          />
           <div
             className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
             onClick={handleMyOrders}
@@ -137,177 +134,33 @@ export const ActiveDeal = () => {
               My orders
             </button>
           </div>
-          <div
-            className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
-            onClick={handleManageLovedOnes}
-          >
-            <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
-            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Managing my loved ones
-            </button>
-          </div>
-          <div
-            className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
-            onClick={handleEditDeal}
-          >
-            <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
-            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Edit the deal
-            </button>
-          </div>
+          <Badges
+            className="!left-[15px] !absolute !top-[155px]"
+            color={statusBanner[location?.state?.deal?.dealStatus]?.color}
+            divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+            round="semi-round"
+            state="duo-tone"
+            text1={statusBanner[location?.state?.deal?.dealStatus]?.text}
+            text2={
+              location?.state?.deal?.dealStatus === "in_stock" ||
+              location?.state?.deal?.dealStatus === "finished"
+                ? statusBanner[location?.state?.deal?.dealStatus]?.text
+                : location?.state?.deal?.dealStatus
+            }
+          />
+          <Badges
+            className="!left-60 !absolute !bg-blueblue-light-5 !top-[155px]"
+            color="warning"
+            divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+            round="semi-round"
+            state="duo-tone"
+            imageSrc={FranceFlag}
+          />
         </div>
         <img
-          className="relative self-stretch w-full h-px object-cover"
+          className="relative self-stretch w-full h-[2px] object-cover"
           alt="Line"
           src={Line69}
-        />
-        <Badges
-          className="!left-[45px] !absolute !top-[170px]"
-          color={statusBanner[location?.state?.deal?.dealStatus]?.color}
-          divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          text1={statusBanner[location?.state?.deal?.dealStatus]?.text}
-          text2={
-            location?.state?.deal?.dealStatus === "in_stock" ||
-            location?.state?.deal?.dealStatus === "finished"
-              ? statusBanner[location?.state?.deal?.dealStatus]?.text
-              : location?.state?.deal?.dealStatus
-          }
-        />
-        <Badges
-          className="!left-[280px] !absolute !bg-blueblue-light-5 !top-[170px]"
-          color="warning"
-          divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          imageSrc={FranceFlag}
-        />
-        <div className="flex flex-col items-start gap-6 p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
-          <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto]">
-            <div className="inline-flex items-center gap-3.5 relative flex-[0_0_auto]">
-              <div className="relative w-[50px] h-[50px]">
-                <div className="relative h-[50px] rounded-[3px]">
-                  <div className="absolute w-[50px] h-[50px] top-0 left-0 bg-secondary-color rounded-[3px] opacity-[0.08]" />
-                  <Box43
-                    className="!absolute !w-[26px] !h-[26px] !top-3 !left-3"
-                    color="#13C296"
-                  />
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap">
-                  My orders
-                </div>
-                <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                  Your loved ones order
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] font-bold text-darkdark text-2xl leading-[30px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap">
-                20
-              </div>
-              <div className="relative w-[124px] h-[22px]">
-                <div className="inline-flex items-center gap-1 relative">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-greengreen text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    out of 20 available
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-[230px] h-px mb-[-1.00px]">
-            <div
-              className={`bg-[url(${Line_570_1})] relative h-[7px] top-[-7px] bg-[100%_100%]`}
-            >
-              <img
-                className="w-[9px] h-[7px] absolute top-0 left-0"
-                alt="Line"
-                src={Line571}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col items-start gap-6 p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
-          <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto]">
-            <div className="inline-flex items-center gap-3.5 relative flex-[0_0_auto]">
-              <div className="relative w-[50px] h-[50px]">
-                <div className="relative h-[50px] rounded-[3px]">
-                  <div className="bg-purplepurple absolute w-[50px] h-[50px] top-0 left-0 rounded-[3px] opacity-[0.08]" />
-                  <Coins
-                    className="!absolute !w-[26px] !h-[26px] !top-3 !left-3"
-                    color="#8646F4"
-                  />
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap">
-                  My wallet
-                </div>
-                <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                  Deal amount collected
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
-                €0
-              </div>
-              <div className="w-[67px] relative h-[22px]">
-                <div className="inline-flex items-center gap-1 relative">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-purplepurple text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    on €1,050
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-[230px] h-px mb-[-1.00px]">
-            <div
-              className={`bg-[url(${Line_570_1})] relative h-[7px] top-[-7px] bg-[100%_100%]`}
-            >
-              <img
-                className="w-[9px] h-[7px] absolute top-0 left-0"
-                alt="Line"
-                src={Line_571_1}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col items-start gap-6 p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
-          <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto] mr-[-11.00px]">
-            <div className="inline-flex items-center gap-3.5 relative flex-[0_0_auto]">
-              <div className="relative w-[50px] h-[50px]">
-                <div className="relative h-[50px] rounded-[3px]">
-                  <div className="bg-cyancyan absolute w-[50px] h-[50px] top-0 left-0 rounded-[3px] opacity-[0.08]" />
-                  <Users22
-                    className="!absolute !w-[26px] !h-[26px] !top-3 !left-3"
-                    color="#01A9DB"
-                  />
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap">
-                  My relatives
-                </div>
-                <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                  Guests on the deal
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
-                0 participants
-              </div>
-              <div className="w-[91px] relative h-[22px]" />
-            </div>
-          </div>
-        </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
         />
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto] mr-[-24.00px]">
@@ -331,7 +184,7 @@ export const ActiveDeal = () => {
               </div>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Invite your loved ones
+              Current orders
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -343,7 +196,7 @@ export const ActiveDeal = () => {
               </div>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Current orders
+              Goal achieved ! . 🎉
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -356,7 +209,7 @@ export const ActiveDeal = () => {
             </div>
             <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Receipt of order
+                Order preparation
               </div>
             </div>
           </div>
@@ -368,10 +221,25 @@ export const ActiveDeal = () => {
                 </div>
               </div>
             </div>
-            <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
-              Organize the collection
-              <br /> with your loved ones
-            </p>
+            <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
+              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+                Shipping
+              </div>
+            </div>
+          </div>
+          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
+            <div className="relative w-[52px] h-[50px]">
+              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
+                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
+                  6
+                </div>
+              </div>
+            </div>
+            <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
+              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+                Delivery and Closing of the deal
+              </div>
+            </div>
           </div>
         </div>
         <img

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowRight } from "../../icons/ArrowRight";
 import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { Envelope } from "../../icons/Envelope";
@@ -23,6 +23,10 @@ export const InformToCraftsMan = () => {
   const handleFinishLater = () => {
     navigate("/admin-draft-deal");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto ">

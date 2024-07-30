@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowLeft2 } from "../../icons/ArrowLeft2";
 import { Box4 } from "../../icons/Box4";
 import { FileExport2 } from "../../icons/FileExport2";
@@ -21,6 +21,10 @@ export const Wallet = () => {
     // Logic for navigating back to home
     navigate("/account");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto">

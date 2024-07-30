@@ -58,6 +58,10 @@ export const VerificationOTP = () => {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleChange = (value, index) => {
     if (/^[0-9]$/.test(value) || value === "") {
       const newOtp = [...otp];

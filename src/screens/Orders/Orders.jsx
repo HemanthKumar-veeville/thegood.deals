@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SizeXlCorner } from "../../components/SizeXlCorner";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { Box44 } from "../../icons/Box44";
@@ -28,6 +28,10 @@ export const Orders = () => {
   const handleBackToDeal = () => {
     navigate("/admin-active-deal");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col w-screen h-[640px] items-start relative bg-primary-background mx-auto">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { UserAlt } from "../../icons/UserAlt";
 import { VerticalLine } from "../../icons/VerticalLine";
@@ -12,6 +12,10 @@ export const ThanksToAdmin = () => {
   const handleBack = () => {
     navigate("/account");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto">

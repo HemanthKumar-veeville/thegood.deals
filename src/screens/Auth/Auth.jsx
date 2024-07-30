@@ -15,6 +15,10 @@ const Auth = () => {
   const [isLoginTab, setIsLoginTab] = useState(true);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const switchToLogin = () => {
     setIsLoginTab(true);
     navigate("/auth?login");

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Box43 } from "../../icons/Box43";
@@ -19,15 +19,31 @@ import {
   Line69,
   Line_570_1,
   Line_571_1,
+  FranceFlag,
 } from "../../images";
 import { DraftBanner } from "../../components/Banners/DraftBanner";
 import AppBar from "../../components/AppBar/AppBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Badges } from "../../components/Badges";
 
 export const DraftDeal = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const handleBack = () => {
     navigate("/account");
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const statusBanner = {
+    out_of_stock: { text: "Soon to be out of stock", color: "warning" },
+    finished: { text: "Finished", color: "success" },
+    in_stock: { text: "In stock", color: "success" },
+    waiting: { text: "Waiting for the craftsman", color: "warning" },
+    draft: { text: "Draft", color: "info" },
   };
 
   return (
@@ -65,6 +81,28 @@ export const DraftDeal = () => {
             </button>
           </div>
         </div>
+        <Badges
+          className="!left-[45px] !absolute !top-[170px]"
+          color={statusBanner[location?.state?.deal?.dealStatus].color}
+          divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+          round="semi-round"
+          state="duo-tone"
+          text1={statusBanner[location?.state?.deal?.dealStatus].text}
+          text2={
+            location?.state?.deal?.dealStatus === "in_stock" ||
+            location?.state?.deal?.dealStatus === "finished"
+              ? statusBanner[location?.state?.deal?.dealStatus].text
+              : location?.state?.deal?.dealStatus
+          }
+        />
+        <Badges
+          className="!left-[280px] !absolute !bg-blueblue-light-5 !top-[170px]"
+          color="warning"
+          divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+          round="semi-round"
+          state="duo-tone"
+          imageSrc={FranceFlag}
+        />
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"

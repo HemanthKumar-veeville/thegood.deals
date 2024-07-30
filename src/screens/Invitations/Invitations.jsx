@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SizeXlCorner } from "../../components/SizeXlCorner";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { Box43 } from "../../icons/Box43";
@@ -17,6 +17,10 @@ export const Invitations = () => {
     { name: "Karthik Ramesh", accepted: false, refused: false },
   ]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleAccept = (name) => {
     setRequests((prevRequests) =>

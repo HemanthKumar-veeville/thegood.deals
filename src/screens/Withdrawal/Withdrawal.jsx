@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowRight1 } from "../../icons/ArrowRight1";
 import { UserAlt2 } from "../../icons/UserAlt2";
 import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
@@ -20,6 +20,10 @@ export const Withdrawal = () => {
     // Logic for going back
     navigate("/admin-wallet");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto">

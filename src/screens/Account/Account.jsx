@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ButtonGroup } from "../../components/ButtonGroup";
 import { CardDeal } from "../../components/CardDeal";
 import { StyleTypePrimaryWrapper } from "../../components/StyleTypePrimaryWrapper";
@@ -12,7 +12,7 @@ import { Users3 } from "../../icons/Users3";
 import { ChatAlt6 } from "../../icons/ChatAlt6";
 import { Line63, Line_60_1, Line_59_2 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
@@ -20,12 +20,20 @@ import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 export const Account = () => {
   const [activeTab, setActiveTab] = useState("created");
   const navigate = useNavigate();
+  const location = useLocation();
   const dealsState = useSelector((state) => state.deals);
   const { deals } = dealsState;
 
+  useEffect(() => {
+    location?.state?.activeTab && handleTabSwitch(location?.state?.activeTab);
+  }, []);
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleCreateDeal = () => {
     navigate("/create-deal");
@@ -51,14 +59,48 @@ export const Account = () => {
     navigate("/auth?login");
   };
 
-  const handleCardClick = () => {
-    navigate("/admin-active-deal");
+  const handleCardClick = (deal) => {
+    switch (deal?.dealStatus) {
+      case "draft":
+        navigate("/admin-draft-deal", { state: { deal } });
+        break;
+      case "waiting":
+        navigate("/admin-waiting-deal", { state: { deal } });
+        break;
+      case "in_stock":
+        activeTab !== "created"
+          ? navigate("/guest-deal-view", { state: { deal } })
+          : navigate("/admin-active-deal", { state: { deal } });
+        break;
+      case "out_of_stock":
+        activeTab !== "created"
+          ? navigate("/guest-deal-view", { state: { deal } })
+          : navigate("/admin-active-deal", { state: { deal } });
+        break;
+      case "finished":
+        activeTab !== "created"
+          ? navigate("/guest-deal-view", { state: { deal } })
+          : navigate("/admin-active-deal", { state: { deal } });
+        break;
+      default:
+        navigate("/admin-active-deal", { state: { deal } });
+    }
   };
 
   const DEALS = [
     {
       deal_id: "0x001",
       dealStatus: "out_of_stock",
+      participantsCount: 14,
+      dealTitle: "Miracles of Wine",
+      initialQuantity: 100,
+      availableQuantity: 10,
+      region: "FR",
+      dealExpiryDate: new Date("2024-08-05"),
+    },
+    {
+      deal_id: "0xi001",
+      dealStatus: "in_stock",
       participantsCount: 14,
       dealTitle: "Miracles of Wine",
       initialQuantity: 100,
@@ -99,6 +141,26 @@ export const Account = () => {
     {
       deal_id: "0xg001",
       dealStatus: "in_stock",
+      participantsCount: 14,
+      dealTitle: "Miracles of Wine",
+      initialQuantity: 100,
+      availableQuantity: 10,
+      region: "FR",
+      dealExpiryDate: new Date("2024-08-05"),
+    },
+    {
+      deal_id: "0x001",
+      dealStatus: "out_of_stock",
+      participantsCount: 14,
+      dealTitle: "Miracles of Wine",
+      initialQuantity: 100,
+      availableQuantity: 10,
+      region: "FR",
+      dealExpiryDate: new Date("2024-08-05"),
+    },
+    {
+      deal_id: "0x001",
+      dealStatus: "finished",
       participantsCount: 14,
       dealTitle: "Miracles of Wine",
       initialQuantity: 100,
@@ -179,7 +241,10 @@ export const Account = () => {
         {activeTab === "created" ? (
           <>
             {DEALS?.map((deal) => (
-              <div onClick={handleCardClick} className="cursor-pointer">
+              <div
+                onClick={() => handleCardClick(deal)}
+                className="cursor-pointer"
+              >
                 <CardDeal
                   badgesColor="success"
                   badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
@@ -206,7 +271,10 @@ export const Account = () => {
         ) : (
           <>
             {GuestDeals?.map((deal) => (
-              <div onClick={handleCardClick} className="cursor-pointer">
+              <div
+                onClick={() => handleCardClick(deal)}
+                className="cursor-pointer"
+              >
                 <CardDeal
                   badgesColor="success"
                   badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
@@ -217,7 +285,7 @@ export const Account = () => {
                   divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
                   override={
                     deal.dealStatus === "out_of_stock" ? (
-                      <ProgressBarYellow percentage={80} />
+                      <ProgressBarYellow percentage={98} />
                     ) : (
                       <ProgressBarGreen percentage={90} />
                     )

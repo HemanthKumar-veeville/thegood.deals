@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Box43 } from "../../icons/Box43";
@@ -19,35 +19,47 @@ import {
   Line69,
   Line_570_1,
   Line_571_1,
+  FranceFlag,
 } from "../../images";
 import { WaitingBanner } from "../../components/Banners/WaitingBanner";
+import AppBar from "../../components/AppBar/AppBar";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Badges } from "../../components/Badges";
 
 export const WaitingDeal = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleBack = () => {
+    navigate("/account");
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const statusBanner = {
+    out_of_stock: { text: "Soon to be out of stock", color: "warning" },
+    finished: { text: "Finished", color: "success" },
+    in_stock: { text: "In stock", color: "success" },
+    waiting: { text: "Waiting for the craftsman", color: "warning" },
+    draft: { text: "Draft", color: "info" },
+  };
+
+  const handleEditDeal = () => {
+    alert("Editing the deal!");
+  };
+
   return (
     <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto">
-      <header className="flex flex-col w-screen h-16 items-start relative bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
-        <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
-          <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative">
-            <VerticalLine3 className="!relative !w-6 !h-6" color="#1B4F4A" />
-          </div>
-          <div className="inline-flex items-start relative flex-[0_0_auto]">
-            <div className="inline-flex items-start relative flex-[0_0_auto]">
-              <div className="inline-flex items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Source_Serif_Pro',Helvetica] font-bold text-[#1b4f4a] text-[28px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
-                  thegood.deals
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative">
-            <UserAlt2 className="!relative !w-6 !h-6" color="#1B4F4A" />
-          </div>
-        </div>
-      </header>
+      <AppBar />
       <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
-            <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+            <div
+              className="inline-flex items-center gap-2 relative flex-[0_0_auto] cursor-pointer"
+              onClick={handleBack}
+            >
               <ArrowLeft
                 className="!relative !w-[18px] !h-[18px]"
                 color="#637381"
@@ -72,13 +84,38 @@ export const WaitingDeal = () => {
               Domaine de Cigalus 11200 Bizanet
             </p>
           </div>
-          <div className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color">
+          <div
+            className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
+            onClick={handleEditDeal}
+          >
             <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
               Edit the deal
             </button>
           </div>
         </div>
+        <Badges
+          className="!left-[45px] !absolute !top-[170px]"
+          color={statusBanner[location?.state?.deal?.dealStatus]?.color}
+          divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+          round="semi-round"
+          state="duo-tone"
+          text1={statusBanner[location?.state?.deal?.dealStatus]?.text}
+          text2={
+            location?.state?.deal?.dealStatus === "in_stock" ||
+            location?.state?.deal?.dealStatus === "finished"
+              ? statusBanner[location?.state?.deal?.dealStatus]?.text
+              : location?.state?.deal?.dealStatus
+          }
+        />
+        <Badges
+          className="!left-[280px] !absolute !bg-blueblue-light-5 !top-[170px]"
+          color="warning"
+          divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+          round="semi-round"
+          state="duo-tone"
+          imageSrc={FranceFlag}
+        />
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"

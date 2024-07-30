@@ -21,6 +21,7 @@ import { ViewGoodDeal } from "./screens/ViewGoodDeal/ViewGoodDeal";
 import { ThanksForWithdrawal } from "./screens/ThanksForWithdrawal/ThanksForWithdrawal";
 import { InviteLovedOnes } from "./screens/InviteLovedOnes/InviteLovedOnes";
 import { InvitationSent } from "./screens/InvitationSent/InvitationSent";
+import { GuestDealView } from "./screens/GuestDealView/GuestDealView";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
   {
     path: "/admin-invitations-sent",
     element: <InvitationSent />,
+  },
+  {
+    path: "/guest-deal-view",
+    element: <GuestDealView />,
   },
 ]);
 

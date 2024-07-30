@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChatAlt1 } from "../../icons/ChatAlt1";
 import { CopyAlt } from "../../icons/CopyAlt";
 import { Envelope } from "../../icons/Envelope";
@@ -59,6 +59,10 @@ export const InviteLovedOnes = () => {
     const url = `sms:?body=${encodeURIComponent(shareLink)}`;
     window.open(url, "_blank");
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto">

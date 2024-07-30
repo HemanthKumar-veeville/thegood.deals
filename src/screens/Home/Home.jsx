@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BreakpointDesktopWrapper } from "../../components/BreakpointDesktopWrapper";
 import { Faq } from "../../components/Faq";
 import { Footer } from "../../components/Footer";
@@ -35,6 +35,10 @@ import ImageRotator from "../../components/ImageRotator/ImageRotator";
 export const Home = () => {
   const navigate = useNavigate();
   const IMAGES = [picture1, picture2, picture3, picture4];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">
