@@ -226,6 +226,7 @@ export const Account = () => {
                   text1={deal.dealStatus}
                   participantsCount={deal.participantsCount}
                   dealExpiryDate={deal?.dealExpiryDate}
+                  isGuestDeal={true}
                 />
               </div>
             ))}
