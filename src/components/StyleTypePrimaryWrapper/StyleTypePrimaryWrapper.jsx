@@ -35,7 +35,7 @@ export const StyleTypePrimaryWrapper = ({
         <div
           className={`absolute top-0 left-[197px] font-body-extra-small-medium font-[number:var(--body-extra-small-medium-font-weight)] text-whitewhite text-[length:var(--body-extra-small-medium-font-size)] tracking-[var(--body-extra-small-medium-letter-spacing)] leading-[var(--body-extra-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-medium-font-style)] ${divClassName}`}
         >
-          90%
+          80%
         </div>
       </div>
     </div>

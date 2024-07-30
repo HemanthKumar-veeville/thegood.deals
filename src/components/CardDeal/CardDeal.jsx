@@ -14,6 +14,7 @@ import {
 const statusBanner = {
   out_of_stock: { text: "Soon to be out of stock", color: "warning" },
   finished: { text: "Finished", color: "success" },
+  in_stock: { text: "In stock", color: "success" },
   waiting: { text: "Waiting for the craftsman", color: "warning" },
   draft: { text: "Draft", color: "info" },
 };
@@ -58,6 +59,7 @@ export const CardDeal = ({
   const statusCaption = {
     out_of_stock: `ends in ${daysLeft} days`,
     finished: "Deal finished",
+    in_stock: `ends in ${daysLeft} days`,
   };
   return (
     <div
@@ -105,7 +107,11 @@ export const CardDeal = ({
         round="semi-round"
         state="duo-tone"
         text1={badgesText}
-        text2={badgesText1}
+        text2={
+          badgesText1 === "in_stock" || badgesText1 === "finished"
+            ? statusBanner[badgesText1].text
+            : badgesText1
+        }
       />
       <Badges
         className="!left-60 !absolute !bg-blueblue-light-5 !top-[15px]"

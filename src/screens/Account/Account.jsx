@@ -14,6 +14,8 @@ import { Line63, Line_60_1, Line_59_2 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
+import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 
 export const Account = () => {
   const [activeTab, setActiveTab] = useState("created");
@@ -93,6 +95,19 @@ export const Account = () => {
     },
   ];
 
+  const GuestDeals = [
+    {
+      deal_id: "0xg001",
+      dealStatus: "in_stock",
+      participantsCount: 14,
+      dealTitle: "Miracles of Wine",
+      initialQuantity: 100,
+      availableQuantity: 10,
+      region: "FR",
+      dealExpiryDate: new Date("2024-08-05"),
+    },
+  ];
+
   return (
     <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto">
       <AppBar />
@@ -168,21 +183,17 @@ export const Account = () => {
                 <CardDeal
                   badgesColor="success"
                   badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-                  badgesText1="Finished"
+                  badgesText1={deal.dealStatus}
                   caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
                   className="!flex-[0_0_auto]"
                   divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
                   divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
                   override={
-                    <StyleTypePrimaryWrapper
-                      className="!self-stretch !w-full !relative"
-                      divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !left-[92px] !leading-5"
-                      groupClassName="!w-[260px]"
-                      line={Line_60_1}
-                      lineClassName="!w-[232px]"
-                      overlapClassName="!w-[260px]"
-                      overlapGroupClassName={`bg-[url(${Line_59_2})]`}
-                    />
+                    deal.dealStatus === "out_of_stock" ? (
+                      <ProgressBarYellow percentage={80} />
+                    ) : (
+                      <ProgressBarGreen percentage={90} />
+                    )
                   }
                   text={deal.dealTitle}
                   text1={deal.dealStatus}
@@ -193,30 +204,32 @@ export const Account = () => {
             ))}
           </>
         ) : (
-          <div onClick={handleCardClick} className="cursor-pointer">
-            <CardDeal
-              badgesColor="success"
-              badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-              badgesText1="Finished"
-              caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
-              className="!flex-[0_0_auto]"
-              divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
-              divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
-              override={
-                <StyleTypePrimaryWrapper
-                  className="!self-stretch !w-full !relative"
-                  divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !left-[92px] !leading-5"
-                  groupClassName="!w-[260px]"
-                  line={Line_60_1}
-                  lineClassName="!w-[232px]"
-                  overlapClassName="!w-[260px]"
-                  overlapGroupClassName={`bg-[url(${Line_59_2})]`}
+          <>
+            {GuestDeals?.map((deal) => (
+              <div onClick={handleCardClick} className="cursor-pointer">
+                <CardDeal
+                  badgesColor="success"
+                  badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+                  badgesText1={deal.dealStatus}
+                  caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
+                  className="!flex-[0_0_auto]"
+                  divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
+                  divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
+                  override={
+                    deal.dealStatus === "out_of_stock" ? (
+                      <ProgressBarYellow percentage={80} />
+                    ) : (
+                      <ProgressBarGreen percentage={90} />
+                    )
+                  }
+                  text={deal.dealTitle}
+                  text1={deal.dealStatus}
+                  participantsCount={deal.participantsCount}
+                  dealExpiryDate={deal?.dealExpiryDate}
                 />
-              }
-              text="Wine cratesDomaine de Cigaluse"
-              text1="Deal finished"
-            />
-          </div>
+              </div>
+            ))}
+          </>
         )}
         <img
           className="relative self-stretch w-full h-px object-cover"
