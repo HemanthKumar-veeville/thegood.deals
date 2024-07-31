@@ -11,8 +11,16 @@ export const Placeholder = () => {
       title: "Select the Language",
       html: `
         <ul class="language-list space-y-2">
-          <li class="language-item py-2 px-4 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200" data-language="English">English</li>
-          <li class="language-item py-2 px-4 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200" data-language="French">French</li>
+          <li class="language-item py-2 px-4 rounded-md cursor-pointer ${
+            selectedLanguage !== "English"
+              ? "bg-blue-100"
+              : "bg-[#2a4e4a] text-whitewhite"
+          } hover:bg-gray-200" data-language="English">English</li>
+          <li class="language-item py-2 px-4 rounded-md cursor-pointer ${
+            selectedLanguage !== "French"
+              ? "bg-blue-100"
+              : "bg-[#2a4e4a] text-whitewhite"
+          } hover:bg-gray-200" data-language="French">French</li>
         </ul>
       `,
       showConfirmButton: false,
@@ -24,11 +32,7 @@ export const Placeholder = () => {
           item.addEventListener("click", () => {
             const language = item.getAttribute("data-language");
             setSelectedLanguage(language);
-            Swal.fire({
-              title: `You selected: ${language}`,
-              icon: "success",
-              confirmButtonText: "OK",
-            });
+            Swal.close();
           });
         });
       },
