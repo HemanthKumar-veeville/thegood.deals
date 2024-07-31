@@ -1,12 +1,12 @@
-import { SignIn } from "./screens/SignIn/SignIn";
-import { SignUp } from "./screens/SignUp/SignUp";
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import PageWrapper from "./PageWrapper";
+import "./App.css";
+
+import { Home } from "./screens/Home/Home";
 import { Auth } from "./screens/Auth/Auth";
 import { VerificationOTP } from "./screens/VerificationOTP/VerificationOTP";
-import { Home } from "./screens/Home/Home";
 import { Account } from "./screens/Account/Account";
-
-import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { CreateDeal } from "./screens/CreateDeal/CreateDeal";
 import { InformToCraftsMan } from "./screens/InformToCraftsMan/InformToCraftsMan";
 import { ThanksToAdmin } from "./screens/ThanksToAdmin/ThanksToAdmin";
@@ -23,85 +23,44 @@ import { InviteLovedOnes } from "./screens/InviteLovedOnes/InviteLovedOnes";
 import { InvitationSent } from "./screens/InvitationSent/InvitationSent";
 import { GuestDealView } from "./screens/GuestDealView/GuestDealView";
 
+const wrapWithPageWrapper = (Component) => (
+  <PageWrapper>
+    <Component />
+  </PageWrapper>
+);
+
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/auth",
-    element: <Auth />,
-  },
-  {
-    path: "/verify",
-    element: <VerificationOTP />,
-  },
-  {
-    path: "/account",
-    element: <Account />,
-  },
-  {
-    path: "/create-deal",
-    element: <CreateDeal />,
-  },
-  {
-    path: "/inform-deal",
-    element: <InformToCraftsMan />,
-  },
-  {
-    path: "/thanks-admin",
-    element: <ThanksToAdmin />,
-  },
-  {
-    path: "/admin-active-deal",
-    element: <ActiveDeal />,
-  },
-  {
-    path: "/admin-waiting-deal",
-    element: <WaitingDeal />,
-  },
-  {
-    path: "/admin-draft-deal",
-    element: <DraftDeal />,
-  },
-  {
-    path: "/admin-wallet",
-    element: <Wallet />,
-  },
-  {
-    path: "/admin-withdrawal",
-    element: <Withdrawal />,
-  },
+  { path: "/", element: wrapWithPageWrapper(Home) },
+  { path: "/auth", element: wrapWithPageWrapper(Auth) },
+  { path: "/verify", element: wrapWithPageWrapper(VerificationOTP) },
+  { path: "/account", element: wrapWithPageWrapper(Account) },
+  { path: "/create-deal", element: wrapWithPageWrapper(CreateDeal) },
+  { path: "/inform-deal", element: wrapWithPageWrapper(InformToCraftsMan) },
+  { path: "/thanks-admin", element: wrapWithPageWrapper(ThanksToAdmin) },
+  { path: "/admin-active-deal", element: wrapWithPageWrapper(ActiveDeal) },
+  { path: "/admin-waiting-deal", element: wrapWithPageWrapper(WaitingDeal) },
+  { path: "/admin-draft-deal", element: wrapWithPageWrapper(DraftDeal) },
+  { path: "/admin-wallet", element: wrapWithPageWrapper(Wallet) },
+  { path: "/admin-withdrawal", element: wrapWithPageWrapper(Withdrawal) },
   {
     path: "/thanks-withdrawal",
-    element: <ThanksForWithdrawal />,
+    element: wrapWithPageWrapper(ThanksForWithdrawal),
   },
-  {
-    path: "/admin-invitations",
-    element: <Invitations />,
-  },
-  {
-    path: "/admin-orders",
-    element: <Orders />,
-  },
-  {
-    path: "/admin-view-deal",
-    element: <ViewGoodDeal />,
-  },
-  {
-    path: "/invite-loved-ones",
-    element: <InviteLovedOnes />,
-  },
+  { path: "/admin-invitations", element: wrapWithPageWrapper(Invitations) },
+  { path: "/admin-orders", element: wrapWithPageWrapper(Orders) },
+  { path: "/admin-view-deal", element: wrapWithPageWrapper(ViewGoodDeal) },
+  { path: "/invite-loved-ones", element: wrapWithPageWrapper(InviteLovedOnes) },
   {
     path: "/admin-invitations-sent",
-    element: <InvitationSent />,
+    element: wrapWithPageWrapper(InvitationSent),
   },
-  {
-    path: "/guest-deal-view",
-    element: <GuestDealView />,
-  },
+  { path: "/guest-deal-view", element: wrapWithPageWrapper(GuestDealView) },
 ]);
 
-export default function App() {
-  return <RouterProvider router={router} />;
+function App() {
+  return (
+    <RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
+  );
 }
+
+export default App;

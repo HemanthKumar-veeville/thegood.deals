@@ -25,7 +25,8 @@ export const Account = () => {
   const { deals } = dealsState;
 
   useEffect(() => {
-    location?.state?.activeTab && handleTabSwitch(location?.state?.activeTab);
+    location?.state?.activeTab &&
+      handleTabSwitch(location?.state?.activeTab || "created");
   }, []);
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);

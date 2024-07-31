@@ -1,3 +1,12 @@
+/* App.css */
 .App {
-    background-color: #2A4E4A;
-}
+    background-color: #2a4e4a;
+  }
+  
+  .page {
+    padding: 20px;
+    background: white;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }

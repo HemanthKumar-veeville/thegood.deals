@@ -83,15 +83,15 @@ export const DraftDeal = () => {
         </div>
         <Badges
           className="!left-[45px] !absolute !top-[170px]"
-          color={statusBanner[location?.state?.deal?.dealStatus].color}
+          color={statusBanner[location?.state?.deal?.dealStatus]?.color}
           divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
           round="semi-round"
           state="duo-tone"
-          text1={statusBanner[location?.state?.deal?.dealStatus].text}
+          text1={statusBanner[location?.state?.deal?.dealStatus]?.text}
           text2={
             location?.state?.deal?.dealStatus === "in_stock" ||
             location?.state?.deal?.dealStatus === "finished"
-              ? statusBanner[location?.state?.deal?.dealStatus].text
+              ? statusBanner[location?.state?.deal?.dealStatus]?.text
               : location?.state?.deal?.dealStatus
           }
         />
