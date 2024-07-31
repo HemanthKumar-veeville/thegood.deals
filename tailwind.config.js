@@ -144,10 +144,15 @@ export default {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(0)" },
         },
+        "click-effect": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(0.9)" },
+        },
       },
       animation: {
         scrollLeft: "scrollLeft 20s linear infinite",
         scrollRight: "scrollRight 20s linear infinite",
+        "click-effect": "click-effect 0.2s ease-in-out",
       },
     },
   },

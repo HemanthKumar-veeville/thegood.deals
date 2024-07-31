@@ -23,6 +23,7 @@ import { InviteLovedOnes } from "./screens/InviteLovedOnes/InviteLovedOnes";
 import { InvitationSent } from "./screens/InvitationSent/InvitationSent";
 import { GuestDealView } from "./screens/GuestDealView/GuestDealView";
 import AboutUs from "./screens/AboutUs/AboutUs";
+import { SideBar } from "./screens/SideBar/SideBar";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
   },
   { path: "/guest-deal-view", element: wrapWithPageWrapper(GuestDealView) },
   { path: "/about-us", element: wrapWithPageWrapper(AboutUs) },
+  { path: "/side-bar", element: wrapWithPageWrapper(SideBar) },
 ]);
 
 function App() {

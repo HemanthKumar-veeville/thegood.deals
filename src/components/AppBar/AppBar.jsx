@@ -5,11 +5,16 @@ import { useNavigate } from "react-router-dom";
 
 function AppBar() {
   const navigate = useNavigate();
-
+  const handleOpen = () => {
+    navigate("/side-bar");
+  };
   return (
     <header className="flex flex-col w-screen h-16 items-start relative bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
       <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
-        <div className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer">
+        <div
+          className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
+          onClick={handleOpen}
+        >
           <VerticalLine3 className="!relative !w-6 !h-6" />
         </div>
         <div className="inline-flex items-start relative flex-[0_0_auto]">

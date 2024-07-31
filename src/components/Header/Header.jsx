@@ -17,17 +17,33 @@ export const Header = ({
   buttonStylePrimarySmallClassName,
   buttonDivClassName,
   buttonText1 = "Gérer mes good deals",
+  type,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const handleNavigate = (event) => {
+    const button = event.currentTarget;
 
+    // Add the click effect class
+    button.classList.add("animate-click-effect");
+
+    // Remove the class after the animation completes
+    button.addEventListener(
+      "animationend",
+      () => {
+        button.classList.remove("animate-click-effect");
+        navigate("/auth?login");
+      },
+      { once: true }
+    );
+  };
   return (
     <div
-      className={`flex flex-col items-start overflow-hidden rounded-[30px] bg-orange relative ${
-        breakpoint === "mobile" ? "w-[375px]" : "w-[1312px]"
-      } ${breakpoint === "mobile" ? "gap-12" : "gap-20"} ${
-        breakpoint === "mobile" ? "px-5 py-16" : "px-16 py-28"
-      } ${className}`}
+      className={`flex flex-col items-start overflow-hidden rounded-[30px] ${
+        type === "orange" ? "bg-orange" : "bg-[#2a4e4a]"
+      } relative ${breakpoint === "mobile" ? "w-[375px]" : "w-[1312px]"} ${
+        breakpoint === "mobile" ? "gap-12" : "gap-20"
+      } ${breakpoint === "mobile" ? "px-5 py-16" : "px-16 py-28"} ${className}`}
     >
       <div
         className={`w-full flex self-stretch items-start flex-[0_0_auto] relative ${
@@ -104,6 +120,16 @@ export const Header = ({
                 </span>
               </button>
             </div>
+          )}
+          {type === "green" && (
+            <button
+              className="all-[unset] box-border inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] mt-[-2.00px] bg-whitewhite text-[#2a4e4a] rounded-[100px] border border-solid border-green cursor-pointer w-full"
+              onClick={handleNavigate}
+            >
+              <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-[#2a4e4a] text-base tracking-[0] leading-6 whitespace-nowrap ">
+                Create a good deal!
+              </button>
+            </button>
           )}
         </div>
       </div>

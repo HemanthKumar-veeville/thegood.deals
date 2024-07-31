@@ -40,7 +40,7 @@ function AboutUs() {
   const text5 = "Soutien et valorisation<br/>des artisans locaux";
   const text6 =
     "En privilégiant les produits issus de l&#39;artisanat local, vous contribuez au maintien et à la valorisation des savoir-faire uniques de nos régions.";
-  const buttonText = "Comment ça fonctionne ?";
+  const buttonText = "How it works ?";
   const buttonText1 = "À propos de nous";
   const buttonIcon = <IconChevronRight2 className="!relative !w-6 !h-6" />;
   const placeholderImage = placeHolderImage14;
@@ -59,6 +59,24 @@ function AboutUs() {
       heading: "Local support",
       definition:
         "You participate in promoting and maintaining the unique know-how of our regions. Each purchase is a gesture of support for our artisans.",
+    },
+  ];
+
+  const reason = [
+    {
+      heading: "Unique products",
+      definition:
+        "Each artisan is selected for the quality and authenticity of their products. You will discover flavors and creations that you will not find anywhere else.",
+    },
+    {
+      heading: "Advantageous prices",
+      definition:
+        "Thanks to bulk orders, you benefit from preferential rates. The more the merrier!",
+    },
+    {
+      heading: "An enriching experience",
+      definition:
+        "Ordering on The Good Deals is much more than a simple purchase. This is an opportunity to share precious moments with your loved ones while supporting a local and sustainable economy.",
     },
   ];
   return (
@@ -184,6 +202,7 @@ function AboutUs() {
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
           text="Our mission"
           text1="Allow you to benefit from the best artisans in our regions and allow you to share their treasures with your loved ones. By joining forces, we make exceptional products accessible to all, while supporting local talent."
+          type="orange"
         />
       </div>
       <div
@@ -218,16 +237,6 @@ function AboutUs() {
                       </p>
                     </div>
                   ))}
-                  <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-                    <p
-                      className={`text-[length:var(--heading-h6-font-size)] leading-[var(--heading-h6-line-height)] relative self-stretch mt-[-1.00px] font-heading-h6 font-[number:var(--heading-h6-font-weight)] text-green tracking-[var(--heading-h6-letter-spacing)] [font-style:var(--heading-h6-font-style)] ${divClassName}`}
-                    >
-                      {text5}
-                    </p>
-                    <p className="text-base leading-6 relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green tracking-[0]">
-                      {text6}
-                    </p>
-                  </div>
                 </div>
               </div>
               <div className="inline-flex flex-col items-start justify-center gap-6 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
@@ -239,15 +248,6 @@ function AboutUs() {
                   style="secondary"
                   text={buttonText}
                 />
-                <Button
-                  className="!flex-[0_0_auto]"
-                  darkMode={false}
-                  icon={buttonIcon}
-                  iconPosition="trailing"
-                  small={false}
-                  style="link"
-                  text={buttonText1}
-                />
               </div>
             </div>
             <div className="w-full">
@@ -257,8 +257,48 @@ function AboutUs() {
                 src={placeholderImage}
               />
             </div>
+            <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
+              <div className="gap-5 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
+                <p
+                  className={`text-[length:var(--heading-h2-mobile-font-size)] leading-[var(--heading-h2-mobile-line-height)] relative self-stretch mt-[-1.00px] font-heading-h2-mobile font-[number:var(--heading-h2-mobile-font-weight)] text-green tracking-[var(--heading-h2-mobile-letter-spacing)] [font-style:var(--heading-h2-mobile-font-style)] ${headingClassName}`}
+                >
+                  Why choose us ?
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col items-start gap-6 px-0 py-2 relative self-stretch w-full flex-[0_0_auto]">
+              {reason?.map((value) => (
+                <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
+                  <div
+                    className={`text-[length:var(--heading-h6-font-size)] leading-[var(--heading-h6-line-height)] relative self-stretch mt-[-1.00px] font-heading-h6 font-[number:var(--heading-h6-font-weight)] text-green tracking-[var(--heading-h6-letter-spacing)] [font-style:var(--heading-h6-font-style)] ${headingClassNameOverride}`}
+                  >
+                    {value?.heading}
+                  </div>
+                  <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-base tracking-[0] leading-6">
+                    {value?.definition}
+                  </p>
+                </div>
+              ))}
+            </div>
           </>
         </div>
+      </div>
+      <div
+        id="about"
+        className="flex items-center gap-2.5 px-5 pt-8 relative self-stretch w-full flex-[0_0_auto]"
+      >
+        <Header
+          breakpoint="mobile"
+          buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
+          buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
+          buttonText="Create a good deal"
+          buttonText1="Manage my good deals"
+          className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
+          crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
+          text="Join us on this great adventure!"
+          text1="Creating an order is as simple as it is user-friendly. In just a few clicks, launch an ad, invite your friends and enjoy the delights of local crafts together."
+          type="green"
+        />
       </div>
       <Footer
         breakpoint="mobile"
