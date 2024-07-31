@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Button } from "../../components/Button/Button";
 import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
 import { useNavigate } from "react-router-dom";
+import { Placeholder } from "../../components/Dropdown/Dropdown";
 
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +16,7 @@ export const SignUp = () => {
       lastName: "",
       phone: "",
       email: "",
+      language: "",
       password: "",
       confirmPassword: "",
       address: "",
@@ -30,6 +32,7 @@ export const SignUp = () => {
       lastName: Yup.string().required("Required"),
       phone: Yup.string().required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
+      language: Yup.string().required("Required"),
       password: Yup.string().required("Required"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -164,6 +167,7 @@ export const SignUp = () => {
             ) : null} */}
           </div>
         </div>
+        <Placeholder />
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
           Your password
         </div>

@@ -5,3 +5,9 @@
 #root {
     background-color: #2A4E4A;
 } */
+
+select.custom-select option:checked {
+    background-color: #2a4e4a !important;
+    color: white !important;
+  }
+  
