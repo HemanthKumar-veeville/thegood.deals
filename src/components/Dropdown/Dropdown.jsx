@@ -1,37 +1,37 @@
 import React, { useState } from "react";
 import { ChevronDown1 } from "../../icons/ChevronDown1";
 import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 export const Placeholder = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState("Language");
+
   const handleButtonClick = () => {
     Swal.fire({
-      title: "Select Language",
-      input: "select",
-      inputOptions: {
-        English: "English",
-        French: "French",
-        Spanish: "Spanish",
-        German: "German",
-      },
-      inputPlaceholder: "Select a language",
+      title: "Select the Language",
+      html: `
+        <ul class="language-list space-y-2">
+          <li class="language-item py-2 px-4 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200" data-language="English">English</li>
+          <li class="language-item py-2 px-4 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200" data-language="French">French</li>
+        </ul>
+      `,
+      showConfirmButton: false,
       showCancelButton: true,
-      inputValidator: (value) => {
-        return new Promise((resolve) => {
-          if (value) {
-            resolve();
-          } else {
-            resolve("You need to select a language");
-          }
+      didOpen: () => {
+        const languageItems =
+          Swal.getPopup().querySelectorAll(".language-item");
+        languageItems.forEach((item) => {
+          item.addEventListener("click", () => {
+            const language = item.getAttribute("data-language");
+            setSelectedLanguage(language);
+            Swal.fire({
+              title: `You selected: ${language}`,
+              icon: "success",
+              confirmButtonText: "OK",
+            });
+          });
         });
       },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: `You selected: ${result.value}`,
-          icon: "success",
-          confirmButtonText: "OK",
-        });
-      }
     });
   };
 
@@ -42,8 +42,8 @@ export const Placeholder = () => {
         onClick={handleButtonClick}
       >
         <div className="flex items-center justify-between w-full">
-          <div className="text-gray-800 font-medium text-base whitespace-nowrap">
-            Language
+          <div className="text-[#637381] font-medium text-base whitespace-nowrap">
+            {selectedLanguage}
           </div>
           <ChevronDown1 className="w-4 h-4" />
         </div>
