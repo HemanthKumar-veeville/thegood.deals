@@ -22,6 +22,7 @@ import { ThanksForWithdrawal } from "./screens/ThanksForWithdrawal/ThanksForWith
 import { InviteLovedOnes } from "./screens/InviteLovedOnes/InviteLovedOnes";
 import { InvitationSent } from "./screens/InvitationSent/InvitationSent";
 import { GuestDealView } from "./screens/GuestDealView/GuestDealView";
+import AboutUs from "./screens/AboutUs/AboutUs";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
     element: wrapWithPageWrapper(InvitationSent),
   },
   { path: "/guest-deal-view", element: wrapWithPageWrapper(GuestDealView) },
+  { path: "/about-us", element: wrapWithPageWrapper(AboutUs) },
 ]);
 
 function App() {
