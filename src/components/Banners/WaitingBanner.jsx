@@ -16,7 +16,7 @@ export const WaitingBanner = () => {
         />
       }
       style="three"
-      text="Waiting for confirmation of the deal from the craftsman"
+      text="Waiting for confirmation of the deal from the artisian"
     />
   );
 };

@@ -16,7 +16,7 @@ const statusBanner = {
   out_of_stock: { text: "Soon to be out of stock", color: "warning" },
   finished: { text: "Finished", color: "success" },
   in_stock: { text: "In stock", color: "success" },
-  waiting: { text: "Waiting for the craftsman", color: "warning" },
+  waiting: { text: "Waiting for the artisian", color: "warning" },
   draft: { text: "Draft", color: "info" },
 };
 

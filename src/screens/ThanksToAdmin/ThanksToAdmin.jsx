@@ -25,7 +25,7 @@ export const ThanksToAdmin = () => {
           THANKS ! . 🎉
         </div>
         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          Once the deal is confirmed by the craftsman,
+          Once the deal is confirmed by the artisian,
           <br />
           we will notify you by email.
         </p>

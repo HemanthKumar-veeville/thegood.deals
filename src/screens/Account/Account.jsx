@@ -235,7 +235,7 @@ export const Account = () => {
                 />
               }
               state={activeTab === "guests" ? "active" : "default"}
-              text="Guests"
+              text="Invited"
             />
           </div>
         </div>

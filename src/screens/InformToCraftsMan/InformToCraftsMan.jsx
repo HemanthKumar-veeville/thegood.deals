@@ -33,10 +33,10 @@ export const InformToCraftsMan = () => {
       <AppBar />
       <div className="flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
         <p className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          Confirm the good deal with the craftsman
+          Confirm the good deal with the artisian
         </p>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          We will send an email to the craftsman to confirm the deal with him.
+          We will send an email to the artisian to confirm the deal with him.
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -44,7 +44,7 @@ export const InformToCraftsMan = () => {
           src={Line63}
         />
         <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-          Indicate the email of the craftsman
+          Indicate the email of the artisian
         </p>
         <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
           <Envelope className="!relative !w-4 !h-4" color="#6B7280" />
@@ -61,7 +61,7 @@ export const InformToCraftsMan = () => {
           onClick={handleSubmit}
         >
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Send to craftsman
+            Send to artisian
           </button>
           <ArrowRight className="!relative !w-5 !h-5" color="white" />
         </div>

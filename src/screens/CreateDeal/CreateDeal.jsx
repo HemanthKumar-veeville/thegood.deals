@@ -183,7 +183,7 @@ const CreateDeal = () => {
             divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
             groupClassName="!w-[42px]"
             helperText="off"
-            label="Information from the craftsman/manufacturer"
+            label="Information from the artisian/manufacturer"
             label1="on"
             placeholder="ex. Domaine de Cigalus 11200 Bizanet"
             secondLabel="on"
@@ -197,7 +197,7 @@ const CreateDeal = () => {
           src={Line63}
         />
         <p className="relative w-[230px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px]">
-          Banking information for the craftsman
+          Banking information for the artisian
         </p>
         <div className="w-full">
           <BankingInfo

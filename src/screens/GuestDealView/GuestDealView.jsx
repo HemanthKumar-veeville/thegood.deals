@@ -43,7 +43,7 @@ export const GuestDealView = () => {
     out_of_stock: { text: "Soon to be out of stock", color: "warning" },
     finished: { text: "Finished", color: "success" },
     in_stock: { text: "In stock", color: "success" },
-    waiting: { text: "Waiting for the craftsman", color: "warning" },
+    waiting: { text: "Waiting for the artisian", color: "warning" },
     draft: { text: "Draft", color: "info" },
   };
 
@@ -172,7 +172,7 @@ export const GuestDealView = () => {
               </div>
             </div>
             <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              The craftsman accepted the deal
+              The artisian accepted the deal
             </p>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">

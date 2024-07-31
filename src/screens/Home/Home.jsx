@@ -165,11 +165,11 @@ export const Home = () => {
         imgClassName="!left-[104px]"
         text="Savor the delights of local crafts together, in three simple steps"
         text1="Create your ad"
-        text2="By creating an attractive ad where you define the price, give details of the products offered and introduce the craftsman. All the information your potential buyers need."
+        text2="By creating an attractive ad where you define the price, give details of the products offered and introduce the artisian. All the information your potential buyers need."
         text3="Invite your loved ones"
         text4="Encourage them to explore the offer and place an order, all facilitated by an online platform. This is an opportunity to introduce him to . products"
         text5="Deliver the Marchandise"
-        text6="This includes the preparation of the packages by the craftsman and their delivery to you. Make sure that your loved ones receive the products under the best conditions."
+        text6="This includes the preparation of the packages by the artisian and their delivery to you. Make sure that your loved ones receive the products under the best conditions."
       />
       <div
         id="about"
