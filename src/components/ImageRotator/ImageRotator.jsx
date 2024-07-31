@@ -2,7 +2,7 @@ import React from "react";
 
 const ImageRotator = ({ images, direction = "left" }) => {
   return (
-    <div className="overflow-hidden w-full h-[180px] flex justify-center items-center relative">
+    <div className="overflow-hidden w-full h-[170px] flex justify-center items-center relative">
       <div
         className={`flex ${
           direction === "left" ? "animate-scrollLeft" : "animate-scrollRight"
