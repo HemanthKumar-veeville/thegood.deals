@@ -26,7 +26,7 @@ import {
 import { IconChevronRight2 } from "../../icons/IconChevronRight2";
 import { Button } from "../../components/RoundedButton";
 
-function AboutUs() {
+function ContactUs() {
   const IMAGES = [picture1, picture2, picture3, picture4];
   const headingClassName = "";
   const text1 = "Our values";
@@ -84,10 +84,63 @@ function AboutUs() {
     window.scrollTo(0, 0);
   }, []);
 
+  const FAQS = [
+    {
+      ques: "How does bulk ordering work on your platform?",
+      ans: "Our platform allows you to create ads for artisanal products, invite loved ones to participate, and easily manage orders and deliveries.",
+    },
+    {
+      ques: "Who are the partner artisans?",
+      ans: "We collaborate with passionate local artisans who are rigorously selected for the quality and authenticity of their products.. Each of them has a unique story to tell through their creations.",
+    },
+    {
+      ques: "How do I invite my loved ones to join a group order?",
+      ans: "Once your ad is created, you can invite your friends and family by sharing a link via email or on social media. Our platform makes this process easy in just a few clicks.",
+    },
+    {
+      ques: "How is the price of products calculated?",
+      ans: "The price of the products is set by the artisans and may vary depending on the size of the bulk order. The higher the number of participants, the more advantageous the price per product can be.",
+    },
+    {
+      ques: "How does delivery work?",
+      ans: "The craftsmen prepare and ship the packages directly to the address of your choice. We ensure that delivery goes smoothly so that the products arrive in perfect condition.",
+    },
+    {
+      ques: "What is the delivery delay ?",
+      ans: "The delivery time depends on each craftsman and the location of your address. Generally, you can expect to receive your products within 5-7 business days after the bulk order is placed.",
+    },
+    {
+      ques: "Can I track my order?",
+      ans: "Yes, once your order has been shipped, you will receive a tracking number to follow the delivery progress in real time.",
+    },
+    {
+      ques: "What happens if I have a problem with my order?",
+      ans: "If you have a problem with your order, our customer service team is on hand to help you resolve it quickly. Contact us via our contact form or by phone.",
+    },
+    {
+      ques: "Is there a minimum amount for bulk orders?",
+      ans: "Minimum amount for bulk orders may vary depending on products and artisans. Details are specified in each ad.",
+    },
+    {
+      ques: "What payment methods do you accept?",
+      ans: "We accept major credit cards (Visa, MasterCard, American Express). All payments are secure.",
+    },
+    {
+      ques: "How can I cancel or modify my order?",
+      ans: "To cancel or change an order, please contact us as soon as possible. If the order has not yet been processed, we will do our best to accommodate your request.",
+    },
+    {
+      ques: "Can I return products?",
+      ans: "Given the handmade nature of our products, returns are generally only accepted in the event of defective or damaged product. Please see our returns policy for full details.",
+    },
+    {
+      ques: "How can I become an artisan partner?",
+      ans: "If you are a tradesman interested in our platform, we would be delighted to speak with you. Contact us via our contact form mentioning your interest in becoming a partner.",
+    },
+  ];
   return (
     <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">
       <AppBar />
-      <ImageRotator images={IMAGES} direction="left" />
       <div className="w-screen items-center gap-[30px] pt-2 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
           id="how"
@@ -164,13 +217,14 @@ function AboutUs() {
         >
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
             <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
-              About The Good Deals
+              FAQs
             </p>
             <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
-              We are delighted to welcome you to our community dedicated to
-              discovering exceptional products at affordable prices.. The Good
-              Deals is above all a human and gourmet adventure, where each group
-              order becomes a celebration of local flavors and know-how.
+              You will find answers to the most common questions regarding our
+              bulk ordering platform for artisanal products.
+            </p>
+            <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
+              <b>Any questions?</b> Contact us, we are here . to help you !
             </p>
           </div>
           <div className="inline-flex flex-col items-center gap-4 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
@@ -179,36 +233,11 @@ function AboutUs() {
               onClick={() => navigate("/auth?login")}
             >
               <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-white text-base tracking-[0] leading-6 whitespace-nowrap">
-                To log in
+                Contact us
               </button>
-            </button>
-            <button
-              className="all-[unset] text-green box-border inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] mb-[-1.00px] ml-[-1.00px] mr-[-1.00px] rounded-[100px] border border-solid border-green hover:bg-[#1b4f4a] hover:text-white cursor-pointer"
-              onClick={() => navigate("/auth?signup")}
-            >
-              <span className="all-[unset] box-border relative w-fit [font-family:'Rethink_Sans',Helvetica] font-normal text-base tracking-[0] leading-6 whitespace-nowrap hover:bg-[#1b4f4a] hover:text-white cursor-pointer">
-                Create an account
-              </span>
             </button>
           </div>
         </div>
-      </div>
-      <div
-        id="about"
-        className="flex items-center gap-2.5 px-5 pt-8 relative self-stretch w-full flex-[0_0_auto]"
-      >
-        <Header
-          breakpoint="mobile"
-          buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
-          buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText="Create a good deal"
-          buttonText1="Manage my good deals"
-          className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
-          crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text="Our mission"
-          text1="Allow you to benefit from the best artisans in our regions and allow you to share their treasures with your loved ones. By joining forces, we make exceptional products accessible to all, while supporting local talent."
-          type="orange"
-        />
       </div>
       <div
         id="contact"
@@ -220,70 +249,21 @@ function AboutUs() {
           <>
             <div className="gap-2 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
               <div className="gap-6 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="gap-5 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
-                    <p
-                      className={`text-[length:var(--heading-h2-mobile-font-size)] leading-[var(--heading-h2-mobile-line-height)] relative self-stretch mt-[-1.00px] font-heading-h2-mobile font-[number:var(--heading-h2-mobile-font-weight)] text-green tracking-[var(--heading-h2-mobile-letter-spacing)] [font-style:var(--heading-h2-mobile-font-style)] ${headingClassName}`}
-                    >
-                      {text1}
-                    </p>
-                  </div>
-                </div>
                 <div className="flex flex-col items-start gap-6 px-0 py-2 relative self-stretch w-full flex-[0_0_auto]">
-                  {values?.map((value) => (
+                  {FAQS?.map((value) => (
                     <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
                       <div
                         className={`text-[length:var(--heading-h6-font-size)] leading-[var(--heading-h6-line-height)] relative self-stretch mt-[-1.00px] font-heading-h6 font-[number:var(--heading-h6-font-weight)] text-green tracking-[var(--heading-h6-letter-spacing)] [font-style:var(--heading-h6-font-style)] ${headingClassNameOverride}`}
                       >
-                        {value?.heading}
+                        {value?.ques}
                       </div>
                       <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-base tracking-[0] leading-6">
-                        {value?.definition}
+                        {value?.ans}
                       </p>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="inline-flex flex-col items-start justify-center gap-6 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
-                <Button
-                  className="!mr-[-1.00px] !mt-[-1.00px] !ml-[-1.00px] !flex-[0_0_auto]"
-                  darkMode={false}
-                  iconPosition="no-icon"
-                  small={false}
-                  style="secondary"
-                  text={buttonText}
-                />
-              </div>
-            </div>
-            <div className="w-full">
-              <img
-                className="relative self-stretch w-full h-[348px] object-fit"
-                alt="Placeholder image"
-                src={placeholderImage}
-              />
-            </div>
-            <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-              <div className="gap-5 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
-                <p
-                  className={`text-[length:var(--heading-h2-mobile-font-size)] leading-[var(--heading-h2-mobile-line-height)] relative self-stretch mt-[-1.00px] font-heading-h2-mobile font-[number:var(--heading-h2-mobile-font-weight)] text-green tracking-[var(--heading-h2-mobile-letter-spacing)] [font-style:var(--heading-h2-mobile-font-style)] ${headingClassName}`}
-                >
-                  Why choose us ?
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col items-start gap-6 px-0 py-2 relative self-stretch w-full flex-[0_0_auto]">
-              {reason?.map((value) => (
-                <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
-                  <div
-                    className={`text-[length:var(--heading-h6-font-size)] leading-[var(--heading-h6-line-height)] relative self-stretch mt-[-1.00px] font-heading-h6 font-[number:var(--heading-h6-font-weight)] text-green tracking-[var(--heading-h6-letter-spacing)] [font-style:var(--heading-h6-font-style)] ${headingClassNameOverride}`}
-                  >
-                    {value?.heading}
-                  </div>
-                  <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-base tracking-[0] leading-6">
-                    {value?.definition}
-                  </p>
-                </div>
-              ))}
             </div>
           </>
         </div>
@@ -300,8 +280,8 @@ function AboutUs() {
           buttonText1="Manage my good deals"
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text="Join us on this great adventure!"
-          text1="Creating an order is as simple as it is user-friendly. In just a few clicks, launch an ad, invite your friends and enjoy the delights of local crafts together."
+          text="Other questions ?"
+          text1="If you have any further questions or need more information, please do not hesitate to contact us. We are here to accompany you on this wonderful adventure of discovery and sharing!"
           type="green"
         />
       </div>
@@ -337,4 +317,4 @@ function AboutUs() {
   );
 }
 
-export default AboutUs;
+export default ContactUs;

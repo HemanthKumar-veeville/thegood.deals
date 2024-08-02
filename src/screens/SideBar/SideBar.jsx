@@ -23,6 +23,10 @@ export const SideBar = () => {
     navigate("/about-us");
   };
 
+  const handleHowItWorks = () => {
+    navigate("/how-it-works");
+  };
+
   return (
     <div className="flex flex-col w-[360px] h-[812px] items-start relative bg-primary-background">
       <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke">
@@ -56,7 +60,10 @@ export const SideBar = () => {
                 About
               </div>
             </div>
-            <div className="flex items-start gap-2 px-0 py-3 relative self-stretch w-full flex-[0_0_auto]">
+            <div
+              className="flex items-start gap-2 px-0 py-3 relative self-stretch w-full flex-[0_0_auto]"
+              onClick={handleHowItWorks}
+            >
               <div className="relative flex-1 mt-[-1.00px] font-text-medium-normal font-[number:var(--text-medium-normal-font-weight)] text-[#2a4e4a] text-[length:var(--text-medium-normal-font-size)] tracking-[var(--text-medium-normal-letter-spacing)] leading-[var(--text-medium-normal-line-height)] [font-style:var(--text-medium-normal-font-style)]">
                 How it works?
               </div>

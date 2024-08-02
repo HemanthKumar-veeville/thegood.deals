@@ -24,6 +24,9 @@ import { InvitationSent } from "./screens/InvitationSent/InvitationSent";
 import { GuestDealView } from "./screens/GuestDealView/GuestDealView";
 import AboutUs from "./screens/AboutUs/AboutUs";
 import { SideBar } from "./screens/SideBar/SideBar";
+import { HowItWorks } from "./screens/HowItWorks/HowItWorks";
+import ContactUs from "./screens/ContactUs/ContactUs";
+import { PublicNeedHelp } from "./screens/HelpMe/HelpMe";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -58,7 +61,10 @@ const router = createBrowserRouter([
   },
   { path: "/guest-deal-view", element: wrapWithPageWrapper(GuestDealView) },
   { path: "/about-us", element: wrapWithPageWrapper(AboutUs) },
+  { path: "/how-it-works", element: wrapWithPageWrapper(HowItWorks) },
+  { path: "/contact-us", element: wrapWithPageWrapper(ContactUs) },
   { path: "/side-bar", element: wrapWithPageWrapper(SideBar) },
+  { path: "/help-me", element: wrapWithPageWrapper(PublicNeedHelp) },
 ]);
 
 function App() {

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Button } from "../RoundedButton";
 import { plus14 } from "../../images";
+import { useNavigate } from "react-router-dom";
 
 export const Faq = ({
   breakpoint,
@@ -25,6 +26,7 @@ export const Faq = ({
   questionClassNameOverride,
 }) => {
   const [openQuestion, setOpenQuestion] = useState(null);
+  const navigate = useNavigate();
 
   const toggleQuestion = (question) => {
     if (openQuestion === question) {
@@ -32,6 +34,10 @@ export const Faq = ({
     } else {
       setOpenQuestion(question);
     }
+  };
+
+  const handleContactUs = () => {
+    navigate("/contact-us");
   };
 
   const questions = [que1, que2, que3, que4, que5];
@@ -95,15 +101,17 @@ export const Faq = ({
               {text}
             </p>
           </div>
-          <Button
-            className={buttonStylePrimarySmallClassName}
-            darkMode={false}
-            divClassName={buttonDivClassName}
-            iconPosition="no-icon"
-            small={false}
-            style="secondary"
-            text={buttonText}
-          />
+          <div onClick={handleContactUs}>
+            <Button
+              className={buttonStylePrimarySmallClassName}
+              darkMode={false}
+              divClassName={buttonDivClassName}
+              iconPosition="no-icon"
+              small={false}
+              style="secondary"
+              text={buttonText}
+            />
+          </div>
         </div>
         <div
           className={`flex flex-col items-start gap-4 relative ${

@@ -8,6 +8,7 @@ import React from "react";
 import { IconChevronRight2 } from "../../icons/IconChevronRight2";
 import { Button } from "../RoundedButton";
 import { placeHolderImage14 } from "../../images";
+import { useLocation } from "react-router-dom";
 
 export const BreakpointDesktopWrapper = ({
   breakpoint,
@@ -22,11 +23,14 @@ export const BreakpointDesktopWrapper = ({
   divClassName,
   text5 = "Soutien et valorisation<br/>des artisans locaux",
   text6 = "En privilégiant les produits issus de l&#39;artisanat local, vous contribuez au maintien et à la valorisation des savoir-faire uniques de nos régions.",
+  text7,
+  text8,
   buttonText = "Comment ça fonctionne ?",
   buttonText1 = "À propos de nous",
   buttonIcon = <IconChevronRight2 className="!relative !w-6 !h-6" />,
   placeholderImage = { placeHolderImage14 },
 }) => {
+  const location = useLocation();
   return (
     <div
       id="contact"
@@ -149,6 +153,16 @@ export const BreakpointDesktopWrapper = ({
                       {text6}
                     </p>
                   </div>
+                  {location?.pathname === "/how-it-works" && (
+                    <div className="flex flex-col items-start gap-4 relative flex-1 grow">
+                      <p className="text-[length:var(--heading-h6-font-size)] leading-[var(--heading-h6-line-height)] relative self-stretch mt-[-1.00px] font-heading-h6 font-[number:var(--heading-h6-font-weight)] text-green tracking-[var(--heading-h6-letter-spacing)] [font-style:var(--heading-h6-font-style)]">
+                        {text7}
+                      </p>
+                      <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-base tracking-[0] leading-6">
+                        {text8}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="inline-flex flex-col items-start justify-center gap-6 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
@@ -160,15 +174,17 @@ export const BreakpointDesktopWrapper = ({
                   style="secondary"
                   text={buttonText}
                 />
-                <Button
-                  className="!flex-[0_0_auto]"
-                  darkMode={false}
-                  icon={buttonIcon}
-                  iconPosition="trailing"
-                  small={false}
-                  style="link"
-                  text={buttonText1}
-                />
+                {location?.pathname !== "/how-it-works" && (
+                  <Button
+                    className="!flex-[0_0_auto]"
+                    darkMode={false}
+                    icon={buttonIcon}
+                    iconPosition="trailing"
+                    small={false}
+                    style="link"
+                    text={buttonText1}
+                  />
+                )}
               </div>
             </div>
             <img
