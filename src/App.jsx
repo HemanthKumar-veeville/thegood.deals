@@ -31,6 +31,8 @@ import { AdminNeedHelp } from "./screens/HelpMe/AdminHelpMe";
 import { SettingsPage } from "./screens/Settings/Settings";
 import { EditProfile } from "./screens/EditProfile/EditProfile";
 import { Notifications } from "./screens/Notifications/Notifications";
+import { LanguageSelection } from "./screens/LanguageSelection/LanguageSelection";
+import { CurrencySelection } from "./screens/CurrencySelection/CurrencySelection";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -72,6 +74,8 @@ const router = createBrowserRouter([
   { path: "/settings", element: wrapWithPageWrapper(SettingsPage) },
   { path: "/edit-profile", element: wrapWithPageWrapper(EditProfile) },
   { path: "/notifications", element: wrapWithPageWrapper(Notifications) },
+  { path: "/select-language", element: wrapWithPageWrapper(LanguageSelection) },
+  { path: "/select-currency", element: wrapWithPageWrapper(CurrencySelection) },
 ]);
 
 function App() {

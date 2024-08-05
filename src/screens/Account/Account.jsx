@@ -41,7 +41,7 @@ export const Account = () => {
   };
 
   const handleMyInformation = () => {
-    alert("My information");
+    navigate("/edit-profile");
   };
 
   const handleWalletDetails = () => {
