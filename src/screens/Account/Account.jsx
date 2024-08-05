@@ -49,11 +49,11 @@ export const Account = () => {
   };
 
   const handleSettings = () => {
-    alert("Settings");
+    navigate("/settings");
   };
 
   const handleAcquireHelp = () => {
-    alert("Acquire help");
+    navigate("/help-me");
   };
 
   const handleSignOut = () => {
