@@ -29,6 +29,8 @@ import ContactUs from "./screens/ContactUs/ContactUs";
 import { PublicNeedHelp } from "./screens/HelpMe/HelpMe";
 import { AdminNeedHelp } from "./screens/HelpMe/AdminHelpMe";
 import { SettingsPage } from "./screens/Settings/Settings";
+import { EditProfile } from "./screens/EditProfile/EditProfile";
+import { Notifications } from "./screens/Notifications/Notifications";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -68,6 +70,8 @@ const router = createBrowserRouter([
   { path: "/side-bar", element: wrapWithPageWrapper(SideBar) },
   { path: "/help-me", element: wrapWithPageWrapper(PublicNeedHelp) },
   { path: "/settings", element: wrapWithPageWrapper(SettingsPage) },
+  { path: "/edit-profile", element: wrapWithPageWrapper(EditProfile) },
+  { path: "/notifications", element: wrapWithPageWrapper(Notifications) },
 ]);
 
 function App() {
