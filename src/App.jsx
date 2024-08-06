@@ -33,6 +33,7 @@ import { EditProfile } from "./screens/EditProfile/EditProfile";
 import { Notifications } from "./screens/Notifications/Notifications";
 import { LanguageSelection } from "./screens/LanguageSelection/LanguageSelection";
 import { CurrencySelection } from "./screens/CurrencySelection/CurrencySelection";
+import { AdminViewGoodDeal } from "./screens/AdminViewGoodDeal/AdminViewGoodDeal";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
   { path: "/notifications", element: wrapWithPageWrapper(Notifications) },
   { path: "/select-language", element: wrapWithPageWrapper(LanguageSelection) },
   { path: "/select-currency", element: wrapWithPageWrapper(CurrencySelection) },
+  { path: "/admin-view-deal", element: wrapWithPageWrapper(AdminViewGoodDeal) },
 ]);
 
 function App() {
