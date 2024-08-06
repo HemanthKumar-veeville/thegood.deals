@@ -7,15 +7,20 @@ import { useNavigate } from "react-router-dom";
 import { Placeholder } from "../../components/Dropdown/Dropdown";
 import axios from "axios";
 
+const axiosInstance = axios.create({
+  baseURL:
+    "https://c0f2-2401-4900-619d-94bb-49c3-b54d-4015-d143.ngrok-free.app/", // Replace with your API base URL
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*", // Make sure the server supports this
+  },
+});
+
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
-  const handleSignup = (values) => {
-    axios.post("https://fb69-117-202-99-18.ngrok-free.app/register", {
-      values,
-    });
-  };
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -58,9 +63,48 @@ export const SignUp = () => {
       setShowPassword(false); // Reset password visibility state
       setShowConfirmPassword(false); // Reset confirm password visibility state
       // Handle form submission (e.g., send values to the server)
-      handleSignup(values);
+      // handleSignup(values);
     },
   });
+
+  const handleSignup = async () => {
+    const values = formik.values;
+    console.log({ values });
+
+    const formData = new FormData();
+    formData.append("firstname", values.firstName);
+    formData.append("lastname", values.lastName);
+    formData.append("phone", values.phone);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    formData.append("address", values.address);
+    formData.append("addl_address", values.additionalAddress);
+    formData.append("city", values.city);
+    formData.append("postal_code", values.postalCode);
+    formData.append("country", "India");
+
+    try {
+      const response = await axiosInstance.post("register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+
+      if (response?.status === 200) {
+        if (response?.data?.is_mail_sent === true) {
+          navigate("/verify", { state: { email: values.email } });
+          formik.resetForm();
+          setShowPassword(false); // Reset password visibility state
+          setShowConfirmPassword(false); // Reset confirm password visibility state
+        }
+      }
+      console.log({ response });
+    } catch (error) {
+      console.error("There was an error!", error);
+      alert(error?.response?.data?.detail);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -445,15 +489,17 @@ export const SignUp = () => {
             <span className="underline">receive the newsletter</span>
           </p>
         </div>
-        <Button
-          buttonText="Register"
-          className="!self-stretch !flex-[0_0_auto] !flex !w-full"
-          color="primary"
-          kind="primary"
-          round="semi-round"
-          state="default"
-          type="submit"
-        />
+        <button onClick={handleSignup}>
+          <Button
+            buttonText="Register"
+            className="!self-stretch !flex-[0_0_auto] !flex !w-full"
+            color="primary"
+            kind="primary"
+            round="semi-round"
+            state="default"
+            type="submit"
+          />
+        </button>
       </form>
     </div>
   );

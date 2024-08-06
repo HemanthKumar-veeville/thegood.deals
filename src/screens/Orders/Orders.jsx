@@ -34,291 +34,300 @@ export const Orders = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-screen h-[640px] items-start relative bg-primary-background mx-auto">
+    <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto">
       <AppBar />
-      <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-screen items-start gap-4 px-8 py-4 relative">
         <div
-          className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
+          className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full border-b border-stroke cursor-pointer"
           onClick={handleBackToDeal}
         >
-          <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-            <ArrowLeft1
-              className="!relative !w-[18px] !h-[18px]"
-              color="#637381"
-            />
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
+          <div className="inline-flex items-center gap-2">
+            <ArrowLeft1 className="w-4.5 h-4.5" color="#637381" />
+            <div className="mt-[-1px] font-medium text-primary-text-color text-base">
               Back to the deal
             </div>
           </div>
         </div>
-        <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
+        <div className="relative self-stretch font-semibold text-primary-color text-2xl">
           My orders
         </div>
         <div
-          className="inline-flex items-center gap-[15px] relative flex-[0_0_auto] cursor-pointer"
+          className="inline-flex items-center gap-4 cursor-pointer"
           onClick={() => handleToggleOrderDetails("abraham")}
         >
           <SizeXlCorner
-            className="!h-[50px] !w-[50px]"
-            divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-2 !leading-10 !top-1"
+            className="h-12.5 w-12.5"
+            divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
             text="A.T."
           />
-          <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+          <div className="inline-flex flex-col items-start gap-1.5">
+            <div className="mt-[-1px] font-medium text-primary-color text-base">
               Abraham Thomas
             </div>
-            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-              <Box44 className="!relative !w-5 !h-5" />
-              <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
+            <div className="inline-flex items-center gap-2.5">
+              <Box44 className="w-5 h-5" />
+              <p className="mt-[-1px] font-normal text-primary-text-color text-sm leading-5.5">
                 1 order on the deal
               </p>
             </div>
           </div>
           {isOrderDetailsVisible.abraham ? (
-            <ChevronUp className="!relative !w-6 !h-6" color="#1B4F4A" />
+            <ChevronUp className="w-6 h-6" color="#1B4F4A" />
           ) : (
-            <ChevronDown1 className="!relative !w-6 !h-6" color="#1B4F4A" />
+            <ChevronDown1 className="w-6 h-6" color="#1B4F4A" />
           )}
         </div>
-        {isOrderDetailsVisible.abraham && (
-          <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
+        <div
+          className={`transition-all duration-500 overflow-hidden ${
+            isOrderDetailsVisible.abraham ? "max-h-screen" : "max-h-0"
+          }`}
+        >
+          <div className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite">
             <img
-              className="mt-[-1.00px] relative self-stretch w-full h-px object-cover"
+              className="self-stretch w-full h-px object-cover"
               alt="Line"
               src={Line63}
             />
-            <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+            <div className="flex flex-col items-start gap-1.5 self-stretch">
+              <div className="flex items-center gap-2.5 self-stretch">
+                <p className="mt-[-1px] font-normal text-primary-color text-base">
                   Case of Rosé - 6 bottles
                 </p>
               </div>
-              <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex items-center gap-2.5 relative flex-1 grow">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+              <div className="flex items-end justify-between self-stretch">
+                <div className="flex items-center gap-2.5 grow">
+                  <div className="mt-[-1px] font-semibold text-secondary-color text-base">
                     3 products
                   </div>
                 </div>
-                <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base text-right tracking-[0] leading-6 whitespace-nowrap">
+                <div className="inline-flex flex-col items-end">
+                  <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                     €29.00 x 3 = €87
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+            <div className="flex flex-col items-start gap-1.5 self-stretch">
+              <div className="flex items-center gap-2.5 self-stretch">
+                <p className="mt-[-1px] font-normal text-primary-color text-base">
                   Case of White - 6 bottles
                 </p>
               </div>
-              <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex items-center gap-2.5 relative flex-1 grow">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+              <div className="flex items-end justify-between self-stretch">
+                <div className="flex items-center gap-2.5 grow">
+                  <div className="mt-[-1px] font-semibold text-secondary-color text-base">
                     3 products
                   </div>
                 </div>
-                <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base text-right tracking-[0] leading-6 whitespace-nowrap">
+                <div className="inline-flex flex-col items-end">
+                  <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                     €29.00 x 3 = €87
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
+            <div className="flex items-end justify-between self-stretch">
+              <div className="flex items-center gap-2.5 grow">
+                <div className="mt-[-1px] font-semibold text-primary-color text-lg">
                   Total
                 </div>
               </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-lg text-right tracking-[0] leading-[26px] whitespace-nowrap">
+              <div className="inline-flex flex-col items-end">
+                <div className="mt-[-1px] font-semibold text-primary-color text-lg text-right">
                   €174
                 </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
         <img
-          className="relative self-stretch w-full h-px object-cover"
+          className="self-stretch w-full h-px object-cover"
           alt="Line"
           src={Line63}
         />
         <div
-          className="inline-flex items-center gap-[15px] relative flex-[0_0_auto] cursor-pointer"
+          className="inline-flex items-center gap-4 cursor-pointer"
           onClick={() => handleToggleOrderDetails("jane")}
         >
           <SizeXlCorner
-            className="!h-[50px] !w-[50px]"
-            divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-[9px] !leading-10 !top-1"
+            className="h-12.5 w-12.5"
+            divClassName="tracking-0 text-lg font-semibold left-2.25 leading-10 top-1"
             text="J.D."
           />
-          <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+          <div className="inline-flex flex-col items-start gap-1.5">
+            <div className="mt-[-1px] font-medium text-primary-color text-base">
               Jane Doe
             </div>
-            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-              <Box44 className="!relative !w-5 !h-5" />
-              <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
+            <div className="inline-flex items-center gap-2.5">
+              <Box44 className="w-5 h-5" />
+              <p className="mt-[-1px] font-normal text-primary-text-color text-sm leading-5.5">
                 1 order on the deal
               </p>
             </div>
           </div>
           {isOrderDetailsVisible.jane ? (
-            <ChevronUp className="!relative !w-6 !h-6" color="#1B4F4A" />
+            <ChevronUp className="w-6 h-6" color="#1B4F4A" />
           ) : (
-            <ChevronDown1 className="!relative !w-6 !h-6" color="#1B4F4A" />
+            <ChevronDown1 className="w-6 h-6" color="#1B4F4A" />
           )}
         </div>
-        {isOrderDetailsVisible.jane && (
-          <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
+        <div
+          className={`transition-all duration-500 overflow-hidden ${
+            isOrderDetailsVisible.jane ? "max-h-screen" : "max-h-0"
+          }`}
+        >
+          <div className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite">
             <img
-              className="mt-[-1.00px] relative self-stretch w-full h-px object-cover"
+              className="self-stretch w-full h-px object-cover"
               alt="Line"
               src={Line63}
             />
-            <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+            <div className="flex flex-col items-start gap-1.5 self-stretch">
+              <div className="flex items-center gap-2.5 self-stretch">
+                <p className="mt-[-1px] font-normal text-primary-color text-base">
                   Case of Rosé - 6 bottles
                 </p>
               </div>
-              <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex items-center gap-2.5 relative flex-1 grow">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+              <div className="flex items-end justify-between self-stretch">
+                <div className="flex items-center gap-2.5 grow">
+                  <div className="mt-[-1px] font-semibold text-secondary-color text-base">
                     3 products
                   </div>
                 </div>
-                <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base text-right tracking-[0] leading-6 whitespace-nowrap">
+                <div className="inline-flex flex-col items-end">
+                  <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                     €29.00 x 3 = €87
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+            <div className="flex flex-col items-start gap-1.5 self-stretch">
+              <div className="flex items-center gap-2.5 self-stretch">
+                <p className="mt-[-1px] font-normal text-primary-color text-base">
                   Case of White - 6 bottles
                 </p>
               </div>
-              <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex items-center gap-2.5 relative flex-1 grow">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+              <div className="flex items-end justify-between self-stretch">
+                <div className="flex items-center gap-2.5 grow">
+                  <div className="mt-[-1px] font-semibold text-secondary-color text-base">
                     3 products
                   </div>
                 </div>
-                <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base text-right tracking-[0] leading-6 whitespace-nowrap">
+                <div className="inline-flex flex-col items-end">
+                  <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                     €29.00 x 3 = €87
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
+            <div className="flex items-end justify-between self-stretch">
+              <div className="flex items-center gap-2.5 grow">
+                <div className="mt-[-1px] font-semibold text-primary-color text-lg">
                   Total
                 </div>
               </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-lg text-right tracking-[0] leading-[26px] whitespace-nowrap">
+              <div className="inline-flex flex-col items-end">
+                <div className="mt-[-1px] font-semibold text-primary-color text-lg text-right">
                   €174
                 </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
         <img
-          className="relative self-stretch w-full h-px object-cover"
+          className="self-stretch w-full h-px object-cover"
           alt="Line"
           src={Line63}
         />
         <div
-          className="inline-flex items-center gap-[15px] relative flex-[0_0_auto] cursor-pointer"
+          className="inline-flex items-center gap-4 cursor-pointer"
           onClick={() => handleToggleOrderDetails("donald")}
         >
           <SizeXlCorner
-            className="!h-[50px] !w-[50px]"
-            divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-2 !leading-10 !top-1"
+            className="h-12.5 w-12.5"
+            divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
             text="D.T."
           />
-          <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+          <div className="inline-flex flex-col items-start gap-1.5">
+            <div className="mt-[-1px] font-medium text-primary-color text-base">
               Donald Trump
             </div>
-            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-              <Box44 className="!relative !w-5 !h-5" />
-              <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
+            <div className="inline-flex items-center gap-2.5">
+              <Box44 className="w-5 h-5" />
+              <p className="mt-[-1px] font-normal text-primary-text-color text-sm leading-5.5">
                 1 order on the deal
               </p>
             </div>
           </div>
           {isOrderDetailsVisible.donald ? (
-            <ChevronUp className="!relative !w-6 !h-6" color="#1B4F4A" />
+            <ChevronUp className="w-6 h-6" color="#1B4F4A" />
           ) : (
-            <ChevronDown1 className="!relative !w-6 !h-6" color="#1B4F4A" />
+            <ChevronDown1 className="w-6 h-6" color="#1B4F4A" />
           )}
         </div>
-        {isOrderDetailsVisible.donald && (
-          <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
+        <div
+          className={`transition-all duration-500 overflow-hidden ${
+            isOrderDetailsVisible.donald ? "max-h-screen" : "max-h-0"
+          }`}
+        >
+          <div className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite">
             <img
-              className="mt-[-1.00px] relative self-stretch w-full h-px object-cover"
+              className="self-stretch w-full h-px object-cover"
               alt="Line"
               src={Line63}
             />
-            <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+            <div className="flex flex-col items-start gap-1.5 self-stretch">
+              <div className="flex items-center gap-2.5 self-stretch">
+                <p className="mt-[-1px] font-normal text-primary-color text-base">
                   Case of Rosé - 6 bottles
                 </p>
               </div>
-              <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex items-center gap-2.5 relative flex-1 grow">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+              <div className="flex items-end justify-between self-stretch">
+                <div className="flex items-center gap-2.5 grow">
+                  <div className="mt-[-1px] font-semibold text-secondary-color text-base">
                     3 products
                   </div>
                 </div>
-                <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base text-right tracking-[0] leading-6 whitespace-nowrap">
+                <div className="inline-flex flex-col items-end">
+                  <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                     €29.00 x 3 = €87
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+            <div className="flex flex-col items-start gap-1.5 self-stretch">
+              <div className="flex items-center gap-2.5 self-stretch">
+                <p className="mt-[-1px] font-normal text-primary-color text-base">
                   Case of White - 6 bottles
                 </p>
               </div>
-              <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-                <div className="flex items-center gap-2.5 relative flex-1 grow">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+              <div className="flex items-end justify-between self-stretch">
+                <div className="flex items-center gap-2.5 grow">
+                  <div className="mt-[-1px] font-semibold text-secondary-color text-base">
                     3 products
                   </div>
                 </div>
-                <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-secondary-color text-base text-right tracking-[0] leading-6 whitespace-nowrap">
+                <div className="inline-flex flex-col items-end">
+                  <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                     €29.00 x 3 = €87
                   </p>
                 </div>
               </div>
             </div>
-            <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
+            <div className="flex items-end justify-between self-stretch">
+              <div className="flex items-center gap-2.5 grow">
+                <div className="mt-[-1px] font-semibold text-primary-color text-lg">
                   Total
                 </div>
               </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-lg text-right tracking-[0] leading-[26px] whitespace-nowrap">
+              <div className="inline-flex flex-col items-end">
+                <div className="mt-[-1px] font-semibold text-primary-color text-lg text-right">
                   €174
                 </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
