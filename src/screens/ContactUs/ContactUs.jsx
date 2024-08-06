@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "../../components/AppBar/AppBar";
 import ImageRotator from "../../components/ImageRotator/ImageRotator";
 import { Header } from "../../components/Header";
@@ -25,6 +25,7 @@ import {
 } from "../../images";
 import { IconChevronRight2 } from "../../icons/IconChevronRight2";
 import { Button } from "../../components/RoundedButton";
+import { plus14 } from "../../images";
 
 function ContactUs() {
   const IMAGES = [picture1, picture2, picture3, picture4];
@@ -138,6 +139,19 @@ function ContactUs() {
       ans: "If you are a tradesman interested in our platform, we would be delighted to speak with you. Contact us via our contact form mentioning your interest in becoming a partner.",
     },
   ];
+  const [openQuestion, setOpenQuestion] = useState(null);
+
+  const toggleQuestion = (question) => {
+    if (openQuestion === question) {
+      setOpenQuestion(null);
+    } else {
+      setOpenQuestion(question);
+    }
+  };
+
+  const questions = FAQS?.map((faq) => faq.ques);
+  const answers = FAQS?.map((faq) => faq.ans);
+
   return (
     <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">
       <AppBar />
@@ -250,16 +264,36 @@ function ContactUs() {
             <div className="gap-2 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
               <div className="gap-6 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
                 <div className="flex flex-col items-start gap-6 px-0 py-2 relative self-stretch w-full flex-[0_0_auto]">
-                  {FAQS?.map((value) => (
-                    <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
+                  {questions.map((question, index) => (
+                    <div key={index} className="w-full">
                       <div
-                        className={`text-[length:var(--heading-h6-font-size)] leading-[var(--heading-h6-line-height)] relative self-stretch mt-[-1.00px] font-heading-h6 font-[number:var(--heading-h6-font-weight)] text-green tracking-[var(--heading-h6-letter-spacing)] [font-style:var(--heading-h6-font-style)] ${headingClassNameOverride}`}
+                        className={`border border-solid border-green w-full flex flex-col self-stretch items-start flex-[0_0_auto] overflow-hidden transition-all duration-1000 rounded-[30px] relative px-5 py-4`}
+                        onClick={() => toggleQuestion(index)}
                       >
-                        {value?.ques}
+                        <div className="flex items-center !w-full cursor-pointer relative justify-between">
+                          <p
+                            className={`[font-family:'Rethink_Sans',Helvetica] tracking-[0] text-base flex-1 text-green font-bold leading-6 relative mt-[-1.00px] max-w-[calc(100%-2rem)]`} // Ensures wrapping and space for the icon
+                          >
+                            {question}
+                          </p>
+                          <img
+                            className={`w-8 h-8 absolute right-0 transition-transform duration-500 ${
+                              openQuestion === index ? "rotate-45" : ""
+                            }`}
+                            alt="Plus"
+                            src={plus14}
+                          />
+                        </div>
+                        <div
+                          className={`text-green w-full break-words transition-max-height duration-1000 overflow-hidden ${
+                            openQuestion === index
+                              ? "max-h-96 mt-4 "
+                              : "max-h-0"
+                          }`}
+                        >
+                          <p>{answers[index]}</p>
+                        </div>
                       </div>
-                      <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-base tracking-[0] leading-6">
-                        {value?.ans}
-                      </p>
                     </div>
                   ))}
                 </div>
