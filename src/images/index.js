@@ -49,6 +49,9 @@ import picture5 from "../../static/img/picture5.png";
 import picture6 from "../../static/img/picture6.png";
 import Rectangle4592 from "../../static/img/Rectangle 4592.png";
 import Rectangle5095_1 from "../../static/img/rectangle-5095-1.png";
+import Rectangle_5095 from "../../static/img/rectangle-5095.png";
+import Ellipse from "../../static/img/ellipse-2763.png";
+import Rectangle_4592 from "../../static/img/rectangle-4592.png";
 
 export {
   placeHolderImage14,
@@ -100,4 +103,7 @@ export {
   picture6,
   Rectangle4592,
   Rectangle5095_1,
+  Rectangle_5095,
+  Ellipse,
+  Rectangle_4592,
 };
