@@ -5,11 +5,17 @@ import { Button } from "../../components/Button/Button";
 import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
 import { useNavigate } from "react-router-dom";
 import { Placeholder } from "../../components/Dropdown/Dropdown";
+import axios from "axios";
 
 export const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const handleSignup = (values) => {
+    axios.post("https://fb69-117-202-99-18.ngrok-free.app/register", {
+      values,
+    });
+  };
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -52,6 +58,7 @@ export const SignUp = () => {
       setShowPassword(false); // Reset password visibility state
       setShowConfirmPassword(false); // Reset confirm password visibility state
       // Handle form submission (e.g., send values to the server)
+      handleSignup(values);
     },
   });
 
