@@ -48,10 +48,12 @@ export const VerificationOTP = () => {
   const [otp, setOtp] = useState(Array(5).fill(""));
   const [seconds, setSeconds] = useState(33);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
   const inputRefs = useRef(otp.map(() => React.createRef()));
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
+
   useEffect(() => {
     const timer = setInterval(() => {
       setSeconds((prevSeconds) => (prevSeconds > 0 ? prevSeconds - 1 : 0));
@@ -80,6 +82,7 @@ export const VerificationOTP = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true); // Show loader
     console.log("OTP submitted:", otp.join(""));
 
     const formData = new FormData();
@@ -96,6 +99,7 @@ export const VerificationOTP = () => {
       console.error("There was an error!", error);
       alert(error?.response?.data?.detail);
     }
+    setLoading(false); // Hide loader
   };
 
   const handleMail = () => {
@@ -106,53 +110,56 @@ export const VerificationOTP = () => {
   return (
     <div className="relative w-screen h-[640px] bg-primary-background mx-auto">
       <AppBar />
-      <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
-        <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold !text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-          Confirm your email
-        </div>
-        <p className="relative w-fit [font-family:'Inter',Helvetica] font-normal !text-[#1b4f4a] text-sm tracking-[0] leading-[22px]">
-          We have sent you a code to <br />
-          {state?.email || "{email}"}
-        </p>
-        <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
-          {otp.map((value, index) => (
-            <OTPInput
-              key={index}
-              value={value}
-              onChange={handleChange}
-              index={index}
-              inputRefs={inputRefs.current}
-            />
-          ))}
-        </div>
-        {seconds !== 0 && (
-          <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-secondary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-            Send again in ({seconds}s)
+      {!loading && (
+        <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
+          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold !text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
+            Confirm your email
           </div>
-        )}
-        {seconds === 0 && (
-          <div onClick={handleMail} className="!w-full">
+          <p className="relative w-fit [font-family:'Inter',Helvetica] font-normal !text-[#1b4f4a] text-sm tracking-[0] leading-[22px]">
+            We have sent you a code to <br />
+            {state?.email || "{email}"}
+          </p>
+          <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
+            {otp.map((value, index) => (
+              <OTPInput
+                key={index}
+                value={value}
+                onChange={handleChange}
+                index={index}
+                inputRefs={inputRefs.current}
+              />
+            ))}
+          </div>
+          {seconds !== 0 && (
+            <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-secondary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
+              Send again in ({seconds}s)
+            </div>
+          )}
+          {seconds === 0 && (
+            <div onClick={handleMail} className="!w-full">
+              <Button
+                buttonText="Send Code Again"
+                className="!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer"
+                color="primary"
+                kind="primary"
+                round="semi-round"
+                state="active"
+              />
+            </div>
+          )}
+          <div onClick={handleSubmit} className="!w-full">
             <Button
-              buttonText="Send Code Again"
+              buttonText="To log in"
               className="!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer"
               color="primary"
               kind="primary"
               round="semi-round"
-              state="active"
+              state={isButtonDisabled ? "disable" : "active"}
             />
           </div>
-        )}
-        <div onClick={handleSubmit} className="!w-full">
-          <Button
-            buttonText="To log in"
-            className="!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer"
-            color="primary"
-            kind="primary"
-            round="semi-round"
-            state={isButtonDisabled ? "disable" : "active"}
-          />
         </div>
-      </div>
+      )}
+      {loading && <div>Loading...</div>}
     </div>
   );
 };
