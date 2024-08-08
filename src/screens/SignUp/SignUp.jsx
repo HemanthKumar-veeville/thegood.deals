@@ -5,18 +5,9 @@ import { Button } from "../../components/Button/Button";
 import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
 import { useNavigate } from "react-router-dom";
 import { Placeholder } from "../../components/Dropdown/Dropdown";
-import axios from "axios";
+import { axiosInstance } from "../../helpers/helperMethods";
 
-const axiosInstance = axios.create({
-  baseURL:
-    "https://c0f2-2401-4900-619d-94bb-49c3-b54d-4015-d143.ngrok-free.app/", // Replace with your API base URL
-  headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*", // Make sure the server supports this
-  },
-});
-
-export const SignUp = () => {
+export const SignUp = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
@@ -70,7 +61,7 @@ export const SignUp = () => {
   const handleSignup = async () => {
     const values = formik.values;
     console.log({ values });
-
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("firstname", values.firstName);
     formData.append("lastname", values.lastName);
@@ -84,12 +75,7 @@ export const SignUp = () => {
     formData.append("country", "India");
 
     try {
-      const response = await axiosInstance.post("register", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
-        },
-      });
+      const response = await axiosInstance.post("register", formData);
 
       if (response?.status === 200) {
         if (response?.data?.is_mail_sent === true) {
@@ -104,6 +90,7 @@ export const SignUp = () => {
       console.error("There was an error!", error);
       alert(error?.response?.data?.detail);
     }
+    setIsLoading(false);
   };
 
   const togglePasswordVisibility = () => {

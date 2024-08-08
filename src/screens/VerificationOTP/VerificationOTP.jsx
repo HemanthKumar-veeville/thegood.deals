@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button } from "../../components/Button/Button.jsx";
 import AppBar from "../../components/AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../helpers/helperMethods.js";
 
 const OTPInput = ({ value, onChange, index, inputRefs }) => (
   <div className="flex flex-col w-12 h-12 items-start gap-[5px] relative">
@@ -78,9 +79,23 @@ export const VerificationOTP = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("OTP submitted:", otp.join(""));
-    navigate("/account");
+
+    const formData = new FormData();
+    formData.append("email", state?.email);
+    formData.append("verification_code", otp.join(""));
+
+    try {
+      const response = await axiosInstance.post("verify", formData);
+
+      if (response?.status === 201) {
+        navigate("/account");
+      }
+    } catch (error) {
+      console.error("There was an error!", error);
+      alert(error?.response?.data?.detail);
+    }
   };
 
   const handleMail = () => {

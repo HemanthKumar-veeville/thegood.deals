@@ -14,6 +14,8 @@ import AppBar from "../../components/AppBar/AppBar.jsx";
 
 const Auth = () => {
   const [isLoginTab, setIsLoginTab] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,29 +44,40 @@ const Auth = () => {
   return (
     <div className="relative w-screen h-screen bg-primary-background mx-auto">
       <AppBar />
-      <div className="flex w-screen items-start justify-center gap-[35px] px-[25px] py-0 absolute top-16 left-0 border-b [border-bottom-style:solid] border-stroke">
-        <TabMenuStyle
-          className={`${
-            isLoginTab ? "!border-[#1b4f4a]" : "!border-transparent"
-          } !flex-[0_0_auto] !bg-[unset] hover:bg-gray-100 cursor-pointer`}
-          divClassName={`${
-            isLoginTab ? "!text-[#1b4f4a]" : "!text-[#637381]"
-          } !tracking-[0] !text-base ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-6`}
-          text="To log in"
-          onClick={switchToLogin}
-        />
-        <TabMenuStyle
-          className={`${
-            !isLoginTab ? "!border-[#1b4f4a]" : "!border-transparent"
-          } !flex-[0_0_auto] !bg-[unset] hover:bg-gray-100 cursor-pointer`}
-          divClassName={`${
-            !isLoginTab ? "!text-[#1b4f4a]" : "!text-[#637381]"
-          } !tracking-[0] !text-base ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-6`}
-          text="Create an account"
-          onClick={switchToSignUp}
-        />
-      </div>
-      {isLoginTab ? <SignIn /> : <SignUp />}
+      {isLoading && <div>Loading...</div>}
+      {!isLoading && (
+        <div className="flex w-screen items-start justify-center gap-[35px] px-[25px] py-0 absolute top-16 left-0 border-b [border-bottom-style:solid] border-stroke">
+          <TabMenuStyle
+            className={`${
+              isLoginTab ? "!border-[#1b4f4a]" : "!border-transparent"
+            } !flex-[0_0_auto] !bg-[unset] hover:bg-gray-100 cursor-pointer`}
+            divClassName={`${
+              isLoginTab ? "!text-[#1b4f4a]" : "!text-[#637381]"
+            } !tracking-[0] !text-base ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-6`}
+            text="To log in"
+            onClick={switchToLogin}
+          />
+          <TabMenuStyle
+            className={`${
+              !isLoginTab ? "!border-[#1b4f4a]" : "!border-transparent"
+            } !flex-[0_0_auto] !bg-[unset] hover:bg-gray-100 cursor-pointer`}
+            divClassName={`${
+              !isLoginTab ? "!text-[#1b4f4a]" : "!text-[#637381]"
+            } !tracking-[0] !text-base ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-6`}
+            text="Create an account"
+            onClick={switchToSignUp}
+          />
+        </div>
+      )}
+      {!isLoading ? (
+        isLoginTab ? (
+          <SignIn setIsLoading={setIsLoading} />
+        ) : (
+          <SignUp setIsLoading={setIsLoading} />
+        )
+      ) : (
+        ""
+      )}
     </div>
   );
 };

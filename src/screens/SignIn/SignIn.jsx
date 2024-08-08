@@ -7,8 +7,9 @@ import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8.jsx";
 import { FacebookFill } from "../../icons/FacebookFill/FacebookFill.jsx";
 import { Google } from "../../icons/Google/Google.jsx";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../helpers/helperMethods.js";
 
-const SignIn = () => {
+const SignIn = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const formik = useFormik({
@@ -20,11 +21,25 @@ const SignIn = () => {
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string().required("Required"),
     }),
-    onSubmit: (values) => {
-      navigate("/account");
-      console.log("Form values:", values);
+    onSubmit: async (values) => {
+      setIsLoading(true);
+      const formData = new FormData();
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+      try {
+        const response = await axiosInstance.post("login", formData);
+
+        if (response?.status === 200) {
+          navigate("/account");
+          formik.resetForm();
+        }
+        console.log({ response });
+      } catch (error) {
+        console.error("There was an error!", error);
+        alert(error?.response?.data?.detail);
+      }
+      setIsLoading(false);
       formik.resetForm();
-      // Handle form submission (e.g., send values to the server)
     },
   });
 
