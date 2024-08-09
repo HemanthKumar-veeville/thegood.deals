@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button } from "../../components/Button/Button";
@@ -6,11 +6,20 @@ import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
 import { useNavigate } from "react-router-dom";
 import { Placeholder } from "../../components/Dropdown/Dropdown";
 import { axiosInstance } from "../../helpers/helperMethods";
+import Swal from "sweetalert2";
 
 export const SignUp = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+
+  // Load saved form values from localStorage
+  useEffect(() => {
+    const savedValues = localStorage.getItem("signupFormValues");
+    if (savedValues) {
+      formik.setValues(JSON.parse(savedValues));
+    }
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -58,6 +67,11 @@ export const SignUp = ({ setIsLoading }) => {
     },
   });
 
+  // Save form values to localStorage on change
+  useEffect(() => {
+    localStorage.setItem("signupFormValues", JSON.stringify(formik.values));
+  }, [formik.values]);
+
   const handleSignup = async () => {
     const values = formik.values;
     console.log({ values });
@@ -83,15 +97,20 @@ export const SignUp = ({ setIsLoading }) => {
           formik.resetForm();
           setShowPassword(false); // Reset password visibility state
           setShowConfirmPassword(false); // Reset confirm password visibility state
+          localStorage.removeItem("signupFormValues"); // Clear localStorage after successful submission
         }
       }
       console.log({ response });
     } catch (error) {
       console.error("There was an error!", error);
-      alert(error?.response?.data?.detail);
+      Swal.fire({
+        title: "Error!",
+        text: error?.response?.data?.detail,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
       setIsLoading(false);
     }
-    // setIsLoading(false);
   };
 
   const togglePasswordVisibility = () => {
