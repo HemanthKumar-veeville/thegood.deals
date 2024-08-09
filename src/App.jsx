@@ -41,6 +41,8 @@ import { GuestsSendReviewsScreen } from "./screens/GuestSendReview/GuestSendRevi
 import { ArtisanEmailScreen } from "./screens/ArtisanEmailScreen/ArtisanEmailScreen";
 import { ArtisanEmailList } from "./components/ArtisanEmailList";
 import { GuestEmailAskForScreen } from "./screens/AskGuestReview/AskGuestReview";
+import { LostPassword } from "./screens/LostPassword/LostPassword";
+import { ResetPassword } from "./screens/ResetPassword/ResetPassword";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -109,6 +111,14 @@ const router = createBrowserRouter([
   {
     path: "/ask-guest-review",
     element: wrapWithPageWrapper(GuestEmailAskForScreen),
+  },
+  {
+    path: "/lost-password",
+    element: wrapWithPageWrapper(LostPassword),
+  },
+  {
+    path: "/reset-password",
+    element: wrapWithPageWrapper(ResetPassword),
   },
 ]);
 

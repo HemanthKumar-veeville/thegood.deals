@@ -8,6 +8,7 @@ import { Send } from "../../icons/Send";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { RatingStar } from "../RatingStar";
 import { blogImage, Human } from "../../images";
+import { Send1 } from "../../icons/Send1";
 
 export const ArtisanEmail = ({ HEADERClassName }) => {
   return (
@@ -28,17 +29,17 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
       </div>
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Cher artisan, merci de valider ce deal 🤝
+          Dear craftsman, thank you for validating this deal 🤝
         </p>
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-          Je vous pris de bien vouloir confirmer la création du deal ci-dessous.
+          Please confirm the creation of the deal below.
           <br />
           <br />
-          Nous souhaitons nous assurer que toutes les informations sont
-          correctes afin de déclencher le paiement.
+          We want to ensure that all information is correct in order to trigger
+          payment.
           <br />
           <br />
-          Une fois le deal confirmé, celui-ci sera proposé à la vente.
+          Once the deal is confirmed, it will be offered for sale.
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -51,9 +52,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
           src={blogImage}
         />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Caisses de vins
-          <br />
-          Domaine de Cigaluse
+          Wine cratesDomaine de Cigaluse
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -88,9 +87,9 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
           src="/img/line-65.svg"
         />
         <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
-          <Send className="!relative !w-5 !h-5" />
+          <Send1 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Voir le deal
+            See the deal
           </button>
         </div>
       </div>

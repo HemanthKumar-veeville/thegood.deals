@@ -10,6 +10,7 @@ import { ChevronUp } from "../../icons/ChevronUp";
 import { Send } from "../../icons/Send";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { SizeXlCorner } from "../SizeXlCorner";
+import { Send1 } from "../../icons/Send1";
 
 export const ArtisanEmailList = ({ HEADERClassName }) => {
   return (
@@ -28,24 +29,19 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
       </div>
       <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Cher artisan,
-          <br />
-          merci de confirmer
-          <br />
-          le bon de commande 🧾
+          Dear craftsman, please confirm the order form 🧾
         </p>
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-          Je vous pris de bien vouloir confirmer le bon de commande ci-dessous.
-          Nous souhaitons nous assurer que toutes les informations sont
-          correctes afin de déclencher le paiement.
+          Please confirm the order form below. We want to ensure that all
+          information is correct in order to trigger payment.
           <br />
           <br />
-          Merci de bien vouloir confirmer via le bouton à la fin de l’email.
+          Please confirm via the button at the end of the email.
         </p>
         <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
-          <Send className="!relative !w-5 !h-5" />
+          <Send1 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Confirmer les infos
+            Confirm information
           </button>
         </div>
         <img
@@ -66,7 +62,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <Box4 className="!relative !w-5 !h-5" />
               <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                1 commande sur le deal
+                1 order on the deal
               </p>
             </div>
           </div>
@@ -81,13 +77,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Caisse de Rosé - 6 bouteilles
+                Case of Rosé - 6 bottles
               </p>
             </div>
             <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
               <div className="flex items-center gap-2.5 relative flex-1 grow">
                 <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 produits
+                  3 products
                 </div>
               </div>
               <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -100,13 +96,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           <div className="items-start flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Caisse de Blanc - 6 bouteilles
+                Case of White - 6 bottles
               </p>
             </div>
             <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
               <div className="flex items-center gap-2.5 relative flex-1 grow">
                 <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 produits
+                  3 products
                 </div>
               </div>
               <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -147,7 +143,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <Box4 className="!relative !w-5 !h-5" />
               <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                1 commande sur le deal
+                1 order on the deal
               </p>
             </div>
           </div>
@@ -162,13 +158,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Caisse de Rosé - 6 bouteilles
+                Case of Rosé - 6 bottles
               </p>
             </div>
             <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
               <div className="flex items-center gap-2.5 relative flex-1 grow">
                 <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 produits
+                  3 products
                 </div>
               </div>
               <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -181,13 +177,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           <div className="items-start flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Caisse de Blanc - 6 bouteilles
+                Case of White - 6 bottles
               </p>
             </div>
             <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
               <div className="flex items-center gap-2.5 relative flex-1 grow">
                 <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 produits
+                  3 products
                 </div>
               </div>
               <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -228,7 +224,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <Box4 className="!relative !w-5 !h-5" />
               <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                1 commande sur le deal
+                1 order on the deal
               </p>
             </div>
           </div>
@@ -243,13 +239,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Caisse de Rosé - 6 bouteilles
+                Case of Rosé - 6 bottles
               </p>
             </div>
             <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
               <div className="flex items-center gap-2.5 relative flex-1 grow">
                 <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 produits
+                  3 products
                 </div>
               </div>
               <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -262,13 +258,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           <div className="items-start flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Caisse de Blanc - 6 bouteilles
+                Case of White - 6 bottles
               </p>
             </div>
             <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
               <div className="flex items-center gap-2.5 relative flex-1 grow">
                 <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 produits
+                  3 products
                 </div>
               </div>
               <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -300,7 +296,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           <div className="items-end flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex justify-between self-stretch w-full items-end relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] text-center tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
-                Total TTC
+                Total Price
               </div>
               <div className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] text-right tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
                 552.00 €
@@ -308,9 +304,9 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             </div>
           </div>
           <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
-            <Send className="!relative !w-5 !h-5" />
+            <Send1 className="!relative !w-5 !h-5" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Confirmer les infos
+              Confirm information
             </button>
           </div>
         </div>

@@ -20,10 +20,10 @@ export const GuestsSendReviews = ({
       <AppBar />
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Donnez-vous votre avis !
+          Give your opinion!
         </div>
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-          Merci d’avoir utiliser notre service, qu’en avez-vous pensé ?
+          Thank you for using our service, what did you think?
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -33,10 +33,10 @@ export const GuestsSendReviews = ({
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="w-[247px] flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative self-stretch mt-[-1.00px] font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-primary-color text-[length:var(--body-large-medium-font-size)] tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] [font-style:var(--body-large-medium-font-style)]">
-              Notez l’organisateur du deal
+              Note the organizer of the deal
             </div>
             <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
-              L’organisateur a-t-il été à la hauteur ?
+              Was the organizer up to the task?
             </p>
           </div>
           <div className="inline-flex items-center gap-[8.33px] relative flex-[0_0_auto]">
@@ -57,7 +57,7 @@ export const GuestsSendReviews = ({
           <div className="flex flex-col h-[120px] items-start relative self-stretch w-full">
             <div className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
               <div className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-                Remarques...
+                Remarks...
               </div>
             </div>
           </div>
@@ -77,11 +77,10 @@ export const GuestsSendReviews = ({
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="self-stretch w-full flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative self-stretch mt-[-1.00px] font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-primary-color text-[length:var(--body-large-medium-font-size)] tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] [font-style:var(--body-large-medium-font-style)]">
-              Notez les produits
+              Rate the products
             </div>
             <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
-              Les produits reçus correspondent-ils
-              <br />à vos attentes ?
+              Do the products received meet your expectations?
             </p>
           </div>
           <div className="inline-flex items-center gap-[8.33px] relative flex-[0_0_auto]">
@@ -102,7 +101,7 @@ export const GuestsSendReviews = ({
           <div className="flex flex-col h-[120px] items-start relative self-stretch w-full">
             <div className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
               <div className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-                Remarques...
+                Remarks...
               </div>
             </div>
           </div>
@@ -122,10 +121,10 @@ export const GuestsSendReviews = ({
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="self-stretch w-full flex flex-col items-start relative flex-[0_0_auto]">
             <p className="relative self-stretch mt-[-1.00px] font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-primary-color text-[length:var(--body-large-medium-font-size)] tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] [font-style:var(--body-large-medium-font-style)]">
-              Notez la plateforme Good Deals
+              Rate the Good Deals platform
             </p>
             <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
-              Avez-vous apprécié utiliser notre site ?
+              Did you enjoy using our site?
             </p>
           </div>
           <div className="inline-flex items-center gap-[8.33px] relative flex-[0_0_auto]">
@@ -146,7 +145,7 @@ export const GuestsSendReviews = ({
           <div className="flex flex-col h-[120px] items-start relative self-stretch w-full">
             <div className="h-[120px] flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
               <div className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-                Remarques...
+                Remarks...
               </div>
             </div>
           </div>
@@ -165,7 +164,7 @@ export const GuestsSendReviews = ({
         />
         <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Envoyer mon avis
+            Send my review
           </button>
           <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
         </div>

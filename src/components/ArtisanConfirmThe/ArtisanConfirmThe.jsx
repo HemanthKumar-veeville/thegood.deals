@@ -21,7 +21,9 @@ import {
   Line60,
   Line59,
   Rectangle_4592_5,
+  Human,
 } from "../../images";
+import { Send1 } from "../../icons/Send1";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -34,10 +36,10 @@ export const ArtisanConfirmThe = ({
       <AppBar />
       <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Cher artisan, merci de valider ce deal 🤝
+          Dear craftsman, thank you for validating this deal 🤝
         </p>
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-          Une fois le deal confirmé, celui-ci sera proposé à la vente.
+          Once the deal is confirmed, it will be offered for sale.
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -50,15 +52,13 @@ export const ArtisanConfirmThe = ({
           src={blogImage}
         />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Caisses de vins
-          <br />
-          Domaine de Cigaluse
+          Wine cratesDomaine de Cigaluse
         </p>
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              du 15 au 30 août (soit 15 jours)
+              from August 15 to 30 (15 days)
             </p>
           </div>
         </div>
@@ -77,11 +77,11 @@ export const ArtisanConfirmThe = ({
           <img
             className="relative w-[50px] h-[50px] object-cover"
             alt="Rectangle"
-            src={Rectangle_4592_5}
+            src={Human}
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              Collecte organisée par
+              Collection organized by
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
               Abraham Thomas
@@ -96,18 +96,18 @@ export const ArtisanConfirmThe = ({
           </div>
         </div>
         <div className="relative self-stretch font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] [font-style:var(--body-large-bold-font-style)]">
-          À propos du deal
+          About the deal
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            J&#39;ai découvert le domaine de Cilagus récemment, et je dois dire
-            que le vin y est exceptionnel. Cette découverte m&#39;a tellement
-            marqué que je souhaite la partager avec vous...
+            I discovered the Cilagus estate recently, and I must say that the
+            wine there is exceptional. This discovery had such an impact on me
+            that I would like to share it with you...
           </span>
           <span className="text-[#1b4f4a] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
             &nbsp;
           </span>
-          <span className="font-bold text-[#1b4f4a] underline">Lire plus</span>
+          <span className="font-bold text-[#1b4f4a] underline">Read more</span>
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -117,19 +117,18 @@ export const ArtisanConfirmThe = ({
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
-            Que recoivent les clients ?
+            What do customers receive?
           </p>
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            Chaque commande groupée inclura une sélection variée de bouteilles
-            provenant du domaine de Cilaguse, couvrant des vins rouges robustes,
-            des blancs délicats...
+            Each bulk order will include a diverse selection of bottles from
+            Cilaguse Estate, spanning robust red wines, delicate whites...
           </span>
           <span className="text-[#1b4f4a] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
             &nbsp;&nbsp;
           </span>
-          <span className="font-bold text-[#1b4f4a] underline">Lire plus</span>
+          <span className="font-bold text-[#1b4f4a] underline">Read more</span>
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -139,13 +138,13 @@ export const ArtisanConfirmThe = ({
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
-            Lieu et Date de livraison
+            Delivery location and date
           </p>
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-            Samedi 15 avril, entre 10h et 15h
+            Saturday April 15, between 10 a.m. and 3 p.m.
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -164,7 +163,7 @@ export const ArtisanConfirmThe = ({
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <Box44 className="!relative !w-5 !h-5" />
             <div className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
-              Le good deal
+              The good deal
             </div>
           </div>
           <img
@@ -175,24 +174,24 @@ export const ArtisanConfirmThe = ({
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Caisse de Rosé - 6 bouteilles
+                Case of Rosé - 6 bottles
               </p>
             </div>
             <div className="flex flex-col items-start justify-center gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-orangeorange text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                Quantité min. par commande : 2
+                Min quantity. per order: 2
               </p>
               <p className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-secondary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                Quantité max. par commande : 13
+                Max quantity. per order: 13
               </p>
               <div className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-primary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                Stock total : 32
+                Total stock: 32
               </div>
             </div>
             <div className="items-center justify-end gap-[70px] self-stretch w-full flex relative flex-[0_0_auto]">
               <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] font-body-large-regular font-[number:var(--body-large-regular-font-weight)] text-primary-color text-[length:var(--body-large-regular-font-size)] text-right tracking-[var(--body-large-regular-letter-spacing)] leading-[var(--body-large-regular-line-height)] whitespace-nowrap [font-style:var(--body-large-regular-font-style)]">
-                  29.00 € à l’unité
+                  €29.00 per unit
                 </div>
               </div>
             </div>
@@ -205,18 +204,18 @@ export const ArtisanConfirmThe = ({
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Caisse de Rosé - 6 bouteilles
+                Case of Rosé - 6 bottles
               </p>
             </div>
             <div className="flex flex-col items-start justify-center gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-orangeorange text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                Quantité min. par commande : 2
+                Min quantity. per order: 2
               </p>
               <p className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-secondary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                Quantité max. par commande : 13
+                Max quantity. per order: 13
               </p>
               <div className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-primary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                Stock total : 32
+                Total stock: 32
               </div>
             </div>
             <div className="items-center justify-end gap-[70px] self-stretch w-full flex relative flex-[0_0_auto]">
@@ -236,13 +235,13 @@ export const ArtisanConfirmThe = ({
             <div className="gap-2 bg-whitewhite border border-solid border-redred shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md">
               <CrossCircle className="!relative !w-5 !h-5 !ml-[-6.75px]" />
               <button className="all-[unset] box-border mr-[-6.75px] text-redred relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                Refuser
+                Refuse
               </button>
             </div>
             <div className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md">
-              <Send2 className="!relative !w-5 !h-5 !ml-[-13.25px]" />
+              <Send1 className="!relative !w-5 !h-5 !ml-[-13.25px]" />
               <button className="all-[unset] box-border mr-[-13.25px] text-whitewhite relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                Confimer
+                Confirm
               </button>
             </div>
           </div>

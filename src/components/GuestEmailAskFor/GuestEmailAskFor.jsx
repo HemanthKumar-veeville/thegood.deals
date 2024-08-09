@@ -8,6 +8,7 @@ import { Send } from "../../icons/Send";
 import { Star } from "../../icons/Star";
 import { StarFill1 } from "../../icons/StarFill1";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
+import { Send1 } from "../../icons/Send1";
 
 export const GuestEmailAskFor = ({ HEADERClassName }) => {
   return (
@@ -26,9 +27,7 @@ export const GuestEmailAskFor = ({ HEADERClassName }) => {
       </div>
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Cher invité,
-          <br />
-          donnez-nous votre avis !
+          Dear guest, give us your opinion!
         </p>
         <div className="inline-flex items-center gap-[8.33px] relative flex-[0_0_auto]">
           <div className="inline-flex items-start gap-[6.25px] relative flex-[0_0_auto]">
@@ -43,15 +42,15 @@ export const GuestEmailAskFor = ({ HEADERClassName }) => {
           </div>
         </div>
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-          Nous espérons que vous êtes satisfait de notre service. <br />
+          We hope you are satisfied with our service. <br />
           <br />
-          Afin de continuer d’améliorer votre expérience, pourriez-vous prendre
-          un moment pour nous laisser votre avis ?
+          To continue improving your experience, could you take a moment to
+          leave us your review?
         </p>
         <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
-          <Send className="!relative !w-5 !h-5" />
+          <Send1 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Donner mon avis
+            Give my opinion
           </button>
         </div>
       </div>
