@@ -40,6 +40,7 @@ import { ArtisanConfirmTheScreen } from "./screens/ArtisanConfirmed/ArtisanConfi
 import { GuestsSendReviewsScreen } from "./screens/GuestSendReview/GuestSendReview";
 import { ArtisanEmailScreen } from "./screens/ArtisanEmailScreen/ArtisanEmailScreen";
 import { ArtisanEmailList } from "./components/ArtisanEmailList";
+import { GuestEmailAskForScreen } from "./screens/AskGuestReview/AskGuestReview";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
   {
     path: "/artisan-email-list",
     element: wrapWithPageWrapper(ArtisanEmailList),
+  },
+  {
+    path: "/ask-guest-review",
+    element: wrapWithPageWrapper(GuestEmailAskForScreen),
   },
 ]);
 
