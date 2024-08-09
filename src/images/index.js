@@ -52,6 +52,7 @@ import Rectangle5095_1 from "../../static/img/rectangle-5095-1.png";
 import Rectangle_5095 from "../../static/img/rectangle-5095.png";
 import Ellipse from "../../static/img/ellipse-2763.png";
 import Rectangle_4592 from "../../static/img/rectangle-4592.png";
+import Human from "../../static/img/human.png";
 
 export {
   placeHolderImage14,
@@ -106,4 +107,5 @@ export {
   Rectangle_5095,
   Ellipse,
   Rectangle_4592,
+  Human,
 };

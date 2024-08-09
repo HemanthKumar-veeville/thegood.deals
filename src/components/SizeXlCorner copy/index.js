@@ -1,0 +1,1 @@
+export { SizeXlCorner } from "./SizeXlCorner";

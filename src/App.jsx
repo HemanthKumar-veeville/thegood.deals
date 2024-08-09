@@ -38,6 +38,8 @@ import { MyInformation } from "./screens/MyInformation/MyInformation";
 import { ArtisanDeniedTheScreen } from "./screens/ArtisanDenied/ArtisanDenied";
 import { ArtisanConfirmTheScreen } from "./screens/ArtisanConfirmed/ArtisanConfirmed";
 import { GuestsSendReviewsScreen } from "./screens/GuestSendReview/GuestSendReview";
+import { ArtisanEmailScreen } from "./screens/ArtisanEmailScreen/ArtisanEmailScreen";
+import { ArtisanEmailList } from "./components/ArtisanEmailList";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -94,6 +96,14 @@ const router = createBrowserRouter([
   {
     path: "/guest-send-review",
     element: wrapWithPageWrapper(GuestsSendReviewsScreen),
+  },
+  {
+    path: "/artisan-email",
+    element: wrapWithPageWrapper(ArtisanEmailScreen),
+  },
+  {
+    path: "/artisan-email-list",
+    element: wrapWithPageWrapper(ArtisanEmailList),
   },
 ]);
 
