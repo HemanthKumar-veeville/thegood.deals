@@ -50,13 +50,13 @@ export const ArtisanDeniedThe = ({
           </p>
           <div className="flex flex-col items-start relative flex-1 self-stretch w-full grow">
             <div className="flex items-start gap-2.5 p-5 self-stretch w-full grow bg-whitewhite rounded-md border border-solid border-stroke relative flex-1">
-              <input
-                type="text"
+              <textarea
                 value={feedback}
                 onChange={handleFeedbackChange}
                 placeholder="eg. Change the address, increase the price..."
-                className="mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] relative flex-1 [font-style:var(--body-medium-regular-font-style)] w-full focus:outline-none"
+                className="mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] relative flex-1 [font-style:var(--body-medium-regular-font-style)] w-full focus:outline-none resize-none"
                 maxLength="250"
+                rows="5"
               />
             </div>
           </div>
