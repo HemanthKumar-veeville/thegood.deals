@@ -11,6 +11,7 @@ import { SignIn } from "../SignIn/SignIn.jsx";
 import { SignUp } from "../SignUp/SignUp.jsx";
 import { useNavigate } from "react-router-dom";
 import AppBar from "../../components/AppBar/AppBar.jsx";
+import { InfinitySpin } from "react-loader-spinner";
 
 const Auth = () => {
   const [isLoginTab, setIsLoginTab] = useState(true);
@@ -44,7 +45,15 @@ const Auth = () => {
   return (
     <div className="relative w-screen h-screen bg-primary-background mx-auto">
       <AppBar />
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <InfinitySpin
+          height="300"
+          width="300"
+          radius="9"
+          color="#2a4e4a"
+          ariaLabel="three-dots-loading"
+        />
+      )}
       {!isLoading && (
         <div className="flex w-screen items-start justify-center gap-[35px] px-[25px] py-0 absolute top-16 left-0 border-b [border-bottom-style:solid] border-stroke">
           <TabMenuStyle

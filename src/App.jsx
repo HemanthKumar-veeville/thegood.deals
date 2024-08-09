@@ -35,6 +35,9 @@ import { LanguageSelection } from "./screens/LanguageSelection/LanguageSelection
 import { CurrencySelection } from "./screens/CurrencySelection/CurrencySelection";
 import { AdminViewGoodDeal } from "./screens/AdminViewGoodDeal/AdminViewGoodDeal";
 import { MyInformation } from "./screens/MyInformation/MyInformation";
+import { ArtisanDeniedTheScreen } from "./screens/ArtisanDenied/ArtisanDenied";
+import { ArtisanConfirmTheScreen } from "./screens/ArtisanConfirmed/ArtisanConfirmed";
+import { GuestsSendReviewsScreen } from "./screens/GuestSendReview/GuestSendReview";
 
 const wrapWithPageWrapper = (Component) => (
   <PageWrapper>
@@ -80,6 +83,18 @@ const router = createBrowserRouter([
   { path: "/select-currency", element: wrapWithPageWrapper(CurrencySelection) },
   { path: "/admin-view-deal", element: wrapWithPageWrapper(AdminViewGoodDeal) },
   { path: "/my-information", element: wrapWithPageWrapper(MyInformation) },
+  {
+    path: "/artisan-denied-deal",
+    element: wrapWithPageWrapper(ArtisanDeniedTheScreen),
+  },
+  {
+    path: "/artisan-confirmed-deal",
+    element: wrapWithPageWrapper(ArtisanConfirmTheScreen),
+  },
+  {
+    path: "/guest-send-review",
+    element: wrapWithPageWrapper(GuestsSendReviewsScreen),
+  },
 ]);
 
 function App() {

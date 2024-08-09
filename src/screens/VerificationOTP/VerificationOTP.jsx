@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
+import Swal from "sweetalert2";
 import { Button } from "../../components/Button/Button.jsx";
 import AppBar from "../../components/AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../helpers/helperMethods.js";
+import { InfinitySpin } from "react-loader-spinner";
 
 const OTPInput = ({ value, onChange, index, inputRefs }) => (
   <div className="flex flex-col w-12 h-12 items-start gap-[5px] relative">
@@ -44,7 +46,7 @@ const OTPInput = ({ value, onChange, index, inputRefs }) => (
   </div>
 );
 
-export const VerificationOTP = () => {
+export const VerificationOTP = ({ setIsLoading }) => {
   const [otp, setOtp] = useState(Array(5).fill(""));
   const [seconds, setSeconds] = useState(33);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -53,6 +55,13 @@ export const VerificationOTP = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
+
+  useEffect(() => {
+    const savedOtp = JSON.parse(localStorage.getItem("otpInput"));
+    if (savedOtp) {
+      setOtp(savedOtp);
+    }
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -64,6 +73,10 @@ export const VerificationOTP = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("otpInput", JSON.stringify(otp));
+  }, [otp]);
 
   const handleChange = (value, index) => {
     if (/^[0-9]$/.test(value) || value === "") {
@@ -93,11 +106,17 @@ export const VerificationOTP = () => {
       const response = await axiosInstance.post("verify", formData);
 
       if (response?.status === 201) {
+        localStorage.removeItem("otpInput");
         navigate("/account");
       }
     } catch (error) {
       console.error("There was an error!", error);
-      alert(error?.response?.data?.detail);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error?.response?.data?.detail,
+      });
+      setIsLoading(false);
     }
     setLoading(false); // Hide loader
   };
@@ -159,7 +178,17 @@ export const VerificationOTP = () => {
           </div>
         </div>
       )}
-      {loading && <div>Loading...</div>}
+      {loading && (
+        <InfinitySpin
+          height="300"
+          width="300"
+          radius="9"
+          color="#2a4e4a"
+          ariaLabel="three-dots-loading"
+        />
+      )}
     </div>
   );
 };
+
+export default VerificationOTP;

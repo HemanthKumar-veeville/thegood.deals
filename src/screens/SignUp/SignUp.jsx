@@ -89,8 +89,9 @@ export const SignUp = ({ setIsLoading }) => {
     } catch (error) {
       console.error("There was an error!", error);
       alert(error?.response?.data?.detail);
+      setIsLoading(false);
     }
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   const togglePasswordVisibility = () => {

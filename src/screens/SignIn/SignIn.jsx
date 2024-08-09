@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
 import { Button } from "../../components/Button/Button.jsx";
 import { AppleBrand1 } from "../../icons/AppleBrand1/AppleBrand1.jsx";
 import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8.jsx";
@@ -12,6 +13,14 @@ import { axiosInstance } from "../../helpers/helperMethods.js";
 const SignIn = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedValues = JSON.parse(localStorage.getItem("signInForm"));
+    if (savedValues) {
+      formik.setValues(savedValues);
+    }
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -30,18 +39,26 @@ const SignIn = ({ setIsLoading }) => {
         const response = await axiosInstance.post("login", formData);
 
         if (response?.status === 200) {
+          localStorage.removeItem("signInForm");
           navigate("/account");
           formik.resetForm();
         }
         console.log({ response });
       } catch (error) {
         console.error("There was an error!", error);
-        alert(error?.response?.data?.detail);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error?.response?.data?.detail,
+        });
+        setIsLoading(false);
       }
-      setIsLoading(false);
-      formik.resetForm();
     },
   });
+
+  useEffect(() => {
+    localStorage.setItem("signInForm", JSON.stringify(formik.values));
+  }, [formik.values]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
