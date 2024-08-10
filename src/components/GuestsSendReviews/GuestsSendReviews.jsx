@@ -5,6 +5,7 @@ import { StarFill1 } from "../../icons/StarFill1";
 import { VerticalLine } from "../../icons/VerticalLine";
 import { Header } from "../Header";
 import AppBar from "../AppBar/AppBar";
+import { Line63 } from "../../images";
 
 export const GuestsSendReviews = ({
   HEADERHeaderOpenClassName,
@@ -67,7 +68,7 @@ export const GuestsSendReviews = ({
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-71.svg"
+          src={Line63}
         />
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="w-[247px] flex flex-col items-start relative flex-[0_0_auto]">
@@ -103,7 +104,7 @@ export const GuestsSendReviews = ({
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-71.svg"
+          src={Line63}
         />
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="self-stretch w-full flex flex-col items-start relative flex-[0_0_auto]">
@@ -139,7 +140,7 @@ export const GuestsSendReviews = ({
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-71.svg"
+          src={Line63}
         />
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="self-stretch w-full flex flex-col items-start relative flex-[0_0_auto]">
@@ -175,7 +176,7 @@ export const GuestsSendReviews = ({
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-71.svg"
+          src={Line63}
         />
         <div
           className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md focus:outline-none focus:ring-2 focus:ring-[#2a4e4a]"
