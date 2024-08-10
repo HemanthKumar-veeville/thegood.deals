@@ -1,16 +1,14 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
 import React from "react";
-import { Send } from "../../icons/Send";
+import { Send1 } from "../../icons/Send1";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { RatingStar } from "../RatingStar";
-import { blogImage, Human } from "../../images";
-import { Send1 } from "../../icons/Send1";
+import { blogImage, Human, Line63 } from "../../images";
 
 export const ArtisanEmail = ({ HEADERClassName }) => {
+  const handleButtonClick = () => {
+    alert("You clicked 'See the deal'.");
+  };
+
   return (
     <div className="flex flex-col w-[360px] items-start relative bg-primary-background">
       <div
@@ -44,7 +42,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <img
           className="relative self-stretch w-full h-[150px] object-cover"
@@ -57,7 +55,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           <img
@@ -84,9 +82,12 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
-        <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
+        <div
+          className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"
+          onClick={handleButtonClick}
+        >
           <Send1 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
             See the deal
