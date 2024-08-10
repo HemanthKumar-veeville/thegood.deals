@@ -1,22 +1,103 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
-import React from "react";
+import React, { useState } from "react";
 import { Box4 } from "../../icons/Box4";
 import { ChevronDown } from "../../icons/ChevronDown";
 import { ChevronUp } from "../../icons/ChevronUp";
-import { Send } from "../../icons/Send";
+import { Send1 } from "../../icons/Send1";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { SizeXlCorner } from "../SizeXlCorner";
-import { Send1 } from "../../icons/Send1";
+import { Line63 } from "../../images"; // Ensure correct import path
 
 export const ArtisanEmailList = ({ HEADERClassName }) => {
+  const items = [
+    {
+      initials: "AT",
+      name: "Abraham Thomas",
+      orders: 1,
+      expanded: true,
+      products: [
+        {
+          name: "Case of Rosé - 6 bottles",
+          quantity: 3,
+          price: "29.00 €",
+          totalPrice: "87 €",
+        },
+        {
+          name: "Case of White - 6 bottles",
+          quantity: 3,
+          price: "29.00 €",
+          totalPrice: "87 €",
+        },
+      ],
+      totalPrice: "174 €",
+    },
+    {
+      initials: "JD",
+      name: "Jane Doe",
+      orders: 1,
+      expanded: false,
+      products: [
+        {
+          name: "Case of Rosé - 6 bottles",
+          quantity: 3,
+          price: "29.00 €",
+          totalPrice: "87 €",
+        },
+        {
+          name: "Case of White - 6 bottles",
+          quantity: 3,
+          price: "29.00 €",
+          totalPrice: "87 €",
+        },
+      ],
+      totalPrice: "174 €",
+    },
+    {
+      initials: "KD",
+      name: "Kate Doe",
+      orders: 1,
+      expanded: false,
+      products: [
+        {
+          name: "Case of Rosé - 6 bottles",
+          quantity: 3,
+          price: "29.00 €",
+          totalPrice: "87 €",
+        },
+        {
+          name: "Case of White - 6 bottles",
+          quantity: 3,
+          price: "29.00 €",
+          totalPrice: "87 €",
+        },
+      ],
+      totalPrice: "174 €",
+    },
+  ];
+
+  const [expandedItems, setExpandedItems] = useState(
+    items.map((item) => item.expanded)
+  );
+
+  const toggleExpand = (index) => {
+    setExpandedItems((prev) =>
+      prev.map((expanded, i) => (i === index ? !expanded : expanded))
+    );
+  };
+
+  const handleConfirm = () => {
+    alert("Information confirmed!");
+  };
+
+  // Calculate total price with proper parsing of the price values
+  const totalOrderPrice = items.reduce((acc, item) => {
+    const itemTotal = parseFloat(item.totalPrice.replace(" €", ""));
+    return acc + itemTotal;
+  }, 0);
+
   return (
     <div className="flex flex-col w-[360px] items-start relative bg-primary-background">
       <div
-        className={`flex flex-col w-[360px] h-16 items-start relative bg-primary-background border-b [border-bottom-style:solid] border-stroke ${HEADERClassName}`}
+        className={`flex flex-col w-[360px] h-16 items-start relative bg-primary-background border-b border-solid border-stroke ${HEADERClassName}`}
       >
         <div className="flex h-16 items-center justify-around gap-8 pl-5 pr-3 py-0 relative self-stretch w-full">
           <div className="inline-flex items-start relative flex-[0_0_auto]">
@@ -28,10 +109,10 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
         </div>
       </div>
       <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
-        <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
+        <p className="relative self-stretch mt-[-1.00px] font-heading-6 text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)]">
           Dear craftsman, please confirm the order form 🧾
         </p>
-        <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
+        <p className="relative self-stretch font-body-medium-regular text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)]">
           Please confirm the order form below. We want to ensure that all
           information is correct in order to trigger payment.
           <br />
@@ -40,272 +121,126 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
         </p>
         <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
           <Send1 className="!relative !w-5 !h-5" />
-          <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+          <button
+            className="all-[unset] box-border relative w-fit mt-[-1.00px] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap"
+            onClick={handleConfirm}
+          >
             Confirm information
           </button>
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-73.svg"
+          src={Line63}
         />
-        <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-          <SizeXlCorner
-            className="!h-[50px] !w-[50px]"
-            divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-[13px] !leading-10 !top-1"
-            text="AT"
-          />
-          <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Abraham Thomas
-            </div>
-            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-              <Box4 className="!relative !w-5 !h-5" />
-              <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                1 order on the deal
-              </p>
-            </div>
-          </div>
-          <ChevronDown className="!relative !w-6 !h-6" color="#1B4F4A" />
-        </div>
-        <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
-          <img
-            className="relative self-stretch w-full h-px mt-[-1.00px] object-cover"
-            alt="Line"
-            src="/img/line-68-2.svg"
-          />
-          <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Case of Rosé - 6 bottles
-              </p>
-            </div>
-            <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 products
+        {items.map((item, index) => (
+          <div
+            className={`flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] ${
+              index % 2 === 0 ? "bg-white" : "bg-gray-100"
+            }`}
+            key={index}
+          >
+            <img
+              className="relative self-stretch w-full h-px object-cover"
+              alt="Line"
+              src={Line63}
+            />
+            <div
+              className="flex items-center gap-[15px] relative flex-[0_0_auto] cursor-pointer"
+              onClick={() => toggleExpand(index)}
+            >
+              <SizeXlCorner
+                className="!h-[50px] !w-[50px]"
+                divClassName="!tracking-[0] !text-lg !font-semibold !font-sans !leading-10 !top-1"
+                text={item.initials}
+              />
+              <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
+                <div className="relative w-fit mt-[-1.00px] font-medium text-primary-color text-base leading-6 whitespace-nowrap">
+                  {item.name}
+                </div>
+                <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
+                  <Box4 className="!relative !w-5 !h-5" />
+                  <p className="relative w-fit mt-[-1.00px] text-primary-text-color text-sm leading-5 whitespace-nowrap">
+                    {item.orders} order on the deal
+                  </p>
                 </div>
               </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] text-right tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  29.00 € x 3 = 87 €
-                </p>
-              </div>
+              {expandedItems[index] ? (
+                <ChevronUp className="!relative !w-6 !h-6" />
+              ) : (
+                <ChevronDown className="!relative !w-6 !h-6" />
+              )}
             </div>
-          </div>
-          <div className="items-start flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Case of White - 6 bottles
-              </p>
-            </div>
-            <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 products
+            {expandedItems[index] && (
+              <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto]">
+                <img
+                  className="relative self-stretch w-full h-px mt-[-1.00px] object-cover"
+                  alt="Line"
+                  src={Line63}
+                />
+                {item.products.map((product, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]"
+                  >
+                    <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+                      <p className="relative w-fit mt-[-1.00px] font-medium text-primary-color text-base leading-6 whitespace-nowrap">
+                        {product.name}
+                      </p>
+                    </div>
+                    <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
+                      <div className="flex items-center gap-2.5 relative flex-1 grow">
+                        <div className="relative w-fit mt-[-1.00px] text-secondary-color font-semibold text-base leading-6 whitespace-nowrap">
+                          {product.quantity} products
+                        </div>
+                      </div>
+                      <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
+                        <p className="relative w-fit mt-[-1.00px] text-secondary-color font-semibold text-base text-right leading-6 whitespace-nowrap">
+                          {product.price} x {product.quantity} ={" "}
+                          {product.totalPrice}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
+                  <div className="flex items-center gap-2.5 relative flex-1 grow">
+                    <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-base leading-6 whitespace-nowrap">
+                      Total
+                    </div>
+                  </div>
+                  <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
+                    <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-base text-right leading-6 whitespace-nowrap">
+                      {item.totalPrice}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] text-right tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  29.00 € x 3 = 87 €
-                </p>
-              </div>
-            </div>
+            )}
           </div>
-          <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative flex-1 grow">
-              <div className="relative w-fit mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-primary-color text-[length:var(--body-large-semibold-font-size)] tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] whitespace-nowrap [font-style:var(--body-large-semibold-font-style)]">
-                Total
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-primary-color text-[length:var(--body-large-semibold-font-size)] text-right tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] whitespace-nowrap [font-style:var(--body-large-semibold-font-style)]">
-                174 €
-              </div>
-            </div>
-          </div>
-        </div>
+        ))}
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-73.svg"
+          src={Line63}
         />
-        <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-          <SizeXlCorner
-            className="!h-[50px] !w-[50px]"
-            divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-[13px] !leading-10 !top-1"
-            text="JD"
-          />
-          <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Jane Doe
-            </div>
-            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-              <Box4 className="!relative !w-5 !h-5" />
-              <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                1 order on the deal
-              </p>
-            </div>
-          </div>
-          <ChevronUp className="!relative !w-6 !h-6" />
-        </div>
-        <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
-          <img
-            className="relative self-stretch w-full h-px mt-[-1.00px] object-cover"
-            alt="Line"
-            src="/img/line-68-2.svg"
-          />
-          <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Case of Rosé - 6 bottles
-              </p>
-            </div>
-            <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 products
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] text-right tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  29.00 € x 3 = 87 €
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="items-start flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Case of White - 6 bottles
-              </p>
-            </div>
-            <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 products
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] text-right tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  29.00 € x 3 = 87 €
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative flex-1 grow">
-              <div className="relative w-fit mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-primary-color text-[length:var(--body-large-semibold-font-size)] tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] whitespace-nowrap [font-style:var(--body-large-semibold-font-style)]">
-                Total
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-primary-color text-[length:var(--body-large-semibold-font-size)] text-right tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] whitespace-nowrap [font-style:var(--body-large-semibold-font-style)]">
-                174 €
-              </div>
-            </div>
-          </div>
-        </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src="/img/line-73.svg"
-        />
-        <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-          <SizeXlCorner
-            className="!h-[50px] !w-[50px]"
-            divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-[13px] !leading-10 !top-1"
-            text="JD"
-          />
-          <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Jane Doe
-            </div>
-            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-              <Box4 className="!relative !w-5 !h-5" />
-              <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                1 order on the deal
-              </p>
-            </div>
-          </div>
-          <ChevronUp className="!relative !w-6 !h-6" />
-        </div>
-        <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
-          <img
-            className="relative self-stretch w-full h-px mt-[-1.00px] object-cover"
-            alt="Line"
-            src="/img/line-68-2.svg"
-          />
-          <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Case of Rosé - 6 bottles
-              </p>
-            </div>
-            <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 products
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] text-right tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  29.00 € x 3 = 87 €
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="items-start flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                Case of White - 6 bottles
-              </p>
-            </div>
-            <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-              <div className="flex items-center gap-2.5 relative flex-1 grow">
-                <div className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  3 products
-                </div>
-              </div>
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <p className="relative w-fit mt-[-1.00px] font-body-medium-semibold font-[number:var(--body-medium-semibold-font-weight)] text-secondary-color text-[length:var(--body-medium-semibold-font-size)] text-right tracking-[var(--body-medium-semibold-letter-spacing)] leading-[var(--body-medium-semibold-line-height)] whitespace-nowrap [font-style:var(--body-medium-semibold-font-style)]">
-                  29.00 € x 3 = 87 €
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative flex-1 grow">
-              <div className="relative w-fit mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-primary-color text-[length:var(--body-large-semibold-font-size)] tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] whitespace-nowrap [font-style:var(--body-large-semibold-font-style)]">
-                Total
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-primary-color text-[length:var(--body-large-semibold-font-size)] text-right tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] whitespace-nowrap [font-style:var(--body-large-semibold-font-style)]">
-                174 €
-              </div>
-            </div>
-          </div>
-        </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src="/img/line-73.svg"
-        />
-        <div className="flex-col items-start gap-[15px] p-[15px] self-stretch w-full bg-whitewhite rounded-[5px] flex relative flex-[0_0_auto]">
+        <div className="flex-col items-start gap-[15px] p-[15px] self-stretch w-full bg-white rounded-[5px] flex relative flex-[0_0_auto]">
           <div className="items-end flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex justify-between self-stretch w-full items-end relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] text-center tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
+              <div className="relative w-fit mt-[-1.00px] font-bold text-primary-color text-base text-center leading-6 whitespace-nowrap">
                 Total Price
               </div>
-              <div className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] text-right tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
-                552.00 €
+              <div className="relative w-fit mt-[-1.00px] font-bold text-primary-color text-base text-right leading-6 whitespace-nowrap">
+                {totalOrderPrice.toFixed(2)} €
               </div>
             </div>
           </div>
           <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
             <Send1 className="!relative !w-5 !h-5" />
-            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+            <button
+              className="all-[unset] box-border relative w-fit mt-[-1.00px] font-medium text-white text-base text-center leading-6 whitespace-nowrap"
+              onClick={handleConfirm}
+            >
               Confirm information
             </button>
           </div>
