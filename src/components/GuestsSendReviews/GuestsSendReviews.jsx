@@ -1,9 +1,4 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
-import React from "react";
+import React, { useState } from "react";
 import { ArrowRight1 } from "../../icons/ArrowRight1";
 import { Star5 } from "../../icons/Star5";
 import { StarFill1 } from "../../icons/StarFill1";
@@ -15,6 +10,50 @@ export const GuestsSendReviews = ({
   HEADERHeaderOpenClassName,
   HEADERIcon = <VerticalLine className="!relative !w-6 !h-6" color="#1B4F4A" />,
 }) => {
+  const [organizerRating, setOrganizerRating] = useState(0);
+  const [productRating, setProductRating] = useState(0);
+  const [platformRating, setPlatformRating] = useState(0);
+  const [organizerRemarks, setOrganizerRemarks] = useState("");
+  const [productRemarks, setProductRemarks] = useState("");
+  const [platformRemarks, setPlatformRemarks] = useState("");
+
+  const handleStarClick = (setRating, ratingValue) => {
+    setRating(ratingValue);
+  };
+
+  const handleTextAreaChange = (setRemarks, event) => {
+    setRemarks(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    alert(`
+      Organizer Rating: ${organizerRating}/5
+      Organizer Remarks: ${organizerRemarks}
+      Product Rating: ${productRating}/5
+      Product Remarks: ${productRemarks}
+      Platform Rating: ${platformRating}/5
+      Platform Remarks: ${platformRemarks}
+    `);
+  };
+
+  const renderStars = (currentRating, setRating) => {
+    return [1, 2, 3, 4, 5].map((ratingValue) => (
+      <div
+        key={ratingValue}
+        onClick={() => handleStarClick(setRating, ratingValue)}
+      >
+        {currentRating >= ratingValue ? (
+          <StarFill1
+            className="!relative !w-[25px] !h-[25px]"
+            color="#F59E0B"
+          />
+        ) : (
+          <Star5 className="!relative !w-[25px] !h-[25px]" color="#F59E0B" />
+        )}
+      </div>
+    ));
+  };
+
   return (
     <div className="flex flex-col w-[360px] items-start relative bg-primary-background">
       <AppBar />
@@ -33,7 +72,7 @@ export const GuestsSendReviews = ({
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="w-[247px] flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative self-stretch mt-[-1.00px] font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-primary-color text-[length:var(--body-large-medium-font-size)] tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] [font-style:var(--body-large-medium-font-style)]">
-              Note the organizer of the deal
+              Rate the organizer of the deal
             </div>
             <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
               Was the organizer up to the task?
@@ -41,30 +80,22 @@ export const GuestsSendReviews = ({
           </div>
           <div className="inline-flex items-center gap-[8.33px] relative flex-[0_0_auto]">
             <div className="inline-flex items-start gap-[6.25px] relative flex-[0_0_auto]">
-              <StarFill1
-                className="!relative !w-[25px] !h-[25px]"
-                color="#F59E0B"
-              />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <Star5
-                className="!relative !w-[25px] !h-[25px]"
-                color="#F59E0B"
-              />
+              {renderStars(organizerRating, setOrganizerRating)}
             </div>
           </div>
           <div className="flex flex-col h-[120px] items-start relative self-stretch w-full">
-            <div className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
-              <div className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-                Remarks...
-              </div>
-            </div>
+            <textarea
+              className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke focus:outline-none focus:ring-2 focus:ring-[#2a4e4a] placeholder:text-[#637381] text-[#637381]"
+              value={organizerRemarks}
+              onChange={(e) => handleTextAreaChange(setOrganizerRemarks, e)}
+              maxLength={250}
+              placeholder="Remarks..."
+            />
           </div>
           <div className="flex items-end justify-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="relative w-[42px] h-[22px] mr-[-2.00px]">
               <div className="absolute top-0 left-0 font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-right tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                0/250
+                {organizerRemarks.length}/250
               </div>
             </div>
           </div>
@@ -85,30 +116,22 @@ export const GuestsSendReviews = ({
           </div>
           <div className="inline-flex items-center gap-[8.33px] relative flex-[0_0_auto]">
             <div className="inline-flex items-start gap-[6.25px] relative flex-[0_0_auto]">
-              <StarFill1
-                className="!relative !w-[25px] !h-[25px]"
-                color="#F59E0B"
-              />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <Star5
-                className="!relative !w-[25px] !h-[25px]"
-                color="#F59E0B"
-              />
+              {renderStars(productRating, setProductRating)}
             </div>
           </div>
           <div className="flex flex-col h-[120px] items-start relative self-stretch w-full">
-            <div className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
-              <div className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-                Remarks...
-              </div>
-            </div>
+            <textarea
+              className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke focus:outline-none focus:ring-2 focus:ring-[#2a4e4a] placeholder:text-[#637381] text-[#637381]"
+              value={productRemarks}
+              onChange={(e) => handleTextAreaChange(setProductRemarks, e)}
+              maxLength={250}
+              placeholder="Remarks..."
+            />
           </div>
           <div className="flex items-end justify-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="relative w-[42px] h-[22px] mr-[-2.00px]">
               <div className="absolute top-0 left-0 font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-right tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                0/250
+                {productRemarks.length}/250
               </div>
             </div>
           </div>
@@ -129,30 +152,22 @@ export const GuestsSendReviews = ({
           </div>
           <div className="inline-flex items-center gap-[8.33px] relative flex-[0_0_auto]">
             <div className="inline-flex items-start gap-[6.25px] relative flex-[0_0_auto]">
-              <StarFill1
-                className="!relative !w-[25px] !h-[25px]"
-                color="#F59E0B"
-              />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <StarFill1 className="!relative !w-[25px] !h-[25px]" />
-              <Star5
-                className="!relative !w-[25px] !h-[25px]"
-                color="#F59E0B"
-              />
+              {renderStars(platformRating, setPlatformRating)}
             </div>
           </div>
           <div className="flex flex-col h-[120px] items-start relative self-stretch w-full">
-            <div className="h-[120px] flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
-              <div className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-                Remarks...
-              </div>
-            </div>
+            <textarea
+              className="h-[120px] flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke focus:outline-none focus:ring-2 focus:ring-[#2a4e4a] placeholder:text-[#637381] text-[#637381]"
+              value={platformRemarks}
+              onChange={(e) => handleTextAreaChange(setPlatformRemarks, e)}
+              maxLength={250}
+              placeholder="Remarks..."
+            />
           </div>
           <div className="flex items-end justify-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="relative w-[42px] h-[22px] mr-[-2.00px]">
               <div className="absolute top-0 left-0 font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-right tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                0/250
+                {platformRemarks.length}/250
               </div>
             </div>
           </div>
@@ -162,7 +177,10 @@ export const GuestsSendReviews = ({
           alt="Line"
           src="/img/line-71.svg"
         />
-        <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
+        <div
+          className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md focus:outline-none focus:ring-2 focus:ring-[#2a4e4a]"
+          onClick={handleSubmit}
+        >
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
             Send my review
           </button>

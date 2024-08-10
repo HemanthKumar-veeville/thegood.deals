@@ -1,8 +1,3 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
 import React from "react";
 import { Box44 } from "../../icons/Box44";
 import { ClockAlt11 } from "../../icons/ClockAlt11";
@@ -31,8 +26,16 @@ export const ArtisanConfirmThe = ({
   ),
   HEADERHeaderOpenClassName,
 }) => {
+  const handleRefuse = () => {
+    alert("You have refused the deal.");
+  };
+
+  const handleConfirm = () => {
+    alert("You have confirmed the deal.");
+  };
+
   return (
-    <div className="flex flex-col w-[360px] items-start relative bg-primary-background">
+    <div className="flex flex-col w-screen items-start relative bg-primary-background">
       <AppBar />
       <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
@@ -44,7 +47,7 @@ export const ArtisanConfirmThe = ({
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <img
           className="relative self-stretch w-full h-[150px] object-cover"
@@ -71,7 +74,7 @@ export const ArtisanConfirmThe = ({
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           <img
@@ -112,7 +115,7 @@ export const ArtisanConfirmThe = ({
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
@@ -133,7 +136,7 @@ export const ArtisanConfirmThe = ({
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
@@ -144,7 +147,7 @@ export const ArtisanConfirmThe = ({
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-            Saturday April 15, between 10 a.m. and 3 p.m.
+            Saturday April 15, between 10 a.m
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -169,7 +172,7 @@ export const ArtisanConfirmThe = ({
           <img
             className="relative self-stretch w-full h-px object-cover"
             alt="Line"
-            src="/img/line-68.svg"
+            src={Line63}
           />
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -199,7 +202,7 @@ export const ArtisanConfirmThe = ({
           <img
             className="relative self-stretch w-full h-px object-cover"
             alt="Line"
-            src="/img/line-68.svg"
+            src={Line63}
           />
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -229,16 +232,22 @@ export const ArtisanConfirmThe = ({
           <img
             className="relative self-stretch w-full h-px object-cover"
             alt="Line"
-            src="/img/line-68.svg"
+            src={Line63}
           />
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="gap-2 bg-whitewhite border border-solid border-redred shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md">
+            <div
+              onClick={handleRefuse}
+              className="gap-2 bg-whitewhite border border-solid border-redred shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md"
+            >
               <CrossCircle className="!relative !w-5 !h-5 !ml-[-6.75px]" />
               <button className="all-[unset] box-border mr-[-6.75px] text-redred relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                 Refuse
               </button>
             </div>
-            <div className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md">
+            <div
+              onClick={handleConfirm}
+              className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md"
+            >
               <Send1 className="!relative !w-5 !h-5 !ml-[-13.25px]" />
               <button className="all-[unset] box-border mr-[-13.25px] text-whitewhite relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                 Confirm
