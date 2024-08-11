@@ -6,31 +6,18 @@ import AppBar from "../../components/AppBar/AppBar";
 
 export const LostPassword = () => {
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleSendLink = async () => {
-    setErrorMessage("");
-    setSuccessMessage("");
+  const handleSendLink = () => {
+    alert(`Email has been sent to ${email}`);
+    setEmail("");
+  };
 
-    if (!email) {
-      setErrorMessage("Veuillez entrer une adresse email valide.");
-      return;
-    }
-
-    try {
-      // Assume sendPasswordReset is a function that sends the password reset link
-      await sendPasswordReset(email);
-      setSuccessMessage(
-        "Le lien de réinitialisation du mot de passe a été envoyé."
-      );
-    } catch (error) {
-      setErrorMessage("Erreur lors de l'envoi du lien. Veuillez réessayer.");
-    }
+  const handleBack = () => {
+    alert("Back Button clicked");
   };
 
   return (
@@ -38,7 +25,10 @@ export const LostPassword = () => {
       <AppBar />
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
         <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
-          <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+          <div
+            className="inline-flex items-center gap-2 relative flex-[0_0_auto]"
+            onClick={handleBack}
+          >
             <ArrowLeft1
               className="!relative !w-[18px] !h-[18px]"
               color="#637381"
@@ -67,8 +57,6 @@ export const LostPassword = () => {
             </div>
           </div>
         </div>
-        {errorMessage && <p className="text-red-600">{errorMessage}</p>}
-        {successMessage && <p className="text-green-600">{successMessage}</p>}
         <div onClick={handleSendLink} className="w-full">
           <Button
             buttonText="Receive the link"
@@ -82,15 +70,4 @@ export const LostPassword = () => {
       </div>
     </div>
   );
-};
-
-// This function simulates sending a password reset link
-const sendPasswordReset = async (email) => {
-  // Simulate a delay
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Simulate a success response
-      resolve();
-    }, 1000);
-  });
 };

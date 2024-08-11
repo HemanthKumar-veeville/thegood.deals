@@ -11,8 +11,11 @@ import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { Send1 } from "../../icons/Send1";
 
 export const GuestEmailAskFor = ({ HEADERClassName }) => {
+  const handleSend = () => {
+    alert("Button clicked");
+  };
   return (
-    <div className="flex flex-col w-[360px] h-[660px] items-start relative bg-primary-background">
+    <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background">
       <div
         className={`flex flex-col w-[360px] h-16 items-start relative bg-primary-background border-b [border-bottom-style:solid] border-stroke ${HEADERClassName}`}
       >
@@ -47,7 +50,10 @@ export const GuestEmailAskFor = ({ HEADERClassName }) => {
           To continue improving your experience, could you take a moment to
           leave us your review?
         </p>
-        <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
+        <div
+          className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"
+          onClick={handleSend}
+        >
           <Send1 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
             Give my opinion

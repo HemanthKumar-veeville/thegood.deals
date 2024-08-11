@@ -136,7 +136,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
         {items.map((item, index) => (
           <div
             className={`flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] ${
-              index % 2 === 0 ? "bg-white" : "bg-gray-100"
+              index % 2 === 0 ? "bg-white" : "bg-white"
             }`}
             key={index}
           >
