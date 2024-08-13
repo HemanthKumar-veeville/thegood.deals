@@ -47,7 +47,7 @@ export const CardDeal = ({
   ),
   badgesColor = "warning",
   badgesText1 = statusBanner[text1].text,
-  dealExpiryDate,
+  dealEndsIn,
   isGuestDeal,
 }) => {
   const calculateDaysLeft = (expiryDate) => {
@@ -57,7 +57,7 @@ export const CardDeal = ({
     return daysLeft;
   };
 
-  const daysLeft = calculateDaysLeft(dealExpiryDate);
+  const daysLeft = dealEndsIn;
   const statusCaption = {
     out_of_stock: `ends in ${daysLeft} days`,
     finished: "Deal finished",
@@ -76,7 +76,7 @@ export const CardDeal = ({
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           {!(text1 === "draft" || text1 === "waiting") && override}
           <p
-            className={`relative self-stretch font-body-medium-bold font-[number:var(--body-medium-bold-font-weight)] text-primary-color text-[length:var(--body-medium-bold-font-size)] tracking-[var(--body-medium-bold-letter-spacing)] leading-[var(--body-medium-bold-line-height)] [font-style:var(--body-medium-bold-font-style)] ${caissesDeVinsClassName}`}
+            className={`capitalize relative self-stretch font-body-medium-bold font-[number:var(--body-medium-bold-font-weight)] text-primary-color text-[length:var(--body-medium-bold-font-size)] tracking-[var(--body-medium-bold-letter-spacing)] leading-[var(--body-medium-bold-line-height)] [font-style:var(--body-medium-bold-font-style)] ${caissesDeVinsClassName}`}
           >
             {text}
           </p>

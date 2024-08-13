@@ -20,7 +20,7 @@ import { Minus1 } from "../../icons/Minus1";
 import { Plus1 } from "../../icons/Plus1";
 import ProductList from "../../components/ProductInfo/ProductList";
 import { useSelector, useDispatch } from "react-redux";
-import { addDeal } from "../../redux/app/deals/dealSlice";
+// import { addDeal } from "../../redux/app/deals/dealSlice";
 
 const CreateDeal = () => {
   const [formData, setFormData] = useState({
@@ -85,7 +85,7 @@ const CreateDeal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ ...formData, title, products });
-    dispatch(addDeal({ ...formData, title, products }));
+    // dispatch(addDeal({ ...formData, title, products }));
     navigate("/inform-deal");
   };
 

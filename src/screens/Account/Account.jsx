@@ -25,7 +25,7 @@ export const Account = () => {
   const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
   const { deals, status } = dealsState;
-  console.log({ dealsState });
+
   useEffect(() => {
     location?.state?.activeTab &&
       handleTabSwitch(location?.state?.activeTab || "created");
@@ -35,10 +35,8 @@ export const Account = () => {
   };
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchDeals());
-    }
-  }, [dispatch, status]);
+    dispatch(fetchDeals());
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -166,7 +164,7 @@ export const Account = () => {
         </div>
         {activeTab === "created" ? (
           <>
-            {deals?.map((deal) => (
+            {deals?.Deals?.map((deal) => (
               <div
                 onClick={() => handleCardClick(deal)}
                 className="cursor-pointer"
@@ -186,17 +184,17 @@ export const Account = () => {
                       <ProgressBarGreen percentage={90} />
                     )
                   }
-                  text={deal.dealTitle}
-                  text1={deal.dealStatus}
-                  participantsCount={deal.participantsCount}
-                  dealExpiryDate={deal?.dealExpiryDate}
+                  text={deal.deal_title}
+                  text1={deal.deal_status}
+                  participantsCount={deal.deal_participants_count}
+                  dealEndsIn={deal?.deal_ends_in}
                 />
               </div>
             ))}
           </>
         ) : (
           <>
-            {deals?.map((deal) => (
+            {deals?.Deals?.map((deal) => (
               <div
                 onClick={() => handleCardClick(deal)}
                 className="cursor-pointer"
@@ -216,10 +214,10 @@ export const Account = () => {
                       <ProgressBarGreen percentage={90} />
                     )
                   }
-                  text={deal.dealTitle}
-                  text1={deal.dealStatus}
-                  participantsCount={deal.participantsCount}
-                  dealExpiryDate={deal?.dealExpiryDate}
+                  text={deal.deal_title}
+                  text1={deal.deal_status}
+                  participantsCount={deal.deal_participants_count}
+                  dealEndsIn={deal?.deal_ends_in}
                   isGuestDeal={true}
                 />
               </div>

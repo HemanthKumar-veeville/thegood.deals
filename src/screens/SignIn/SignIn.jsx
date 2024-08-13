@@ -39,6 +39,10 @@ const SignIn = ({ setIsLoading }) => {
         const response = await axiosInstance.post("login", formData);
 
         if (response?.status === 200) {
+          // Optionally log or access the cookie if needed
+          console.log("Cookies:", document.cookie);
+
+          // Proceed with your success actions
           localStorage.removeItem("signInForm");
           navigate("/account");
           formik.resetForm();

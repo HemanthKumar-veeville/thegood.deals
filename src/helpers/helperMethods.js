@@ -2,9 +2,12 @@ import axios from "axios";
 
 export const axiosInstance = axios.create({
   baseURL:
-    "https://eaf3-2401-4900-61cd-94be-2963-156d-467e-b42a.ngrok-free.app/", // Replace with your API base URL
+    "https://b49e-2401-4900-61ad-809c-8973-56fd-46f7-2e30.ngrok-free.app/", // Replace with your API base URL
   headers: {
     "Content-Type": "multipart/form-data",
     "Access-Control-Allow-Origin": "*",
+    "access-control-allow-credentials": true,
+    "ngrok-skip-browser-warning": "69420",
   },
+  withCredentials: true,
 });
