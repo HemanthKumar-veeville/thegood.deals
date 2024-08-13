@@ -30,12 +30,14 @@ export const Account = () => {
     location?.state?.activeTab &&
       handleTabSwitch(location?.state?.activeTab || "created");
   }, []);
+
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
+    dispatch(fetchDeals({ deal_type: tab, page: 1, limit: 3 }));
   };
 
   useEffect(() => {
-    dispatch(fetchDeals());
+    dispatch(fetchDeals({ deal_type: "created", page: 1, limit: 3 }));
   }, []);
 
   useEffect(() => {
@@ -142,11 +144,11 @@ export const Account = () => {
           </div>
           <div
             className={`flex-1 flex grow cursor-pointer ${
-              activeTab === "guests"
+              activeTab === "invited"
                 ? "bg-primary-dark-color text-white"
                 : "text-primary-color hover:bg-gray-200"
             }`}
-            onClick={() => handleTabSwitch("guests")}
+            onClick={() => handleTabSwitch("invited")}
           >
             <ButtonGroup
               buttonClassName={`!mt-[-1.00px]`}
@@ -154,10 +156,10 @@ export const Account = () => {
               icon={
                 <Users3
                   className="!relative !w-[18px] !h-[18px]"
-                  color={activeTab === "guests" ? "white" : "#1B4F4A"}
+                  color={activeTab === "invited" ? "white" : "#1B4F4A"}
                 />
               }
-              state={activeTab === "guests" ? "active" : "default"}
+              state={activeTab === "invited" ? "active" : "default"}
               text="Invited"
             />
           </div>

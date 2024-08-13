@@ -13,11 +13,13 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
 
   const handleAddClick = () => {
     const newProduct = {
-      productTitle,
-      minQuantity,
-      maxQuantity,
-      goodDealPrice,
-      estimatedDiscount: 50,
+      name: productTitle,
+      minimum_quantity: minQuantity,
+      maximum_quantity: maxQuantity,
+      deal_price: goodDealPrice,
+      estimated_discount: 50,
+      market_price: 23,
+      total_stock: 10,
     };
     addProduct(newProduct);
     setProductTitle("");

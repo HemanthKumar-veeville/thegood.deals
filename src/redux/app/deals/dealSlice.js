@@ -12,9 +12,11 @@ const initialState = {
 // Async thunk for fetching deals
 export const fetchDeals = createAsyncThunk(
   "deals/fetchDeals",
-  async (_, { rejectWithValue }) => {
+  async ({ deal_type, page, limit }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get("deals/1/3");
+      const response = await axiosInstance.get(
+        `deals/${deal_type}/${page}/${limit}`
+      );
       console.log({ response });
       return response.data;
     } catch (err) {

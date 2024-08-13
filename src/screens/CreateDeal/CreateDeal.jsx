@@ -20,6 +20,7 @@ import { Minus1 } from "../../icons/Minus1";
 import { Plus1 } from "../../icons/Plus1";
 import ProductList from "../../components/ProductInfo/ProductList";
 import { useSelector, useDispatch } from "react-redux";
+import { addNewDeal } from "../../redux/app/deals/dealSlice";
 // import { addDeal } from "../../redux/app/deals/dealSlice";
 
 const CreateDeal = () => {
@@ -84,8 +85,23 @@ const CreateDeal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ ...formData, title, products });
-    // dispatch(addDeal({ ...formData, title, products }));
+    const form = new FormData();
+    form.append("title", formData.title);
+    form.append("description", formData.description);
+    form.append("collection_location", "hyderabad");
+    form.append("collection_date", formData.collectionDate);
+    form.append("content_description", formData.contentDescription);
+    form.append("artisan_information", formData.manufacturerInfo);
+    form.append("banking_info[iban]", formData.iban);
+    form.append("banking_info[bic]", formData.bic);
+    form.append("deal_expiration_date", formData.dealExpiration);
+    form.append("minimum_products", formData.minProducts);
+    form.append("terms_accepted", formData.acceptConditions);
+    form.append("images", formData.pictures);
+    form.append("products", products);
+
+    dispatch(addNewDeal(form));
+
     navigate("/inform-deal");
   };
 
