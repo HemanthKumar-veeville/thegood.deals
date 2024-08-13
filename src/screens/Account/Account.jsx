@@ -13,17 +13,19 @@ import { ChatAlt6 } from "../../icons/ChatAlt6";
 import { Line63, Line_60_1, Line_59_2 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
+import { fetchDeals } from "../../redux/app/deals/dealSlice";
 
 export const Account = () => {
   const [activeTab, setActiveTab] = useState("created");
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
-  const { deals } = dealsState;
-
+  const { deals, status } = dealsState;
+  console.log({ dealsState });
   useEffect(() => {
     location?.state?.activeTab &&
       handleTabSwitch(location?.state?.activeTab || "created");
@@ -31,6 +33,12 @@ export const Account = () => {
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchDeals());
+    }
+  }, [dispatch, status]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -88,91 +96,8 @@ export const Account = () => {
     }
   };
 
-  const DEALS = [
-    {
-      deal_id: "0x001",
-      dealStatus: "out_of_stock",
-      participantsCount: 14,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-      dealExpiryDate: new Date("2024-08-05"),
-    },
-    {
-      deal_id: "0xi001",
-      dealStatus: "in_stock",
-      participantsCount: 14,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-      dealExpiryDate: new Date("2024-08-05"),
-    },
-    {
-      deal_id: "0x002",
-      dealStatus: "finished",
-      participantsCount: 9,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-    },
-    {
-      deal_id: "0x003",
-      dealStatus: "waiting",
-      participantsCount: 0,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-    },
-    {
-      deal_id: "0x004",
-      dealStatus: "draft",
-      participantsCount: 0,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-    },
-  ];
-
-  const GuestDeals = [
-    {
-      deal_id: "0xg001",
-      dealStatus: "in_stock",
-      participantsCount: 14,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-      dealExpiryDate: new Date("2024-08-05"),
-    },
-    {
-      deal_id: "0x001",
-      dealStatus: "out_of_stock",
-      participantsCount: 14,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-      dealExpiryDate: new Date("2024-08-05"),
-    },
-    {
-      deal_id: "0x001",
-      dealStatus: "finished",
-      participantsCount: 14,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-      dealExpiryDate: new Date("2024-08-05"),
-    },
-  ];
-
   return (
-    <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto">
+    <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto h-screen">
       <AppBar />
       <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
@@ -241,7 +166,7 @@ export const Account = () => {
         </div>
         {activeTab === "created" ? (
           <>
-            {DEALS?.map((deal) => (
+            {deals?.map((deal) => (
               <div
                 onClick={() => handleCardClick(deal)}
                 className="cursor-pointer"
@@ -271,7 +196,7 @@ export const Account = () => {
           </>
         ) : (
           <>
-            {GuestDeals?.map((deal) => (
+            {deals?.map((deal) => (
               <div
                 onClick={() => handleCardClick(deal)}
                 className="cursor-pointer"
