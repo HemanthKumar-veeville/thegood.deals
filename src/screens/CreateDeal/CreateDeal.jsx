@@ -86,19 +86,24 @@ const CreateDeal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = new FormData();
-    form.append("title", formData.title);
+    form.append("title", title);
     form.append("description", formData.description);
     form.append("collection_location", "hyderabad");
-    form.append("collection_date", formData.collectionDate);
+    form.append("collection_date", "2024-08-20T17:42");
     form.append("content_description", formData.contentDescription);
     form.append("artisan_information", formData.manufacturerInfo);
     form.append("banking_info[iban]", formData.iban);
     form.append("banking_info[bic]", formData.bic);
-    form.append("deal_expiration_date", formData.dealExpiration);
+    form.append("deal_expiration_date", "2024-08-20T17:42");
     form.append("minimum_products", formData.minProducts);
-    form.append("terms_accepted", formData.acceptConditions);
+    form.append("terms_accepted", formData.acceptConditions ? "on" : "off");
     form.append("images", formData.pictures);
-    form.append("products", products);
+    products.forEach((product, index) => {
+      const productKeys = Object.keys(product);
+      productKeys.forEach((key) => {
+        form.append(`products[${index}][${key}]`, products[index][key]);
+      });
+    });
 
     dispatch(addNewDeal(form));
 

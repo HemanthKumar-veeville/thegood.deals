@@ -26,11 +26,16 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Badges } from "../../components/Badges";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
+import { getDealByDealId } from "../../redux/app/deals/dealSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const ActiveDeal = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const dispatch = useDispatch();
+  const dealState = useSelector((state) => state.deals);
+  const { deal, status } = dealState;
+  console.log({ deal, status });
   const handleBack = () => {
     navigate("/account");
   };
@@ -57,6 +62,10 @@ export const ActiveDeal = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getDealByDealId("fe4667b7-7e5f-48b9-8ecc-9824c560cc34"));
   }, []);
 
   return (

@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { fetchDeals } from "../../redux/app/deals/dealSlice";
+import { InfinitySpin } from "react-loader-spinner";
 
 export const Account = () => {
   const [activeTab, setActiveTab] = useState("created");
@@ -25,11 +26,11 @@ export const Account = () => {
   const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
   const { deals, status } = dealsState;
-
+  console.log({ status });
   useEffect(() => {
     location?.state?.activeTab &&
-      handleTabSwitch(location?.state?.activeTab || "created");
-  }, []);
+      handleTabSwitch(location?.state?.activeTab || activeTab);
+  }, [activeTab]);
 
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
@@ -164,68 +165,44 @@ export const Account = () => {
             />
           </div>
         </div>
-        {activeTab === "created" ? (
-          <>
-            {deals?.Deals?.map((deal) => (
-              <div
-                onClick={() => handleCardClick(deal)}
-                className="cursor-pointer"
-              >
-                <CardDeal
-                  badgesColor="success"
-                  badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-                  badgesText1={deal.dealStatus}
-                  caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
-                  className="!flex-[0_0_auto]"
-                  divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
-                  divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
-                  override={
-                    deal.dealStatus === "out_of_stock" ? (
-                      <ProgressBarYellow percentage={80} />
-                    ) : (
-                      <ProgressBarGreen percentage={90} />
-                    )
-                  }
-                  text={deal.deal_title}
-                  text1={deal.deal_status}
-                  participantsCount={deal.deal_participants_count}
-                  dealEndsIn={deal?.deal_ends_in}
-                />
-              </div>
-            ))}
-          </>
-        ) : (
-          <>
-            {deals?.Deals?.map((deal) => (
-              <div
-                onClick={() => handleCardClick(deal)}
-                className="cursor-pointer"
-              >
-                <CardDeal
-                  badgesColor="success"
-                  badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-                  badgesText1={deal.dealStatus}
-                  caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
-                  className="!flex-[0_0_auto]"
-                  divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
-                  divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
-                  override={
-                    deal.dealStatus === "out_of_stock" ? (
-                      <ProgressBarYellow percentage={98} />
-                    ) : (
-                      <ProgressBarGreen percentage={90} />
-                    )
-                  }
-                  text={deal.deal_title}
-                  text1={deal.deal_status}
-                  participantsCount={deal.deal_participants_count}
-                  dealEndsIn={deal?.deal_ends_in}
-                  isGuestDeal={true}
-                />
-              </div>
-            ))}
-          </>
+        {status === "loading" && (
+          <InfinitySpin
+            height="300"
+            width="300"
+            radius="9"
+            color="#2a4e4a"
+            ariaLabel="three-dots-loading"
+          />
         )}
+        {status !== "loading" &&
+          deals?.Deals?.map((deal) => (
+            <div
+              onClick={() => handleCardClick(deal)}
+              className="cursor-pointer"
+            >
+              <CardDeal
+                badgesColor="success"
+                badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+                badgesText1={deal.dealStatus}
+                caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
+                className="!flex-[0_0_auto]"
+                divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
+                divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
+                override={
+                  deal.dealStatus === "out_of_stock" ? (
+                    <ProgressBarYellow percentage={98} />
+                  ) : (
+                    <ProgressBarGreen percentage={90} />
+                  )
+                }
+                text={deal.deal_title}
+                text1={deal.deal_status}
+                participantsCount={deal.deal_participants_count}
+                dealEndsIn={deal?.deal_ends_in}
+                isGuestDeal={activeTab === "invited"}
+              />
+            </div>
+          ))}
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"

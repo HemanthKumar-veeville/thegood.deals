@@ -9,10 +9,13 @@ import { FacebookFill } from "../../icons/FacebookFill/FacebookFill.jsx";
 import { Google } from "../../icons/Google/Google.jsx";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../helpers/helperMethods.js";
+import { useDispatch } from "react-redux";
+import { checkUserLoginStatus } from "../../redux/app/user/userSlice.js";
 
 const SignIn = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const savedValues = JSON.parse(localStorage.getItem("signInForm"));
@@ -44,6 +47,7 @@ const SignIn = ({ setIsLoading }) => {
 
           // Proceed with your success actions
           localStorage.removeItem("signInForm");
+          dispatch(checkUserLoginStatus());
           navigate("/account");
           formik.resetForm();
         }
