@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { fetchDeals } from "../../redux/app/deals/dealSlice";
-import { CustomLoader } from "../../components/CustomLoader";
+import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
 
 const Account = () => {
   const [activeTab, setActiveTab] = useState("created");
