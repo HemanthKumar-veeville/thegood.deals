@@ -26,7 +26,7 @@ import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Badges } from "../../components/Badges";
 
-export const WaitingDeal = () => {
+const WaitingDeal = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -195,3 +195,5 @@ export const WaitingDeal = () => {
     </div>
   );
 };
+
+export default WaitingDeal;

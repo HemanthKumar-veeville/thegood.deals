@@ -53,6 +53,7 @@ import Rectangle_5095 from "../../static/img/rectangle-5095.png";
 import Ellipse from "../../static/img/ellipse-2763.png";
 import Rectangle_4592 from "../../static/img/rectangle-4592.png";
 import Human from "../../static/img/human.png";
+import GiphyLoader from "../../static/img/Loader_optimized.gif";
 
 export {
   placeHolderImage14,
@@ -108,4 +109,5 @@ export {
   Ellipse,
   Rectangle_4592,
   Human,
+  GiphyLoader,
 };

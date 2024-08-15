@@ -8,7 +8,7 @@ import AppBar from "../../components/AppBar/AppBar";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 
-export const Wallet = () => {
+const Wallet = () => {
   const [fundsUnlocked, setFundsUnlocked] = useState(false);
   const navigate = useNavigate();
   const handleUnlockFunds = () => {
@@ -108,3 +108,5 @@ export const Wallet = () => {
     </div>
   );
 };
+
+export default Wallet;

@@ -6,7 +6,7 @@ import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const ThanksToAdmin = () => {
+const ThanksToAdmin = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -47,3 +47,5 @@ export const ThanksToAdmin = () => {
     </div>
   );
 };
+
+export default ThanksToAdmin;

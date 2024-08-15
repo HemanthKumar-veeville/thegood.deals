@@ -32,7 +32,7 @@ import ScrollIntoView from "react-scroll-into-view";
 import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
 import ImageRotator from "../../components/ImageRotator/ImageRotator";
 
-export const Home = () => {
+const Home = () => {
   const navigate = useNavigate();
   const IMAGES = [picture1, picture2, picture3, picture4];
 
@@ -260,3 +260,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;

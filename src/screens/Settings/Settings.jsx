@@ -10,7 +10,7 @@ import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const SettingsPage = () => {
+const SettingsPage = () => {
   const navigate = useNavigate();
   const handleBack = () => {
     navigate("/account");
@@ -115,3 +115,5 @@ export const SettingsPage = () => {
     </div>
   );
 };
+
+export default SettingsPage;

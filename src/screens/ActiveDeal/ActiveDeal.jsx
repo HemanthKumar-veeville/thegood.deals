@@ -29,7 +29,7 @@ import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import { getDealByDealId } from "../../redux/app/deals/dealSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-export const ActiveDeal = () => {
+const ActiveDeal = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -392,3 +392,5 @@ export const ActiveDeal = () => {
     </div>
   );
 };
+
+export default ActiveDeal;

@@ -1,1 +1,3 @@
-export { ArtisanEmailList } from "./ArtisanEmailList";
+import { ArtisanEmailList } from "./ArtisanEmailList";
+
+export default ArtisanEmailList;

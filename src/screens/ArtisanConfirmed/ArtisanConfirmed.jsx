@@ -2,7 +2,7 @@ import React from "react";
 import { ArtisanConfirmThe } from "../../components/ArtisanConfirmThe";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
 
-export const ArtisanConfirmTheScreen = () => {
+const ArtisanConfirmTheScreen = () => {
   return (
     <ArtisanConfirmThe
       HEADERHeaderOpenClassName="![border-right-style:none] ![border-top-style:none] ![border-left-style:none]"
@@ -12,3 +12,5 @@ export const ArtisanConfirmTheScreen = () => {
     />
   );
 };
+
+export default ArtisanConfirmTheScreen;

@@ -5,7 +5,7 @@ import { ChevronDown } from "../../icons/ChevronDown";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const LanguageSelection = () => {
+const LanguageSelection = () => {
   const navigate = useNavigate();
   const [selectedLanguage, setSelectedLanguage] = useState("French");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -91,3 +91,5 @@ export const LanguageSelection = () => {
     </div>
   );
 };
+
+export default LanguageSelection;

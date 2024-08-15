@@ -2,7 +2,7 @@ import React from "react";
 import { ArtisanDeniedThe } from "../../components/ArtisanDeniedThe";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
 
-export const ArtisanDeniedTheScreen = () => {
+const ArtisanDeniedTheScreen = () => {
   return (
     <ArtisanDeniedThe
       HEADERHeaderOpenClassName="![border-right-style:none] ![border-top-style:none] ![border-left-style:none]"
@@ -12,3 +12,5 @@ export const ArtisanDeniedTheScreen = () => {
     />
   );
 };
+
+export default ArtisanDeniedTheScreen;

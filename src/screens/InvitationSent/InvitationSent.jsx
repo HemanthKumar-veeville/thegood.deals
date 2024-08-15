@@ -6,7 +6,7 @@ import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const InvitationSent = () => {
+const InvitationSent = () => {
   const navigate = useNavigate();
   const handleBackToHome = () => {
     // Logic for navigating back to home
@@ -45,3 +45,5 @@ export const InvitationSent = () => {
     </div>
   );
 };
+
+export default InvitationSent;

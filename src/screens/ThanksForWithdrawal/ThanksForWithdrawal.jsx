@@ -6,7 +6,7 @@ import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const ThanksForWithdrawal = () => {
+const ThanksForWithdrawal = () => {
   const navigate = useNavigate();
   const handleBackToHome = () => {
     // Logic for navigating back to home
@@ -47,3 +47,5 @@ export const ThanksForWithdrawal = () => {
     </div>
   );
 };
+
+export default ThanksForWithdrawal;

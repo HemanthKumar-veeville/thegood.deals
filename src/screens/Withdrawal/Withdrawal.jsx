@@ -6,7 +6,7 @@ import AppBar from "../../components/AppBar/AppBar";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 
-export const Withdrawal = () => {
+const Withdrawal = () => {
   const [withdrawalValidated, setWithdrawalValidated] = useState(false);
   const navigate = useNavigate();
 
@@ -66,3 +66,5 @@ export const Withdrawal = () => {
     </div>
   );
 };
+
+export default Withdrawal;

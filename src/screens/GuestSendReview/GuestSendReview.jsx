@@ -2,7 +2,7 @@ import React from "react";
 import { GuestsSendReviews } from "../../components/GuestsSendReviews";
 import { VerticalLine } from "../../icons/VerticalLine";
 
-export const GuestsSendReviewsScreen = () => {
+const GuestsSendReviewsScreen = () => {
   return (
     <GuestsSendReviews
       HEADERHeaderOpenClassName="![border-right-style:none] ![border-top-style:none] ![border-left-style:none]"
@@ -12,3 +12,5 @@ export const GuestsSendReviewsScreen = () => {
     />
   );
 };
+
+export default GuestsSendReviewsScreen;

@@ -8,7 +8,7 @@ import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const InformToCraftsMan = () => {
+const InformToCraftsMan = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
@@ -83,3 +83,5 @@ export const InformToCraftsMan = () => {
     </div>
   );
 };
+
+export default InformToCraftsMan;

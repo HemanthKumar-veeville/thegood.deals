@@ -9,7 +9,7 @@ import AppBar from "../../components/AppBar/AppBar";
 import { Rectangle5095_1 } from "../../images";
 import { useNavigate } from "react-router-dom";
 
-export const EditProfile = () => {
+const EditProfile = () => {
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState({
@@ -273,3 +273,5 @@ export const EditProfile = () => {
     </div>
   );
 };
+
+export default EditProfile;

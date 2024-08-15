@@ -17,9 +17,9 @@ import { useSelector, useDispatch } from "react-redux";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { fetchDeals } from "../../redux/app/deals/dealSlice";
-import { InfinitySpin } from "react-loader-spinner";
+import { CustomLoader } from "../../components/CustomLoader";
 
-export const Account = () => {
+const Account = () => {
   const [activeTab, setActiveTab] = useState("created");
   const navigate = useNavigate();
   const location = useLocation();
@@ -165,15 +165,7 @@ export const Account = () => {
             />
           </div>
         </div>
-        {status === "loading" && (
-          <InfinitySpin
-            height="300"
-            width="300"
-            radius="9"
-            color="#2a4e4a"
-            ariaLabel="three-dots-loading"
-          />
-        )}
+        {status === "loading" && <CustomLoader />}
         {status !== "loading" &&
           deals?.Deals?.map((deal) => (
             <div
@@ -257,3 +249,5 @@ export const Account = () => {
     </div>
   );
 };
+
+export default Account;

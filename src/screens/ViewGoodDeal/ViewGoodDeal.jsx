@@ -23,7 +23,7 @@ import {
 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 
-export const ViewGoodDeal = () => {
+const ViewGoodDeal = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -342,3 +342,5 @@ export const ViewGoodDeal = () => {
     </div>
   );
 };
+
+export default ViewGoodDeal;

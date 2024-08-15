@@ -34,7 +34,7 @@ import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
 import ImageRotator from "../../components/ImageRotator/ImageRotator";
 import { Button } from "../../components/RoundedButton";
 
-export const HowItWorks = () => {
+const HowItWorks = () => {
   const navigate = useNavigate();
   const IMAGES = [picture1, picture2, picture3, picture4];
 
@@ -307,3 +307,5 @@ export const HowItWorks = () => {
     </div>
   );
 };
+
+export default HowItWorks;

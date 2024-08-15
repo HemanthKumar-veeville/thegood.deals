@@ -5,7 +5,7 @@ import { ChevronDown1 } from "../../icons/ChevronDown1";
 import { UserAlt3 } from "../../icons/UserAlt3";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export const SideBar = () => {
+const SideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -112,3 +112,5 @@ export const SideBar = () => {
     </div>
   );
 };
+
+export default SideBar;

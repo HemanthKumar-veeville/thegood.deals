@@ -1,91 +1,105 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { checkUserLoginStatus } from "./redux/app/user/userSlice";
-import PageWrapper from "./PageWrapper";
 import "./App.css";
+import loadable from "@loadable/component";
 
-// Import all your components
-import { Home } from "./screens/Home/Home";
-import { Auth } from "./screens/Auth/Auth";
-import { VerificationOTP } from "./screens/VerificationOTP/VerificationOTP";
-import { Account } from "./screens/Account/Account";
-import { CreateDeal } from "./screens/CreateDeal/CreateDeal";
-import { InformToCraftsMan } from "./screens/InformToCraftsMan/InformToCraftsMan";
-import { ThanksToAdmin } from "./screens/ThanksToAdmin/ThanksToAdmin";
-import { ActiveDeal } from "./screens/ActiveDeal/ActiveDeal";
-import { DraftDeal } from "./screens/DraftDeal/DraftDeal";
-import { WaitingDeal } from "./screens/WaitingDeal/WaitingDeal";
-import { Wallet } from "./screens/Wallet/Wallet";
-import { Withdrawal } from "./screens/Withdrawal/Withdrawal";
-import { Invitations } from "./screens/Invitations/Invitations";
-import { Orders } from "./screens/Orders/Orders";
-import { ViewGoodDeal } from "./screens/ViewGoodDeal/ViewGoodDeal";
-import { ThanksForWithdrawal } from "./screens/ThanksForWithdrawal/ThanksForWithdrawal";
-import { InviteLovedOnes } from "./screens/InviteLovedOnes/InviteLovedOnes";
-import { InvitationSent } from "./screens/InvitationSent/InvitationSent";
-import { GuestDealView } from "./screens/GuestDealView/GuestDealView";
-import AboutUs from "./screens/AboutUs/AboutUs";
-import { SideBar } from "./screens/SideBar/SideBar";
-import { HowItWorks } from "./screens/HowItWorks/HowItWorks";
-import ContactUs from "./screens/ContactUs/ContactUs";
-import { PublicNeedHelp } from "./screens/HelpMe/HelpMe";
-import { SettingsPage } from "./screens/Settings/Settings";
-import { EditProfile } from "./screens/EditProfile/EditProfile";
-import { Notifications } from "./screens/Notifications/Notifications";
-import { LanguageSelection } from "./screens/LanguageSelection/LanguageSelection";
-import { CurrencySelection } from "./screens/CurrencySelection/CurrencySelection";
-import { AdminViewGoodDeal } from "./screens/AdminViewGoodDeal/AdminViewGoodDeal";
-import { MyInformation } from "./screens/MyInformation/MyInformation";
-import { ArtisanDeniedTheScreen } from "./screens/ArtisanDenied/ArtisanDenied";
-import { ArtisanConfirmTheScreen } from "./screens/ArtisanConfirmed/ArtisanConfirmed";
-import { GuestsSendReviewsScreen } from "./screens/GuestSendReview/GuestSendReview";
-import { ArtisanEmailScreen } from "./screens/ArtisanEmailScreen/ArtisanEmailScreen";
-import { ArtisanEmailList } from "./components/ArtisanEmailList";
-import { GuestEmailAskForScreen } from "./screens/AskGuestReview/AskGuestReview";
-import { LostPassword } from "./screens/LostPassword/LostPassword";
-import { ResetPassword } from "./screens/ResetPassword/ResetPassword";
-import { InfinitySpin } from "react-loader-spinner";
-
-// Function to wrap components with PageWrapper
-const wrapWithPageWrapper = (Component) => (
-  <PageWrapper>
-    <Component />
-  </PageWrapper>
+// loadable load your components
+const Home = loadable(() => import("./screens/Home/Home"));
+const Auth = loadable(() => import("./screens/Auth/Auth"));
+const VerificationOTP = loadable(() =>
+  import("./screens/VerificationOTP/VerificationOTP")
 );
-
-// ProtectedRoute component
-function ProtectedRoute({ element }) {
-  const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      await dispatch(checkUserLoginStatus());
-      setLoading(false);
-    };
-    checkLoginStatus();
-  }, [dispatch]);
-
-  if (loading) {
-    return (
-      <InfinitySpin
-        height="300"
-        width="300"
-        radius="9"
-        color="#2a4e4a"
-        ariaLabel="three-dots-loading"
-      />
-    ); // Or any loading spinner
+const Account = loadable(() => import("./screens/Account/Account"));
+const CreateDeal = loadable(() => import("./screens/CreateDeal/CreateDeal"));
+const InformToCraftsMan = loadable(() =>
+  import("./screens/InformToCraftsMan/InformToCraftsMan")
+);
+const ThanksToAdmin = loadable(() =>
+  import("./screens/ThanksToAdmin/ThanksToAdmin")
+);
+const ActiveDeal = loadable(() => import("./screens/ActiveDeal/ActiveDeal"));
+const DraftDeal = loadable(() => import("./screens/DraftDeal/DraftDeal"));
+const WaitingDeal = loadable(() => import("./screens/WaitingDeal/WaitingDeal"));
+const Wallet = loadable(() => import("./screens/Wallet/Wallet"));
+const Withdrawal = loadable(() => import("./screens/Withdrawal/Withdrawal"));
+const Invitations = loadable(() => import("./screens/Invitations/Invitations"));
+const Orders = loadable(() => import("./screens/Orders/Orders"));
+const ViewGoodDeal = loadable(() =>
+  import("./screens/ViewGoodDeal/ViewGoodDeal")
+);
+const ThanksForWithdrawal = loadable(() =>
+  import("./screens/ThanksForWithdrawal/ThanksForWithdrawal")
+);
+const InviteLovedOnes = loadable(() =>
+  import("./screens/InviteLovedOnes/InviteLovedOnes")
+);
+const InvitationSent = loadable(() =>
+  import("./screens/InvitationSent/InvitationSent")
+);
+const GuestDealView = loadable(() =>
+  import("./screens/GuestDealView/GuestDealView")
+);
+const AboutUs = loadable(() => import("./screens/AboutUs/AboutUs"));
+const SideBar = loadable(() => import("./screens/SideBar/SideBar"));
+const HowItWorks = loadable(() => import("./screens/HowItWorks/HowItWorks"));
+const ContactUs = loadable(() => import("./screens/ContactUs/ContactUs"));
+const PublicNeedHelp = loadable(() => import("./screens/HelpMe/HelpMe"));
+const SettingsPage = loadable(() => import("./screens/Settings/Settings"));
+const EditProfile = loadable(() => import("./screens/EditProfile/EditProfile"));
+const Notifications = loadable(() =>
+  import("./screens/Notifications/Notifications")
+);
+const LanguageSelection = loadable(() =>
+  import("./screens/LanguageSelection/LanguageSelection")
+);
+const CurrencySelection = loadable(() =>
+  import("./screens/CurrencySelection/CurrencySelection")
+);
+const AdminViewGoodDeal = loadable(() =>
+  import("./screens/AdminViewGoodDeal/AdminViewGoodDeal")
+);
+const MyInformation = loadable(() =>
+  import("./screens/MyInformation/MyInformation")
+);
+const ArtisanDeniedTheScreen = loadable(() =>
+  import("./screens/ArtisanDenied/ArtisanDenied")
+);
+const ArtisanConfirmTheScreen = loadable(() =>
+  import("./screens/ArtisanConfirmed/ArtisanConfirmed")
+);
+const GuestsSendReviewsScreen = loadable(() =>
+  import("./screens/GuestSendReview/GuestSendReview")
+);
+const ArtisanEmailScreen = loadable(() =>
+  import("./screens/ArtisanEmailScreen/ArtisanEmailScreen")
+);
+const ArtisanEmailList = loadable(() =>
+  import("./components/ArtisanEmailList")
+);
+const GuestEmailAskForScreen = loadable(() =>
+  import("./screens/AskGuestReview/AskGuestReview")
+);
+const LostPassword = loadable(() =>
+  import("./screens/LostPassword/LostPassword")
+);
+const ResetPassword = loadable(() =>
+  import("./screens/ResetPassword/ResetPassword")
+);
+const CustomLoader = loadable(() =>
+  import("./components/CustomLoader/CustomLoader")
+);
+const ProtectedRoute = loadable(
+  () => import("./components/ProtectedRoute/ProtectedRoute"),
+  {
+    fallback: <CustomLoader />,
   }
-
-  return isUserLoggedIn ? element : <Navigate to="/auth?login" />;
-}
+);
 
 // App component
 function App() {
@@ -94,174 +108,324 @@ function App() {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      dispatch(checkUserLoginStatus());
+      await dispatch(checkUserLoginStatus());
       setIsReady(true);
     };
     checkLoginStatus();
   }, [dispatch]);
 
   if (!isReady) {
-    return (
-      <InfinitySpin
-        height="300"
-        width="300"
-        radius="9"
-        color="#2a4e4a"
-        ariaLabel="three-dots-loading"
-      />
-    ); // Or any loading spinner
+    return <CustomLoader />;
   }
 
   const router = createBrowserRouter([
-    { path: "/", element: wrapWithPageWrapper(Home) },
-    { path: "/auth", element: wrapWithPageWrapper(Auth) },
-    { path: "/verify", element: wrapWithPageWrapper(VerificationOTP) },
+    {
+      path: "/",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <Home />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/auth",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <Auth />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/verify",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <VerificationOTP />
+        </Suspense>
+      ),
+    },
     {
       path: "/account",
-      element: <ProtectedRoute element={wrapWithPageWrapper(Account)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<Account />} />
+        </Suspense>
+      ),
     },
     {
       path: "/create-deal",
-      element: <ProtectedRoute element={wrapWithPageWrapper(CreateDeal)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<CreateDeal />} />
+        </Suspense>
+      ),
     },
     {
       path: "/inform-deal",
       element: (
-        <ProtectedRoute element={wrapWithPageWrapper(InformToCraftsMan)} />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<InformToCraftsMan />} />
+        </Suspense>
       ),
     },
     {
       path: "/thanks-admin",
-      element: <ProtectedRoute element={wrapWithPageWrapper(ThanksToAdmin)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<ThanksToAdmin />} />
+        </Suspense>
+      ),
     },
     {
       path: "/admin-active-deal",
-      element: <ProtectedRoute element={wrapWithPageWrapper(ActiveDeal)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<ActiveDeal />} />
+        </Suspense>
+      ),
     },
     {
       path: "/admin-waiting-deal",
-      element: <ProtectedRoute element={wrapWithPageWrapper(WaitingDeal)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<WaitingDeal />} />
+        </Suspense>
+      ),
     },
     {
       path: "/admin-draft-deal",
-      element: <ProtectedRoute element={wrapWithPageWrapper(DraftDeal)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<DraftDeal />} />
+        </Suspense>
+      ),
     },
     {
       path: "/admin-wallet",
-      element: <ProtectedRoute element={wrapWithPageWrapper(Wallet)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<Wallet />} />
+        </Suspense>
+      ),
     },
     {
       path: "/admin-withdrawal",
-      element: <ProtectedRoute element={wrapWithPageWrapper(Withdrawal)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<Withdrawal />} />
+        </Suspense>
+      ),
     },
     {
       path: "/thanks-withdrawal",
-      element: wrapWithPageWrapper(ThanksForWithdrawal),
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<ThanksForWithdrawal />} />
+        </Suspense>
+      ),
     },
     {
       path: "/admin-invitations",
-      element: <ProtectedRoute element={wrapWithPageWrapper(Invitations)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<Invitations />} />
+        </Suspense>
+      ),
     },
     {
       path: "/admin-orders",
-      element: <ProtectedRoute element={wrapWithPageWrapper(Orders)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<Orders />} />
+        </Suspense>
+      ),
     },
     {
       path: "/admin-view-deal",
       element: (
-        <ProtectedRoute element={wrapWithPageWrapper(AdminViewGoodDeal)} />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<AdminViewGoodDeal />} />
+        </Suspense>
       ),
     },
     {
       path: "/invite-loved-ones",
       element: (
-        <ProtectedRoute element={wrapWithPageWrapper(InviteLovedOnes)} />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<InviteLovedOnes />} />
+        </Suspense>
       ),
     },
     {
       path: "/admin-invitations-sent",
-      element: <ProtectedRoute element={wrapWithPageWrapper(InvitationSent)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<InvitationSent />} />
+        </Suspense>
+      ),
     },
     {
       path: "/guest-deal-view",
-      element: <ProtectedRoute element={wrapWithPageWrapper(GuestDealView)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<GuestDealView />} />
+        </Suspense>
+      ),
     },
-    { path: "/about-us", element: wrapWithPageWrapper(AboutUs) },
-    { path: "/how-it-works", element: wrapWithPageWrapper(HowItWorks) },
-    { path: "/contact-us", element: wrapWithPageWrapper(ContactUs) },
-    { path: "/side-bar", element: wrapWithPageWrapper(SideBar) },
-    { path: "/help-me", element: wrapWithPageWrapper(PublicNeedHelp) },
+    {
+      path: "/about-us",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <AboutUs />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/how-it-works",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <HowItWorks />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/contact-us",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ContactUs />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/side-bar",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <SideBar />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/help-me",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <PublicNeedHelp />
+        </Suspense>
+      ),
+    },
     {
       path: "/settings",
-      element: <ProtectedRoute element={wrapWithPageWrapper(SettingsPage)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<SettingsPage />} />
+        </Suspense>
+      ),
     },
     {
       path: "/edit-profile",
-      element: <ProtectedRoute element={wrapWithPageWrapper(EditProfile)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<EditProfile />} />
+        </Suspense>
+      ),
     },
     {
       path: "/notifications",
-      element: <ProtectedRoute element={wrapWithPageWrapper(Notifications)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<Notifications />} />
+        </Suspense>
+      ),
     },
     {
       path: "/select-language",
-      element: wrapWithPageWrapper(LanguageSelection),
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <LanguageSelection />
+        </Suspense>
+      ),
     },
     {
       path: "/select-currency",
-      element: wrapWithPageWrapper(CurrencySelection),
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <CurrencySelection />
+        </Suspense>
+      ),
     },
     {
       path: "/my-information",
-      element: <ProtectedRoute element={wrapWithPageWrapper(MyInformation)} />,
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<MyInformation />} />
+        </Suspense>
+      ),
     },
     {
       path: "/artisan-denied-deal",
       element: (
-        <ProtectedRoute element={wrapWithPageWrapper(ArtisanDeniedTheScreen)} />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<ArtisanDeniedTheScreen />} />
+        </Suspense>
       ),
     },
     {
       path: "/artisan-confirmed-deal",
       element: (
-        <ProtectedRoute
-          element={wrapWithPageWrapper(ArtisanConfirmTheScreen)}
-        />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<ArtisanConfirmTheScreen />} />
+        </Suspense>
       ),
     },
     {
       path: "/guest-send-review",
       element: (
-        <ProtectedRoute
-          element={wrapWithPageWrapper(GuestsSendReviewsScreen)}
-        />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<GuestsSendReviewsScreen />} />
+        </Suspense>
       ),
     },
     {
       path: "/artisan-email",
       element: (
-        <ProtectedRoute element={wrapWithPageWrapper(ArtisanEmailScreen)} />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<ArtisanEmailScreen />} />
+        </Suspense>
       ),
     },
     {
       path: "/artisan-email-list",
       element: (
-        <ProtectedRoute element={wrapWithPageWrapper(ArtisanEmailList)} />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<ArtisanEmailList />} />
+        </Suspense>
       ),
     },
     {
       path: "/ask-guest-review",
       element: (
-        <ProtectedRoute element={wrapWithPageWrapper(GuestEmailAskForScreen)} />
+        <Suspense fallback={<CustomLoader />}>
+          <ProtectedRoute element={<GuestEmailAskForScreen />} />
+        </Suspense>
       ),
     },
-    { path: "/lost-password", element: wrapWithPageWrapper(LostPassword) },
-    { path: "/reset-password", element: wrapWithPageWrapper(ResetPassword) },
+    {
+      path: "/lost-password",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <LostPassword />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/reset-password",
+      element: (
+        <Suspense fallback={<CustomLoader />}>
+          <ResetPassword />
+        </Suspense>
+      ),
+    },
   ]);
 
-  return (
-    <RouterProvider router={router} fallbackElement={<div>Loading...</div>} />
-  );
+  return <RouterProvider router={router} fallbackElement={<CustomLoader />} />;
 }
 
 export default App;

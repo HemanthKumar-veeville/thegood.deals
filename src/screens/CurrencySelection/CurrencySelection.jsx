@@ -5,7 +5,7 @@ import { ChevronDown } from "../../icons/ChevronDown";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const CurrencySelection = () => {
+const CurrencySelection = () => {
   const navigate = useNavigate();
   const [selectedCurrency, setSelectedCurrency] = useState("French");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -89,3 +89,5 @@ export const CurrencySelection = () => {
     </div>
   );
 };
+
+export default CurrencySelection;

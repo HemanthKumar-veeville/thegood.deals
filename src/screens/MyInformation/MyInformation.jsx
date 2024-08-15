@@ -14,7 +14,7 @@ import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { useNavigate } from "react-router-dom";
 
-export const MyInformation = () => {
+const MyInformation = () => {
   const navigate = useNavigate();
   const handleBack = () => {
     navigate("/account");
@@ -183,3 +183,5 @@ export const MyInformation = () => {
     </div>
   );
 };
+
+export default MyInformation;

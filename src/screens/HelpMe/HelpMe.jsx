@@ -12,7 +12,7 @@ import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { Send1 } from "../../icons/Send1";
 import { useNavigate } from "react-router-dom";
 
-export const PublicNeedHelp = () => {
+const PublicNeedHelp = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -179,3 +179,5 @@ export const PublicNeedHelp = () => {
     </div>
   );
 };
+
+export default PublicNeedHelp;

@@ -11,7 +11,7 @@ import AppBar from "../../components/AppBar/AppBar";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 
-export const Invitations = () => {
+const Invitations = () => {
   const [requests, setRequests] = useState([
     { name: "Abraham Thomas", accepted: false, refused: false },
     { name: "Karthik Ramesh", accepted: false, refused: false },
@@ -193,3 +193,5 @@ export const Invitations = () => {
     </div>
   );
 };
+
+export default Invitations;

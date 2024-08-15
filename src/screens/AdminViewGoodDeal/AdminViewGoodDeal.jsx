@@ -17,7 +17,7 @@ import { Users2 } from "../../icons/Users2";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
 import AppBar from "../../components/AppBar/AppBar";
 
-export const AdminViewGoodDeal = () => {
+const AdminViewGoodDeal = () => {
   return (
     <div className="flex flex-col w-screen items-start relative bg-primary-background">
       <AppBar />
@@ -299,3 +299,5 @@ export const AdminViewGoodDeal = () => {
     </div>
   );
 };
+
+export default AdminViewGoodDeal;

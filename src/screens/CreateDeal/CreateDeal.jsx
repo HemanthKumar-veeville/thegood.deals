@@ -364,4 +364,4 @@ const CreateDeal = () => {
   );
 };
 
-export { CreateDeal };
+export default CreateDeal;

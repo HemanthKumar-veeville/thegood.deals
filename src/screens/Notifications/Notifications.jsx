@@ -3,7 +3,7 @@ import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const Notifications = () => {
+const Notifications = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState({
     dealStatus: true,
@@ -77,3 +77,5 @@ export const Notifications = () => {
     </div>
   );
 };
+
+export default Notifications;

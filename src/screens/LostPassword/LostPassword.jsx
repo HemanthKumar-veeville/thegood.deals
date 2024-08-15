@@ -4,7 +4,7 @@ import { Header } from "../../components/Header";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import AppBar from "../../components/AppBar/AppBar";
 
-export const LostPassword = () => {
+const LostPassword = () => {
   const [email, setEmail] = useState("");
 
   const handleEmailChange = (e) => {
@@ -71,3 +71,5 @@ export const LostPassword = () => {
     </div>
   );
 };
+
+export default LostPassword;

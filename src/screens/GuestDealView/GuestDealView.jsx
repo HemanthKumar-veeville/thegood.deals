@@ -27,7 +27,7 @@ import { Badges } from "../../components/Badges";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 
-export const GuestDealView = () => {
+const GuestDealView = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -251,3 +251,5 @@ export const GuestDealView = () => {
     </div>
   );
 };
+
+export default GuestDealView;

@@ -10,7 +10,7 @@ import AppBar from "../../components/AppBar/AppBar";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 
-export const Orders = () => {
+const Orders = () => {
   const navigate = useNavigate();
   const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState({
     abraham: true,
@@ -332,3 +332,5 @@ export const Orders = () => {
     </div>
   );
 };
+
+export default Orders;

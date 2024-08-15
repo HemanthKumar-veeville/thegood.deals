@@ -12,7 +12,7 @@ import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
-export const InviteLovedOnes = () => {
+const InviteLovedOnes = () => {
   const [emails, setEmails] = useState([]);
   const [newEmail, setNewEmail] = useState("");
   const shareLink = "thegood.deal/2343qvsgdfb";
@@ -186,3 +186,5 @@ export const InviteLovedOnes = () => {
     </div>
   );
 };
+
+export default InviteLovedOnes;

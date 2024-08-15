@@ -4,7 +4,7 @@ import { Header } from "../../components/Header";
 import { EyeAlt4 } from "../../icons/EyeAlt4";
 import AppBar from "../../components/AppBar/AppBar";
 
-export const ResetPassword = () => {
+const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -122,3 +122,5 @@ export const ResetPassword = () => {
     </div>
   );
 };
+
+export default ResetPassword;
