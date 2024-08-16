@@ -43,8 +43,7 @@ const Auth = () => {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen bg-primary-background mx-auto">
-      <AppBar />
+    <>
       {isLoading && <CustomLoader />}
       {!isLoading && (
         <div className="flex w-screen items-start justify-center gap-[35px] px-[25px] py-0 absolute top-16 left-0 border-b [border-bottom-style:solid] border-stroke">
@@ -79,7 +78,7 @@ const Auth = () => {
       ) : (
         ""
       )}
-    </div>
+    </>
   );
 };
 

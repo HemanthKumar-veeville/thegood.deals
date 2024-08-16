@@ -35,7 +35,6 @@ const Orders = () => {
 
   return (
     <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto">
-      <AppBar />
       <div className="flex flex-col w-screen items-start gap-4 px-8 py-4 relative">
         <div
           className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full border-b border-stroke cursor-pointer"

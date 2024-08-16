@@ -86,7 +86,6 @@ function AboutUs() {
 
   return (
     <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">
-      <AppBar />
       <ImageRotator images={IMAGES} direction="left" />
       <div className="w-screen items-center gap-[30px] pt-2 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div

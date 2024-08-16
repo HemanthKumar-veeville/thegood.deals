@@ -128,7 +128,6 @@ export const VerificationOTP = ({ setIsLoading }) => {
 
   return (
     <div className="relative w-screen h-[640px] bg-primary-background mx-auto">
-      <AppBar />
       {!loading && (
         <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold !text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">

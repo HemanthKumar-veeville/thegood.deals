@@ -29,26 +29,6 @@ const SideBar = () => {
 
   return (
     <div className="flex flex-col w-[360px] h-[812px] items-start relative bg-primary-background">
-      <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke">
-        <div
-          className="flex w-12 h-12 items-center justify-center gap-2.5 relative"
-          onClick={handleClose}
-        >
-          <ChevronDown1 className="!relative !w-6 !h-6" color="#1B4F4A" />
-        </div>
-        <div className="inline-flex items-start relative flex-[0_0_auto]">
-          <LogoTheGoodDeals
-            className="!flex-[0_0_auto]"
-            thegoodDealsClassName="!text-[28px]"
-          />
-        </div>
-        <div
-          className="flex w-12 h-12 items-center justify-center gap-2.5 relative"
-          onClick={handleProfile}
-        >
-          <UserAlt3 className="!relative !w-6 !h-6" />
-        </div>
-      </div>
       <div className="flex flex-col w-[360px] h-[748px] items-start gap-2.5 pt-4 pb-40 px-5 relative">
         <div className="items-center justify-center gap-6 flex flex-col relative self-stretch w-full flex-[0_0_auto]">
           <div className="items-start flex flex-col relative self-stretch w-full flex-[0_0_auto]">

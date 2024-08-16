@@ -59,7 +59,6 @@ const PublicNeedHelp = () => {
 
   return (
     <div className="flex flex-col w-[360px] items-start relative bg-primary-background">
-      <AppBar />
       <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
         <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
           <div

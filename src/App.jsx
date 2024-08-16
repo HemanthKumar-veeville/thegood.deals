@@ -100,6 +100,19 @@ const ProtectedRoute = loadable(
     fallback: <CustomLoader />,
   }
 );
+const AppBar = loadable(() => import("./components/AppBar/AppBar"), {
+  fallback: <CustomLoader />,
+});
+
+// Layout component to include AppBar across all routes
+function Layout({ children }) {
+  return (
+    <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background">
+      <AppBar />
+      <Suspense fallback={<CustomLoader />}>{children}</Suspense>
+    </div>
+  );
+}
 
 // App component
 function App() {
@@ -122,305 +135,305 @@ function App() {
     {
       path: "/",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <Home />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/auth",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <Auth />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/verify",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <VerificationOTP />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/account",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<Account />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/create-deal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<CreateDeal />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/inform-deal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<InformToCraftsMan />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/thanks-admin",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<ThanksToAdmin />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-active-deal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<ActiveDeal />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-waiting-deal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<WaitingDeal />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-draft-deal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<DraftDeal />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-wallet",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<Wallet />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-withdrawal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<Withdrawal />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/thanks-withdrawal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<ThanksForWithdrawal />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-invitations",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<Invitations />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-orders",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<Orders />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-view-deal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<AdminViewGoodDeal />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/invite-loved-ones",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<InviteLovedOnes />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/admin-invitations-sent",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<InvitationSent />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/guest-deal-view",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<GuestDealView />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/about-us",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <AboutUs />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/how-it-works",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <HowItWorks />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/contact-us",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ContactUs />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/side-bar",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <SideBar />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/help-me",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <PublicNeedHelp />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/settings",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<SettingsPage />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/edit-profile",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<EditProfile />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/notifications",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<Notifications />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/select-language",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <LanguageSelection />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/select-currency",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <CurrencySelection />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/my-information",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<MyInformation />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/artisan-denied-deal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<ArtisanDeniedTheScreen />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/artisan-confirmed-deal",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<ArtisanConfirmTheScreen />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/guest-send-review",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<GuestsSendReviewsScreen />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/artisan-email",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<ArtisanEmailScreen />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/artisan-email-list",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<ArtisanEmailList />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/ask-guest-review",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ProtectedRoute element={<GuestEmailAskForScreen />} />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/lost-password",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <LostPassword />
-        </Suspense>
+        </Layout>
       ),
     },
     {
       path: "/reset-password",
       element: (
-        <Suspense fallback={<CustomLoader />}>
+        <Layout>
           <ResetPassword />
-        </Suspense>
+        </Layout>
       ),
     },
   ]);
