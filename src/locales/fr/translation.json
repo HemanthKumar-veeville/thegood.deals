@@ -1,0 +1,17 @@
+{
+  "language": {
+    "english": "Anglais",
+    "french": "Français"
+  },
+  "flag_alt": {
+    "uk": "Drapeau du Royaume-Uni",
+    "france": "Drapeau de la France"
+  },
+  "select_language": "Choisir la langue",
+  "about": "À propos de nous",
+  "how_it_works": "Comment ça marche",
+  "faq": "FAQ",
+  "contact_us": "Nous contacter",
+  "create_deal": "Créer une offre",
+  "my_account": "Mon compte"
+}

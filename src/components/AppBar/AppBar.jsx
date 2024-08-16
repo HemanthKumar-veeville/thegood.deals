@@ -13,6 +13,10 @@ function AppBar() {
     setOpen(!open);
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className="relative">
       <header className="flex flex-col w-screen h-16 items-start relative bg-primary-background border-b border-stroke z-50">
@@ -30,7 +34,10 @@ function AppBar() {
           <div className="inline-flex items-start relative flex-[0_0_auto]">
             <div className="inline-flex items-start relative flex-[0_0_auto]">
               <div className="inline-flex items-start relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] font-bold text-[28px] text-center tracking-[0] leading-[normal] whitespace-nowrap">
+                <div
+                  className="relative w-fit mt-[-1.00px] font-bold text-[28px] text-center tracking-[0] leading-[normal] whitespace-nowrap cursor-pointer"
+                  onClick={handleLogoClick}
+                >
                   <span className="text-primary-color">thegood</span>
                   <span className="text-custom-yellow">.</span>
                   <span className="text-custom-orange">deals</span>

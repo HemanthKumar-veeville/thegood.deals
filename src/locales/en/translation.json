@@ -1,0 +1,17 @@
+{
+  "language": {
+    "english": "English",
+    "french": "French"
+  },
+  "flag_alt": {
+    "uk": "UK Flag",
+    "france": "France Flag"
+  },
+  "select_language": "Select Language",
+  "about": "About Us",
+  "how_it_works": "How It Works",
+  "faq": "FAQ",
+  "contact_us": "Contact Us",
+  "create_deal": "Create Deal",
+  "my_account": "My Account"
+}
