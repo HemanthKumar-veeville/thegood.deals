@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { UserAlt4 } from "../../icons/UserAlt4/UserAlt4";
 import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
 import { useNavigate } from "react-router-dom";
+import { ChevronDown } from "../../icons/ChevronDown/ChevronDown";
 
 function AppBar() {
+  const [open, setOpen] = useState(false);
+  const [prevPath, setPrevPath] = useState("/");
   const navigate = useNavigate();
+
   const handleOpen = () => {
-    navigate("/side-bar");
+    if (!open) {
+      setPrevPath(window.location.pathname);
+      navigate("/side-bar");
+    } else {
+      navigate(prevPath);
+    }
+    setOpen(!open);
   };
+
   return (
     <header className="flex flex-col w-screen h-16 items-start relative bg-primary-background [border-top-style:none] [border-right-style:none] border-b [border-bottom-style:solid] [border-left-style:none] border-stroke">
       <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
@@ -15,7 +26,11 @@ function AppBar() {
           className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
           onClick={handleOpen}
         >
-          <VerticalLine3 className="!relative !w-6 !h-6" />
+          {!open ? (
+            <VerticalLine3 className="!relative !w-6 !h-6" />
+          ) : (
+            <ChevronDown className="!relative !w-6 !h-6" />
+          )}
         </div>
         <div className="inline-flex items-start relative flex-[0_0_auto]">
           <div className="inline-flex items-start relative flex-[0_0_auto]">
