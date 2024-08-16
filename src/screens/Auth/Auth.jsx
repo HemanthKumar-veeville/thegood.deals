@@ -9,7 +9,6 @@ import { UserAlt4 } from "../../icons/UserAlt4/UserAlt4.jsx";
 import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3.jsx";
 import { SignIn } from "../SignIn/SignIn.jsx";
 import { SignUp } from "../SignUp/SignUp.jsx";
-import { useNavigate } from "react-router-dom";
 import AppBar from "../../components/AppBar/AppBar.jsx";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
 
@@ -17,30 +16,17 @@ const Auth = () => {
   const [isLoginTab, setIsLoginTab] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const switchToLogin = () => {
     setIsLoginTab(true);
-    navigate("/auth?login");
-  };
-  const switchToSignUp = () => {
-    setIsLoginTab(false);
-    navigate("/auth?signup");
   };
 
-  useEffect(() => {
-    const url = window.location.href;
-    const params = url.split("?")[1];
-    if (params === "login") {
-      setIsLoginTab(true);
-    } else {
-      setIsLoginTab(false);
-    }
-  }, []);
+  const switchToSignUp = () => {
+    setIsLoginTab(false);
+  };
 
   return (
     <>
