@@ -103,6 +103,8 @@ export default {
         "yellowyellow-light-2": "var(--yellowyellow-light-2)",
         "yellowyellow-light-3": "var(--yellowyellow-light-3)",
         "yellowyellow-light-4": "var(--yellowyellow-light-4)",
+        "custom-orange": "#FC661A",
+        "custom-yellow": "#FFB130",
       },
       fontFamily: {
         "body-extra-small-text-medium":

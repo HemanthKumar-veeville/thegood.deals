@@ -46,7 +46,6 @@ const GuestDealView = loadable(() =>
   import("./screens/GuestDealView/GuestDealView")
 );
 const AboutUs = loadable(() => import("./screens/AboutUs/AboutUs"));
-const SideBar = loadable(() => import("./screens/SideBar/SideBar"));
 const HowItWorks = loadable(() => import("./screens/HowItWorks/HowItWorks"));
 const ContactUs = loadable(() => import("./screens/ContactUs/ContactUs"));
 const PublicNeedHelp = loadable(() => import("./screens/HelpMe/HelpMe"));
@@ -305,14 +304,6 @@ function App() {
       element: (
         <Layout>
           <ContactUs />
-        </Layout>
-      ),
-    },
-    {
-      path: "/side-bar",
-      element: (
-        <Layout>
-          <SideBar />
         </Layout>
       ),
     },

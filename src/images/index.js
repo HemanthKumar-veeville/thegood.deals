@@ -54,6 +54,7 @@ import Ellipse from "../../static/img/ellipse-2763.png";
 import Rectangle_4592 from "../../static/img/rectangle-4592.png";
 import Human from "../../static/img/human.png";
 import GiphyLoader from "../../static/img/Loader_optimized.gif";
+import UK_Flag_Icon from "../../static/img/uk_flag_icon.png";
 
 export {
   placeHolderImage14,
@@ -110,4 +111,5 @@ export {
   Rectangle_4592,
   Human,
   GiphyLoader,
+  UK_Flag_Icon,
 };
