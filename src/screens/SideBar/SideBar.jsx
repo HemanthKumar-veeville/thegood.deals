@@ -7,6 +7,11 @@ import { useTranslation } from "react-i18next";
 import { FranceFlag, UK_Flag_Icon } from "../../images";
 import { useLanguage } from "../../context/LanguageContext";
 
+/**
+ * SideBar component
+ * @param {Object} props - Component props
+ * @param {Function} props.onClose - Function to call when the sidebar is closed
+ */
 const SideBar = React.memo(({ onClose }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
@@ -14,15 +19,18 @@ const SideBar = React.memo(({ onClose }) => {
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const { t, i18n } = useTranslation();
 
+  // Show the sidebar when the component is mounted
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
+  // Handle closing the sidebar
   const handleClose = useCallback(() => {
     setIsVisible(false);
     setTimeout(onClose, 300);
   }, [onClose]);
 
+  // Handle navigation and close the sidebar
   const handleNavigation = useCallback(
     (path) => {
       navigate(path);
@@ -31,6 +39,7 @@ const SideBar = React.memo(({ onClose }) => {
     [navigate, handleClose]
   );
 
+  // Handle language change using SweetAlert2
   const handleLanguageChange = useCallback(() => {
     Swal.fire({
       title: t("select_language"),
@@ -68,6 +77,7 @@ const SideBar = React.memo(({ onClose }) => {
     });
   }, [selectedLanguage, setSelectedLanguage, i18n, t]);
 
+  // Memoize menu items to avoid unnecessary re-renders
   const menuItems = useMemo(
     () => [
       { label: t("about"), onClick: () => handleNavigation("/about-us") },
@@ -84,6 +94,7 @@ const SideBar = React.memo(({ onClose }) => {
     [t, handleNavigation]
   );
 
+  // Render menu items
   const renderMenuItems = () =>
     menuItems.map((item, index) => (
       <div
@@ -97,6 +108,7 @@ const SideBar = React.memo(({ onClose }) => {
       </div>
     ));
 
+  // Render a button with optional additional classes
   const renderButton = (label, path, additionalClasses = "") => (
     <button
       className={`w-full text-green inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-green cursor-pointer ${additionalClasses}`}
