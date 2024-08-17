@@ -26,60 +26,11 @@ import {
 import { IconChevronRight2 } from "../../icons/IconChevronRight2";
 import { Button } from "../../components/RoundedButton";
 import { plus14 } from "../../images";
+import { useTranslation } from "react-i18next";
 
 function ContactUs() {
+  const { t } = useTranslation();
   const IMAGES = [picture1, picture2, picture3, picture4];
-  const headingClassName = "";
-  const text1 = "Our values";
-  const text2 =
-    "En rejoignant notre communauté de commande groupée, bénéficiez de prix avantageux tout en partageant le plaisir de goûter au meilleur de l&#39;artisanat local. Faites de chaque achat une expérience unique, soutenant les artisans et partageant des moments avec vos proches.";
-  const headingClassNameOverride = "";
-  const text3 = "Expérience de<br/>consommation partagée";
-  const text4 =
-    "Une expérience sociale enrichissante, renforçant les liens avec famille et amis tout en découvrant ensemble des produits exceptionnels.";
-  const divClassName = "";
-  const text5 = "Soutien et valorisation<br/>des artisans locaux";
-  const text6 =
-    "En privilégiant les produits issus de l&#39;artisanat local, vous contribuez au maintien et à la valorisation des savoir-faire uniques de nos régions.";
-  const buttonText = "How it works ?";
-  const buttonText1 = "À propos de nous";
-  const buttonIcon = <IconChevronRight2 className="!relative !w-6 !h-6" />;
-  const placeholderImage = placeHolderImage14;
-  const values = [
-    {
-      heading: "Authenticity",
-      definition:
-        "Products that tell a story, that of our terroirs and their passionate artisans.",
-    },
-    {
-      heading: "Community",
-      definition:
-        "We believe in the power of sharing and friendly experiences. Each bulk order is an opportunity to strengthen ties with your friends and family.",
-    },
-    {
-      heading: "Local support",
-      definition:
-        "You participate in promoting and maintaining the unique know-how of our regions. Each purchase is a gesture of support for our artisans.",
-    },
-  ];
-
-  const reason = [
-    {
-      heading: "Unique products",
-      definition:
-        "Each artisan is selected for the quality and authenticity of their products. You will discover flavors and creations that you will not find anywhere else.",
-    },
-    {
-      heading: "Advantageous prices",
-      definition:
-        "Thanks to bulk orders, you benefit from preferential rates. The more the merrier!",
-    },
-    {
-      heading: "An enriching experience",
-      definition:
-        "Ordering on The Good Deals is much more than a simple purchase. This is an opportunity to share precious moments with your loved ones while supporting a local and sustainable economy.",
-    },
-  ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -87,58 +38,59 @@ function ContactUs() {
 
   const FAQS = [
     {
-      ques: "How does bulk ordering work on your platform?",
-      ans: "Our platform allows you to create ads for artisanal products, invite loved ones to participate, and easily manage orders and deliveries.",
+      ques: t("contact_us.faq_1.question"),
+      ans: t("contact_us.faq_1.answer"),
     },
     {
-      ques: "Who are the partner artisans?",
-      ans: "We collaborate with passionate local artisans who are rigorously selected for the quality and authenticity of their products.. Each of them has a unique story to tell through their creations.",
+      ques: t("contact_us.faq_2.question"),
+      ans: t("contact_us.faq_2.answer"),
     },
     {
-      ques: "How do I invite my loved ones to join a group order?",
-      ans: "Once your ad is created, you can invite your friends and family by sharing a link via email or on social media. Our platform makes this process easy in just a few clicks.",
+      ques: t("contact_us.faq_3.question"),
+      ans: t("contact_us.faq_3.answer"),
     },
     {
-      ques: "How is the price of products calculated?",
-      ans: "The price of the products is set by the artisans and may vary depending on the size of the bulk order. The higher the number of participants, the more advantageous the price per product can be.",
+      ques: t("contact_us.faq_4.question"),
+      ans: t("contact_us.faq_4.answer"),
     },
     {
-      ques: "How does delivery work?",
-      ans: "The craftsmen prepare and ship the packages directly to the address of your choice. We ensure that delivery goes smoothly so that the products arrive in perfect condition.",
+      ques: t("contact_us.faq_5.question"),
+      ans: t("contact_us.faq_5.answer"),
     },
     {
-      ques: "What is the delivery delay ?",
-      ans: "The delivery time depends on each craftsman and the location of your address. Generally, you can expect to receive your products within 5-7 business days after the bulk order is placed.",
+      ques: t("contact_us.faq_6.question"),
+      ans: t("contact_us.faq_6.answer"),
     },
     {
-      ques: "Can I track my order?",
-      ans: "Yes, once your order has been shipped, you will receive a tracking number to follow the delivery progress in real time.",
+      ques: t("contact_us.faq_7.question"),
+      ans: t("contact_us.faq_7.answer"),
     },
     {
-      ques: "What happens if I have a problem with my order?",
-      ans: "If you have a problem with your order, our customer service team is on hand to help you resolve it quickly. Contact us via our contact form or by phone.",
+      ques: t("contact_us.faq_8.question"),
+      ans: t("contact_us.faq_8.answer"),
     },
     {
-      ques: "Is there a minimum amount for bulk orders?",
-      ans: "Minimum amount for bulk orders may vary depending on products and artisans. Details are specified in each ad.",
+      ques: t("contact_us.faq_9.question"),
+      ans: t("contact_us.faq_9.answer"),
     },
     {
-      ques: "What payment methods do you accept?",
-      ans: "We accept major credit cards (Visa, MasterCard, American Express). All payments are secure.",
+      ques: t("contact_us.faq_10.question"),
+      ans: t("contact_us.faq_10.answer"),
     },
     {
-      ques: "How can I cancel or modify my order?",
-      ans: "To cancel or change an order, please contact us as soon as possible. If the order has not yet been processed, we will do our best to accommodate your request.",
+      ques: t("contact_us.faq_11.question"),
+      ans: t("contact_us.faq_11.answer"),
     },
     {
-      ques: "Can I return products?",
-      ans: "Given the handmade nature of our products, returns are generally only accepted in the event of defective or damaged product. Please see our returns policy for full details.",
+      ques: t("contact_us.faq_12.question"),
+      ans: t("contact_us.faq_12.answer"),
     },
     {
-      ques: "How can I become an artisan partner?",
-      ans: "If you are a tradesman interested in our platform, we would be delighted to speak with you. Contact us via our contact form mentioning your interest in becoming a partner.",
+      ques: t("contact_us.faq_13.question"),
+      ans: t("contact_us.faq_13.answer"),
     },
   ];
+
   const [openQuestion, setOpenQuestion] = useState(null);
 
   const toggleQuestion = (question) => {
@@ -230,14 +182,14 @@ function ContactUs() {
         >
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
             <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
-              FAQs
+              {t("contact_us.title")}
             </p>
             <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
-              You will find answers to the most common questions regarding our
-              bulk ordering platform for artisanal products.
+              {t("contact_us.description")}
             </p>
             <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
-              <b>Any questions?</b> Contact us, we are here . to help you !
+              <b>{t("contact_us.any_questions")}</b>{" "}
+              {t("contact_us.contact_us")}
             </p>
           </div>
           <div className="inline-flex flex-col items-center gap-4 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
@@ -245,9 +197,9 @@ function ContactUs() {
               className="all-[unset] box-border inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] mt-[-2.00px] bg-green rounded-[100px] border border-solid border-green hover:bg-[#15423b] hover:text-[#d4d4d4] cursor-pointer"
               onClick={() => navigate("/auth?login")}
             >
-              <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-white text-base tracking-[0] leading-6 whitespace-nowrap">
-                Contact us
-              </button>
+              <span className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-white text-base tracking-[0] leading-6 whitespace-nowrap">
+                {t("contact_us.contact_us_button")}
+              </span>
             </button>
           </div>
         </div>
@@ -309,41 +261,41 @@ function ContactUs() {
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
           buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText="Create a good deal"
-          buttonText1="Manage my good deals"
+          buttonText={t("contact_us.create_good_deal")}
+          buttonText1={t("contact_us.manage_good_deal")}
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text="Other questions ?"
-          text1="If you have any further questions or need more information, please do not hesitate to contact us. We are here to accompany you on this wonderful adventure of discovery and sharing!"
+          text={t("contact_us.other_questions")}
+          text1={t("contact_us.other_questions_description")}
           type="green"
         />
       </div>
       <Footer
         breakpoint="mobile"
-        buttonText="Subscribe"
+        buttonText={t("footer.subscribe")}
         className="!flex-[0_0_auto] !w-screen"
         divClassName="![white-space:unset] !w-[155px]"
         linksClassName="!h-[485px] !flex-[unset]"
         spanClassName="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassName1="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassNameOverride="!text-[unset]"
-        text="Sitemap"
-        text1="About"
-        text10="Our committed newsletter"
-        text11="Stay informed (only once a month) of our news"
-        text12="By subscribing, you agree to our "
-        text13=" and consent to receive updates from our company."
-        text14="© 2024 The Good Deals. All rights reserved."
-        text2="How it works ?"
-        text3="Bulk order"
-        text4="Support / Contact"
-        text5="FAQs"
-        text6="Information"
-        text7="Legal Notice"
-        text8="Privacy Policy"
-        text9="General Conditions of Sales and Use"
+        text={t("footer.sitemap")}
+        text1={t("footer.about")}
+        text10={t("footer.committed_newsletter")}
+        text11={t("footer.newsletter_info")}
+        text12={t("footer.subscribe_agreement")}
+        text13={t("footer.consent")}
+        text14={t("footer.copyright")}
+        text2={t("footer.how_it_works")}
+        text3={t("footer.bulk_order")}
+        text4={t("footer.support_contact")}
+        text5={t("footer.faqs")}
+        text6={t("footer.information")}
+        text7={t("footer.legal_notice")}
+        text8={t("footer.privacy_policy")}
+        text9={t("footer.general_conditions")}
         textInputDivClassName="!mt-[-1.00px] !text-[#4f4f4f] !ml-[-1.00px]"
-        textInputText="Enter your email"
+        textInputText={t("footer.enter_email")}
         textInputTextInputClassName="!self-stretch !border-white !rounded-[100px] !mr-[-2.00px] !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !w-full"
       />
     </div>

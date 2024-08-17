@@ -61,7 +61,7 @@ const SideBar = React.memo(({ onClose }) => {
    */
   const handleLanguageChange = useCallback(() => {
     Swal.fire({
-      title: t("select_language"),
+      title: t("side_bar.select_language"),
       showCancelButton: false,
       showConfirmButton: false,
       showCloseButton: true,
@@ -70,12 +70,12 @@ const SideBar = React.memo(({ onClose }) => {
           selectedLanguage === "english"
             ? "bg-blue-500 text-white"
             : "bg-gray-200 text-black"
-        } px-4 py-2 rounded-md mr-2">${t("language.english")}</button>
+        } px-4 py-2 rounded-md mr-2">${t("side_bar.language.english")}</button>
         <button id="french-button" class="swal2-confirm swal2-styled ${
           selectedLanguage === "french"
             ? "bg-blue-500 text-white"
             : "bg-gray-200 text-black"
-        } px-4 py-2 rounded-md">${t("language.french")}</button>
+        } px-4 py-2 rounded-md">${t("side_bar.language.french")}</button>
       `,
       didOpen: () => {
         const englishButton = Swal.getPopup().querySelector("#english-button");
@@ -99,14 +99,20 @@ const SideBar = React.memo(({ onClose }) => {
   // Memoize menu items to avoid unnecessary re-renders
   const menuItems = useMemo(
     () => [
-      { label: t("about"), onClick: () => handleNavigation("/about-us") },
       {
-        label: t("how_it_works"),
+        label: t("side_bar.about"),
+        onClick: () => handleNavigation("/about-us"),
+      },
+      {
+        label: t("side_bar.how"),
         onClick: () => handleNavigation("/how-it-works"),
       },
-      { label: t("faq"), onClick: () => handleNavigation("/contact-us") },
       {
-        label: t("contact_us"),
+        label: t("side_bar.faq"),
+        onClick: () => handleNavigation("/contact-us"),
+      },
+      {
+        label: t("side_bar.contact_us"),
         onClick: () => handleNavigation("/help-me"),
       },
     ],
@@ -167,12 +173,12 @@ const SideBar = React.memo(({ onClose }) => {
           </div>
           <div className="inline-flex flex-col items-center gap-4 pt-4 pb-0 px-0 relative flex-[0_0_auto] w-full">
             {renderButton(
-              t("create_deal"),
+              t("side_bar.create_deal"),
               isUserLoggedIn ? "/create-deal" : "/auth?login",
               "bg-green text-white hover:bg-[#15423b] hover:text-[#d4d4d4]"
             )}
             {renderButton(
-              t("my_account"),
+              t("side_bar.my_account"),
               isUserLoggedIn ? "/account" : "/auth?login"
             )}
             <button
@@ -180,7 +186,7 @@ const SideBar = React.memo(({ onClose }) => {
               onClick={handleLanguageChange}
             >
               <span className="font-normal text-base leading-6 whitespace-nowrap flex items-center gap-2">
-                {t(`language.${selectedLanguage}`)}
+                {t(`side_bar.language.${selectedLanguage}`)}
                 <img
                   src={
                     selectedLanguage === "english" ? UK_Flag_Icon : FranceFlag
@@ -191,8 +197,8 @@ const SideBar = React.memo(({ onClose }) => {
                   }}
                   alt={
                     selectedLanguage === "english"
-                      ? t("flag_alt.uk")
-                      : t("flag_alt.france")
+                      ? t("side_bar.flag_alt.uk")
+                      : t("side_bar.flag_alt.france")
                   }
                 />
               </span>

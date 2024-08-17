@@ -1,19 +1,21 @@
 {
-  "language": {
-    "english": "English",
-    "french": "French"
+  "side_bar": {
+    "language": {
+      "english": "English",
+      "french": "French"
+    },
+    "flag_alt": {
+      "uk": "UK Flag",
+      "france": "France Flag"
+    },
+    "select_language": "Select Language",
+    "about": "About Us",
+    "how": "How It Works",
+    "faq": "FAQ",
+    "contact_us": "Contact Us",
+    "create_deal": "Create Deal",
+    "my_account": "My Account"
   },
-  "flag_alt": {
-    "uk": "UK Flag",
-    "france": "France Flag"
-  },
-  "select_language": "Select Language",
-  "about": "About Us",
-  "how_it_works": "How It Works",
-  "faq": "FAQ",
-  "contact_us": "Contact Us",
-  "create_deal": "Create Deal",
-  "my_account": "My Account",
   "home": {
     "title": "Exceptional products at friendly prices",
     "description": "Offer your loved ones the opportunity to discover exceptional products, thanks to our group orders. Benefit from preferential rates, but also enjoy together the richness and authenticity of our terroirs.",
@@ -78,5 +80,191 @@
       "copyright": "© 2024 The Good Deals. All rights reserved.",
       "enter_email": "Enter your email"
     }
+  },
+  "about_us": {
+    "values": "Our values",
+    "values_description": "By joining our group order community, you benefit from advantageous prices while sharing the pleasure of tasting the best of local crafts. Make each purchase a unique experience, supporting artisans and sharing moments with your loved ones.",
+    "shared_experience": "Shared consumption experience",
+    "shared_experience_description": "An enriching social experience, strengthening bonds with family and friends while discovering exceptional products together.",
+    "local_support": "Support and promotion of local artisans",
+    "local_support_description": "By favoring products from local crafts, you contribute to maintaining and promoting the unique know-how of our regions.",
+    "how_it_works": "How it works?",
+    "about_us": "About Us",
+    "authenticity": "Authenticity",
+    "authenticity_description": "Products that tell a story, that of our terroirs and their passionate artisans.",
+    "community": "Community",
+    "community_description": "We believe in the power of sharing and friendly experiences. Each bulk order is an opportunity to strengthen ties with your friends and family.",
+    "local_support_heading": "Local support",
+    "local_support_heading_description": "You participate in promoting and maintaining the unique know-how of our regions. Each purchase is a gesture of support for our artisans.",
+    "unique_products": "Unique products",
+    "unique_products_description": "Each artisan is selected for the quality and authenticity of their products. You will discover flavors and creations that you will not find anywhere else.",
+    "advantageous_prices": "Advantageous prices",
+    "advantageous_prices_description": "Thanks to bulk orders, you benefit from preferential rates. The more the merrier!",
+    "enriching_experience": "An enriching experience",
+    "enriching_experience_description": "Ordering on The Good Deals is much more than a simple purchase. This is an opportunity to share precious moments with your loved ones while supporting a local and sustainable economy.",
+    "about_good_deals": "About The Good Deals",
+    "welcome_description": "We are delighted to welcome you to our community dedicated to discovering exceptional products at affordable prices.. The Good Deals is above all a human and gourmet adventure, where each group order becomes a celebration of local flavors and know-how.",
+    "login": "To log in",
+    "create_account": "Create an account",
+    "create_deal": "Create a good deal",
+    "manage_deal": "Manage my good deals",
+    "our_mission": "Our mission",
+    "mission_description": "Allow you to benefit from the best artisans in our regions and allow you to share their treasures with your loved ones. By joining forces, we make exceptional products accessible to all, while supporting local talent.",
+    "join_adventure": "Join us on this great adventure!",
+    "join_adventure_description": "Creating an order is as simple as it is user-friendly. In just a few clicks, launch an ad, invite your friends and enjoy the delights of local crafts together.",
+    "subscribe": "Subscribe",
+    "sitemap": "Sitemap",
+    "about": "About",
+    "newsletter_title": "Our committed newsletter",
+    "newsletter_description": "Stay informed (only once a month) of our news",
+    "subscribe_agreement": "By subscribing, you agree to our ",
+    "agree": " and consent to receive updates from our company.",
+    "copyright": "© 2024 The Good Deals. All rights reserved.",
+    "bulk_order": "Bulk order",
+    "support_contact": "Support / Contact",
+    "faq": "FAQs",
+    "information": "Information",
+    "legal_notice": "Legal Notice",
+    "privacy_policy": "Privacy Policy",
+    "general_conditions": "General Conditions of Sales and Use",
+    "enter_email": "Enter your email",
+    "why_choose_us": "Why choose us?"
+  },
+  "how_it_works": {
+    "title": "How it works?",
+    "description": "We know that you can't wait to discover and share exceptional products with your loved ones. That's why we've made the process as simple and enjoyable as possible.",
+    "login": "To log in",
+    "create_account": "Create an account",
+    "layout": {
+      "text": "Savor the delights of local crafts together, in three simple steps",
+      "text1": "Define your offer carefully",
+      "text2": "Start by creating an attractive ad in just a few clicks. Define the price, describe the products offered and present the craftsman behind these wonders. Make sure to include all the essential information to captivate your future buyers.",
+      "text3": "Share the enthusiasm",
+      "text4": "Once your ad is ready, it’s time to invite your friends and family to check out the offer. Use our online platform to send invitations and share the announcement via social media or email. The more of you there are, the more advantageous rates you will be able to benefit from!",
+      "text5": "Ensure perfect reception",
+      "text6": "After collecting all the orders, the craftsman prepares the packages and ships them directly to your home. We ensure that delivery takes place in the best conditions so that your loved ones receive their products in perfect condition, ready to be enjoyed."
+    },
+    "header": {
+      "create_deal": "Create a good deal",
+      "manage_deal": "Manage my good deals",
+      "text": "It's that simple !",
+      "text1": "In just a few steps, you can turn a purchase into a friendly and rewarding experience. Create an ad, invite your loved ones and enjoy the delights of local crafts together.",
+      "ready_to_get_started": "Ready to get started?",
+      "ready_to_get_started_description": "Join our community and place your first bulk order today. If you have any questions or need assistance, our team is here to support you every step."
+    },
+    "breakpoint": {
+      "how_it_works": "How it works?",
+      "about_us": "About Us",
+      "text": "Join the adventure",
+      "text1": "Why choose The Good Deals?",
+      "text2": "",
+      "text3": "Quality products",
+      "text4": "Each product is selected for its authenticity and exceptional quality.",
+      "text5": "Advantageous prices",
+      "text6": "Thanks to bulk orders, benefit from preferential prices.",
+      "text7": "A friendly experience",
+      "text8": "Share unique moments with your loved ones while supporting artisans in your region."
+    },
+    "footer": {
+      "subscribe": "Subscribe",
+      "sitemap": "Sitemap",
+      "about": "About",
+      "newsletter_title": "Our committed newsletter",
+      "newsletter_description": "Stay informed (only once a month) of our news",
+      "subscribe_agreement": "By subscribing, you agree to our ",
+      "agree": " and consent to receive updates from our company.",
+      "copyright": "© 2024 The Good Deals. All rights reserved.",
+      "how_it_works": "How it works?",
+      "bulk_order": "Bulk order",
+      "support_contact": "Support / Contact",
+      "faq": "FAQs",
+      "information": "Information",
+      "legal_notice": "Legal Notice",
+      "privacy_policy": "Privacy Policy",
+      "general_conditions": "General Conditions of Sales and Use",
+      "enter_email": "Enter your email"
+    }
+  },
+  "contact_us": {
+    "title": "FAQs",
+    "description": "You will find answers to the most common questions regarding our bulk ordering platform for artisanal products.",
+    "any_questions": "Any questions?",
+    "contact_us": "Contact us, we are here to help you!",
+    "contact_us_button": "Contact us",
+    "create_good_deal": "Create a good deal",
+    "manage_good_deal": "Manage my good deals",
+    "other_questions": "Other questions?",
+    "other_questions_description": "If you have any further questions or need more information, please do not hesitate to contact us. We are here to accompany you on this wonderful adventure of discovery and sharing!",
+    "faq_1": {
+      "question": "How does bulk ordering work on your platform?",
+      "answer": "Our platform allows you to create ads for artisanal products, invite loved ones to participate, and easily manage orders and deliveries."
+    },
+    "faq_2": {
+      "question": "Who are the partner artisans?",
+      "answer": "We collaborate with passionate local artisans who are rigorously selected for the quality and authenticity of their products. Each of them has a unique story to tell through their creations."
+    },
+    "faq_3": {
+      "question": "How do I invite my loved ones to join a group order?",
+      "answer": "Once your ad is created, you can invite your friends and family by sharing a link via email or on social media. Our platform makes this process easy in just a few clicks."
+    },
+    "faq_4": {
+      "question": "How is the price of products calculated?",
+      "answer": "The price of the products is set by the artisans and may vary depending on the size of the bulk order. The higher the number of participants, the more advantageous the price per product can be."
+    },
+    "faq_5": {
+      "question": "How does delivery work?",
+      "answer": "The craftsmen prepare and ship the packages directly to the address of your choice. We ensure that delivery goes smoothly so that the products arrive in perfect condition."
+    },
+    "faq_6": {
+      "question": "What is the delivery delay?",
+      "answer": "The delivery time depends on each craftsman and the location of your address. Generally, you can expect to receive your products within 5-7 business days after the bulk order is placed."
+    },
+    "faq_7": {
+      "question": "Can I track my order?",
+      "answer": "Yes, once your order has been shipped, you will receive a tracking number to follow the delivery progress in real time."
+    },
+    "faq_8": {
+      "question": "What happens if I have a problem with my order?",
+      "answer": "If you have a problem with your order, our customer service team is on hand to help you resolve it quickly. Contact us via our contact form or by phone."
+    },
+    "faq_9": {
+      "question": "Is there a minimum amount for bulk orders?",
+      "answer": "Minimum amount for bulk orders may vary depending on products and artisans. Details are specified in each ad."
+    },
+    "faq_10": {
+      "question": "What payment methods do you accept?",
+      "answer": "We accept major credit cards (Visa, MasterCard, American Express). All payments are secure."
+    },
+    "faq_11": {
+      "question": "How can I cancel or modify my order?",
+      "answer": "To cancel or change an order, please contact us as soon as possible. If the order has not yet been processed, we will do our best to accommodate your request."
+    },
+    "faq_12": {
+      "question": "Can I return products?",
+      "answer": "Given the handmade nature of our products, returns are generally only accepted in the event of defective or damaged product. Please see our returns policy for full details."
+    },
+    "faq_13": {
+      "question": "How can I become an artisan partner?",
+      "answer": "If you are a tradesman interested in our platform, we would be delighted to speak with you. Contact us via our contact form mentioning your interest in becoming a partner."
+    }
+  },
+  "footer": {
+    "sitemap": "Sitemap",
+    "about": "About",
+    "how_it_works": "How it works?",
+    "bulk_order": "Bulk order",
+    "support_contact": "Support / Contact",
+    "faqs": "FAQs",
+    "information": "Information",
+    "legal_notice": "Legal Notice",
+    "privacy_policy": "Privacy Policy",
+    "general_conditions": "General Conditions of Sales and Use",
+    "committed_newsletter": "Our committed newsletter",
+    "newsletter_info": "Stay informed (only once a month) of our news",
+    "subscribe_agreement": "By subscribing, you agree to our ",
+    "consent": "and consent to receive updates from our company.",
+    "copyright": "© 2024 The Good Deals. All rights reserved.",
+    "enter_email": "Enter your email",
+    "subscribe": "Subscribe"
   }
 }

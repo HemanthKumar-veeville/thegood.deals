@@ -1,19 +1,21 @@
 {
-  "language": {
-    "english": "Anglais",
-    "french": "Français"
+  "side_bar": {
+    "language": {
+      "english": "English",
+      "french": "French"
+    },
+    "flag_alt": {
+      "uk": "Drapeau du Royaume-Uni",
+      "france": "Drapeau de la France"
+    },
+    "select_language": "Choisir la langue",
+    "about": "À propos de nous",
+    "how": "Comment ça marche",
+    "faq": "FAQ",
+    "contact_us": "Contactez-nous",
+    "create_deal": "Créer une offre",
+    "my_account": "Mon compte"
   },
-  "flag_alt": {
-    "uk": "Drapeau du Royaume-Uni",
-    "france": "Drapeau de la France"
-  },
-  "select_language": "Choisir la langue",
-  "about": "À propos de nous",
-  "how_it_works": "Comment ça marche",
-  "faq": "FAQ",
-  "contact_us": "Contactez-nous",
-  "create_deal": "Créer une offre",
-  "my_account": "Mon compte",
   "home": {
     "title": "Des produits exceptionnels à des prix amicaux",
     "description": "Offrez à vos proches l'opportunité de découvrir des produits exceptionnels, grâce à nos commandes groupées. Bénéficiez de tarifs préférentiels, mais profitez également ensemble de la richesse et de l'authenticité de nos terroirs.",
@@ -78,5 +80,191 @@
       "copyright": "© 2024 The Good Deals. Tous droits réservés.",
       "enter_email": "Entrez votre e-mail"
     }
+  },
+  "about_us": {
+    "values": "Nos valeurs",
+    "values_description": "En rejoignant notre communauté de commande groupée, vous bénéficiez de prix avantageux tout en partageant le plaisir de goûter au meilleur de l'artisanat local. Faites de chaque achat une expérience unique, soutenant les artisans et partageant des moments avec vos proches.",
+    "shared_experience": "Expérience de consommation partagée",
+    "shared_experience_description": "Une expérience sociale enrichissante, renforçant les liens avec famille et amis tout en découvrant ensemble des produits exceptionnels.",
+    "local_support": "Soutien et valorisation des artisans locaux",
+    "local_support_description": "En favorisant les produits des métiers locaux, vous contribuez à maintenir et à promouvoir le savoir-faire unique de nos régions.",
+    "how_it_works": "Comment ça marche?",
+    "about_us": "À propos de nous",
+    "authenticity": "Authenticité",
+    "authenticity_description": "Des produits qui racontent une histoire, celle de nos terroirs et de leurs artisans passionnés.",
+    "community": "Communauté",
+    "community_description": "Nous croyons au pouvoir du partage et des expériences conviviales. Chaque commande groupée est une occasion de renforcer les liens avec vos amis et votre famille.",
+    "local_support_heading": "Soutien local",
+    "local_support_heading_description": "Vous participez à la promotion et au maintien du savoir-faire unique de nos régions. Chaque achat est un geste de soutien pour nos artisans.",
+    "unique_products": "Produits uniques",
+    "unique_products_description": "Chaque artisan est sélectionné pour la qualité et l'authenticité de ses produits. Vous découvrirez des saveurs et des créations que vous ne trouverez nulle part ailleurs.",
+    "advantageous_prices": "Prix avantageux",
+    "advantageous_prices_description": "Grâce aux commandes groupées, vous bénéficiez de tarifs préférentiels. Plus on est de fous, plus on rit!",
+    "enriching_experience": "Une expérience enrichissante",
+    "enriching_experience_description": "Commander sur The Good Deals, c'est bien plus qu'un simple achat. C'est une occasion de partager des moments précieux avec vos proches tout en soutenant une économie locale et durable.",
+    "about_good_deals": "À propos de The Good Deals",
+    "welcome_description": "Nous sommes ravis de vous accueillir dans notre communauté dédiée à la découverte de produits exceptionnels à des prix abordables. The Good Deals est avant tout une aventure humaine et gourmande, où chaque commande groupée devient une célébration des saveurs et du savoir-faire locaux.",
+    "login": "Se connecter",
+    "create_account": "Créer un compte",
+    "create_deal": "Créer une bonne affaire",
+    "manage_deal": "Gérer mes bonnes affaires",
+    "our_mission": "Notre mission",
+    "mission_description": "Vous permettre de bénéficier des meilleurs artisans de nos régions et de partager leurs trésors avec vos proches. En unissant nos forces, nous rendons les produits exceptionnels accessibles à tous, tout en soutenant les talents locaux.",
+    "join_adventure": "Rejoignez-nous dans cette grande aventure!",
+    "join_adventure_description": "Créer une commande est aussi simple que convivial. En quelques clics, lancez une annonce, invitez vos amis et savourez ensemble les délices des métiers locaux.",
+    "subscribe": "S'abonner",
+    "sitemap": "Plan du site",
+    "about": "À propos",
+    "newsletter_title": "Notre newsletter engagée",
+    "newsletter_description": "Restez informé (une fois par mois seulement) de nos actualités",
+    "subscribe_agreement": "En vous abonnant, vous acceptez notre",
+    "agree": "et consentez à recevoir des mises à jour de notre entreprise.",
+    "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+    "bulk_order": "Commande groupée",
+    "support_contact": "Support / Contact",
+    "faq": "FAQs",
+    "information": "Informations",
+    "legal_notice": "Mentions légales",
+    "privacy_policy": "Politique de confidentialité",
+    "general_conditions": "Conditions générales de vente et d'utilisation",
+    "enter_email": "Entrez votre e-mail",
+    "why_choose_us": "Pourquoi nous choisir?"
+  },
+  "how_it_works": {
+    "title": "Comment ça marche?",
+    "description": "Nous savons que vous avez hâte de découvrir et de partager des produits exceptionnels avec vos proches. C'est pourquoi nous avons rendu le processus aussi simple et agréable que possible.",
+    "login": "Se connecter",
+    "create_account": "Créer un compte",
+    "layout": {
+      "text": "Savourez les délices de l'artisanat local ensemble, en trois étapes simples",
+      "text1": "Définissez votre offre avec soin",
+      "text2": "Commencez par créer une annonce attrayante en quelques clics. Définissez le prix, décrivez les produits proposés et présentez l'artisan derrière ces merveilles. Assurez-vous d'inclure toutes les informations essentielles pour captiver vos futurs acheteurs.",
+      "text3": "Partagez l'enthousiasme",
+      "text4": "Une fois votre annonce prête, il est temps d'inviter vos amis et votre famille à consulter l'offre. Utilisez notre plateforme en ligne pour envoyer des invitations et partager l'annonce via les réseaux sociaux ou par e-mail. Plus vous serez nombreux, plus les tarifs avantageux dont vous pourrez bénéficier seront importants !",
+      "text5": "Assurez une réception parfaite",
+      "text6": "Après avoir recueilli toutes les commandes, l'artisan prépare les colis et les expédie directement à votre domicile. Nous veillons à ce que la livraison se déroule dans les meilleures conditions pour que vos proches reçoivent leurs produits en parfait état, prêts à être dégustés."
+    },
+    "header": {
+      "create_deal": "Créer une bonne affaire",
+      "manage_deal": "Gérer mes bonnes affaires",
+      "text": "C'est aussi simple que ça !",
+      "text1": "En quelques étapes seulement, vous pouvez transformer un achat en une expérience conviviale et enrichissante. Créez une annonce, invitez vos proches et savourez ensemble les délices de l'artisanat local.",
+      "ready_to_get_started": "Prêt à commencer?",
+      "ready_to_get_started_description": "Rejoignez notre communauté et passez votre première commande groupée dès aujourd'hui. Si vous avez des questions ou besoin d'assistance, notre équipe est là pour vous accompagner à chaque étape."
+    },
+    "breakpoint": {
+      "how_it_works": "Comment ça marche?",
+      "about_us": "À propos de nous",
+      "text": "Rejoignez l'aventure",
+      "text1": "Pourquoi choisir The Good Deals?",
+      "text2": "",
+      "text3": "Produits de qualité",
+      "text4": "Chaque produit est sélectionné pour son authenticité et sa qualité exceptionnelle.",
+      "text5": "Prix avantageux",
+      "text6": "Grâce aux commandes groupées, profitez de prix préférentiels.",
+      "text7": "Une expérience conviviale",
+      "text8": "Partagez des moments uniques avec vos proches tout en soutenant les artisans de votre région."
+    },
+    "footer": {
+      "subscribe": "S'abonner",
+      "sitemap": "Plan du site",
+      "about": "À propos",
+      "newsletter_title": "Notre newsletter engagée",
+      "newsletter_description": "Restez informé (une fois par mois seulement) de nos actualités",
+      "subscribe_agreement": "En vous abonnant, vous acceptez nos ",
+      "agree": " et consentez à recevoir des mises à jour de notre entreprise.",
+      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "how_it_works": "Comment ça marche?",
+      "bulk_order": "Commande groupée",
+      "support_contact": "Support / Contact",
+      "faq": "FAQs",
+      "information": "Informations",
+      "legal_notice": "Mentions légales",
+      "privacy_policy": "Politique de confidentialité",
+      "general_conditions": "Conditions générales de vente et d'utilisation",
+      "enter_email": "Entrez votre email"
+    }
+  },
+  "contact_us": {
+    "title": "FAQs",
+    "description": "Vous trouverez des réponses aux questions les plus courantes concernant notre plateforme de commande groupée de produits artisanaux.",
+    "any_questions": "Des questions ?",
+    "contact_us": "Contactez-nous, nous sommes là pour vous aider !",
+    "contact_us_button": "Contactez-nous",
+    "create_good_deal": "Créer un bon plan",
+    "manage_good_deal": "Gérer mes bons plans",
+    "other_questions": "D'autres questions ?",
+    "other_questions_description": "Si vous avez d'autres questions ou besoin de plus d'informations, n'hésitez pas à nous contacter. Nous sommes là pour vous accompagner dans cette merveilleuse aventure de découverte et de partage !",
+    "faq_1": {
+      "question": "Comment fonctionne la commande groupée sur votre plateforme ?",
+      "answer": "Notre plateforme vous permet de créer des annonces pour des produits artisanaux, d'inviter vos proches à participer et de gérer facilement les commandes et les livraisons."
+    },
+    "faq_2": {
+      "question": "Qui sont les artisans partenaires ?",
+      "answer": "Nous collaborons avec des artisans locaux passionnés, rigoureusement sélectionnés pour la qualité et l'authenticité de leurs produits. Chacun d'eux a une histoire unique à raconter à travers ses créations."
+    },
+    "faq_3": {
+      "question": "Comment inviter mes proches à rejoindre une commande groupée ?",
+      "answer": "Une fois votre annonce créée, vous pouvez inviter vos amis et votre famille en partageant un lien par email ou sur les réseaux sociaux. Notre plateforme rend ce processus simple en quelques clics."
+    },
+    "faq_4": {
+      "question": "Comment est calculé le prix des produits ?",
+      "answer": "Le prix des produits est fixé par les artisans et peut varier en fonction de la taille de la commande groupée. Plus le nombre de participants est élevé, plus le prix par produit peut être avantageux."
+    },
+    "faq_5": {
+      "question": "Comment fonctionne la livraison ?",
+      "answer": "Les artisans préparent et expédient les colis directement à l'adresse de votre choix. Nous veillons à ce que la livraison se passe sans encombre afin que les produits arrivent en parfait état."
+    },
+    "faq_6": {
+      "question": "Quel est le délai de livraison ?",
+      "answer": "Le délai de livraison dépend de chaque artisan et de la localisation de votre adresse. En général, vous pouvez vous attendre à recevoir vos produits sous 5 à 7 jours ouvrés après la commande groupée."
+    },
+    "faq_7": {
+      "question": "Puis-je suivre ma commande ?",
+      "answer": "Oui, une fois votre commande expédiée, vous recevrez un numéro de suivi pour suivre la progression de la livraison en temps réel."
+    },
+    "faq_8": {
+      "question": "Que faire si j'ai un problème avec ma commande ?",
+      "answer": "Si vous avez un problème avec votre commande, notre équipe de service client est à votre disposition pour vous aider à le résoudre rapidement. Contactez-nous via notre formulaire de contact ou par téléphone."
+    },
+    "faq_9": {
+      "question": "Y a-t-il un montant minimum pour les commandes groupées ?",
+      "answer": "Le montant minimum pour les commandes groupées peut varier en fonction des produits et des artisans. Les détails sont spécifiés dans chaque annonce."
+    },
+    "faq_10": {
+      "question": "Quels sont les moyens de paiement acceptés ?",
+      "answer": "Nous acceptons les principales cartes de crédit (Visa, MasterCard, American Express). Tous les paiements sont sécurisés."
+    },
+    "faq_11": {
+      "question": "Comment puis-je annuler ou modifier ma commande ?",
+      "answer": "Pour annuler ou modifier une commande, veuillez nous contacter dès que possible. Si la commande n'a pas encore été traitée, nous ferons de notre mieux pour répondre à votre demande."
+    },
+    "faq_12": {
+      "question": "Puis-je retourner les produits ?",
+      "answer": "Étant donné la nature artisanale de nos produits, les retours ne sont généralement acceptés qu'en cas de produit défectueux ou endommagé. Veuillez consulter notre politique de retour pour plus de détails."
+    },
+    "faq_13": {
+      "question": "Comment puis-je devenir un artisan partenaire ?",
+      "answer": "Si vous êtes un artisan intéressé par notre plateforme, nous serions ravis de discuter avec vous. Contactez-nous via notre formulaire de contact en mentionnant votre intérêt à devenir partenaire."
+    }
+  },
+  "footer": {
+    "sitemap": "Plan du site",
+    "about": "À propos",
+    "how_it_works": "Comment ça marche ?",
+    "bulk_order": "Commande groupée",
+    "support_contact": "Support / Contact",
+    "faqs": "FAQs",
+    "information": "Informations",
+    "legal_notice": "Mentions légales",
+    "privacy_policy": "Politique de confidentialité",
+    "general_conditions": "Conditions générales de vente et d'utilisation",
+    "committed_newsletter": "Notre newsletter engagée",
+    "newsletter_info": "Restez informé (une fois par mois seulement) de nos actualités",
+    "subscribe_agreement": "En vous inscrivant, vous acceptez notre ",
+    "consent": "et consentez à recevoir des mises à jour de notre entreprise.",
+    "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+    "enter_email": "Entrez votre email",
+    "subscribe": "S'abonner"
   }
 }

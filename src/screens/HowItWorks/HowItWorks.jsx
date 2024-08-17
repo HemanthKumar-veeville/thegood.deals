@@ -32,10 +32,12 @@ import { useNavigate } from "react-router-dom";
 import ScrollIntoView from "react-scroll-into-view";
 import ImageCarousel from "../../components/ImageCarousel/ImageCarousel";
 import ImageRotator from "../../components/ImageRotator/ImageRotator";
+import { useTranslation } from "react-i18next";
 import { Button } from "../../components/RoundedButton";
 
 const HowItWorks = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const IMAGES = [picture1, picture2, picture3, picture4];
 
   useEffect(() => {
@@ -43,54 +45,45 @@ const HowItWorks = () => {
   }, []);
 
   const headingClassName = "";
-  const text1 = "Our values";
-  const text2 =
-    "En rejoignant notre communauté de commande groupée, bénéficiez de prix avantageux tout en partageant le plaisir de goûter au meilleur de l&#39;artisanat local. Faites de chaque achat une expérience unique, soutenant les artisans et partageant des moments avec vos proches.";
+  const text1 = t("how_it_works.text1");
+  const text2 = t("how_it_works.text2");
   const headingClassNameOverride = "";
-  const text3 = "Expérience de<br/>consommation partagée";
-  const text4 =
-    "Une expérience sociale enrichissante, renforçant les liens avec famille et amis tout en découvrant ensemble des produits exceptionnels.";
+  const text3 = t("how_it_works.text3");
+  const text4 = t("how_it_works.text4");
   const divClassName = "";
-  const text5 = "Soutien et valorisation<br/>des artisans locaux";
-  const text6 =
-    "En privilégiant les produits issus de l&#39;artisanat local, vous contribuez au maintien et à la valorisation des savoir-faire uniques de nos régions.";
-  const buttonText = "How it works ?";
-  const buttonText1 = "À propos de nous";
+  const text5 = t("how_it_works.text5");
+  const text6 = t("how_it_works.text6");
+  const buttonText = t("how_it_works.buttonText");
+  const buttonText1 = t("how_it_works.buttonText1");
   const buttonIcon = <IconChevronRight2 className="!relative !w-6 !h-6" />;
   const placeholderImage = placeHolderImage14;
   const values = [
     {
-      heading: "Authenticity",
-      definition:
-        "Products that tell a story, that of our terroirs and their passionate artisans.",
+      heading: t("how_it_works.values.authenticity.heading"),
+      definition: t("how_it_works.values.authenticity.definition"),
     },
     {
-      heading: "Community",
-      definition:
-        "We believe in the power of sharing and friendly experiences. Each bulk order is an opportunity to strengthen ties with your friends and family.",
+      heading: t("how_it_works.values.community.heading"),
+      definition: t("how_it_works.values.community.definition"),
     },
     {
-      heading: "Local support",
-      definition:
-        "You participate in promoting and maintaining the unique know-how of our regions. Each purchase is a gesture of support for our artisans.",
+      heading: t("how_it_works.values.local_support.heading"),
+      definition: t("how_it_works.values.local_support.definition"),
     },
   ];
 
   const reason = [
     {
-      heading: "Unique products",
-      definition:
-        "Each artisan is selected for the quality and authenticity of their products. You will discover flavors and creations that you will not find anywhere else.",
+      heading: t("how_it_works.reason.unique_products.heading"),
+      definition: t("how_it_works.reason.unique_products.definition"),
     },
     {
-      heading: "Advantageous prices",
-      definition:
-        "Thanks to bulk orders, you benefit from preferential rates. The more the merrier!",
+      heading: t("how_it_works.reason.advantageous_prices.heading"),
+      definition: t("how_it_works.reason.advantageous_prices.definition"),
     },
     {
-      heading: "An enriching experience",
-      definition:
-        "Ordering on The Good Deals is much more than a simple purchase. This is an opportunity to share precious moments with your loved ones while supporting a local and sustainable economy.",
+      heading: t("how_it_works.reason.enriching_experience.heading"),
+      definition: t("how_it_works.reason.enriching_experience.definition"),
     },
   ];
 
@@ -172,12 +165,10 @@ const HowItWorks = () => {
         >
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
             <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
-              How it works ?
+              {t("how_it_works.title")}
             </p>
             <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
-              We know that you can't wait to discover and share exceptional
-              products with your loved ones. That's why we've made the process
-              as simple and enjoyable as possible.
+              {t("how_it_works.description")}
             </p>
           </div>
           <div className="inline-flex flex-col items-center gap-4 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
@@ -186,7 +177,7 @@ const HowItWorks = () => {
               onClick={() => navigate("/auth?login")}
             >
               <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-white text-base tracking-[0] leading-6 whitespace-nowrap">
-                To log in
+                {t("how_it_works.login")}
               </button>
             </button>
             <button
@@ -194,7 +185,7 @@ const HowItWorks = () => {
               onClick={() => navigate("/auth?signup")}
             >
               <span className="all-[unset] box-border relative w-fit [font-family:'Rethink_Sans',Helvetica] font-normal text-base tracking-[0] leading-6 whitespace-nowrap hover:bg-[#1b4f4a] hover:text-white cursor-pointer">
-                Create an account
+                {t("how_it_works.create_account")}
               </span>
             </button>
           </div>
@@ -213,13 +204,13 @@ const HowItWorks = () => {
         headingClassNameOverride="!tracking-[0] !text-2xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[33.6px]"
         img={frame14x10}
         imgClassName="!left-[104px]"
-        text="Savor the delights of local crafts together, in three simple steps"
-        text1="Define your offer carefully"
-        text2="Start by creating an attractive ad in just a few clicks. Define the price, describe the products offered and present the craftsman behind these wonders. Make sure to include all the essential information to captivate your future buyers."
-        text3="Share the enthusiasm"
-        text4="Once your ad is ready, it’s time to invite your friends and family to check out the offer. Use our online platform to send invitations and share the announcement via social media or email. The more of you there are, the more advantageous rates you will be able to benefit from!"
-        text5="Ensure perfect reception"
-        text6="After collecting all the orders, the craftsman prepares the packages and ships them directly to your home. We ensure that delivery takes place in the best conditions so that your loved ones receive their products in perfect condition, ready to be enjoyed."
+        text={t("how_it_works.layout.text")}
+        text1={t("how_it_works.layout.text1")}
+        text2={t("how_it_works.layout.text2")}
+        text3={t("how_it_works.layout.text3")}
+        text4={t("how_it_works.layout.text4")}
+        text5={t("how_it_works.layout.text5")}
+        text6={t("how_it_works.layout.text6")}
       />
       <div
         id="about"
@@ -229,34 +220,32 @@ const HowItWorks = () => {
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
           buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText="Create a good deal"
-          buttonText1="Manage my good deals"
+          buttonText={t("how_it_works.header.create_deal")}
+          buttonText1={t("how_it_works.header.manage_deal")}
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text="It's that simple !"
-          text1="In just a few steps, you can turn a purchase into a friendly and rewarding experience. Create an ad, invite your loved ones and enjoy the delights of local crafts together."
+          text={t("how_it_works.header.text")}
+          text1={t("how_it_works.header.text1")}
           type="orange"
         />
       </div>
       <BreakpointDesktopWrapper
         breakpoint="mobile"
         buttonIcon={<IconChevronRight2 className="!relative !w-6 !h-6" />}
-        buttonText="About Us"
-        buttonText1="About Us"
+        buttonText={t("how_it_works.breakpoint.how_it_works")}
+        buttonText1={t("how_it_works.breakpoint.about_us")}
         className="!flex-[0_0_auto] !w-screen"
         divClassName="!tracking-[0] !text-xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[28.0px]"
         headingClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
         headingClassNameOverride="!tracking-[0] !text-xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[28.0px]"
         placeholderImage={placeHolderImage12}
-        text="Join the adventure"
-        text1="Why choose The Good Deals?"
-        text2=""
-        text3="Quality products"
-        text4="Each product is selected for its authenticity and exceptional quality."
-        text5="Advantageous prices"
-        text6="Thanks to bulk orders, benefit from preferential prices."
-        text7="A friendly experience"
-        text8="Share unique moments with your loved ones while supporting artisans in your region."
+        text={t("how_it_works.breakpoint.text")}
+        text1={t("how_it_works.breakpoint.text1")}
+        text2={t("how_it_works.breakpoint.text2")}
+        text3={t("how_it_works.breakpoint.text3")}
+        text4={t("how_it_works.breakpoint.text4")}
+        text5={t("how_it_works.breakpoint.text5")}
+        text6={t("how_it_works.breakpoint.text6")}
       />
       <div
         id="about"
@@ -266,41 +255,41 @@ const HowItWorks = () => {
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
           buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText="Create a good deal"
-          buttonText1="Manage my good deals"
+          buttonText={t("how_it_works.header.ready_to_get_started")}
+          buttonText1={t("how_it_works.header.manage_deal")}
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text="Ready to get started?"
-          text1="Join our community and place your first bulk order today. If you have any questions or need assistance, our team is here to support you every step."
+          text={t("how_it_works.header.ready_to_get_started")}
+          text1={t("how_it_works.header.ready_to_get_started_description")}
           type="green"
         />
       </div>
       <Footer
         breakpoint="mobile"
-        buttonText="Subscribe"
+        buttonText={t("how_it_works.footer.subscribe")}
         className="!flex-[0_0_auto] !w-screen"
         divClassName="![white-space:unset] !w-[155px]"
         linksClassName="!h-[485px] !flex-[unset]"
         spanClassName="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassName1="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassNameOverride="!text-[unset]"
-        text="Sitemap"
-        text1="About"
-        text10="Our committed newsletter"
-        text11="Stay informed (only once a month) of our news"
-        text12="By subscribing, you agree to our "
-        text13=" and consent to receive updates from our company."
-        text14="© 2024 The Good Deals. All rights reserved."
-        text2="How it works ?"
-        text3="Bulk order"
-        text4="Support / Contact"
-        text5="FAQs"
-        text6="Information"
-        text7="Legal Notice"
-        text8="Privacy Policy"
-        text9="General Conditions of Sales and Use"
+        text={t("how_it_works.footer.sitemap")}
+        text1={t("how_it_works.footer.about")}
+        text10={t("how_it_works.footer.newsletter_title")}
+        text11={t("how_it_works.footer.newsletter_description")}
+        text12={t("how_it_works.footer.subscribe_agreement")}
+        text13={t("how_it_works.footer.agree")}
+        text14={t("how_it_works.footer.copyright")}
+        text2={t("how_it_works.footer.how_it_works")}
+        text3={t("how_it_works.footer.bulk_order")}
+        text4={t("how_it_works.footer.support_contact")}
+        text5={t("how_it_works.footer.faq")}
+        text6={t("how_it_works.footer.information")}
+        text7={t("how_it_works.footer.legal_notice")}
+        text8={t("how_it_works.footer.privacy_policy")}
+        text9={t("how_it_works.footer.general_conditions")}
         textInputDivClassName="!mt-[-1.00px] !text-[#4f4f4f] !ml-[-1.00px]"
-        textInputText="Enter your email"
+        textInputText={t("how_it_works.footer.enter_email")}
         textInputTextInputClassName="!self-stretch !border-white !rounded-[100px] !mr-[-2.00px] !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !w-full"
       />
     </div>

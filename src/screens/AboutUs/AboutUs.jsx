@@ -25,58 +25,51 @@ import {
 } from "../../images";
 import { IconChevronRight2 } from "../../icons/IconChevronRight2";
 import { Button } from "../../components/RoundedButton";
+import { useTranslation } from "react-i18next"; // Import for translation
 
 function AboutUs() {
   const IMAGES = [picture1, picture2, picture3, picture4];
+  const { t } = useTranslation(); // Hook for translation
   const headingClassName = "";
-  const text1 = "Our values";
-  const text2 =
-    "En rejoignant notre communauté de commande groupée, bénéficiez de prix avantageux tout en partageant le plaisir de goûter au meilleur de l&#39;artisanat local. Faites de chaque achat une expérience unique, soutenant les artisans et partageant des moments avec vos proches.";
+  const text1 = t("about_us.values");
+  const text2 = t("about_us.values_description");
   const headingClassNameOverride = "";
-  const text3 = "Expérience de<br/>consommation partagée";
-  const text4 =
-    "Une expérience sociale enrichissante, renforçant les liens avec famille et amis tout en découvrant ensemble des produits exceptionnels.";
+  const text3 = t("about_us.shared_experience");
+  const text4 = t("about_us.shared_experience_description");
   const divClassName = "";
-  const text5 = "Soutien et valorisation<br/>des artisans locaux";
-  const text6 =
-    "En privilégiant les produits issus de l&#39;artisanat local, vous contribuez au maintien et à la valorisation des savoir-faire uniques de nos régions.";
-  const buttonText = "How it works ?";
-  const buttonText1 = "À propos de nous";
+  const text5 = t("about_us.local_support");
+  const text6 = t("about_us.local_support_description");
+  const buttonText = t("about_us.how_it_works");
+  const buttonText1 = t("about_us.about_us");
   const buttonIcon = <IconChevronRight2 className="!relative !w-6 !h-6" />;
   const placeholderImage = placeHolderImage14;
   const values = [
     {
-      heading: "Authenticity",
-      definition:
-        "Products that tell a story, that of our terroirs and their passionate artisans.",
+      heading: t("about_us.authenticity"),
+      definition: t("about_us.authenticity_description"),
     },
     {
-      heading: "Community",
-      definition:
-        "We believe in the power of sharing and friendly experiences. Each bulk order is an opportunity to strengthen ties with your friends and family.",
+      heading: t("about_us.community"),
+      definition: t("about_us.community_description"),
     },
     {
-      heading: "Local support",
-      definition:
-        "You participate in promoting and maintaining the unique know-how of our regions. Each purchase is a gesture of support for our artisans.",
+      heading: t("about_us.local_support_heading"),
+      definition: t("about_us.local_support_heading_description"),
     },
   ];
 
   const reason = [
     {
-      heading: "Unique products",
-      definition:
-        "Each artisan is selected for the quality and authenticity of their products. You will discover flavors and creations that you will not find anywhere else.",
+      heading: t("about_us.unique_products"),
+      definition: t("about_us.unique_products_description"),
     },
     {
-      heading: "Advantageous prices",
-      definition:
-        "Thanks to bulk orders, you benefit from preferential rates. The more the merrier!",
+      heading: t("about_us.advantageous_prices"),
+      definition: t("about_us.advantageous_prices_description"),
     },
     {
-      heading: "An enriching experience",
-      definition:
-        "Ordering on The Good Deals is much more than a simple purchase. This is an opportunity to share precious moments with your loved ones while supporting a local and sustainable economy.",
+      heading: t("about_us.enriching_experience"),
+      definition: t("about_us.enriching_experience_description"),
     },
   ];
 
@@ -163,13 +156,10 @@ function AboutUs() {
         >
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
             <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
-              About The Good Deals
+              {t("about_us.about_good_deals")}
             </p>
             <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
-              We are delighted to welcome you to our community dedicated to
-              discovering exceptional products at affordable prices.. The Good
-              Deals is above all a human and gourmet adventure, where each group
-              order becomes a celebration of local flavors and know-how.
+              {t("about_us.welcome_description")}
             </p>
           </div>
           <div className="inline-flex flex-col items-center gap-4 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
@@ -178,7 +168,7 @@ function AboutUs() {
               onClick={() => navigate("/auth?login")}
             >
               <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-white text-base tracking-[0] leading-6 whitespace-nowrap">
-                To log in
+                {t("about_us.login")}
               </button>
             </button>
             <button
@@ -186,7 +176,7 @@ function AboutUs() {
               onClick={() => navigate("/auth?signup")}
             >
               <span className="all-[unset] box-border relative w-fit [font-family:'Rethink_Sans',Helvetica] font-normal text-base tracking-[0] leading-6 whitespace-nowrap hover:bg-[#1b4f4a] hover:text-white cursor-pointer">
-                Create an account
+                {t("about_us.create_account")}
               </span>
             </button>
           </div>
@@ -200,12 +190,12 @@ function AboutUs() {
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
           buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText="Create a good deal"
-          buttonText1="Manage my good deals"
+          buttonText={t("about_us.create_deal")}
+          buttonText1={t("about_us.manage_deal")}
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text="Our mission"
-          text1="Allow you to benefit from the best artisans in our regions and allow you to share their treasures with your loved ones. By joining forces, we make exceptional products accessible to all, while supporting local talent."
+          text={t("about_us.our_mission")}
+          text1={t("about_us.mission_description")}
           type="orange"
         />
       </div>
@@ -266,7 +256,7 @@ function AboutUs() {
                 <p
                   className={`text-[length:var(--heading-h2-mobile-font-size)] leading-[var(--heading-h2-mobile-line-height)] relative self-stretch mt-[-1.00px] font-heading-h2-mobile font-[number:var(--heading-h2-mobile-font-weight)] text-green tracking-[var(--heading-h2-mobile-letter-spacing)] [font-style:var(--heading-h2-mobile-font-style)] ${headingClassName}`}
                 >
-                  Why choose us ?
+                  {t("about_us.why_choose_us")}
                 </p>
               </div>
             </div>
@@ -295,41 +285,41 @@ function AboutUs() {
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
           buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText="Create a good deal"
-          buttonText1="Manage my good deals"
+          buttonText={t("about_us.create_deal")}
+          buttonText1={t("about_us.manage_deal")}
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text="Join us on this great adventure!"
-          text1="Creating an order is as simple as it is user-friendly. In just a few clicks, launch an ad, invite your friends and enjoy the delights of local crafts together."
+          text={t("about_us.join_adventure")}
+          text1={t("about_us.join_adventure_description")}
           type="green"
         />
       </div>
       <Footer
         breakpoint="mobile"
-        buttonText="Subscribe"
+        buttonText={t("about_us.subscribe")}
         className="!flex-[0_0_auto] !w-screen"
         divClassName="![white-space:unset] !w-[155px]"
         linksClassName="!h-[485px] !flex-[unset]"
         spanClassName="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassName1="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassNameOverride="!text-[unset]"
-        text="Sitemap"
-        text1="About"
-        text10="Our committed newsletter"
-        text11="Stay informed (only once a month) of our news"
-        text12="By subscribing, you agree to our "
-        text13=" and consent to receive updates from our company."
-        text14="© 2024 The Good Deals. All rights reserved."
-        text2="How it works ?"
-        text3="Bulk order"
-        text4="Support / Contact"
-        text5="FAQs"
-        text6="Information"
-        text7="Legal Notice"
-        text8="Privacy Policy"
-        text9="General Conditions of Sales and Use"
+        text={t("about_us.sitemap")}
+        text1={t("about_us.about")}
+        text10={t("about_us.newsletter_title")}
+        text11={t("about_us.newsletter_description")}
+        text12={t("about_us.subscribe_agreement")}
+        text13={t("about_us.agree")}
+        text14={t("about_us.copyright")}
+        text2={t("about_us.how_it_works")}
+        text3={t("about_us.bulk_order")}
+        text4={t("about_us.support_contact")}
+        text5={t("about_us.faq")}
+        text6={t("about_us.information")}
+        text7={t("about_us.legal_notice")}
+        text8={t("about_us.privacy_policy")}
+        text9={t("about_us.general_conditions")}
         textInputDivClassName="!mt-[-1.00px] !text-[#4f4f4f] !ml-[-1.00px]"
-        textInputText="Enter your email"
+        textInputText={t("about_us.enter_email")}
         textInputTextInputClassName="!self-stretch !border-white !rounded-[100px] !mr-[-2.00px] !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !w-full"
       />
     </div>
