@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 import { Button } from "../../components/Button/Button.jsx";
 import { TabMenuStyle } from "../../components/TabMenuStyle/TabMenuStyle.jsx";
 import { AppleBrand1 } from "../../icons/AppleBrand1/AppleBrand1.jsx";
@@ -13,6 +14,7 @@ import AppBar from "../../components/AppBar/AppBar.jsx";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
 
 const Auth = () => {
+  const { t } = useTranslation(); // Initialize translation hook
   const [isLoginTab, setIsLoginTab] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +42,7 @@ const Auth = () => {
             divClassName={`${
               isLoginTab ? "!text-[#1b4f4a]" : "!text-[#637381]"
             } !tracking-[0] !text-base ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-6`}
-            text="To log in"
+            text={t("auth.login_tab")} // Translated text for "To log in"
             onClick={switchToLogin}
           />
           <TabMenuStyle
@@ -50,7 +52,7 @@ const Auth = () => {
             divClassName={`${
               !isLoginTab ? "!text-[#1b4f4a]" : "!text-[#637381]"
             } !tracking-[0] !text-base ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-6`}
-            text="Create an account"
+            text={t("auth.signup_tab")} // Translated text for "Create an account"
             onClick={switchToSignUp}
           />
         </div>

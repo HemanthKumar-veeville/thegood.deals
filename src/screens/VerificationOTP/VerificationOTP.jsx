@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 import Swal from "sweetalert2";
 import { Button } from "../../components/Button/Button.jsx";
 import AppBar from "../../components/AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../helpers/helperMethods.js";
-import { CustomLoader } from "../../components/CustomLoader.jsx";
+import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
 
 const OTPInput = ({ value, onChange, index, inputRefs }) => (
   <div className="flex flex-col w-12 h-12 items-start gap-[5px] relative">
@@ -47,6 +48,7 @@ const OTPInput = ({ value, onChange, index, inputRefs }) => (
 );
 
 export const VerificationOTP = ({ setIsLoading }) => {
+  const { t } = useTranslation(); // Initialize translation hook
   const [otp, setOtp] = useState(Array(5).fill(""));
   const [seconds, setSeconds] = useState(33);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -131,10 +133,10 @@ export const VerificationOTP = ({ setIsLoading }) => {
       {!loading && (
         <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold !text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-            Confirm your email
+            {t("otp.confirm_email")} {/* Confirm your email */}
           </div>
           <p className="relative w-fit [font-family:'Inter',Helvetica] font-normal !text-[#1b4f4a] text-sm tracking-[0] leading-[22px]">
-            We have sent you a code to <br />
+            {t("otp.code_sent")} <br />
             {state?.email || "{email}"}
           </p>
           <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
@@ -150,13 +152,13 @@ export const VerificationOTP = ({ setIsLoading }) => {
           </div>
           {seconds !== 0 && (
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-secondary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              Send again in ({seconds}s)
+              {t("otp.send_again")} ({seconds}s) {/* Send again in */}
             </div>
           )}
           {seconds === 0 && (
             <div onClick={handleMail} className="!w-full">
               <Button
-                buttonText="Send Code Again"
+                buttonText={t("otp.send_code_again")} // Send Code Again
                 className="!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer"
                 color="primary"
                 kind="primary"
@@ -167,7 +169,7 @@ export const VerificationOTP = ({ setIsLoading }) => {
           )}
           <div onClick={handleSubmit} className="!w-full">
             <Button
-              buttonText="To log in"
+              buttonText={t("otp.login")} // To log in
               className="!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer"
               color="primary"
               kind="primary"

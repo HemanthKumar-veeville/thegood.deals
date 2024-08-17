@@ -266,5 +266,32 @@
     "copyright": "© 2024 The Good Deals. Tous droits réservés.",
     "enter_email": "Entrez votre email",
     "subscribe": "S'abonner"
+  },
+  "public_need_help": {
+    "back": "Retour",
+    "title": "Besoin d'aide ? 🛟",
+    "description": "Notre équipe est là pour répondre à vos questions.",
+    "form_title": "Via notre formulaire",
+    "name_placeholder": "Votre nom",
+    "email_placeholder": "Votre email",
+    "phone_placeholder": "Votre téléphone",
+    "message_placeholder": "Votre message",
+    "privacy_accept_text": "J'accepte ",
+    "privacy_policy": "la politique de confidentialité",
+    "send_message": "Envoyer mon message",
+    "faq_title": "Notre FAQ peut également vous être utile 💡",
+    "see_faq": "Voir la page FAQ",
+    "fill_all_fields": "Veuillez remplir tous les champs et accepter la politique de confidentialité avant de soumettre."
+  },
+  "auth": {
+    "login_tab": "Se connecter",
+    "signup_tab": "Créer un compte"
+  },
+  "otp": {
+    "confirm_email": "Confirmez votre email",
+    "code_sent": "Nous vous avons envoyé un code à",
+    "send_again": "Envoyer de nouveau dans",
+    "send_code_again": "Envoyer à nouveau le code",
+    "login": "Se connecter"
   }
 }

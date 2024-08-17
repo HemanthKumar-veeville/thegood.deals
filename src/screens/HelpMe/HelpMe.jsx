@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Textarea } from "../../components/TextareaUpdated";
 import { ArrowRightCircle2 } from "../../icons/ArrowRightCircle2";
 import { Envelope } from "../../icons/Envelope";
 import { Phone2 } from "../../icons/Phone2";
-import { Send2 } from "../../icons/Send2";
+import { Send1 } from "../../icons/Send1";
 import { UserAlt5 } from "../../icons/UserAlt5";
-import { VerticalLine } from "../../icons/VerticalLine";
 import AppBar from "../../components/AppBar/AppBar";
 import { Line63 } from "../../images";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
-import { Send1 } from "../../icons/Send1";
 import { useNavigate } from "react-router-dom";
 
 const PublicNeedHelp = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,6 +21,7 @@ const PublicNeedHelp = () => {
     privacyAccepted: false,
   });
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -37,9 +38,7 @@ const PublicNeedHelp = () => {
     e.preventDefault();
     const { name, email, phone, message, privacyAccepted } = formData;
     if (!name || !email || !phone || !message || !privacyAccepted) {
-      alert(
-        "Please fill out all fields and accept the privacy policy before submitting."
-      );
+      alert(t("public_need_help.fill_all_fields"));
       return;
     }
     console.log("Form Data Submitted:", formData);
@@ -70,15 +69,15 @@ const PublicNeedHelp = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("public_need_help.back")}
             </div>
           </div>
         </div>
         <div className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Need help? 🛟
+          {t("public_need_help.title")}
         </div>
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-          Our team is here to answer your questions.
+          {t("public_need_help.description")}
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -86,7 +85,7 @@ const PublicNeedHelp = () => {
           src={Line63}
         />
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-          Via our form
+          {t("public_need_help.form_title")}
         </div>
         <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
           <UserAlt5
@@ -99,7 +98,7 @@ const PublicNeedHelp = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            placeholder="Your name"
+            placeholder={t("public_need_help.name_placeholder")}
             className="flex-1 outline-none"
           />
         </div>
@@ -110,7 +109,7 @@ const PublicNeedHelp = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Your email"
+            placeholder={t("public_need_help.email_placeholder")}
             className="flex-1 outline-none"
           />
         </div>
@@ -121,7 +120,7 @@ const PublicNeedHelp = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="Your phone"
+            placeholder={t("public_need_help.phone_placeholder")}
             className="flex-1 outline-none"
           />
         </div>
@@ -129,7 +128,7 @@ const PublicNeedHelp = () => {
           className="!self-stretch !w-full"
           helperText="off"
           label1="off"
-          placeholder="Your message"
+          placeholder={t("public_need_help.message_placeholder")}
           secondLabel="off"
           state="default"
           name="message"
@@ -146,9 +145,11 @@ const PublicNeedHelp = () => {
           />
           <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-xs tracking-[0] leading-5 whitespace-nowrap">
             <span className="[font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-xs tracking-[0] leading-5">
-              I accept{" "}
+              {t("public_need_help.privacy_accept_text")}
             </span>
-            <span className="underline">privacy policy</span>
+            <span className="underline">
+              {t("public_need_help.privacy_policy")}
+            </span>
           </p>
         </div>
         <div
@@ -156,7 +157,7 @@ const PublicNeedHelp = () => {
           onClick={handleSubmit}
         >
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Send my message
+            {t("public_need_help.send_message")}
           </button>
           <Send1 className="!relative !w-5 !h-5" color="white" />
         </div>
@@ -166,12 +167,12 @@ const PublicNeedHelp = () => {
           src={Line63}
         />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Our FAQ may also be useful to you 💡
+          {t("public_need_help.faq_title")}
         </p>
         <div className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1">
           <ArrowRightCircle2 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            See the FAQ page
+            {t("public_need_help.see_faq")}
           </button>
         </div>
       </div>
