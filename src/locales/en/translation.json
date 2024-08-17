@@ -13,5 +13,70 @@
   "faq": "FAQ",
   "contact_us": "Contact Us",
   "create_deal": "Create Deal",
-  "my_account": "My Account"
+  "my_account": "My Account",
+  "home": {
+    "title": "Exceptional products at friendly prices",
+    "description": "Offer your loved ones the opportunity to discover exceptional products, thanks to our group orders. Benefit from preferential rates, but also enjoy together the richness and authenticity of our terroirs.",
+    "login": "To log in",
+    "create_account": "Create an account",
+    "layout": {
+      "text": "Savor the delights of local crafts together, in three simple steps",
+      "text1": "Create your ad",
+      "text2": "By creating an attractive ad where you define the price, give details of the products offered and introduce the artisan. All the information your potential buyers need.",
+      "text3": "Invite your loved ones",
+      "text4": "Encourage them to explore the offer and place an order, all facilitated by an online platform. This is an opportunity to introduce them to new products.",
+      "text5": "Deliver the Merchandise",
+      "text6": "This includes the preparation of the packages by the artisan and their delivery to you. Make sure that your loved ones receive the products under the best conditions."
+    },
+    "header": {
+      "text": "Create, Share and Enjoy with a bulk order!",
+      "text1": "In just a few clicks, create an order, invite your loved ones and share the pleasure of discovering together the unique flavors of local crafts. Take advantage of advantageous prices, support artisans in your region, and transform each purchase into a friendly and enriching experience.",
+      "create_deal": "Create a good deal",
+      "manage_deal": "Manage my good deals"
+    },
+    "breakpoint": {
+      "how_it_works": "How it works?",
+      "about_us": "About Us",
+      "text": "Our approach",
+      "text1": "Embark on the adventure of artisanal flavors",
+      "text2": "By joining our group order community, benefit from advantageous prices while sharing the pleasure of tasting the best of local crafts. Make each purchase a unique experience, supporting artisans and sharing moments with your loved ones.",
+      "text3": "Shared consumption experience",
+      "text4": "An enriching social experience, strengthening bonds with family and friends while discovering exceptional products together.",
+      "text5": "Support and promotion of local artisans",
+      "text6": "By favoring products from local crafts, you contribute to maintaining and promoting the unique know-how of our regions."
+    },
+    "faq": {
+      "button_text": "Questions? Contact us",
+      "text": "You will find answers to the most common questions regarding our bulk ordering platform for artisan products.",
+      "que1": "How does bulk ordering work on your platform?",
+      "que2": "Who are the partner artisans?",
+      "que3": "How do I invite my loved ones to join a group order?",
+      "que4": "How is the price of products calculated?",
+      "que5": "How does delivery work?",
+      "ans1": "This is a detailed answer for the first question.",
+      "ans2": "This is a detailed answer for the second question.",
+      "ans3": "This is a detailed answer for the third question.",
+      "ans4": "This is a detailed answer for the fourth question.",
+      "ans5": "This is a detailed answer for the fifth question."
+    },
+    "footer": {
+      "subscribe": "Subscribe",
+      "sitemap": "Sitemap",
+      "about": "About",
+      "how_it_works": "How it works?",
+      "bulk_order": "Bulk order",
+      "support_contact": "Support / Contact",
+      "faq": "FAQs",
+      "information": "Information",
+      "legal_notice": "Legal Notice",
+      "privacy_policy": "Privacy Policy",
+      "general_conditions": "General Conditions of Sales and Use",
+      "newsletter_title": "Our committed newsletter",
+      "newsletter_description": "Stay informed (only once a month) of our news",
+      "subscribe_agreement": "By subscribing, you agree to our",
+      "agree": "and consent to receive updates from our company.",
+      "copyright": "© 2024 The Good Deals. All rights reserved.",
+      "enter_email": "Enter your email"
+    }
+  }
 }
