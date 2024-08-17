@@ -9,8 +9,13 @@ import { useLanguage } from "../../context/LanguageContext";
 
 /**
  * SideBar component
+ *
+ * This component renders a sidebar with navigation links and language selection.
+ * It uses various hooks for state management, navigation, and translations.
+ *
  * @param {Object} props - Component props
  * @param {Function} props.onClose - Function to call when the sidebar is closed
+ * @returns {JSX.Element} The rendered sidebar component
  */
 const SideBar = React.memo(({ onClose }) => {
   const navigate = useNavigate();
@@ -24,13 +29,23 @@ const SideBar = React.memo(({ onClose }) => {
     setIsVisible(true);
   }, []);
 
-  // Handle closing the sidebar
+  /**
+   * Handle closing the sidebar
+   *
+   * This function sets the sidebar visibility to false and calls the onClose prop after a delay.
+   */
   const handleClose = useCallback(() => {
     setIsVisible(false);
     setTimeout(onClose, 300);
   }, [onClose]);
 
-  // Handle navigation and close the sidebar
+  /**
+   * Handle navigation and close the sidebar
+   *
+   * This function navigates to the specified path and then closes the sidebar.
+   *
+   * @param {string} path - The path to navigate to
+   */
   const handleNavigation = useCallback(
     (path) => {
       navigate(path);
@@ -39,7 +54,11 @@ const SideBar = React.memo(({ onClose }) => {
     [navigate, handleClose]
   );
 
-  // Handle language change using SweetAlert2
+  /**
+   * Handle language change using SweetAlert2
+   *
+   * This function displays a SweetAlert2 modal for language selection and updates the selected language.
+   */
   const handleLanguageChange = useCallback(() => {
     Swal.fire({
       title: t("select_language"),
@@ -94,7 +113,13 @@ const SideBar = React.memo(({ onClose }) => {
     [t, handleNavigation]
   );
 
-  // Render menu items
+  /**
+   * Render menu items
+   *
+   * This function maps over the menu items and returns a JSX element for each item.
+   *
+   * @returns {JSX.Element[]} The rendered menu items
+   */
   const renderMenuItems = () =>
     menuItems.map((item, index) => (
       <div
@@ -108,7 +133,16 @@ const SideBar = React.memo(({ onClose }) => {
       </div>
     ));
 
-  // Render a button with optional additional classes
+  /**
+   * Render a button with optional additional classes
+   *
+   * This function returns a button element with the specified label, path, and additional classes.
+   *
+   * @param {string} label - The button label
+   * @param {string} path - The path to navigate to when the button is clicked
+   * @param {string} [additionalClasses=""] - Additional classes for the button
+   * @returns {JSX.Element} The rendered button
+   */
   const renderButton = (label, path, additionalClasses = "") => (
     <button
       className={`w-full text-green inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-green cursor-pointer ${additionalClasses}`}
