@@ -37,7 +37,7 @@ export const Faq = ({
   };
 
   const handleContactUs = () => {
-    navigate("/contact-us");
+    navigate("/help-me");
   };
 
   const questions = [que1, que2, que3, que4, que5];

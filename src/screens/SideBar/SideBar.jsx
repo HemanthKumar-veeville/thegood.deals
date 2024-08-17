@@ -107,7 +107,7 @@ const SideBar = React.memo(({ onClose }) => {
       { label: t("faq"), onClick: () => handleNavigation("/contact-us") },
       {
         label: t("contact_us"),
-        onClick: () => handleNavigation("/contact-us"),
+        onClick: () => handleNavigation("/help-me"),
       },
     ],
     [t, handleNavigation]

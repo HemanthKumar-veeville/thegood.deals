@@ -102,7 +102,8 @@ export const Header = ({
             {text1}
           </p>
           {(location?.pathname === "about-us" ||
-            location?.pathname === "/how-it-works") &&
+            location?.pathname === "/how-it-works" ||
+            location?.pathname === "/") &&
             type !== "green" && (
               <div className="inline-flex flex-col items-start gap-4 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
                 <button

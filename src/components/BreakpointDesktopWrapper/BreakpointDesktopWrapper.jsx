@@ -8,7 +8,7 @@ import React from "react";
 import { IconChevronRight2 } from "../../icons/IconChevronRight2";
 import { Button } from "../RoundedButton";
 import { placeHolderImage14 } from "../../images";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const BreakpointDesktopWrapper = ({
   breakpoint,
@@ -31,6 +31,7 @@ export const BreakpointDesktopWrapper = ({
   placeholderImage = { placeHolderImage14 },
 }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   return (
     <div
       id="contact"
@@ -166,24 +167,28 @@ export const BreakpointDesktopWrapper = ({
                 </div>
               </div>
               <div className="inline-flex flex-col items-start justify-center gap-6 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
-                <Button
-                  className="!mr-[-1.00px] !mt-[-1.00px] !ml-[-1.00px] !flex-[0_0_auto]"
-                  darkMode={false}
-                  iconPosition="no-icon"
-                  small={false}
-                  style="secondary"
-                  text={buttonText}
-                />
-                {location?.pathname !== "/how-it-works" && (
+                <div onClick={() => navigate("/how-it-works")}>
                   <Button
-                    className="!flex-[0_0_auto]"
+                    className="!mr-[-1.00px] !mt-[-1.00px] !ml-[-1.00px] !flex-[0_0_auto]"
                     darkMode={false}
-                    icon={buttonIcon}
-                    iconPosition="trailing"
+                    iconPosition="no-icon"
                     small={false}
-                    style="link"
-                    text={buttonText1}
+                    style="secondary"
+                    text={buttonText}
                   />
+                </div>
+                {location?.pathname !== "/how-it-works" && (
+                  <div onClick={() => navigate("/about-us")}>
+                    <Button
+                      className="!flex-[0_0_auto]"
+                      darkMode={false}
+                      icon={buttonIcon}
+                      iconPosition="trailing"
+                      small={false}
+                      style="link"
+                      text={buttonText1}
+                    />
+                  </div>
                 )}
               </div>
             </div>

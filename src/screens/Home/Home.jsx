@@ -184,6 +184,7 @@ const Home = () => {
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
           text="Create, Share and Enjoy with a bulk order!"
           text1="In just a few clicks, create an order, invite your loved ones and share the pleasure of discovering together the unique flavors of local crafts. Take advantage of advantageous prices, support artisans in your region, and transform each purchase into a friendly and enriching experience."
+          type="orange"
         />
       </div>
       <BreakpointDesktopWrapper
