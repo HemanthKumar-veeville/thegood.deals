@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Box43 } from "../../icons/Box43";
@@ -10,24 +11,14 @@ import { Pencil1 } from "../../icons/Pencil1";
 import { UserAlt2 } from "../../icons/UserAlt2";
 import { Users22 } from "../../icons/Users22";
 import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
-import {
-  blogImage,
-  Line571,
-  Line59,
-  Line60,
-  Line63,
-  Line69,
-  Line_570_1,
-  Line_571_1,
-  FranceFlag,
-} from "../../images";
-import AppBar from "../../components/AppBar/AppBar";
+import { blogImage, Line63, Line69, FranceFlag } from "../../images";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Badges } from "../../components/Badges";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 
 const GuestDealView = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,11 +31,11 @@ const GuestDealView = () => {
   };
 
   const statusBanner = {
-    out_of_stock: { text: "Soon to be out of stock", color: "warning" },
-    finished: { text: "Finished", color: "success" },
-    in_stock: { text: "In stock", color: "success" },
-    waiting: { text: "Waiting for the artisian", color: "warning" },
-    draft: { text: "Draft", color: "info" },
+    out_of_stock: { text: t("status.out_of_stock"), color: "warning" },
+    finished: { text: t("status.finished"), color: "success" },
+    in_stock: { text: t("status.in_stock"), color: "success" },
+    waiting: { text: t("status.waiting"), color: "warning" },
+    draft: { text: t("status.draft"), color: "info" },
   };
 
   useEffect(() => {
@@ -65,7 +56,7 @@ const GuestDealView = () => {
                 color="#637381"
               />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Back
+                {t("common.back")}
               </div>
             </div>
           </div>
@@ -79,20 +70,22 @@ const GuestDealView = () => {
               </div>
               <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
                 <span className="[font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
-                  Deal ends in
+                  {t("deal.ends_in")}
                   <br />
                 </span>
-                <span className="font-bold">10 days and 6 hours.</span>
+                <span className="font-bold">
+                  {t("deal.time_left", { days: 10, hours: 6 })}
+                </span>
               </p>
             </div>
           </div>
           <img
             className="relative self-stretch w-full h-[150px] object-cover"
-            alt="Blog image"
+            alt={t("deal.image_alt")}
             src={blogImage}
           />
           <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-            Wine cratesDomaine de Cigaluse
+            {t("deal.title")}
           </div>
           {location?.state?.deal?.dealStatus === "out_of_stock" ? (
             <ProgressBarYellow percentage={80} />
@@ -103,20 +96,20 @@ const GuestDealView = () => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                end in 10 days
+                {t("deal.end_in", { days: 10 })}
               </div>
             </div>
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                13 participants
+                {t("deal.participants", { count: 13 })}
               </div>
             </div>
           </div>
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <Map className="!relative !w-5 !h-5" />
             <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              Domaine de Cigalus 11200 Bizanet
+              {t("deal.location")}
             </p>
           </div>
           <img
@@ -130,7 +123,7 @@ const GuestDealView = () => {
           >
             <Box44 className="!relative !w-5 !h-5" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              My orders
+              {t("deal.my_orders")}
             </button>
           </div>
           <Badges
@@ -171,7 +164,7 @@ const GuestDealView = () => {
               </div>
             </div>
             <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              The artisian accepted the deal
+              {t("deal.step1")}
             </p>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -183,7 +176,7 @@ const GuestDealView = () => {
               </div>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Current orders
+              {t("deal.step2")}
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -195,7 +188,7 @@ const GuestDealView = () => {
               </div>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Goal achieved ! . 🎉
+              {t("deal.step3")}
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -208,7 +201,7 @@ const GuestDealView = () => {
             </div>
             <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Order preparation
+                {t("deal.step4")}
               </div>
             </div>
           </div>
@@ -222,7 +215,7 @@ const GuestDealView = () => {
             </div>
             <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Shipping
+                {t("deal.step5")}
               </div>
             </div>
           </div>
@@ -236,7 +229,7 @@ const GuestDealView = () => {
             </div>
             <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Delivery and Closing of the deal
+                {t("deal.step6")}
               </div>
             </div>
           </div>

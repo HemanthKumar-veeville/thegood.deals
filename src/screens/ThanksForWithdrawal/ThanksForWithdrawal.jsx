@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next"; // Import useTranslation hook
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
-import { UserAlt } from "../../icons/UserAlt";
-import { VerticalLine } from "../../icons/VerticalLine";
 import { Line63 } from "../../images";
-import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 
 const ThanksForWithdrawal = () => {
+  const { t } = useTranslation(); // Initialize the translation hook
   const navigate = useNavigate();
+
   const handleBackToHome = () => {
-    // Logic for navigating back to home
     navigate("/account");
   };
 
@@ -21,16 +20,16 @@ const ThanksForWithdrawal = () => {
     <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          THANKS ! . 🎉
+          {t("thanks_withdrawal.thanks")} 🎉
         </div>
         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          The transfer is complete!
+          {t("thanks_withdrawal.transfer_complete")}
           <br />
-          You should receive the funds in your account within 3 to 4 days.
+          {t("thanks_withdrawal.receive_funds")}
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("thanks_withdrawal.line_alt")}
           src={Line63}
         />
         <div
@@ -39,7 +38,7 @@ const ThanksForWithdrawal = () => {
         >
           <ArrowLeft className="!relative !w-5 !h-5" color="#1B4F4A" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Back to Home
+            {t("thanks_withdrawal.back_to_home")}
           </button>
         </div>
       </div>

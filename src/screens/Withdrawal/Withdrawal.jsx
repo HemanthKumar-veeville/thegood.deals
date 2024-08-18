@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ArrowRight1 } from "../../icons/ArrowRight1";
-import { UserAlt2 } from "../../icons/UserAlt2";
-import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
-import AppBar from "../../components/AppBar/AppBar";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Withdrawal = () => {
   const [withdrawalValidated, setWithdrawalValidated] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleValidateWithdrawal = () => {
     // Logic for validating the withdrawal
@@ -29,14 +28,14 @@ const Withdrawal = () => {
     <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          Validation of withdrawal
+          {t("withdrawal.title")}
         </div>
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          Stripe page
+          {t("withdrawal.stripe_page")}
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("withdrawal.line_alt")}
           src={Line63}
         />
         <div
@@ -44,13 +43,13 @@ const Withdrawal = () => {
           onClick={handleValidateWithdrawal}
         >
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Validate the withdrawal
+            {t("withdrawal.validate_button")}
           </button>
           <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("withdrawal.line_alt")}
           src={Line63}
         />
         <button
@@ -58,7 +57,7 @@ const Withdrawal = () => {
           onClick={handleBack}
         >
           <div className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Back
+            {t("withdrawal.back_button")}
           </div>
         </button>
       </div>

@@ -5,11 +5,9 @@ import { Box43 } from "../../icons/Box43";
 import { CheckmarkCircle } from "../../icons/CheckmarkCircle";
 import { CrossCircle2 } from "../../icons/CrossCircle2";
 import { Send2 } from "../../icons/Send2";
-import { UserAlt4 } from "../../icons/UserAlt4/UserAlt4";
-import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
-import AppBar from "../../components/AppBar/AppBar";
-import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Line63 } from "../../images";
 
 const Invitations = () => {
   const [requests, setRequests] = useState([
@@ -17,6 +15,7 @@ const Invitations = () => {
     { name: "Karthik Ramesh", accepted: false, refused: false },
   ]);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -63,16 +62,16 @@ const Invitations = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back to the deal
+              {t("invitations.back_to_deal")}
             </div>
           </div>
         </div>
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          Managing my loved ones
+          {t("invitations.managing_loved_ones")}
         </div>
         <div className="flex flex-col items-start gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
           <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-orangeorange text-lg tracking-[0] leading-[26px]">
-            New requests
+            {t("invitations.new_requests")}
           </div>
         </div>
         {requests.map((request, index) => (
@@ -98,7 +97,7 @@ const Invitations = () => {
                     >
                       <CheckmarkCircle className="!relative !w-5 !h-5" />
                       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-whitewhite text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                        Accept
+                        {t("invitations.accept_button")}
                       </div>
                     </div>
                     <div
@@ -107,26 +106,26 @@ const Invitations = () => {
                     >
                       <CrossCircle2 className="!relative !w-5 !h-5" />
                       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-whitewhite text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                        Refuse
+                        {t("invitations.refuse_button")}
                       </div>
                     </div>
                   </div>
                 )}
                 {request.accepted && (
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-green-500 text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    Request accepted
+                    {t("invitations.request_accepted")}
                   </div>
                 )}
                 {request.refused && (
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-red-500 text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    Request refused
+                    {t("invitations.request_refused")}
                   </div>
                 )}
               </div>
             </div>
             <img
               className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
+              alt={t("invitations.line_alt")}
               src={Line63}
             />
           </div>
@@ -137,17 +136,17 @@ const Invitations = () => {
         >
           <Send2 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Invite my loved ones
+            {t("invitations.invite_loved_ones")}
           </button>
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("invitations.line_alt")}
           src={Line63}
         />
         <div className="flex flex-col items-start gap-[15px] self-stretch w-full relative flex-[0_0_auto]">
           <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-lg tracking-[0] leading-[26px]">
-            List of relatives
+            {t("invitations.list_of_relatives")}
           </div>
           <div className="inline-flex flex-col items-start gap-[15px] relative flex-[0_0_auto]">
             <div className="flex items-center gap-[15px] self-stretch w-full relative flex-[0_0_auto]">
@@ -163,7 +162,7 @@ const Invitations = () => {
                 <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
                   <Box43 className="!relative !w-5 !h-5" />
                   <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    1 order on the deal
+                    1 {t("invitations.order_on_deal_singular")}
                   </p>
                 </div>
               </div>
@@ -181,7 +180,7 @@ const Invitations = () => {
                 <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
                   <Box43 className="!relative !w-5 !h-5" />
                   <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    2 orders on the deal
+                    2 {t("invitations.order_on_deal_plural")}
                   </p>
                 </div>
               </div>

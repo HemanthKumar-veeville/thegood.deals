@@ -293,5 +293,231 @@
     "send_again": "Send again in",
     "send_code_again": "Send Code Again",
     "login": "To log in"
+  },
+  "account": {
+    "greeting": "Hey 👋🏻 Anthony",
+    "create_deal": "Create a good deal",
+    "my_good_deals": "My good deals",
+    "created": "Created",
+    "invited": "Invited",
+    "my_information": "My information",
+    "wallet_details": "Wallet details",
+    "settings": "Settings",
+    "acquire_help": "Acquire help",
+    "sign_out": "Sign out"
+  },
+  "create_deal": {
+    "title": "Create a good deal",
+    "description_label": "Description of the deal",
+    "description_placeholder": "ex. I discovered this incredible winery...",
+    "collection_location": "Collection Location",
+    "collection_date_label": "Approximate collection date",
+    "content_description_label": "Describe the content",
+    "content_description_placeholder": "ex. Each order will include a varied selection of ... bottles",
+    "artisan_info_label": "Information from the artisan/manufacturer",
+    "artisan_info_placeholder": "ex. Domaine de Cigalus 11200 Bizanet",
+    "banking_info_label": "Banking information for the artisan",
+    "iban_label": "IBAN",
+    "iban_placeholder": "ENXXXXXXXXXXXXXXXXXXXX",
+    "bic_label": "BIC",
+    "bic_placeholder": "XXXXXXXXXXX",
+    "deal_expiration_label": "Deal expiration date",
+    "product_list_label": "Product List",
+    "add_products_label": "Add products",
+    "add_another_product_label": "Add another product",
+    "min_products_label": "Minimum products by order",
+    "accept_conditions_label": "I accept the General Conditions of Sale",
+    "next_step_button": "Next step"
+  },
+  "inform_craftsman": {
+    "confirm_deal_title": "Confirm the good deal with the artisan",
+    "confirm_deal_message": "We will send an email to the artisan to confirm the deal with him.",
+    "indicate_email": "Indicate the email of the artisan",
+    "email_placeholder": "ex. contact@gmail.com",
+    "send_to_artisan": "Send to artisan",
+    "finish_later": "Finish later"
+  },
+  "thanks_to_admin": {
+    "thanks_message": "THANKS ! . 🎉",
+    "confirmation_message": "Once the deal is confirmed by the artisan, we will notify you by email.",
+    "back_to_home": "Back to Home"
+  },
+  "active_deal": {
+    "edit_deal_button": "Edit the deal",
+    "my_orders_label": "My orders",
+    "loved_ones_orders_label": "Your loved ones' orders",
+    "orders_count": "{{count}}",
+    "orders_available": "out of {{available}} available",
+    "wallet_label": "My wallet",
+    "amount_collected_label": "Deal amount collected",
+    "amount_target": "on €{{target}}",
+    "relatives_label": "My relatives",
+    "participants_label": "Participants of the deal",
+    "participants_count": "{{count}} participants",
+    "step_1": "The artisan accepted the deal",
+    "step_2": "Invite your loved ones",
+    "step_3": "Current orders",
+    "step_4": "Receipt of order",
+    "step_5": "Organize the collection with your loved ones"
+  },
+  "draft_deal": {
+    "back_button": "Back",
+    "title": "Wine cratesDomaine de Cigaluse",
+    "edit_button": "Edit the deal",
+    "step_1": "The artisan accepted the deal",
+    "step_2": "Invite your loved ones",
+    "step_3": "Current orders",
+    "step_4": "Receipt of order",
+    "step_5": "Organize the collection with your loved ones",
+    "badges": {
+      "out_of_stock": "Soon to be out of stock",
+      "finished": "Finished",
+      "in_stock": "In stock",
+      "waiting": "Waiting for the artisan",
+      "draft": "Draft"
+    }
+  },
+  "waiting_deal": {
+    "back_button": "Back",
+    "blog_image_alt": "Blog image",
+    "title": "Wine cratesDomaine de Cigaluse",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "edit_button": "Edit the deal",
+    "line_alt": "Line",
+    "badges": {
+      "out_of_stock": "Soon to be out of stock",
+      "finished": "Finished",
+      "in_stock": "In stock",
+      "waiting": "Waiting for the artisan",
+      "draft": "Draft"
+    },
+    "step_1": "The artisan accepted the deal",
+    "step_2": "Invite your loved ones",
+    "step_3": "Current orders",
+    "step_4": "Receipt of order",
+    "step_5": "Organize the collection with your loved ones",
+    "alert_editing": "Editing the deal!"
+  },
+  "wallet": {
+    "back_button": "Back",
+    "title": "My wallet",
+    "wallet_info": {
+      "heading": "My wallet",
+      "subheading": "Deal amount collected",
+      "amount": "€823"
+    },
+    "info_text": "The money from your deals is stored here!\nYou can unlock it once the deals expire.",
+    "unlock_funds_button": "Unlock funds",
+    "back_to_home_button": "Back to Home",
+    "line_alt": "Line"
+  },
+  "withdrawal": {
+    "title": "Validation of withdrawal",
+    "stripe_page": "Stripe page",
+    "validate_button": "Validate the withdrawal",
+    "back_button": "Back",
+    "line_alt": "Line"
+  },
+  "invitations": {
+    "back_to_deal": "Back to the deal",
+    "managing_loved_ones": "Managing my loved ones",
+    "new_requests": "New requests",
+    "accept_button": "Accept",
+    "refuse_button": "Refuse",
+    "request_accepted": "Request accepted",
+    "request_refused": "Request refused",
+    "invite_loved_ones": "Invite my loved ones",
+    "list_of_relatives": "List of relatives",
+    "order_on_deal_singular": "order on the deal",
+    "order_on_deal_plural": "orders on the deal",
+    "line_alt": "Line"
+  },
+  "orders": {
+    "back_to_deal": "Back to the deal",
+    "my_orders": "My orders",
+    "order_on_deal": "order on the deal",
+    "total": "Total",
+    "case_of_rose": "Case of Rosé - 6 bottles",
+    "case_of_white": "Case of White - 6 bottles",
+    "line_alt": "Line"
+  },
+  "view_good_deal": {
+    "back": "Back",
+    "sold": "50% sold",
+    "end_in": "end in 12 days",
+    "participants": "13 participants",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "soon_out_of_stock": "Soon to be out of stock",
+    "collection_organized_by": "Collection organized by",
+    "about_the_deal": "About the deal",
+    "about_the_deal_text": "I discovered the Cilagus estate recently, and I must say that the wine there is exceptional. This discovery had such an impact on me that I would like to share it with you...",
+    "read_more": "Read more",
+    "what_you_receive": "What do you receive?",
+    "what_you_receive_text": "Each bulk order will include a diverse selection of bottles from Cilaguse Estate, spanning robust red wines, delicate whites...",
+    "delivery_location_date": "Delivery location and date",
+    "delivery_date": "Saturday April 15, between 10 a.m. and 3 p.m.",
+    "delivery_address": "Chez Anthony 24 rue des Vignobles, 33000 Bordeaux",
+    "my_basket": "My basket",
+    "case_of_rose": "Case of Rosé - 6 bottles",
+    "case_of_white": "Case of White - 6 bottles",
+    "available": "available",
+    "total": "TOTAL",
+    "total_ttc": "TOTAL TTC",
+    "save": "Save",
+    "payment": "Payment"
+  },
+  "thanks_withdrawal": {
+    "thanks": "THANKS! 🎉",
+    "transfer_complete": "The transfer is complete!",
+    "receive_funds": "You should receive the funds in your account within 3 to 4 days.",
+    "back_to_home": "Back to Home",
+    "line_alt": "Line"
+  },
+  "invite_loved_ones": {
+    "title": "Invite your loved ones to order 🍎",
+    "description": "Once your invitations have been sent, your loved ones will be able to order.",
+    "via_messaging_or_sms": "Via messaging or SMS",
+    "via_email_invitations": "Via email invitations",
+    "placeholder_email": "ex. contact@gmail.com",
+    "add_loved_one": "Add a loved one",
+    "send_invitation": "Send invitation",
+    "copy_paste_link_title": "Otherwise, copy and paste this share link 🔗",
+    "copy_paste_link_description": "This link is to be shared between you in order to maintain the exclusivity of the deal 😉",
+    "copy_link": "Copy link",
+    "back": "Back",
+    "link_copied": "Link copied to clipboard",
+    "line_alt": "Line"
+  },
+  "invitation_sent": {
+    "title": "It’s sent! . 🎉",
+    "description": "Your loved ones can now order and take advantage of the deal!",
+    "back_to_home": "Back to Home",
+    "line_alt": "Line"
+  },
+  "common": {
+    "back": "Back"
+  },
+  "deal": {
+    "title": "Wine crates Domaine de Cigaluse",
+    "ends_in": "Deal ends in",
+    "time_left": "{{days}} days and {{hours}} hours.",
+    "end_in": "end in {{days}} days",
+    "participants": "{{count}} participants",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "my_orders": "My orders",
+    "step1": "The artisian accepted the deal",
+    "step2": "Current orders",
+    "step3": "Goal achieved ! 🎉",
+    "step4": "Order preparation",
+    "step5": "Shipping",
+    "step6": "Delivery and Closing of the deal",
+    "image_alt": "Blog image"
+  },
+  "status": {
+    "out_of_stock": "Soon to be out of stock",
+    "finished": "Finished",
+    "in_stock": "In stock",
+    "waiting": "Waiting for the artisian",
+    "draft": "Draft"
   }
 }

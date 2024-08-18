@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 import { ButtonGroup } from "../../components/ButtonGroup";
 import { CardDeal } from "../../components/CardDeal";
 import { StyleTypePrimaryWrapper } from "../../components/StyleTypePrimaryWrapper";
@@ -10,7 +11,7 @@ import { UserAlt5 } from "../../icons/UserAlt5";
 import { UserLock1 } from "../../icons/UserLock1";
 import { Users3 } from "../../icons/Users3";
 import { ChatAlt6 } from "../../icons/ChatAlt6";
-import { Line63, Line_60_1, Line_59_2 } from "../../images";
+import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,13 +21,14 @@ import { fetchDeals } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
 
 const Account = () => {
+  const { t } = useTranslation(); // Initialize translation hook
   const [activeTab, setActiveTab] = useState("created");
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
   const { deals, status } = dealsState;
-  console.log({ status });
+
   useEffect(() => {
     location?.state?.activeTab &&
       handleTabSwitch(location?.state?.activeTab || activeTab);
@@ -101,7 +103,7 @@ const Account = () => {
     <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto h-screen">
       <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-          Hey 👋🏻 Anthony
+          {t("account.greeting")} {/* Hey 👋🏻 Anthony */}
         </div>
         <div
           className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
@@ -109,7 +111,7 @@ const Account = () => {
         >
           <CirclePlus92 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Create a good deal
+            {t("account.create_deal")} {/* Create a good deal */}
           </button>
         </div>
         <img
@@ -118,7 +120,7 @@ const Account = () => {
           src={Line63}
         />
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-          My good deals
+          {t("account.my_good_deals")} {/* My good deals */}
         </div>
         <div className="flex items-start relative self-stretch w-full flex-[0_0_auto]">
           <div
@@ -139,7 +141,7 @@ const Account = () => {
                 />
               }
               state={activeTab === "created" ? "active" : "default"}
-              text="Created"
+              text={t("account.created")}
             />
           </div>
           <div
@@ -160,7 +162,7 @@ const Account = () => {
                 />
               }
               state={activeTab === "invited" ? "active" : "default"}
-              text="Invited"
+              text={t("account.invited")}
             />
           </div>
         </div>
@@ -170,6 +172,7 @@ const Account = () => {
             <div
               onClick={() => handleCardClick(deal)}
               className="cursor-pointer"
+              key={deal.id} // Add key to the mapped elements
             >
               <CardDeal
                 badgesColor="success"
@@ -205,7 +208,7 @@ const Account = () => {
         >
           <UserAlt2 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            My information
+            {t("account.my_information")} {/* My information */}
           </div>
         </div>
         <div
@@ -214,7 +217,7 @@ const Account = () => {
         >
           <ClockDollar1 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            Wallet details
+            {t("account.wallet_details")} {/* Wallet details */}
           </div>
         </div>
         <div
@@ -223,7 +226,7 @@ const Account = () => {
         >
           <Cog2 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            Settings
+            {t("account.settings")} {/* Settings */}
           </div>
         </div>
         <div
@@ -232,7 +235,7 @@ const Account = () => {
         >
           <ChatAlt6 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            Acquire help
+            {t("account.acquire_help")} {/* Acquire help */}
           </div>
         </div>
         <div
@@ -241,7 +244,7 @@ const Account = () => {
         >
           <UserLock1 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            Sign out
+            {t("account.sign_out")} {/* Sign out */}
           </div>
         </div>
       </div>

@@ -1,32 +1,15 @@
 import React, { useEffect } from "react";
-import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
+import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
-import { Box43 } from "../../icons/Box43";
-import { Box44 } from "../../icons/Box44";
-import { ClockAlt13 } from "../../icons/ClockAlt13";
-import { Coins } from "../../icons/Coins";
 import { Map } from "../../icons/Map";
 import { Pencil1 } from "../../icons/Pencil1";
-import { UserAlt2 } from "../../icons/UserAlt2";
-import { Users22 } from "../../icons/Users22";
-import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
-import {
-  blogImage,
-  Line571,
-  Line59,
-  Line60,
-  Line63,
-  Line69,
-  Line_570_1,
-  Line_571_1,
-  FranceFlag,
-} from "../../images";
+import { blogImage, Line63, Line69, FranceFlag } from "../../images";
 import { WaitingBanner } from "../../components/Banners/WaitingBanner";
-import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Badges } from "../../components/Badges";
 
 const WaitingDeal = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -39,15 +22,18 @@ const WaitingDeal = () => {
   }, []);
 
   const statusBanner = {
-    out_of_stock: { text: "Soon to be out of stock", color: "warning" },
-    finished: { text: "Finished", color: "success" },
-    in_stock: { text: "In stock", color: "success" },
-    waiting: { text: "Waiting for the artisian", color: "warning" },
-    draft: { text: "Draft", color: "info" },
+    out_of_stock: {
+      text: t("waiting_deal.badges.out_of_stock"),
+      color: "warning",
+    },
+    finished: { text: t("waiting_deal.badges.finished"), color: "success" },
+    in_stock: { text: t("waiting_deal.badges.in_stock"), color: "success" },
+    waiting: { text: t("waiting_deal.badges.waiting"), color: "warning" },
+    draft: { text: t("waiting_deal.badges.draft"), color: "info" },
   };
 
   const handleEditDeal = () => {
-    alert("Editing the deal!");
+    alert(t("waiting_deal.alert_editing"));
   };
 
   return (
@@ -64,23 +50,23 @@ const WaitingDeal = () => {
                 color="#637381"
               />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Back
+                {t("waiting_deal.back_button")}
               </div>
             </div>
           </div>
           <WaitingBanner />
           <img
             className="relative self-stretch w-full h-[150px] object-cover"
-            alt="Blog image"
+            alt={t("waiting_deal.blog_image_alt")}
             src={blogImage}
           />
           <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-            Wine cratesDomaine de Cigaluse
+            {t("waiting_deal.title")}
           </div>
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <Map className="!relative !w-5 !h-5" />
             <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              Domaine de Cigalus 11200 Bizanet
+              {t("waiting_deal.location")}
             </p>
           </div>
           <div
@@ -89,7 +75,7 @@ const WaitingDeal = () => {
           >
             <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Edit the deal
+              {t("waiting_deal.edit_button")}
             </button>
           </div>
         </div>
@@ -117,7 +103,7 @@ const WaitingDeal = () => {
         />
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("waiting_deal.line_alt")}
           src={Line69}
         />
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
@@ -130,7 +116,7 @@ const WaitingDeal = () => {
               </div>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              The artisian accepted the deal
+              {t("waiting_deal.step_1")}
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -142,7 +128,7 @@ const WaitingDeal = () => {
               </div>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Invite your loved ones
+              {t("waiting_deal.step_2")}
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -154,7 +140,7 @@ const WaitingDeal = () => {
               </div>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Current orders
+              {t("waiting_deal.step_3")}
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -167,7 +153,7 @@ const WaitingDeal = () => {
             </div>
             <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Receipt of order
+                {t("waiting_deal.step_4")}
               </div>
             </div>
           </div>
@@ -180,14 +166,13 @@ const WaitingDeal = () => {
               </div>
             </div>
             <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
-              Organize the collection
-              <br /> with your loved ones
+              {t("waiting_deal.step_5")}
             </p>
           </div>
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("waiting_deal.line_alt")}
           src={Line63}
         />
       </div>

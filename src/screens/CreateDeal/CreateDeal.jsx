@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 import { useNavigate } from "react-router-dom";
 import AppBar from "../../components/AppBar/AppBar";
 import AddPictures from "../../components/AddPictures/AddPictures";
@@ -12,18 +13,16 @@ import ProductInfo from "../../components/ProductInfo/ProductInfo";
 import { Button } from "../../components/Button/Button";
 import { CheckBox } from "../../components/CheckBox";
 import { ArrowRight1 } from "../../icons/ArrowRight1";
-import { Line63, Line_146_2 } from "../../images";
-import { ChevronRight1 } from "../../icons/ChevronRight1";
-import { ChevronLeft1 } from "../../icons/ChevronLeft1";
+import { Line63 } from "../../images";
 import { Plus3 } from "../../icons/Plus3";
 import { Minus1 } from "../../icons/Minus1";
 import { Plus1 } from "../../icons/Plus1";
 import ProductList from "../../components/ProductInfo/ProductList";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addNewDeal } from "../../redux/app/deals/dealSlice";
-// import { addDeal } from "../../redux/app/deals/dealSlice";
 
 const CreateDeal = () => {
+  const { t } = useTranslation(); // Initialize translation hook
   const [formData, setFormData] = useState({
     description: "",
     collectionDate: "",
@@ -121,7 +120,7 @@ const CreateDeal = () => {
     >
       <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-          Create a good deal
+          {t("create_deal.title")} {/* Create a good deal */}
         </div>
         <AddPictures onChange={handleAddPictures} />
         <TitleInput dealTitle={title} setDealTitle={setTitle} />
@@ -136,9 +135,9 @@ const CreateDeal = () => {
             divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
             groupClassName="!w-[42px]"
             helperText="off"
-            label="Description of the deal"
+            label={t("create_deal.description_label")}
             label1="on"
-            placeholder="ex. I discovered this incredible winery..."
+            placeholder={t("create_deal.description_placeholder")}
             secondLabel="on"
             secondLabelText="0/250"
             state="default"
@@ -154,7 +153,8 @@ const CreateDeal = () => {
           onChange={handleLocationChange}
         />
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
-          Approximate collection date
+          {t("create_deal.collection_date_label")}{" "}
+          {/* Approximate collection date */}
         </div>
         <div className="w-full">
           <DatePicker
@@ -179,9 +179,9 @@ const CreateDeal = () => {
             divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
             groupClassName="!w-[42px]"
             helperText="off"
-            label="Describe the content"
+            label={t("create_deal.content_description_label")}
             label1="on"
-            placeholder="ex. Each order will include a varied selection of ... bottles"
+            placeholder={t("create_deal.content_description_placeholder")}
             secondLabel="on"
             secondLabelText="0/250"
             state="default"
@@ -203,9 +203,9 @@ const CreateDeal = () => {
             divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
             groupClassName="!w-[42px]"
             helperText="off"
-            label="Information from the artisian/manufacturer"
+            label={t("create_deal.artisan_info_label")}
             label1="on"
-            placeholder="ex. Domaine de Cigalus 11200 Bizanet"
+            placeholder={t("create_deal.artisan_info_placeholder")}
             secondLabel="on"
             secondLabelText="0/250"
             state="default"
@@ -217,7 +217,7 @@ const CreateDeal = () => {
           src={Line63}
         />
         <p className="relative w-[230px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px]">
-          Banking information for the artisian
+          {t("create_deal.banking_info_label")}
         </p>
         <div className="w-full">
           <BankingInfo
@@ -225,8 +225,8 @@ const CreateDeal = () => {
             type="iban"
             value={formData.iban}
             onChange={handleChange}
-            label="IBAN"
-            placeholder="ENXXXXXXXXXXXXXXXXXXXX"
+            label={t("create_deal.iban_label")}
+            placeholder={t("create_deal.iban_placeholder")}
           />
         </div>
         <div className="w-full">
@@ -235,8 +235,8 @@ const CreateDeal = () => {
             type="bic"
             value={formData.bic}
             onChange={handleChange}
-            label="BIC"
-            placeholder="XXXXXXXXXXX"
+            label={t("create_deal.bic_label")}
+            placeholder={t("create_deal.bic_placeholder")}
           />
         </div>
         <img
@@ -265,7 +265,7 @@ const CreateDeal = () => {
         />
         <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-            Add products
+            {t("create_deal.add_products_label")} {/* Add products */}
           </div>
         </div>
         {addMode === true && (
@@ -285,7 +285,8 @@ const CreateDeal = () => {
               type="button"
               className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap"
             >
-              Add another product
+              {t("create_deal.add_another_product_label")}{" "}
+              {/* Add another product */}
             </button>
           </div>
         )}
@@ -297,12 +298,8 @@ const CreateDeal = () => {
         <div className="relative w-[260px] h-[97px]">
           <div className="flex-col items-start top-0 flex w-[260px] absolute left-0">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-              Minimum products
-            </div>
-            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                by order
-              </div>
+              {t("create_deal.min_products_label")}{" "}
+              {/* Minimum products by order */}
             </div>
           </div>
           <div className="items-center gap-[70px] top-[61px] flex w-[260px] absolute left-0">
@@ -346,7 +343,8 @@ const CreateDeal = () => {
             text1="ON"
           />
           <p className="[font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">
-            I accept the General Conditions of Sale
+            {t("create_deal.accept_conditions_label")}{" "}
+            {/* I accept the General Conditions of Sale */}
           </p>
         </div>
         <button
@@ -354,7 +352,7 @@ const CreateDeal = () => {
           className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
         >
           <div className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Next step
+            {t("create_deal.next_step_button")} {/* Next step */}
           </div>
           <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
         </button>

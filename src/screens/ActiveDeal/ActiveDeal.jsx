@@ -28,6 +28,7 @@ import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import { getDealByDealId } from "../../redux/app/deals/dealSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -35,7 +36,8 @@ const ActiveDeal = () => {
   const dispatch = useDispatch();
   const dealState = useSelector((state) => state.deals);
   const { deal, status } = dealState;
-  console.log({ deal, status });
+  const { t } = useTranslation();
+
   const handleBack = () => {
     navigate("/account");
   };
@@ -49,15 +51,15 @@ const ActiveDeal = () => {
   };
 
   const handleEditDeal = () => {
-    alert("Editing the deal!");
+    alert(t("active_deal.edit_alert"));
   };
 
   const statusBanner = {
-    out_of_stock: { text: "Soon to be out of stock", color: "warning" },
-    finished: { text: "Finished", color: "success" },
-    in_stock: { text: "In stock", color: "success" },
-    waiting: { text: "Waiting for the artisian", color: "warning" },
-    draft: { text: "Draft", color: "info" },
+    out_of_stock: { text: t("active_deal.out_of_stock"), color: "warning" },
+    finished: { text: t("active_deal.finished"), color: "success" },
+    in_stock: { text: t("active_deal.in_stock"), color: "success" },
+    waiting: { text: t("active_deal.waiting"), color: "warning" },
+    draft: { text: t("active_deal.draft"), color: "info" },
   };
 
   useEffect(() => {
@@ -82,7 +84,7 @@ const ActiveDeal = () => {
                 color="#637381"
               />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Back
+                {t("active_deal.back_button")}
               </div>
             </div>
           </div>
@@ -96,10 +98,10 @@ const ActiveDeal = () => {
               </div>
               <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
                 <span className="[font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
-                  Deal ends in
+                  {t("active_deal.deal_ends_in")}
                   <br />
                 </span>
-                <span className="font-bold">10 days and 6 hours.</span>
+                <span className="font-bold">{t("active_deal.time_left")}</span>
               </p>
             </div>
           </div>
@@ -109,7 +111,7 @@ const ActiveDeal = () => {
             src={blogImage}
           />
           <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-            Wine cratesDomaine de Cigaluse
+            {t("active_deal.title")}
           </div>
           {location?.state?.deal?.dealStatus === "out_of_stock" ? (
             <ProgressBarYellow percentage={80} />
@@ -120,20 +122,20 @@ const ActiveDeal = () => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                end in 10 days
+                {t("active_deal.ends_in_time")}
               </div>
             </div>
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                13 participants
+                {t("active_deal.participants_count", { count: 13 })}
               </div>
             </div>
           </div>
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <Map className="!relative !w-5 !h-5" />
             <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              Domaine de Cigalus 11200 Bizanet
+              {t("active_deal.location")}
             </p>
           </div>
           <div
@@ -142,7 +144,7 @@ const ActiveDeal = () => {
           >
             <Box44 className="!relative !w-5 !h-5" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              My orders
+              {t("active_deal.my_orders_button")}
             </button>
           </div>
           <div
@@ -151,7 +153,7 @@ const ActiveDeal = () => {
           >
             <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Managing my loved ones
+              {t("active_deal.manage_loved_ones_button")}
             </button>
           </div>
           <div
@@ -160,7 +162,7 @@ const ActiveDeal = () => {
           >
             <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Edit the deal
+              {t("active_deal.edit_deal_button")}
             </button>
           </div>
         </div>
@@ -205,21 +207,21 @@ const ActiveDeal = () => {
               </div>
               <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap">
-                  My orders
+                  {t("active_deal.my_orders_label")}
                 </div>
                 <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                  Your loved ones order
+                  {t("active_deal.loved_ones_orders_label")}
                 </div>
               </div>
             </div>
             <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] font-bold text-darkdark text-2xl leading-[30px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap">
-                20
+                {t("active_deal.orders_count", { count: 20 })}
               </div>
               <div className="relative w-[124px] h-[22px]">
                 <div className="inline-flex items-center gap-1 relative">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-greengreen text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    out of 20 available
+                    {t("active_deal.orders_available", { available: 20 })}
                   </div>
                 </div>
               </div>
@@ -251,10 +253,10 @@ const ActiveDeal = () => {
               </div>
               <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap">
-                  My wallet
+                  {t("active_deal.wallet_label")}
                 </div>
                 <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                  Deal amount collected
+                  {t("active_deal.amount_collected_label")}
                 </div>
               </div>
             </div>
@@ -265,7 +267,7 @@ const ActiveDeal = () => {
               <div className="w-[67px] relative h-[22px]">
                 <div className="inline-flex items-center gap-1 relative">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-purplepurple text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    on €1,050
+                    {t("active_deal.amount_target", { target: 1050 })}
                   </div>
                 </div>
               </div>
@@ -297,16 +299,16 @@ const ActiveDeal = () => {
               </div>
               <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap">
-                  My relatives
+                  {t("active_deal.relatives_label")}
                 </div>
                 <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                  Participants of the deal
+                  {t("active_deal.participants_label")}
                 </div>
               </div>
             </div>
             <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
-                0 participants
+                {t("active_deal.participants_count", { count: 0 })}
               </div>
               <div className="w-[91px] relative h-[22px]" />
             </div>
@@ -327,7 +329,7 @@ const ActiveDeal = () => {
               </div>
             </div>
             <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              The artisian accepted the deal
+              {t("active_deal.step_1")}
             </p>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -339,7 +341,7 @@ const ActiveDeal = () => {
               </div>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Invite your loved ones
+              {t("active_deal.step_2")}
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -350,8 +352,8 @@ const ActiveDeal = () => {
                 </div>
               </div>
             </div>
-            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Current orders
+            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+              {t("active_deal.step_3")}
             </div>
           </div>
           <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
@@ -364,7 +366,7 @@ const ActiveDeal = () => {
             </div>
             <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Receipt of order
+                {t("active_deal.step_4")}
               </div>
             </div>
           </div>
@@ -377,8 +379,7 @@ const ActiveDeal = () => {
               </div>
             </div>
             <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
-              Organize the collection
-              <br /> with your loved ones
+              {t("active_deal.step_5")}
             </p>
           </div>
         </div>

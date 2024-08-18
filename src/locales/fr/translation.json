@@ -293,5 +293,231 @@
     "send_again": "Envoyer de nouveau dans",
     "send_code_again": "Envoyer à nouveau le code",
     "login": "Se connecter"
+  },
+  "account": {
+    "greeting": "Salut 👋🏻 Anthony",
+    "create_deal": "Créer une bonne affaire",
+    "my_good_deals": "Mes bonnes affaires",
+    "created": "Créé",
+    "invited": "Invité",
+    "my_information": "Mes informations",
+    "wallet_details": "Détails du portefeuille",
+    "settings": "Paramètres",
+    "acquire_help": "Obtenir de l'aide",
+    "sign_out": "Se déconnecter"
+  },
+  "create_deal": {
+    "title": "Créer une bonne affaire",
+    "description_label": "Description de l'affaire",
+    "description_placeholder": "ex. J'ai découvert ce domaine viticole incroyable...",
+    "collection_location": "Lieu de collecte",
+    "collection_date_label": "Date de collecte approximative",
+    "content_description_label": "Décrire le contenu",
+    "content_description_placeholder": "ex. Chaque commande comprendra une sélection variée de ... bouteilles",
+    "artisan_info_label": "Informations de l'artisan/fabricant",
+    "artisan_info_placeholder": "ex. Domaine de Cigalus 11200 Bizanet",
+    "banking_info_label": "Informations bancaires pour l'artisan",
+    "iban_label": "IBAN",
+    "iban_placeholder": "ENXXXXXXXXXXXXXXXXXXXX",
+    "bic_label": "BIC",
+    "bic_placeholder": "XXXXXXXXXXX",
+    "deal_expiration_label": "Date d'expiration de l'affaire",
+    "product_list_label": "Liste des produits",
+    "add_products_label": "Ajouter des produits",
+    "add_another_product_label": "Ajouter un autre produit",
+    "min_products_label": "Produits minimum par commande",
+    "accept_conditions_label": "J'accepte les Conditions Générales de Vente",
+    "next_step_button": "Étape suivante"
+  },
+  "inform_craftsman": {
+    "confirm_deal_title": "Confirmez le bon plan avec l'artisan",
+    "confirm_deal_message": "Nous enverrons un e-mail à l'artisan pour confirmer l'accord avec lui.",
+    "indicate_email": "Indiquez l'e-mail de l'artisan",
+    "email_placeholder": "ex. contact@gmail.com",
+    "send_to_artisan": "Envoyer à l'artisan",
+    "finish_later": "Terminer plus tard"
+  },
+  "thanks_to_admin": {
+    "thanks_message": "MERCI ! . 🎉",
+    "confirmation_message": "Une fois l'accord confirmé par l'artisan, nous vous en informerons par e-mail.",
+    "back_to_home": "Retour à l'accueil"
+  },
+  "active_deal": {
+    "edit_deal_button": "Modifier l'offre",
+    "my_orders_label": "Mes commandes",
+    "loved_ones_orders_label": "Les commandes de vos proches",
+    "orders_count": "{{count}}",
+    "orders_available": "sur {{available}} disponibles",
+    "wallet_label": "Mon portefeuille",
+    "amount_collected_label": "Montant de l'offre collecté",
+    "amount_target": "sur €{{target}}",
+    "relatives_label": "Mes proches",
+    "participants_label": "Participants de l'offre",
+    "participants_count": "{{count}} participants",
+    "step_1": "L'artisan a accepté l'offre",
+    "step_2": "Invitez vos proches",
+    "step_3": "Commandes actuelles",
+    "step_4": "Réception de la commande",
+    "step_5": "Organisez la collecte avec vos proches"
+  },
+  "draft_deal": {
+    "back_button": "Retour",
+    "title": "Caisses de vin Domaine de Cigaluse",
+    "edit_button": "Modifier l'offre",
+    "step_1": "L'artisan a accepté l'offre",
+    "step_2": "Invitez vos proches",
+    "step_3": "Commandes actuelles",
+    "step_4": "Réception de la commande",
+    "step_5": "Organisez la collecte avec vos proches",
+    "badges": {
+      "out_of_stock": "Bientôt en rupture de stock",
+      "finished": "Terminé",
+      "in_stock": "En stock",
+      "waiting": "En attente de l'artisan",
+      "draft": "Brouillon"
+    }
+  },
+  "waiting_deal": {
+    "back_button": "Retour",
+    "blog_image_alt": "Image de blog",
+    "title": "Caisses de vin Domaine de Cigaluse",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "edit_button": "Modifier l'offre",
+    "line_alt": "Ligne",
+    "badges": {
+      "out_of_stock": "Bientôt en rupture de stock",
+      "finished": "Terminé",
+      "in_stock": "En stock",
+      "waiting": "En attente de l'artisan",
+      "draft": "Brouillon"
+    },
+    "step_1": "L'artisan a accepté l'offre",
+    "step_2": "Invitez vos proches",
+    "step_3": "Commandes en cours",
+    "step_4": "Réception de la commande",
+    "step_5": "Organisez la collecte avec vos proches",
+    "alert_editing": "Modification de l'offre !"
+  },
+  "wallet": {
+    "back_button": "Retour",
+    "title": "Mon portefeuille",
+    "wallet_info": {
+      "heading": "Mon portefeuille",
+      "subheading": "Montant collecté des offres",
+      "amount": "€823"
+    },
+    "info_text": "L'argent de vos offres est stocké ici !\nVous pouvez le débloquer une fois les offres expirées.",
+    "unlock_funds_button": "Débloquer les fonds",
+    "back_to_home_button": "Retour à l'accueil",
+    "line_alt": "Ligne"
+  },
+  "withdrawal": {
+    "title": "Validation du retrait",
+    "stripe_page": "Page Stripe",
+    "validate_button": "Valider le retrait",
+    "back_button": "Retour",
+    "line_alt": "Ligne"
+  },
+  "invitations": {
+    "back_to_deal": "Retour à l'offre",
+    "managing_loved_ones": "Gérer mes proches",
+    "new_requests": "Nouvelles demandes",
+    "accept_button": "Accepter",
+    "refuse_button": "Refuser",
+    "request_accepted": "Demande acceptée",
+    "request_refused": "Demande refusée",
+    "invite_loved_ones": "Inviter mes proches",
+    "list_of_relatives": "Liste des proches",
+    "order_on_deal_singular": "commande sur l'offre",
+    "order_on_deal_plural": "commandes sur l'offre",
+    "line_alt": "Ligne"
+  },
+  "orders": {
+    "back_to_deal": "Retour à l'offre",
+    "my_orders": "Mes commandes",
+    "order_on_deal": "commande sur l'offre",
+    "total": "Total",
+    "case_of_rose": "Caisse de Rosé - 6 bouteilles",
+    "case_of_white": "Caisse de Blanc - 6 bouteilles",
+    "line_alt": "Ligne"
+  },
+  "view_good_deal": {
+    "back": "Retour",
+    "sold": "50% vendu",
+    "end_in": "fin dans 12 jours",
+    "participants": "13 participants",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "soon_out_of_stock": "Bientôt en rupture de stock",
+    "collection_organized_by": "Collection organisée par",
+    "about_the_deal": "À propos de l'offre",
+    "about_the_deal_text": "J'ai découvert récemment le domaine Cilagus et je dois dire que le vin y est exceptionnel. Cette découverte m'a tellement marqué que je souhaite la partager avec vous...",
+    "read_more": "Lire la suite",
+    "what_you_receive": "Que recevez-vous?",
+    "what_you_receive_text": "Chaque commande groupée inclura une sélection variée de bouteilles du Domaine Cilaguse, allant des rouges robustes aux blancs délicats...",
+    "delivery_location_date": "Lieu et date de livraison",
+    "delivery_date": "Samedi 15 avril, entre 10h00 et 15h00",
+    "delivery_address": "Chez Anthony 24 rue des Vignobles, 33000 Bordeaux",
+    "my_basket": "Mon panier",
+    "case_of_rose": "Caisse de Rosé - 6 bouteilles",
+    "case_of_white": "Caisse de Blanc - 6 bouteilles",
+    "available": "disponible",
+    "total": "TOTAL",
+    "total_ttc": "TOTAL TTC",
+    "save": "Économisez",
+    "payment": "Paiement"
+  },
+  "thanks_withdrawal": {
+    "thanks": "MERCI! 🎉",
+    "transfer_complete": "Le transfert est terminé!",
+    "receive_funds": "Vous devriez recevoir les fonds sur votre compte dans 3 à 4 jours.",
+    "back_to_home": "Retour à l'accueil",
+    "line_alt": "Ligne"
+  },
+  "invite_loved_ones": {
+    "title": "Invitez vos proches à commander 🍎",
+    "description": "Une fois vos invitations envoyées, vos proches pourront passer commande.",
+    "via_messaging_or_sms": "Via messagerie ou SMS",
+    "via_email_invitations": "Via invitations par email",
+    "placeholder_email": "ex. contact@gmail.com",
+    "add_loved_one": "Ajouter un proche",
+    "send_invitation": "Envoyer l'invitation",
+    "copy_paste_link_title": "Sinon, copiez et collez ce lien de partage 🔗",
+    "copy_paste_link_description": "Ce lien est à partager entre vous pour maintenir l'exclusivité de l'offre 😉",
+    "copy_link": "Copier le lien",
+    "back": "Retour",
+    "link_copied": "Lien copié dans le presse-papiers",
+    "line_alt": "Ligne"
+  },
+  "invitation_sent": {
+    "title": "C'est envoyé! . 🎉",
+    "description": "Vos proches peuvent maintenant commander et profiter de l'offre!",
+    "back_to_home": "Retour à l'accueil",
+    "line_alt": "Ligne"
+  },
+  "common": {
+    "back": "Retour"
+  },
+  "deal": {
+    "title": "Caisses de vin Domaine de Cigaluse",
+    "ends_in": "L'offre se termine dans",
+    "time_left": "{{days}} jours et {{hours}} heures.",
+    "end_in": "se termine dans {{days}} jours",
+    "participants": "{{count}} participants",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "my_orders": "Mes commandes",
+    "step1": "L'artisan a accepté l'offre",
+    "step2": "Commandes en cours",
+    "step3": "Objectif atteint ! 🎉",
+    "step4": "Préparation des commandes",
+    "step5": "Expédition",
+    "step6": "Livraison et clôture de l'offre",
+    "image_alt": "Image du blog"
+  },
+  "status": {
+    "out_of_stock": "Bientôt en rupture de stock",
+    "finished": "Terminé",
+    "in_stock": "En stock",
+    "waiting": "En attente de l'artisan",
+    "draft": "Brouillon"
   }
 }

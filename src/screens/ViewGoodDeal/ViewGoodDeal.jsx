@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Badges } from "../../components/Badges";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
@@ -10,9 +11,7 @@ import { Minus } from "../../icons/Minus";
 import { Plus3 } from "../../icons/Plus3";
 import { Send1 } from "../../icons/Send1";
 import { ShoppingCart11 } from "../../icons/ShoppingCart11";
-import { UserAlt } from "../../icons/UserAlt";
 import { Users2 } from "../../icons/Users2";
-import { VerticalLine2 } from "../../icons/VerticalLine2";
 import {
   blogImage,
   Line63,
@@ -21,9 +20,10 @@ import {
   Line59,
   Rectangle_4592_5,
 } from "../../images";
-import AppBar from "../../components/AppBar/AppBar";
 
 const ViewGoodDeal = () => {
+  const { t } = useTranslation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -38,13 +38,13 @@ const ViewGoodDeal = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("view_good_deal.back")}
             </div>
           </div>
         </div>
         <img
           className="relative self-stretch w-full h-[150px] object-cover"
-          alt="Blog image"
+          alt={t("view_good_deal.blog_image_alt")}
           src={blogImage}
         />
         <Badges
@@ -56,7 +56,7 @@ const ViewGoodDeal = () => {
           text1="🇫🇷"
         />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          Wine cratesDomaine de Cigaluse
+          Wine crates Domaine de Cigaluse
         </div>
         <StyleTypePrimary
           className="!self-stretch !w-full !relative"
@@ -66,31 +66,31 @@ const ViewGoodDeal = () => {
           lineClassName="!w-40"
           overlapClassName="!w-[290px]"
           overlapGroupClassName={`bg-[url(${Line59})]`}
-          text="50% sold"
+          text={t("view_good_deal.sold")}
         />
         <div className="flex items-start gap-[15px] w-full flex-[0_0_auto] relative self-stretch">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt1 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              end in 12 days
+              {t("view_good_deal.end_in")}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <Users2 className="!relative !w-5 !h-5" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              13 participants
+              {t("view_good_deal.participants")}
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
           <Map className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-            Domaine de Cigalus 11200 Bizanet
+            {t("view_good_deal.location")}
           </p>
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("view_good_deal.line_alt")}
           src={Line63}
         />
         <Badges
@@ -99,7 +99,7 @@ const ViewGoodDeal = () => {
           divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
           round="semi-round"
           state="duo-tone"
-          text1="Soon to be out of stock"
+          text1={t("view_good_deal.soon_out_of_stock")}
         />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           <img
@@ -109,7 +109,7 @@ const ViewGoodDeal = () => {
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              Collection organized by
+              {t("view_good_deal.collection_organized_by")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
               Anthony Brabant
@@ -117,83 +117,84 @@ const ViewGoodDeal = () => {
           </div>
         </div>
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px]">
-          About the deal
+          {t("view_good_deal.about_the_deal")}
         </div>
         <p className="[font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 relative self-stretch">
           <span className="[font-family:'Inter',Helvetica] font-normal text-[#637381] text-base tracking-[0] leading-6">
-            I discovered the Cilagus estate recently, and I must say that the
-            wine there is exceptional. This discovery had such an impact on me
-            that I would like to share it with you...{" "}
+            {t("view_good_deal.about_the_deal_text")}{" "}
           </span>
-          <span className="font-bold underline">Read more</span>
+          <span className="font-bold underline">
+            {t("view_good_deal.read_more")}
+          </span>
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("view_good_deal.line_alt")}
           src={Line63}
         />
         <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
           <Box41 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-            What do you receive?
+            {t("view_good_deal.what_you_receive")}
           </div>
         </div>
         <p className="[font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 relative self-stretch">
           <span className="[font-family:'Inter',Helvetica] font-normal text-[#637381] text-base tracking-[0] leading-6">
-            Each bulk order will include a diverse selection of bottles from
-            Cilaguse Estate, spanning robust red wines, delicate whites...{" "}
+            {t("view_good_deal.what_you_receive_text")}{" "}
           </span>
-          <span className="font-bold underline">Read more</span>
+          <span className="font-bold underline">
+            {t("view_good_deal.read_more")}
+          </span>
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("view_good_deal.line_alt")}
           src={Line63}
         />
         <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
           <Box41 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-            Delivery location and date
+            {t("view_good_deal.delivery_location_date")}
           </div>
         </div>
         <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
           <ClockAlt1 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative w-fit mt-[-1.00px] mr-[-85.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            Saturday April 15, between 10 a.m. and 3 p.m.
+            {t("view_good_deal.delivery_date")}
           </p>
         </div>
         <div className="flex items-start gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
           <DeliveryTruck4 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
-            Chez Anthony24 rue des Vignobles, 33000 Bordeaux
+            {t("view_good_deal.delivery_address")}
           </p>
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("view_good_deal.line_alt")}
           src={Line63}
         />
         <div className="flex flex-col items-start gap-[15px] p-[15px] w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] relative self-stretch">
           <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
             <ShoppingCart11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-              My basket
+              {t("view_good_deal.my_basket")}
             </div>
           </div>
           <img
             className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
+            alt={t("view_good_deal.line_alt")}
             src={Line63}
           />
           <div className="flex flex-col items-start gap-[5px] self-stretch w-full relative flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Case of Rosé - 6 bottles
+                {t("view_good_deal.case_of_rose")}
               </p>
             </div>
             <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-orangeorange text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                3 available
+                3 {t("view_good_deal.available")}
               </div>
             </div>
             <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
@@ -208,12 +209,12 @@ const ViewGoodDeal = () => {
                     <div className="relative w-[79px] h-[25px] bg-whitewhite rounded-[3.47px] border-[0.69px] border-solid border-stroke">
                       <img
                         className="absolute w-px h-[25px] -top-px left-[23px]"
-                        alt="Line"
+                        alt={t("view_good_deal.line_alt")}
                         src={Line_146_2}
                       />
                       <img
                         className="absolute w-px h-[25px] -top-px left-[55px]"
-                        alt="Line"
+                        alt={t("view_good_deal.line_alt")}
                         src={Line_146_2}
                       />
                       <Minus className="!absolute !w-2 !h-2 !top-2 !left-[7px]" />
@@ -242,17 +243,17 @@ const ViewGoodDeal = () => {
           </div>
           <img
             className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
+            alt={t("view_good_deal.line_alt")}
             src={Line63}
           />
           <div className="flex flex-col items-start gap-[5px] self-stretch w-full relative flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Case of White - 6 bottles
+                {t("view_good_deal.case_of_white")}
               </p>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-cyancyan text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              15 available
+              15 {t("view_good_deal.available")}
             </div>
             <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
               <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -266,12 +267,12 @@ const ViewGoodDeal = () => {
                     <div className="relative w-[79px] h-[25px] bg-whitewhite rounded-[3.47px] border-[0.69px] border-solid border-stroke">
                       <img
                         className="absolute w-px h-[25px] -top-px left-[23px]"
-                        alt="Line"
+                        alt={t("view_good_deal.line_alt")}
                         src={Line_146_2}
                       />
                       <img
                         className="absolute w-px h-[25px] -top-px left-[55px]"
-                        alt="Line"
+                        alt={t("view_good_deal.line_alt")}
                         src={Line_146_2}
                       />
                       <Minus className="!absolute !w-2 !h-2 !top-2 !left-[7px]" />
@@ -300,7 +301,7 @@ const ViewGoodDeal = () => {
           </div>
           <img
             className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
+            alt={t("view_good_deal.line_alt")}
             src={Line63}
           />
           <div className="flex flex-col items-end gap-[5px] self-stretch w-full relative flex-[0_0_auto]">
@@ -308,7 +309,7 @@ const ViewGoodDeal = () => {
               <div className="flex flex-col items-end gap-[5px] self-stretch w-full relative flex-[0_0_auto]">
                 <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
                   <div className="relative w-fit font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                    TOTAL TTC
+                    {t("view_good_deal.total_ttc")}
                   </div>
                   <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
                     <div className="mt-[-1.00px] font-normal text-primary-text-color leading-6 line-through relative w-fit [font-family:'Inter',Helvetica] text-sm text-right tracking-[0] whitespace-nowrap">
@@ -322,7 +323,7 @@ const ViewGoodDeal = () => {
               </div>
               <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
                 <div className="relative w-fit font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-secondary-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                  Économisez
+                  {t("view_good_deal.save")}
                 </div>
                 <div className="mt-[-1.00px] font-[number:var(--body-small-medium-font-weight)] text-secondary-color leading-[var(--body-small-medium-line-height)] relative w-fit font-body-small-medium text-[length:var(--body-small-medium-font-size)] text-right tracking-[var(--body-small-medium-letter-spacing)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
                   77,98 €
@@ -333,7 +334,7 @@ const ViewGoodDeal = () => {
           <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
             <Send1 className="!relative !w-5 !h-5" color="white" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Payment
+              {t("view_good_deal.payment")}
             </button>
           </div>
         </div>

@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next"; // Importing the hook for translation
 import { ArrowLeft2 } from "../../icons/ArrowLeft2";
 import { Box4 } from "../../icons/Box4";
 import { FileExport2 } from "../../icons/FileExport2";
-import { UserAlt2 } from "../../icons/UserAlt2";
-import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
-import AppBar from "../../components/AppBar/AppBar";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 
 const Wallet = () => {
+  const { t } = useTranslation(); // Using the translation hook
   const [fundsUnlocked, setFundsUnlocked] = useState(false);
   const navigate = useNavigate();
+
   const handleUnlockFunds = () => {
-    // Logic for unlocking funds
     setFundsUnlocked(true);
     navigate("/admin-withdrawal");
   };
 
   const handleBackToHome = () => {
-    // Logic for navigating back to home
     navigate("/account");
   };
 
@@ -39,12 +37,12 @@ const Wallet = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("wallet.back_button")}
             </div>
           </div>
         </div>
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          My wallet
+          {t("wallet.title")}
         </div>
         <div className="flex flex-col items-start gap-6 p-5 self-stretch w-full bg-whitewhite rounded-[5px] shadow-shadow-1 relative flex-[0_0_auto]">
           <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto]">
@@ -60,25 +58,23 @@ const Wallet = () => {
               </div>
               <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap">
-                  My wallet
+                  {t("wallet.wallet_info.heading")}
                 </div>
                 <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                  Deal amount collected
+                  {t("wallet.wallet_info.subheading")}
                 </div>
               </div>
             </div>
             <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
-                €823
+                {t("wallet.wallet_info.amount")}
               </div>
               <div className="relative w-[91px] h-[22px]" />
             </div>
           </div>
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          The money from your deals is stored here!
-          <br />
-          You can unlock it once the deals expire.
+          {t("wallet.info_text")}
         </p>
         <div
           className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md cursor-pointer"
@@ -86,12 +82,12 @@ const Wallet = () => {
         >
           <FileExport2 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Unlock funds
+            {t("wallet.unlock_funds_button")}
           </button>
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("wallet.line_alt")}
           src={Line63}
         />
         <div
@@ -100,7 +96,7 @@ const Wallet = () => {
         >
           <ArrowLeft2 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Back to Home
+            {t("wallet.back_to_home_button")}
           </button>
         </div>
       </div>
