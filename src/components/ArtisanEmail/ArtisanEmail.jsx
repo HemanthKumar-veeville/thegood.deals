@@ -3,10 +3,13 @@ import { Send1 } from "../../icons/Send1";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { RatingStar } from "../RatingStar";
 import { blogImage, Human, Line63 } from "../../images";
+import { useTranslation } from "react-i18next";
 
 export const ArtisanEmail = ({ HEADERClassName }) => {
+  const { t } = useTranslation(); // Initialize the translation hook
+
   const handleButtonClick = () => {
-    alert("You clicked 'See the deal'.");
+    alert(t("artisanEmail.seeTheDeal"));
   };
 
   return (
@@ -27,21 +30,20 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
       </div>
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Dear craftsman, thank you for validating this deal 🤝
+          {t("artisanEmail.dearCraftsman")}
         </p>
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-          Please confirm the creation of the deal below.
+          {t("artisanEmail.confirmCreation")}
           <br />
           <br />
-          We want to ensure that all information is correct in order to trigger
-          payment.
+          {t("artisanEmail.ensureCorrectInfo")}
           <br />
           <br />
-          Once the deal is confirmed, it will be offered for sale.
+          {t("artisanEmail.dealConfirmed")}
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("artisanEmail.line")}
           src={Line63}
         />
         <img
@@ -50,11 +52,11 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
           src={blogImage}
         />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Wine cratesDomaine de Cigaluse
+          {t("artisanEmail.dealTitle")}
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("artisanEmail.line")}
           src={Line63}
         />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
@@ -65,7 +67,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              Collecte organisée par
+              {t("artisanEmail.organizedBy")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
               Abraham Thomas
@@ -81,7 +83,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("artisanEmail.line")}
           src={Line63}
         />
         <div
@@ -90,7 +92,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         >
           <Send1 className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            See the deal
+            {t("artisanEmail.seeTheDeal")}
           </button>
         </div>
       </div>

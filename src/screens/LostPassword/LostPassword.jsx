@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Button } from "../../components/Button/Button";
-import { Header } from "../../components/Header";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
-import AppBar from "../../components/AppBar/AppBar";
+import { useTranslation } from "react-i18next";
 
 const LostPassword = () => {
+  const { t } = useTranslation(); // Initialize the translation hook
   const [email, setEmail] = useState("");
 
   const handleEmailChange = (e) => {
@@ -12,12 +12,12 @@ const LostPassword = () => {
   };
 
   const handleSendLink = () => {
-    alert(`Email has been sent to ${email}`);
+    alert(t("lostPassword.emailSentAlert", { email }));
     setEmail("");
   };
 
   const handleBack = () => {
-    alert("Back Button clicked");
+    alert(t("lostPassword.backButtonAlert"));
   };
 
   return (
@@ -33,15 +33,15 @@ const LostPassword = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("lostPassword.back")}
             </div>
           </div>
         </div>
         <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-          Forgot your password
+          {t("lostPassword.forgotPassword")}
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px]">
-          Enter your email and we will send you a recovery link.
+          {t("lostPassword.enterEmail")}
         </p>
         <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
@@ -50,7 +50,7 @@ const LostPassword = () => {
                 type="email"
                 value={email}
                 onChange={handleEmailChange}
-                placeholder="E-mail"
+                placeholder={t("lostPassword.emailPlaceholder")}
                 className="w-full border-none outline-none"
               />
             </div>
@@ -58,7 +58,7 @@ const LostPassword = () => {
         </div>
         <div onClick={handleSendLink} className="w-full">
           <Button
-            buttonText="Receive the link"
+            buttonText={t("lostPassword.receiveLinkButton")}
             className="!self-stretch !flex-[0_0_auto] !flex !w-full"
             color="primary"
             kind="primary"

@@ -594,5 +594,117 @@
     "ratings": "Évaluations ⭐️",
     "rating_title": "J'aime vraiment ce produit !",
     "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula."
+  },
+  "artisanDeniedThe": {
+    "not_agree": "Vous n'êtes pas d'accord avec l'accord ? 😕",
+    "send_info": "Nous enverrons vos informations à l'organisateur pour qu'il puisse les corriger",
+    "indicate_info": "Indiquez vos informations",
+    "placeholder": "ex. Changer l'adresse, augmenter le prix...",
+    "send_for_proofreading": "Envoyer pour relecture",
+    "cancel_and_return": "Annuler et retourner à l'accord",
+    "feedback_submitted": "Retour envoyé",
+    "cancelled": "Annulé et retour à l'accord."
+  },
+  "artisanConfirmThe": {
+    "thank_you": "Cher artisan, merci de valider ce deal 🤝",
+    "confirmation_notice": "Une fois le deal confirmé, il sera proposé à la vente.",
+    "wine_crates": "Cagettes de vin Domaine de Cigaluse",
+    "deal_duration": "du 15 au 30 août (15 jours)",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "organized_by": "Collecte organisée par",
+    "about_deal": "À propos du deal",
+    "deal_description": "J'ai découvert le domaine Cilagus récemment, et je dois dire que le vin y est exceptionnel. Cette découverte m'a tellement marqué que j'aimerais la partager avec vous...",
+    "read_more": "En savoir plus",
+    "what_customers_receive": "Que reçoivent les clients ?",
+    "customers_receive": "Chaque commande en gros comprendra une sélection diversifiée de bouteilles du domaine Cilaguse, couvrant des vins rouges robustes, des blancs délicats...",
+    "delivery_info": "Lieu et date de livraison",
+    "delivery_date": "Samedi 15 avril, entre 10h et 12h",
+    "delivery_location": "Chez Abraham",
+    "address": "24 rue des Vignobles, 33000 Bordeaux",
+    "good_deal": "La bonne affaire",
+    "case_of_rose": "Caisse de Rosé - 6 bouteilles",
+    "min_quantity": "Quantité min. par commande : 2",
+    "max_quantity": "Quantité max. par commande : 13",
+    "total_stock": "Stock total : 32",
+    "per_unit": "à l’unité",
+    "refuse": "Refuser",
+    "confirm": "Confirmer",
+    "refused": "Vous avez refusé le deal.",
+    "confirmed": "Vous avez confirmé le deal."
+  },
+  "guestsSendReviews": {
+    "giveYourOpinion": "Donnez votre avis !",
+    "thankYouForUsingService": "Merci d'avoir utilisé notre service, qu'en avez-vous pensé?",
+    "rateOrganizer": "Évaluez l'organisateur de l'affaire",
+    "wasOrganizerTask": "L'organisateur était-il à la hauteur de la tâche?",
+    "line": "Ligne",
+    "remarks": "Remarques...",
+    "rateProducts": "Évaluer les produits",
+    "didProductsMeetExpectations": "Les produits reçus répondent-ils à vos attentes?",
+    "ratePlatform": "Évaluez la plateforme Good Deals",
+    "didYouEnjoySite": "Avez-vous aimé utiliser notre site?",
+    "sendMyReview": "Envoyer mon avis",
+    "organizerRating": "Évaluation de l'organisateur",
+    "organizerRemarks": "Remarques de l'organisateur",
+    "productRating": "Évaluation des produits",
+    "productRemarks": "Remarques sur le produit",
+    "platformRating": "Évaluation de la plateforme",
+    "platformRemarks": "Remarques sur la plateforme"
+  },
+  "artisanEmail": {
+    "dearCraftsman": "Cher artisan, merci d'avoir validé cette affaire 🤝",
+    "confirmCreation": "Veuillez confirmer la création de l'affaire ci-dessous.",
+    "ensureCorrectInfo": "Nous voulons nous assurer que toutes les informations sont correctes afin de déclencher le paiement.",
+    "dealConfirmed": "Une fois l'affaire confirmée, elle sera proposée à la vente.",
+    "line": "Ligne",
+    "dealTitle": "Caisses de vin Domaine de Cigaluse",
+    "organizedBy": "Collecte organisée par",
+    "seeTheDeal": "Voir l'affaire"
+  },
+  "artisanEmailList": {
+    "dearCraftsman": "Cher artisan, veuillez confirmer le bon de commande 🧾",
+    "confirmOrderForm": "Veuillez confirmer le bon de commande ci-dessous. Nous voulons nous assurer que toutes les informations sont correctes afin de déclencher le paiement.\n\nVeuillez confirmer via le bouton à la fin de l'email.",
+    "confirmInformation": "Confirmer les informations",
+    "caseOfRose": "Caisse de Rosé - 6 bouteilles",
+    "caseOfWhite": "Caisse de Blanc - 6 bouteilles",
+    "orderOnDeal": "commande sur l'affaire",
+    "products": "produits",
+    "total": "Total",
+    "totalPrice": "Prix total",
+    "line": "Ligne",
+    "confirmationAlert": "Information confirmée!"
+  },
+  "guestEmailAskFor": {
+    "dearGuest": "Cher invité, donnez-nous votre avis!",
+    "satisfactionMessage": "Nous espérons que vous êtes satisfait de notre service.\n\nPour continuer à améliorer votre expérience, pourriez-vous prendre un moment pour nous laisser votre avis?",
+    "giveOpinionButton": "Donner mon avis",
+    "buttonClickAlert": "Bouton cliqué"
+  },
+  "lostPassword": {
+    "back": "Retour",
+    "forgotPassword": "Mot de passe oublié",
+    "enterEmail": "Entrez votre email et nous vous enverrons un lien de récupération.",
+    "emailPlaceholder": "E-mail",
+    "receiveLinkButton": "Recevoir le lien",
+    "emailSentAlert": "L'e-mail a été envoyé à {{email}}",
+    "backButtonAlert": "Bouton Retour cliqué"
+  },
+  "resetPassword": {
+    "newPassword": "Nouveau mot de passe",
+    "passwordInstruction": "Le mot de passe doit être suffisamment long et difficile à deviner pour les autres.",
+    "passwordPlaceholder": "Mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "passwordCriteria": {
+      "8characters": "8 caractères",
+      "1capitalLetter": "1 majuscule",
+      "1lowerCase": "1 minuscule",
+      "1digit": "1 chiffre"
+    },
+    "passwordChangedSuccess": "Mot de passe changé avec succès!",
+    "passwordCriteriaError": "Veuillez vous assurer que le mot de passe répond à tous les critères et que les deux mots de passe correspondent.",
+    "changePasswordButton": "Changer le mot de passe"
+  },
+  "customLoader": {
+    "loading": "Chargement..."
   }
 }

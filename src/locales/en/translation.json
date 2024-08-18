@@ -594,5 +594,117 @@
     "ratings": "Ratings ⭐️",
     "rating_title": "I Really Love This Product!",
     "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula."
+  },
+  "artisanDeniedThe": {
+    "not_agree": "You don't agree with the deal? 😕",
+    "send_info": "We will send your information to the organizer so that he can correct it",
+    "indicate_info": "Indicate your information",
+    "placeholder": "eg. Change the address, increase the price...",
+    "send_for_proofreading": "Send for proofreading",
+    "cancel_and_return": "Cancel and return to deal",
+    "feedback_submitted": "Feedback submitted",
+    "cancelled": "Cancelled and returning to deal."
+  },
+  "artisanConfirmThe": {
+    "thank_you": "Dear craftsman, thank you for validating this deal 🤝",
+    "confirmation_notice": "Once the deal is confirmed, it will be offered for sale.",
+    "wine_crates": "Wine cratesDomaine de Cigaluse",
+    "deal_duration": "from August 15 to 30 (15 days)",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "organized_by": "Collection organized by",
+    "about_deal": "About the deal",
+    "deal_description": "I discovered the Cilagus estate recently, and I must say that the wine there is exceptional. This discovery had such an impact on me that I would like to share it with you...",
+    "read_more": "Read more",
+    "what_customers_receive": "What do customers receive?",
+    "customers_receive": "Each bulk order will include a diverse selection of bottles from Cilaguse Estate, spanning robust red wines, delicate whites...",
+    "delivery_info": "Delivery location and date",
+    "delivery_date": "Saturday April 15, between 10 a.m",
+    "delivery_location": "Chez Abraham ",
+    "address": "24 rue des Vignobles, 33000 Bordeaux",
+    "good_deal": "The good deal",
+    "case_of_rose": "Case of Rosé - 6 bottles",
+    "min_quantity": "Min quantity. per order: 2",
+    "max_quantity": "Max quantity. per order: 13",
+    "total_stock": "Total stock: 32",
+    "per_unit": "per unit",
+    "refuse": "Refuse",
+    "confirm": "Confirm",
+    "refused": "You have refused the deal.",
+    "confirmed": "You have confirmed the deal."
+  },
+  "guestsSendReviews": {
+    "giveYourOpinion": "Give your opinion!",
+    "thankYouForUsingService": "Thank you for using our service, what did you think?",
+    "rateOrganizer": "Rate the organizer of the deal",
+    "wasOrganizerTask": "Was the organizer up to the task?",
+    "line": "Line",
+    "remarks": "Remarks...",
+    "rateProducts": "Rate the products",
+    "didProductsMeetExpectations": "Do the products received meet your expectations?",
+    "ratePlatform": "Rate the Good Deals platform",
+    "didYouEnjoySite": "Did you enjoy using our site?",
+    "sendMyReview": "Send my review",
+    "organizerRating": "Organizer Rating",
+    "organizerRemarks": "Organizer Remarks",
+    "productRating": "Product Rating",
+    "productRemarks": "Product Remarks",
+    "platformRating": "Platform Rating",
+    "platformRemarks": "Platform Remarks"
+  },
+  "artisanEmail": {
+    "dearCraftsman": "Dear craftsman, thank you for validating this deal 🤝",
+    "confirmCreation": "Please confirm the creation of the deal below.",
+    "ensureCorrectInfo": "We want to ensure that all information is correct in order to trigger payment.",
+    "dealConfirmed": "Once the deal is confirmed, it will be offered for sale.",
+    "line": "Line",
+    "dealTitle": "Wine cratesDomaine de Cigaluse",
+    "organizedBy": "Collection organized by",
+    "seeTheDeal": "See the deal"
+  },
+  "artisanEmailList": {
+    "dearCraftsman": "Dear craftsman, please confirm the order form 🧾",
+    "confirmOrderForm": "Please confirm the order form below. We want to ensure that all information is correct in order to trigger payment.\n\nPlease confirm via the button at the end of the email.",
+    "confirmInformation": "Confirm information",
+    "caseOfRose": "Case of Rosé - 6 bottles",
+    "caseOfWhite": "Case of White - 6 bottles",
+    "orderOnDeal": "order on the deal",
+    "products": "products",
+    "total": "Total",
+    "totalPrice": "Total Price",
+    "line": "Line",
+    "confirmationAlert": "Information confirmed!"
+  },
+  "guestEmailAskFor": {
+    "dearGuest": "Dear guest, give us your opinion!",
+    "satisfactionMessage": "We hope you are satisfied with our service.\n\nTo continue improving your experience, could you take a moment to leave us your review?",
+    "giveOpinionButton": "Give my opinion",
+    "buttonClickAlert": "Button clicked"
+  },
+  "lostPassword": {
+    "back": "Back",
+    "forgotPassword": "Forgot your password",
+    "enterEmail": "Enter your email and we will send you a recovery link.",
+    "emailPlaceholder": "E-mail",
+    "receiveLinkButton": "Receive the link",
+    "emailSentAlert": "Email has been sent to {{email}}",
+    "backButtonAlert": "Back Button clicked"
+  },
+  "resetPassword": {
+    "newPassword": "New Password",
+    "passwordInstruction": "The password must be long enough and difficult for others to guess.",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "passwordCriteria": {
+      "8characters": "8 characters",
+      "1capitalLetter": "1 capital letter",
+      "1lowerCase": "1 lower case",
+      "1digit": "1 digit"
+    },
+    "passwordChangedSuccess": "Password changed successfully!",
+    "passwordCriteriaError": "Please make sure the password meets all criteria and both passwords match.",
+    "changePasswordButton": "Change password"
+  },
+  "customLoader": {
+    "loading": "Loading..."
   }
 }

@@ -6,8 +6,11 @@ import { Send1 } from "../../icons/Send1";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { SizeXlCorner } from "../SizeXlCorner";
 import { Line63 } from "../../images"; // Ensure correct import path
+import { useTranslation } from "react-i18next"; // Import useTranslation hook
 
 export const ArtisanEmailList = ({ HEADERClassName }) => {
+  const { t } = useTranslation(); // Initialize the translation hook
+
   const items = [
     {
       initials: "AT",
@@ -16,13 +19,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
       expanded: true,
       products: [
         {
-          name: "Case of Rosé - 6 bottles",
+          name: t("artisanEmailList.caseOfRose"),
           quantity: 3,
           price: "29.00 €",
           totalPrice: "87 €",
         },
         {
-          name: "Case of White - 6 bottles",
+          name: t("artisanEmailList.caseOfWhite"),
           quantity: 3,
           price: "29.00 €",
           totalPrice: "87 €",
@@ -37,13 +40,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
       expanded: false,
       products: [
         {
-          name: "Case of Rosé - 6 bottles",
+          name: t("artisanEmailList.caseOfRose"),
           quantity: 3,
           price: "29.00 €",
           totalPrice: "87 €",
         },
         {
-          name: "Case of White - 6 bottles",
+          name: t("artisanEmailList.caseOfWhite"),
           quantity: 3,
           price: "29.00 €",
           totalPrice: "87 €",
@@ -58,13 +61,13 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
       expanded: false,
       products: [
         {
-          name: "Case of Rosé - 6 bottles",
+          name: t("artisanEmailList.caseOfRose"),
           quantity: 3,
           price: "29.00 €",
           totalPrice: "87 €",
         },
         {
-          name: "Case of White - 6 bottles",
+          name: t("artisanEmailList.caseOfWhite"),
           quantity: 3,
           price: "29.00 €",
           totalPrice: "87 €",
@@ -85,7 +88,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
   };
 
   const handleConfirm = () => {
-    alert("Information confirmed!");
+    alert(t("artisanEmailList.confirmationAlert"));
   };
 
   // Calculate total price with proper parsing of the price values
@@ -110,14 +113,10 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
       </div>
       <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)]">
-          Dear craftsman, please confirm the order form 🧾
+          {t("artisanEmailList.dearCraftsman")}
         </p>
         <p className="relative self-stretch font-body-medium-regular text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)]">
-          Please confirm the order form below. We want to ensure that all
-          information is correct in order to trigger payment.
-          <br />
-          <br />
-          Please confirm via the button at the end of the email.
+          {t("artisanEmailList.confirmOrderForm")}
         </p>
         <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
           <Send1 className="!relative !w-5 !h-5" />
@@ -125,12 +124,12 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             className="all-[unset] box-border relative w-fit mt-[-1.00px] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap"
             onClick={handleConfirm}
           >
-            Confirm information
+            {t("artisanEmailList.confirmInformation")}
           </button>
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("artisanEmailList.line")}
           src={Line63}
         />
         {items.map((item, index) => (
@@ -142,7 +141,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           >
             <img
               className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
+              alt={t("artisanEmailList.line")}
               src={Line63}
             />
             <div
@@ -161,7 +160,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
                 <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
                   <Box4 className="!relative !w-5 !h-5" />
                   <p className="relative w-fit mt-[-1.00px] text-primary-text-color text-sm leading-5 whitespace-nowrap">
-                    {item.orders} order on the deal
+                    {item.orders} {t("artisanEmailList.orderOnDeal")}
                   </p>
                 </div>
               </div>
@@ -175,7 +174,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
               <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto]">
                 <img
                   className="relative self-stretch w-full h-px mt-[-1.00px] object-cover"
-                  alt="Line"
+                  alt={t("artisanEmailList.line")}
                   src={Line63}
                 />
                 {item.products.map((product, idx) => (
@@ -191,7 +190,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
                     <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
                       <div className="flex items-center gap-2.5 relative flex-1 grow">
                         <div className="relative w-fit mt-[-1.00px] text-secondary-color font-semibold text-base leading-6 whitespace-nowrap">
-                          {product.quantity} products
+                          {product.quantity} {t("artisanEmailList.products")}
                         </div>
                       </div>
                       <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -206,7 +205,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
                 <div className="items-end justify-between self-stretch w-full flex relative flex-[0_0_auto]">
                   <div className="flex items-center gap-2.5 relative flex-1 grow">
                     <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-base leading-6 whitespace-nowrap">
-                      Total
+                      {t("artisanEmailList.total")}
                     </div>
                   </div>
                   <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
@@ -221,14 +220,14 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
         ))}
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
+          alt={t("artisanEmailList.line")}
           src={Line63}
         />
         <div className="flex-col items-start gap-[15px] p-[15px] self-stretch w-full bg-white rounded-[5px] flex relative flex-[0_0_auto]">
           <div className="items-end flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex justify-between self-stretch w-full items-end relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] font-bold text-primary-color text-base text-center leading-6 whitespace-nowrap">
-                Total Price
+                {t("artisanEmailList.totalPrice")}
               </div>
               <div className="relative w-fit mt-[-1.00px] font-bold text-primary-color text-base text-right leading-6 whitespace-nowrap">
                 {totalOrderPrice.toFixed(2)} €
@@ -241,7 +240,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
               className="all-[unset] box-border relative w-fit mt-[-1.00px] font-medium text-white text-base text-center leading-6 whitespace-nowrap"
               onClick={handleConfirm}
             >
-              Confirm information
+              {t("artisanEmailList.confirmInformation")}
             </button>
           </div>
         </div>
