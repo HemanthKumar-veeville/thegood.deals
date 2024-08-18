@@ -4,10 +4,12 @@ import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { ChevronDown } from "../../icons/ChevronDown";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const LanguageSelection = () => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [selectedLanguage, setSelectedLanguage] = useState("French");
+  const [selectedLanguage, setSelectedLanguage] = useState("fr"); // Default to French
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleBack = () => {
@@ -24,7 +26,7 @@ const LanguageSelection = () => {
   };
 
   const confirmLanguage = () => {
-    console.log({ selectedLanguage });
+    i18n.changeLanguage(selectedLanguage);
   };
 
   return (
@@ -40,12 +42,12 @@ const LanguageSelection = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("common.back")}
             </div>
           </div>
         </div>
         <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-[#1b4f4a] text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-          Change language 📣
+          {t("language.change")}
         </div>
         <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
           <div
@@ -54,7 +56,7 @@ const LanguageSelection = () => {
           >
             <div className="flex items-center justify-between relative flex-1 grow">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
-                {selectedLanguage}
+                {t(`language.${selectedLanguage}`)}
               </div>
               <ChevronDown className="!relative !w-4 !h-4" color="#1B4F4A" />
             </div>
@@ -63,22 +65,22 @@ const LanguageSelection = () => {
             <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg border border-stroke">
               <div
                 className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                onClick={() => selectLanguage("French")}
+                onClick={() => selectLanguage("fr")}
               >
-                French
+                {t("language.french")}
               </div>
               <div
                 className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                onClick={() => selectLanguage("English")}
+                onClick={() => selectLanguage("en")}
               >
-                English
+                {t("language.english")}
               </div>
             </div>
           )}
         </div>
         <div onClick={confirmLanguage}>
           <Button
-            buttonText="Confirm"
+            buttonText={t("common.confirm")}
             className="!self-stretch !flex-[0_0_auto] !flex !w-full"
             color="primary"
             kind="primary"

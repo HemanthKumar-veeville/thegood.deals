@@ -495,7 +495,9 @@
     "line_alt": "Ligne"
   },
   "common": {
-    "back": "Retour"
+    "back": "Retour",
+    "confirm": "Confirmer",
+    "read_more": "Lire plus"
   },
   "deal": {
     "title": "Caisses de vin Domaine de Cigaluse",
@@ -519,5 +521,78 @@
     "in_stock": "En stock",
     "waiting": "En attente de l'artisan",
     "draft": "Brouillon"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "edit_profile": "Modifier mon profil",
+    "notifications": "Notifications",
+    "language": "Langue",
+    "currency": "Devise"
+  },
+  "profile": {
+    "my_account": "Mon compte",
+    "change_profile_picture": "Changer la photo de profil",
+    "your_information": "Vos informations",
+    "address": "Adresse",
+    "required": "requis",
+    "additional_address": "Adresse complémentaire",
+    "city": "Ville",
+    "postal_code": "Code postal",
+    "country": "Pays",
+    "confirm_changes": "Confirmer les modifications"
+  },
+  "notifications": {
+    "title": "Notifications 🔔",
+    "dealStatus": "Statut du Deal",
+    "newDeals": "Nouveaux Deals",
+    "invitations": "Invitations",
+    "messages": "Messages",
+    "emails": "Emails"
+  },
+  "language": {
+    "change": "Changer de langue 📣",
+    "french": "Français",
+    "english": "Anglais",
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "currency": {
+    "change": "Changer la devise 💶",
+    "USD": "USD",
+    "Euro": "Euro"
+  },
+  "admin": {
+    "modify": "Modifier",
+    "invite": "Inviter",
+    "wine_crates": "Cagettes de vinDomaine de Cigaluse",
+    "sold_percentage": "80% vendu",
+    "ends_in": "fin dans {{days}} jours",
+    "participants": "{{count}} participants",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "soon_out_of_stock": "Bientôt en rupture de stock",
+    "collection_organized_by": "Collection organisée par",
+    "about_the_deal": "À propos du deal",
+    "deal_description": "J'ai découvert récemment le domaine de Cilagus, et je dois dire que le vin y est exceptionnel. Cette découverte m'a tellement marqué que je voudrais la partager avec vous...",
+    "what_you_receive": "Que recevez-vous?",
+    "bulk_order_includes": "Chaque commande groupée comprendra une sélection diversifiée de bouteilles du domaine de Cilaguse, allant des vins rouges robustes aux blancs délicats...",
+    "delivery_location_and_date": "Lieu et date de livraison",
+    "delivery_date": "Samedi 15 avril, entre 10h et 15h",
+    "delivery_address": "Chez Abraham24 rue des Vignobles, 33000 Bordeaux",
+    "my_basket": "Mon panier",
+    "case_of_rose": "Caisse de Rosé - 6 bouteilles",
+    "case_of_white": "Caisse de Blanc - 6 bouteilles",
+    "available": "{{count}} disponible",
+    "total_price": "PRIX TOTAL",
+    "payment": "Paiement"
+  },
+  "myInformation": {
+    "orders_placed": "{{count}} commandes passées",
+    "collections_organized": "{{count}} collectes organisées",
+    "location": "Lille, Hauts-de-France",
+    "contact": "Contacter {{name}}",
+    "deals": "Ces offres ✌🏻",
+    "ratings": "Évaluations ⭐️",
+    "rating_title": "J'aime vraiment ce produit !",
+    "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula."
   }
 }

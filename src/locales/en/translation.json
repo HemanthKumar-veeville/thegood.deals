@@ -495,7 +495,9 @@
     "line_alt": "Line"
   },
   "common": {
-    "back": "Back"
+    "back": "Back",
+    "confirm": "Confirm",
+    "read_more": "Read more"
   },
   "deal": {
     "title": "Wine crates Domaine de Cigaluse",
@@ -519,5 +521,78 @@
     "in_stock": "In stock",
     "waiting": "Waiting for the artisian",
     "draft": "Draft"
+  },
+  "settings": {
+    "title": "Settings",
+    "edit_profile": "Edit my profile",
+    "notifications": "Notifications",
+    "language": "Language",
+    "currency": "Currency"
+  },
+  "profile": {
+    "my_account": "Mon compte",
+    "change_profile_picture": "Changer la photo de profil",
+    "your_information": "Vos informations",
+    "address": "Adresse",
+    "required": "requis",
+    "additional_address": "Adresse complémentaire",
+    "city": "Ville",
+    "postal_code": "Code postal",
+    "country": "Pays",
+    "confirm_changes": "Confirmer les modifications"
+  },
+  "notifications": {
+    "title": "Notifications 🔔",
+    "dealStatus": "Deal Status",
+    "newDeals": "New Deals",
+    "invitations": "Invitations",
+    "messages": "Messages",
+    "emails": "Emails"
+  },
+  "language": {
+    "change": "Change language 📣",
+    "french": "French",
+    "english": "English",
+    "fr": "French",
+    "en": "English"
+  },
+  "currency": {
+    "change": "Change currency 💶",
+    "USD": "USD",
+    "Euro": "Euro"
+  },
+  "admin": {
+    "modify": "To modify",
+    "invite": "Invite",
+    "wine_crates": "Wine cratesDomaine de Cigaluse",
+    "sold_percentage": "80% sold",
+    "ends_in": "end in {{days}} days",
+    "participants": "{{count}} participants",
+    "location": "Domaine de Cigalus 11200 Bizanet",
+    "soon_out_of_stock": "Soon to be out of stock",
+    "collection_organized_by": "Collection organized by",
+    "about_the_deal": "About the deal",
+    "deal_description": "I discovered the Cilagus estate recently, and I must say that the wine there is exceptional. This discovery had such an impact on me that I would like to share it with you...",
+    "what_you_receive": "What do you receive?",
+    "bulk_order_includes": "Each bulk order will include a diverse selection of bottles from Cilaguse Estate, spanning robust red wines, delicate whites...",
+    "delivery_location_and_date": "Delivery location and date",
+    "delivery_date": "Saturday April 15, between 10 a.m.",
+    "delivery_address": "Chez Abraham24 rue des Vignobles, 33000 Bordeaux",
+    "my_basket": "My basket",
+    "case_of_rose": "Case of Rosé - 6 bottles",
+    "case_of_white": "Case of White - 6 bottles",
+    "available": "{{count}} available",
+    "total_price": "TOTAL PRICE",
+    "payment": "Payment"
+  },
+  "myInformation": {
+    "orders_placed": "{{count}} orders placed",
+    "collections_organized": "{{count}} collections organized",
+    "location": "Lille, Hauts-de-France",
+    "contact": "Contact {{name}}",
+    "deals": "These deals ✌🏻",
+    "ratings": "Ratings ⭐️",
+    "rating_title": "I Really Love This Product!",
+    "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula."
   }
 }

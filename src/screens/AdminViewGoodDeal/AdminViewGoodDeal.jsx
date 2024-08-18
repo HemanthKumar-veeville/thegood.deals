@@ -12,12 +12,13 @@ import { Plus3 } from "../../icons/Plus3";
 import { Send } from "../../icons/Send";
 import { Send2 } from "../../icons/Send2";
 import { ShoppingCart111 } from "../../icons/ShoppingCart111";
-import { UserAlt2 } from "../../icons/UserAlt2";
 import { Users2 } from "../../icons/Users2";
-import { VerticalLine2 } from "../../icons/VerticalLine2";
 import AppBar from "../../components/AppBar/AppBar";
+import { useTranslation } from "react-i18next";
 
 const AdminViewGoodDeal = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col w-screen items-start relative bg-primary-background">
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
@@ -25,23 +26,23 @@ const AdminViewGoodDeal = () => {
           <div className="flex items-center justify-center gap-2 px-6 py-3 relative flex-1 grow bg-whitewhite rounded-md shadow-shadow-1">
             <Pencil className="!relative !w-5 !h-5 !ml-[-7.25px]" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] mr-[-7.25px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              To modify
+              {t("admin.modify")}
             </button>
           </div>
           <div className="flex items-center justify-center gap-2 px-6 py-3 relative flex-1 grow bg-whitewhite rounded-md shadow-shadow-1">
             <Send className="!relative !w-5 !h-5" />
             <button className="all-[unset] box-border text-primary-color relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Invite
+              {t("admin.invite")}
             </button>
           </div>
         </div>
         <img
           className="relative self-stretch w-full h-[150px] object-cover"
-          alt="Blog image"
+          alt={t("admin.blog_image")}
           src="/img/blog-image.png"
         />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          Wine cratesDomaine de Cigaluse
+          {t("admin.wine_crates")}
         </div>
         <StyleTypePrimary
           className="!self-stretch !w-full !relative"
@@ -51,26 +52,26 @@ const AdminViewGoodDeal = () => {
           lineClassName="!w-[220px]"
           overlapClassName="!w-[290px]"
           overlapGroupClassName="bg-[url(/static/img/line-59.svg)]"
-          text="80% sold"
+          text={t("admin.sold_percentage")}
         />
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              end in 12 days
+              {t("admin.ends_in", { days: 12 })}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <Users2 className="!relative !w-5 !h-5" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              13 participants
+              {t("admin.participants", { count: 13 })}
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Map className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-            Domaine de Cigalus 11200 Bizanet
+            {t("admin.location")}
           </p>
         </div>
         <img
@@ -84,17 +85,17 @@ const AdminViewGoodDeal = () => {
           divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
           round="semi-round"
           state="duo-tone"
-          text1="Soon to be out of stock"
+          text1={t("admin.soon_out_of_stock")}
         />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           <img
             className="relative w-[50px] h-[50px] object-cover"
-            alt="Rectangle"
+            alt="Organizer"
             src="/img/rectangle-5095.png"
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              Collection organized by
+              {t("admin.collection_organized_by")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
               Abraham Thomas
@@ -109,15 +110,13 @@ const AdminViewGoodDeal = () => {
           </div>
         </div>
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px]">
-          About the deal
+          {t("admin.about_the_deal")}
         </div>
         <p className="[font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 relative self-stretch">
           <span className="[font-family:'Inter',Helvetica] font-normal text-[#637381] text-base tracking-[0] leading-6">
-            I discovered the Cilagus estate recently, and I must say that the
-            wine there is exceptional. This discovery had such an impact on me
-            that I would like to share it with you...{" "}
+            {t("admin.deal_description")}{" "}
           </span>
-          <span className="font-bold underline">Read more</span>
+          <span className="font-bold underline">{t("common.read_more")}</span>
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -127,15 +126,14 @@ const AdminViewGoodDeal = () => {
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-            What do you receive?
+            {t("admin.what_you_receive")}
           </div>
         </div>
         <p className="[font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 relative self-stretch">
           <span className="[font-family:'Inter',Helvetica] font-normal text-[#637381] text-base tracking-[0] leading-6">
-            Each bulk order will include a diverse selection of bottles from
-            Cilaguse Estate, spanning robust red wines, delicate whites...{" "}
+            {t("admin.bulk_order_includes")}{" "}
           </span>
-          <span className="font-bold underline">Read more</span>
+          <span className="font-bold underline">{t("common.read_more")}</span>
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -145,19 +143,19 @@ const AdminViewGoodDeal = () => {
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-            Delivery location and date
+            {t("admin.delivery_location_and_date")}
           </div>
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
-            Saturday April 15, between 10 a.m
+            {t("admin.delivery_date")}
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <DeliveryTruck4 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
-            Chez Abraham24 rue des Vignobles, 33000 Bordeaux
+            {t("admin.delivery_address")}
           </p>
         </div>
         <img
@@ -169,7 +167,7 @@ const AdminViewGoodDeal = () => {
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <ShoppingCart111 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-              My basket
+              {t("admin.my_basket")}
             </div>
           </div>
           <img
@@ -180,12 +178,12 @@ const AdminViewGoodDeal = () => {
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Case of Rosé - 6 bottles
+                {t("admin.case_of_rose")}
               </p>
             </div>
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-orangeorange text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                3 available
+                {t("admin.available", { count: 3 })}
               </div>
             </div>
             <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
@@ -231,11 +229,11 @@ const AdminViewGoodDeal = () => {
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Case of White - 6 bottles
+                {t("admin.case_of_white")}
               </p>
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-secondary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              15 available
+              {t("admin.available", { count: 15 })}
             </div>
             <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
               <div className="inline-flex flex-col items-start gap-3 relative flex-[0_0_auto]">
@@ -280,7 +278,7 @@ const AdminViewGoodDeal = () => {
           <div className="flex flex-col items-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
               <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-xs text-center tracking-[0] leading-5 whitespace-nowrap">
-                TOTAL PRICE
+                {t("admin.total_price")}
               </div>
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg text-right tracking-[0] leading-[26px] whitespace-nowrap">
                 €58.00
@@ -290,7 +288,7 @@ const AdminViewGoodDeal = () => {
           <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
             <Send2 className="!relative !w-5 !h-5" color="white" />
             <button className="all-[unset] box-border text-whitewhite relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              Payment
+              {t("admin.payment")}
             </button>
           </div>
         </div>

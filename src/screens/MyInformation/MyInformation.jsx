@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next"; // Import useTranslation hook
 import { CardDeal } from "../../components/CardDeal";
 import { RatingStar } from "../../components/RatingStar";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
@@ -15,13 +16,17 @@ import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { useNavigate } from "react-router-dom";
 
 const MyInformation = () => {
+  const { t } = useTranslation(); // Initialize the useTranslation hook
   const navigate = useNavigate();
+
   const handleBack = () => {
     navigate("/account");
   };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   const DEALS = [
     {
       deal_id: "0x001",
@@ -34,6 +39,7 @@ const MyInformation = () => {
       dealExpiryDate: new Date("2024-08-05"),
     },
   ];
+
   return (
     <div className="flex flex-col w-screen h-screen items-start relative bg-primary-background">
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative">
@@ -47,7 +53,7 @@ const MyInformation = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("common.back")}
             </div>
           </div>
         </div>
@@ -76,19 +82,19 @@ const MyInformation = () => {
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <Box101 className="!relative !w-5 !h-5" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              18 orders placed
+              {t("myInformation.orders_placed", { count: 18 })}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <Users2 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              3 collections organized
+              {t("myInformation.collections_organized", { count: 3 })}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <MapMarker1 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              Lille, Hauts-de-France
+              {t("myInformation.location")}
             </div>
           </div>
         </div>
@@ -100,7 +106,7 @@ const MyInformation = () => {
         <div className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color">
           <EnvelopeAlt className="!relative !w-5 !h-5" color="#1B4F4A" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] text-center tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-            Contact Anthony
+            {t("myInformation.contact", { name: "Anthony" })}
           </button>
         </div>
         <img
@@ -109,7 +115,7 @@ const MyInformation = () => {
           src={Line63}
         />
         <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
-          These deals ✌🏻
+          {t("myInformation.deals")}
         </div>
         {DEALS?.map((deal) => (
           <div onClick={() => handleCardClick(deal)} className="cursor-pointer">
@@ -141,7 +147,7 @@ const MyInformation = () => {
           src={Line63}
         />
         <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
-          Ratings ⭐️
+          {t("myInformation.ratings")}
         </div>
         <div className="flex flex-col items-start gap-5 pt-5 pb-[30px] px-[30px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-xl shadow-shadow-1">
           <div className="flex flex-col items-start justify-center gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
@@ -170,11 +176,10 @@ const MyInformation = () => {
           </div>
           <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
             <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-darkdark text-base tracking-[0] leading-[26px] whitespace-nowrap">
-              I Really Love This Product!
+              {t("myInformation.rating_title")}
             </p>
             <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-              ac risus a risus elementum vehicula.
+              {t("myInformation.rating_description")}
             </p>
           </div>
         </div>

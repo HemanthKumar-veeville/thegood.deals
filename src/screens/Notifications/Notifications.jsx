@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Notifications = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState({
     dealStatus: true,
@@ -37,12 +39,12 @@ const Notifications = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-text-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-              Back
+              {t("common.back")}
             </div>
           </div>
         </div>
         <div className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Notifications 🔔
+          {t("notifications.title")}
         </div>
         <div className="flex flex-col items-start self-stretch w-full relative flex-[0_0_auto]">
           {Object.keys(notifications).map((type, index) => (
@@ -52,8 +54,7 @@ const Notifications = () => {
             >
               <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-                  {type.charAt(0).toUpperCase() +
-                    type.slice(1).replace(/([A-Z])/g, " $1")}
+                  {t(`notifications.${type}`)}
                 </div>
               </div>
               <div

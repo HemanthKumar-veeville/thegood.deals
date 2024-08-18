@@ -4,10 +4,12 @@ import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { ChevronDown } from "../../icons/ChevronDown";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CurrencySelection = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectedCurrency, setSelectedCurrency] = useState("French");
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [showDropdown, setShowDropdown] = useState(false);
   const currencies = ["USD", "Euro"];
 
@@ -41,12 +43,12 @@ const CurrencySelection = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("common.back")}
             </div>
           </div>
         </div>
         <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-[#1b4f4a] text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-          Change currency 💶
+          {t("currency.change")}
         </div>
         <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
           <div
@@ -76,7 +78,7 @@ const CurrencySelection = () => {
         </div>
         <div className="w-full" onClick={confirmCurrency}>
           <Button
-            buttonText="Confirm"
+            buttonText={t("common.confirm")}
             className="!self-stretch !flex-[0_0_auto] !flex !w-full"
             color="primary"
             kind="primary"
