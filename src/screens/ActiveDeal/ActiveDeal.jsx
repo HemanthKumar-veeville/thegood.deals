@@ -36,8 +36,9 @@ const ActiveDeal = () => {
   const dispatch = useDispatch();
   const dealState = useSelector((state) => state.deals);
   const { deal, status } = dealState;
+  const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
   const { t } = useTranslation();
-
+  console.log({ deal });
   const handleBack = () => {
     navigate("/account");
   };
@@ -67,7 +68,7 @@ const ActiveDeal = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getDealByDealId("fe4667b7-7e5f-48b9-8ecc-9824c560cc34"));
+    dispatch(getDealByDealId(location?.state?.deal?.deal_id));
   }, []);
 
   return (
@@ -84,7 +85,7 @@ const ActiveDeal = () => {
                 color="#637381"
               />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {t("active_deal.back_button")}
+                {t("common.back")}
               </div>
             </div>
           </div>
@@ -101,7 +102,7 @@ const ActiveDeal = () => {
                   {t("active_deal.deal_ends_in")}
                   <br />
                 </span>
-                <span className="font-bold">{t("active_deal.time_left")}</span>
+                <span className="font-bold">{dealData?.deal_ends_in}</span>
               </p>
             </div>
           </div>
@@ -111,18 +112,20 @@ const ActiveDeal = () => {
             src={blogImage}
           />
           <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-            {t("active_deal.title")}
+            {dealData?.deal_title}
           </div>
           {location?.state?.deal?.dealStatus === "out_of_stock" ? (
-            <ProgressBarYellow percentage={80} />
+            <ProgressBarYellow
+              percentage={dealData?.deal_progress_percentage}
+            />
           ) : (
-            <ProgressBarGreen percentage={90} />
+            <ProgressBarGreen percentage={dealData?.deal_progress_percentage} />
           )}
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("active_deal.ends_in_time")}
+                {dealData?.deal_ends_in}
               </div>
             </div>
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
@@ -135,7 +138,7 @@ const ActiveDeal = () => {
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <Map className="!relative !w-5 !h-5" />
             <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {t("active_deal.location")}
+              {dealData?.collection_location}
             </p>
           </div>
           <div
@@ -144,7 +147,7 @@ const ActiveDeal = () => {
           >
             <Box44 className="!relative !w-5 !h-5" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("active_deal.my_orders_button")}
+              {t("active_deal.my_orders_label")}
             </button>
           </div>
           <div
@@ -153,7 +156,7 @@ const ActiveDeal = () => {
           >
             <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("active_deal.manage_loved_ones_button")}
+              {t("active_deal.loved_ones_orders_label")}
             </button>
           </div>
           <div
