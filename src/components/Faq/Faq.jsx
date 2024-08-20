@@ -101,7 +101,7 @@ export const Faq = ({
               {text}
             </p>
           </div>
-          <div onClick={handleContactUs}>
+          <div onClick={handleContactUs} className="w-full">
             <Button
               className={buttonStylePrimarySmallClassName}
               darkMode={false}

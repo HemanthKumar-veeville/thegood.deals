@@ -9,30 +9,30 @@
       "france": "France Flag"
     },
     "select_language": "Select Language",
-    "about": "About Us",
-    "how": "How It Works",
+    "about": "About",
+    "how": "How it works?",
     "faq": "FAQ",
-    "contact_us": "Contact Us",
-    "create_deal": "Create Deal",
-    "my_account": "My Account"
+    "contact_us": "Contact us",
+    "create_deal": "Create a good deal",
+    "my_account": "My account"
   },
   "home": {
     "title": "Exceptional products at friendly prices",
-    "description": "Offer your loved ones the opportunity to discover exceptional products, thanks to our group orders. Benefit from preferential rates, but also enjoy together the richness and authenticity of our terroirs.",
+    "description": "Offer your friends the opportunity to discover exceptional products, thanks to our group orders. Benefit from preferential rates, but also enjoy together the richness and authenticity of our terroirs.",
     "login": "To log in",
     "create_account": "Create an account",
     "layout": {
       "text": "Savor the delights of local crafts together, in three simple steps",
       "text1": "Create your ad",
       "text2": "By creating an attractive ad where you define the price, give details of the products offered and introduce the artisan. All the information your potential buyers need.",
-      "text3": "Invite your loved ones",
+      "text3": "Invite your friends",
       "text4": "Encourage them to explore the offer and place an order, all facilitated by an online platform. This is an opportunity to introduce them to new products.",
-      "text5": "Deliver the Merchandise",
-      "text6": "This includes the preparation of the packages by the artisan and their delivery to you. Make sure that your loved ones receive the products under the best conditions."
+      "text5": "Deliver the Marchandise",
+      "text6": "This includes the preparation of the packages by the artisan and their delivery to you. Make sure that your friends receive the products under the best conditions."
     },
     "header": {
       "text": "Create, Share and Enjoy with a bulk order!",
-      "text1": "In just a few clicks, create an order, invite your loved ones and share the pleasure of discovering together the unique flavors of local crafts. Take advantage of advantageous prices, support artisans in your region, and transform each purchase into a friendly and enriching experience.",
+      "text1": "In just a few clicks, create an order, invite your friends and share the pleasure of discovering together the unique flavors of local crafts. Take advantage of advantageous prices, support artisans in your region, and transform each purchase into a friendly and enriching experience.",
       "create_deal": "Create a good deal",
       "manage_deal": "Manage my good deals"
     },
@@ -41,18 +41,18 @@
       "about_us": "About Us",
       "text": "Our approach",
       "text1": "Embark on the adventure of artisanal flavors",
-      "text2": "By joining our group order community, benefit from advantageous prices while sharing the pleasure of tasting the best of local crafts. Make each purchase a unique experience, supporting artisans and sharing moments with your loved ones.",
+      "text2": "By joining our group order community, benefit from advantageous prices while sharing the pleasure of tasting the best of local crafts. Make each purchase a unique experience, supporting artisans and sharing moments with your friends.",
       "text3": "Shared consumption experience",
       "text4": "An enriching social experience, strengthening bonds with family and friends while discovering exceptional products together.",
       "text5": "Support and promotion of local artisans",
       "text6": "By favoring products from local crafts, you contribute to maintaining and promoting the unique know-how of our regions."
     },
     "faq": {
-      "button_text": "Questions? Contact us",
+      "button_text": "Questions ? Contact us",
       "text": "You will find answers to the most common questions regarding our bulk ordering platform for artisan products.",
       "que1": "How does bulk ordering work on your platform?",
       "que2": "Who are the partner artisans?",
-      "que3": "How do I invite my loved ones to join a group order?",
+      "que3": "How do I invite my friends to join a group order?",
       "que4": "How is the price of products calculated?",
       "que5": "How does delivery work?",
       "ans1": "This is a detailed answer for the first question.",
@@ -83,7 +83,7 @@
   },
   "about_us": {
     "values": "Our values",
-    "values_description": "By joining our group order community, you benefit from advantageous prices while sharing the pleasure of tasting the best of local crafts. Make each purchase a unique experience, supporting artisans and sharing moments with your loved ones.",
+    "values_description": "By joining our group order community, you benefit from advantageous prices while sharing the pleasure of tasting the best of local crafts. Make each purchase a unique experience, supporting artisans and sharing moments with your friends.",
     "shared_experience": "Shared consumption experience",
     "shared_experience_description": "An enriching social experience, strengthening bonds with family and friends while discovering exceptional products together.",
     "local_support": "Support and promotion of local artisans",
@@ -101,7 +101,7 @@
     "advantageous_prices": "Advantageous prices",
     "advantageous_prices_description": "Thanks to bulk orders, you benefit from preferential rates. The more the merrier!",
     "enriching_experience": "An enriching experience",
-    "enriching_experience_description": "Ordering on The Good Deals is much more than a simple purchase. This is an opportunity to share precious moments with your loved ones while supporting a local and sustainable economy.",
+    "enriching_experience_description": "Ordering on The Good Deals is much more than a simple purchase. This is an opportunity to share precious moments with your friends while supporting a local and sustainable economy.",
     "about_good_deals": "About The Good Deals",
     "welcome_description": "We are delighted to welcome you to our community dedicated to discovering exceptional products at affordable prices.. The Good Deals is above all a human and gourmet adventure, where each group order becomes a celebration of local flavors and know-how.",
     "login": "To log in",
@@ -109,7 +109,7 @@
     "create_deal": "Create a good deal",
     "manage_deal": "Manage my good deals",
     "our_mission": "Our mission",
-    "mission_description": "Allow you to benefit from the best artisans in our regions and allow you to share their treasures with your loved ones. By joining forces, we make exceptional products accessible to all, while supporting local talent.",
+    "mission_description": "Allow you to benefit from the best artisans in our regions and allow you to share their treasures with your friends. By joining forces, we make exceptional products accessible to all, while supporting local talent.",
     "join_adventure": "Join us on this great adventure!",
     "join_adventure_description": "Creating an order is as simple as it is user-friendly. In just a few clicks, launch an ad, invite your friends and enjoy the delights of local crafts together.",
     "subscribe": "Subscribe",
@@ -132,7 +132,7 @@
   },
   "how_it_works": {
     "title": "How it works?",
-    "description": "We know that you can't wait to discover and share exceptional products with your loved ones. That's why we've made the process as simple and enjoyable as possible.",
+    "description": "We know that you can't wait to discover and share exceptional products with your friends. That's why we've made the process as simple and enjoyable as possible.",
     "login": "To log in",
     "create_account": "Create an account",
     "layout": {
@@ -142,13 +142,13 @@
       "text3": "Share the enthusiasm",
       "text4": "Once your ad is ready, it’s time to invite your friends and family to check out the offer. Use our online platform to send invitations and share the announcement via social media or email. The more of you there are, the more advantageous rates you will be able to benefit from!",
       "text5": "Ensure perfect reception",
-      "text6": "After collecting all the orders, the craftsman prepares the packages and ships them directly to your home. We ensure that delivery takes place in the best conditions so that your loved ones receive their products in perfect condition, ready to be enjoyed."
+      "text6": "After collecting all the orders, the craftsman prepares the packages and ships them directly to your home. We ensure that delivery takes place in the best conditions so that your friends receive their products in perfect condition, ready to be enjoyed."
     },
     "header": {
       "create_deal": "Create a good deal",
       "manage_deal": "Manage my good deals",
       "text": "It's that simple !",
-      "text1": "In just a few steps, you can turn a purchase into a friendly and rewarding experience. Create an ad, invite your loved ones and enjoy the delights of local crafts together.",
+      "text1": "In just a few steps, you can turn a purchase into a friendly and rewarding experience. Create an ad, invite your friends and enjoy the delights of local crafts together.",
       "ready_to_get_started": "Ready to get started?",
       "ready_to_get_started_description": "Join our community and place your first bulk order today. If you have any questions or need assistance, our team is here to support you every step."
     },
@@ -163,7 +163,7 @@
       "text5": "Advantageous prices",
       "text6": "Thanks to bulk orders, benefit from preferential prices.",
       "text7": "A friendly experience",
-      "text8": "Share unique moments with your loved ones while supporting artisans in your region."
+      "text8": "Share unique moments with your friends while supporting artisans in your region."
     },
     "footer": {
       "subscribe": "Subscribe",
@@ -197,14 +197,14 @@
     "other_questions_description": "If you have any further questions or need more information, please do not hesitate to contact us. We are here to accompany you on this wonderful adventure of discovery and sharing!",
     "faq_1": {
       "question": "How does bulk ordering work on your platform?",
-      "answer": "Our platform allows you to create ads for artisanal products, invite loved ones to participate, and easily manage orders and deliveries."
+      "answer": "Our platform allows you to create ads for artisanal products, invite friends to participate, and easily manage orders and deliveries."
     },
     "faq_2": {
       "question": "Who are the partner artisans?",
       "answer": "We collaborate with passionate local artisans who are rigorously selected for the quality and authenticity of their products. Each of them has a unique story to tell through their creations."
     },
     "faq_3": {
-      "question": "How do I invite my loved ones to join a group order?",
+      "question": "How do I invite my friends to join a group order?",
       "answer": "Once your ad is created, you can invite your friends and family by sharing a link via email or on social media. Our platform makes this process easy in just a few clicks."
     },
     "faq_4": {
@@ -345,7 +345,7 @@
   "active_deal": {
     "edit_deal_button": "Edit the deal",
     "my_orders_label": "My orders",
-    "loved_ones_orders_label": "Your loved ones' orders",
+    "loved_ones_orders_label": "Your friends' orders",
     "orders_count": "{{count}}",
     "orders_available": "out of {{available}} available",
     "wallet_label": "My wallet",
@@ -355,20 +355,20 @@
     "participants_label": "Participants of the deal",
     "participants_count": "{{count}} participants",
     "step_1": "The artisan accepted the deal",
-    "step_2": "Invite your loved ones",
+    "step_2": "Invite your friends",
     "step_3": "Current orders",
     "step_4": "Receipt of order",
-    "step_5": "Organize the collection with your loved ones"
+    "step_5": "Organize the collection with your friends"
   },
   "draft_deal": {
     "back_button": "Back",
     "title": "Wine cratesDomaine de Cigaluse",
     "edit_button": "Edit the deal",
     "step_1": "The artisan accepted the deal",
-    "step_2": "Invite your loved ones",
+    "step_2": "Invite your friends",
     "step_3": "Current orders",
     "step_4": "Receipt of order",
-    "step_5": "Organize the collection with your loved ones",
+    "step_5": "Organize the collection with your friends",
     "badges": {
       "out_of_stock": "Soon to be out of stock",
       "finished": "Finished",
@@ -392,10 +392,10 @@
       "draft": "Draft"
     },
     "step_1": "The artisan accepted the deal",
-    "step_2": "Invite your loved ones",
+    "step_2": "Invite your friends",
     "step_3": "Current orders",
     "step_4": "Receipt of order",
-    "step_5": "Organize the collection with your loved ones",
+    "step_5": "Organize the collection with your friends",
     "alert_editing": "Editing the deal!"
   },
   "wallet": {
@@ -420,13 +420,13 @@
   },
   "invitations": {
     "back_to_deal": "Back to the deal",
-    "managing_loved_ones": "Managing my loved ones",
+    "managing_loved_ones": "Managing my friends",
     "new_requests": "New requests",
     "accept_button": "Accept",
     "refuse_button": "Refuse",
     "request_accepted": "Request accepted",
     "request_refused": "Request refused",
-    "invite_loved_ones": "Invite my loved ones",
+    "invite_loved_ones": "Invite my friends",
     "list_of_relatives": "List of relatives",
     "order_on_deal_singular": "order on the deal",
     "order_on_deal_plural": "orders on the deal",
@@ -474,8 +474,8 @@
     "line_alt": "Line"
   },
   "invite_loved_ones": {
-    "title": "Invite your loved ones to order 🍎",
-    "description": "Once your invitations have been sent, your loved ones will be able to order.",
+    "title": "Invite your friends to order 🍎",
+    "description": "Once your invitations have been sent, your friends will be able to order.",
     "via_messaging_or_sms": "Via messaging or SMS",
     "via_email_invitations": "Via email invitations",
     "placeholder_email": "ex. contact@gmail.com",
@@ -490,7 +490,7 @@
   },
   "invitation_sent": {
     "title": "It’s sent! . 🎉",
-    "description": "Your loved ones can now order and take advantage of the deal!",
+    "description": "Your friends can now order and take advantage of the deal!",
     "back_to_home": "Back to Home",
     "line_alt": "Line"
   },

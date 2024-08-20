@@ -5,20 +5,20 @@
       "french": "French"
     },
     "flag_alt": {
-      "uk": "Drapeau du Royaume-Uni",
-      "france": "Drapeau de la France"
+      "uk": "UK Flag",
+      "france": "France Flag"
     },
     "select_language": "Choisir la langue",
-    "about": "À propos de nous",
-    "how": "Comment ça marche",
+    "about": "À propos",
+    "how": "Comment ça marche ?",
     "faq": "FAQ",
     "contact_us": "Contactez-nous",
-    "create_deal": "Créer une offre",
+    "create_deal": "Créer un good deal",
     "my_account": "Mon compte"
   },
   "home": {
-    "title": "Des produits exceptionnels à des prix amicaux",
-    "description": "Offrez à vos proches l'opportunité de découvrir des produits exceptionnels, grâce à nos commandes groupées. Bénéficiez de tarifs préférentiels, mais profitez également ensemble de la richesse et de l'authenticité de nos terroirs.",
+    "title": "Des produits d’exception à prix d’amis",
+    "description": "Offrez à vos proches l'opportunité de découvrir des produits d'exception,  grâce à nos commandes groupées. Bénéficier de tarifs préférentiels, mais aussi de savourer ensemble la richesse et l'authenticité de nos terroirs.",
     "login": "Se connecter",
     "create_account": "Créer un compte",
     "layout": {

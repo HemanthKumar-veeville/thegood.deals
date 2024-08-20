@@ -68,14 +68,14 @@ const InviteLovedOnes = () => {
     <div className="flex flex-col w-screen items-start relative bg-primary-background mx-auto">
       <div className="flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
         <p className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          Invite your loved ones
+          Invite your friends
           <br />
           to order 🍎
         </p>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
           Once your invitations have been sent,
           <br />
-          your loved ones will be able to order.
+          your friends will be able to order.
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
