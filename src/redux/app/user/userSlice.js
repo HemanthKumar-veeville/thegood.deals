@@ -5,6 +5,9 @@ const initialState = {
   isUserLoggedIn: false,
   status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
   error: null,
+  profile: null, // To store user profile information
+  userDeals: [], // To store user deals
+  userReviews: [], // To store user reviews
 };
 
 // Async thunk for checking if the user is logged in
@@ -13,6 +16,19 @@ export const checkUserLoginStatus = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get("/");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+// Async thunk for fetching user profile along with deals and reviews
+export const fetchUserProfileWithDealsAndReviews = createAsyncThunk(
+  "user/fetchUserProfileWithDealsAndReviews",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("/user/profile");
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -36,7 +52,27 @@ const userSlice = createSlice({
       .addCase(checkUserLoginStatus.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-      });
+      })
+      // Fetch user profile with deals and reviews
+      .addCase(fetchUserProfileWithDealsAndReviews.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        fetchUserProfileWithDealsAndReviews.fulfilled,
+        (state, action) => {
+          state.status = "succeeded";
+          state.profile = action.payload.user;
+          state.userDeals = action.payload.deals;
+          state.userReviews = action.payload.reviews;
+        }
+      )
+      .addCase(
+        fetchUserProfileWithDealsAndReviews.rejected,
+        (state, action) => {
+          state.status = "failed";
+          state.error = action.payload;
+        }
+      );
   },
 });
 

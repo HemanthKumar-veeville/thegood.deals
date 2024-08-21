@@ -15,9 +15,8 @@ export const fetchDeals = createAsyncThunk(
   async ({ deal_type, page, limit }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(
-        `deals/${deal_type}/${page}/${limit}`
+        `/deals?deal_type=${deal_type}&page=${page}&limit=${limit}`
       );
-      console.log({ response });
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -31,7 +30,32 @@ export const getDealByDealId = createAsyncThunk(
   async (dealId, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/deals/${dealId}`);
-      console.log({ response });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+// Async thunk for fetching deal details by deal_id
+export const fetchDealDetailsByDealId = createAsyncThunk(
+  "deals/fetchDealDetailsByDealId",
+  async (dealId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/deal/${dealId}/details`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+// Async thunk for fetching deal validation details by deal_id
+export const fetchDealValidationDetails = createAsyncThunk(
+  "deals/fetchDealValidationDetails",
+  async (dealId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/deals/${dealId}/validation`);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -45,7 +69,6 @@ export const addNewDeal = createAsyncThunk(
   async (newDeal, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post("/deals", newDeal);
-      console.log({ response });
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -61,7 +84,6 @@ export const inviteArtisan = createAsyncThunk(
       const response = await axiosInstance.post(`/invite_artisan/${dealId}`, {
         email,
       });
-      console.log({ response });
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -75,7 +97,6 @@ export const updateDealByDealId = createAsyncThunk(
   async ({ dealId, updatedDeal }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`/deals/${dealId}`, updatedDeal);
-      console.log({ response });
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -89,6 +110,7 @@ const dealSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Handle fetchDeals cases
       .addCase(fetchDeals.pending, (state) => {
         state.status = "loading";
       })
@@ -109,6 +131,30 @@ const dealSlice = createSlice({
         state.deal = action.payload;
       })
       .addCase(getDealByDealId.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle fetchDealDetailsByDealId cases
+      .addCase(fetchDealDetailsByDealId.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchDealDetailsByDealId.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.deal = action.payload;
+      })
+      .addCase(fetchDealDetailsByDealId.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle fetchDealValidationDetails cases
+      .addCase(fetchDealValidationDetails.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchDealValidationDetails.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.deal = action.payload;
+      })
+      .addCase(fetchDealValidationDetails.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })

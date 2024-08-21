@@ -55,6 +55,10 @@ const ActiveDeal = () => {
     alert(t("active_deal.edit_alert"));
   };
 
+  const handleOrder = () => {
+    navigate("/admin-view-deal");
+  };
+
   const statusBanner = {
     out_of_stock: { text: t("active_deal.out_of_stock"), color: "warning" },
     finished: { text: t("active_deal.finished"), color: "success" },
@@ -106,12 +110,17 @@ const ActiveDeal = () => {
               </p>
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-[150px] object-cover"
-            alt="Blog image"
-            src={blogImage}
-          />
-          <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
+          <div onClick={handleOrder}>
+            <img
+              className="relative self-stretch w-full h-[150px] object-cover"
+              alt="Blog image"
+              src={blogImage}
+            />
+          </div>
+          <div
+            onClick={handleOrder}
+            className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]"
+          >
             {dealData?.deal_title}
           </div>
           {location?.state?.deal?.dealStatus === "out_of_stock" ? (

@@ -223,7 +223,29 @@ function App() {
       path: "/admin-withdrawal",
       element: (
         <Layout>
-          <ProtectedRoute element={<Withdrawal />} />
+          <ProtectedRoute
+            element={
+              <Withdrawal
+                heading="Validation of withdrawal"
+                btnText="Validate the withdrawal"
+              />
+            }
+          />
+        </Layout>
+      ),
+    },
+    {
+      path: "/payment",
+      element: (
+        <Layout>
+          <ProtectedRoute
+            element={
+              <Withdrawal
+                heading="Payment validation"
+                btnText="Validate payment"
+              />
+            }
+          />
         </Layout>
       ),
     },

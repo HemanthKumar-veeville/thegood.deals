@@ -15,9 +15,17 @@ import { ShoppingCart111 } from "../../icons/ShoppingCart111";
 import { Users2 } from "../../icons/Users2";
 import AppBar from "../../components/AppBar/AppBar";
 import { useTranslation } from "react-i18next";
+import { blogImage, Human, Line63 } from "../../images";
+import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
+import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
+import { useNavigate } from "react-router-dom";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const handlePayment = () => {
+    navigate("/payment");
+  };
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
@@ -39,21 +47,16 @@ const AdminViewGoodDeal = () => {
         <img
           className="relative self-stretch w-full h-[150px] object-cover"
           alt={t("admin.blog_image")}
-          src="/img/blog-image.png"
+          src={blogImage}
         />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {t("admin.wine_crates")}
         </div>
-        <StyleTypePrimary
-          className="!self-stretch !w-full !relative"
-          divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !left-[76px] !leading-5"
-          groupClassName="!w-[290px]"
-          line="/img/line-60.svg"
-          lineClassName="!w-[220px]"
-          overlapClassName="!w-[290px]"
-          overlapGroupClassName="bg-[url(/static/img/line-59.svg)]"
-          text={t("admin.sold_percentage")}
-        />
+        {location?.state?.deal?.dealStatus === "out_of_stock" ? (
+          <ProgressBarYellow percentage={38} />
+        ) : (
+          <ProgressBarGreen percentage={57} />
+        )}
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
@@ -77,7 +80,7 @@ const AdminViewGoodDeal = () => {
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <Badges
           className="!absolute !left-[47px] !top-[86px]"
@@ -91,7 +94,7 @@ const AdminViewGoodDeal = () => {
           <img
             className="relative w-[50px] h-[50px] object-cover"
             alt="Organizer"
-            src="/img/rectangle-5095.png"
+            src={Human}
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
@@ -121,7 +124,7 @@ const AdminViewGoodDeal = () => {
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
@@ -138,7 +141,7 @@ const AdminViewGoodDeal = () => {
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
@@ -161,7 +164,7 @@ const AdminViewGoodDeal = () => {
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
-          src="/img/line-65.svg"
+          src={Line63}
         />
         <div className="flex flex-col items-start gap-[15px] p-[15px] w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] relative self-stretch">
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -173,7 +176,7 @@ const AdminViewGoodDeal = () => {
           <img
             className="relative self-stretch w-full h-px object-cover"
             alt="Line"
-            src="/img/line-68.svg"
+            src={Line63}
           />
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -191,14 +194,14 @@ const AdminViewGoodDeal = () => {
                 <div className="relative w-[116px] h-9 mr-[-2.00px]">
                   <div className="relative w-[114px] h-9 bg-whitewhite rounded-[5px] border border-solid border-stroke">
                     <img
-                      className="absolute w-px h-9 -top-px left-[33px] object-cover"
+                      className="absolute w-px h-9 -top-px left-[32px] object-cover"
                       alt="Line"
-                      src="/img/line-146-1.svg"
+                      src={Line63}
                     />
                     <img
                       className="absolute w-px h-9 -top-px left-[79px] object-cover"
                       alt="Line"
-                      src="/img/line-146-1.svg"
+                      src={Line63}
                     />
                     <Minus1
                       className="!absolute !w-3 !h-3 !top-[11px] !left-2.5"
@@ -224,7 +227,7 @@ const AdminViewGoodDeal = () => {
           <img
             className="relative self-stretch w-full h-px object-cover"
             alt="Line"
-            src="/img/line-68.svg"
+            src={Line63}
           />
           <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
@@ -240,14 +243,14 @@ const AdminViewGoodDeal = () => {
                 <div className="relative w-[116px] h-9 mr-[-2.00px]">
                   <div className="relative w-[114px] h-9 bg-whitewhite rounded-[5px] border border-solid border-stroke">
                     <img
-                      className="absolute w-px h-9 -top-px left-[33px] object-cover"
+                      className="absolute w-px h-9 -top-px left-[32px] object-cover"
                       alt="Line"
-                      src="/img/line-146-1.svg"
+                      src={Line63}
                     />
                     <img
                       className="absolute w-px h-9 -top-px left-[79px] object-cover"
                       alt="Line"
-                      src="/img/line-146-1.svg"
+                      src={Line63}
                     />
                     <Minus1
                       className="!absolute !w-3 !h-3 !top-[11px] !left-2.5"
@@ -273,7 +276,7 @@ const AdminViewGoodDeal = () => {
           <img
             className="relative self-stretch w-full h-px object-cover"
             alt="Line"
-            src="/img/line-68.svg"
+            src={Line63}
           />
           <div className="flex flex-col items-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
@@ -285,7 +288,10 @@ const AdminViewGoodDeal = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
+          <div
+            className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"
+            onClick={handlePayment}
+          >
             <Send2 className="!relative !w-5 !h-5" color="white" />
             <button className="all-[unset] box-border text-whitewhite relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
               {t("admin.payment")}
