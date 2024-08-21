@@ -88,8 +88,8 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">
-      <div className="w-screen items-center gap-[30px] pt-4 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
+    <div className="flex flex-col w-full items-center relative bg-light-grey mx-auto">
+      <div className="w-full items-center gap-[30px] pt-4 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
           id="how"
           className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]"
@@ -193,7 +193,7 @@ const HowItWorks = () => {
       </div>
       <Layout
         breakpoint="mobile"
-        className="!flex-[0_0_auto] !w-screen"
+        className="!flex-[0_0_auto] !w-full"
         divClassName="!tracking-[0] !text-2xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[33.6px]"
         divClassNameOverride="!tracking-[0] !text-2xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[33.6px]"
         frame={frame14x9}
@@ -234,7 +234,7 @@ const HowItWorks = () => {
         buttonIcon={<IconChevronRight2 className="!relative !w-6 !h-6" />}
         buttonText={t("how_it_works.breakpoint.how_it_works")}
         buttonText1={t("how_it_works.breakpoint.about_us")}
-        className="!flex-[0_0_auto] !w-screen"
+        className="!flex-[0_0_auto] !w-full"
         divClassName="!tracking-[0] !text-xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[28.0px]"
         headingClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
         headingClassNameOverride="!tracking-[0] !text-xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[28.0px]"
@@ -267,7 +267,7 @@ const HowItWorks = () => {
       <Footer
         breakpoint="mobile"
         buttonText={t("how_it_works.footer.subscribe")}
-        className="!flex-[0_0_auto] !w-screen"
+        className="!flex-[0_0_auto] !w-full"
         divClassName="![white-space:unset] !w-[155px]"
         linksClassName="!h-[485px] !flex-[unset]"
         spanClassName="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"

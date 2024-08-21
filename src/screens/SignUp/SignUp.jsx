@@ -122,7 +122,7 @@ export const SignUp = ({ setIsLoading }) => {
   };
 
   return (
-    <div className="flex flex-col w-screen items-start gap-[15px] px-[35px] py-[15px] absolute top-[118px] left-0 bg-primary-background">
+    <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute top-[118px] left-0 bg-primary-background">
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
         Create an account
       </div>

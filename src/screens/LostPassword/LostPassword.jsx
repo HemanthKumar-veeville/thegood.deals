@@ -21,7 +21,7 @@ const LostPassword = () => {
   };
 
   return (
-    <div className="relative w-screen h-screen bg-primary-background">
+    <div className="relative w-full h-screen bg-primary-background">
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
         <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
           <div

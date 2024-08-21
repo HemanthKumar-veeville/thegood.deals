@@ -29,7 +29,7 @@ function AppBar() {
 
   return (
     <div className="relative">
-      <header className="flex flex-col w-screen h-16 items-start relative bg-primary-background border-b border-stroke z-50">
+      <header className="flex flex-col w-screen max-w-[400px] h-16 items-start relative bg-primary-background border-b border-stroke z-50">
         <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
           {/* Sidebar toggle button */}
           <div

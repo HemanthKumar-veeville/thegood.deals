@@ -105,8 +105,8 @@ function ContactUs() {
   const answers = FAQS?.map((faq) => faq.ans);
 
   return (
-    <div className="flex flex-col w-screen items-center relative bg-light-grey mx-auto">
-      <div className="w-screen items-center gap-[30px] pt-2 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
+    <div className="flex flex-col w-full items-center relative bg-light-grey mx-auto">
+      <div className="w-full items-center gap-[30px] pt-2 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
           id="how"
           className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]"
@@ -206,7 +206,7 @@ function ContactUs() {
       </div>
       <div
         id="contact"
-        className={`flex flex-col bg-light-grey relative items-start gap-12 px-5 py-16 !flex-[0_0_auto] !w-screen`}
+        className={`flex flex-col bg-light-grey relative items-start gap-12 px-5 py-16 !flex-[0_0_auto] !w-full`}
       >
         <div
           className={`w-full flex self-stretch flex-[0_0_auto] relative flex-col items-start gap-12`}
@@ -273,7 +273,7 @@ function ContactUs() {
       <Footer
         breakpoint="mobile"
         buttonText={t("footer.subscribe")}
-        className="!flex-[0_0_auto] !w-screen"
+        className="!flex-[0_0_auto] !w-full"
         divClassName="![white-space:unset] !w-[155px]"
         linksClassName="!h-[485px] !flex-[unset]"
         spanClassName="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"

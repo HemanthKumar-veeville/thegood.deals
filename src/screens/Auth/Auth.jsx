@@ -34,7 +34,7 @@ const Auth = () => {
     <>
       {isLoading && <CustomLoader />}
       {!isLoading && (
-        <div className="flex w-screen items-start justify-center gap-[35px] px-[25px] py-0 absolute top-16 left-0 border-b [border-bottom-style:solid] border-stroke">
+        <div className="flex w-full items-start justify-center gap-[35px] px-[25px] py-0 absolute top-16 left-0 border-b [border-bottom-style:solid] border-stroke">
           <TabMenuStyle
             className={`${
               isLoginTab ? "!border-[#1b4f4a]" : "!border-transparent"

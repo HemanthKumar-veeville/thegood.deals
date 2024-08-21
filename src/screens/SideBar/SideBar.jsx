@@ -162,7 +162,7 @@ const SideBar = React.memo(({ onClose }) => {
 
   return (
     <div
-      className={`fixed top-16 left-0 w-full h-screen bg-primary-background shadow-lg z-40 transition-transform duration-300 ${
+      className={`sticky top-16 left-0 w-full max-w-[400px] mx-auto h-screen bg-primary-background shadow-lg z-40 transition-transform duration-300 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >

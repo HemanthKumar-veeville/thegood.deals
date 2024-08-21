@@ -43,7 +43,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="relative w-screen h-screen bg-primary-background">
+    <div className="relative w-full h-screen bg-primary-background">
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
         <div className="relative w-fit mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
           {t("resetPassword.newPassword")}

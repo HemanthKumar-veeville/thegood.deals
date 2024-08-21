@@ -20,7 +20,7 @@ const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col w-screen items-start relative bg-primary-background">
+    <div className="flex flex-col w-full items-start relative bg-primary-background">
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex items-center justify-center gap-2 px-6 py-3 relative flex-1 grow bg-whitewhite rounded-md shadow-shadow-1">
