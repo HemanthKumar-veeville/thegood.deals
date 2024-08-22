@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../components/Button/Button";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
@@ -7,25 +7,46 @@ import { Pencil } from "../../icons/Pencil";
 import { PencilAlt } from "../../icons/PencilAlt";
 import { Rectangle5095_1 } from "../../images";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchUserProfile,
+  updateUserProfile,
+} from "../../redux/app/account/accountSlice";
 
 const EditProfile = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { profile: fetchedProfile, status } = useSelector(
+    (state) => state.account
+  );
 
   const [profile, setProfile] = useState({
-    firstName: "Abraham",
-    lastName: "Thomas",
-    phone: "+33650505050",
-    email: "contact@himyt.com",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
     password: "*******************",
-    address: "1 place with onions",
-    additionalAddress: "Apartment 01",
-    city: "Lille",
-    postalCode: "59000",
-    country: "France",
+    address: "",
+    additionalAddress: "",
+    city: "",
+    postalCode: "",
+    country: "",
   });
 
   const [editField, setEditField] = useState(null);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchUserProfile());
+    }
+  }, [dispatch, status]);
+
+  useEffect(() => {
+    if (fetchedProfile) {
+      setProfile(fetchedProfile);
+    }
+  }, [fetchedProfile]);
 
   const handleBack = () => {
     navigate("/settings");
@@ -45,8 +66,7 @@ const EditProfile = () => {
 
   const handleSave = () => {
     setEditField(null);
-    // Add your save logic here
-    console.log(profile);
+    dispatch(updateUserProfile(profile));
   };
 
   const renderField = (fieldName, value, type = "text") => {
@@ -183,10 +203,8 @@ const EditProfile = () => {
                 {t("profile.address")} ({t("profile.required")})
               </div>
             </div>
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center gap-[116px] relative flex-1 grow">
-                {renderField("address", profile.address)}
-              </div>
+            <div className="flex items-center gap-[116px] relative flex-1 grow">
+              {renderField("address", profile.address)}
             </div>
           </div>
         </div>
@@ -200,10 +218,8 @@ const EditProfile = () => {
                 {t("profile.additional_address")}
               </div>
             </div>
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center gap-[116px] relative flex-1 grow">
-                {renderField("additionalAddress", profile.additionalAddress)}
-              </div>
+            <div className="flex items-center gap-[116px] relative flex-1 grow">
+              {renderField("additionalAddress", profile.additionalAddress)}
             </div>
           </div>
         </div>
@@ -217,10 +233,8 @@ const EditProfile = () => {
                 {t("profile.city")} ({t("profile.required")})
               </div>
             </div>
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center gap-[116px] relative flex-1 grow">
-                {renderField("city", profile.city)}
-              </div>
+            <div className="flex items-center gap-[116px] relative flex-1 grow">
+              {renderField("city", profile.city)}
             </div>
           </div>
         </div>
@@ -234,10 +248,8 @@ const EditProfile = () => {
                 {t("profile.postal_code")} ({t("profile.required")})
               </div>
             </div>
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center gap-[116px] relative flex-1 grow">
-                {renderField("postalCode", profile.postalCode)}
-              </div>
+            <div className="flex items-center gap-[116px] relative flex-1 grow">
+              {renderField("postalCode", profile.postalCode)}
             </div>
           </div>
         </div>
@@ -251,10 +263,8 @@ const EditProfile = () => {
                 {t("profile.country")} ({t("profile.required")})
               </div>
             </div>
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center gap-[116px] relative flex-1 grow">
-                {renderField("country", profile.country)}
-              </div>
+            <div className="flex items-center gap-[116px] relative flex-1 grow">
+              {renderField("country", profile.country)}
             </div>
           </div>
         </div>
