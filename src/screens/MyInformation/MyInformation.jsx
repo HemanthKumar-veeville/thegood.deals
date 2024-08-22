@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import { useTranslation } from "react-i18next"; // Import useTranslation hook
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserProfileWithDealsAndReviews } from "../../redux/app/user/userSlice";
 import { CardDeal } from "../../components/CardDeal";
 import { RatingStar } from "../../components/RatingStar";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
@@ -16,29 +18,28 @@ import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { useNavigate } from "react-router-dom";
 
 const MyInformation = () => {
-  const { t } = useTranslation(); // Initialize the useTranslation hook
+  const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { profile, userDeals, userReviews, status } = useSelector(
+    (state) => state.user
+  );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (status === "idle") {
+      dispatch(fetchUserProfileWithDealsAndReviews());
+    }
+  }, [dispatch, status]);
 
   const handleBack = () => {
     navigate("/account");
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const DEALS = [
-    {
-      deal_id: "0x001",
-      dealStatus: "out_of_stock",
-      participantsCount: 14,
-      dealTitle: "Miracles of Wine",
-      initialQuantity: 100,
-      availableQuantity: 10,
-      region: "FR",
-      dealExpiryDate: new Date("2024-08-05"),
-    },
-  ];
+  const handleCardClick = (deal) => {
+    navigate(`/deal/${deal.deal_id}`);
+  };
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background">
@@ -61,20 +62,18 @@ const MyInformation = () => {
           <img
             className="w-[50px] h-[50px] relative object-cover"
             alt="Rectangle"
-            src={Rectangle_5095}
+            src={profile?.avatar || Rectangle_5095} // Replace with real profile avatar
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
-            <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-                Anthony Brabant
-              </div>
-              <div className="inline-flex h-5 items-center gap-2.5 relative">
-                <RatingStar
-                  className="!flex-[0_0_auto]"
-                  rating="four-star"
-                  size="small"
-                />
-              </div>
+            <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
+              {profile?.name || "User Name"} // Replace with real user name
+            </div>
+            <div className="inline-flex h-5 items-center gap-2.5 relative">
+              <RatingStar
+                className="!flex-[0_0_auto]"
+                rating={profile?.rating || "four-star"} // Replace with real rating
+                size="small"
+              />
             </div>
           </div>
         </div>
@@ -82,19 +81,25 @@ const MyInformation = () => {
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <Box101 className="!relative !w-5 !h-5" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {t("myInformation.orders_placed", { count: 18 })}
+              {t("myInformation.orders_placed", {
+                count: profile?.ordersCount || 0,
+              })}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <Users2 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {t("myInformation.collections_organized", { count: 3 })}
+              {t("myInformation.collections_organized", {
+                count: profile?.collectionsCount || 0,
+              })}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <MapMarker1 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {t("myInformation.location")}
+              {t("myInformation.location", {
+                location: profile?.location || "Unknown",
+              })}
             </div>
           </div>
         </div>
@@ -106,7 +111,7 @@ const MyInformation = () => {
         <div className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color">
           <EnvelopeAlt className="!relative !w-5 !h-5" color="#1B4F4A" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] text-center tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-            {t("myInformation.contact", { name: "Anthony" })}
+            {t("myInformation.contact", { name: profile?.name || "User" })}
           </button>
         </div>
         <img
@@ -117,8 +122,12 @@ const MyInformation = () => {
         <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
           {t("myInformation.deals")}
         </div>
-        {DEALS?.map((deal) => (
-          <div onClick={() => handleCardClick(deal)} className="cursor-pointer">
+        {userDeals?.map((deal) => (
+          <div
+            key={deal.deal_id}
+            onClick={() => handleCardClick(deal)}
+            className="cursor-pointer"
+          >
             <CardDeal
               badgesColor="success"
               badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
@@ -129,15 +138,15 @@ const MyInformation = () => {
               divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
               override={
                 deal.dealStatus === "out_of_stock" ? (
-                  <ProgressBarYellow percentage={80} />
+                  <ProgressBarYellow percentage={deal.percentage || 80} />
                 ) : (
-                  <ProgressBarGreen percentage={90} />
+                  <ProgressBarGreen percentage={deal.percentage || 90} />
                 )
               }
               text={deal.dealTitle}
               text1={deal.dealStatus}
               participantsCount={deal.participantsCount}
-              dealExpiryDate={deal?.dealExpiryDate}
+              dealExpiryDate={deal.dealExpiryDate}
             />
           </div>
         ))}
@@ -149,40 +158,54 @@ const MyInformation = () => {
         <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
           {t("myInformation.ratings")}
         </div>
-        <div className="flex flex-col items-start gap-5 pt-5 pb-[30px] px-[30px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-xl shadow-shadow-1">
-          <div className="flex flex-col items-start justify-center gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-              <img
-                className="relative w-14 h-14 object-cover"
-                alt="Ellipse"
-                src={Ellipse}
-              />
-              <div className="inline-flex flex-col items-start gap-px relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-darkdark text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-                  John Smith
-                </div>
-                <div className="relative w-fit font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                  25, Nov 2024
-                </div>
-                <div className="inline-flex items-start gap-1 relative flex-[0_0_auto]">
-                  <StarFill1 className="!relative !w-4 !h-4" />
-                  <StarFill1 className="!relative !w-4 !h-4" />
-                  <StarFill1 className="!relative !w-4 !h-4" />
-                  <Star7 className="!relative !w-4 !h-4" color="#F59E0B" />
-                  <Star7 className="!relative !w-4 !h-4" color="#F59E0B" />
+        {userReviews?.map((review) => (
+          <div
+            key={review.id}
+            className="flex flex-col items-start gap-5 pt-5 pb-[30px] px-[30px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-xl shadow-shadow-1"
+          >
+            <div className="flex flex-col items-start justify-center gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
+              <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
+                <img
+                  className="relative w-14 h-14 object-cover"
+                  alt="Ellipse"
+                  src={Ellipse} // Replace with user's avatar if available
+                />
+                <div className="inline-flex flex-col items-start gap-px relative flex-[0_0_auto]">
+                  <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-darkdark text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
+                    {review.reviewerName}
+                  </div>
+                  <div className="relative w-fit font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
+                    {new Date(review.date).toLocaleDateString()}
+                  </div>
+                  <div className="inline-flex items-start gap-1 relative flex-[0_0_auto]">
+                    {Array.from({ length: 5 }).map((_, index) =>
+                      index < review.rating ? (
+                        <StarFill1
+                          key={index}
+                          className="!relative !w-4 !h-4"
+                        />
+                      ) : (
+                        <Star7
+                          key={index}
+                          className="!relative !w-4 !h-4"
+                          color="#F59E0B"
+                        />
+                      )
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
+              <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-darkdark text-base tracking-[0] leading-[26px] whitespace-nowrap">
+                {review.title}
+              </p>
+              <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
+                {review.comment}
+              </p>
+            </div>
           </div>
-          <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
-            <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-darkdark text-base tracking-[0] leading-[26px] whitespace-nowrap">
-              {t("myInformation.rating_title")}
-            </p>
-            <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
-              {t("myInformation.rating_description")}
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

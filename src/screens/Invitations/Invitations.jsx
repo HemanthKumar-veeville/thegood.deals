@@ -8,36 +8,38 @@ import { Send2 } from "../../icons/Send2";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Line63 } from "../../images";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchRequestsByDeal,
+  processRequest,
+} from "../../redux/app/requests/requestSlice";
 
 const Invitations = () => {
-  const [requests, setRequests] = useState([
-    { name: "Abraham Thomas", accepted: false, refused: false },
-    { name: "Karthik Ramesh", accepted: false, refused: false },
-  ]);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { requests, requestStatus } = useSelector((state) => state.requests);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    dispatch(fetchRequestsByDeal(/* pass dealId here */));
+  }, [dispatch]);
 
-  const handleAccept = (name) => {
-    setRequests((prevRequests) =>
-      prevRequests.map((request) =>
-        request.name === name
-          ? { ...request, accepted: true, refused: false }
-          : request
-      )
+  const handleAccept = (requestId) => {
+    dispatch(
+      processRequest({
+        dealId: /* pass dealId */ requestId,
+        inviteStatus: "accepted",
+      })
     );
   };
 
-  const handleRefuse = (name) => {
-    setRequests((prevRequests) =>
-      prevRequests.map((request) =>
-        request.name === name
-          ? { ...request, accepted: false, refused: true }
-          : request
-      )
+  const handleRefuse = (requestId) => {
+    dispatch(
+      processRequest({
+        dealId: /* pass dealId */ requestId,
+        inviteStatus: "refused",
+      })
     );
   };
 
@@ -93,7 +95,7 @@ const Invitations = () => {
                   <div className="inline-flex items-start gap-[5px] relative flex-[0_0_auto] mb-5">
                     <div
                       className="inline-flex items-center gap-2.5 px-2.5 py-[5px] relative flex-[0_0_auto] bg-primary-color rounded-[5px] cursor-pointer"
-                      onClick={() => handleAccept(request.name)}
+                      onClick={() => handleAccept(request.id)}
                     >
                       <CheckmarkCircle className="!relative !w-5 !h-5" />
                       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-whitewhite text-sm tracking-[0] leading-[22px] whitespace-nowrap">
@@ -102,7 +104,7 @@ const Invitations = () => {
                     </div>
                     <div
                       className="inline-flex items-center gap-2.5 px-2.5 py-[5px] bg-redred rounded-[5px] relative flex-[0_0_auto] cursor-pointer"
-                      onClick={() => handleRefuse(request.name)}
+                      onClick={() => handleRefuse(request.id)}
                     >
                       <CrossCircle2 className="!relative !w-5 !h-5" />
                       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-whitewhite text-sm tracking-[0] leading-[22px] whitespace-nowrap">
