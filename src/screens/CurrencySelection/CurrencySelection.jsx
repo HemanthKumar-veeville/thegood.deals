@@ -1,17 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../../components/Button/Button";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { ChevronDown } from "../../icons/ChevronDown";
-import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCurrencySetting,
+  updateCurrencySetting,
+} from "../../redux/app/account/accountSlice";
 
 const CurrencySelection = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const dispatch = useDispatch();
+  const { currency, status } = useSelector((state) => state.account);
+
+  const [selectedCurrency, setSelectedCurrency] = useState(currency || "USD");
   const [showDropdown, setShowDropdown] = useState(false);
   const currencies = ["USD", "Euro"];
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchCurrencySetting());
+    }
+  }, [dispatch, status]);
+
+  useEffect(() => {
+    if (currency) {
+      setSelectedCurrency(currency);
+    }
+  }, [currency]);
 
   const handleBack = () => {
     navigate("/settings");
@@ -27,7 +46,7 @@ const CurrencySelection = () => {
   };
 
   const confirmCurrency = () => {
-    console.log({ selectedCurrency });
+    dispatch(updateCurrencySetting(selectedCurrency));
   };
 
   return (

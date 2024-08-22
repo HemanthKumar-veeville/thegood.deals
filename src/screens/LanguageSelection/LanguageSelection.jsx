@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../../components/Button/Button";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { ChevronDown } from "../../icons/ChevronDown";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchLanguageSetting,
+  updateLanguageSetting,
+} from "../../redux/app/account/accountSlice";
 
 const LanguageSelection = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [selectedLanguage, setSelectedLanguage] = useState("fr"); // Default to French
+  const dispatch = useDispatch();
+  const { language, status } = useSelector((state) => state.account);
+
+  const [selectedLanguage, setSelectedLanguage] = useState(language || "fr"); // Default to French
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchLanguageSetting());
+    }
+  }, [dispatch, status]);
+
+  useEffect(() => {
+    if (language) {
+      setSelectedLanguage(language);
+    }
+  }, [language]);
 
   const handleBack = () => {
     navigate("/settings");
@@ -26,6 +46,7 @@ const LanguageSelection = () => {
   };
 
   const confirmLanguage = () => {
+    dispatch(updateLanguageSetting(selectedLanguage));
     i18n.changeLanguage(selectedLanguage);
   };
 
