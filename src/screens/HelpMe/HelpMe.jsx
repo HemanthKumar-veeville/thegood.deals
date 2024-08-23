@@ -10,6 +10,8 @@ import AppBar from "../../components/AppBar/AppBar";
 import { Line63 } from "../../images";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { submitHelpRequest } from "../../redux/app/public/publicSlice";
 
 const PublicNeedHelp = () => {
   const { t } = useTranslation();
@@ -20,7 +22,12 @@ const PublicNeedHelp = () => {
     message: "",
     privacyAccepted: false,
   });
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { helpRequestStatus, helpRequestError, helpRequestMessage } =
+    useSelector((state) => state.public);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -41,15 +48,24 @@ const PublicNeedHelp = () => {
       alert(t("public_need_help.fill_all_fields"));
       return;
     }
-    console.log("Form Data Submitted:", formData);
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-      privacyAccepted: false,
-    });
-    navigate("/admin-invitations-sent");
+
+    dispatch(submitHelpRequest(formData))
+      .unwrap()
+      .then(() => {
+        alert(t("public_need_help.success_message"));
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          privacyAccepted: false,
+        });
+        navigate("/admin-invitations-sent");
+      })
+      .catch((error) => {
+        alert(t("public_need_help.error_message"));
+        console.error("Error:", error);
+      });
   };
 
   const handleBack = () => {
