@@ -109,7 +109,7 @@ export const VerificationOTP = ({ setIsLoading }) => {
 
       if (response?.status === 201) {
         localStorage.removeItem("otpInput");
-        navigate("/account");
+        navigate("/");
       }
     } catch (error) {
       console.error("There was an error!", error);

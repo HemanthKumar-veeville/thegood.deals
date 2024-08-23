@@ -34,7 +34,7 @@ const MyInformation = () => {
   }, [dispatch, status]);
 
   const handleBack = () => {
-    navigate("/account");
+    navigate("/");
   };
 
   const handleCardClick = (deal) => {

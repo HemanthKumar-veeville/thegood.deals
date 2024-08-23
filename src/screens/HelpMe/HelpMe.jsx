@@ -69,7 +69,7 @@ const PublicNeedHelp = () => {
   };
 
   const handleBack = () => {
-    navigate("/account");
+    navigate("/");
   };
 
   return (

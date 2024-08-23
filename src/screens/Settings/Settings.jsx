@@ -13,7 +13,7 @@ const SettingsPage = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/account");
+    navigate("/");
   };
   const handleProfileEdit = () => {
     navigate("/edit-profile");

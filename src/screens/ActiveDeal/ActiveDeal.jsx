@@ -40,7 +40,7 @@ const ActiveDeal = () => {
   const { t } = useTranslation();
   console.log({ deal });
   const handleBack = () => {
-    navigate("/account");
+    navigate("/");
   };
 
   const handleMyOrders = () => {

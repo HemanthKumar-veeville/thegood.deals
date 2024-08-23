@@ -10,7 +10,7 @@ const ThanksToAdmin = () => {
   const { t } = useTranslation();
 
   const handleBack = () => {
-    navigate("/account");
+    navigate("/");
   };
 
   useEffect(() => {

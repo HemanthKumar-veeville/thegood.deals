@@ -48,7 +48,7 @@ const SignIn = ({ setIsLoading }) => {
           // Proceed with your success actions
           localStorage.removeItem("signInForm");
           dispatch(checkUserLoginStatus());
-          navigate("/account");
+          navigate("/");
           formik.resetForm();
         }
         console.log({ response });

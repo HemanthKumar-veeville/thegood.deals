@@ -4,7 +4,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkUserLoginStatus } from "./redux/app/user/userSlice";
 import "./App.css";
 import loadable from "@loadable/component";
@@ -117,6 +117,7 @@ function Layout({ children }) {
 function App() {
   const [isReady, setIsReady] = useState(false);
   const dispatch = useDispatch();
+  const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -135,7 +136,11 @@ function App() {
       path: "/",
       element: (
         <Layout>
-          <Home />
+          {!isUserLoggedIn ? (
+            <Home />
+          ) : (
+            <ProtectedRoute element={<Account />} />
+          )}
         </Layout>
       ),
     },
@@ -152,14 +157,6 @@ function App() {
       element: (
         <Layout>
           <VerificationOTP />
-        </Layout>
-      ),
-    },
-    {
-      path: "/account",
-      element: (
-        <Layout>
-          <ProtectedRoute element={<Account />} />
         </Layout>
       ),
     },

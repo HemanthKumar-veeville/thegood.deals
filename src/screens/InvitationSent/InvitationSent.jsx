@@ -9,7 +9,7 @@ const InvitationSent = () => {
   const navigate = useNavigate();
 
   const handleBackToHome = () => {
-    navigate("/account");
+    navigate("/");
   };
 
   useEffect(() => {

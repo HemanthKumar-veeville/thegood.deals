@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { EyeAlt4 } from "../../icons/EyeAlt4";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPassword } from "../../store/slices/userSlice"; // Import the resetPassword thunk
 
 const ResetPassword = () => {
   const { t } = useTranslation(); // Initialize the translation hook
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.user); // Access status and error from the state
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -35,8 +40,14 @@ const ResetPassword = () => {
 
   const handleSubmit = () => {
     if (validatePassword()) {
-      alert(t("resetPassword.passwordChangedSuccess"));
-      // Add further logic for password change here
+      dispatch(resetPassword({ password, confirm_password: confirmPassword }))
+        .unwrap()
+        .then(() => {
+          alert(t("resetPassword.passwordChangedSuccess"));
+        })
+        .catch((err) => {
+          alert(t("resetPassword.passwordCriteriaError"));
+        });
     } else {
       alert(t("resetPassword.passwordCriteriaError"));
     }
@@ -115,6 +126,16 @@ const ResetPassword = () => {
             state="default"
           />
         </div>
+        {status === "loading" && (
+          <p className="text-sm text-primary-text-color">
+            {t("resetPassword.loadingMessage")}
+          </p>
+        )}
+        {error && (
+          <p className="text-sm text-red-600">
+            {t("resetPassword.errorMessage")}
+          </p>
+        )}
       </div>
     </div>
   );

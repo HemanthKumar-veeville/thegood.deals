@@ -2,18 +2,34 @@ import React, { useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { forgotPassword } from "../../store/slices/userSlice"; // Import the forgotPassword thunk
 
 const LostPassword = () => {
   const { t } = useTranslation(); // Initialize the translation hook
   const [email, setEmail] = useState("");
+
+  const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.user); // Access status and error from the state
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
   const handleSendLink = () => {
-    alert(t("lostPassword.emailSentAlert", { email }));
-    setEmail("");
+    if (email) {
+      dispatch(forgotPassword({ email }))
+        .unwrap()
+        .then(() => {
+          alert(t("lostPassword.emailSentAlert", { email }));
+          setEmail("");
+        })
+        .catch((err) => {
+          alert(t("lostPassword.emailErrorAlert"));
+        });
+    } else {
+      alert(t("lostPassword.enterEmailAlert"));
+    }
   };
 
   const handleBack = () => {
@@ -66,6 +82,16 @@ const LostPassword = () => {
             state="default"
           />
         </div>
+        {status === "loading" && (
+          <p className="text-sm text-primary-text-color">
+            {t("lostPassword.loadingMessage")}
+          </p>
+        )}
+        {error && (
+          <p className="text-sm text-red-600">
+            {t("lostPassword.errorMessage")}
+          </p>
+        )}
       </div>
     </div>
   );

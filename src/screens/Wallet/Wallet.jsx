@@ -17,7 +17,7 @@ const Wallet = () => {
   };
 
   const handleBackToHome = () => {
-    navigate("/account");
+    navigate("/");
   };
 
   useEffect(() => {

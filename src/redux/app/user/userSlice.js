@@ -36,6 +36,37 @@ export const fetchUserProfileWithDealsAndReviews = createAsyncThunk(
   }
 );
 
+// Async thunk for requesting a password recovery link
+export const requestPasswordRecoveryLink = createAsyncThunk(
+  "user/requestPasswordRecoveryLink",
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/forgot_password", {
+        email,
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+// Async thunk for resetting the password
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async ({ password, confirm_password }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/reset_password", {
+        password,
+        confirm_password,
+      });
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -72,7 +103,29 @@ const userSlice = createSlice({
           state.status = "failed";
           state.error = action.payload;
         }
-      );
+      )
+      // Handle forgot password
+      .addCase(requestPasswordRecoveryLink.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(requestPasswordRecoveryLink.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(requestPasswordRecoveryLink.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle reset password
+      .addCase(resetPassword.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
   },
 });
 

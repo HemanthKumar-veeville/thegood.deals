@@ -13,7 +13,7 @@ const DraftDeal = () => {
   const location = useLocation();
 
   const handleBack = () => {
-    navigate("/account");
+    navigate("/");
   };
 
   useEffect(() => {
