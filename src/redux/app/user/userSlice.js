@@ -67,12 +67,26 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
+// Async thunk for logging out the user
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/logout");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Handle user login status check
       .addCase(checkUserLoginStatus.pending, (state) => {
         state.status = "loading";
       })
@@ -123,6 +137,18 @@ const userSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(resetPassword.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle user logout
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.isUserLoggedIn = false;
+        state.profile = null;
+        state.userDeals = [];
+        state.userReviews = [];
+        state.status = "idle";
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
