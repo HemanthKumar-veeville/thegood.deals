@@ -19,6 +19,7 @@ import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { fetchDeals } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
+import { logoutUser } from "../../redux/app/user/userSlice"; // Import the logoutUser thunk
 
 const Account = () => {
   const { t } = useTranslation(); // Initialize translation hook
@@ -68,7 +69,10 @@ const Account = () => {
   };
 
   const handleSignOut = () => {
-    navigate("/auth?login");
+    dispatch(logoutUser()) // Dispatch the logout action
+      .then(() => {
+        navigate("/auth?login"); // Navigate to the login page after successful logout
+      });
   };
 
   const handleCardClick = (deal) => {
