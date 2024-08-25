@@ -3,7 +3,7 @@ import { Button } from "../../components/Button/Button";
 import { EyeAlt4 } from "../../icons/EyeAlt4";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPassword } from "../../store/slices/userSlice"; // Import the resetPassword thunk
+import { resetPassword } from "../../redux/app/user/userSlice"; // Import the resetPassword thunk
 
 const ResetPassword = () => {
   const { t } = useTranslation(); // Initialize the translation hook
@@ -55,7 +55,7 @@ const ResetPassword = () => {
 
   return (
     <div className="relative w-full h-screen bg-primary-background">
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
+      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
         <div className="relative w-fit mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
           {t("resetPassword.newPassword")}
         </div>
@@ -126,16 +126,6 @@ const ResetPassword = () => {
             state="default"
           />
         </div>
-        {status === "loading" && (
-          <p className="text-sm text-primary-text-color">
-            {t("resetPassword.loadingMessage")}
-          </p>
-        )}
-        {error && (
-          <p className="text-sm text-red-600">
-            {t("resetPassword.errorMessage")}
-          </p>
-        )}
       </div>
     </div>
   );

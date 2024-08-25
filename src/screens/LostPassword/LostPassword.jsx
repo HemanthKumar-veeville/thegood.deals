@@ -3,12 +3,13 @@ import { Button } from "../../components/Button/Button";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { forgotPassword } from "../../store/slices/userSlice"; // Import the forgotPassword thunk
+import { forgotPassword } from "../../redux/app/user/userSlice"; // Import the forgotPassword thunk
+import { useNavigate } from "react-router-dom";
 
 const LostPassword = () => {
   const { t } = useTranslation(); // Initialize the translation hook
   const [email, setEmail] = useState("");
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => state.user); // Access status and error from the state
 
@@ -22,6 +23,7 @@ const LostPassword = () => {
         .unwrap()
         .then(() => {
           alert(t("lostPassword.emailSentAlert", { email }));
+          navigate("/check-email");
           setEmail("");
         })
         .catch((err) => {
@@ -33,12 +35,12 @@ const LostPassword = () => {
   };
 
   const handleBack = () => {
-    alert(t("lostPassword.backButtonAlert"));
+    navigate("/auth?signin");
   };
 
   return (
     <div className="relative w-full h-screen bg-primary-background">
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute top-16 left-0">
+      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
         <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
           <div
             className="inline-flex items-center gap-2 relative flex-[0_0_auto]"
@@ -82,16 +84,6 @@ const LostPassword = () => {
             state="default"
           />
         </div>
-        {status === "loading" && (
-          <p className="text-sm text-primary-text-color">
-            {t("lostPassword.loadingMessage")}
-          </p>
-        )}
-        {error && (
-          <p className="text-sm text-red-600">
-            {t("lostPassword.errorMessage")}
-          </p>
-        )}
       </div>
     </div>
   );

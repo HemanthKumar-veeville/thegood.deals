@@ -36,12 +36,12 @@ export const fetchUserProfileWithDealsAndReviews = createAsyncThunk(
   }
 );
 
-// Async thunk for requesting a password recovery link
-export const requestPasswordRecoveryLink = createAsyncThunk(
-  "user/requestPasswordRecoveryLink",
-  async (email, { rejectWithValue }) => {
+// Async thunk for requesting a password reset link
+export const forgotPassword = createAsyncThunk(
+  "user/forgotPassword",
+  async ({ email }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/forgot_password", {
+      const response = await axiosInstance.post("/account/forgot_password", {
         email,
       });
       return response.data;
@@ -51,14 +51,17 @@ export const requestPasswordRecoveryLink = createAsyncThunk(
   }
 );
 
+// Async thunk for requesting a password recovery link (duplicate functionality, so combining with forgotPassword)
+export const requestPasswordRecoveryLink = forgotPassword;
+
 // Async thunk for resetting the password
 export const resetPassword = createAsyncThunk(
   "user/resetPassword",
-  async ({ password, confirm_password }, { rejectWithValue }) => {
+  async ({ password, confirmPassword }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/reset_password", {
+      const response = await axiosInstance.post("/account/reset_password", {
         password,
-        confirm_password,
+        confirm_password: confirmPassword,
       });
       return response.data;
     } catch (err) {
@@ -119,13 +122,13 @@ const userSlice = createSlice({
         }
       )
       // Handle forgot password
-      .addCase(requestPasswordRecoveryLink.pending, (state) => {
+      .addCase(forgotPassword.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(requestPasswordRecoveryLink.fulfilled, (state) => {
+      .addCase(forgotPassword.fulfilled, (state) => {
         state.status = "succeeded";
       })
-      .addCase(requestPasswordRecoveryLink.rejected, (state, action) => {
+      .addCase(forgotPassword.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })

@@ -130,7 +130,8 @@ export const Header = ({
               onClick={handleNavigate}
             >
               <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-[#2a4e4a] text-base tracking-[0] leading-6 whitespace-nowrap ">
-                {location?.pathname !== "/contact-us"
+                {location?.pathname !== "/contact-us" &&
+                location?.pathname !== "/general-conditions"
                   ? "Create a good deal!"
                   : "Contact us"}
               </button>

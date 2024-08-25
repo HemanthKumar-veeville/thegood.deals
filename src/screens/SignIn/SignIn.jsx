@@ -72,6 +72,10 @@ const SignIn = ({ setIsLoading }) => {
     setShowPassword(!showPassword);
   };
 
+  const handleForgotPassword = () => {
+    navigate("/lost-password");
+  };
+
   return (
     <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute top-[118px] left-0">
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
@@ -177,7 +181,10 @@ const SignIn = ({ setIsLoading }) => {
           />
         </div>
       </div>
-      <div className="flex flex-col items-center gap-2 relative self-stretch w-full flex-[0_0_auto]">
+      <div
+        className="flex flex-col items-center gap-2 relative self-stretch w-full flex-[0_0_auto]"
+        onClick={handleForgotPassword}
+      >
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap hover:underline cursor-pointer">
           Forgot your password ?
         </div>

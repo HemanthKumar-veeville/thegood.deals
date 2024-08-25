@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkUserLoginStatus } from "./redux/app/user/userSlice";
 import "./App.css";
 import loadable from "@loadable/component";
+import { Legal } from "./screens/Legal";
+import { useTranslation } from "react-i18next";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -23,6 +25,7 @@ const InformToCraftsMan = loadable(() =>
 const ThanksToAdmin = loadable(() =>
   import("./screens/ThanksToAdmin/ThanksToAdmin")
 );
+const Message = loadable(() => import("./screens/Message/Message"));
 const ActiveDeal = loadable(() => import("./screens/ActiveDeal/ActiveDeal"));
 const DraftDeal = loadable(() => import("./screens/DraftDeal/DraftDeal"));
 const WaitingDeal = loadable(() => import("./screens/WaitingDeal/WaitingDeal"));
@@ -118,6 +121,7 @@ function App() {
   const [isReady, setIsReady] = useState(false);
   const dispatch = useDispatch();
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
+  const { t } = useTranslation(); // Initialize the translation hook
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -431,10 +435,52 @@ function App() {
       ),
     },
     {
+      path: "/general-conditions",
+      element: (
+        <Layout>
+          <ProtectedRoute
+            element={<Legal heading="General conditions of sale" content="" />}
+          />
+        </Layout>
+      ),
+    },
+    {
+      path: "/privacy-policy",
+      element: (
+        <Layout>
+          <ProtectedRoute
+            element={<Legal heading="Privacy policy" content="" />}
+          />
+        </Layout>
+      ),
+    },
+    {
+      path: "/newsletter-indication",
+      element: (
+        <Layout>
+          <ProtectedRoute
+            element={<Legal heading="Newsletter indication" content="" />}
+          />
+        </Layout>
+      ),
+    },
+    {
       path: "/lost-password",
       element: (
         <Layout>
           <LostPassword />
+        </Layout>
+      ),
+    },
+    {
+      path: "/check-email",
+      element: (
+        <Layout>
+          <Message
+            heading={t("lostPassword.checkEmailHead")}
+            description={t("lostPassword.checkEmailDesc")}
+            action={t("lostPassword.checkEmailAction")}
+          />
         </Layout>
       ),
     },

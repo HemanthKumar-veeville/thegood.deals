@@ -688,7 +688,10 @@
     "emailPlaceholder": "E-mail",
     "receiveLinkButton": "Receive the link",
     "emailSentAlert": "Email has been sent to {{email}}",
-    "backButtonAlert": "Back Button clicked"
+    "backButtonAlert": "Back Button clicked",
+    "checkEmailHead": "Check your email 📧",
+    "checkEmailDesc": "A recovery link has just been sent to your email.\nRemember to check your spam!",
+    "checkEmailAction": "Back to Home"
   },
   "resetPassword": {
     "newPassword": "New Password",
