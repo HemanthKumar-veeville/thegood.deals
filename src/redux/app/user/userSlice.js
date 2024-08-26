@@ -108,10 +108,11 @@ const userSlice = createSlice({
       .addCase(
         fetchUserProfileWithDealsAndReviews.fulfilled,
         (state, action) => {
+          console.log(action.payload.data);
           state.status = "succeeded";
-          state.profile = action.payload.user;
-          state.userDeals = action.payload.deals;
-          state.userReviews = action.payload.reviews;
+          state.profile = action.payload.data.user;
+          state.userDeals = action.payload.data.deals;
+          state.userReviews = action.payload.data.reviews;
         }
       )
       .addCase(

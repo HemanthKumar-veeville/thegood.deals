@@ -28,10 +28,9 @@ const MyInformation = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (status === "idle") {
-      dispatch(fetchUserProfileWithDealsAndReviews());
-    }
-  }, [dispatch, status]);
+
+    dispatch(fetchUserProfileWithDealsAndReviews());
+  }, []);
 
   const handleBack = () => {
     navigate("/");
@@ -66,7 +65,7 @@ const MyInformation = () => {
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-              {profile?.name || "User Name"} // Replace with real user name
+              {profile?.name || "User Name"}
             </div>
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar
@@ -137,16 +136,16 @@ const MyInformation = () => {
               divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
               divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
               override={
-                deal.dealStatus === "out_of_stock" ? (
-                  <ProgressBarYellow percentage={deal.percentage || 80} />
+                deal.status === "out_of_stock" ? (
+                  <ProgressBarYellow percentage={deal.progress || 80} />
                 ) : (
-                  <ProgressBarGreen percentage={deal.percentage || 90} />
+                  <ProgressBarGreen percentage={deal.progress || 90} />
                 )
               }
-              text={deal.dealTitle}
-              text1={deal.dealStatus}
-              participantsCount={deal.participantsCount}
-              dealExpiryDate={deal.dealExpiryDate}
+              text={deal.title}
+              text1={deal.status}
+              participantsCount={deal.participants}
+              dealEndsIn={deal.ends_in}
             />
           </div>
         ))}

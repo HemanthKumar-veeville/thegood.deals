@@ -13,9 +13,7 @@ export const fetchOrdersByDeal = createAsyncThunk(
   "orders/fetchOrdersByDeal",
   async ({ dealId, dealType }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/orders/${dealId}`, {
-        params: { deal_type: dealType },
-      });
+      const response = await axiosInstance.get(`/orders/${dealId}/${dealType}`);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

@@ -39,12 +39,16 @@ const ActiveDeal = () => {
   const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
   const { t } = useTranslation();
   console.log({ deal });
+  const queryParams = new URLSearchParams(location.search);
+  const deal_id = queryParams.get("deal_id");
+  const is_creator = queryParams.get("is_creator");
+
   const handleBack = () => {
     navigate("/");
   };
 
   const handleMyOrders = () => {
-    navigate("/admin-orders");
+    navigate("/admin-orders?deal_id=" + deal_id + "&is_creator=" + is_creator);
   };
 
   const handleManageLovedOnes = () => {
@@ -56,7 +60,12 @@ const ActiveDeal = () => {
   };
 
   const handleOrder = () => {
-    navigate("/admin-view-deal?deal_id=" + location?.state?.deal?.deal_id);
+    navigate(
+      "/admin-view-deal?deal_id=" +
+        location?.state?.deal?.deal_id +
+        "&deal_type=" +
+        location?.state?.deal?.is_creator
+    );
   };
 
   const statusBanner = {

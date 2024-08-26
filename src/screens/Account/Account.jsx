@@ -78,28 +78,82 @@ const Account = () => {
   const handleCardClick = (deal) => {
     switch (deal?.dealStatus) {
       case "draft":
-        navigate("/admin-draft-deal", { state: { deal } });
+        navigate(
+          "/admin-draft-deal?deal_id=" +
+            deal?.deal_id +
+            "&is_creator=" +
+            deal?.is_creator,
+          { state: { deal } }
+        );
         break;
       case "waiting":
-        navigate("/admin-waiting-deal", { state: { deal } });
+        navigate(
+          "/admin-waiting-deal?deal_id=" +
+            deal?.deal_id +
+            "&is_creator=" +
+            deal?.is_creator,
+          { state: { deal } }
+        );
         break;
       case "in_stock":
         activeTab !== "created"
-          ? navigate("/guest-deal-view", { state: { deal } })
-          : navigate("/admin-active-deal", { state: { deal } });
+          ? navigate(
+              "/guest-deal-view?deal_id=" +
+                deal?.deal_id +
+                "&is_creator=" +
+                deal?.is_creator,
+              { state: { deal } }
+            )
+          : navigate(
+              "/admin-active-deal?deal_id=" +
+                deal?.deal_id +
+                "&is_creator=" +
+                deal?.is_creator,
+              { state: { deal } }
+            );
         break;
       case "out_of_stock":
         activeTab !== "created"
-          ? navigate("/guest-deal-view", { state: { deal } })
-          : navigate("/admin-active-deal", { state: { deal } });
+          ? navigate(
+              "/guest-deal-view?deal_id=" +
+                deal?.deal_id +
+                "&is_creator=" +
+                deal?.is_creator,
+              { state: { deal } }
+            )
+          : navigate(
+              "/admin-active-deal?deal_id=" +
+                deal?.deal_id +
+                "&is_creator=" +
+                deal?.is_creator,
+              { state: { deal } }
+            );
         break;
       case "finished":
         activeTab !== "created"
-          ? navigate("/guest-deal-view", { state: { deal } })
-          : navigate("/admin-active-deal", { state: { deal } });
+          ? navigate(
+              "/guest-deal-view?deal_id=" +
+                deal?.deal_id +
+                "&is_creator=" +
+                deal?.is_creator,
+              { state: { deal } }
+            )
+          : navigate(
+              "/admin-active-deal?deal_id=" +
+                deal?.deal_id +
+                "&is_creator=" +
+                deal?.is_creator,
+              { state: { deal } }
+            );
         break;
       default:
-        navigate("/admin-active-deal", { state: { deal } });
+        navigate(
+          "/admin-active-deal?deal_id=" +
+            deal?.deal_id +
+            "&is_creator=" +
+            deal?.is_creator,
+          { state: { deal } }
+        );
     }
   };
 
