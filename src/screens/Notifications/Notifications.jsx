@@ -13,12 +13,10 @@ const Notifications = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { notifications, status } = useSelector((state) => state.account);
-
+  console.log({ notifications });
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchNotificationSettings());
-    }
-  }, [dispatch, status]);
+    dispatch(fetchNotificationSettings());
+  }, []);
 
   const handleToggle = (type) => {
     const updatedNotifications = {
@@ -61,18 +59,22 @@ const Notifications = () => {
               >
                 <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
                   <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-                    {t(`notifications.${type}`)}
+                    {notifications[type]?.name}
                   </div>
                 </div>
                 <div
                   className={`relative w-[50px] h-[26px] mt-[-1.00px] mb-[-1.00px] rounded-[30px] cursor-pointer ${
-                    notifications[type] ? "bg-primary-color" : "bg-gray-300"
+                    notifications[type]?.enabled
+                      ? "bg-primary-color"
+                      : "bg-gray-300"
                   }`}
                   onClick={() => handleToggle(type)}
                 >
                   <div
                     className={`relative w-[18px] h-[18px] top-1 bg-white rounded-[9px] transition-transform ${
-                      notifications[type] ? "translate-x-7" : "translate-x-1"
+                      notifications[type]?.enabled
+                        ? "translate-x-7"
+                        : "translate-x-1"
                     }`}
                   />
                 </div>

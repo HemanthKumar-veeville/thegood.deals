@@ -554,8 +554,8 @@
     "change": "Change language 📣",
     "french": "French",
     "english": "English",
-    "fr": "French",
-    "en": "English"
+    "French": "French",
+    "English": "English"
   },
   "currency": {
     "change": "Change currency 💶",

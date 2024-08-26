@@ -158,7 +158,7 @@ const accountSlice = createSlice({
       })
       .addCase(fetchLanguageSetting.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.language = action.payload.language;
+        state.language = action.payload.user_settings.language;
       })
       .addCase(fetchLanguageSetting.rejected, (state, action) => {
         state.status = "failed";
@@ -170,7 +170,7 @@ const accountSlice = createSlice({
       })
       .addCase(updateLanguageSetting.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.language = action.payload.language;
+        state.language = action.payload.user_settings.language;
       })
       .addCase(updateLanguageSetting.rejected, (state, action) => {
         state.status = "failed";
@@ -208,7 +208,7 @@ const accountSlice = createSlice({
       })
       .addCase(fetchNotificationSettings.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.notifications = action.payload.notifications;
+        state.notifications = action.payload.user_settings;
       })
       .addCase(fetchNotificationSettings.rejected, (state, action) => {
         state.status = "failed";

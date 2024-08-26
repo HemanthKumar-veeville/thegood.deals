@@ -17,14 +17,14 @@ const LanguageSelection = () => {
   const dispatch = useDispatch();
   const { language, status } = useSelector((state) => state.account);
 
-  const [selectedLanguage, setSelectedLanguage] = useState(language || "fr"); // Default to French
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    language || "French"
+  ); // Default to French
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchLanguageSetting());
-    }
-  }, [dispatch, status]);
+    dispatch(fetchLanguageSetting());
+  }, []);
 
   useEffect(() => {
     if (language) {
@@ -86,13 +86,13 @@ const LanguageSelection = () => {
             <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg border border-stroke">
               <div
                 className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                onClick={() => selectLanguage("fr")}
+                onClick={() => selectLanguage("French")}
               >
                 {t("language.french")}
               </div>
               <div
                 className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                onClick={() => selectLanguage("en")}
+                onClick={() => selectLanguage("English")}
               >
                 {t("language.english")}
               </div>

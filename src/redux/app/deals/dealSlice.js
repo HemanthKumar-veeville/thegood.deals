@@ -42,7 +42,7 @@ export const fetchDealDetailsByDealId = createAsyncThunk(
   "deals/fetchDealDetailsByDealId",
   async (dealId, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/deal/${dealId}/details`);
+      const response = await axiosInstance.get(`/deals/${dealId}/details`);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

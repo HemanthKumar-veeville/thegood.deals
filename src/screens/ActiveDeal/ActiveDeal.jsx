@@ -56,7 +56,7 @@ const ActiveDeal = () => {
   };
 
   const handleOrder = () => {
-    navigate("/admin-view-deal");
+    navigate("/admin-view-deal?deal_id=" + location?.state?.deal?.deal_id);
   };
 
   const statusBanner = {
