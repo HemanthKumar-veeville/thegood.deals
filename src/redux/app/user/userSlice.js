@@ -41,7 +41,7 @@ export const forgotPassword = createAsyncThunk(
   "user/forgotPassword",
   async ({ email }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/account/forgot_password", {
+      const response = await axiosInstance.post("/forgot_password", {
         email,
       });
       return response.data;
@@ -59,7 +59,7 @@ export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async ({ password, confirmPassword }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/account/reset_password", {
+      const response = await axiosInstance.post("/reset_password", {
         password,
         confirm_password: confirmPassword,
       });
@@ -129,6 +129,7 @@ const userSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(forgotPassword.rejected, (state, action) => {
+        console.log(action.payload);
         state.status = "failed";
         state.error = action.payload;
       })

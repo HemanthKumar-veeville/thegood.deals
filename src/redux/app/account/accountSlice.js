@@ -182,7 +182,9 @@ const accountSlice = createSlice({
       })
       .addCase(fetchCurrencySetting.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.currency = action.payload.currency;
+        console.log({ response: action.payload });
+        state.currency =
+          action.payload.user_settings.currency === "Usd" ? "USD" : "Euro";
       })
       .addCase(fetchCurrencySetting.rejected, (state, action) => {
         state.status = "failed";
