@@ -28,7 +28,7 @@ export const ArtisanDeniedThe = ({
   };
 
   const handleCancel = () => {
-    navigate("/artisan-confirmed-deal");
+    navigate("/artisan-validation");
   };
 
   return (

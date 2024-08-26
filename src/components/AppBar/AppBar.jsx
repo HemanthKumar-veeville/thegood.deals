@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDown } from "../../icons/ChevronDown/ChevronDown";
 import { useNavigate } from "react-router-dom";
 import { UserAlt } from "../../icons/UserAlt";
 import { VerticalLine } from "../../icons/VerticalLine";
 import SideBar from "../../screens/SideBar/SideBar";
+import { useLocation } from "react-router-dom";
 
 /**
  * AppBar component renders the top navigation bar of the application.
@@ -12,7 +13,8 @@ import SideBar from "../../screens/SideBar/SideBar";
 function AppBar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const [isUser, setIsUser] = useState(true);
   /**
    * Toggles the sidebar open state.
    */
@@ -27,21 +29,41 @@ function AppBar() {
     navigate("/");
   };
 
+  useEffect(() => {
+    if (
+      location?.pathname === "/artisan-validation" ||
+      location?.pathname === "/deal-confirmed" ||
+      location?.pathname === "/deal-refused" ||
+      location?.pathname === "/deal-refused-message" ||
+      location?.pathname === "/artisan-send-review"
+    ) {
+      setIsUser(false);
+    } else {
+      setIsUser(true);
+    }
+  }, [location?.pathname]);
+
   return (
     <div className="relative">
       <header className="flex flex-col w-screen max-w-[400px] h-16 items-start relative bg-primary-background border-b border-stroke z-50">
-        <div className="flex h-16 items-center justify-between pl-5 pr-3 py-0 relative self-stretch w-full">
+        <div
+          className={`flex h-16 items-center ${
+            isUser ? "justify-between" : "justify-center"
+          } pl-5 pr-3 py-0 relative self-stretch w-full`}
+        >
           {/* Sidebar toggle button */}
-          <div
-            className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
-            onClick={handleOpen}
-          >
-            {!open ? (
-              <VerticalLine className="!relative !w-6 !h-6" />
-            ) : (
-              <ChevronDown className="!relative !w-6 !h-6" />
-            )}
-          </div>
+          {isUser && (
+            <div
+              className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
+              onClick={handleOpen}
+            >
+              {!open ? (
+                <VerticalLine className="!relative !w-6 !h-6" />
+              ) : (
+                <ChevronDown className="!relative !w-6 !h-6" />
+              )}
+            </div>
+          )}
           {/* Logo */}
           <div className="inline-flex items-start relative flex-[0_0_auto]">
             <div className="inline-flex items-start relative flex-[0_0_auto]">
@@ -58,12 +80,14 @@ function AppBar() {
             </div>
           </div>
           {/* User icon */}
-          <div
-            className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
-            onClick={() => navigate("/auth?login")}
-          >
-            <UserAlt className="!relative !w-6 !h-6" />
-          </div>
+          {isUser && (
+            <div
+              className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
+              onClick={() => navigate("/auth?login")}
+            >
+              <UserAlt className="!relative !w-6 !h-6" />
+            </div>
+          )}
         </div>
       </header>
       {/* Sidebar */}

@@ -387,10 +387,10 @@ function App() {
       ),
     },
     {
-      path: "/artisan-confirmed-deal",
+      path: "/artisan-validation",
       element: (
         <Layout>
-          <ProtectedRoute element={<ArtisanConfirmTheScreen />} />
+          <ArtisanConfirmTheScreen />
         </Layout>
       ),
     },
@@ -398,14 +398,10 @@ function App() {
       path: "/deal-confirmed",
       element: (
         <Layout>
-          <ProtectedRoute
-            element={
-              <Message
-                heading={t("artisanApproved.heading")}
-                description={t("artisanApproved.description")}
-                action={t("artisanApproved.action")}
-              />
-            }
+          <Message
+            heading={t("artisanApproved.heading")}
+            description={t("artisanApproved.description")}
+            action={t("artisanApproved.action")}
           />
         </Layout>
       ),
@@ -414,7 +410,7 @@ function App() {
       path: "/deal-refused",
       element: (
         <Layout>
-          <ProtectedRoute element={<ArtisanDeniedTheScreen />} />
+          <ArtisanDeniedTheScreen />
         </Layout>
       ),
     },
@@ -422,14 +418,10 @@ function App() {
       path: "/deal-refused-message",
       element: (
         <Layout>
-          <ProtectedRoute
-            element={
-              <Message
-                heading={t("artisanRefused.heading")}
-                description={t("artisanRefused.description")}
-                action={t("artisanRefused.action")}
-              />
-            }
+          <Message
+            heading={t("artisanRefused.heading")}
+            description={t("artisanRefused.description")}
+            action={t("artisanRefused.action")}
           />
         </Layout>
       ),
@@ -439,6 +431,14 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<GuestsSendReviewsScreen />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/artisan-send-review",
+      element: (
+        <Layout>
+          <GuestsSendReviewsScreen />
         </Layout>
       ),
     },
