@@ -15,7 +15,7 @@ export const fetchDeals = createAsyncThunk(
   async ({ deal_type, page, limit }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(
-        `/deals?deal_type=${deal_type}&page=${page}&limit=${limit}`
+        `/deals/${deal_type}/${page}/${limit}`
       );
       return response.data;
     } catch (err) {

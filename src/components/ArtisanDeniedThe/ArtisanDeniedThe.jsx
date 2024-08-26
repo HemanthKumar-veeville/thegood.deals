@@ -4,6 +4,7 @@ import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { ArrowRight1 } from "../../icons/ArrowRight1";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
 import { Line63 } from "../../images";
+import { useNavigate } from "react-router-dom";
 
 export const ArtisanDeniedThe = ({
   HEADERHeaderOpenClassName,
@@ -14,6 +15,7 @@ export const ArtisanDeniedThe = ({
   const { t } = useTranslation(); // Initialize the useTranslation hook
   const [feedback, setFeedback] = useState("");
   const [charCount, setCharCount] = useState(0);
+  const navigate = useNavigate();
 
   const handleFeedbackChange = (e) => {
     const input = e.target.value;
@@ -22,11 +24,11 @@ export const ArtisanDeniedThe = ({
   };
 
   const handleSubmit = () => {
-    alert(t("artisanDeniedThe.feedback_submitted") + ": " + feedback);
+    navigate("/deal-refused-message");
   };
 
   const handleCancel = () => {
-    alert(t("artisanDeniedThe.cancelled"));
+    navigate("/artisan-confirmed-deal");
   };
 
   return (

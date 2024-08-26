@@ -43,7 +43,7 @@ const ResetPassword = () => {
       dispatch(resetPassword({ password, confirm_password: confirmPassword }))
         .unwrap()
         .then(() => {
-          alert(t("resetPassword.passwordChangedSuccess"));
+          navigate("/reset-password-success");
         })
         .catch((err) => {
           alert(t("resetPassword.passwordCriteriaError"));

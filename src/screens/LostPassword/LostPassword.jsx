@@ -22,7 +22,6 @@ const LostPassword = () => {
       dispatch(forgotPassword({ email }))
         .unwrap()
         .then(() => {
-          alert(t("lostPassword.emailSentAlert", { email }));
           navigate("/check-email");
           setEmail("");
         })

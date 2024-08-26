@@ -705,7 +705,10 @@
     },
     "passwordChangedSuccess": "Mot de passe changé avec succès!",
     "passwordCriteriaError": "Veuillez vous assurer que le mot de passe répond à tous les critères et que les deux mots de passe correspondent.",
-    "changePasswordButton": "Changer le mot de passe"
+    "changePasswordButton": "Changer le mot de passe",
+    "resetHead": "Check your email 📧",
+    "resetDesc": "A recovery link has just been sent to your email.\nRemember to check your spam!",
+    "resetAction": "Back to Home"
   },
   "customLoader": {
     "loading": "Chargement..."

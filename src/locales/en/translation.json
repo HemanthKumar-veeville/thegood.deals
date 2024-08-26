@@ -706,9 +706,22 @@
     },
     "passwordChangedSuccess": "Password changed successfully!",
     "passwordCriteriaError": "Please make sure the password meets all criteria and both passwords match.",
-    "changePasswordButton": "Change password"
+    "changePasswordButton": "Change password",
+    "resetHead": "Password changed 👍🏻",
+    "resetDesc": "You can log in with this new password.",
+    "resetAction": "To log in"
   },
   "customLoader": {
     "loading": "Loading..."
+  },
+  "artisanApproved": {
+    "heading": "THANKS !  🎉",
+    "description": "The deal will now be published! Guests will be able to order.",
+    "action": "Back to Home"
+  },
+  "artisanRefused": {
+    "heading": "THANKS ! 👍🏻",
+    "description": "Once the deal has been corrected by the organizer, you will receive an email to confirm the information again.",
+    "action": "Back to Home"
   }
 }

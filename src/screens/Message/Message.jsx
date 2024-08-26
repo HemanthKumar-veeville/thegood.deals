@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Line63 } from "../../images";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Message = ({ heading, description, action }) => {
   const navigate = useNavigate();
-  console.log({ description });
-  const handleBackToHome = () => {
-    navigate("/");
+  const location = useLocation();
+  const path = location?.pathname;
+  const handleBack = () => {
+    switch (path) {
+      case "/reset-password-success":
+        navigate("/auth?signin");
+        break;
+      default:
+        navigate("/");
+    }
   };
 
   useEffect(() => {
@@ -35,7 +42,7 @@ const Message = ({ heading, description, action }) => {
         />
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
-          onClick={handleBackToHome}
+          onClick={handleBack}
         >
           <ArrowLeft className="!relative !w-5 !h-5" color="#1B4F4A" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">

@@ -387,7 +387,31 @@ function App() {
       ),
     },
     {
-      path: "/artisan-denied-deal",
+      path: "/artisan-confirmed-deal",
+      element: (
+        <Layout>
+          <ProtectedRoute element={<ArtisanConfirmTheScreen />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/deal-confirmed",
+      element: (
+        <Layout>
+          <ProtectedRoute
+            element={
+              <Message
+                heading={t("artisanApproved.heading")}
+                description={t("artisanApproved.description")}
+                action={t("artisanApproved.action")}
+              />
+            }
+          />
+        </Layout>
+      ),
+    },
+    {
+      path: "/deal-refused",
       element: (
         <Layout>
           <ProtectedRoute element={<ArtisanDeniedTheScreen />} />
@@ -395,10 +419,18 @@ function App() {
       ),
     },
     {
-      path: "/artisan-confirmed-deal",
+      path: "/deal-refused-message",
       element: (
         <Layout>
-          <ProtectedRoute element={<ArtisanConfirmTheScreen />} />
+          <ProtectedRoute
+            element={
+              <Message
+                heading={t("artisanRefused.heading")}
+                description={t("artisanRefused.description")}
+                action={t("artisanRefused.action")}
+              />
+            }
+          />
         </Layout>
       ),
     },
@@ -489,6 +521,18 @@ function App() {
       element: (
         <Layout>
           <ResetPassword />
+        </Layout>
+      ),
+    },
+    {
+      path: "/reset-password-success",
+      element: (
+        <Layout>
+          <Message
+            heading={t("resetPassword.resetHead")}
+            description={t("resetPassword.resetDesc")}
+            action={t("resetPassword.resetAction")}
+          />
         </Layout>
       ),
     },

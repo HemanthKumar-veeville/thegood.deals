@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDealDetailsByDealId } from "../../redux/app/deals/dealSlice";
+import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
 import { Badges } from "../../components/Badges";
 import { RatingStar } from "../../components/RatingStar";
-import { StyleTypePrimary } from "../../components/StyleTypePrimary";
 import { Box43 } from "../../icons/Box43";
 import { ClockAlt11 } from "../../icons/ClockAlt11";
 import { DeliveryTruck4 } from "../../icons/DeliveryTruck4";
@@ -13,19 +16,35 @@ import { Send } from "../../icons/Send";
 import { Send2 } from "../../icons/Send2";
 import { ShoppingCart111 } from "../../icons/ShoppingCart111";
 import { Users2 } from "../../icons/Users2";
-import AppBar from "../../components/AppBar/AppBar";
-import { useTranslation } from "react-i18next";
-import { blogImage, Human, Line63 } from "../../images";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
-import { useNavigate } from "react-router-dom";
+import { blogImage, Human, Line63 } from "../../images";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { dealId } = useParams(); // Assuming you're passing dealId as a route parameter
+  const dispatch = useDispatch();
+
+  const { deal, status, error } = useSelector((state) => state.deals);
+
+  useEffect(() => {
+    if (dealId) {
+      dispatch(fetchDealDetailsByDealId(dealId));
+    }
+  }, [dispatch, dealId]);
+
   const handlePayment = () => {
     navigate("/payment");
   };
+
+  if (status === "loading") {
+    return <div>{t("loading")}</div>;
+  }
+
+  if (status === "failed") {
+    return <div>{t("error_message", { error })}</div>;
+  }
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
@@ -50,9 +69,9 @@ const AdminViewGoodDeal = () => {
           src={blogImage}
         />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          {t("admin.wine_crates")}
+          {deal?.title || t("admin.wine_crates")}
         </div>
-        {location?.state?.deal?.dealStatus === "out_of_stock" ? (
+        {deal?.dealStatus === "out_of_stock" ? (
           <ProgressBarYellow percentage={38} />
         ) : (
           <ProgressBarGreen percentage={57} />

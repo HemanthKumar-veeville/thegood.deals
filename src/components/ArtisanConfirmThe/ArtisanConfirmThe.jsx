@@ -1,5 +1,8 @@
-import React from "react";
-import { useTranslation } from "react-i18next"; // Import useTranslation hook
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDealValidationDetails } from "../../redux/app/deals/dealSlice";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { Box44 } from "../../icons/Box44";
 import { ClockAlt11 } from "../../icons/ClockAlt11";
 import { CrossCircle } from "../../icons/CrossCircle";
@@ -9,6 +12,7 @@ import { Send1 } from "../../icons/Send1";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
 import { RatingStar } from "../RatingStar";
 import { Line63, blogImage, Human } from "../../images";
+import { useNavigate } from "react-router-dom";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -16,15 +20,33 @@ export const ArtisanConfirmThe = ({
   ),
   HEADERHeaderOpenClassName,
 }) => {
-  const { t } = useTranslation(); // Initialize the useTranslation hook
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { dealId } = useParams(); // Assuming you're passing dealId as a route parameter
+  const navigate = useNavigate();
+  const { deal, status, error } = useSelector((state) => state.deals);
+
+  useEffect(() => {
+    if (dealId) {
+      dispatch(fetchDealValidationDetails(dealId));
+    }
+  }, [dispatch, dealId]);
 
   const handleRefuse = () => {
-    alert(t("artisanConfirmThe.refused"));
+    navigate("/deal-refused");
   };
 
   const handleConfirm = () => {
-    alert(t("artisanConfirmThe.confirmed"));
+    navigate("/deal-confirmed");
   };
+
+  if (status === "loading") {
+    return <div>{t("loading")}</div>;
+  }
+
+  if (status === "failed") {
+    return <div>{t("error_message", { error })}</div>;
+  }
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
@@ -43,23 +65,23 @@ export const ArtisanConfirmThe = ({
         <img
           className="relative self-stretch w-full h-[150px] object-cover"
           alt="Blog image"
-          src={blogImage}
+          src={deal?.image || blogImage} // Use deal image if available
         />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          {t("artisanConfirmThe.wine_crates")}
+          {deal?.title || t("artisanConfirmThe.wine_crates")}
         </p>
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {t("artisanConfirmThe.deal_duration")}
+              {deal?.duration || t("artisanConfirmThe.deal_duration")}
             </p>
           </div>
         </div>
         <div className="flex self-stretch w-full items-center gap-2.5 relative flex-[0_0_auto]">
           <Map className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-            {t("artisanConfirmThe.location")}
+            {deal?.location || t("artisanConfirmThe.location")}
           </p>
         </div>
         <img
@@ -70,7 +92,7 @@ export const ArtisanConfirmThe = ({
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           <img
             className="relative w-[50px] h-[50px] object-cover"
-            alt="Rectangle"
+            alt="Organizer"
             src={Human}
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
@@ -78,7 +100,7 @@ export const ArtisanConfirmThe = ({
               {t("artisanConfirmThe.organized_by")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Abraham Thomas
+              {deal?.organizer || "Abraham Thomas"}
             </div>
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar
@@ -94,7 +116,7 @@ export const ArtisanConfirmThe = ({
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {t("artisanConfirmThe.deal_description")}
+            {deal?.description || t("artisanConfirmThe.deal_description")}
           </span>
           <span className="font-bold text-[#1b4f4a] underline">
             {t("artisanConfirmThe.read_more")}
@@ -113,7 +135,8 @@ export const ArtisanConfirmThe = ({
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {t("artisanConfirmThe.customers_receive")}
+            {deal?.what_customers_receive ||
+              t("artisanConfirmThe.customers_receive")}
           </span>
           <span className="font-bold text-[#1b4f4a] underline">
             {t("artisanConfirmThe.read_more")}
@@ -133,17 +156,18 @@ export const ArtisanConfirmThe = ({
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-            {t("artisanConfirmThe.delivery_date")}
+            {deal?.delivery_date || t("artisanConfirmThe.delivery_date")}
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <DeliveryTruck4 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-transparent text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
             <span className="text-[#1b4f4a] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-              {t("artisanConfirmThe.delivery_location")}
+              {deal?.delivery_location ||
+                t("artisanConfirmThe.delivery_location")}
             </span>
             <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-              {t("artisanConfirmThe.address")}
+              {deal?.address || t("artisanConfirmThe.address")}
             </span>
           </p>
         </div>
