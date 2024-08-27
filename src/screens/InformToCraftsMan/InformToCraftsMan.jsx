@@ -1,23 +1,42 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ArrowRight } from "../../icons/ArrowRight";
 import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { Envelope } from "../../icons/Envelope";
 import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { inviteArtisan } from "../../redux/app/deals/dealSlice";
 
 const InformToCraftsMan = () => {
   const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { status, error } = useSelector((state) => state.deals);
+
+  const [searchParams] = useSearchParams();
+  const dealId = searchParams.get("id"); // Get the 'id' from the URL
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
 
   const handleSubmit = () => {
-    navigate("/thanks-admin");
+    if (dealId) {
+      dispatch(inviteArtisan({ dealId, email }))
+        .unwrap()
+        .then(() => {
+          navigate("/thanks-admin");
+        })
+        .catch((err) => {
+          console.error("Failed to invite artisan:", err);
+          // Optionally, handle the error in the UI
+        });
+    } else {
+      console.error("Deal ID is missing in the URL.");
+    }
   };
 
   const handleFinishLater = () => {

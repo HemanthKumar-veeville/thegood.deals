@@ -56,7 +56,7 @@ const ActiveDeal = () => {
   };
 
   const handleEditDeal = () => {
-    alert(t("active_deal.edit_alert"));
+    navigate("/create-deal?deal_id=" + deal_id);
   };
 
   const handleOrder = () => {

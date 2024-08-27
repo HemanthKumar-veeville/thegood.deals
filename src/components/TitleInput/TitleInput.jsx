@@ -7,7 +7,7 @@ const TitleInput = ({ dealTitle, setDealTitle }) => {
     setTitle(e.target.value);
     setDealTitle(e.target.value);
   };
-
+  console.log({ title });
   return (
     <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full">
       <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">

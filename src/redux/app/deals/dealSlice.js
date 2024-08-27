@@ -164,7 +164,6 @@ const dealSlice = createSlice({
       })
       .addCase(addNewDeal.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.deals = [...state.deals, action.payload];
       })
       .addCase(addNewDeal.rejected, (state, action) => {
         state.status = "failed";
