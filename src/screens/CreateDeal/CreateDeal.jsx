@@ -171,10 +171,6 @@ const CreateDeal = () => {
     fetchDeal();
   }, [dealId]);
 
-  useEffect(() => {
-    console.log({ title });
-  }, [title]);
-
   return (
     <>
       {loading && <CustomLoader />}
