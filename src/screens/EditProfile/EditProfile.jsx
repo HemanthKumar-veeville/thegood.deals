@@ -69,7 +69,7 @@ const EditProfile = () => {
     dispatch(updateUserProfile(profile));
   };
 
-  const renderField = (fieldName, value, type = "text") => {
+  const renderField = (fieldName, value, type = "text", placeholder = "") => {
     return editField === fieldName ? (
       <input
         name={fieldName}
@@ -78,6 +78,7 @@ const EditProfile = () => {
         onChange={handleChange}
         onBlur={handleSave}
         autoFocus
+        placeholder={placeholder}
         className="relative w-full mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-darkdark-5 text-base tracking-[0] leading-6 focus:outline-none"
       />
     ) : (
@@ -135,7 +136,12 @@ const EditProfile = () => {
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
               <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField("firstName", profile.firstName)}
+                {renderField(
+                  "firstName",
+                  profile.firstName,
+                  "text",
+                  t("profile.first_name_placeholder")
+                )}
                 <Pencil className="!relative !w-4 !h-4" />
               </div>
             </div>
@@ -148,7 +154,12 @@ const EditProfile = () => {
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
               <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField("lastName", profile.lastName)}
+                {renderField(
+                  "lastName",
+                  profile.lastName,
+                  "text",
+                  t("profile.last_name_placeholder")
+                )}
                 <Pencil className="!relative !w-4 !h-4" />
               </div>
             </div>
@@ -161,7 +172,12 @@ const EditProfile = () => {
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
               <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField("phone", profile.phone)}
+                {renderField(
+                  "phone",
+                  profile.phone,
+                  "text",
+                  t("profile.phone_placeholder")
+                )}
                 <Pencil className="!relative !w-4 !h-4" />
               </div>
             </div>
@@ -174,7 +190,12 @@ const EditProfile = () => {
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
               <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField("email", profile.email)}
+                {renderField(
+                  "email",
+                  profile.email,
+                  "text",
+                  t("profile.email_placeholder")
+                )}
                 <Pencil className="!relative !w-4 !h-4" />
               </div>
             </div>
@@ -187,12 +208,18 @@ const EditProfile = () => {
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
               <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField("password", profile.password, "password")}
+                {renderField(
+                  "password",
+                  profile.password,
+                  "password",
+                  t("profile.password_placeholder")
+                )}
                 <EyeAlt4 className="!relative !w-4 !h-4" />
               </div>
             </div>
           </div>
         </div>
+
         <div
           className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
           onClick={() => handleEdit("address")}
@@ -203,8 +230,23 @@ const EditProfile = () => {
                 {t("profile.address")} ({t("profile.required")})
               </div>
             </div>
-            <div className="flex items-center gap-[116px] relative flex-1 grow">
-              {renderField("address", profile.address)}
+            <div
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+              onClick={() => handleEdit("address")}
+            >
+              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                  <div className="flex items-center justify-between relative flex-1 grow">
+                    {renderField(
+                      "address",
+                      profile.address,
+                      "text",
+                      t("profile.address_placeholder")
+                    )}
+                    <Pencil className="!relative !w-4 !h-4" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -218,8 +260,23 @@ const EditProfile = () => {
                 {t("profile.additional_address")}
               </div>
             </div>
-            <div className="flex items-center gap-[116px] relative flex-1 grow">
-              {renderField("additionalAddress", profile.additionalAddress)}
+            <div
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+              onClick={() => handleEdit("address")}
+            >
+              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                  <div className="flex items-center justify-between relative flex-1 grow">
+                    {renderField(
+                      "additionalAddress",
+                      profile.additionalAddress,
+                      "text",
+                      t("profile.additional_address_placeholder")
+                    )}
+                    <Pencil className="!relative !w-4 !h-4" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -233,8 +290,23 @@ const EditProfile = () => {
                 {t("profile.city")} ({t("profile.required")})
               </div>
             </div>
-            <div className="flex items-center gap-[116px] relative flex-1 grow">
-              {renderField("city", profile.city)}
+            <div
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+              onClick={() => handleEdit("address")}
+            >
+              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                  <div className="flex items-center justify-between relative flex-1 grow">
+                    {renderField(
+                      "city",
+                      profile.city,
+                      "text",
+                      t("profile.city_placeholder")
+                    )}
+                    <Pencil className="!relative !w-4 !h-4" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -248,8 +320,23 @@ const EditProfile = () => {
                 {t("profile.postal_code")} ({t("profile.required")})
               </div>
             </div>
-            <div className="flex items-center gap-[116px] relative flex-1 grow">
-              {renderField("postalCode", profile.postalCode)}
+            <div
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+              onClick={() => handleEdit("postalCode")}
+            >
+              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                  <div className="flex items-center justify-between relative flex-1 grow">
+                    {renderField(
+                      "postalCode",
+                      profile.postalCode,
+                      "text",
+                      t("profile.postal_code_placeholder")
+                    )}
+                    <Pencil className="!relative !w-4 !h-4" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -264,7 +351,12 @@ const EditProfile = () => {
               </div>
             </div>
             <div className="flex items-center gap-[116px] relative flex-1 grow">
-              {renderField("country", profile.country)}
+              {renderField(
+                "country",
+                profile.country,
+                "text",
+                t("profile.country_placeholder")
+              )}
             </div>
           </div>
         </div>
