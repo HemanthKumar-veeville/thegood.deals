@@ -23,7 +23,7 @@ const GuestDealView = () => {
   const location = useLocation();
 
   const handleBack = () => {
-    navigate("/account", { state: { activeTab: "guests" } });
+    navigate("/", { state: { activeTab: "guests" } });
   };
 
   const handleMyOrders = () => {

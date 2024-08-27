@@ -33,22 +33,27 @@ const Invitations = () => {
     dispatch(fetchParticipantsByDeal(deal_id));
   }, [dispatch, deal_id]);
 
-  const handleAccept = (requestId) => {
-    dispatch(
+  const handleAccept = async (requestId) => {
+    console.log({ deal_id });
+    await dispatch(
       processRequest({
-        dealId: requestId,
-        inviteStatus: "accepted",
+        dealId: deal_id,
+        requestId,
+        inviteStatus: "accept",
       })
     );
+    await dispatch(fetchRequestsByDeal(deal_id));
   };
 
-  const handleRefuse = (requestId) => {
-    dispatch(
+  const handleRefuse = async (requestId) => {
+    await dispatch(
       processRequest({
-        dealId: requestId,
-        inviteStatus: "refused",
+        dealId: deal_id,
+        requestId,
+        inviteStatus: "refuse",
       })
     );
+    await dispatch(fetchRequestsByDeal(deal_id));
   };
 
   const handleBackToDeal = () => {
@@ -87,7 +92,7 @@ const Invitations = () => {
           </div>
         </div>
         {requests?.map((request, index) => (
-          <div key={index}>
+          <div key={request.participant_id}>
             <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
               <SizeXlCorner
                 className="!h-[50px] !w-[50px]"
@@ -105,7 +110,7 @@ const Invitations = () => {
                   <div className="inline-flex items-start gap-[5px] relative flex-[0_0_auto] mb-5">
                     <div
                       className="inline-flex items-center gap-2.5 px-2.5 py-[5px] relative flex-[0_0_auto] bg-primary-color rounded-[5px] cursor-pointer"
-                      onClick={() => handleAccept(request.id)}
+                      onClick={() => handleAccept(request.request_id)}
                     >
                       <CheckmarkCircle className="!relative !w-5 !h-5" />
                       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-whitewhite text-sm tracking-[0] leading-[22px] whitespace-nowrap">
@@ -114,7 +119,7 @@ const Invitations = () => {
                     </div>
                     <div
                       className="inline-flex items-center gap-2.5 px-2.5 py-[5px] bg-redred rounded-[5px] relative flex-[0_0_auto] cursor-pointer"
-                      onClick={() => handleRefuse(request.id)}
+                      onClick={() => handleRefuse(request.request_id)}
                     >
                       <CrossCircle2 className="!relative !w-5 !h-5" />
                       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-whitewhite text-sm tracking-[0] leading-[22px] whitespace-nowrap">

@@ -36,15 +36,24 @@ export const createRequest = createAsyncThunk(
   }
 );
 
-// Async thunk for processing (accepting/refusing) a request
 export const processRequest = createAsyncThunk(
   "requests/processRequest",
   async ({ dealId, requestId, inviteStatus }, { rejectWithValue }) => {
     try {
+      // Create a new FormData object
+      const formData = new FormData();
+      formData.append("invite_status", inviteStatus);
+
       const response = await axiosInstance.put(
         `/requests/${dealId}/${requestId}`,
-        { invite_status: inviteStatus }
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
+
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

@@ -179,7 +179,7 @@ const SideBar = React.memo(({ onClose }) => {
             )}
             {renderButton(
               t("side_bar.my_account"),
-              isUserLoggedIn ? "/account" : "/auth?login"
+              isUserLoggedIn ? "/" : "/auth?login"
             )}
             <button
               className="w-full text-green inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-green cursor-pointer"

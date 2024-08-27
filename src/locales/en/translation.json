@@ -531,16 +531,16 @@
     "currency": "Currency"
   },
   "profile": {
-    "my_account": "Mon compte",
-    "change_profile_picture": "Changer la photo de profil",
-    "your_information": "Vos informations",
-    "address": "Adresse",
-    "required": "requis",
-    "additional_address": "Adresse complémentaire",
-    "city": "Ville",
-    "postal_code": "Code postal",
-    "country": "Pays",
-    "confirm_changes": "Confirmer les modifications"
+    "my_account": "My account",
+    "change_profile_picture": "Change profile picture",
+    "your_information": "Your information",
+    "address": "Address",
+    "required": "Required",
+    "additional_address": "Additional address",
+    "city": "City",
+    "postal_code": "Postal Code",
+    "country": "Country",
+    "confirm_changes": "Confirm Changes"
   },
   "notifications": {
     "title": "Notifications 🔔",
