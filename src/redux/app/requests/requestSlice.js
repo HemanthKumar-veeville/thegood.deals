@@ -65,7 +65,7 @@ const requestSlice = createSlice({
       })
       .addCase(fetchRequestsByDeal.fulfilled, (state, action) => {
         state.requestStatus = "succeeded";
-        state.requests = action.payload;
+        state.requests = action.payload.participants;
         state.requestError = null;
       })
       .addCase(fetchRequestsByDeal.rejected, (state, action) => {

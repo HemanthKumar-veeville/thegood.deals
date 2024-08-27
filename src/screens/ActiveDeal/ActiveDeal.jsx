@@ -52,7 +52,7 @@ const ActiveDeal = () => {
   };
 
   const handleManageLovedOnes = () => {
-    navigate("/admin-invitations");
+    navigate("/admin-invitations?deal_id=" + deal_id);
   };
 
   const handleEditDeal = () => {
@@ -61,10 +61,7 @@ const ActiveDeal = () => {
 
   const handleOrder = () => {
     navigate(
-      "/admin-view-deal?deal_id=" +
-        location?.state?.deal?.deal_id +
-        "&deal_type=" +
-        location?.state?.deal?.is_creator
+      "/admin-view-deal?deal_id=" + deal_id + "&deal_type=" + is_creator
     );
   };
 
@@ -81,7 +78,7 @@ const ActiveDeal = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getDealByDealId(location?.state?.deal?.deal_id));
+    dispatch(getDealByDealId(deal_id));
   }, []);
 
   return (

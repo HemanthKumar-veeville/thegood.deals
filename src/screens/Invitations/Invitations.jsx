@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { SizeXlCorner } from "../../components/SizeXlCorner";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { Box43 } from "../../icons/Box43";
@@ -13,22 +13,30 @@ import {
   fetchRequestsByDeal,
   processRequest,
 } from "../../redux/app/requests/requestSlice";
+import { fetchParticipantsByDeal } from "../../redux/app/participants/participantSlice";
 
 const Invitations = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { requests, requestStatus } = useSelector((state) => state.requests);
+  const { participants, participantStatus } = useSelector(
+    (state) => state.participants
+  );
+  const queryParams = new URLSearchParams(location.search);
+  const deal_id = queryParams.get("deal_id");
+  const is_creator = queryParams.get("is_creator");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(fetchRequestsByDeal(/* pass dealId here */));
-  }, [dispatch]);
+    dispatch(fetchRequestsByDeal(deal_id));
+    dispatch(fetchParticipantsByDeal(deal_id));
+  }, [dispatch, deal_id]);
 
   const handleAccept = (requestId) => {
     dispatch(
       processRequest({
-        dealId: /* pass dealId */ requestId,
+        dealId: requestId,
         inviteStatus: "accepted",
       })
     );
@@ -37,14 +45,16 @@ const Invitations = () => {
   const handleRefuse = (requestId) => {
     dispatch(
       processRequest({
-        dealId: /* pass dealId */ requestId,
+        dealId: requestId,
         inviteStatus: "refused",
       })
     );
   };
 
   const handleBackToDeal = () => {
-    navigate("/admin-active-deal");
+    navigate(
+      "/admin-active-deal?deal_id=" + deal_id + "&is_creator=" + is_creator
+    );
   };
 
   const handleInviteLovedOnes = () => {
@@ -76,20 +86,20 @@ const Invitations = () => {
             {t("invitations.new_requests")}
           </div>
         </div>
-        {requests.map((request, index) => (
+        {requests?.map((request, index) => (
           <div key={index}>
             <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
               <SizeXlCorner
                 className="!h-[50px] !w-[50px]"
                 divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-2 !leading-10 !top-1"
-                text={request.name
+                text={request.participant_name
                   .split(" ")
                   .map((n) => n[0])
                   .join(".")}
               />
               <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                  {request.name}
+                  {request.participant_name}
                 </div>
                 {!request.accepted && !request.refused && (
                   <div className="inline-flex items-start gap-[5px] relative flex-[0_0_auto] mb-5">
@@ -111,16 +121,6 @@ const Invitations = () => {
                         {t("invitations.refuse_button")}
                       </div>
                     </div>
-                  </div>
-                )}
-                {request.accepted && (
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-green-500 text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    {t("invitations.request_accepted")}
-                  </div>
-                )}
-                {request.refused && (
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-red-500 text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    {t("invitations.request_refused")}
                   </div>
                 )}
               </div>
@@ -151,42 +151,35 @@ const Invitations = () => {
             {t("invitations.list_of_relatives")}
           </div>
           <div className="inline-flex flex-col items-start gap-[15px] relative flex-[0_0_auto]">
-            <div className="flex items-center gap-[15px] self-stretch w-full relative flex-[0_0_auto]">
-              <SizeXlCorner
-                className="!h-[50px] !w-[50px]"
-                divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-[9px] !leading-10 !top-1"
-                text="J.D."
-              />
-              <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                  Jon Doe
-                </div>
-                <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-                  <Box43 className="!relative !w-5 !h-5" />
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    1 {t("invitations.order_on_deal_singular")}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-              <SizeXlCorner
-                className="!h-[50px] !w-[50px]"
-                divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-[9px] !leading-10 !top-1"
-                text="J.D."
-              />
-              <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                  Jane Doe
-                </div>
-                <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
-                  <Box43 className="!relative !w-5 !h-5" />
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    2 {t("invitations.order_on_deal_plural")}
-                  </p>
+            {participants?.map((participant, index) => (
+              <div
+                key={participant.participant_id}
+                className="flex items-center gap-[15px] self-stretch w-full relative flex-[0_0_auto]"
+              >
+                <SizeXlCorner
+                  className="!h-[50px] !w-[50px]"
+                  divClassName="!tracking-[0] !text-lg ![font-style:unset] !font-semibold ![font-family:'Inter',Helvetica] !left-[9px] !leading-10 !top-1"
+                  text={participant.participant_name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join(".")}
+                />
+                <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
+                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+                    {participant.participant_name}
+                  </div>
+                  <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
+                    <Box43 className="!relative !w-5 !h-5" />
+                    <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
+                      {participant.orders_count}{" "}
+                      {participant.orders_count > 1
+                        ? t("invitations.order_on_deal_plural")
+                        : t("invitations.order_on_deal_singular")}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

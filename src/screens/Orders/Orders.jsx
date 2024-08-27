@@ -43,7 +43,9 @@ const Orders = ({ dealId, dealType }) => {
   };
 
   const handleBackToDeal = () => {
-    navigate("/admin-active-deal");
+    navigate(
+      "/admin-active-deal?deal_id=" + deal_id + "&is_creator=" + is_creator
+    );
   };
 
   useEffect(() => {

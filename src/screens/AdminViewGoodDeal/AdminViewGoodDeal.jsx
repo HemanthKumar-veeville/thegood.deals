@@ -19,6 +19,7 @@ import { Users2 } from "../../icons/Users2";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import { blogImage, Human, Line63 } from "../../images";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -29,7 +30,7 @@ const AdminViewGoodDeal = () => {
   // Extract deal_id from the query parameters
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
-  console.log({ deal_id });
+  const is_creator = queryParams.get("is_creator");
 
   const { deal, status, error } = useSelector((state) => state.deals);
   console.log({ deal, status, error });
@@ -46,11 +47,7 @@ const AdminViewGoodDeal = () => {
   };
 
   if (status === "loading") {
-    return <div>{t("loading")}</div>;
-  }
-
-  if (status === "failed") {
-    return <div>{t("error_message", { error })}</div>;
+    return <CustomLoader />;
   }
 
   return (
@@ -206,7 +203,10 @@ const AdminViewGoodDeal = () => {
           />
           {dealState?.products?.map((product, index) => (
             <>
-              <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
+              <div
+                className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]"
+                key={index}
+              >
                 <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
                   <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
                     {product?.name}
