@@ -24,6 +24,7 @@ const Orders = ({ dealId, dealType }) => {
   const { orders, orderStatus, orderError } = useSelector(
     (state) => state.orders
   );
+  const ordersState = orders?.Orders;
 
   useEffect(() => {
     dispatch(
@@ -50,11 +51,7 @@ const Orders = ({ dealId, dealType }) => {
   }, []);
 
   if (orderStatus === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (orderStatus === "failed") {
-    return <div>Error: {orderError}</div>;
+    return <CustomLoader />;
   }
 
   return (
@@ -76,7 +73,7 @@ const Orders = ({ dealId, dealType }) => {
             {t("orders.my_orders")}
           </div>
 
-          {orders.map((order) => (
+          {ordersState?.map((order) => (
             <div key={order.participant_name}>
               <div
                 className="inline-flex items-center gap-4 cursor-pointer"
@@ -152,7 +149,7 @@ const Orders = ({ dealId, dealType }) => {
                     <div className="inline-flex flex-col items-end">
                       <div className="mt-[-1px] font-semibold text-primary-color text-lg text-right">
                         €
-                        {orders.products.reduce(
+                        {order.products.reduce(
                           (total, product) =>
                             total +
                             product.product_price * product.product_quantity,
