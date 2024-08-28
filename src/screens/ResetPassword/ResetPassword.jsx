@@ -4,13 +4,15 @@ import { EyeAlt4 } from "../../icons/EyeAlt4";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../redux/app/user/userSlice"; // Import the resetPassword thunk
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const ResetPassword = () => {
   const { t } = useTranslation(); // Initialize the translation hook
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => state.user); // Access status and error from the state
 
@@ -27,29 +29,54 @@ const ResetPassword = () => {
   };
 
   const validatePassword = () => {
-    const lengthValid = password.length >= 8;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const passwordsMatch = password === confirmPassword;
+    const errors = [];
 
-    return (
-      lengthValid && hasUppercase && hasLowercase && hasNumber && passwordsMatch
-    );
+    if (password.length < 8) {
+      errors.push("Password must be at least 8 characters long.");
+    }
+    if (!/[A-Z]/.test(password)) {
+      errors.push("Password must contain at least one uppercase letter.");
+    }
+    if (!/[a-z]/.test(password)) {
+      errors.push("Password must contain at least one lowercase letter.");
+    }
+    if (!/[0-9]/.test(password)) {
+      errors.push("Password must contain at least one digit.");
+    }
+    if (password !== confirmPassword) {
+      errors.push("Passwords do not match.");
+    }
+
+    if (errors.length > 0) {
+      Swal.fire({
+        title: "Password Validation Failed",
+        html: `<ul style="text-align: left;">${errors
+          .map((error) => `<li>${error}</li>`)
+          .join("")}</ul>`,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = () => {
     if (validatePassword()) {
-      dispatch(resetPassword({ password, confirm_password: confirmPassword }))
+      dispatch(resetPassword({ password, confirmPassword }))
         .unwrap()
         .then(() => {
           navigate("/reset-password-success");
         })
         .catch((err) => {
-          alert(t("resetPassword.passwordCriteriaError"));
+          Swal.fire({
+            title: "Error",
+            text: err?.message,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
         });
-    } else {
-      alert(t("resetPassword.passwordCriteriaError"));
     }
   };
 

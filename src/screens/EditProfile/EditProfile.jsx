@@ -32,6 +32,7 @@ const EditProfile = () => {
     city: "",
     postalCode: "",
     country: "",
+    profilePicture: Rectangle5095_1,
   });
 
   const [editField, setEditField] = useState(null);
@@ -43,9 +44,21 @@ const EditProfile = () => {
   }, [dispatch, status]);
 
   useEffect(() => {
-    if (fetchedProfile) {
-      setProfile(fetchedProfile);
-    }
+    const profile = fetchedProfile?.data || {};
+
+    setProfile({
+      firstName: profile.first_name || "",
+      lastName: profile.last_name || "",
+      phone: profile.phone || "", // Assuming phone is part of your data
+      email: profile.email || "",
+      password: "*******************", // Password is not stored, placeholder only
+      address: profile.address || "",
+      additionalAddress: profile.addl_address || "",
+      city: profile.city || "",
+      postalCode: profile.postal_code || "",
+      country: profile.country || "",
+      profilePicture: profile.profile_picture || Rectangle5095_1, // Use default image if null
+    });
   }, [fetchedProfile]);
 
   const handleBack = useCallback(() => {
@@ -67,12 +80,26 @@ const EditProfile = () => {
     dispatch(updateUserProfile(profile));
   }, [dispatch, profile]);
 
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          profilePicture: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const renderField = (fieldName, value, type = "text", placeholder = "") =>
     editField === fieldName ? (
       <input
         name={fieldName}
         type={type}
-        value={value}
+        value={value || ""}
         onChange={handleChange}
         onBlur={handleSave}
         autoFocus
@@ -84,7 +111,7 @@ const EditProfile = () => {
         className="relative w-full mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-darkdark-5 text-base tracking-[0] leading-6 whitespace-nowrap"
         onClick={() => handleEdit(fieldName)}
       >
-        {value}
+        {value || ""}
       </div>
     );
 
@@ -112,8 +139,8 @@ const EditProfile = () => {
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
             <img
               className="relative w-[50px] h-[50px] object-cover"
-              alt="Rectangle"
-              src={Rectangle5095_1}
+              alt="Profile"
+              src={profile.profilePicture}
             />
           </div>
           <div className="inline-flex items-center justify-center gap-1.5 px-3 py-[5px] relative flex-[0_0_auto] bg-[#1b4f4a] rounded-[5px]">
@@ -121,6 +148,12 @@ const EditProfile = () => {
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-[22px] whitespace-nowrap">
               {t("profile.change_profile_picture")}
             </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoChange}
+              className="absolute inset-0 opacity-0 cursor-pointer"
+            />
           </div>
         </div>
         <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">

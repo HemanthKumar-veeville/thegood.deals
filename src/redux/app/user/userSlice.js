@@ -59,10 +59,16 @@ export const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async ({ password, confirmPassword }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/reset_password", {
-        password,
-        confirm_password: confirmPassword,
+      const formData = new FormData();
+      formData.append("new-password", password);
+      formData.append("confirm-password", confirmPassword);
+
+      const response = await axiosInstance.post("/reset_password", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+      console.log(response.data);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
