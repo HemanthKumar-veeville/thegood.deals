@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../../components/Button/Button";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
@@ -48,13 +48,11 @@ const EditProfile = () => {
     }
   }, [fetchedProfile]);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     navigate("/settings");
-  };
+  }, [navigate]);
 
-  const handleEdit = (field) => {
-    setEditField(field);
-  };
+  const handleEdit = (field) => setEditField(field);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,13 +62,13 @@ const EditProfile = () => {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     setEditField(null);
     dispatch(updateUserProfile(profile));
-  };
+  }, [dispatch, profile]);
 
-  const renderField = (fieldName, value, type = "text", placeholder = "") => {
-    return editField === fieldName ? (
+  const renderField = (fieldName, value, type = "text", placeholder = "") =>
+    editField === fieldName ? (
       <input
         name={fieldName}
         type={type}
@@ -89,7 +87,6 @@ const EditProfile = () => {
         {value}
       </div>
     );
-  };
 
   return (
     <div className="flex flex-col w-[360px] items-start relative bg-primary-background">
@@ -129,101 +126,37 @@ const EditProfile = () => {
         <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
           {t("profile.your_information")}
         </div>
-        <div
-          className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("firstName")}
-        >
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField(
-                  "firstName",
-                  profile.firstName,
-                  "text",
-                  t("profile.first_name_placeholder")
-                )}
-                <Pencil className="!relative !w-4 !h-4" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("lastName")}
-        >
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField(
-                  "lastName",
-                  profile.lastName,
-                  "text",
-                  t("profile.last_name_placeholder")
-                )}
-                <Pencil className="!relative !w-4 !h-4" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("phone")}
-        >
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField(
-                  "phone",
-                  profile.phone,
-                  "text",
-                  t("profile.phone_placeholder")
-                )}
-                <Pencil className="!relative !w-4 !h-4" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("email")}
-        >
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField(
-                  "email",
-                  profile.email,
-                  "text",
-                  t("profile.email_placeholder")
-                )}
-                <Pencil className="!relative !w-4 !h-4" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("password")}
-        >
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-              <div className="flex items-center justify-between relative flex-1 grow">
-                {renderField(
-                  "password",
-                  profile.password,
-                  "password",
-                  t("profile.password_placeholder")
-                )}
-                <EyeAlt4 className="!relative !w-4 !h-4" />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div
-          className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("address")}
-        >
+        {[
+          { name: "firstName", label: t("profile.first_name_placeholder") },
+          { name: "lastName", label: t("profile.last_name_placeholder") },
+          { name: "phone", label: t("profile.phone_placeholder") },
+          { name: "email", label: t("profile.email_placeholder") },
+          {
+            name: "password",
+            label: t("profile.password_placeholder"),
+            type: "password",
+            icon: <EyeAlt4 className="!relative !w-4 !h-4" />,
+          },
+        ].map(({ name, label, type = "text", icon }) => (
+          <div
+            key={name}
+            className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+            onClick={() => handleEdit(name)}
+          >
+            <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                <div className="flex items-center justify-between relative flex-1 grow">
+                  {renderField(name, profile[name], type, label)}
+                  {icon || <Pencil className="!relative !w-4 !h-4" />}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Address Section */}
+        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
@@ -231,29 +164,24 @@ const EditProfile = () => {
               </div>
             </div>
             <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
               onClick={() => handleEdit("address")}
             >
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                  <div className="flex items-center justify-between relative flex-1 grow">
-                    {renderField(
-                      "address",
-                      profile.address,
-                      "text",
-                      t("profile.address_placeholder")
-                    )}
-                    <Pencil className="!relative !w-4 !h-4" />
-                  </div>
+              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                <div className="flex items-center justify-between relative flex-1 grow">
+                  {renderField(
+                    "address",
+                    profile.address,
+                    "text",
+                    t("profile.address_placeholder")
+                  )}
+                  <Pencil className="!relative !w-4 !h-4" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("additionalAddress")}
-        >
+        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="font-normal relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] text-[#1b4f4a] text-sm tracking-[0] leading-[22px] whitespace-nowrap">
@@ -261,29 +189,24 @@ const EditProfile = () => {
               </div>
             </div>
             <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-              onClick={() => handleEdit("address")}
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
+              onClick={() => handleEdit("additionalAddress")}
             >
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                  <div className="flex items-center justify-between relative flex-1 grow">
-                    {renderField(
-                      "additionalAddress",
-                      profile.additionalAddress,
-                      "text",
-                      t("profile.additional_address_placeholder")
-                    )}
-                    <Pencil className="!relative !w-4 !h-4" />
-                  </div>
+              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                <div className="flex items-center justify-between relative flex-1 grow">
+                  {renderField(
+                    "additionalAddress",
+                    profile.additionalAddress,
+                    "text",
+                    t("profile.additional_address_placeholder")
+                  )}
+                  <Pencil className="!relative !w-4 !h-4" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("city")}
-        >
+        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
@@ -291,29 +214,24 @@ const EditProfile = () => {
               </div>
             </div>
             <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-              onClick={() => handleEdit("address")}
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
+              onClick={() => handleEdit("city")}
             >
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                  <div className="flex items-center justify-between relative flex-1 grow">
-                    {renderField(
-                      "city",
-                      profile.city,
-                      "text",
-                      t("profile.city_placeholder")
-                    )}
-                    <Pencil className="!relative !w-4 !h-4" />
-                  </div>
+              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                <div className="flex items-center justify-between relative flex-1 grow">
+                  {renderField(
+                    "city",
+                    profile.city,
+                    "text",
+                    t("profile.city_placeholder")
+                  )}
+                  <Pencil className="!relative !w-4 !h-4" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("postalCode")}
-        >
+        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
@@ -321,42 +239,45 @@ const EditProfile = () => {
               </div>
             </div>
             <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
               onClick={() => handleEdit("postalCode")}
             >
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                  <div className="flex items-center justify-between relative flex-1 grow">
-                    {renderField(
-                      "postalCode",
-                      profile.postalCode,
-                      "text",
-                      t("profile.postal_code_placeholder")
-                    )}
-                    <Pencil className="!relative !w-4 !h-4" />
-                  </div>
+              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                <div className="flex items-center justify-between relative flex-1 grow">
+                  {renderField(
+                    "postalCode",
+                    profile.postalCode,
+                    "text",
+                    t("profile.postal_code_placeholder")
+                  )}
+                  <Pencil className="!relative !w-4 !h-4" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          onClick={() => handleEdit("country")}
-        >
+        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
                 {t("profile.country")} ({t("profile.required")})
               </div>
             </div>
-            <div className="flex items-center gap-[116px] relative flex-1 grow">
-              {renderField(
-                "country",
-                profile.country,
-                "text",
-                t("profile.country_placeholder")
-              )}
+            <div
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
+              onClick={() => handleEdit("country")}
+            >
+              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                <div className="flex items-center justify-between relative flex-1 grow">
+                  {renderField(
+                    "country",
+                    profile.country,
+                    "text",
+                    t("profile.country_placeholder")
+                  )}
+                  <Pencil className="!relative !w-4 !h-4" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
