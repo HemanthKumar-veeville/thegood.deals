@@ -13,6 +13,7 @@ import { VerticalLine2 } from "../../icons/VerticalLine2";
 import { RatingStar } from "../RatingStar";
 import { Line63, blogImage, Human } from "../../images";
 import { useNavigate } from "react-router-dom";
+import CustomLoader from "../CustomLoader/CustomLoader";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -22,15 +23,14 @@ export const ArtisanConfirmThe = ({
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { dealId } = useParams(); // Assuming you're passing dealId as a route parameter
   const navigate = useNavigate();
   const { deal, status, error } = useSelector((state) => state.deals);
-
+  const queryParams = new URLSearchParams(location.search);
+  const dealId = queryParams.get("deal_id");
+  const dealState = deal?.Deal;
   useEffect(() => {
-    if (dealId) {
-      dispatch(fetchDealValidationDetails(dealId));
-    }
-  }, [dispatch, dealId]);
+    dispatch(fetchDealValidationDetails(dealId));
+  }, []);
 
   const handleRefuse = () => {
     navigate("/deal-refused");
@@ -41,11 +41,7 @@ export const ArtisanConfirmThe = ({
   };
 
   if (status === "loading") {
-    return <div>{t("loading")}</div>;
-  }
-
-  if (status === "failed") {
-    return <div>{t("error_message", { error })}</div>;
+    return <CustomLoader />;
   }
 
   return (

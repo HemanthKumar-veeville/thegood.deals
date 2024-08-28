@@ -57,17 +57,21 @@ export const requestPasswordRecoveryLink = forgotPassword;
 // Async thunk for resetting the password
 export const resetPassword = createAsyncThunk(
   "user/resetPassword",
-  async ({ password, confirmPassword }, { rejectWithValue }) => {
+  async ({ email, password, confirmPassword }, { rejectWithValue }) => {
     try {
       const formData = new FormData();
       formData.append("new-password", password);
       formData.append("confirm-password", confirmPassword);
 
-      const response = await axiosInstance.post("/reset_password", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosInstance.post(
+        `/reset_password?email=${email}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       console.log(response.data);
       return response.data;
     } catch (err) {

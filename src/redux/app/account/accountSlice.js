@@ -24,12 +24,28 @@ export const fetchUserProfile = createAsyncThunk(
   }
 );
 
-// Async thunk for updating user profile
+// Async thunk for updating user profile with FormData
 export const updateUserProfile = createAsyncThunk(
   "account/updateUserProfile",
   async (profileData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put("/account/profile", profileData);
+      // Create a new FormData object
+      const formData = new FormData();
+
+      // Append the profile data to the FormData object
+      for (const key in profileData) {
+        if (profileData.hasOwnProperty(key)) {
+          formData.append(key, profileData[key]);
+        }
+      }
+
+      // Make the PUT request with the FormData
+      const response = await axiosInstance.put("/account/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

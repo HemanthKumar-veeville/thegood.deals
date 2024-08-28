@@ -691,7 +691,9 @@
     "backButtonAlert": "Back Button clicked",
     "checkEmailHead": "Check your email 📧",
     "checkEmailDesc": "A recovery link has just been sent to your email.\nRemember to check your spam!",
-    "checkEmailAction": "Back to Home"
+    "checkEmailAction": "Back to Home",
+    "warningTitle": "Email missing",
+    "enterEmailAlert": "Please enter your email address."
   },
   "resetPassword": {
     "newPassword": "New Password",

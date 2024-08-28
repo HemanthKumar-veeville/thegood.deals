@@ -14,6 +14,7 @@ import {
   processRequest,
 } from "../../redux/app/requests/requestSlice";
 import { fetchParticipantsByDeal } from "../../redux/app/participants/participantSlice";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 
 const Invitations = () => {
   const navigate = useNavigate();
@@ -66,6 +67,14 @@ const Invitations = () => {
     navigate("/invite-loved-ones");
   };
 
+  // Check if either status is loading
+  const isLoading =
+    requestStatus === "loading" || participantStatus === "loading";
+
+  if (isLoading) {
+    return <CustomLoader />; // Display a single loader for the entire page
+  }
+
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-screen">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
@@ -91,6 +100,7 @@ const Invitations = () => {
             {t("invitations.new_requests")}
           </div>
         </div>
+
         {requests?.map((request, index) => (
           <div key={request.participant_id}>
             <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
@@ -137,6 +147,7 @@ const Invitations = () => {
             />
           </div>
         ))}
+
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
           onClick={handleInviteLovedOnes}
