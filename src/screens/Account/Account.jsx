@@ -20,6 +20,9 @@ import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { fetchDeals } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
 import { logoutUser } from "../../redux/app/user/userSlice"; // Import the logoutUser thunk
+import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
+import { Pencil } from "../../icons/Pencil/Pencil.jsx";
+import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 
 const Account = () => {
   const { t } = useTranslation(); // Initialize translation hook
@@ -224,37 +227,71 @@ const Account = () => {
             />
           </div>
         </div>
-        {status === "loading" && <CustomLoader />}
-        {status !== "loading" &&
-          deals?.Deals?.map((deal) => (
-            <div
-              onClick={() => handleCardClick(deal)}
-              className="cursor-pointer"
-              key={deal.id} // Add key to the mapped elements
-            >
-              <CardDeal
-                badgesColor="success"
-                badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-                badgesText1={deal.dealStatus}
-                caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
-                className="!flex-[0_0_auto]"
-                divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
-                divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
-                override={
-                  deal.dealStatus === "out_of_stock" ? (
-                    <ProgressBarYellow percentage={98} />
+        <div className={status === "loading" ? "h-56" : "h-full"}>
+          {status === "loading" && <CustomLoader />}
+          {status !== "loading" &&
+            deals?.Deals?.map((deal) => (
+              <div
+                onClick={() => handleCardClick(deal)}
+                className="cursor-pointer"
+                key={deal.id} // Add key to the mapped elements
+              >
+                <CardDeal
+                  badgesColor="success"
+                  badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+                  badgesText1={deal.dealStatus}
+                  caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
+                  className="!flex-[0_0_auto]"
+                  divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
+                  divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
+                  override={
+                    deal.dealStatus === "out_of_stock" ? (
+                      <ProgressBarYellow percentage={98} />
+                    ) : (
+                      <ProgressBarGreen percentage={90} />
+                    )
+                  }
+                  text={deal.deal_title}
+                  text1={deal.deal_status}
+                  participantsCount={deal.deal_participants_count}
+                  dealEndsIn={deal?.deal_ends_in}
+                  isGuestDeal={activeTab === "invited"}
+                />
+              </div>
+            ))}
+          {status !== "loading" && deals?.Deals?.length === 0 && (
+            <div className="w-[18rem]">
+              <SuccessAlert
+                className="!flex !bg-cyancyan-light-3 w-[100%]"
+                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
+                frameClassName="!flex-1 !flex !grow"
+                groupClassName="!bg-cyancyan"
+                icon={
+                  <Warning1
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                }
+                style="three"
+                text={
+                  activeTab === "created" ? (
+                    <>
+                      You don't have any deals.
+                      <br />
+                       Create one now!
+                    </>
                   ) : (
-                    <ProgressBarGreen percentage={90} />
+                    <>
+                      You are not in any deals.
+                      <br />
+                       Wait until you are invited!
+                    </>
                   )
                 }
-                text={deal.deal_title}
-                text1={deal.deal_status}
-                participantsCount={deal.deal_participants_count}
-                dealEndsIn={deal?.deal_ends_in}
-                isGuestDeal={activeTab === "invited"}
               />
             </div>
-          ))}
+          )}
+        </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"

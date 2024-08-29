@@ -76,14 +76,25 @@ export const addNewDeal = createAsyncThunk(
   }
 );
 
-// Async thunk for inviting an artisan to a deal
+// Async thunk for inviting an artisan to a deal with FormData
 export const inviteArtisan = createAsyncThunk(
   "deals/inviteArtisan",
   async ({ dealId, email }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/invite_artisan/${dealId}`, {
-        email,
-      });
+      // Create a FormData object
+      const formData = new FormData();
+      formData.append("email", email);
+
+      const response = await axiosInstance.post(
+        `/invite_artisan/${dealId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
