@@ -28,9 +28,10 @@ export const ArtisanConfirmThe = ({
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
   const dealState = deal?.Deal;
+
   useEffect(() => {
     dispatch(fetchDealValidationDetails(dealId));
-  }, []);
+  }, [dispatch, dealId]);
 
   const handleRefuse = () => {
     navigate("/deal-refused");
@@ -61,23 +62,23 @@ export const ArtisanConfirmThe = ({
         <img
           className="relative self-stretch w-full h-[150px] object-cover"
           alt="Blog image"
-          src={deal?.image || blogImage} // Use deal image if available
+          src={dealState?.image || blogImage} // Use dealState image if available
         />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          {deal?.title || t("artisanConfirmThe.wine_crates")}
+          {dealState?.deal_title || t("artisanConfirmThe.wine_crates")}
         </p>
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {deal?.duration || t("artisanConfirmThe.deal_duration")}
+              {dealState?.deal_duration || t("artisanConfirmThe.deal_duration")}
             </p>
           </div>
         </div>
         <div className="flex self-stretch w-full items-center gap-2.5 relative flex-[0_0_auto]">
           <Map className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-            {deal?.location || t("artisanConfirmThe.location")}
+            {dealState?.location || t("artisanConfirmThe.location")}
           </p>
         </div>
         <img
@@ -96,12 +97,12 @@ export const ArtisanConfirmThe = ({
               {t("artisanConfirmThe.organized_by")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              {deal?.organizer || "Abraham Thomas"}
+              {dealState?.organiser.name || "Abraham Thomas"}
             </div>
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar
                 className="!flex-[0_0_auto]"
-                rating="four-star"
+                rating={dealState?.organiser.rating || "four-star"}
                 size="small"
               />
             </div>
@@ -112,7 +113,8 @@ export const ArtisanConfirmThe = ({
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {deal?.description || t("artisanConfirmThe.deal_description")}
+            {dealState?.deal_description ||
+              t("artisanConfirmThe.deal_description")}
           </span>
           <span className="font-bold text-[#1b4f4a] underline">
             {t("artisanConfirmThe.read_more")}
@@ -131,7 +133,7 @@ export const ArtisanConfirmThe = ({
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {deal?.what_customers_receive ||
+            {dealState?.["what's included"] ||
               t("artisanConfirmThe.customers_receive")}
           </span>
           <span className="font-bold text-[#1b4f4a] underline">
@@ -152,22 +154,22 @@ export const ArtisanConfirmThe = ({
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-            {deal?.delivery_date || t("artisanConfirmThe.delivery_date")}
+            {dealState?.delivery_date || t("artisanConfirmThe.delivery_date")}
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <DeliveryTruck4 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-transparent text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
             <span className="text-[#1b4f4a] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-              {deal?.delivery_location ||
+              {dealState?.delivery_location ||
                 t("artisanConfirmThe.delivery_location")}
             </span>
             <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-              {deal?.address || t("artisanConfirmThe.address")}
+              {dealState?.address || t("artisanConfirmThe.address")}
             </span>
           </p>
         </div>
-        <div className="flex-col items-start gap-[15px] p-[15px] self-stretch w-full bg-whitewhite rounded-[5px] flex relative flex-[0_0_auto]">
+        <div className="flex-col items-start gap-[15px] p-[15px] self-stretch w-full bg-white rounded-[5px] flex relative flex-[0_0_auto]">
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <Box44 className="!relative !w-5 !h-5" />
             <div className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
@@ -179,43 +181,50 @@ export const ArtisanConfirmThe = ({
             alt="Line"
             src={Line63}
           />
-          <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-                {t("artisanConfirmThe.case_of_rose")}
-              </p>
-            </div>
-            <div className="flex flex-col items-start justify-center gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-              <p className="relative w-fit mt-[-1.00px] font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-orangeorange text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                {t("artisanConfirmThe.min_quantity")}
-              </p>
-              <p className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-secondary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                {t("artisanConfirmThe.max_quantity")}
-              </p>
-              <div className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-primary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                {t("artisanConfirmThe.total_stock")}
+          {dealState?.products.map((product, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]"
+            >
+              <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+                <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
+                  {product.product_name}
+                </p>
               </div>
-            </div>
-            <div className="items-center justify-end gap-[70px] self-stretch w-full flex relative flex-[0_0_auto]">
-              <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                <div className="relative w-fit mt-[-1.00px] font-body-large-regular font-[number:var(--body-large-regular-font-weight)] text-primary-color text-[length:var(--body-large-regular-font-size)] text-right tracking-[var(--body-large-regular-letter-spacing)] leading-[var(--body-large-regular-line-height)] whitespace-nowrap [font-style:var(--body-large-regular-font-style)]">
-                  €29.00 {t("artisanConfirmThe.per_unit")}
+              <div className="flex flex-col items-start justify-center gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
+                <p className="relative w-fit mt-[-1.00px] font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-orange text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                  {t("artisanConfirmThe.min_quantity")}:{" "}
+                  {product.min_quantity_per_order}
+                </p>
+                <p className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-secondary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                  {t("artisanConfirmThe.max_quantity")}:{" "}
+                  {product.max_quantity_per_order}
+                </p>
+                <div className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-primary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                  {t("artisanConfirmThe.total_stock")}: {product.total_stock}
                 </div>
               </div>
+              <div className="items-center justify-end gap-[70px] self-stretch w-full flex relative flex-[0_0_auto]">
+                <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
+                  <div className="relative w-fit mt-[-1.00px] font-body-large-regular font-[number:var(--body-large-regular-font-weight)] text-primary-color text-[length:var(--body-large-regular-font-size)] text-right tracking-[var(--body-large-regular-letter-spacing)] leading-[var(--body-large-regular-line-height)] whitespace-nowrap [font-style:var(--body-large-regular-font-style)]">
+                    €{product.price_per_unit} {t("artisanConfirmThe.per_unit")}
+                  </div>
+                </div>
+              </div>
+              <img
+                className="relative self-stretch w-full h-px object-cover"
+                alt="Line"
+                src={Line63}
+              />
             </div>
-          </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          ))}
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             <div
               onClick={handleRefuse}
-              className="gap-2 bg-whitewhite border border-solid border-redred shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
+              className="gap-2 bg-white border border-solid border-red shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
             >
               <CrossCircle className="!relative !w-5 !h-5 !ml-[-6.75px]" />
-              <button className="all-[unset] box-border mr-[-6.75px] text-redred relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+              <button className="all-[unset] box-border mr-[-6.75px] text-red relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                 {t("artisanConfirmThe.refuse")}
               </button>
             </div>
@@ -224,7 +233,7 @@ export const ArtisanConfirmThe = ({
               className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
             >
               <Send1 className="!relative !w-5 !h-5 !ml-[-13.25px]" />
-              <button className="all-[unset] box-border mr-[-13.25px] text-whitewhite relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+              <button className="all-[unset] box-border mr-[-13.25px] text-white relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                 {t("artisanConfirmThe.confirm")}
               </button>
             </div>

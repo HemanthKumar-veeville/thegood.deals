@@ -5,6 +5,7 @@ import { UserAlt } from "../../icons/UserAlt";
 import { VerticalLine } from "../../icons/VerticalLine";
 import SideBar from "../../screens/SideBar/SideBar";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 /**
  * AppBar component renders the top navigation bar of the application.
@@ -15,6 +16,8 @@ function AppBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isUser, setIsUser] = useState(true);
+  const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
+
   /**
    * Toggles the sidebar open state.
    */
@@ -83,7 +86,9 @@ function AppBar() {
           {isUser && (
             <div
               className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
-              onClick={() => navigate("/auth?login")}
+              onClick={() =>
+                !isUserLoggedIn ? navigate("/auth?login") : handleOpen()
+              }
             >
               <UserAlt className="!relative !w-6 !h-6" />
             </div>

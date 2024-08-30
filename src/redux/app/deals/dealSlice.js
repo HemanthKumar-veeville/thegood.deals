@@ -86,7 +86,7 @@ export const inviteArtisan = createAsyncThunk(
       formData.append("email", email);
 
       const response = await axiosInstance.post(
-        `/invite_artisan/${dealId}`,
+        `/invite_artisan/${dealId}/1`,
         formData,
         {
           headers: {
