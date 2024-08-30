@@ -161,7 +161,7 @@ const Account = () => {
   };
 
   return (
-    <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-screen">
+    <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-full">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
           {t("account.greeting")} {/* Hey 👋🏻 Anthony */}
@@ -233,7 +233,7 @@ const Account = () => {
             deals?.Deals?.map((deal) => (
               <div
                 onClick={() => handleCardClick(deal)}
-                className="cursor-pointer"
+                className="cursor-pointer mb-5"
                 key={deal.id} // Add key to the mapped elements
               >
                 <CardDeal

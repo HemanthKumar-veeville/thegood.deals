@@ -12,8 +12,10 @@ import { Send1 } from "../../icons/Send1";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
 import { RatingStar } from "../RatingStar";
 import { Line63, blogImage, Human } from "../../images";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import CustomLoader from "../CustomLoader/CustomLoader";
+import { createRequest } from "../../redux/app/requests/requestSlice";
+import Swal from "sweetalert2";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -28,6 +30,9 @@ export const ArtisanConfirmThe = ({
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
   const dealState = deal?.Deal;
+  const pathLocation = useLocation();
+  const pathname = pathLocation?.pathname;
+  const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
 
   useEffect(() => {
     dispatch(fetchDealValidationDetails(dealId));
@@ -41,6 +46,38 @@ export const ArtisanConfirmThe = ({
     navigate("/deal-confirmed");
   };
 
+  const handleAcceptRequest = async () => {
+    try {
+      const response = await dispatch(createRequest(dealId));
+
+      if (response.payload.code === 201) {
+        navigate("/request-sent");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text:
+            response.payload.message ||
+            "Something went wrong. Please try again.",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Failed to send request. Please try again.",
+      });
+    }
+  };
+
+  const handleAccept = () => {
+    isUserLoggedIn ? handleAcceptRequest() : navigate("/auth?login");
+  };
+
+  const handleIgnore = () => {
+    navigate("/");
+  };
+
   if (status === "loading") {
     return <CustomLoader />;
   }
@@ -48,12 +85,16 @@ export const ArtisanConfirmThe = ({
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
       <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
-        <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          {t("artisanConfirmThe.thank_you")}
-        </p>
-        <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-          {t("artisanConfirmThe.confirmation_notice")}
-        </p>
+        {pathname !== "/deal_details" && (
+          <>
+            <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
+              {t("artisanConfirmThe.thank_you")}
+            </p>
+            <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
+              {t("artisanConfirmThe.confirmation_notice")}
+            </p>
+          </>
+        )}
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
@@ -218,26 +259,50 @@ export const ArtisanConfirmThe = ({
               />
             </div>
           ))}
-          <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-            <div
-              onClick={handleRefuse}
-              className="gap-2 bg-white border border-solid border-red shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
-            >
-              <CrossCircle className="!relative !w-5 !h-5 !ml-[-6.75px]" />
-              <button className="all-[unset] box-border mr-[-6.75px] text-red relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                {t("artisanConfirmThe.refuse")}
-              </button>
+          {pathname !== "/deal_details" && (
+            <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
+              <div
+                onClick={handleRefuse}
+                className="gap-2 bg-white border border-solid border-red shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
+              >
+                <CrossCircle className="!relative !w-5 !h-5 !ml-[-6.75px]" />
+                <button className="all-[unset] box-border mr-[-6.75px] text-red relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                  {t("artisanConfirmThe.refuse")}
+                </button>
+              </div>
+              <div
+                onClick={handleConfirm}
+                className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
+              >
+                <Send1 className="!relative !w-5 !h-5 !ml-[-13.25px]" />
+                <button className="all-[unset] box-border mr-[-13.25px] text-white relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                  {t("artisanConfirmThe.confirm")}
+                </button>
+              </div>
             </div>
-            <div
-              onClick={handleConfirm}
-              className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
-            >
-              <Send1 className="!relative !w-5 !h-5 !ml-[-13.25px]" />
-              <button className="all-[unset] box-border mr-[-13.25px] text-white relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                {t("artisanConfirmThe.confirm")}
-              </button>
+          )}
+          {pathname === "/deal_details" && (
+            <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
+              <div
+                onClick={handleIgnore}
+                className="gap-2 bg-white border border-solid border-red shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
+              >
+                <CrossCircle className="!relative !w-5 !h-5 !ml-[-6.75px]" />
+                <button className="all-[unset] box-border mr-[-6.75px] text-red relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                  Ignore
+                </button>
+              </div>
+              <div
+                onClick={handleAccept}
+                className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
+              >
+                <Send1 className="!relative !w-5 !h-5 !ml-[-13.25px]" />
+                <button className="all-[unset] box-border mr-[-13.25px] text-white relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                  Accept
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

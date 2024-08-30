@@ -21,6 +21,7 @@ import ProductList from "../../components/ProductInfo/ProductList";
 import { useDispatch } from "react-redux";
 import { addNewDeal, getDealByDealId } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import Swal from "sweetalert2";
 
 const CreateDeal = () => {
   const { t } = useTranslation(); // Initialize translation hook
@@ -87,6 +88,7 @@ const CreateDeal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true at the start
 
     try {
       // Create FormData object and append form data
@@ -121,7 +123,13 @@ const CreateDeal = () => {
       // Handle error during submission
       console.error("Failed to create deal:", err);
       // Optionally, display an error message to the user
-      alert("There was an error creating the deal. Please try again.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: err?.detail,
+      });
+    } finally {
+      setLoading(false); // Set loading to false after the API call is completed
     }
   };
 

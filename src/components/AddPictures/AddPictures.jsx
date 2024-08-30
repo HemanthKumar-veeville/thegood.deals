@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { FaTrash, FaStar } from "react-icons/fa"; // Import the trash and star icons from react-icons
+import Swal from "sweetalert2";
 
 const AddPictures = ({ onChange }) => {
   const [pictures, setPictures] = useState([]);
@@ -12,7 +13,11 @@ const AddPictures = ({ onChange }) => {
     const files = Array.from(event.target.files);
     const totalFiles = pictures.length + files.length;
     if (totalFiles > 10) {
-      alert("You can only select up to 10 files in total.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You can only select up to 10 files in total.",
+      });
       return;
     }
 

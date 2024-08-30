@@ -13,7 +13,7 @@ export const GuestEmailAskFor = ({ HEADERClassName }) => {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen items-start relative bg-primary-background">
+    <div className="flex flex-col w-full h-full min-h-screen items-start relative bg-primary-background">
       <div
         className={`flex flex-col w-[360px] h-16 items-start relative bg-primary-background border-b [border-bottom-style:solid] border-stroke ${HEADERClassName}`}
       >

@@ -109,7 +109,7 @@ const AppBar = loadable(() => import("./components/AppBar/AppBar"), {
 // Layout component to include AppBar across all routes
 function Layout({ children }) {
   return (
-    <div className="flex flex-col w-full h-screen items-start relative bg-primary-background">
+    <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen">
       <AppBar />
       <Suspense fallback={<CustomLoader />}>{children}</Suspense>
     </div>
@@ -185,6 +185,22 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<ThanksToAdmin />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/request-sent",
+      element: (
+        <Layout>
+          <ProtectedRoute
+            element={
+              <Message
+                heading="It’s sent! . 🎉"
+                description="Your request has been sent to the organiser. You will be notified when the organiser accepts or refuses your request."
+                action={t("lostPassword.checkEmailAction")}
+              />
+            }
+          />
         </Layout>
       ),
     },
@@ -388,6 +404,14 @@ function App() {
     },
     {
       path: "/artisan-validation",
+      element: (
+        <Layout>
+          <ArtisanConfirmTheScreen />
+        </Layout>
+      ),
+    },
+    {
+      path: "/deal_details",
       element: (
         <Layout>
           <ArtisanConfirmTheScreen />

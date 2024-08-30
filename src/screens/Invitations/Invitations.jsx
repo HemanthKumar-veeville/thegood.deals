@@ -64,7 +64,7 @@ const Invitations = () => {
   };
 
   const handleInviteLovedOnes = () => {
-    navigate("/invite-loved-ones");
+    navigate(`/invite-loved-ones?deal_id=${deal_id}`);
   };
 
   // Check if either status is loading

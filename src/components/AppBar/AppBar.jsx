@@ -38,7 +38,8 @@ function AppBar() {
       location?.pathname === "/deal-confirmed" ||
       location?.pathname === "/deal-refused" ||
       location?.pathname === "/deal-refused-message" ||
-      location?.pathname === "/artisan-send-review"
+      location?.pathname === "/artisan-send-review" ||
+      location?.pathname === "/deal_details"
     ) {
       setIsUser(false);
     } else {
