@@ -16,6 +16,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import { createRequest } from "../../redux/app/requests/requestSlice";
 import Swal from "sweetalert2";
+import { validationByArtisan } from "../../redux/app/deals/dealSlice";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -39,11 +40,29 @@ export const ArtisanConfirmThe = ({
   }, [dispatch, dealId]);
 
   const handleRefuse = () => {
-    navigate("/deal-refused");
+    navigate(`/deal-refused?deal_id=${dealId}`);
   };
 
-  const handleConfirm = () => {
-    navigate("/deal-confirmed");
+  const handleConfirm = async (dealId) => {
+    const formData = { status: "accept", reason_for_refusal: "" };
+
+    try {
+      // Dispatch the async thunk with formData as the dealUpdate
+      const resultAction = await dispatch(
+        validationByArtisan({ dealId, dealUpdate: formData })
+      );
+
+      // Check if the thunk was fulfilled
+      if (validationByArtisan.fulfilled.match(resultAction)) {
+        // Navigate to the confirmation page
+        navigate("/deal-confirmed");
+      } else {
+        // Handle any validation errors here
+        console.error("Validation failed:", resultAction.payload);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   const handleAcceptRequest = async () => {
@@ -271,7 +290,7 @@ export const ArtisanConfirmThe = ({
                 </button>
               </div>
               <div
-                onClick={handleConfirm}
+                onClick={() => handleConfirm(dealId)}
                 className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
               >
                 <Send1 className="!relative !w-5 !h-5 !ml-[-13.25px]" />

@@ -63,6 +63,22 @@ export const fetchDealValidationDetails = createAsyncThunk(
   }
 );
 
+// Async thunk for artisan validating new deal
+export const validationByArtisan = createAsyncThunk(
+  "deals/validateDeal",
+  async ({ dealId, dealUpdate }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/deals/${dealId}/validation`,
+        dealUpdate
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // Async thunk for adding a new deal
 export const addNewDeal = createAsyncThunk(
   "deals/addNewDeal",

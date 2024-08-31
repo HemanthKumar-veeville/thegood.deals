@@ -5,6 +5,8 @@ import { ArrowRight1 } from "../../icons/ArrowRight1";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { validationByArtisan } from "../../redux/app/deals/dealSlice";
 
 export const ArtisanDeniedThe = ({
   HEADERHeaderOpenClassName,
@@ -16,6 +18,9 @@ export const ArtisanDeniedThe = ({
   const [feedback, setFeedback] = useState("");
   const [charCount, setCharCount] = useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const queryParams = new URLSearchParams(location.search);
+  const dealId = queryParams.get("deal_id");
 
   const handleFeedbackChange = (e) => {
     const input = e.target.value;
@@ -23,12 +28,30 @@ export const ArtisanDeniedThe = ({
     setCharCount(input.length);
   };
 
-  const handleSubmit = () => {
-    navigate("/deal-refused-message");
+  const handleSubmit = async (dealId) => {
+    const formData = { status: "refuse", reason_for_refusal: feedback };
+
+    try {
+      // Dispatch the async thunk with formData as the dealUpdate
+      const resultAction = await dispatch(
+        validationByArtisan({ dealId, dealUpdate: formData })
+      );
+
+      // Check if the thunk was fulfilled
+      if (validationByArtisan.fulfilled.match(resultAction)) {
+        // Navigate to the refusal message page
+        navigate("/deal-refused-message");
+      } else {
+        // Handle any validation errors here
+        console.error("Validation failed:", resultAction.payload);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   const handleCancel = () => {
-    navigate("/artisan-validation");
+    navigate(`/artisan-validation?deal_id=${dealId}`);
   };
 
   return (
@@ -70,7 +93,7 @@ export const ArtisanDeniedThe = ({
           </div>
         </div>
         <div
-          onClick={handleSubmit}
+          onClick={() => handleSubmit(dealId)}
           className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
         >
           <button className="all-[unset] box-border text-whitewhite relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">

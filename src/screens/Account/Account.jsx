@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next"; // Import the useTranslation hook
+import React, { useEffect, useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { ButtonGroup } from "../../components/ButtonGroup";
 import { CardDeal } from "../../components/CardDeal";
-import { StyleTypePrimaryWrapper } from "../../components/StyleTypePrimaryWrapper";
 import { CirclePlus92 } from "../../icons/CirclePlus92";
 import { ClockDollar1 } from "../../icons/ClockDollar1";
 import { Cog2 } from "../../icons/Cog2";
@@ -12,40 +11,43 @@ import { UserLock1 } from "../../icons/UserLock1";
 import { Users3 } from "../../icons/Users3";
 import { ChatAlt6 } from "../../icons/ChatAlt6";
 import { Line63 } from "../../images";
-import AppBar from "../../components/AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { fetchDeals } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
-import { logoutUser } from "../../redux/app/user/userSlice"; // Import the logoutUser thunk
+import { logoutUser } from "../../redux/app/user/userSlice";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
-import { Pencil } from "../../icons/Pencil/Pencil.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 
 const Account = () => {
-  const { t } = useTranslation(); // Initialize translation hook
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("created");
+  const [page, setPage] = useState(1); // Track current page
+  const [isFetchingMore, setIsFetchingMore] = useState(false); // Track if more data is being fetched
+
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
   const { deals, status } = dealsState;
 
+  const scrollableContainerRef = useRef(null); // Ref for the scrollable container
+
   useEffect(() => {
-    location?.state?.activeTab &&
-      handleTabSwitch(location?.state?.activeTab || activeTab);
-  }, [activeTab]);
+    if (location?.state?.activeTab) {
+      handleTabSwitch(location.state.activeTab || activeTab);
+    } else {
+      dispatch(fetchDeals({ deal_type: activeTab, page: 1, limit: 3 }));
+    }
+  }, [activeTab, dispatch]);
 
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
+    setPage(1); // Reset to page 1 when switching tabs
     dispatch(fetchDeals({ deal_type: tab, page: 1, limit: 3 }));
   };
-
-  useEffect(() => {
-    dispatch(fetchDeals({ deal_type: "created", page: 1, limit: 3 }));
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,91 +74,93 @@ const Account = () => {
   };
 
   const handleSignOut = () => {
-    dispatch(logoutUser()) // Dispatch the logout action
-      .then(() => {
-        navigate("/auth?login"); // Navigate to the login page after successful logout
-      });
+    dispatch(logoutUser()).then(() => {
+      navigate("/auth?login");
+    });
   };
 
   const handleCardClick = (deal) => {
     switch (deal?.dealStatus) {
       case "draft":
         navigate(
-          "/admin-draft-deal?deal_id=" +
-            deal?.deal_id +
-            "&is_creator=" +
-            deal?.is_creator,
+          `/admin-draft-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
           { state: { deal } }
         );
         break;
       case "waiting":
         navigate(
-          "/admin-waiting-deal?deal_id=" +
-            deal?.deal_id +
-            "&is_creator=" +
-            deal?.is_creator,
+          `/admin-waiting-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
           { state: { deal } }
         );
         break;
       case "in_stock":
         activeTab !== "created"
           ? navigate(
-              "/guest-deal-view?deal_id=" +
-                deal?.deal_id +
-                "&is_creator=" +
-                deal?.is_creator,
+              `/guest-deal-view?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
               { state: { deal } }
             )
           : navigate(
-              "/admin-active-deal?deal_id=" +
-                deal?.deal_id +
-                "&is_creator=" +
-                deal?.is_creator,
+              `/admin-active-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
               { state: { deal } }
             );
         break;
       case "out_of_stock":
         activeTab !== "created"
           ? navigate(
-              "/guest-deal-view?deal_id=" +
-                deal?.deal_id +
-                "&is_creator=" +
-                deal?.is_creator,
+              `/guest-deal-view?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
               { state: { deal } }
             )
           : navigate(
-              "/admin-active-deal?deal_id=" +
-                deal?.deal_id +
-                "&is_creator=" +
-                deal?.is_creator,
+              `/admin-active-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
               { state: { deal } }
             );
         break;
       case "finished":
         activeTab !== "created"
           ? navigate(
-              "/guest-deal-view?deal_id=" +
-                deal?.deal_id +
-                "&is_creator=" +
-                deal?.is_creator,
+              `/guest-deal-view?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
               { state: { deal } }
             )
           : navigate(
-              "/admin-active-deal?deal_id=" +
-                deal?.deal_id +
-                "&is_creator=" +
-                deal?.is_creator,
+              `/admin-active-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
               { state: { deal } }
             );
         break;
       default:
         navigate(
-          "/admin-active-deal?deal_id=" +
-            deal?.deal_id +
-            "&is_creator=" +
-            deal?.is_creator,
+          `/admin-active-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
           { state: { deal } }
         );
+    }
+  };
+
+  // Function to load more deals when scrolled to the top or bottom
+  const loadMoreDeals = (direction) => {
+    if (status === "loading" || isFetchingMore) return;
+
+    setIsFetchingMore(true); // Indicate that more data is being fetched
+    const nextPage = direction === "bottom" ? page + 1 : Math.max(1, page - 1);
+
+    dispatch(fetchDeals({ deal_type: activeTab, page: nextPage, limit: 3 }))
+      .then(() => {
+        setPage((prevPage) => nextPage); // Update the page number after fetching
+      })
+      .finally(() => {
+        setIsFetchingMore(false); // Reset the fetching state
+      });
+  };
+
+  // Function to handle scroll event on the container
+  const handleContainerScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } =
+      scrollableContainerRef.current;
+    console.log(scrollTop, scrollHeight, clientHeight);
+    if (scrollTop === 0) {
+      // Reached the top
+      loadMoreDeals("top");
+    } else if (scrollTop + clientHeight >= scrollHeight - 50) {
+      // Reached the bottom
+      loadMoreDeals("bottom");
     }
   };
 
@@ -227,7 +231,11 @@ const Account = () => {
             />
           </div>
         </div>
-        <div className={status === "loading" ? "h-56" : "h-full"}>
+        <div
+          className="h-72 overflow-y-auto"
+          ref={scrollableContainerRef}
+          onScroll={handleContainerScroll}
+        >
           {status === "loading" && <CustomLoader />}
           {status !== "loading" &&
             deals?.Deals?.map((deal) => (
@@ -292,6 +300,7 @@ const Account = () => {
             </div>
           )}
         </div>
+        {isFetchingMore && <CustomLoader />} {/* Loader for infinite scroll */}
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt="Line"
