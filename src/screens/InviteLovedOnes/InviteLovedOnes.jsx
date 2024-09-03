@@ -11,6 +11,7 @@ import { Whatsapp } from "../../icons/Whatsapp";
 import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const InviteLovedOnes = () => {
   const [emails, setEmails] = useState([]);
@@ -38,7 +39,7 @@ const InviteLovedOnes = () => {
       .then(() => {
         Swal.fire({
           icon: "success",
-          title: "Oops...",
+          title: "Copied...",
           text: "Link copied to clipboard!",
         });
       })

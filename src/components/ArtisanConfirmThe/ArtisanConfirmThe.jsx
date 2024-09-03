@@ -72,13 +72,14 @@ export const ArtisanConfirmThe = ({
       if (response.payload.code === 201) {
         navigate("/request-sent");
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text:
-            response.payload.message ||
-            "Something went wrong. Please try again.",
-        });
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Oops...",
+        //   text:
+        //     response.payload.message ||
+        //     "Something went wrong. Please try again.",
+        // });
+        navigate("/auth?login");
       }
     } catch (error) {
       Swal.fire({
@@ -90,7 +91,7 @@ export const ArtisanConfirmThe = ({
   };
 
   const handleAccept = () => {
-    isUserLoggedIn ? handleAcceptRequest() : navigate("/auth?login");
+    handleAcceptRequest();
   };
 
   const handleIgnore = () => {
