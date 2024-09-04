@@ -10,6 +10,8 @@ import "./App.css";
 import loadable from "@loadable/component";
 import { Legal } from "./screens/Legal";
 import { useTranslation } from "react-i18next";
+import Payment from "./components/Payment";
+import { loadStripe } from "@stripe/stripe-js";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -122,6 +124,18 @@ function App() {
   const dispatch = useDispatch();
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const { t } = useTranslation(); // Initialize the translation hook
+  const [stripePromise, setStripePromise] = useState(null);
+
+  useEffect(() => {
+    // fetch("/api/config").then(async (r) => {
+    // const { publishableKey } = await r.json();
+    setStripePromise(
+      loadStripe(
+        "pk_test_51PplNp04KHQUtznoy8HmY5meaJK4aZgRjwuckLfjquqCSJMvfXEjacj3pADbzg2SDbNuWr0zRhrFymRRstAjzh3S00USzDZqAJ"
+      )
+    );
+    // });
+  }, []);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -258,8 +272,9 @@ function App() {
           <ProtectedRoute
             element={
               <Withdrawal
-                heading="Payment validation"
-                btnText="Validate payment"
+                heading="Provide Payment Details"
+                btnText="Validate Payment"
+                stripePromise={stripePromise}
               />
             }
           />
