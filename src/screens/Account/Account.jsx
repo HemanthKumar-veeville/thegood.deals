@@ -264,6 +264,7 @@ const Account = () => {
                   participantsCount={deal.deal_participants_count}
                   dealEndsIn={deal?.deal_ends_in}
                   isGuestDeal={activeTab === "invited"}
+                  dealImage={deal.deal_image}
                 />
               </div>
             ))}

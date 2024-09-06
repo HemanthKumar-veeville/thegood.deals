@@ -12,6 +12,7 @@ import { Legal } from "./screens/Legal";
 import { useTranslation } from "react-i18next";
 import Payment from "./components/Payment";
 import { loadStripe } from "@stripe/stripe-js";
+import DeleteAccount from "./screens/DeleteAccount";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -440,6 +441,26 @@ function App() {
           <Message
             heading={t("artisanApproved.heading")}
             description={t("artisanApproved.description")}
+            action={t("artisanApproved.action")}
+          />
+        </Layout>
+      ),
+    },
+    {
+      path: "/delete-account",
+      element: (
+        <Layout>
+          <DeleteAccount />
+        </Layout>
+      ),
+    },
+    {
+      path: "/delete-account-message",
+      element: (
+        <Layout>
+          <Message
+            heading="It's deleted! 🗑️"
+            description={`This is just goodbye!\nCome back whenever you want.`}
             action={t("artisanApproved.action")}
           />
         </Layout>

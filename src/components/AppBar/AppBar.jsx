@@ -6,6 +6,7 @@ import { VerticalLine } from "../../icons/VerticalLine";
 import SideBar from "../../screens/SideBar/SideBar";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Line63 } from "../../images";
 
 /**
  * AppBar component renders the top navigation bar of the application.
@@ -95,6 +96,11 @@ function AppBar() {
             </div>
           )}
         </div>
+        <img
+          className="relative self-stretch w-full h-[2px] mb-1 object-cover"
+          alt="Line"
+          src={Line63}
+        />
       </header>
       {/* Sidebar */}
       {open && <SideBar onClose={handleOpen} />}

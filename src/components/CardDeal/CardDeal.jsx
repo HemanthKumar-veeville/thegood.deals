@@ -49,6 +49,7 @@ export const CardDeal = ({
   badgesText1 = statusBanner[text1].text,
   dealEndsIn,
   isGuestDeal,
+  dealImage,
 }) => {
   const calculateDaysLeft = (expiryDate) => {
     const now = new Date();
@@ -70,7 +71,7 @@ export const CardDeal = ({
       <img
         className="relative self-stretch w-full h-[125px] object-cover"
         alt="Rectangle"
-        src={isGuestDeal ? Rectangle4592 : Rectangle_4592_5}
+        src={dealImage}
       />
       <div className="flex flex-col items-center gap-2.5 p-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">

@@ -3,7 +3,7 @@ import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { FaTrash, FaStar } from "react-icons/fa"; // Import the trash and star icons from react-icons
 import Swal from "sweetalert2";
 
-const AddPictures = ({ onChange }) => {
+const AddPictures = ({ onChange, setForm }) => {
   const [pictures, setPictures] = useState([]);
   const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,6 +30,12 @@ const AddPictures = ({ onChange }) => {
       }
       return updatedPictures;
     });
+    const form = new FormData(); // Create a new FormData object
+    files.forEach((file) => {
+      form.append("images", file); // Append each actual file object
+    });
+
+    setForm(form);
   };
 
   const handleDelete = (index, event) => {

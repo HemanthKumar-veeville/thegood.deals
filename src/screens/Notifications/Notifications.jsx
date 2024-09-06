@@ -12,8 +12,8 @@ const Notifications = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { notifications, status } = useSelector((state) => state.account);
-  console.log({ notifications });
+  // const { notifications, status } = useSelector((state) => state.account);
+  // console.log({ notifications });
   useEffect(() => {
     dispatch(fetchNotificationSettings());
   }, []);
@@ -29,6 +29,13 @@ const Notifications = () => {
   const handleBack = () => {
     navigate("/settings");
   };
+
+  const notifications = [
+    { name: "Newsletter", enabled: true },
+    { name: "SMS", enabled: false },
+    { name: "Email", enabled: false },
+    { name: "Whatsapp", enabled: false },
+  ];
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background">

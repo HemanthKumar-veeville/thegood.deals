@@ -46,7 +46,7 @@ const CreateDeal = () => {
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
-
+  const [form, setForm] = useState(new FormData());
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
@@ -92,7 +92,7 @@ const CreateDeal = () => {
 
     try {
       // Create FormData object and append form data
-      const form = new FormData();
+
       form.append("title", title);
       form.append("description", formData.description);
       form.append("collection_location", "hyderabad");
@@ -104,8 +104,8 @@ const CreateDeal = () => {
       form.append("deal_expiration_date", "2024-09-20T17:42");
       form.append("minimum_products", formData.minProducts);
       form.append("terms_accepted", formData.acceptConditions ? "on" : "off");
-      form.append("images", formData.pictures);
-
+      setForm(form);
+      console.log({ form });
       products.forEach((product, index) => {
         const productKeys = Object.keys(product);
         productKeys.forEach((key) => {
@@ -191,7 +191,7 @@ const CreateDeal = () => {
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
               {t("create_deal.title")} {/* Create a good deal */}
             </div>
-            <AddPictures onChange={handleAddPictures} />
+            <AddPictures onChange={handleAddPictures} setForm={setForm} />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">
               <Textarea
