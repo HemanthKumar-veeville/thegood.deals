@@ -97,7 +97,7 @@ function AppBar() {
           )}
         </div>
         <img
-          className="relative self-stretch w-full h-[2px] mb-1 object-cover"
+          className="relative self-stretch w-full h-px mb-1 object-cover"
           alt="Line"
           src={Line63}
         />
