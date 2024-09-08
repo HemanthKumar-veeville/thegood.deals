@@ -89,7 +89,7 @@ const HowItWorks = () => {
 
   return (
     <div className="flex flex-col w-full items-center relative bg-light-grey mx-auto">
-      <div className="w-full items-center gap-[30px] pt-4 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
+      <div className="w-full items-center gap-[30px] pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
           id="how"
           className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]"
@@ -232,7 +232,7 @@ const HowItWorks = () => {
       <BreakpointDesktopWrapper
         breakpoint="mobile"
         buttonIcon={<IconChevronRight2 className="!relative !w-6 !h-6" />}
-        buttonText={t("how_it_works.breakpoint.how_it_works")}
+        buttonText="About Us"
         buttonText1={t("how_it_works.breakpoint.about_us")}
         className="!flex-[0_0_auto] !w-full"
         divClassName="!tracking-[0] !text-xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[28.0px]"
@@ -246,6 +246,8 @@ const HowItWorks = () => {
         text4={t("how_it_works.breakpoint.text4")}
         text5={t("how_it_works.breakpoint.text5")}
         text6={t("how_it_works.breakpoint.text6")}
+        text7="A friendly experience"
+        text8="Share unique moments with your friends while supporting artisans in your region."
       />
       <div
         id="about"

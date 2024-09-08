@@ -110,72 +110,7 @@ function ContactUs() {
         <div
           id="how"
           className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]"
-        >
-          <div className="flex w-[1355px] h-[169px] items-start gap-4 absolute top-0 -left-7">
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-2319.42px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage16}
-            />
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-2097.04px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage16}
-            />
-            <img
-              className="w-[110.55px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage2}
-            />
-            <img
-              className="relative self-stretch w-[206.38px] object-cover"
-              alt="Placeholder image"
-              src={placeHolderImage18}
-            />
-            <img
-              className="w-[11.07px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage19}
-            />
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-1207.53px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-          </div>
-          <div className="flex w-[1355px] items-start gap-4 absolute top-[185px] left-[75px]">
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-2422.61px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-2200.23px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="relative self-stretch w-[206.38px] object-cover"
-              alt="Placeholder image"
-              src={placeHolderImage8}
-            />
-            <img
-              className="w-[130.26px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage9}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-1533.10px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-1310.72px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-          </div>
-        </div>
+        ></div>
         <div
           id="order"
           className="items-center gap-2 flex flex-col relative self-stretch w-full flex-[0_0_auto]"
@@ -206,7 +141,7 @@ function ContactUs() {
       </div>
       <div
         id="contact"
-        className={`flex flex-col bg-light-grey relative items-start gap-12 px-5 py-16 !flex-[0_0_auto] !w-full`}
+        className={`flex flex-col bg-light-grey relative items-start gap-12 px-5 py-8 !flex-[0_0_auto] !w-full`}
       >
         <div
           className={`w-full flex self-stretch flex-[0_0_auto] relative flex-col items-start gap-12`}

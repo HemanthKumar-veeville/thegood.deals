@@ -167,7 +167,15 @@ export const BreakpointDesktopWrapper = ({
                 </div>
               </div>
               <div className="inline-flex flex-col items-start justify-center gap-6 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
-                <div onClick={() => navigate("/how-it-works")}>
+                <div
+                  onClick={() =>
+                    navigate(
+                      buttonText === "How it works?"
+                        ? "/how-it-works"
+                        : "/about-us"
+                    )
+                  }
+                >
                   <Button
                     className="!mr-[-1.00px] !mt-[-1.00px] !ml-[-1.00px] !flex-[0_0_auto]"
                     darkMode={false}

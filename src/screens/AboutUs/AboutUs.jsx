@@ -201,7 +201,7 @@ function AboutUs() {
       </div>
       <div
         id="contact"
-        className={`flex flex-col bg-light-grey relative items-start gap-12 px-5 py-16 !flex-[0_0_auto] !w-full`}
+        className={`flex flex-col bg-light-grey relative items-start gap-12 px-5 pt-10 !flex-[0_0_auto] !w-full`}
       >
         <div
           className={`w-full flex self-stretch flex-[0_0_auto] relative flex-col items-start gap-12`}

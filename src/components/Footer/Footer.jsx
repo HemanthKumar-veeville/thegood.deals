@@ -12,6 +12,7 @@ import { IconTwitter4 } from "../../icons/IconTwitter4";
 import { Button } from "../RoundedButton";
 import { TextInput } from "../TextInput";
 import ScrollIntoView from "react-scroll-into-view";
+import { useNavigate } from "react-router-dom";
 
 export const Footer = ({
   breakpoint,
@@ -42,6 +43,10 @@ export const Footer = ({
   text14 = "© 2024 The Good Deals. Tous droits réservés.",
   columnClassName,
 }) => {
+  const navigate = useNavigate();
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
   return (
     <div
       className={`flex flex-col bg-light-grey relative ${
@@ -96,45 +101,46 @@ export const Footer = ({
               {text}
             </div>
             <div className="w-full flex self-stretch flex-col items-start flex-[0_0_auto] relative">
-              <ScrollIntoView selector="#about">
-                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative cursor-pointer">
-                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                    {text1}
-                  </div>
+              <div
+                onClick={() => handleNavigation("/about-us")}
+                className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative cursor-pointer"
+              >
+                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                  {text1}
                 </div>
-              </ScrollIntoView>
-
-              <ScrollIntoView selector="#how">
-                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer">
-                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                    {text2}
-                  </div>
+              </div>
+              <div
+                onClick={() => handleNavigation("/how-it-works")}
+                className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer"
+              >
+                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                  {text2}
                 </div>
-              </ScrollIntoView>
-
-              <ScrollIntoView selector="#order">
-                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer">
-                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                    {text3}
-                  </div>
+              </div>
+              <div
+                onClick={() => handleNavigation("/")}
+                className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer"
+              >
+                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                  {text3}
                 </div>
-              </ScrollIntoView>
-
-              <ScrollIntoView selector="#contact">
-                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer">
-                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                    {text4}
-                  </div>
+              </div>
+              <div
+                onClick={() => handleNavigation("/help-me")}
+                className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative  cursor-pointer"
+              >
+                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                  {text4}
                 </div>
-              </ScrollIntoView>
-
-              <ScrollIntoView selector="#faq">
-                <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative cursor-pointer">
-                  <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
-                    {text5}
-                  </div>
+              </div>
+              <div
+                onClick={() => handleNavigation("/contact-us")}
+                className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative cursor-pointer"
+              >
+                <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
+                  {text5}
                 </div>
-              </ScrollIntoView>
+              </div>
             </div>
           </div>
           <div
@@ -150,17 +156,26 @@ export const Footer = ({
               {text6}
             </div>
             <div className="w-full flex self-stretch flex-col items-start flex-[0_0_auto] relative">
-              <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative">
+              <div
+                onClick={() => handleNavigation("/")}
+                className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative"
+              >
                 <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
                   {text7}
                 </div>
               </div>
-              <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative">
+              <div
+                onClick={() => handleNavigation("/privacy-policy")}
+                className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative"
+              >
                 <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
                   {text8}
                 </div>
               </div>
-              <div className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative">
+              <div
+                onClick={() => handleNavigation("/general-conditions")}
+                className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative"
+              >
                 <p className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">
                   {text9}
                 </p>
