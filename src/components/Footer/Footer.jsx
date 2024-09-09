@@ -274,7 +274,7 @@ export const Footer = ({
       <div
         className={`w-full flex self-stretch flex-col items-start gap-8 flex-[0_0_auto] relative ${
           breakpoint === "mobile" ? "pt-0 pb-4 px-0" : ""
-        }`}
+        }`} 
       >
         <div
           className={`w-full flex self-stretch items-start flex-[0_0_auto] relative ${
