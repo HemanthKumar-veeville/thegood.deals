@@ -3,14 +3,15 @@ import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { FaTrash, FaStar } from "react-icons/fa"; // Import the trash and star icons from react-icons
 import Swal from "sweetalert2";
 
-const AddPictures = ({ onChange, setForm }) => {
+const AddPictures = ({ onChange }) => {
   const [pictures, setPictures] = useState([]);
   const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-
+  const [files, setFiles] = useState([]);
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
+    setFiles(files);
     const totalFiles = pictures.length + files.length;
     if (totalFiles > 10) {
       Swal.fire({
@@ -30,12 +31,6 @@ const AddPictures = ({ onChange, setForm }) => {
       }
       return updatedPictures;
     });
-    const form = new FormData(); // Create a new FormData object
-    files.forEach((file) => {
-      form.append("images", file); // Append each actual file object
-    });
-
-    setForm(form);
   };
 
   const handleDelete = (index, event) => {
@@ -106,8 +101,8 @@ const AddPictures = ({ onChange, setForm }) => {
   }, [isPlaying, currentIndex]);
 
   useEffect(() => {
-    onChange(pictures);
-  }, [pictures]);
+    onChange(files);
+  }, [files]);
 
   return (
     <div className="flex flex-col h-fit items-start gap-2.5 relative self-stretch w-full">

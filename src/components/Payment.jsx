@@ -2,18 +2,26 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { axiosInstance } from "../helpers/helperMethods";
 
 function Payment({ heading, btnText, ...props }) {
   const { stripePromise } = props;
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
-    axios.post("/create_payment_intent").then(({ data }) => {
-      console.log(data);
-      setClientSecret(data.clientSecret);
-    });
-    //   .then(({ clientSecret }) => setClientSecret(clientSecret));
+    // Define an async function inside the useEffect
+    const createPaymentIntent = async () => {
+      try {
+        const { data } = await axiosInstance.post("create_payment_intent");
+        console.log(data);
+        setClientSecret(data.clientSecret);
+      } catch (error) {
+        console.error("Error creating PaymentIntent:", error);
+      }
+    };
+
+    // Call the async function
+    createPaymentIntent();
   }, []);
 
   return (

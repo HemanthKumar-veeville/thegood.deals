@@ -10,7 +10,7 @@ import { UserAlt5 } from "../../icons/UserAlt5";
 import { UserLock1 } from "../../icons/UserLock1";
 import { Users3 } from "../../icons/Users3";
 import { ChatAlt6 } from "../../icons/ChatAlt6";
-import { Line63 } from "../../images";
+import { blogImage, Line63 } from "../../images";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
@@ -154,7 +154,6 @@ const Account = () => {
   const handleContainerScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } =
       scrollableContainerRef.current;
-    console.log(scrollTop, scrollHeight, clientHeight);
     if (scrollTop === 0) {
       // Reached the top
       loadMoreDeals("top");
@@ -264,7 +263,7 @@ const Account = () => {
                   participantsCount={deal.deal_participants_count}
                   dealEndsIn={deal?.deal_ends_in}
                   isGuestDeal={activeTab === "invited"}
-                  dealImage={deal.deal_image}
+                  dealImage={deal?.images[0] || blogImage}
                 />
               </div>
             ))}
