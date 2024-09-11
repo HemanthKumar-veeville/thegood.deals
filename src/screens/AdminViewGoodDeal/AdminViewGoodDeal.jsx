@@ -20,6 +20,7 @@ import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import { blogImage, Human, Line63 } from "../../images";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import ImageSlider from "../../components/ImageSlider/ImageSlider";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -33,14 +34,12 @@ const AdminViewGoodDeal = () => {
   const is_creator = queryParams.get("is_creator");
 
   const { deal, status, error } = useSelector((state) => state.deals);
-  console.log({ deal, status, error });
-  const dealState = deal?.Deal?.deal;
-  console.log({ dealState });
+
+  const dealState = (deal?.Deal?.deal && deal?.Deal?.deal) || {};
+
   useEffect(() => {
-    if (deal_id) {
-      dispatch(fetchDealDetailsByDealId(deal_id));
-    }
-  }, [dispatch, deal_id]);
+    dispatch(fetchDealDetailsByDealId(deal_id));
+  }, []);
 
   const handlePayment = () => {
     navigate("/payment");
@@ -50,6 +49,7 @@ const AdminViewGoodDeal = () => {
     return <CustomLoader />;
   }
 
+  console.log({ dealState });
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
@@ -67,11 +67,7 @@ const AdminViewGoodDeal = () => {
             </button>
           </div>
         </div>
-        <img
-          className="relative self-stretch w-full h-[150px] object-cover"
-          alt={t("admin.blog_image")}
-          src={blogImage}
-        />
+        <ImageSlider pictures={dealState?.image_url || [blogImage]} />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {dealState?.title || t("admin.wine_crates")}
         </div>

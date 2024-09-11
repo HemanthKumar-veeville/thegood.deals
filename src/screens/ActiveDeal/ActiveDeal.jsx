@@ -29,6 +29,7 @@ import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import { getDealByDealId } from "../../redux/app/deals/dealSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import ImageSlider from "../../components/ImageSlider/ImageSlider";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const ActiveDeal = () => {
   useEffect(() => {
     dispatch(getDealByDealId(deal_id));
   }, []);
-
+  console.log({ dealData });
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
@@ -117,11 +118,7 @@ const ActiveDeal = () => {
             </div>
           </div>
           <div onClick={handleOrder}>
-            <img
-              className="relative self-stretch w-full h-[150px] object-cover"
-              alt="Blog image"
-              src={blogImage}
-            />
+            <ImageSlider pictures={dealData?.image_url || [blogImage]} />
           </div>
           <div
             onClick={handleOrder}

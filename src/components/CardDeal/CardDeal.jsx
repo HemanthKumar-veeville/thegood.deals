@@ -11,6 +11,7 @@ import {
   FranceFlag,
   Rectangle4592,
 } from "../../images";
+import ImageSlider from "../ImageSlider/ImageSlider";
 
 const statusBanner = {
   out_of_stock: { text: "Soon to be out of stock", color: "warning" },
@@ -49,7 +50,7 @@ export const CardDeal = ({
   badgesText1 = statusBanner[text1].text,
   dealEndsIn,
   isGuestDeal,
-  dealImage,
+  dealImages,
 }) => {
   const calculateDaysLeft = (expiryDate) => {
     const now = new Date();
@@ -68,11 +69,7 @@ export const CardDeal = ({
     <div
       className={`flex flex-col w-[290px] items-start relative rounded-lg overflow-hidden shadow-shadow-1 ${className}`}
     >
-      <img
-        className="relative self-stretch w-full h-[125px] object-cover"
-        alt="Rectangle"
-        src={dealImage}
-      />
+      <ImageSlider pictures={dealImages} />
       <div className="flex flex-col items-center gap-2.5 p-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           {!(text1 === "draft" || text1 === "waiting") && override}
