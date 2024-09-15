@@ -7,6 +7,8 @@ import { Coin2 } from "../../icons/Coin2";
 import { Flag } from "../../icons/Flag";
 import { UserAlt4 } from "../../icons/UserAlt4/UserAlt4";
 import { useNavigate } from "react-router-dom";
+import { CrossCircle } from "../../icons/CrossCircle";
+import { LockAlt } from "../../icons/LockAltScreen/LockAltScreen";
 
 const SettingsPage = () => {
   const { t } = useTranslation();
@@ -84,6 +86,21 @@ const SettingsPage = () => {
           </div>
           <div
             className="flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke cursor-pointer"
+            onClick={handleNotifications}
+          >
+            <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+              <LockAlt className="!relative !w-[18px] !h-[18px]" />
+              <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
+                {t("settings.terms")}
+              </div>
+            </div>
+            <ChevronRight7
+              className="!relative !w-[18px] !h-[18px]"
+              color="#1B4F4A"
+            />
+          </div>
+          <div
+            className="flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke cursor-pointer"
             onClick={handleLanguageSelection}
           >
             <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
@@ -117,7 +134,7 @@ const SettingsPage = () => {
             onClick={handleDeleteAccount}
           >
             <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-              <Coin2 className="!relative !w-[18px] !h-[18px]" />
+              <CrossCircle className="!relative !w-[18px] !h-[18px]" />
               <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
                 {t("settings.trash_account")}
               </div>

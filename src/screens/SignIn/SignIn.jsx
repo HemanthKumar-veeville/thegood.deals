@@ -76,6 +76,8 @@ const SignIn = ({ setIsLoading }) => {
     navigate("/lost-password");
   };
 
+  const handleGoogleSignIn = () => {};
+
   return (
     <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute top-[118px] left-0">
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
@@ -165,7 +167,10 @@ const SignIn = ({ setIsLoading }) => {
         </div>
       </div>
       <div className="flex items-start justify-center gap-5 relative self-stretch w-full flex-[0_0_auto]">
-        <div className="relative w-[45px] h-[45px] bg-[#d64937] rounded-md hover:bg-[#b8372c] cursor-pointer">
+        <div
+          onClick={handleGoogleSignIn}
+          className="relative w-[45px] h-[45px] bg-[#d64937] rounded-md hover:bg-[#b8372c] cursor-pointer"
+        >
           <Google className="!absolute !w-5 !h-5 !top-[13px] !left-[13px]" />
         </div>
         <div className="relative w-[45px] h-[45px] bg-black rounded-md hover:bg-[#333] cursor-pointer">

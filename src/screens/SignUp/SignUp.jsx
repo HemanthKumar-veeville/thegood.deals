@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Placeholder } from "../../components/Dropdown/Dropdown";
 import { axiosInstance } from "../../helpers/helperMethods";
 import Swal from "sweetalert2";
+import { Dropdown } from "../../components/CountryDropDown";
 
 export const SignUp = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -187,7 +188,7 @@ export const SignUp = ({ setIsLoading }) => {
               id="phone"
               name="phone"
               type="text"
-              placeholder="Tel."
+              placeholder="Mobile number"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.phone}
@@ -224,6 +225,10 @@ export const SignUp = ({ setIsLoading }) => {
               <div className="text-red-500 text-sm">{formik.errors.email}</div>
             ) : null} */}
           </div>
+        </div>
+        <Placeholder />
+        <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
+          Currency
         </div>
         <Placeholder />
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
