@@ -7,6 +7,7 @@ import {
   fetchNotificationSettings,
   updateNotificationSettings,
 } from "../../redux/app/account/accountSlice";
+import { Button } from "../../components/Button/Button";
 
 const TermsOfUse = () => {
   const { t } = useTranslation();
@@ -55,7 +56,7 @@ const TermsOfUse = () => {
           </div>
         </div>
         <div className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          {t("notifications.title")}
+          Terms of Use 🔒
         </div>
         <div className="flex flex-col items-start self-stretch w-full relative flex-[0_0_auto]">
           {notifications &&
@@ -88,6 +89,21 @@ const TermsOfUse = () => {
               </div>
             ))}
           <div className="relative w-[159px] h-[26px]" />
+        </div>
+        <div className="w-full">
+          <Button
+            buttonText="All agreement"
+            className="!self-stretch !flex-[0_0_auto] !flex !w-full"
+            color="primary"
+            kind="primary"
+            round="semi-round"
+            state="default"
+          />
+        </div>
+        <div className="gap-2 border border-solid border-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer">
+          <button className="all-[unset] box-border relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+            Confirm selection
+          </button>
         </div>
       </div>
     </div>

@@ -31,7 +31,7 @@ export const updateUserProfile = createAsyncThunk(
     try {
       // Create a new FormData object
       const formData = new FormData();
-
+      console.log({ profileData });
       // Append the profile data to the FormData object
       for (const key in profileData) {
         if (profileData.hasOwnProperty(key)) {

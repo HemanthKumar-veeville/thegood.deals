@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useTranslation } from "react-i18next";
 import { Button } from "../../components/Button/Button";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { EyeAlt4 } from "../../icons/EyeAlt4";
@@ -12,51 +11,74 @@ import {
   fetchUserProfile,
   updateUserProfile,
 } from "../../redux/app/account/accountSlice";
+import { ChevronDown } from "../../icons/ChevronDown";
 
 const EditProfile = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { profile: fetchedProfile, status } = useSelector(
-    (state) => state.account
-  );
+  const { profile: fetchedProfile } = useSelector((state) => state.account);
 
-  const [profile, setProfile] = useState({
+  const initialProfileState = {
     firstName: "",
     lastName: "",
     phone: "",
     email: "",
-    password: "*******************",
+    currentPassword: "*******************",
+    newPassword: "*******************",
+    language: "English", // Default language state
     address: "",
     additionalAddress: "",
     city: "",
     postalCode: "",
     country: "",
     profilePicture: Rectangle5095_1,
+  };
+
+  const [profile, setProfile] = useState(initialProfileState);
+  const [editField, setEditField] = useState(null);
+  const [showPassword, setShowPassword] = useState({
+    current: false,
+    new: false,
   });
 
-  const [editField, setEditField] = useState(null);
-
+  // Fetching user profile on mount
   useEffect(() => {
     dispatch(fetchUserProfile());
-  }, []);
+  }, [dispatch]);
 
+  // Setting profile once fetched
   useEffect(() => {
-    const profile = fetchedProfile?.data || {};
+    if (fetchedProfile?.data) {
+      const {
+        first_name,
+        last_name,
+        phone,
+        email,
+        address,
+        addl_address,
+        city,
+        postal_code,
+        country,
+        profile_picture,
+        language, // Assuming language comes from the backend
+      } = fetchedProfile.data;
 
-    setProfile({
-      firstName: profile.first_name || "",
-      lastName: profile.last_name || "",
-      phone: profile.phone || "", // Assuming phone is part of your data
-      email: profile.email || "",
-      password: "*******************", // Password is not stored, placeholder only
-      address: profile.address || "",
-      additionalAddress: profile.addl_address || "",
-      city: profile.city || "",
-      postalCode: profile.postal_code || "",
-      country: profile.country || "",
-      profilePicture: profile.profile_picture || Rectangle5095_1, // Use default image if null
-    });
+      setProfile({
+        firstName: first_name || "",
+        lastName: last_name || "",
+        phone: phone || "",
+        email: email || "",
+        currentPassword: "*******************",
+        newPassword: "*******************",
+        language: language || "French",
+        address: address || "",
+        additionalAddress: addl_address || "",
+        city: city || "",
+        postalCode: postal_code || "",
+        country: country || "",
+        profilePicture: profile_picture || Rectangle5095_1,
+      });
+    }
   }, [fetchedProfile]);
 
   const handleBack = useCallback(() => {
@@ -75,7 +97,7 @@ const EditProfile = () => {
 
   const handleSave = useCallback(() => {
     setEditField(null);
-    dispatch(updateUserProfile(profile));
+    dispatch(updateUserProfile(profile)); // Only call updateUserProfile on button click
   }, [dispatch, profile]);
 
   const handlePhotoChange = (e) => {
@@ -92,14 +114,20 @@ const EditProfile = () => {
     }
   };
 
+  const togglePasswordVisibility = (field) => {
+    setShowPassword((prevState) => ({
+      ...prevState,
+      [field]: !prevState[field],
+    }));
+  };
+
   const renderField = (fieldName, value, type = "text", placeholder = "") =>
     editField === fieldName ? (
       <input
         name={fieldName}
         type={type}
         value={value || ""}
-        onChange={handleChange}
-        onBlur={handleSave}
+        onChange={handleChange} // Update state but no API call here
         autoFocus
         placeholder={placeholder}
         className="relative w-full mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-darkdark-5 text-base tracking-[0] leading-6 focus:outline-none"
@@ -120,18 +148,16 @@ const EditProfile = () => {
           className="flex w-[290px] items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
           onClick={handleBack}
         >
-          <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-            <ArrowLeft1
-              className="!relative !w-[18px] !h-[18px]"
-              color="#637381"
-            />
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
-              {t("common.back")}
-            </div>
+          <ArrowLeft1
+            className="!relative !w-[18px] !h-[18px]"
+            color="#637381"
+          />
+          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
+            Back
           </div>
         </div>
         <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-[#1b4f4a] text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-          {t("profile.my_account")} ✏️
+          My account ✏️
         </div>
         <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
@@ -144,7 +170,7 @@ const EditProfile = () => {
           <div className="inline-flex items-center justify-center gap-1.5 px-3 py-[5px] relative flex-[0_0_auto] bg-[#1b4f4a] rounded-[5px]">
             <PencilAlt className="!relative !w-3.5 !h-3.5" color="white" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {t("profile.change_profile_picture")}
+              Change profile picture
             </div>
             <input
               type="file"
@@ -154,22 +180,17 @@ const EditProfile = () => {
             />
           </div>
         </div>
-        <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
-          {t("profile.your_information")}
-        </div>
 
+        <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
+          Your information
+        </div>
+        {/* Profile Information Fields */}
         {[
-          { name: "firstName", label: t("profile.first_name_placeholder") },
-          { name: "lastName", label: t("profile.last_name_placeholder") },
-          { name: "phone", label: t("profile.phone_placeholder") },
-          { name: "email", label: t("profile.email_placeholder") },
-          {
-            name: "password",
-            label: t("profile.password_placeholder"),
-            type: "password",
-            icon: <EyeAlt4 className="!relative !w-4 !h-4" />,
-          },
-        ].map(({ name, label, type = "text", icon }) => (
+          { name: "firstName", label: "First Name" },
+          { name: "lastName", label: "Last Name" },
+          { name: "phone", label: "Phone" },
+          { name: "email", label: "Email" },
+        ].map(({ name, label }) => (
           <div
             key={name}
             className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
@@ -178,143 +199,133 @@ const EditProfile = () => {
             <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
               <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
                 <div className="flex items-center justify-between relative flex-1 grow">
-                  {renderField(name, profile[name], type, label)}
-                  {icon || <Pencil className="!relative !w-4 !h-4" />}
+                  {renderField(name, profile[name], "text", label)}
+                  <Pencil className="!relative !w-4 !h-4" />
                 </div>
               </div>
             </div>
           </div>
         ))}
 
+        {/* Language Dropdown */}
+        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
+          <div className="relative w-full">
+            <select
+              name="language"
+              value={profile.language}
+              onChange={handleChange}
+              className="w-full pl-5 pr-10 py-3 bg-white rounded-md border border-solid border-stroke text-darkdark-5 text-base font-normal focus:outline-none appearance-none"
+            >
+              <option value="French">French</option>
+              <option value="English">English</option>
+            </select>
+            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+              <ChevronDown className="!relative !w-4 !h-4" />
+            </div>
+          </div>
+        </div>
+
+        {/* Change Password Section */}
+        <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
+          change my password
+        </div>
+
+        {/* Current and New Password Fields */}
+        {[
+          {
+            name: "currentPassword",
+            label: "Current Password",
+            showPassword: showPassword.current,
+            toggleVisibility: () => togglePasswordVisibility("current"),
+          },
+          {
+            name: "newPassword",
+            label: "New Password",
+            showPassword: showPassword.new,
+            toggleVisibility: () => togglePasswordVisibility("new"),
+          },
+        ].map(({ name, label, showPassword, toggleVisibility }) => (
+          <div
+            key={name}
+            className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
+          >
+            <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                <div className="flex items-center justify-between relative flex-1 grow">
+                  {renderField(
+                    name,
+                    profile[name],
+                    showPassword ? "text" : "password",
+                    label
+                  )}
+                  <div onClick={toggleVisibility}>
+                    <EyeAlt4 className="!relative !w-4 !h-4 cursor-pointer" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Password Requirements */}
+        <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
+          {["8 characters", "1 capital letter", "1 lower case", "1 digit"].map(
+            (requirement, idx) => (
+              <div
+                key={idx}
+                className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
+              >
+                <span className="mr-1">•</span> {requirement}
+              </div>
+            )
+          )}
+        </div>
+
         {/* Address Section */}
-        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                {t("profile.address")} ({t("profile.required")})
+        <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
+          Your address
+        </div>
+
+        {[
+          { name: "address", label: "Address", heading: "Address" },
+          {
+            name: "additionalAddress",
+            label: "Additional Address",
+            heading: "Additional Address",
+          },
+          { name: "city", label: "City", heading: "City" },
+          { name: "postalCode", label: "Postal Code", heading: "Postal Code" },
+          { name: "country", label: "Country", heading: "Country" },
+        ].map(({ name, label, heading }) => (
+          <div
+            key={name}
+            className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+          >
+            <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+              <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
+                <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                  {heading} (required)
+                </div>
               </div>
-            </div>
-            <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
-              onClick={() => handleEdit("address")}
-            >
-              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                <div className="flex items-center justify-between relative flex-1 grow">
-                  {renderField(
-                    "address",
-                    profile.address,
-                    "text",
-                    t("profile.address_placeholder")
-                  )}
-                  <Pencil className="!relative !w-4 !h-4" />
+              <div
+                className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
+                onClick={() => handleEdit(name)}
+              >
+                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                  <div className="flex items-center justify-between relative flex-1 grow">
+                    {renderField(name, profile[name], "text", label)}
+                    <Pencil className="!relative !w-4 !h-4" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="font-normal relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] text-[#1b4f4a] text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("profile.additional_address")}
-              </div>
-            </div>
-            <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
-              onClick={() => handleEdit("additionalAddress")}
-            >
-              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                <div className="flex items-center justify-between relative flex-1 grow">
-                  {renderField(
-                    "additionalAddress",
-                    profile.additionalAddress,
-                    "text",
-                    t("profile.additional_address_placeholder")
-                  )}
-                  <Pencil className="!relative !w-4 !h-4" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                {t("profile.city")} ({t("profile.required")})
-              </div>
-            </div>
-            <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
-              onClick={() => handleEdit("city")}
-            >
-              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                <div className="flex items-center justify-between relative flex-1 grow">
-                  {renderField(
-                    "city",
-                    profile.city,
-                    "text",
-                    t("profile.city_placeholder")
-                  )}
-                  <Pencil className="!relative !w-4 !h-4" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                {t("profile.postal_code")} ({t("profile.required")})
-              </div>
-            </div>
-            <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
-              onClick={() => handleEdit("postalCode")}
-            >
-              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                <div className="flex items-center justify-between relative flex-1 grow">
-                  {renderField(
-                    "postalCode",
-                    profile.postalCode,
-                    "text",
-                    t("profile.postal_code_placeholder")
-                  )}
-                  <Pencil className="!relative !w-4 !h-4" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                {t("profile.country")} ({t("profile.required")})
-              </div>
-            </div>
-            <div
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
-              onClick={() => handleEdit("country")}
-            >
-              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                <div className="flex items-center justify-between relative flex-1 grow">
-                  {renderField(
-                    "country",
-                    profile.country,
-                    "text",
-                    t("profile.country_placeholder")
-                  )}
-                  <Pencil className="!relative !w-4 !h-4" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        ))}
+
+        {/* Confirm Changes Button */}
         <div onClick={handleSave} className="w-full">
           <Button
-            buttonText={t("profile.confirm_changes")}
+            buttonText="Confirm changes"
             className="!self-stretch !flex-[0_0_auto] !flex !w-full"
             color="primary"
             kind="primary"
