@@ -17,7 +17,10 @@ import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { fetchDeals } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
-import { logoutUser } from "../../redux/app/user/userSlice";
+import {
+  checkUserLoginStatus,
+  logoutUser,
+} from "../../redux/app/user/userSlice";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { fetchUserProfileWithDealsAndReviews } from "../../redux/app/user/userSlice";
@@ -169,6 +172,7 @@ const Account = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchUserProfileWithDealsAndReviews());
+    dispatch(checkUserLoginStatus());
   }, []);
 
   return (
