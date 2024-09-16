@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import Payment from "./components/Payment";
 import { loadStripe } from "@stripe/stripe-js";
 import DeleteAccount from "./screens/DeleteAccount";
+import TermsOfUse from "./screens/TermsOfUse/TermsOfUse";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -391,6 +392,14 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<Notifications />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/terms-of-use",
+      element: (
+        <Layout>
+          <ProtectedRoute element={<TermsOfUse />} />
         </Layout>
       ),
     },

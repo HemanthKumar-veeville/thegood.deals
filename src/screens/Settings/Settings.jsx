@@ -32,6 +32,9 @@ const SettingsPage = () => {
   const handleDeleteAccount = () => {
     navigate("/delete-account");
   };
+  const handleTermsOfUse = () => {
+    navigate("/terms-of-use");
+  };
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background">
@@ -86,7 +89,7 @@ const SettingsPage = () => {
           </div>
           <div
             className="flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke cursor-pointer"
-            onClick={handleNotifications}
+            onClick={handleTermsOfUse}
           >
             <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
               <LockAlt className="!relative !w-[18px] !h-[18px]" />
