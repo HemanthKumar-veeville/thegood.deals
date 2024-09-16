@@ -38,10 +38,8 @@ const EditProfile = () => {
   const [editField, setEditField] = useState(null);
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchUserProfile());
-    }
-  }, [dispatch, status]);
+    dispatch(fetchUserProfile());
+  }, []);
 
   useEffect(() => {
     const profile = fetchedProfile?.data || {};

@@ -32,7 +32,7 @@ const MyInformation = () => {
   const { profile, userDeals, userReviews, status } = useSelector(
     (state) => state.user
   );
-
+  console.log({ profile, userDeals, userReviews, status });
   const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const MyInformation = () => {
 
   const sliderSettings = {
     dots: false,
-    infinite: true,
+    infinite: userDeals?.length > 1, // Disable infinite scroll if there's only one deal
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -205,15 +205,18 @@ const MyInformation = () => {
                       text1={deal.status}
                       participantsCount={deal.participants}
                       dealEndsIn={deal.ends_in}
+                      dealImages={[deal.image]}
                     />
                   </div>
                 ))}
               </Slider>
-              <div className="flex justify-around items-between mt-1   w-full">
-                <PrevArrow onClick={() => sliderRef.current.slickPrev()} />
-                <PlayPauseButton />
-                <NextArrow onClick={() => sliderRef.current.slickNext()} />
-              </div>
+              {userDeals?.length > 1 && (
+                <div className="flex justify-around items-between mt-1   w-full">
+                  <PrevArrow onClick={() => sliderRef.current.slickPrev()} />
+                  <PlayPauseButton />
+                  <NextArrow onClick={() => sliderRef.current.slickNext()} />
+                </div>
+              )}
             </>
           )}
           {status === "succeeded" && !userDeals?.length && (
@@ -229,7 +232,7 @@ const MyInformation = () => {
                 />
               }
               style="three"
-              text="Waiting for confirmation of the deal from the artisian"
+              text="No deals available"
             />
           )}
           <img

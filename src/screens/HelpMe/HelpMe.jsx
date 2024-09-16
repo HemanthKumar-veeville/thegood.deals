@@ -63,7 +63,7 @@ const PublicNeedHelp = () => {
         navigate("/admin-invitations-sent");
       })
       .catch((error) => {
-        alert(t("public_need_help.error_message"));
+        alert(error?.detail);
         console.error("Error:", error);
       });
   };

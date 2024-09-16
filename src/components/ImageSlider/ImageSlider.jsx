@@ -64,37 +64,39 @@ const ImageSlider = ({ pictures }) => {
                 </div>
               ))}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center px-4 py-2 bg-black bg-opacity-50">
-              <button
-                onClick={prevSlide}
-                className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 focus:outline-none"
-              >
-                &#10094;
-              </button>
-              <div className="flex space-x-2 items-center">
+            {pictures?.length > 1 && (
+              <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center px-4 py-2 bg-black bg-opacity-50">
                 <button
-                  onClick={togglePlayPause}
-                  className="w-8 h-8 bg-white rounded-full focus:outline-none flex items-center justify-center"
+                  onClick={prevSlide}
+                  className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 focus:outline-none"
                 >
-                  {isPlaying ? "❚❚" : "▶"}
+                  &#10094;
                 </button>
-                {pictures.map((_, index) => (
+                <div className="flex space-x-2 items-center">
                   <button
-                    key={index}
-                    onClick={(event) => setCurrentSlide(index, event)}
-                    className={`w-2 h-2 rounded-full ${
-                      index === currentIndex ? "bg-white" : "bg-gray-400"
-                    } focus:outline-none`}
-                  ></button>
-                ))}
+                    onClick={togglePlayPause}
+                    className="w-8 h-8 bg-white rounded-full focus:outline-none flex items-center justify-center"
+                  >
+                    {isPlaying ? "❚❚" : "▶"}
+                  </button>
+                  {pictures.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={(event) => setCurrentSlide(index, event)}
+                      className={`w-2 h-2 rounded-full ${
+                        index === currentIndex ? "bg-white" : "bg-gray-400"
+                      } focus:outline-none`}
+                    ></button>
+                  ))}
+                </div>
+                <button
+                  onClick={nextSlide}
+                  className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 focus:outline-none"
+                >
+                  &#10095;
+                </button>
               </div>
-              <button
-                onClick={nextSlide}
-                className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 focus:outline-none"
-              >
-                &#10095;
-              </button>
-            </div>
+            )}
           </div>
         )}
       </div>

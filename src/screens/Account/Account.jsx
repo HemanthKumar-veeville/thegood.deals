@@ -20,6 +20,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
 import { logoutUser } from "../../redux/app/user/userSlice";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
+import { fetchUserProfileWithDealsAndReviews } from "../../redux/app/user/userSlice";
 
 const Account = () => {
   const { t } = useTranslation();
@@ -32,7 +33,9 @@ const Account = () => {
   const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
   const { deals, status } = dealsState;
-
+  const { profile, userDeals, userReviews } = useSelector(
+    (state) => state.user
+  );
   const scrollableContainerRef = useRef(null); // Ref for the scrollable container
 
   useEffect(() => {
@@ -163,11 +166,17 @@ const Account = () => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(fetchUserProfileWithDealsAndReviews());
+  }, []);
+
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-full">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
-        <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-          {t("account.greeting")} {/* Hey 👋🏻 Anthony */}
+        <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap capitalize">
+          {"Hey 👋🏻 " + profile?.name || t("account.greeting")}
+          {/* Hey 👋🏻 Anthony */}
         </div>
         <div
           className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"

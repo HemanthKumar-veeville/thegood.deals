@@ -51,7 +51,7 @@ export const ArtisanConfirmThe = ({
       const resultAction = await dispatch(
         validationByArtisan({ dealId, dealUpdate: formData })
       );
-
+      console.log("resultAction", resultAction);
       // Check if the thunk was fulfilled
       if (validationByArtisan.fulfilled.match(resultAction)) {
         // Navigate to the confirmation page

@@ -227,10 +227,10 @@ export const SignUp = ({ setIsLoading }) => {
           </div>
         </div>
         <Placeholder />
-        <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
+        {/* <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
           Currency
         </div>
-        <Placeholder />
+        <Placeholder /> */}
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
           Your password
         </div>
