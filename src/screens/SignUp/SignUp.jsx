@@ -167,14 +167,19 @@ export const SignUp = ({ setIsLoading }) => {
       const formData = new FormData();
       formData.append("firstname", values.firstName);
       formData.append("lastname", values.lastName);
+      formData.append("country_code", values.countryCode.code);
       formData.append("phone", values.phone);
       formData.append("email", values.email);
+      formData.append("language", values.language);
       formData.append("password", values.password);
       formData.append("address", values.address);
       formData.append("addl_address", values.additionalAddress);
       formData.append("city", values.city);
       formData.append("postal_code", values.postalCode);
       formData.append("country", values.country);
+      formData.append("currency", values.currency);
+      formData.append("accept_privacy_policy", values.acceptPrivacyPolicy);
+      formData.append("agree_newsletter", values.agreeNewsletter);
 
       try {
         const response = await axiosInstance.post("register", formData);
