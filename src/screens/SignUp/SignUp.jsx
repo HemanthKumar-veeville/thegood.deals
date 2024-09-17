@@ -8,6 +8,7 @@ import { Placeholder } from "../../components/Dropdown/Dropdown";
 import { axiosInstance } from "../../helpers/helperMethods";
 import Swal from "sweetalert2";
 import { Dropdown } from "../../components/CountryDropDown";
+import { ChevronDown } from "../../icons/ChevronDown";
 
 export const SignUp = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -67,6 +68,14 @@ export const SignUp = ({ setIsLoading }) => {
       // handleSignup(values);
     },
   });
+
+  const handlePrivacyPolicy = () => {
+    navigate("/privacy-policy");
+  };
+
+  const handleNewsLetter = () => {
+    navigate("/newsletter-indication");
+  };
 
   // Save form values to localStorage on change
   useEffect(() => {
@@ -182,7 +191,8 @@ export const SignUp = ({ setIsLoading }) => {
             ) : null}
           </div>
         </div>
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
+        <div className="flex h-12 items-start gap-[5px] relative self-stretch w-full">
+          <Dropdown />
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <input
               id="phone"
@@ -226,7 +236,72 @@ export const SignUp = ({ setIsLoading }) => {
             ) : null} */}
           </div>
         </div>
-        <Placeholder />
+        {/* Language Dropdown */}
+        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
+          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+            <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
+              <select
+                id="language"
+                name="language"
+                value={formik.values.language}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full pl-5 pr-10 py-3 bg-white rounded-md border ${
+                  formik.touched.language && formik.errors.language
+                    ? "border-red-500"
+                    : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
+                } hover:bg-gray-100 cursor-pointer appearance-none`}
+              >
+                <option value="French">French</option>
+                <option value="English">English</option>
+              </select>
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                <ChevronDown className="w-4 h-4 text-gray-600" />
+              </div>
+            </div>
+            {/* Display error message for the language dropdown */}
+            {/* {formik.touched.language && formik.errors.language ? (
+              <div className="text-red-500 text-sm">
+                {formik.errors.language}
+              </div>
+            ) : null} */}
+          </div>
+        </div>
+        <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
+          Currency
+        </div>
+        {/* Currency Dropdown */}
+        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
+          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+            <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
+              <select
+                id="currency"
+                name="currency"
+                value={formik.values.currency}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full pl-5 pr-10 py-3 bg-white rounded-md border ${
+                  formik.touched.currency && formik.errors.currency
+                    ? "border-red-500"
+                    : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
+                } hover:bg-gray-100 cursor-pointer appearance-none`}
+              >
+                <option value="eur">Euro - France</option>
+                <option value="usd">USD - English</option>
+              </select>
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                <ChevronDown className="w-4 h-4 text-gray-600" />
+              </div>
+            </div>
+            {/* Display error message for the language dropdown */}
+            {/* {formik.touched.language && formik.errors.language ? (
+              <div className="text-red-500 text-sm">
+                {formik.errors.language}
+              </div>
+            ) : null} */}
+          </div>
+        </div>
+        {/* <Placeholder /> */}
         {/* <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
           Currency
         </div>
@@ -303,25 +378,19 @@ export const SignUp = ({ setIsLoading }) => {
             ) : null} */}
           </div>
         </div>
-        <div className="relative w-[280px] h-[71px]">
-          <div className="relative h-[71px]">
-            <div className="flex w-[280px] items-center gap-[15px] absolute top-0 left-0">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#637381] text-sm text-center tracking-[0] leading-[22px]">
-                8 characters
+
+        {/* Password Requirements */}
+        <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
+          {["8 characters", "1 capital letter", "1 lower case", "1 digit"].map(
+            (requirement, idx) => (
+              <div
+                key={idx}
+                className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
+              >
+                <span className="mr-1">•</span> {requirement}
               </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#637381] text-sm text-center tracking-[0] leading-[22px]">
-                1 capital letter
-              </div>
-            </div>
-            <div className="flex w-[280px] items-center gap-[21px] absolute top-[27px] left-0">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#637381] text-sm text-center tracking-[0] leading-[22px]">
-                1 lower case
-              </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#637381] text-sm text-center tracking-[0] leading-[22px]">
-                1 digit
-              </div>
-            </div>
-          </div>
+            )
+          )}
         </div>
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
           Your address
@@ -339,7 +408,7 @@ export const SignUp = ({ setIsLoading }) => {
                   id="address"
                   name="address"
                   type="text"
-                  placeholder="SA street"
+                  placeholder="1 place with onions"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.address}
@@ -367,7 +436,7 @@ export const SignUp = ({ setIsLoading }) => {
                   id="additionalAddress"
                   name="additionalAddress"
                   type="text"
-                  placeholder="Satya's colony"
+                  placeholder="Apartment 01"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.additionalAddress}
@@ -396,7 +465,7 @@ export const SignUp = ({ setIsLoading }) => {
                   id="city"
                   name="city"
                   type="text"
-                  placeholder="Veeville"
+                  placeholder="Lille"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.city}
@@ -424,7 +493,7 @@ export const SignUp = ({ setIsLoading }) => {
                   id="postalCode"
                   name="postalCode"
                   type="text"
-                  placeholder="560094"
+                  placeholder="59000"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.postalCode}
@@ -481,7 +550,9 @@ export const SignUp = ({ setIsLoading }) => {
             <span className="[font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-xs tracking-[0] leading-5">
               I accept{" "}
             </span>
-            <span className="underline">privacy policy</span>
+            <span className="underline" onClick={handlePrivacyPolicy}>
+              privacy policy
+            </span>
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-[10px_10px] relative self-stretch w-full flex-[0_0_auto]">
@@ -498,7 +569,9 @@ export const SignUp = ({ setIsLoading }) => {
             <span className="[font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-xs tracking-[0] leading-5">
               I agree to{" "}
             </span>
-            <span className="underline">receive the newsletter</span>
+            <span className="underline" onClick={handleNewsLetter}>
+              receive the newsletter
+            </span>
           </p>
         </div>
         <button onClick={handleSignup}>

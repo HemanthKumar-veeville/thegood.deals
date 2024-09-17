@@ -22,6 +22,19 @@ const Auth = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  //check the query string to determine which tab to display
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const signup = urlParams.get("signup");
+    const login = urlParams.get("login");
+    console.log({ signup, login });
+    if (signup === "") {
+      setIsLoginTab(false); // Show signup tab
+    } else if (login) {
+      setIsLoginTab(true); // Show login tab if 'login' is present
+    }
+  }, []);
+
   const switchToLogin = () => {
     setIsLoginTab(true);
   };

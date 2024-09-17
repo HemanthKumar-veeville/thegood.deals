@@ -1,16 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { useTranslation } from "react-i18next";
+import { ArrowLeft1 } from "../icons/ArrowLeft1";
+import { useNavigate } from "react-router-dom";
 
 export const Legal = ({ heading }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleBack = () => {
+    navigate("/auth?signup");
+  };
 
   return (
     <div className="flex flex-col w-[360px] items-center relative bg-light-grey">
       <div className="items-center gap-[30px] pt-4 pb-12 px-5 flex-[0_0_auto] flex flex-col w-[360px] relative bg-light-grey">
         <div className="items-center gap-4 flex flex-col relative self-stretch w-full flex-[0_0_auto]">
+          <div
+            className="flex w-[290px] items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
+            onClick={handleBack}
+          >
+            <ArrowLeft1
+              className="!relative !w-[18px] !h-[18px]"
+              color="#637381"
+            />
+            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
+              Back
+            </div>
+          </div>
           <div className="flex flex-col gap-5 self-stretch w-full items-start relative flex-[0_0_auto]">
             <div className="relative self-stretch mt-[-1.00px] font-heading-h1-mobile font-[number:var(--heading-h1-mobile-font-weight)] text-green text-[length:var(--heading-h1-mobile-font-size)] text-center tracking-[var(--heading-h1-mobile-letter-spacing)] leading-[var(--heading-h1-mobile-line-height)] [font-style:var(--heading-h1-mobile-font-style)]">
               {heading}

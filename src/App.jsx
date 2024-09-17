@@ -549,9 +549,7 @@ function App() {
       path: "/privacy-policy",
       element: (
         <Layout>
-          <ProtectedRoute
-            element={<Legal heading="Privacy policy" content="" />}
-          />
+          <Legal heading="Privacy policy" content="" />
         </Layout>
       ),
     },
@@ -559,9 +557,7 @@ function App() {
       path: "/newsletter-indication",
       element: (
         <Layout>
-          <ProtectedRoute
-            element={<Legal heading="Newsletter indication" content="" />}
-          />
+          <Legal heading="Newsletter indication" content="" />
         </Layout>
       ),
     },
