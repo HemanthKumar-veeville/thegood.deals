@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDown } from "../icons/ChevronDown"; // Ensure this path is correct
 
 // Static list of country codes and flags (ISO country codes for flag images)
@@ -58,7 +58,7 @@ const countryCodes = [
 export const Dropdown = ({
   id,
   name,
-  selectedCode = countryCodes[2], // Default to France
+  selectedCode, // Default to France
   setSelectedCode,
   formik, // Accessing Formik props for Formik integration
 }) => {
@@ -74,6 +74,9 @@ export const Dropdown = ({
     setIsOpen(false); // Close the dropdown
   };
 
+  useEffect(() => {
+    selectCountryCode({ code: "+33", iso: "fr", name: "France" });
+  }, []);
   return (
     <div className="inline-flex flex-col h-12 items-start gap-[5px] relative">
       <div

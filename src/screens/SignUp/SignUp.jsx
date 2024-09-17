@@ -113,8 +113,10 @@ export const SignUp = ({ setIsLoading }) => {
       countryCode: Yup.object().required("Country code is required"),
 
       phone: Yup.string()
-        .matches(/^\d+$/, "Phone number is invalid") // Ensure only digits are allowed
-        .required("Phone number is required"),
+        .matches(/^\d+$/, "Phone number must contain only digits")
+        .min(10, "Phone number must be at least 10 digits long")
+        .max(15, "Phone number can't be longer than 15 digits")
+        .required("Mobile number is required"),
 
       email: Yup.string()
         .email("Invalid email address")
@@ -139,18 +141,26 @@ export const SignUp = ({ setIsLoading }) => {
 
       address: Yup.string().required("Address is required"),
 
+      additionalAddress: Yup.string(), // This field is optional, so no required validation
+
       city: Yup.string()
         .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
         .required("City is required"),
 
       postalCode: Yup.string()
-        .matches(/^\d+$/, "Postal Code is invalid") // Assuming postal code is numeric
+        .matches(/^\d+$/, "Postal Code is invalid")
         .required("Postal Code is required"),
+
+      country: Yup.string().required("Country is required"), // Added country validation
+
+      currency: Yup.string().oneOf(["eur", "usd", "gbp"], "Invalid currency"), // Ensure only valid currency values
 
       acceptPrivacyPolicy: Yup.boolean().oneOf(
         [true],
         "You must accept the privacy policy"
       ),
+
+      agreeNewsletter: Yup.boolean(), // Optional, not required
     }),
     onSubmit: async (values) => {
       setIsLoading(true);
