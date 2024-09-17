@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown } from "../icons/ChevronDown";
+import { ChevronDown } from "../icons/ChevronDown"; // Ensure this path is correct
 
 // Static list of country codes and flags (ISO country codes for flag images)
 const countryCodes = [
@@ -55,8 +55,13 @@ const countryCodes = [
   { code: "+64", iso: "nz", name: "New Zealand" },
 ];
 
-export const Dropdown = () => {
-  const [selectedCode, setSelectedCode] = useState(countryCodes[2]); // Default to France
+export const Dropdown = ({
+  id,
+  name,
+  selectedCode = countryCodes[2], // Default to France
+  setSelectedCode,
+  formik, // Accessing Formik props for Formik integration
+}) => {
   const [isOpen, setIsOpen] = useState(false); // Track if dropdown is open
 
   const toggleDropdown = () => {
@@ -64,14 +69,16 @@ export const Dropdown = () => {
   };
 
   const selectCountryCode = (code) => {
-    setSelectedCode(code);
-    setIsOpen(false);
+    setSelectedCode(code); // Update the state
+    formik.setFieldValue(name, code); // Update Formik field
+    setIsOpen(false); // Close the dropdown
   };
 
   return (
     <div className="inline-flex flex-col h-12 items-start gap-[5px] relative">
       <div
-        className="inline-flex items-center gap-2.5 px-[15px] py-3 relative flex-1 grow bg-white rounded-md border border-solid border-stroke cursor-pointer"
+        id={id}
+        className="inline-flex items-center gap-2.5 px-[15px] py-3 relative flex-1 grow bg-white rounded-md border border-solid border-stroke cursor-pointer w-28"
         onClick={toggleDropdown}
       >
         <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
@@ -84,7 +91,8 @@ export const Dropdown = () => {
             {selectedCode.code}
           </div>
         </div>
-        <ChevronDown className="!relative !w-4 !h-4" />
+        {/* Ensure that the ChevronDown icon is displayed */}
+        <ChevronDown className="ml-auto h-4 w-4" />
       </div>
 
       {isOpen && (
@@ -93,7 +101,7 @@ export const Dropdown = () => {
             <div
               key={code.code}
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
-              onClick={() => selectCountryCode(code)}
+              onClick={() => selectCountryCode(code)} // Pass the code to selectCountryCode
             >
               <img
                 src={`https://flagcdn.com/w20/${code.iso}.png`}
@@ -104,6 +112,10 @@ export const Dropdown = () => {
             </div>
           ))}
         </div>
+      )}
+
+      {formik.touched[name] && formik.errors[name] && (
+        <div className="text-red-500 text-sm mt-1">{formik.errors[name]}</div>
       )}
     </div>
   );

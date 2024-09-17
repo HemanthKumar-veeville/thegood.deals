@@ -4,11 +4,70 @@ import * as Yup from "yup";
 import { Button } from "../../components/Button/Button";
 import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
 import { useNavigate } from "react-router-dom";
-import { Placeholder } from "../../components/Dropdown/Dropdown";
 import { axiosInstance } from "../../helpers/helperMethods";
 import Swal from "sweetalert2";
 import { Dropdown } from "../../components/CountryDropDown";
 import { ChevronDown } from "../../icons/ChevronDown";
+
+// Reusable Input Field Component with proper vertical alignment
+const InputField = ({
+  id,
+  name,
+  type = "text",
+  placeholder,
+  formik,
+  label,
+  showPassword = false,
+  toggleVisibility,
+}) => {
+  return (
+    <div className="flex flex-col items-start gap-2 relative w-full">
+      {label && (
+        <label
+          htmlFor={id}
+          className="w-full [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm leading-[22px] mb-[2px]"
+        >
+          {label}
+        </label>
+      )}
+      <div className="w-full">
+        <div
+          className={`flex items-center gap-2.5 pl-5 pr-4 py-3 w-full bg-white rounded-md border cursor-pointer hover:bg-gray-100 ${
+            formik.touched[name] && formik.errors[name]
+              ? "border-red-500 border-solid"
+              : "focus-within:ring-1 focus-within:ring-[#1b4f4a] border"
+          }`}
+        >
+          <input
+            id={id}
+            name={name}
+            type={showPassword ? "text" : type}
+            placeholder={placeholder}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values[name]}
+            className="flex-1 bg-transparent outline-none"
+            autoComplete="off"
+          />
+          {toggleVisibility && (
+            <button
+              type="button"
+              onClick={toggleVisibility}
+              className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              <EyeAlt8 />
+            </button>
+          )}
+        </div>
+        {/* Error message with proper margin to avoid overlapping */}
+        {formik.touched[name] && formik.errors[name] && name !== "phone" ? (
+          <div className="text-red-500 text-sm mt-2">{formik.errors[name]}</div>
+        ) : null}
+      </div>
+    </div>
+  );
+};
 
 export const SignUp = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +86,7 @@ export const SignUp = ({ setIsLoading }) => {
     initialValues: {
       firstName: "",
       lastName: "",
+      countryCode: "",
       phone: "",
       email: "",
       language: "",
@@ -37,35 +97,94 @@ export const SignUp = ({ setIsLoading }) => {
       city: "",
       postalCode: "",
       country: "",
+      currency: "eur",
       acceptPrivacyPolicy: false,
       agreeNewsletter: false,
     },
     validationSchema: Yup.object({
-      firstName: Yup.string().required("Required"),
-      lastName: Yup.string().required("Required"),
-      phone: Yup.string().required("Required"),
-      email: Yup.string().email("Invalid email address").required("Required"),
-      language: Yup.string().required("Required"),
-      password: Yup.string().required("Required"),
+      firstName: Yup.string()
+        .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
+        .required("First name is required"),
+
+      lastName: Yup.string()
+        .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
+        .required("Last name is required"),
+
+      countryCode: Yup.object().required("Country code is required"),
+
+      phone: Yup.string()
+        .matches(/^\d+$/, "Phone number is invalid") // Ensure only digits are allowed
+        .required("Phone number is required"),
+
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+
+      language: Yup.string().required("Language is required"),
+
+      password: Yup.string()
+        .min(8, "Password must be at least 8 characters long")
+        .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+        .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+        .matches(/\d/, "Password must contain at least one number")
+        .matches(
+          /[~#@$%&!*_?^-]/,
+          "Password must contain at least one special character from ~#@$%&!*_?^-"
+        )
+        .required("Password is required"),
+
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .required("Required"),
-      address: Yup.string().required("Required"),
-      city: Yup.string().required("Required"),
-      postalCode: Yup.string().required("Required"),
+        .required("Password must get confirmed"),
+
+      address: Yup.string().required("Address is required"),
+
+      city: Yup.string()
+        .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
+        .required("City is required"),
+
+      postalCode: Yup.string()
+        .matches(/^\d+$/, "Postal Code is invalid") // Assuming postal code is numeric
+        .required("Postal Code is required"),
+
       acceptPrivacyPolicy: Yup.boolean().oneOf(
         [true],
         "You must accept the privacy policy"
       ),
     }),
-    onSubmit: (values) => {
-      navigate("/verify", { state: { email: values.email } });
-      console.log("Form values:", values);
-      formik.resetForm();
-      setShowPassword(false); // Reset password visibility state
-      setShowConfirmPassword(false); // Reset confirm password visibility state
-      // Handle form submission (e.g., send values to the server)
-      // handleSignup(values);
+    onSubmit: async (values) => {
+      setIsLoading(true);
+      const formData = new FormData();
+      formData.append("firstname", values.firstName);
+      formData.append("lastname", values.lastName);
+      formData.append("phone", values.phone);
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+      formData.append("address", values.address);
+      formData.append("addl_address", values.additionalAddress);
+      formData.append("city", values.city);
+      formData.append("postal_code", values.postalCode);
+      formData.append("country", values.country);
+
+      try {
+        const response = await axiosInstance.post("register", formData);
+
+        if (response?.status === 200 && response?.data?.is_mail_sent === true) {
+          navigate("/verify", { state: { email: values.email } });
+          formik.resetForm();
+          setShowPassword(false); // Reset password visibility state
+          setShowConfirmPassword(false); // Reset confirm password visibility state
+          localStorage.removeItem("signupFormValues"); // Clear localStorage after successful submission
+        }
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: error?.response?.data?.detail,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+        setIsLoading(false);
+      }
     },
   });
 
@@ -82,47 +201,6 @@ export const SignUp = ({ setIsLoading }) => {
     localStorage.setItem("signupFormValues", JSON.stringify(formik.values));
   }, [formik.values]);
 
-  const handleSignup = async () => {
-    const values = formik.values;
-    console.log({ values });
-    setIsLoading(true);
-    const formData = new FormData();
-    formData.append("firstname", values.firstName);
-    formData.append("lastname", values.lastName);
-    formData.append("phone", values.phone);
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-    formData.append("address", values.address);
-    formData.append("addl_address", values.additionalAddress);
-    formData.append("city", values.city);
-    formData.append("postal_code", values.postalCode);
-    formData.append("country", "India");
-
-    try {
-      const response = await axiosInstance.post("register", formData);
-
-      if (response?.status === 200) {
-        if (response?.data?.is_mail_sent === true) {
-          navigate("/verify", { state: { email: values.email } });
-          formik.resetForm();
-          setShowPassword(false); // Reset password visibility state
-          setShowConfirmPassword(false); // Reset confirm password visibility state
-          localStorage.removeItem("signupFormValues"); // Clear localStorage after successful submission
-        }
-      }
-      console.log({ response });
-    } catch (error) {
-      console.error("There was an error!", error);
-      Swal.fire({
-        title: "Error!",
-        text: error?.response?.data?.detail,
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-      setIsLoading(false);
-    }
-  };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -132,7 +210,7 @@ export const SignUp = ({ setIsLoading }) => {
   };
 
   return (
-    <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute top-[118px] left-0 bg-primary-background">
+    <div className="flex flex-col w-full items-start gap-[20px] px-[35px] py-[15px] absolute top-[118px] left-0 bg-primary-background">
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
         Create an account
       </div>
@@ -141,401 +219,187 @@ export const SignUp = ({ setIsLoading }) => {
       </div>
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col w-full gap-[15px]"
+        className="flex flex-col w-full gap-[20px]"
       >
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <input
-              id="firstName"
-              name="firstName"
-              type="text"
-              placeholder="First Name"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.firstName}
-              className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                formik.touched.firstName && formik.errors.firstName
-                  ? "border-red-500"
-                  : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-              } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-              autoComplete="off"
-            />
-            {formik.touched.firstName && formik.errors.firstName ? (
-              <div className="text-red-500 text-sm">
-                {formik.errors.firstName}
-              </div>
-            ) : null}
-          </div>
-        </div>
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <input
-              id="lastName"
-              name="lastName"
-              type="text"
-              placeholder="Last Name"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.lastName}
-              className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                formik.touched.lastName && formik.errors.lastName
-                  ? "border-red-500"
-                  : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-              } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-              autoComplete="off"
-            />
-            {formik.touched.lastName && formik.errors.lastName ? (
-              <div className="text-red-500 text-sm">
-                {formik.errors.lastName}
-              </div>
-            ) : null}
-          </div>
-        </div>
+        <InputField
+          id="firstName"
+          name="firstName"
+          placeholder="First Name"
+          formik={formik}
+        />
+        <InputField
+          id="lastName"
+          name="lastName"
+          placeholder="Last Name"
+          formik={formik}
+        />
         <div className="flex h-12 items-start gap-[5px] relative self-stretch w-full">
-          <Dropdown />
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <input
-              id="phone"
-              name="phone"
-              type="text"
-              placeholder="Mobile number"
+          <Dropdown
+            id="countryCode"
+            name="countryCode"
+            selectedCode={formik.values.countryCode}
+            setSelectedCode={(value) =>
+              formik.setFieldValue("countryCode", value)
+            }
+            formik={formik}
+          />
+          <InputField
+            id="phone"
+            name="phone"
+            placeholder="Mobile number"
+            formik={formik}
+          />
+        </div>
+        {formik?.touched["phone"] && formik?.errors["phone"] ? (
+          <div className="text-red-500 text-sm mt-[2px]">
+            {formik.errors["phone"]}
+          </div>
+        ) : null}
+        <InputField
+          id="email"
+          name="email"
+          type="email"
+          placeholder="E-mail"
+          formik={formik}
+        />
+        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
+          <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
+            <select
+              id="language"
+              name="language"
+              value={formik.values.language}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.phone}
-              className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                formik.touched.phone && formik.errors.phone
+              className={`w-full pl-5 pr-10 py-3 bg-white rounded-md border ${
+                formik.touched.language && formik.errors.language
                   ? "border-red-500"
                   : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-              } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-              autoComplete="off"
-            />
-            {formik.touched.phone && formik.errors.phone ? (
-              <div className="text-red-500 text-sm">{formik.errors.phone}</div>
-            ) : null}
-          </div>
-        </div>
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="E-mail"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
-              className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                formik.touched.email && formik.errors.email
-                  ? "border-red-500"
-                  : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-              } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-              autoComplete="off"
-            />
-            {/* {formik.touched.email && formik.errors.email ? (
-              <div className="text-red-500 text-sm">{formik.errors.email}</div>
-            ) : null} */}
-          </div>
-        </div>
-        {/* Language Dropdown */}
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
-              <select
-                id="language"
-                name="language"
-                value={formik.values.language}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`w-full pl-5 pr-10 py-3 bg-white rounded-md border ${
-                  formik.touched.language && formik.errors.language
-                    ? "border-red-500"
-                    : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-                } hover:bg-gray-100 cursor-pointer appearance-none`}
-              >
-                <option value="French">French</option>
-                <option value="English">English</option>
-              </select>
-              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                <ChevronDown className="w-4 h-4 text-gray-600" />
-              </div>
+              } hover:bg-gray-100 cursor-pointer appearance-none`}
+            >
+              <option value="French">French</option>
+              <option value="English">English</option>
+            </select>
+            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+              <ChevronDown className="w-4 h-4 text-gray-600" />
             </div>
-            {/* Display error message for the language dropdown */}
-            {/* {formik.touched.language && formik.errors.language ? (
-              <div className="text-red-500 text-sm">
-                {formik.errors.language}
-              </div>
-            ) : null} */}
           </div>
+          {formik.touched.language && formik.errors.language ? (
+            <div className="text-red-500 text-sm mt-[2px]">
+              {formik.errors.language}
+            </div>
+          ) : null}
         </div>
+
+        {/* Currency Dropdown */}
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
           Currency
         </div>
-        {/* Currency Dropdown */}
         <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
-              <select
-                id="currency"
-                name="currency"
-                value={formik.values.currency}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={`w-full pl-5 pr-10 py-3 bg-white rounded-md border ${
-                  formik.touched.currency && formik.errors.currency
-                    ? "border-red-500"
-                    : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-                } hover:bg-gray-100 cursor-pointer appearance-none`}
-              >
-                <option value="eur">Euro - France</option>
-                <option value="usd">USD - English</option>
-              </select>
-              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-                <ChevronDown className="w-4 h-4 text-gray-600" />
-              </div>
+          <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
+            <select
+              id="currency"
+              name="currency"
+              value={formik.values.currency}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full pl-5 pr-10 py-3 bg-white rounded-md border ${
+                formik.touched.currency && formik.errors.currency
+                  ? "border-red-500"
+                  : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
+              } hover:bg-gray-100 cursor-pointer appearance-none`}
+            >
+              <option value="eur">Euro - France</option>
+              <option value="usd">USD - English</option>
+            </select>
+            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+              <ChevronDown className="w-4 h-4 text-gray-600" />
             </div>
-            {/* Display error message for the language dropdown */}
-            {/* {formik.touched.language && formik.errors.language ? (
-              <div className="text-red-500 text-sm">
-                {formik.errors.language}
-              </div>
-            ) : null} */}
           </div>
+          {formik.touched.currency && formik.errors.currency ? (
+            <div className="text-red-500 text-sm mt-[2px]">
+              {formik.errors.currency}
+            </div>
+          ) : null}
         </div>
-        {/* <Placeholder /> */}
-        {/* <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
-          Currency
-        </div>
-        <Placeholder /> */}
+
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
           Your password
         </div>
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-stroke hover:bg-gray-100 cursor-pointer">
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-                className={`flex items-center justify-between relative flex-1 grow bg-transparent outline-none ${
-                  formik.touched.password && formik.errors.password
-                    ? "border-red-500"
-                    : ""
-                }`}
-              />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
-                aria-label={showPassword ? "Hide password" : "Show password"}
-              >
-                <EyeAlt8 />
-              </button>
+        <InputField
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Password"
+          formik={formik}
+          showPassword={showPassword}
+          toggleVisibility={togglePasswordVisibility}
+        />
+        <InputField
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+          formik={formik}
+          showPassword={showConfirmPassword}
+          toggleVisibility={toggleConfirmPasswordVisibility}
+        />
+
+        {/* Password Hints */}
+        <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
+          {[
+            "At least 8 characters",
+            "Capital and lowercase letters",
+            "A special character ~ #@$%&! *_?^-",
+            "A number",
+          ].map((requirement, idx) => (
+            <div
+              key={idx}
+              className="relative w-fit font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
+            >
+              <span className="mr-1">•</span> {requirement}
             </div>
-            {/* {formik.touched.password && formik.errors.password ? (
-              <div className="text-red-500 text-sm">
-                {formik.errors.password}
-              </div>
-            ) : null} */}
-          </div>
-        </div>
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-stroke hover:bg-gray-100 cursor-pointer">
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type={showPassword ? "text" : "password"}
-                placeholder="Confirm Password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.confirmPassword}
-                className={`flex items-center justify-between relative flex-1 grow bg-transparent outline-none ${
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                    ? "border-red-500"
-                    : ""
-                }`}
-              />
-              <button
-                type="button"
-                onClick={toggleConfirmPasswordVisibility}
-                className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
-                aria-label={
-                  showConfirmPassword ? "Hide password" : "Show password"
-                }
-              >
-                <EyeAlt8 />
-              </button>
-            </div>
-            {/* {formik.touched.password && formik.errors.password ? (
-              <div className="text-red-500 text-sm">
-                {formik.errors.password}
-              </div>
-            ) : null} */}
-          </div>
+          ))}
         </div>
 
-        {/* Password Requirements */}
-        <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
-          {["8 characters", "1 capital letter", "1 lower case", "1 digit"].map(
-            (requirement, idx) => (
-              <div
-                key={idx}
-                className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
-              >
-                <span className="mr-1">•</span> {requirement}
-              </div>
-            )
-          )}
-        </div>
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
           Your address
         </div>
-        <div className="h-20 flex flex-col items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                Address (required)
-              </div>
-            </div>
-            <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <input
-                  id="address"
-                  name="address"
-                  type="text"
-                  placeholder="1 place with onions"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.address}
-                  className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                    formik.touched.address && formik.errors.address
-                      ? "border-red-500"
-                      : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-                  } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-                  autoComplete="off"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="h-20 flex flex-col items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                Additional address
-              </div>
-            </div>
-            <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <input
-                  id="additionalAddress"
-                  name="additionalAddress"
-                  type="text"
-                  placeholder="Apartment 01"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.additionalAddress}
-                  className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                    formik.touched.additionalAddress &&
-                    formik.errors.additionalAddress
-                      ? "border-red-500"
-                      : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-                  } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-                  autoComplete="off"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="h-20 flex flex-col items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                City (required)
-              </div>
-            </div>
-            <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <input
-                  id="city"
-                  name="city"
-                  type="text"
-                  placeholder="Lille"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.city}
-                  className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                    formik.touched.city && formik.errors.city
-                      ? "border-red-500"
-                      : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-                  } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-                  autoComplete="off"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="h-20 flex flex-col items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                Postal code (required)
-              </div>
-            </div>
-            <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <input
-                  id="postalCode"
-                  name="postalCode"
-                  type="text"
-                  placeholder="59000"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.postalCode}
-                  className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                    formik.touched.postalCode && formik.errors.postalCode
-                      ? "border-red-500"
-                      : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-                  } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-                  autoComplete="off"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="h-20 flex flex-col items-start gap-[5px] relative self-stretch w-full">
-          <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-            <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                Country (required)
-              </div>
-            </div>
-            <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <input
-                  id="country"
-                  name="country"
-                  type="text"
-                  placeholder="France"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.country}
-                  className={`flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border ${
-                    formik.touched.country && formik.errors.country
-                      ? "border-red-500"
-                      : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-                  } hover:bg-gray-100 cursor-pointer focus:outline-none`}
-                  autoComplete="off"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <InputField
+          id="address"
+          name="address"
+          placeholder="1 place with onions"
+          formik={formik}
+          label="Address (required)"
+        />
+        <InputField
+          id="additionalAddress"
+          name="additionalAddress"
+          placeholder="Apartment 01"
+          formik={formik}
+          label="Additional address"
+        />
+        <InputField
+          id="city"
+          name="city"
+          placeholder="Lille"
+          formik={formik}
+          label="City (required)"
+        />
+        <InputField
+          id="postalCode"
+          name="postalCode"
+          placeholder="59000"
+          formik={formik}
+          label="Postal code (required)"
+        />
+        <InputField
+          id="country"
+          name="country"
+          placeholder="France"
+          formik={formik}
+          label="Country (required)"
+        />
+
         <div className="flex flex-wrap items-center gap-[10px_10px] relative self-stretch w-full flex-[0_0_auto]">
           <input
             id="acceptPrivacyPolicy"
@@ -574,17 +438,15 @@ export const SignUp = ({ setIsLoading }) => {
             </span>
           </p>
         </div>
-        <button onClick={handleSignup}>
-          <Button
-            buttonText="Register"
-            className="!self-stretch !flex-[0_0_auto] !flex !w-full"
-            color="primary"
-            kind="primary"
-            round="semi-round"
-            state="default"
-            type="submit"
-          />
-        </button>
+        <Button
+          buttonText="Register"
+          className="!self-stretch !flex-[0_0_auto] !flex !w-full"
+          color="primary"
+          kind="primary"
+          round="semi-round"
+          state="default"
+          type="submit"
+        />
       </form>
     </div>
   );
