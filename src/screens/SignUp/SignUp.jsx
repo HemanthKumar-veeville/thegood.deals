@@ -89,7 +89,7 @@ export const SignUp = ({ setIsLoading }) => {
       countryCode: "",
       phone: "",
       email: "",
-      language: "",
+      language: "English",
       password: "",
       confirmPassword: "",
       address: "",
@@ -97,7 +97,7 @@ export const SignUp = ({ setIsLoading }) => {
       city: "",
       postalCode: "",
       country: "",
-      currency: "eur",
+      currency: "usd",
       acceptPrivacyPolicy: false,
       agreeNewsletter: false,
     },
@@ -115,7 +115,7 @@ export const SignUp = ({ setIsLoading }) => {
       phone: Yup.string()
         .matches(/^\d+$/, "Phone number must contain only digits")
         .min(10, "Phone number must be at least 10 digits long")
-        .max(15, "Phone number can't be longer than 15 digits")
+        .max(13, "Phone number can't be longer than 13 digits")
         .required("Mobile number is required"),
 
       email: Yup.string()
@@ -155,10 +155,9 @@ export const SignUp = ({ setIsLoading }) => {
 
       currency: Yup.string().oneOf(["eur", "usd", "gbp"], "Invalid currency"), // Ensure only valid currency values
 
-      acceptPrivacyPolicy: Yup.boolean().oneOf(
-        [true],
-        "You must accept the privacy policy"
-      ),
+      acceptPrivacyPolicy: Yup.boolean()
+        .oneOf([true], "You must accept the privacy policy")
+        .required("You must accept the privacy policy"),
 
       agreeNewsletter: Yup.boolean(), // Optional, not required
     }),
@@ -185,11 +184,12 @@ export const SignUp = ({ setIsLoading }) => {
         const response = await axiosInstance.post("register", formData);
 
         if (response?.status === 200 && response?.data?.is_mail_sent === true) {
-          navigate("/verify", { state: { email: values.email } });
           formik.resetForm();
           setShowPassword(false); // Reset password visibility state
           setShowConfirmPassword(false); // Reset confirm password visibility state
           localStorage.removeItem("signupFormValues"); // Clear localStorage after successful submission
+          navigate("/verify", { state: { email: values.email } });
+          window.scrollTo(0, 0);
         }
       } catch (error) {
         Swal.fire({
@@ -248,7 +248,7 @@ export const SignUp = ({ setIsLoading }) => {
           placeholder="Last Name"
           formik={formik}
         />
-        <div className="flex h-12 items-start gap-[5px] relative self-stretch w-full">
+        <div className="flex h-12 items-start gap-[5px] relative self-stretch !w-full">
           <Dropdown
             id="countryCode"
             name="countryCode"
@@ -258,12 +258,14 @@ export const SignUp = ({ setIsLoading }) => {
             }
             formik={formik}
           />
-          <InputField
-            id="phone"
-            name="phone"
-            placeholder="Mobile number"
-            formik={formik}
-          />
+          <div className="w-48">
+            <InputField
+              id="phone"
+              name="phone"
+              placeholder="Mobile number"
+              formik={formik}
+            />
+          </div>
         </div>
         {formik?.touched["phone"] && formik?.errors["phone"] ? (
           <div className="text-red-500 text-sm mt-[2px]">
@@ -291,7 +293,9 @@ export const SignUp = ({ setIsLoading }) => {
                   : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
               } hover:bg-gray-100 cursor-pointer appearance-none`}
             >
-              <option value="French">French</option>
+              <option value="French" defaultValue={true}>
+                French
+              </option>
               <option value="English">English</option>
             </select>
             <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
@@ -323,7 +327,9 @@ export const SignUp = ({ setIsLoading }) => {
                   : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
               } hover:bg-gray-100 cursor-pointer appearance-none`}
             >
-              <option value="eur">Euro - France</option>
+              <option value="eur" defaultValue={true}>
+                Euro - France
+              </option>
               <option value="usd">USD - English</option>
             </select>
             <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
@@ -434,6 +440,12 @@ export const SignUp = ({ setIsLoading }) => {
             </span>
           </p>
         </div>
+        {formik.touched.acceptPrivacyPolicy &&
+        formik.errors.acceptPrivacyPolicy ? (
+          <div className="text-red-500 text-sm mt-[2px]">
+            {formik.errors.acceptPrivacyPolicy}
+          </div>
+        ) : null}
         <div className="flex flex-wrap items-center gap-[10px_10px] relative self-stretch w-full flex-[0_0_auto]">
           <input
             id="agreeNewsletter"
