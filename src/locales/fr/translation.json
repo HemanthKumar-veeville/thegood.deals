@@ -712,5 +712,54 @@
   },
   "customLoader": {
     "loading": "Chargement..."
+  },
+  "signup": {
+    "title": "Créer un compte",
+    "subtitle": "Vos informations",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "mobile_number": "Numéro de mobile",
+    "email": "E-mail",
+    "language": "Langue",
+    "currency": "Devise",
+    "password": "Mot de passe",
+    "confirm_password": "Confirmer le mot de passe",
+    "address": "Adresse (obligatoire)",
+    "additional_address": "Adresse complémentaire",
+    "city": "Ville (obligatoire)",
+    "postal_code": "Code postal (obligatoire)",
+    "country": "Pays (obligatoire)",
+    "privacy_policy": "J'accepte la politique de confidentialité",
+    "newsletter": "Je souhaite recevoir la newsletter",
+    "register_button": "S'inscrire",
+    "password_hints": {
+      "min_length": "Au moins 8 caractères",
+      "uppercase_lowercase": "Lettres majuscules et minuscules",
+      "special_character": "Un caractère spécial ~ #@$%&! *_?^-",
+      "number": "Un nombre"
+    },
+    "country_dropdown": {
+      "france": "France",
+      "united_states": "États-Unis"
+    },
+    "currency_options": {
+      "eur": "Euro - France",
+      "usd": "USD - Anglais"
+    },
+    "errors": {
+      "first_name": "Le prénom est obligatoire",
+      "last_name": "Le nom est obligatoire",
+      "country_code": "Le code du pays est obligatoire",
+      "phone_number": "Le numéro de téléphone doit être valide",
+      "email": "Adresse e-mail invalide",
+      "language": "La langue est obligatoire",
+      "password": "Le mot de passe est obligatoire",
+      "confirm_password": "Les mots de passe doivent correspondre",
+      "address": "L'adresse est obligatoire",
+      "city": "La ville est obligatoire",
+      "postal_code": "Le code postal est obligatoire",
+      "country": "Le pays est obligatoire",
+      "accept_privacy_policy": "Vous devez accepter la politique de confidentialité"
+    }
   }
 }

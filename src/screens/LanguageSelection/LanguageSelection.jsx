@@ -42,12 +42,12 @@ const LanguageSelection = () => {
 
   const selectLanguage = (language) => {
     setSelectedLanguage(language);
+    i18n.changeLanguage(language === "English" ? "en" : "fr");
     setDropdownOpen(false);
   };
 
   const confirmLanguage = () => {
     dispatch(updateLanguageSetting(selectedLanguage));
-    i18n.changeLanguage(selectedLanguage);
   };
 
   return (

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button } from "../RoundedButton";
 import { plus14 } from "../../images";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const Faq = ({
   breakpoint,
@@ -27,6 +28,7 @@ export const Faq = ({
 }) => {
   const [openQuestion, setOpenQuestion] = useState(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const toggleQuestion = (question) => {
     if (openQuestion === question) {
@@ -40,8 +42,63 @@ export const Faq = ({
     navigate("/help-me");
   };
 
-  const questions = [que1, que2, que3, que4, que5];
-  const answers = [ans1, ans2, ans3, ans4, ans5];
+  const FAQS = [
+    {
+      ques: t("contact_us.faq_1.question"),
+      ans: t("contact_us.faq_1.answer"),
+    },
+    {
+      ques: t("contact_us.faq_2.question"),
+      ans: t("contact_us.faq_2.answer"),
+    },
+    {
+      ques: t("contact_us.faq_3.question"),
+      ans: t("contact_us.faq_3.answer"),
+    },
+    {
+      ques: t("contact_us.faq_4.question"),
+      ans: t("contact_us.faq_4.answer"),
+    },
+    {
+      ques: t("contact_us.faq_5.question"),
+      ans: t("contact_us.faq_5.answer"),
+    },
+    {
+      ques: t("contact_us.faq_6.question"),
+      ans: t("contact_us.faq_6.answer"),
+    },
+    {
+      ques: t("contact_us.faq_7.question"),
+      ans: t("contact_us.faq_7.answer"),
+    },
+    {
+      ques: t("contact_us.faq_8.question"),
+      ans: t("contact_us.faq_8.answer"),
+    },
+    {
+      ques: t("contact_us.faq_9.question"),
+      ans: t("contact_us.faq_9.answer"),
+    },
+    {
+      ques: t("contact_us.faq_10.question"),
+      ans: t("contact_us.faq_10.answer"),
+    },
+    {
+      ques: t("contact_us.faq_11.question"),
+      ans: t("contact_us.faq_11.answer"),
+    },
+    {
+      ques: t("contact_us.faq_12.question"),
+      ans: t("contact_us.faq_12.answer"),
+    },
+    {
+      ques: t("contact_us.faq_13.question"),
+      ans: t("contact_us.faq_13.answer"),
+    },
+  ];
+
+  const questions = FAQS?.map((faq) => faq.ques);
+  const answers = FAQS?.map((faq) => faq.ans);
 
   return (
     <div

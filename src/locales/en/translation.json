@@ -727,5 +727,60 @@
     "heading": "THANKS ! 👍🏻",
     "description": "Once the deal has been corrected by the organizer, you will receive an email to confirm the information again.",
     "action": "Back to Home"
+  },
+  "signup": {
+    "title": "Create an account",
+    "subtitle": "Your information",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "mobile_number": "Mobile number",
+    "email": "E-mail",
+    "language": "Language",
+    "currency": "Currency",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "address": "Address (required)",
+    "additional_address": "Additional address",
+    "city": "City (required)",
+    "postal_code": "Postal code (required)",
+    "country": "Country (required)",
+    "privacy_policy": "I accept ",
+    "privacy_policy_link": "privacy policy",
+    "newsletter": "I agree to ",
+    "newsletter_link": "receive the newsletter",
+    "register_button": "Register",
+    "password_hints": {
+      "min_length": "At least 8 characters",
+      "uppercase_lowercase": "Capital and lowercase letters",
+      "special_character": "A special character ~ #@$%&! *_?^-",
+      "number": "A number",
+      "lowercase": "Password must contain at least one lowercase letter (a-z)",
+      "uppercase": "Password must contain at least one uppercase letter (A-Z)"
+    },
+    "country_dropdown": {
+      "france": "France",
+      "united_states": "United States"
+    },
+    "currency_options": {
+      "eur": "Euro - France",
+      "usd": "USD - English"
+    },
+    "errors": {
+      "first_name": "First name is required",
+      "last_name": "Last name is required",
+      "country_code": "Country code is required",
+      "phone_number": "Phone number must be valid",
+      "email": "Invalid email address",
+      "language": "Language is required",
+      "password": "Password is required",
+      "confirm_password": "Passwords must match",
+      "address": "Address is required",
+      "city": "City is required",
+      "postal_code": "Postal Code is required",
+      "country": "Country is required",
+      "accept_privacy_policy": "You must accept the privacy policy",
+      "currency": "You must enter the currency",
+      "error_title": "Oops..."
+    }
   }
 }

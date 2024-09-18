@@ -8,6 +8,7 @@ import { axiosInstance } from "../../helpers/helperMethods";
 import Swal from "sweetalert2";
 import { Dropdown } from "../../components/CountryDropDown";
 import { ChevronDown } from "../../icons/ChevronDown";
+import { useTranslation } from "react-i18next";
 
 const InputField = ({
   id,
@@ -68,10 +69,70 @@ const InputField = ({
   );
 };
 
+const MobileInputField = ({
+  id,
+  name,
+  type = "text",
+  placeholder,
+  formik,
+  label,
+  showPassword = false,
+  toggleVisibility,
+}) => {
+  return (
+    <div className="w-[calc(100%-1%)]  flex flex-col items-start gap-2 relative">
+      {label && (
+        <label
+          htmlFor={id}
+          className="[font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm leading-[22px] mb-[2px] w-full"
+        >
+          {label}
+        </label>
+      )}
+      <div className="w-[calc(100%-1%)]  ">
+        <div
+          className={`flex items-center gap-2.5 pl-5 pr-4 py-3 w-[calc(100%-1%)]   bg-white rounded-md border cursor-pointer hover:bg-gray-100 ${
+            formik.touched[name] && formik.errors[name]
+              ? "border-red-500 border-solid"
+              : "focus-within:ring-1 focus-within:ring-[#1b4f4a] border"
+          }`}
+        >
+          <input
+            id={id}
+            name={name}
+            type={showPassword ? "text" : type}
+            placeholder={placeholder}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values[name]}
+            className="flex-1 bg-transparent outline-none w-[calc(100%-1%)]  "
+            autoComplete="off"
+          />
+          {toggleVisibility && (
+            <button
+              type="button"
+              onClick={toggleVisibility}
+              className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              <EyeAlt8 />
+            </button>
+          )}
+        </div>
+        {/* Error message with proper margin to avoid overlapping */}
+        {formik.touched[name] && formik.errors[name] && name !== "phone" ? (
+          <div className="text-red-500 text-sm mt-2">{formik.errors[name]}</div>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
 export const SignUp = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   // Load saved form values from localStorage
   useEffect(() => {
@@ -80,7 +141,7 @@ export const SignUp = ({ setIsLoading }) => {
       formik.setValues(JSON.parse(savedValues));
     }
   }, []);
-
+  console.log(i18n.language);
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -88,7 +149,7 @@ export const SignUp = ({ setIsLoading }) => {
       countryCode: { code: "+33", iso: "fr", name: "France" },
       phone: "",
       email: "",
-      language: "English",
+      language: i18n?.language == "en" ? "English" : "French",
       password: "",
       confirmPassword: "",
       address: "",
@@ -102,63 +163,53 @@ export const SignUp = ({ setIsLoading }) => {
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
-        .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
-        .required("First name is required"),
-
-      lastName: Yup.string()
-        .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
-        .required("Last name is required"),
-
-      countryCode: Yup.object().required("Country code is required"),
-
-      phone: Yup.string()
-        .matches(/^\d+$/, "Phone number must contain only digits")
-        .min(10, "Phone number must be at least 10 digits long")
-        .max(13, "Phone number can't be longer than 13 digits")
-        .required("Mobile number is required"),
-
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-
-      language: Yup.string().required("Language is required"),
-
-      password: Yup.string()
-        .min(8, "Password must be at least 8 characters long")
-        .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-        .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-        .matches(/\d/, "Password must contain at least one number")
         .matches(
-          /[~#@$%&!*_?^-]/,
-          "Password must contain at least one special character from ~#@$%&!*_?^-"
+          /^[a-zA-ZÀ-ÿ\u00C0-\u017F\s'-’]+$/,
+          t("signup.errors.first_name")
         )
-        .required("Password is required"),
-
+        .required(t("signup.errors.first_name")),
+      lastName: Yup.string()
+        .matches(
+          /^[a-zA-ZÀ-ÿ\u00C0-\u017F\s'-’]+$/,
+          t("signup.errors.last_name")
+        )
+        .required(t("signup.errors.last_name")),
+      countryCode: Yup.object().required(t("signup.errors.country_code")),
+      phone: Yup.string()
+        .matches(/^\d+$/, t("signup.errors.phone_number"))
+        .min(10, t("signup.errors.phone_number"))
+        .max(13, t("signup.errors.phone_number"))
+        .required(t("signup.errors.phone_number")),
+      email: Yup.string()
+        .email(t("signup.errors.email"))
+        .required(t("signup.errors.email")),
+      language: Yup.string().required(t("signup.errors.language")),
+      password: Yup.string()
+        .min(8, t("signup.password_hints.min_length"))
+        .matches(/[a-z]/, t("signup.password_hints.lowercase"))
+        .matches(/[A-Z]/, t("signup.password_hints.uppercase"))
+        .matches(/\d/, t("signup.password_hints.number"))
+        .matches(/[~#@$%&!*_?^-]/, t("signup.password_hints.special_character"))
+        .required(t("signup.errors.password")),
       confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], "Passwords must match")
-        .required("Password must get confirmed"),
-
-      address: Yup.string().required("Address is required"),
-
-      additionalAddress: Yup.string(), // This field is optional, so no required validation
-
+        .oneOf([Yup.ref("password"), null], t("signup.errors.confirm_password"))
+        .required(t("signup.errors.confirm_password")),
+      address: Yup.string().required(t("signup.errors.address")),
       city: Yup.string()
-        .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed")
-        .required("City is required"),
-
+        .matches(/^[a-zA-ZÀ-ÿ\u00C0-\u017F\s'-’]+$/, t("signup.errors.city"))
+        .required(t("signup.errors.city")),
       postalCode: Yup.string()
-        .matches(/^\d+$/, "Postal Code is invalid")
-        .required("Postal Code is required"),
-
-      country: Yup.string().required("Country is required"), // Added country validation
-
-      currency: Yup.string().oneOf(["eur", "usd", "gbp"], "Invalid currency"), // Ensure only valid currency values
-
+        .matches(/^[A-Za-z0-9- ]{3,10}$/, t("signup.errors.postal_code"))
+        .required(t("signup.errors.postal_code")),
+      country: Yup.string().required(t("signup.errors.country")),
+      currency: Yup.string().oneOf(
+        ["eur", "usd", "gbp"],
+        t("signup.errors.currency")
+      ),
       acceptPrivacyPolicy: Yup.boolean()
-        .oneOf([true], "You must accept the privacy policy")
-        .required("You must accept the privacy policy"),
-
-      agreeNewsletter: Yup.boolean(), // Optional, not required
+        .oneOf([true], t("signup.errors.accept_privacy_policy"))
+        .required(t("signup.errors.accept_privacy_policy")),
+      agreeNewsletter: Yup.boolean(), // Optional
     }),
     onSubmit: async (values) => {
       setIsLoading(true);
@@ -192,7 +243,7 @@ export const SignUp = ({ setIsLoading }) => {
         }
       } catch (error) {
         Swal.fire({
-          title: "Error!",
+          title: t("signup.errors.error_title"),
           text: error?.response?.data?.detail,
           icon: "error",
           confirmButtonText: "OK",
@@ -222,14 +273,19 @@ export const SignUp = ({ setIsLoading }) => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+  useEffect(() => {
+    formik.values.language === "English"
+      ? i18n.changeLanguage("en")
+      : i18n.changeLanguage("fr");
+  }, [formik.values.language]);
 
   return (
     <div className="flex flex-col w-full items-start gap-[20px] px-[35px] py-[15px] absolute top-[118px] left-0 bg-primary-background">
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-        Create an account
+        {t("signup.title")}
       </div>
       <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
-        Your information
+        {t("signup.subtitle")}
       </div>
       <form
         onSubmit={formik.handleSubmit}
@@ -238,13 +294,13 @@ export const SignUp = ({ setIsLoading }) => {
         <InputField
           id="firstName"
           name="firstName"
-          placeholder="First Name"
+          placeholder={t("signup.first_name")}
           formik={formik}
         />
         <InputField
           id="lastName"
           name="lastName"
-          placeholder="Last Name"
+          placeholder={t("signup.last_name")}
           formik={formik}
         />
         <div className="flex h-12 items-start gap-[5px] relative self-stretch !w-full">
@@ -257,10 +313,10 @@ export const SignUp = ({ setIsLoading }) => {
             }
             formik={formik}
           />
-          <InputField
+          <MobileInputField
             id="phone"
             name="phone"
-            placeholder="Mobile number"
+            placeholder={t("signup.mobile_number")}
             formik={formik}
           />
         </div>
@@ -273,7 +329,7 @@ export const SignUp = ({ setIsLoading }) => {
           id="email"
           name="email"
           type="email"
-          placeholder="E-mail"
+          placeholder={t("signup.email")}
           formik={formik}
         />
         <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
@@ -291,9 +347,9 @@ export const SignUp = ({ setIsLoading }) => {
               } hover:bg-gray-100 cursor-pointer appearance-none`}
             >
               <option value="French" defaultValue={true}>
-                French
+                {t("language.french")}
               </option>
-              <option value="English">English</option>
+              <option value="English">{t("language.english")}</option>
             </select>
             <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
               <ChevronDown className="w-4 h-4 text-gray-600" />
@@ -308,7 +364,7 @@ export const SignUp = ({ setIsLoading }) => {
 
         {/* Currency Dropdown */}
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
-          Currency
+          {t("signup.currency")}
         </div>
         <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
           <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
@@ -325,9 +381,9 @@ export const SignUp = ({ setIsLoading }) => {
               } hover:bg-gray-100 cursor-pointer appearance-none`}
             >
               <option value="eur" defaultValue={true}>
-                Euro - France
+                {t("signup.currency_options.eur")}
               </option>
-              <option value="usd">USD - English</option>
+              <option value="usd">{t("signup.currency_options.usd")}</option>
             </select>
             <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
               <ChevronDown className="w-4 h-4 text-gray-600" />
@@ -341,13 +397,13 @@ export const SignUp = ({ setIsLoading }) => {
         </div>
 
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
-          Your password
+          {t("signup.password")}
         </div>
         <InputField
           id="password"
           name="password"
           type="password"
-          placeholder="Password"
+          placeholder={t("signup.password")}
           formik={formik}
           showPassword={showPassword}
           toggleVisibility={togglePasswordVisibility}
@@ -356,7 +412,7 @@ export const SignUp = ({ setIsLoading }) => {
           id="confirmPassword"
           name="confirmPassword"
           type="password"
-          placeholder="Confirm Password"
+          placeholder={t("signup.confirm_password")}
           formik={formik}
           showPassword={showConfirmPassword}
           toggleVisibility={toggleConfirmPasswordVisibility}
@@ -365,10 +421,10 @@ export const SignUp = ({ setIsLoading }) => {
         {/* Password Hints */}
         <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
           {[
-            "At least 8 characters",
-            "Capital and lowercase letters",
-            "A special character ~ #@$%&! *_?^-",
-            "A number",
+            t("signup.password_hints.min_length"),
+            t("signup.password_hints.uppercase_lowercase"),
+            t("signup.password_hints.special_character"),
+            t("signup.password_hints.number"),
           ].map((requirement, idx) => (
             <div
               key={idx}
@@ -380,42 +436,42 @@ export const SignUp = ({ setIsLoading }) => {
         </div>
 
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
-          Your address
+          {t("signup.address")}
         </div>
         <InputField
           id="address"
           name="address"
-          placeholder="1 place with onions"
+          placeholder={t("signup.address")}
           formik={formik}
-          label="Address (required)"
+          label={t("signup.address")}
         />
         <InputField
           id="additionalAddress"
           name="additionalAddress"
-          placeholder="Apartment 01"
+          placeholder={t("signup.additional_address")}
           formik={formik}
-          label="Additional address"
+          label={t("signup.additional_address")}
         />
         <InputField
           id="city"
           name="city"
-          placeholder="Lille"
+          placeholder={t("signup.city")}
           formik={formik}
-          label="City (required)"
+          label={t("signup.city")}
         />
         <InputField
           id="postalCode"
           name="postalCode"
-          placeholder="59000"
+          placeholder={t("signup.postal_code")}
           formik={formik}
-          label="Postal code (required)"
+          label={t("signup.postal_code")}
         />
         <InputField
           id="country"
           name="country"
-          placeholder="France"
+          placeholder={t("signup.country")}
           formik={formik}
-          label="Country (required)"
+          label={t("signup.country")}
         />
 
         <div className="flex flex-wrap items-center gap-[10px_10px] relative self-stretch w-full flex-[0_0_auto]">
@@ -430,10 +486,10 @@ export const SignUp = ({ setIsLoading }) => {
           />
           <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-xs tracking-[0] leading-5 whitespace-nowrap">
             <span className="[font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-xs tracking-[0] leading-5">
-              I accept{" "}
+              {t("signup.privacy_policy")}
             </span>
             <span className="underline" onClick={handlePrivacyPolicy}>
-              privacy policy
+              {t("signup.privacy_policy_link")}
             </span>
           </p>
         </div>
@@ -455,15 +511,15 @@ export const SignUp = ({ setIsLoading }) => {
           />
           <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-xs tracking-[0] leading-5 whitespace-nowrap">
             <span className="[font-family:'Inter',Helvetica] font-normal text-[#1b4f4a] text-xs tracking-[0] leading-5">
-              I agree to{" "}
+              {t("signup.newsletter")}
             </span>
             <span className="underline" onClick={handleNewsLetter}>
-              receive the newsletter
+              {t("signup.newsletter_link")}
             </span>
           </p>
         </div>
         <Button
-          buttonText="Register"
+          buttonText={t("signup.register_button")}
           className="!self-stretch !flex-[0_0_auto] !flex !w-full"
           color="primary"
           kind="primary"
