@@ -9,7 +9,6 @@ import Swal from "sweetalert2";
 import { Dropdown } from "../../components/CountryDropDown";
 import { ChevronDown } from "../../icons/ChevronDown";
 
-// Reusable Input Field Component with proper vertical alignment
 const InputField = ({
   id,
   name,
@@ -21,11 +20,11 @@ const InputField = ({
   toggleVisibility,
 }) => {
   return (
-    <div className="flex flex-col items-start gap-2 relative w-full">
+    <div className="w-full flex flex-col items-start gap-2 relative">
       {label && (
         <label
           htmlFor={id}
-          className="w-full [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm leading-[22px] mb-[2px]"
+          className="[font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm leading-[22px] mb-[2px] w-full"
         >
           {label}
         </label>
@@ -86,7 +85,7 @@ export const SignUp = ({ setIsLoading }) => {
     initialValues: {
       firstName: "",
       lastName: "",
-      countryCode: "",
+      countryCode: { code: "+33", iso: "fr", name: "France" },
       phone: "",
       email: "",
       language: "English",
@@ -258,14 +257,12 @@ export const SignUp = ({ setIsLoading }) => {
             }
             formik={formik}
           />
-          <div className="w-48">
-            <InputField
-              id="phone"
-              name="phone"
-              placeholder="Mobile number"
-              formik={formik}
-            />
-          </div>
+          <InputField
+            id="phone"
+            name="phone"
+            placeholder="Mobile number"
+            formik={formik}
+          />
         </div>
         {formik?.touched["phone"] && formik?.errors["phone"] ? (
           <div className="text-red-500 text-sm mt-[2px]">
