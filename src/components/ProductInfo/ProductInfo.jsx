@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Plus3 } from "../../icons/Plus3";
 import { WebsiteMoney } from "../../icons/WebsiteMoney";
 import ProductQuantity from "./ProductQuantity";
@@ -10,7 +10,25 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
   const [minQuantity, setMinQuantity] = useState(2);
   const [maxQuantity, setMaxQuantity] = useState(13);
   const [goodDealPrice, setGoodDealPrice] = useState("");
+  const [maximumRetailPrice, setMaximumRetailPrice] = useState("");
   const [productTitle, setProductTitle] = useState("");
+  const [totalStock, setTotalStock] = useState(""); // New state for total stock
+  const [discountPercentage, setDiscountPercentage] = useState(0); // New state for discount percentage
+
+  // Effect to calculate discount percentage whenever maximumRetailPrice or goodDealPrice changes
+  useEffect(() => {
+    if (
+      maximumRetailPrice &&
+      goodDealPrice &&
+      maximumRetailPrice > 0 &&
+      goodDealPrice > 0
+    ) {
+      const discount = (1 - goodDealPrice / maximumRetailPrice) * 100;
+      setDiscountPercentage(Math.max(discount.toFixed(2), 0)); // Ensure it's not negative
+    } else {
+      setDiscountPercentage(0); // Reset discount if values are invalid
+    }
+  }, [maximumRetailPrice, goodDealPrice]);
 
   const handleAddClick = () => {
     const newProduct = {
@@ -18,15 +36,19 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
       minimum_quantity: minQuantity,
       maximum_quantity: maxQuantity,
       deal_price: goodDealPrice,
-      estimated_discount: 50,
-      market_price: 23,
-      total_stock: 10,
+      estimated_discount: discountPercentage, // Use the calculated discount percentage
+      market_price: maximumRetailPrice, // Using maximumRetailPrice in product
+      total_stock: totalStock, // Using totalStock in product
     };
+    console.log(newProduct);
     addProduct(newProduct);
     setProductTitle("");
     setMinQuantity(2);
     setMaxQuantity(13);
     setGoodDealPrice("");
+    setMaximumRetailPrice(""); // Reset after adding
+    setTotalStock(""); // Reset total stock
+    setDiscountPercentage(0); // Reset discount percentage
     setAddMode(!addMode);
   };
 
@@ -46,19 +68,16 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
         <div className=" w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
           Total stock
         </div>
-        <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-            by product
-          </div>
-        </div>
       </div>
-      <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative bg-whitewhite rounded-md border border-solid border-stroke w-full">
+      <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke">
         <Box4 className="!relative !w-4 !h-4" />
-        <div className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px]">
-          <div className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-            ex. 32
-          </div>
-        </div>
+        <input
+          type="number"
+          placeholder="ex. 32"
+          value={totalStock} // Use totalStock here
+          onChange={(e) => setTotalStock(e.target.value)} // Handler for total stock
+          className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
+        />
       </div>
       <ProductQuantity
         label="Minimum quantity"
@@ -80,8 +99,8 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
         <input
           type="number"
           placeholder="ex. €29.00"
-          value={goodDealPrice}
-          onChange={(e) => setGoodDealPrice(e.target.value)}
+          value={maximumRetailPrice}
+          onChange={(e) => setMaximumRetailPrice(e.target.value)}
           className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
         />
       </div>
@@ -106,7 +125,7 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <p className="relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-            compared to the public price
+            {discountPercentage}% compared to the public price
           </p>
         </div>
       </div>
@@ -118,7 +137,7 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
         line={Line_60_1}
         tooltipPolygon={Polygon_1_1}
         tooltipPositionTopColorClassName="your-tooltip-classname"
-        progressPercentage={75} // Example percentage
+        progressPercentage={discountPercentage} // Example percentage
       />
       <div
         className="gap-2 border border-solid border-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"

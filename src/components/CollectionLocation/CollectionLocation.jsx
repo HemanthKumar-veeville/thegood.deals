@@ -7,12 +7,10 @@ const CollectionLocation = ({ type, onChange, value, handleChange }) => {
 
   const handleAtHomeChange = () => {
     setIsAtHome(true);
-    onChange("At my house");
   };
 
   const handleProvideLocationChange = () => {
     setIsAtHome(false);
-    onChange("I provide another location");
   };
 
   return (
@@ -135,8 +133,8 @@ const CollectionLocation = ({ type, onChange, value, handleChange }) => {
               type="text"
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-12 p-2.5 focus:outline-none" // Adjusted padding to add space between icon and date
               value={value}
-              onChange={handleChange}
-              placeholder="ex. 25/04/2025"
+              onChange={handleProvideLocationChange}
+              placeholder="345 . 00 €"
             />
           </div>
         </div>

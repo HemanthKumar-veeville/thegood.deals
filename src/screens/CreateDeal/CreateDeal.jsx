@@ -36,7 +36,6 @@ const CreateDeal = () => {
     bic: "",
     dealExpiration: "",
     acceptConditions: false,
-    minProducts: 2,
     collectionLocation: "",
     pictures: [],
     deliveryCost: "",
@@ -89,13 +88,6 @@ const CreateDeal = () => {
     }));
   };
 
-  const handleMinProductsChange = (delta) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      minProducts: Math.max(1, prevState.minProducts + delta),
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true at the start
@@ -112,7 +104,6 @@ const CreateDeal = () => {
       form.append("banking_info[iban]", formData.iban);
       form.append("banking_info[bic]", formData.bic);
       form.append("deal_expiration_date", "2024-09-20T17:42");
-      form.append("minimum_products", formData.minProducts);
       form.append("terms_accepted", formData.acceptConditions ? "on" : "off");
 
       // Log file names before appending them to FormData
@@ -184,7 +175,6 @@ const CreateDeal = () => {
               dealExpiration:
                 dealData.deal_expiration_date ?? "2024-09-20T17:42",
               acceptConditions: dealData.terms_accepted ?? false,
-              minProducts: dealData.minimum_products ?? 0,
               collectionLocation:
                 dealData.collection_location ?? "Default Collection Location",
               pictures: dealData.images ?? [],
@@ -202,7 +192,13 @@ const CreateDeal = () => {
     fetchDeal();
   }, [dealId]);
 
-  const handleBack = () => {};
+  const handleBack = () => {
+    navigate("/");
+  };
+
+  // useEffect(() => {
+  //   console.log({ products });
+  // }, [products]);
 
   return (
     <>

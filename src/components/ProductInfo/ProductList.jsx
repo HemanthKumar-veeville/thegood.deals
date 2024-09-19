@@ -1,6 +1,7 @@
 import React from "react";
 
 const ProductList = ({ products }) => {
+  console.log({ products });
   return (
     <div className="flex flex-col items-start gap-[15px] p-[15px] bg-white rounded-[5px] w-full">
       <h2 className="font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">
@@ -15,22 +16,25 @@ const ProductList = ({ products }) => {
             className="flex flex-col items-start gap-[5px] p-[10px] bg-gray-100 rounded-[5px] w-full"
           >
             <h3 className="font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">
-              {product.productTitle}
+              {product.name}
             </h3>
             <p className="text-darkdark-6 text-sm">
-              {product.productDescription}
+              Total Stock: {product.total_stock}
             </p>
             <p className="text-darkdark-6 text-sm">
-              Min Quantity: {product.minQuantity}
+              Min Quantity: {product.minimum_quantity}
             </p>
             <p className="text-darkdark-6 text-sm">
-              Max Quantity: {product.maxQuantity}
+              Max Quantity: {product.maximum_quantity}
             </p>
             <p className="text-darkdark-6 text-sm">
-              Good Deal Price: {product.goodDealPrice}
+              Market Price: {product.market_price}
             </p>
             <p className="text-darkdark-6 text-sm">
-              Estimated Discount: {product.estimatedDiscount}
+              Good Deal Price: {product.deal_price}
+            </p>
+            <p className="text-darkdark-6 text-sm">
+              Estimated Discount: {product.estimated_discount}
             </p>
           </div>
         ))
