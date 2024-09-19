@@ -23,6 +23,7 @@ import { addNewDeal, getDealByDealId } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import Swal from "sweetalert2";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
+import AcceptConditions from "../../components/AcceptConditions";
 
 const CreateDeal = () => {
   const { t } = useTranslation(); // Initialize translation hook
@@ -38,6 +39,7 @@ const CreateDeal = () => {
     minProducts: 2,
     collectionLocation: "",
     pictures: [],
+    deliveryCost: "",
   });
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
@@ -77,6 +79,13 @@ const CreateDeal = () => {
     setFormData((prevState) => ({
       ...prevState,
       collectionLocation,
+    }));
+  };
+
+  const handleDeliveryCostChange = (deliveryCost) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      deliveryCost,
     }));
   };
 
@@ -251,6 +260,7 @@ const CreateDeal = () => {
               <CollectionLocation
                 type="collectionLocation"
                 onChange={handleLocationChange}
+                value={formData.collectionLocation}
               />
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
@@ -272,7 +282,8 @@ const CreateDeal = () => {
             <div className="!w-full">
               <CollectionLocation
                 type="deliveryCost"
-                onChange={handleLocationChange}
+                onChange={handleDeliveryCostChange}
+                value={formData.deliveryCost}
               />
             </div>
             <img
@@ -417,58 +428,7 @@ const CreateDeal = () => {
               alt="Line"
               src={Line63}
             />
-            <div className="relative w-[260px] h-[97px]">
-              <div className="flex-col items-start top-0 flex w-[260px] absolute left-0">
-                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-                  {t("create_deal.min_products_label")}
-                  {/* Minimum products by order */}
-                </div>
-              </div>
-              <div className="items-center gap-[70px] top-[61px] flex w-[260px] absolute left-0">
-                <div className="inline-flex flex-col items-start gap-3 relative flex-[0_0_auto]">
-                  <div className="relative w-[116px] h-9 mr-[-2.00px]">
-                    <div className="relative w-[114px] h-9 bg-white rounded-[5px] border border-solid border-stroke flex items-center justify-between px-2">
-                      <div onClick={() => handleMinProductsChange(-1)}>
-                        <Minus1
-                          className="!w-3 !h-3 cursor-pointer"
-                          color="#1B4F4A"
-                        />
-                      </div>
-                      <div className="[font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                        {formData.minProducts}
-                      </div>
-                      <div onClick={() => handleMinProductsChange(1)}>
-                        <Plus1
-                          className="!w-3 !h-3 cursor-pointer"
-                          color="#1B4F4A"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
-            <div className="w-full flex items-center gap-2.5">
-              <CheckBox
-                name="acceptConditions"
-                checked={formData.acceptConditions ? "ON" : "OFF"}
-                onChange={() => handleChange("acceptConditions")}
-                checkedOffStyleClassName="!flex-[0_0_auto]"
-                divClassName="!text-primary-text-color !tracking-[0] !text-base ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 cursor-pointer"
-                style="two"
-                text=""
-                text1="ON"
-              />
-              <p className="[font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">
-                {t("create_deal.accept_conditions_label")}{" "}
-                {/* I accept the General Conditions of Sale */}
-              </p>
-            </div>
+            <AcceptConditions formData={formData} handleChange={handleChange} />
             <button
               type="submit"
               className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
