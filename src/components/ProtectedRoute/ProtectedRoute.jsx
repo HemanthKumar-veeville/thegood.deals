@@ -21,7 +21,7 @@ function ProtectedRoute({ element }) {
     return <CustomLoader />;
   }
 
-  if (!isUserLoggedIn) {
+  if (isUserLoggedIn) {
     return <Navigate to="/auth?login" />;
   }
 

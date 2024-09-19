@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { addNewDeal, getDealByDealId } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import Swal from "sweetalert2";
+import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 
 const CreateDeal = () => {
   const { t } = useTranslation(); // Initialize translation hook
@@ -192,6 +193,8 @@ const CreateDeal = () => {
     fetchDeal();
   }, [dealId]);
 
+  const handleBack = () => {};
+
   return (
     <>
       {loading && <CustomLoader />}
@@ -201,6 +204,20 @@ const CreateDeal = () => {
           className="flex flex-col w-full items-start relative bg-primary-background mx-auto"
         >
           <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+            <div
+              className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke"
+              onClick={handleBack}
+            >
+              <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+                <ArrowLeft
+                  className="!relative !w-[18px] !h-[18px]"
+                  color="#637381"
+                />
+                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
+                  {t("common.back")}
+                </div>
+              </div>
+            </div>
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
               {t("create_deal.title")} {/* Create a good deal */}
             </div>
@@ -230,10 +247,12 @@ const CreateDeal = () => {
               alt="Line"
               src={Line63}
             />
-            <CollectionLocation
-              type="collectionLocation"
-              onChange={handleLocationChange}
-            />
+            <div className="!w-full">
+              <CollectionLocation
+                type="collectionLocation"
+                onChange={handleLocationChange}
+              />
+            </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
               {t("create_deal.collection_date_label")}{" "}
               {/* Approximate collection date */}
@@ -241,8 +260,19 @@ const CreateDeal = () => {
             <div className="w-full">
               <DatePicker
                 name="collectionDate"
-                value={formData.collectionDate}
+                date={formData.collectionDate}
                 onChange={() => handleChange("collectionDate")}
+              />
+            </div>
+            <img
+              className="relative self-stretch w-full h-px object-cover"
+              alt="Line"
+              src={Line63}
+            />
+            <div className="!w-full">
+              <CollectionLocation
+                type="deliveryCost"
+                onChange={handleLocationChange}
               />
             </div>
             <img
@@ -301,6 +331,11 @@ const CreateDeal = () => {
             <p className="relative w-[230px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px]">
               {t("create_deal.banking_info_label")}
             </p>
+            <div className="w-full h-6">
+              <div className="[font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+                IBAN
+              </div>
+            </div>
             <div className="w-full">
               <BankingInfo
                 name="iban"
@@ -310,6 +345,11 @@ const CreateDeal = () => {
                 label={t("create_deal.iban_label")}
                 placeholder={t("create_deal.iban_placeholder")}
               />
+            </div>
+            <div className="w-full h-6">
+              <div className="[font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+                BIC
+              </div>
             </div>
             <div className="w-full">
               <BankingInfo
@@ -380,7 +420,7 @@ const CreateDeal = () => {
             <div className="relative w-[260px] h-[97px]">
               <div className="flex-col items-start top-0 flex w-[260px] absolute left-0">
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-                  {t("create_deal.min_products_label")}{" "}
+                  {t("create_deal.min_products_label")}
                   {/* Minimum products by order */}
                 </div>
               </div>

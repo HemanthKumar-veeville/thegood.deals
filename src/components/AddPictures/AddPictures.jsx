@@ -108,7 +108,7 @@ const AddPictures = ({ onChange }) => {
     <div className="flex flex-col h-fit items-start gap-2.5 relative self-stretch w-full">
       <div className="flex flex-col items-center relative flex-1 self-stretch w-full grow">
         {pictures.length > 0 && (
-          <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg">
+          <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg h-64">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -175,8 +175,12 @@ const AddPictures = ({ onChange }) => {
           </div>
         )}
         <div className="flex items-center justify-center gap-2.5 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke mt-4">
-          <label className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            <div className="inline-flex items-center justify-center gap-2 px-6 py-2 relative flex-[0_0_auto] rounded-[50px] border border-solid border-[#1b4f4a] cursor-pointer">
+          <label
+            className={`${
+              pictures.length > 0 ? "" : "h-32"
+            }  all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap flex items-center `}
+          >
+            <div className="flex items-center justify-center gap-2 px-6 py-2 relative flex-[0_0_auto] rounded-[50px] border border-solid border-[#1b4f4a] cursor-pointer">
               <CirclePlus55 className="!relative !w-5 !h-5" color="#1B4F4A" />{" "}
               Add pictures
             </div>

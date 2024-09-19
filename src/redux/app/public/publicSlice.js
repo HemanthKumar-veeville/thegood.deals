@@ -8,15 +8,22 @@ const initialState = {
   helpRequestMessage: null,
 };
 
-// Async thunk for submitting a help request
+// Async thunk for submitting a help request as FormData
 export const submitHelpRequest = createAsyncThunk(
   "public/submitHelpRequest",
   async (helpRequestData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(
-        "/help_requests",
-        helpRequestData
-      );
+      // Create a new FormData object
+      const formData = new FormData();
+
+      // Append each field from helpRequestData to the FormData object
+      Object.keys(helpRequestData).forEach((key) => {
+        formData.append(key, helpRequestData[key]);
+      });
+
+      // Send the FormData using the existing axiosInstance
+      const response = await axiosInstance.post("/help_requests", formData);
+
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

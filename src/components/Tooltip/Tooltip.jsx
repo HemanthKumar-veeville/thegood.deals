@@ -19,7 +19,13 @@ export const Tooltip = ({
     <div
       className={`inline-flex items-start gap-2.5 px-3.5 py-[5px] rounded-[5px] justify-center relative ${
         color === "white" ? "shadow-shadow-1" : ""
-      } ${color === "dark" ? "bg-darkdark" : color === "white" ? "bg-whitewhite" : "bg-primary-color"} ${className}`}
+      } ${
+        color === "dark"
+          ? "bg-darkdark"
+          : color === "white"
+          ? "bg-whitewhite"
+          : "bg-primary-color"
+      } ${className}`}
     >
       {position === "right" && (
         <img
@@ -52,8 +58,18 @@ export const Tooltip = ({
         <img
           className={`absolute ${position === "left" ? "w-[7px]" : "w-3"} ${
             position === "left" ? "left-[73px]" : "left-[30px]"
-          } ${position === "bottom" ? "top-0" : position === "left" ? "top-2.5" : "top-8"} ${
-            position === "bottom" ? "h-px" : position === "left" ? "h-3" : "h-[7px]"
+          } ${
+            position === "bottom"
+              ? "top-0"
+              : position === "left"
+              ? "top-2.5"
+              : "top-8"
+          } ${
+            position === "bottom"
+              ? "h-px"
+              : position === "left"
+              ? "h-3"
+              : "h-[7px]"
           } ${polygonClassNameOverride}`}
           alt="Polygon"
           src={

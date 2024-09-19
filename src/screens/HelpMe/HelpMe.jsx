@@ -20,7 +20,7 @@ const PublicNeedHelp = () => {
     email: "",
     phone: "",
     message: "",
-    privacyAccepted: false,
+    accept_privacy_policy: false,
   });
 
   const dispatch = useDispatch();
@@ -43,8 +43,9 @@ const PublicNeedHelp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, email, phone, message, privacyAccepted } = formData;
-    if (!name || !email || !phone || !message || !privacyAccepted) {
+    const { name, email, phone, message, accept_privacy_policy } = formData;
+
+    if (!name || !email || !phone || !message || !accept_privacy_policy) {
       alert(t("public_need_help.fill_all_fields"));
       return;
     }
@@ -58,7 +59,7 @@ const PublicNeedHelp = () => {
           email: "",
           phone: "",
           message: "",
-          privacyAccepted: false,
+          accept_privacy_policy: false,
         });
         navigate("/admin-invitations-sent");
       })
@@ -154,8 +155,8 @@ const PublicNeedHelp = () => {
         <div className="flex flex-wrap items-center gap-[10px_10px] relative self-stretch w-full flex-[0_0_auto]">
           <input
             type="checkbox"
-            name="privacyAccepted"
-            checked={formData.privacyAccepted}
+            name="accept_privacy_policy"
+            checked={formData.accept_privacy_policy}
             onChange={handleChange}
             className="w-5 h-5 bg-whitewhite rounded border border-solid border-stroke"
           />
