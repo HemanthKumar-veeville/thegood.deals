@@ -19,6 +19,9 @@ function AppBar() {
   const [isUser, setIsUser] = useState(true);
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
 
+  const { profile, userDeals, userReviews } = useSelector(
+    (state) => state.user
+  );
   /**
    * Toggles the sidebar open state.
    */
@@ -92,7 +95,15 @@ function AppBar() {
                 !isUserLoggedIn ? navigate("/auth?login") : handleOpen()
               }
             >
-              <UserAlt className="!relative !w-6 !h-6" />
+              {profile?.profile_image ? (
+                <img
+                  className="w-[90%] h-[90%] rounded-full object-cover"
+                  alt="photo"
+                  src={profile?.profile_image}
+                />
+              ) : (
+                <UserAlt className="!relative !w-6 !h-6" />
+              )}
             </div>
           )}
         </div>

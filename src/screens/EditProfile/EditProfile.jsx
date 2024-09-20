@@ -4,7 +4,6 @@ import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { EyeAlt4 } from "../../icons/EyeAlt4";
 import { Pencil } from "../../icons/Pencil";
 import { PencilAlt } from "../../icons/PencilAlt";
-import { Rectangle5095_1 } from "../../images";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,11 +11,13 @@ import {
   updateUserProfile,
 } from "../../redux/app/account/accountSlice";
 import { ChevronDown } from "../../icons/ChevronDown";
+import { UserAlt } from "../../icons/UserAlt";
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { profile: fetchedProfile } = useSelector((state) => state.account);
+  const [fileUploaded, setFileUploaded] = useState(null);
 
   const initialProfileState = {
     firstName: "",
@@ -31,7 +32,7 @@ const EditProfile = () => {
     city: "",
     postalCode: "",
     country: "",
-    profilePicture: Rectangle5095_1,
+    profilepicture: "",
   };
 
   const [profile, setProfile] = useState(initialProfileState);
@@ -76,7 +77,7 @@ const EditProfile = () => {
         city: city || "",
         postalCode: postal_code || "",
         country: country || "",
-        profilePicture: profile_picture || Rectangle5095_1,
+        profilepicture: profile_picture || "",
       });
     }
   }, [fetchedProfile]);
@@ -97,17 +98,19 @@ const EditProfile = () => {
 
   const handleSave = useCallback(() => {
     setEditField(null);
-    dispatch(updateUserProfile(profile)); // Only call updateUserProfile on button click
+    dispatch(updateUserProfile({ ...profile, profilepicture: fileUploaded })); // Only call updateUserProfile on button click
+    dispatch(fetchUserProfile()); // Fetch updated profile after saving
   }, [dispatch, profile]);
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setFileUploaded(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfile((prevProfile) => ({
           ...prevProfile,
-          profilePicture: reader.result,
+          profilepicture: reader.result,
         }));
       };
       reader.readAsDataURL(file);
@@ -159,13 +162,17 @@ const EditProfile = () => {
         <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-[#1b4f4a] text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
           My account ✏️
         </div>
-        <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
+        <div className="flex items-center justify-start relative self-stretch w-full flex-[0_0_auto]  gap-[15px]">
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-            <img
-              className="relative w-[50px] h-[50px] object-cover"
-              alt="Profile"
-              src={profile.profilePicture}
-            />
+            {profile?.profilepicture === "" ? (
+              <UserAlt />
+            ) : (
+              <img
+                className="relative w-[50px] h-[50px] object-cover rounded-lg"
+                alt="Profile"
+                src={profile.profilepicture}
+              />
+            )}
           </div>
           <div className="inline-flex items-center justify-center gap-1.5 px-3 py-[5px] relative flex-[0_0_auto] bg-[#1b4f4a] rounded-[5px]">
             <PencilAlt className="!relative !w-3.5 !h-3.5" color="white" />
