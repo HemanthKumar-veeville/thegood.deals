@@ -4,7 +4,7 @@ import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 
-const InvitationSent = () => {
+const InvitationSent = ({ description }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const InvitationSent = () => {
           {t("invitation_sent.title")}
         </div>
         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          {t("invitation_sent.description")}
+          {description || t("invitation_sent.description")}
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"

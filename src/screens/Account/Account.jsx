@@ -179,8 +179,7 @@ const Account = () => {
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-full">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap capitalize">
-          {"Hey 👋🏻 " + profile?.name || t("account.greeting")}
-          {/* Hey 👋🏻 Anthony */}
+          {`Hey, ${profile?.name || "User"} 👋🏻`}
         </div>
         <div
           className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
@@ -249,6 +248,24 @@ const Account = () => {
           onScroll={handleContainerScroll}
         >
           {status === "loading" && <CustomLoader />}
+          {status === "failed" && (
+            <div className="w-[18rem]">
+              <SuccessAlert
+                className="!flex !bg-cyancyan-light-3 w-[100%]"
+                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
+                frameClassName="!flex-1 !flex !grow"
+                groupClassName="!bg-cyancyan"
+                icon={
+                  <Warning1
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                }
+                style="three"
+                text="Error Fetching the Deals"
+              />
+            </div>
+          )}
           {status !== "loading" &&
             deals?.Deals?.map((deal) => (
               <div

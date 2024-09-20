@@ -27,7 +27,7 @@ const PublicNeedHelp = () => {
       name: "",
       email: "",
       phone: "",
-      countryCode: "",
+      country_code: "",
       message: "",
       accept_privacy_policy: false,
     },
@@ -53,9 +53,8 @@ const PublicNeedHelp = () => {
       dispatch(submitHelpRequest(values))
         .unwrap()
         .then(() => {
-          alert(t("public_need_help.success_message"));
           resetForm();
-          navigate("/admin-invitations-sent");
+          navigate("/help-request-sent");
         })
         .catch((error) => {
           alert(error?.detail || t("public_need_help.error_generic"));
@@ -70,6 +69,14 @@ const PublicNeedHelp = () => {
 
   const handleBack = () => {
     navigate("/");
+  };
+
+  const handlePrivacyPolicy = () => {
+    navigate("/privacy-policy");
+  };
+
+  const handleFaq = () => {
+    navigate("/contact-us");
   };
 
   return (
@@ -131,11 +138,11 @@ const PublicNeedHelp = () => {
           )}
           <div className="flex items-start gap-3 w-full">
             <Dropdown
-              id="countryCode"
-              name="countryCode"
-              selectedCode={formik.values.countryCode}
+              id="country_code"
+              name="country_code"
+              selectedCode={formik.values.country_code}
               setSelectedCode={(value) =>
-                formik.setFieldValue("countryCode", value)
+                formik.setFieldValue("country_code", value)
               }
               formik={formik}
             />
@@ -188,7 +195,7 @@ const PublicNeedHelp = () => {
               <span className="text-[#1b4f4a]">
                 {t("public_need_help.privacy_accept_text")}
               </span>
-              <span className="underline">
+              <span className="underline" onClick={handlePrivacyPolicy}>
                 {t("public_need_help.privacy_policy")}
               </span>
             </p>
@@ -203,14 +210,17 @@ const PublicNeedHelp = () => {
             <button type="submit" className="text-white text-base font-medium">
               {t("public_need_help.send_message")}
             </button>
-            <Send1 className="w-5 h-5" color="white" />
+            <Send1 className="w-5 h-5" color="white" fill="white" />
           </div>
         </form>
         <img className="w-full h-px object-cover" alt="Line" src={Line63} />
         <p className="text-primary-color text-lg font-medium">
           {t("public_need_help.faq_title")}
         </p>
-        <div className="flex items-center justify-center gap-2 py-3 w-full bg-white rounded-md shadow-shadow-1">
+        <div
+          className="flex items-center justify-center gap-2 py-3 w-full bg-white rounded-md shadow-shadow-1"
+          onClick={handleFaq}
+        >
           <ArrowRightCircle2 className="w-5 h-5" />
           <button className="text-primary-color text-base font-medium">
             {t("public_need_help.see_faq")}

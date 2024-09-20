@@ -86,12 +86,12 @@ export const Dropdown = ({
       >
         <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
           <img
-            src={`https://flagcdn.com/w20/${selectedCode.iso}.png`}
-            alt={selectedCode.name}
+            src={`https://flagcdn.com/w20/${selectedCode?.iso}.png`}
+            alt={selectedCode?.name}
             className="w-5 h-5"
           />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            {selectedCode.code}
+            {selectedCode?.code}
           </div>
         </div>
         {/* Ensure that the ChevronDown icon is displayed */}

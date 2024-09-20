@@ -18,7 +18,10 @@ export const submitHelpRequest = createAsyncThunk(
 
       // Append each field from helpRequestData to the FormData object
       Object.keys(helpRequestData).forEach((key) => {
-        formData.append(key, helpRequestData[key]);
+        if (key !== "country_code") formData.append(key, helpRequestData[key]);
+        else {
+          formData.append("country_code", helpRequestData.country_code.code);
+        }
       });
 
       // Send the FormData using the existing axiosInstance

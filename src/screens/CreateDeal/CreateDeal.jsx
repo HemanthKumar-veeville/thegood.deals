@@ -112,7 +112,7 @@ const CreateDeal = () => {
       form.append("banking_info[iban]", formData.iban);
       form.append("banking_info[bic]", formData.bic);
       form.append("deal_expiration_date", formData.dealExpiration);
-      form.append("terms_accepted", formData.acceptConditions ? "on" : "off");
+      form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
       // Log file names before appending them to FormData
       if (formData.pictures && formData.pictures.length > 0) {

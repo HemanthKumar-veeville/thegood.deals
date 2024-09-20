@@ -324,10 +324,18 @@ function App() {
       ),
     },
     {
+      path: "/help-request-sent",
+      element: (
+        <Layout>
+          <InvitationSent description="Our team will respond to you within 48 hours maximum." />
+        </Layout>
+      ),
+    },
+    {
       path: "/admin-invitations-sent",
       element: (
         <Layout>
-          <ProtectedRoute element={<InvitationSent />} />
+          <InvitationSent />
         </Layout>
       ),
     },
