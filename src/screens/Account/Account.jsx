@@ -165,20 +165,49 @@ const Account = () => {
           {status === "failed" && (
             <div className="w-[18rem]">
               <SuccessAlert
-                className="!flex !bg-cyancyan-light-3"
+                className="!flex !bg-cyancyan-light-3 w-[100%]"
+                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
+                frameClassName="!flex-1 !flex !grow"
+                groupClassName="!bg-cyancyan"
+                icon={
+                  <Warning1
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                }
+                style="three"
                 text="Error Fetching the Deals"
-                icon={<Warning1 className="!w-3 !h-3" color="white" />}
               />
             </div>
           )}
           {status !== "loading" && deals?.Deals?.length === 0 && (
             <div className="w-[18rem]">
               <SuccessAlert
-                className="!flex !bg-cyancyan-light-3"
+                className="!flex !bg-cyancyan-light-3 w-[100%]"
+                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
+                frameClassName="!flex-1 !flex !grow"
+                groupClassName="!bg-cyancyan"
+                icon={
+                  <Warning1
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                }
+                style="three"
                 text={
-                  activeTab === "created"
-                    ? "You don't have any deals. Create one now!"
-                    : "You are not in any deals. Wait until you are invited!"
+                  activeTab === "created" ? (
+                    <>
+                      You don't have any deals.
+                      <br />
+                       Create one now!
+                    </>
+                  ) : (
+                    <>
+                      You are not in any deals.
+                      <br />
+                       Wait until you are invited!
+                    </>
+                  )
                 }
               />
             </div>
