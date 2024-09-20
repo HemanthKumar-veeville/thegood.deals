@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import { Textarea } from "../Textarea";
 import { WebsiteMoney } from "../../icons/WebsiteMoney";
 
-const CollectionLocation = ({ type, onChange, value, handleChange }) => {
+const CollectionLocation = ({ type, onChange, value }) => {
   const [isAtHome, setIsAtHome] = useState(true);
+  const [deliveryCost, setDeliveryCost] = useState("");
 
   const handleAtHomeChange = () => {
     setIsAtHome(true);
+    onchange("");
   };
 
   const handleProvideLocationChange = () => {
     setIsAtHome(false);
+  };
+
+  const handleChange = (e) => {
+    setDeliveryCost(e.target.value);
+    onChange(deliveryCost);
   };
 
   return (
@@ -103,10 +110,10 @@ const CollectionLocation = ({ type, onChange, value, handleChange }) => {
       {!isAtHome && type === "collectionLocation" && (
         <div className="w-full mt-2">
           <Textarea
-            name="description"
-            type="description"
+            name="collectionLocation"
+            type="collectionLocation"
             value={value}
-            onChange={handleChange}
+            onChange={onChange}
             className="!self-stretch !w-full"
             divClassName="!text-[#1b4f4a] !text-lg !leading-[26px]"
             divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
@@ -132,8 +139,8 @@ const CollectionLocation = ({ type, onChange, value, handleChange }) => {
             <input
               type="text"
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-12 p-2.5 focus:outline-none" // Adjusted padding to add space between icon and date
-              value={value}
-              onChange={handleProvideLocationChange}
+              value={deliveryCost}
+              onChange={handleChange}
               placeholder="345 . 00 €"
             />
           </div>

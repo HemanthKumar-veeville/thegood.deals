@@ -20,7 +20,7 @@ const getDaysInMonth = (month, year) => {
   return days;
 };
 
-const ModernDatePicker = ({ date, onChange }) => {
+const ModernDatePicker = ({ name, onChange }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(selectedDate.getMonth());
@@ -34,7 +34,23 @@ const ModernDatePicker = ({ date, onChange }) => {
     const newDate = new Date(currentYear, currentMonth, day);
     setSelectedDate(newDate);
     setShowCalendar(false); // Close the calendar after selecting a date
-    // if (onChange) onChange(newDate); // Call onChange if it's provided
+    const date = new Date(newDate);
+
+    // Function to format date in 'YYYY-MM-DDTHH:mm' format
+    const formatDate = (date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };
+
+    const formattedDate = formatDate(date);
+    console.log(formattedDate); // Output: 2024-10-01T18:30
+
+    if (onChange) onChange(name, formattedDate); // Call onChange if it's provided
   };
 
   // Format the date in French format (dd/MM/yyyy)

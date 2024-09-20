@@ -1,7 +1,6 @@
 import React from "react";
 
 const ProductList = ({ products }) => {
-  console.log({ products });
   return (
     <div className="flex flex-col items-start gap-[15px] p-[15px] bg-white rounded-[5px] w-full">
       <h2 className="font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">

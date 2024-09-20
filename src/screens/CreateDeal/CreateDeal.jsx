@@ -60,6 +60,7 @@ const CreateDeal = () => {
         acceptConditions: !formData.acceptConditions,
       }));
     } else {
+      console.log(e.target.value);
       setFormData((prevState) => ({
         ...prevState,
         [type]: e.target.value,
@@ -74,10 +75,10 @@ const CreateDeal = () => {
     }));
   };
 
-  const handleLocationChange = (collectionLocation) => {
+  const handleLocationChange = (collectionLocation, e) => {
     setFormData((prevState) => ({
       ...prevState,
-      collectionLocation,
+      collectionLocation: e.target.value,
     }));
   };
 
@@ -88,24 +89,31 @@ const CreateDeal = () => {
     }));
   };
 
+  const handleDateChange = (type, date) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [type]: date,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true at the start
-
+    console.log({ formData, products, title });
     try {
       // Create FormData object and append form data
       const form = new FormData();
       form.append("title", title);
       form.append("description", formData.description);
-      form.append("collection_location", "hyderabad");
-      form.append("collection_date", "2024-09-20T17:42");
+      form.append("collection_location", formData.collectionLocation);
+      form.append("collection_date", formData.collectionDate);
       form.append("content_description", formData.contentDescription);
       form.append("artisan_information", formData.manufacturerInfo);
       form.append("banking_info[iban]", formData.iban);
       form.append("banking_info[bic]", formData.bic);
-      form.append("deal_expiration_date", "2024-09-20T17:42");
+      form.append("deal_expiration_date", formData.dealExpiration);
       form.append("terms_accepted", formData.acceptConditions ? "on" : "off");
-
+      form.append("delivery_cost", formData.deliveryCost);
       // Log file names before appending them to FormData
       if (formData.pictures && formData.pictures.length > 0) {
         formData.pictures.forEach((file, index) => {
@@ -267,7 +275,7 @@ const CreateDeal = () => {
               <DatePicker
                 name="collectionDate"
                 date={formData.collectionDate}
-                onChange={() => handleChange("collectionDate")}
+                onChange={handleDateChange}
               />
             </div>
             <img
@@ -378,7 +386,7 @@ const CreateDeal = () => {
               <DatePicker
                 name="dealExpiration"
                 value={formData.dealExpiration}
-                onChange={() => handleChange("dealExpiration")}
+                onChange={handleDateChange}
               />
             </div>
             <img
