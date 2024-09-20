@@ -20,160 +20,85 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
 import {
   checkUserLoginStatus,
   logoutUser,
+  fetchUserProfileWithDealsAndReviews,
 } from "../../redux/app/user/userSlice";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
-import { fetchUserProfileWithDealsAndReviews } from "../../redux/app/user/userSlice";
 
 const Account = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("created");
-  const [page, setPage] = useState(1); // Track current page
-  const [isFetchingMore, setIsFetchingMore] = useState(false); // Track if more data is being fetched
+  const [page, setPage] = useState(1);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
-  const { deals, status } = dealsState;
-  const { profile, userDeals, userReviews } = useSelector(
-    (state) => state.user
-  );
-  const scrollableContainerRef = useRef(null); // Ref for the scrollable container
+  const { deals = [], status } = dealsState;
+  const { profile } = useSelector((state) => state.user);
+  const scrollableContainerRef = useRef(null);
 
   useEffect(() => {
-    if (location?.state?.activeTab) {
-      handleTabSwitch(location.state.activeTab || activeTab);
-    } else {
-      dispatch(fetchDeals({ deal_type: activeTab, page: 1, limit: 3 }));
-    }
-  }, [activeTab, dispatch]);
+    const activeTabFromLocation = location?.state?.activeTab || activeTab;
+    handleTabSwitch(activeTabFromLocation);
+  }, [location, activeTab, dispatch]);
 
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
-    setPage(1); // Reset to page 1 when switching tabs
+    setPage(1);
     dispatch(fetchDeals({ deal_type: tab, page: 1, limit: 3 }));
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const handleCreateDeal = () => {
-    navigate("/create-deal");
-  };
-
-  const handleMyInformation = () => {
-    navigate("/my-information");
-  };
-
-  const handleWalletDetails = () => {
-    navigate("/admin-wallet");
-  };
-
-  const handleSettings = () => {
-    navigate("/settings");
-  };
-
-  const handleAcquireHelp = () => {
-    navigate("/help-me");
-  };
-
-  const handleSignOut = () => {
-    dispatch(logoutUser()).then(() => {
-      navigate("/auth?login");
-    });
-  };
-
-  const handleCardClick = (deal) => {
-    switch (deal?.dealStatus) {
-      case "draft":
-        navigate(
-          `/admin-draft-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-          { state: { deal } }
-        );
-        break;
-      case "waiting":
-        navigate(
-          `/admin-waiting-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-          { state: { deal } }
-        );
-        break;
-      case "in_stock":
-        activeTab !== "created"
-          ? navigate(
-              `/guest-deal-view?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-              { state: { deal } }
-            )
-          : navigate(
-              `/admin-active-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-              { state: { deal } }
-            );
-        break;
-      case "out_of_stock":
-        activeTab !== "created"
-          ? navigate(
-              `/guest-deal-view?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-              { state: { deal } }
-            )
-          : navigate(
-              `/admin-active-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-              { state: { deal } }
-            );
-        break;
-      case "finished":
-        activeTab !== "created"
-          ? navigate(
-              `/guest-deal-view?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-              { state: { deal } }
-            )
-          : navigate(
-              `/admin-active-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-              { state: { deal } }
-            );
-        break;
-      default:
-        navigate(
-          `/admin-active-deal?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`,
-          { state: { deal } }
-        );
-    }
-  };
-
-  // Function to load more deals when scrolled to the top or bottom
-  const loadMoreDeals = (direction) => {
-    if (status === "loading" || isFetchingMore) return;
-
-    setIsFetchingMore(true); // Indicate that more data is being fetched
-    const nextPage = direction === "bottom" ? page + 1 : Math.max(1, page - 1);
-
-    dispatch(fetchDeals({ deal_type: activeTab, page: nextPage, limit: 3 }))
-      .then(() => {
-        setPage((prevPage) => nextPage); // Update the page number after fetching
-      })
-      .finally(() => {
-        setIsFetchingMore(false); // Reset the fetching state
-      });
-  };
-
-  // Function to handle scroll event on the container
-  const handleContainerScroll = () => {
-    const { scrollTop, scrollHeight, clientHeight } =
-      scrollableContainerRef.current;
-    if (scrollTop === 0) {
-      // Reached the top
-      loadMoreDeals("top");
-    } else if (scrollTop + clientHeight >= scrollHeight - 50) {
-      // Reached the bottom
-      loadMoreDeals("bottom");
-    }
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(fetchUserProfileWithDealsAndReviews());
     dispatch(checkUserLoginStatus());
-  }, []);
+  }, [dispatch]);
+
+  const handleNavigation = (path) => navigate(path);
+
+  const handleCardClick = (deal) => {
+    if (!deal || !deal.deal_id) return; // Handle case where deal data is empty or missing
+
+    const route =
+      deal.dealStatus === "draft"
+        ? "/admin-draft-deal"
+        : deal.dealStatus === "waiting"
+        ? "/admin-waiting-deal"
+        : activeTab === "created"
+        ? "/admin-active-deal"
+        : "/guest-deal-view";
+
+    navigate(`${route}?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`, {
+      state: { deal },
+    });
+  };
+
+  const loadMoreDeals = (direction) => {
+    if (status === "loading" || isFetchingMore) return;
+
+    setIsFetchingMore(true);
+    const nextPage = direction === "bottom" ? page + 1 : Math.max(1, page - 1);
+    dispatch(fetchDeals({ deal_type: activeTab, page: nextPage, limit: 3 }))
+      .then(() => setPage(nextPage))
+      .finally(() => setIsFetchingMore(false));
+  };
+
+  const handleContainerScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } =
+      scrollableContainerRef.current;
+    if (scrollTop === 0) loadMoreDeals("top");
+    else if (scrollTop + clientHeight >= scrollHeight - 50)
+      loadMoreDeals("bottom");
+  };
+
+  // Define handleSignOut function
+  const handleSignOut = () => {
+    dispatch(logoutUser()).then(() => {
+      navigate("/auth?login");
+    });
+  };
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-full">
@@ -182,68 +107,57 @@ const Account = () => {
           {`Hey, ${profile?.name || "User"} 👋🏻`}
         </div>
         <div
-          className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
-          onClick={handleCreateDeal}
+          className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
+          onClick={() => handleNavigation("/create-deal")}
         >
-          <CirclePlus92 className="!relative !w-5 !h-5" />
-          <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            {t("account.create_deal")} {/* Create a good deal */}
+          <CirclePlus92 className="!w-5 !h-5" />
+          <button className="box-border font-medium text-white text-base text-center">
+            {t("account.create_deal")}
           </button>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
-        <div className="relative w-fit [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-          {t("account.my_good_deals")} {/* My good deals */}
+        <img className="self-stretch w-full h-px" alt="Line" src={Line63} />
+        <div className="relative w-fit font-semibold text-primary-color text-2xl text-center">
+          {t("account.my_good_deals")}
         </div>
-        <div className="flex items-start relative self-stretch w-full flex-[0_0_auto]">
-          <div
-            className={`flex-1 flex grow cursor-pointer ${
-              activeTab === "created"
-                ? "bg-primary-dark-color text-white"
-                : "text-primary-color hover:bg-gray-200"
-            }`}
-            onClick={() => handleTabSwitch("created")}
-          >
-            <ButtonGroup
-              buttonClassName={`!mt-[-1.00px]`}
-              className={`!rounded-[6px_0px_0px_6px] !mt-[-1.50px] !ml-[-1.50px] !mb-[-1.50px] !flex-1 !flex !grow`}
-              icon={
-                <UserAlt5
-                  className="!relative !w-[18px] !h-[18px]"
-                  color={activeTab === "created" ? "white" : "#1B4F4A"}
-                />
-              }
-              state={activeTab === "created" ? "active" : "default"}
-              text={t("account.created")}
-            />
-          </div>
-          <div
-            className={`flex-1 flex grow cursor-pointer ${
-              activeTab === "invited"
-                ? "bg-primary-dark-color text-white"
-                : "text-primary-color hover:bg-gray-200"
-            }`}
-            onClick={() => handleTabSwitch("invited")}
-          >
-            <ButtonGroup
-              buttonClassName={`!mt-[-1.00px]`}
-              className={`!rounded-[0px_6px_6px_0px] !mr-[-1.00px] !mt-[-1.00px] !mb-[-1.00px] !flex-1 !flex !grow`}
-              icon={
-                <Users3
-                  className="!relative !w-[18px] !h-[18px]"
-                  color={activeTab === "invited" ? "white" : "#1B4F4A"}
-                />
-              }
-              state={activeTab === "invited" ? "active" : "default"}
-              text={t("account.invited")}
-            />
-          </div>
+        <div className="flex w-full">
+          {["created", "invited"].map((tab) => (
+            <div
+              key={tab}
+              className={`flex-1 flex grow cursor-pointer ${
+                activeTab === tab
+                  ? "bg-primary-dark-color text-white"
+                  : "text-primary-color hover:bg-gray-200"
+              }`}
+              onClick={() => handleTabSwitch(tab)}
+            >
+              <ButtonGroup
+                buttonClassName="!mt-[-1.00px]"
+                className={`!flex-1 !flex grow ${
+                  tab === "created"
+                    ? "!rounded-[6px_0_0_6px]"
+                    : "!rounded-[0_6px_6px_0]"
+                }`}
+                icon={
+                  tab === "created" ? (
+                    <UserAlt5
+                      className="!w-[18px] !h-[18px]"
+                      color={activeTab === "created" ? "white" : "#1B4F4A"}
+                    />
+                  ) : (
+                    <Users3
+                      className="!w-[18px] !h-[18px]"
+                      color={activeTab === "invited" ? "white" : "#1B4F4A"}
+                    />
+                  )
+                }
+                state={activeTab === tab ? "active" : "default"}
+                text={t(`account.${tab}`)}
+              />
+            </div>
+          ))}
         </div>
         <div
-          className="h-72 overflow-y-auto"
+          className="h-[500px] overflow-y-auto custom-scrollbar"
           ref={scrollableContainerRef}
           onScroll={handleContainerScroll}
         >
@@ -251,136 +165,94 @@ const Account = () => {
           {status === "failed" && (
             <div className="w-[18rem]">
               <SuccessAlert
-                className="!flex !bg-cyancyan-light-3 w-[100%]"
-                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
-                frameClassName="!flex-1 !flex !grow"
-                groupClassName="!bg-cyancyan"
-                icon={
-                  <Warning1
-                    className="!absolute !w-3 !h-3 !top-1 !left-1"
-                    color="white"
-                  />
-                }
-                style="three"
+                className="!flex !bg-cyancyan-light-3"
                 text="Error Fetching the Deals"
+                icon={<Warning1 className="!w-3 !h-3" color="white" />}
               />
             </div>
           )}
-          {status !== "loading" &&
-            deals?.Deals?.map((deal) => (
-              <div
-                onClick={() => handleCardClick(deal)}
-                className="cursor-pointer mb-5"
-                key={deal.id} // Add key to the mapped elements
-              >
-                <CardDeal
-                  badgesColor="success"
-                  badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-                  badgesText1={deal.dealStatus}
-                  caissesDeVinsClassName="!tracking-[0] !text-base ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-6"
-                  className="!flex-[0_0_auto]"
-                  divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
-                  divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
-                  override={
-                    deal.dealStatus === "out_of_stock" ? (
-                      <ProgressBarYellow percentage={98} />
-                    ) : (
-                      <ProgressBarGreen percentage={90} />
-                    )
-                  }
-                  text={deal.deal_title}
-                  text1={deal.deal_status}
-                  participantsCount={deal.deal_participants_count}
-                  dealEndsIn={deal?.deal_ends_in}
-                  isGuestDeal={activeTab === "invited"}
-                  dealImages={deal?.images || [blogImage]}
-                />
-              </div>
-            ))}
           {status !== "loading" && deals?.Deals?.length === 0 && (
             <div className="w-[18rem]">
               <SuccessAlert
-                className="!flex !bg-cyancyan-light-3 w-[100%]"
-                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
-                frameClassName="!flex-1 !flex !grow"
-                groupClassName="!bg-cyancyan"
-                icon={
-                  <Warning1
-                    className="!absolute !w-3 !h-3 !top-1 !left-1"
-                    color="white"
-                  />
-                }
-                style="three"
+                className="!flex !bg-cyancyan-light-3"
                 text={
-                  activeTab === "created" ? (
-                    <>
-                      You don't have any deals.
-                      <br />
-                       Create one now!
-                    </>
+                  activeTab === "created"
+                    ? "You don't have any deals. Create one now!"
+                    : "You are not in any deals. Wait until you are invited!"
+                }
+              />
+            </div>
+          )}
+          {deals?.Deals?.map((deal) => (
+            <div
+              key={deal.id}
+              onClick={() => handleCardClick(deal)}
+              className="cursor-pointer mb-5"
+            >
+              <CardDeal
+                badgesColor="success"
+                badgesText1={deal.dealStatus || "No Status"} // Handle missing deal status
+                text={deal.deal_title || "No Title"} // Handle missing deal title
+                text1={deal.deal_status || "No Status"} // Handle missing deal status
+                participantsCount={deal.deal_participants_count || 0} // Handle missing participants
+                dealEndsIn={deal?.deal_ends_in || "N/A"} // Handle missing end date
+                isGuestDeal={activeTab === "invited"}
+                dealImages={deal?.images || [blogImage]} // Provide default image
+                override={
+                  deal.dealStatus === "out_of_stock" ? (
+                    <ProgressBarYellow percentage={98} />
                   ) : (
-                    <>
-                      You are not in any deals.
-                      <br />
-                       Wait until you are invited!
-                    </>
+                    <ProgressBarGreen percentage={90} />
                   )
                 }
               />
             </div>
-          )}
+          ))}
         </div>
-        {isFetchingMore && <CustomLoader />} {/* Loader for infinite scroll */}
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
-        <div
-          className="inline-flex items-center gap-2.5 relative flex-[0_0_auto] hover:text-primary-color-dark cursor-pointer"
-          onClick={handleMyInformation}
-        >
-          <UserAlt2 className="!relative !w-5 !h-5" />
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            {t("account.my_information")} {/* My information */}
+        {isFetchingMore && <CustomLoader />}
+        <img className="self-stretch w-full h-px" alt="Line" src={Line63} />
+        {[
+          {
+            icon: <UserAlt2 className="!w-5 !h-5" />,
+            text: t("account.my_information"),
+            action: "/my-information",
+          },
+          {
+            icon: <ClockDollar1 className="!w-5 !h-5" color="#1B4F4A" />,
+            text: t("account.wallet_details"),
+            action: "/admin-wallet",
+          },
+          {
+            icon: <Cog2 className="!w-5 !h-5" color="#1B4F4A" />,
+            text: t("account.settings"),
+            action: "/settings",
+          },
+          {
+            icon: <ChatAlt6 className="!w-5 !h-5" color="#1B4F4A" />,
+            text: t("account.acquire_help"),
+            action: "/help-me",
+          },
+          {
+            icon: <UserLock1 className="!w-5 !h-5" color="#1B4F4A" />,
+            text: t("account.sign_out"),
+            action: handleSignOut,
+          },
+        ].map(({ icon, text, action }) => (
+          <div
+            key={text}
+            className="inline-flex items-center gap-2.5 cursor-pointer hover:text-primary-color-dark"
+            onClick={
+              typeof action === "string"
+                ? () => handleNavigation(action)
+                : action
+            }
+          >
+            {icon}
+            <div className="font-normal text-primary-text-color text-base">
+              {text}
+            </div>
           </div>
-        </div>
-        <div
-          className="inline-flex items-center gap-2.5 relative flex-[0_0_auto] hover:text-primary-color-dark cursor-pointer"
-          onClick={handleWalletDetails}
-        >
-          <ClockDollar1 className="!relative !w-5 !h-5" color="#1B4F4A" />
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            {t("account.wallet_details")} {/* Wallet details */}
-          </div>
-        </div>
-        <div
-          className="inline-flex items-center gap-2.5 relative flex-[0_0_auto] hover:text-primary-color-dark cursor-pointer"
-          onClick={handleSettings}
-        >
-          <Cog2 className="!relative !w-5 !h-5" color="#1B4F4A" />
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            {t("account.settings")} {/* Settings */}
-          </div>
-        </div>
-        <div
-          className="inline-flex items-center gap-2.5 relative flex-[0_0_auto] hover:text-primary-color-dark cursor-pointer"
-          onClick={handleAcquireHelp}
-        >
-          <ChatAlt6 className="!relative !w-5 !h-5" color="#1B4F4A" />
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            {t("account.acquire_help")} {/* Acquire help */}
-          </div>
-        </div>
-        <div
-          className="inline-flex items-center gap-2.5 relative flex-[0_0_auto] hover:text-primary-color-dark cursor-pointer"
-          onClick={handleSignOut}
-        >
-          <UserLock1 className="!relative !w-5 !h-5" color="#1B4F4A" />
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-            {t("account.sign_out")} {/* Sign out */}
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

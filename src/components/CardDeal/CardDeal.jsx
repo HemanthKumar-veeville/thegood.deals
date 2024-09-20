@@ -67,7 +67,7 @@ export const CardDeal = ({
   };
   return (
     <div
-      className={`flex flex-col w-[290px] items-start relative rounded-lg overflow-hidden shadow-shadow-1 ${className}`}
+      className={`flex flex-col w-full items-start relative rounded-lg overflow-hidden shadow-shadow-1 ${className}`}
     >
       <ImageSlider pictures={dealImages} />
       <div className="flex flex-col items-center gap-2.5 p-[15px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite">
