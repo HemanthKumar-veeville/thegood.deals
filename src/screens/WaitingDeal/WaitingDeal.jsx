@@ -56,7 +56,7 @@ const WaitingDeal = () => {
           </div>
           <WaitingBanner />
           <img
-            className="relative self-stretch w-full h-[150px] object-cover"
+            className="relative self-stretch w-full h-[150px] object-cover rounded-md"
             alt={t("waiting_deal.blog_image_alt")}
             src={blogImage}
           />

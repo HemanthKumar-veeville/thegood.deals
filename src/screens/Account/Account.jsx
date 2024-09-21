@@ -38,7 +38,7 @@ const Account = () => {
   const { deals = [], status } = dealsState;
   const { profile } = useSelector((state) => state.user);
   const scrollableContainerRef = useRef(null);
-
+  console.log({ deals });
   useEffect(() => {
     const activeTabFromLocation = location?.state?.activeTab || activeTab;
     handleTabSwitch(activeTabFromLocation);
@@ -62,9 +62,9 @@ const Account = () => {
     if (!deal || !deal.deal_id) return; // Handle case where deal data is empty or missing
 
     const route =
-      deal.dealStatus === "draft"
+      deal.deal_status === "draft"
         ? "/admin-draft-deal"
-        : deal.dealStatus === "waiting"
+        : deal.deal_status === "waiting"
         ? "/admin-waiting-deal"
         : activeTab === "created"
         ? "/admin-active-deal"
