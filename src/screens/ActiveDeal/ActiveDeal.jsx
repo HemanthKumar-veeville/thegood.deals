@@ -176,7 +176,7 @@ const ActiveDeal = () => {
           >
             <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("active_deal.loved_ones_orders_label")}
+              Managing my friends
             </button>
           </div>
           <div
@@ -194,8 +194,7 @@ const ActiveDeal = () => {
           alt="Line"
           src={Line69}
         />
-
-        <div className="flex flex-col items-start gap-6 p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
+        <div className="flex flex-col items-start p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
           <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto]">
             <div className="inline-flex items-center gap-3.5 relative flex-[0_0_auto]">
               <div className="relative w-[50px] h-[50px]">
@@ -217,31 +216,32 @@ const ActiveDeal = () => {
               </div>
             </div>
             <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] font-bold text-darkdark text-2xl leading-[30px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap">
-                {t("active_deal.orders_count", { count: 20 })}
+              <div className="relative w-fit mt-[-1.00px] font-bold text-darkdark text-2xl leading-[22px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap">
+                {t("active_deal.orders_count", {
+                  count: dealData?.orders_count,
+                })}
               </div>
               <div className="relative w-[124px] h-[22px]">
                 <div className="inline-flex items-center gap-1 relative">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-greengreen text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    {t("active_deal.orders_available", { available: 20 })}
+                    {t("active_deal.orders_available", {
+                      available: dealData?.participants_count,
+                    })}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="relative w-[230px] h-px mb-[-1.00px]">
+
+          {/* Progress Bar with dynamic width based on orders count */}
+          <div className="relative w-full h-[7px] mt-4 bg-gray-300 rounded-full">
             <div
-              className={`bg-[url(${Line_570_1})] relative h-[7px] top-[-7px] bg-[100%_100%]`}
-            >
-              <img
-                className="w-[9px] h-[7px] absolute top-0 left-0"
-                alt="Line"
-                src={Line571}
-              />
-            </div>
+              className="absolute h-[7px] bg-greengreen rounded-full"
+              style={{ width: `${(20 / 20) * 100}%` }}
+            ></div>
           </div>
         </div>
-        <div className="flex flex-col items-start gap-6 p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
+        <div className="flex flex-col items-start p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
           <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto]">
             <div className="inline-flex items-center gap-3.5 relative flex-[0_0_auto]">
               <div className="relative w-[50px] h-[50px]">
@@ -263,7 +263,7 @@ const ActiveDeal = () => {
               </div>
             </div>
             <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
+              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[22px] whitespace-nowrap">
                 €0
               </div>
               <div className="w-[67px] relative h-[22px]">
@@ -275,16 +275,13 @@ const ActiveDeal = () => {
               </div>
             </div>
           </div>
-          <div className="relative w-[230px] h-px mb-[-1.00px]">
+
+          {/* Progress Bar with dynamic width based on amount collected */}
+          <div className="relative w-full h-[7px] mt-4 bg-gray-300 rounded-full">
             <div
-              className={`bg-[url(${Line_570_1})] relative h-[7px] top-[-7px] bg-[100%_100%]`}
-            >
-              <img
-                className="w-[9px] h-[7px] absolute top-0 left-0"
-                alt="Line"
-                src={Line_571_1}
-              />
-            </div>
+              className="absolute h-[7px] bg-purplepurple rounded-full"
+              style={{ width: `${(40 / 1050) * 100}%` }}
+            ></div>
           </div>
         </div>
         <div className="flex flex-col items-start gap-6 p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
@@ -310,7 +307,9 @@ const ActiveDeal = () => {
             </div>
             <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
-                {t("active_deal.participants_count", { count: 0 })}
+                {t("active_deal.participants_count", {
+                  count: dealData?.participants_count,
+                })}
               </div>
               <div className="w-[91px] relative h-[22px]" />
             </div>
@@ -322,68 +321,54 @@ const ActiveDeal = () => {
           src={Line63}
         />
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto] mr-[-24.00px]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-primary-color rounded-[25px]">
-                <div className="absolute top-3 left-5 font-medium text-whitewhite text-xl leading-[26px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap">
-                  1
+          {[
+            {
+              step: 1,
+              bgColor: "bg-primary-color",
+              textColor: "text-whitewhite",
+            },
+            {
+              step: 2,
+              bgColor:
+                "bg-whitewhite border-2 border-solid border-primary-color",
+              textColor: "text-primary-color",
+            },
+            {
+              step: 3,
+              bgColor: "bg-graygray border-2 border-solid border-stroke",
+              textColor: "text-primary-color",
+            },
+            {
+              step: 4,
+              bgColor: "bg-graygray border-2 border-solid border-stroke",
+              textColor: "text-primary-color",
+            },
+            {
+              step: 5,
+              bgColor: "bg-graygray border-2 border-solid border-stroke",
+              textColor: "text-primary-color",
+            },
+          ].map(({ step, bgColor, textColor }) => (
+            <div
+              className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto] mr-[-24.00px]"
+              key={step}
+            >
+              <div className="relative w-[52px] h-[50px]">
+                <div
+                  className={`relative w-[50px] h-[50px] rounded-[25px] ${bgColor}`}
+                >
+                  <div
+                    className={`absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium ${textColor} text-xl tracking-[0] leading-[26px] whitespace-nowrap`}
+                  >
+                    {step}
+                  </div>
                 </div>
               </div>
+              <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
+                {t(`active_deal.step_${step}`)}
+              </p>
             </div>
-            <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("active_deal.step_1")}
-            </p>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-whitewhite rounded-[25px] border-2 border-solid border-primary-color">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  2
-                </div>
-              </div>
-            </div>
-            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("active_deal.step_2")}
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  3
-                </div>
-              </div>
-            </div>
-            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              {t("active_deal.step_3")}
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  4
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {t("active_deal.step_4")}
-              </div>
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  5
-                </div>
-              </div>
-            </div>
-            <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
-              {t("active_deal.step_5")}
-            </p>
-          </div>
+          ))}
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
