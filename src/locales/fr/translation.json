@@ -370,7 +370,7 @@
     "step_4": "Réception de la commande",
     "step_5": "Organisez la collecte avec vos proches",
     "badges": {
-      "out_of_stock": "Bientôt en rupture de stock",
+      "soon_out_stock": "Bientôt en rupture de stock",
       "finished": "Terminé",
       "in_stock": "En stock",
       "waiting": "En attente de l'artisan",
@@ -385,7 +385,7 @@
     "edit_button": "Modifier l'offre",
     "line_alt": "Ligne",
     "badges": {
-      "out_of_stock": "Bientôt en rupture de stock",
+      "soon_out_stock": "Bientôt en rupture de stock",
       "finished": "Terminé",
       "in_stock": "En stock",
       "waiting": "En attente de l'artisan",
@@ -516,7 +516,7 @@
     "image_alt": "Image du blog"
   },
   "status": {
-    "out_of_stock": "Bientôt en rupture de stock",
+    "soon_out_stock": "Bientôt en rupture de stock",
     "finished": "Terminé",
     "in_stock": "En stock",
     "waiting": "En attente de l'artisan",

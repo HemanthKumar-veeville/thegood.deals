@@ -195,7 +195,7 @@ const MyInformation = () => {
                       divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
                       divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
                       override={
-                        deal.status === "out_of_stock" ? (
+                        deal.status === "soon_out_stock" ? (
                           <ProgressBarYellow percentage={deal.progress || 80} />
                         ) : (
                           <ProgressBarGreen percentage={deal.progress || 90} />

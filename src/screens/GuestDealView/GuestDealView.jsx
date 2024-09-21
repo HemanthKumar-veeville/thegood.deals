@@ -31,7 +31,7 @@ const GuestDealView = () => {
   };
 
   const statusBanner = {
-    out_of_stock: { text: t("status.out_of_stock"), color: "warning" },
+    soon_out_stock: { text: t("status.soon_out_stock"), color: "warning" },
     finished: { text: t("status.finished"), color: "success" },
     in_stock: { text: t("status.in_stock"), color: "success" },
     waiting: { text: t("status.waiting"), color: "warning" },
@@ -87,7 +87,7 @@ const GuestDealView = () => {
           <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
             {t("deal.title")}
           </div>
-          {location?.state?.deal?.dealStatus === "out_of_stock" ? (
+          {location?.state?.deal?.dealStatus === "soon_out_stock" ? (
             <ProgressBarYellow percentage={80} />
           ) : (
             <ProgressBarGreen percentage={90} />

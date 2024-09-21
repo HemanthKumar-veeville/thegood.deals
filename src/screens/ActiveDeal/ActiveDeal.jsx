@@ -67,7 +67,7 @@ const ActiveDeal = () => {
   };
 
   const statusBanner = {
-    out_of_stock: { text: t("active_deal.out_of_stock"), color: "warning" },
+    soon_out_stock: { text: t("active_deal.soon_out_stock"), color: "warning" },
     finished: { text: t("active_deal.finished"), color: "success" },
     in_stock: { text: t("active_deal.in_stock"), color: "success" },
     waiting: { text: t("active_deal.waiting"), color: "warning" },
@@ -113,7 +113,9 @@ const ActiveDeal = () => {
                   {t("active_deal.deal_ends_in")}
                   <br />
                 </span>
-                <span className="font-bold">{dealData?.deal_ends_in}</span>
+                <span className="font-bold">
+                  {`${dealData?.deal_ends_in} days and 6 hours`}
+                </span>
               </p>
             </div>
           </div>
@@ -126,31 +128,37 @@ const ActiveDeal = () => {
           >
             {dealData?.deal_title}
           </div>
-          {location?.state?.deal?.dealStatus === "out_of_stock" ? (
-            <ProgressBarYellow
-              percentage={dealData?.deal_progress_percentage}
-            />
-          ) : (
-            <ProgressBarGreen percentage={dealData?.deal_progress_percentage} />
-          )}
+          {dealData?.deal_progress_percentage !== 0 &&
+            (location?.state?.deal?.dealStatus === "soon_out_stock" ? (
+              <ProgressBarYellow
+                percentage={dealData?.deal_progress_percentage}
+              />
+            ) : (
+              <ProgressBarGreen
+                percentage={dealData?.deal_progress_percentage}
+              />
+            ))}
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {dealData?.deal_ends_in}
+                {`ends in ${dealData?.deal_ends_in} days`}
               </div>
             </div>
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("active_deal.participants_count", { count: 13 })}
+                {t("active_deal.participants_count", {
+                  count: dealData?.participants_count,
+                })}
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-            <Map className="!relative !w-5 !h-5" />
-            <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {dealData?.collection_location}
+          {/* Location */}
+          <div className="flex items-center gap-2.5 w-full">
+            <Map className="w-5 h-5" />
+            <p className="w-full text-sm text-primary-color leading-[22px] break-words">
+              {dealData?.collection_location || "No location available"}
             </p>
           </div>
           <div
@@ -186,28 +194,7 @@ const ActiveDeal = () => {
           alt="Line"
           src={Line69}
         />
-        <Badges
-          className="!left-[45px] !absolute !top-[170px]"
-          color={statusBanner[location?.state?.deal?.dealStatus]?.color}
-          divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          text1={statusBanner[location?.state?.deal?.dealStatus]?.text}
-          text2={
-            location?.state?.deal?.dealStatus === "in_stock" ||
-            location?.state?.deal?.dealStatus === "finished"
-              ? statusBanner[location?.state?.deal?.dealStatus]?.text
-              : location?.state?.deal?.dealStatus
-          }
-        />
-        <Badges
-          className="!left-[280px] !absolute !bg-blueblue-light-5 !top-[170px]"
-          color="warning"
-          divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          imageSrc={FranceFlag}
-        />
+
         <div className="flex flex-col items-start gap-6 p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
           <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto]">
             <div className="inline-flex items-center gap-3.5 relative flex-[0_0_auto]">

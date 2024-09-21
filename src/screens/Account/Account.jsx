@@ -228,10 +228,15 @@ const Account = () => {
                 isGuestDeal={activeTab === "invited"}
                 dealImages={deal?.images || [blogImage]} // Provide default image
                 override={
-                  deal.dealStatus === "out_of_stock" ? (
-                    <ProgressBarYellow percentage={98} />
+                  deal?.deal_progress_percentage ===
+                  0 ? null : deal.dealStatus === "soon_out_stock" ? (
+                    <ProgressBarYellow
+                      percentage={deal?.deal_progress_percentage}
+                    />
                   ) : (
-                    <ProgressBarGreen percentage={90} />
+                    <ProgressBarGreen
+                      percentage={deal?.deal_progress_percentage}
+                    />
                   )
                 }
               />

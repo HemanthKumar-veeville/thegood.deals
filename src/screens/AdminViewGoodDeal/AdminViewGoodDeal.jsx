@@ -71,7 +71,7 @@ const AdminViewGoodDeal = () => {
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {dealState?.title || t("admin.wine_crates")}
         </div>
-        {dealState?.status === "out_of_stock" ? (
+        {dealState?.status === "soon_out_stock" ? (
           <ProgressBarYellow percentage={dealState?.progress} />
         ) : (
           <ProgressBarGreen percentage={dealState?.progress} />

@@ -345,7 +345,7 @@
   "active_deal": {
     "edit_deal_button": "Edit the deal",
     "my_orders_label": "My orders",
-    "loved_ones_orders_label": "Your friend's orders",
+    "loved_ones_orders_label": "Managing my friends",
     "orders_count": "{{count}}",
     "orders_available": "out of {{available}} available",
     "wallet_label": "My wallet",
@@ -355,10 +355,10 @@
     "participants_label": "Participants of the deal",
     "participants_count": "{{count}} participants",
     "step_1": "The artisan accepted the deal",
-    "step_2": "Invite your friends",
-    "step_3": "Current orders",
-    "step_4": "Receipt of order",
-    "step_5": "Organize the collection with your friends",
+    "step_2": "The good deal in progress",
+    "step_3": "Goal achieved ! 🎉",
+    "step_4": "Order sent to the artisan",
+    "step_5": "Organizer coordinates with artisan for delivery",
     "deal_ends_in": "Deal ends in"
   },
   "draft_deal": {
@@ -371,7 +371,7 @@
     "step_4": "Order sent to the artisan",
     "step_5": "Organizer coordinates with artisan for delivery",
     "badges": {
-      "out_of_stock": "Soon to be out of stock",
+      "soon_out_stock": "Soon to be out of stock",
       "finished": "Finished",
       "in_stock": "In stock",
       "waiting": "Waiting for the artisan",
@@ -386,7 +386,7 @@
     "edit_button": "Edit the deal",
     "line_alt": "Line",
     "badges": {
-      "out_of_stock": "Soon to be out of stock",
+      "soon_out_stock": "Soon to be out of stock",
       "finished": "Finished",
       "in_stock": "In stock",
       "waiting": "Waiting for the artisan",
@@ -517,7 +517,7 @@
     "image_alt": "Blog image"
   },
   "status": {
-    "out_of_stock": "Soon to be out of stock",
+    "soon_out_stock": "Soon to be out of stock",
     "finished": "Finished",
     "in_stock": "In stock",
     "waiting": "Waiting for the artisian",
