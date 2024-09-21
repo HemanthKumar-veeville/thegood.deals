@@ -6,11 +6,24 @@ import { blogImage, Line63, Line69, FranceFlag } from "../../images";
 import { DraftBanner } from "../../components/Banners/DraftBanner";
 import { Badges } from "../../components/Badges";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getDealByDealId } from "../../redux/app/deals/dealSlice";
+import ImageSlider from "../../components/ImageSlider/ImageSlider";
 
 const DraftDeal = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
+
+  const dispatch = useDispatch();
+  const dealState = useSelector((state) => state.deals);
+  const { deal, status } = dealState;
+  const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
+  console.log("dealData", dealData);
+  const queryParams = new URLSearchParams(location.search);
+  const deal_id = queryParams.get("deal_id");
+  const is_creator = queryParams.get("is_creator");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -20,26 +33,15 @@ const DraftDeal = () => {
     navigate("/");
   };
 
-  const statusBanner = {
-    out_of_stock: {
-      text: t("draft_deal.badges.out_of_stock"),
-      color: "warning",
-    },
-    finished: { text: t("draft_deal.badges.finished"), color: "success" },
-    in_stock: { text: t("draft_deal.badges.in_stock"), color: "success" },
-    waiting: { text: t("draft_deal.badges.waiting"), color: "warning" },
-    draft: { text: t("draft_deal.badges.draft"), color: "info" },
-  };
-
-  const dealStatus = state?.deal?.dealStatus;
-  const badgeColor = statusBanner[dealStatus]?.color;
-  const badgeText = statusBanner[dealStatus]?.text;
+  useEffect(() => {
+    dispatch(getDealByDealId(deal_id));
+  }, []);
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         {/* Back Button */}
-        <div className="flex items-center gap-3 py-2 px-0 relative self-stretch w-full flex-[0_0_auto]">
+        <div className="flex items-center gap-3 px-0 relative self-stretch w-full flex-[0_0_auto]">
           <div
             className="inline-flex items-center gap-2 relative flex-[0_0_auto] cursor-pointer"
             onClick={handleBack}
@@ -53,20 +55,19 @@ const DraftDeal = () => {
             </div>
           </div>
         </div>
-
+        <img
+          className="relative self-stretch w-full h-px object-cover"
+          alt="Line"
+          src={Line69}
+        />
         {/* Banner */}
         <DraftBanner className="relative w-full bg-blue-100 text-blue-800 rounded-md p-3" />
 
-        {/* Image */}
-        <img
-          className="relative self-stretch w-full h-[150px] object-cover rounded-md"
-          alt="Wine crates"
-          src={blogImage}
-        />
+        <ImageSlider pictures={dealData?.image_url || [blogImage]} />
 
         {/* Title */}
         <div className="relative self-stretch font-semibold text-primary-color text-2xl leading-[30px]">
-          Wine crates <br /> Domaine de Cigaluse
+          {dealData?.deal_title}
         </div>
 
         {/* Edit Button */}
@@ -76,31 +77,6 @@ const DraftDeal = () => {
             {t("draft_deal.edit_button", "Edit the deal")}
           </button>
         </div>
-
-        {/* Status Badge */}
-        <Badges
-          className="!left-[45px] !absolute !top-[170px]"
-          color={badgeColor}
-          divClassName="!tracking-[0] !text-xs !font-medium !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          text1={badgeText}
-          text2={
-            ["in_stock", "finished"].includes(dealStatus)
-              ? badgeText
-              : dealStatus
-          }
-        />
-
-        {/* Flag Badge */}
-        <Badges
-          className="!left-[280px] !absolute !bg-blueblue-light-5 !top-[170px]"
-          color="warning"
-          divClassName="!text-blueblue !text-lg !font-medium !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          imageSrc={FranceFlag}
-        />
 
         <img
           className="relative self-stretch w-full h-px object-cover"

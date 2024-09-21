@@ -393,10 +393,10 @@
       "draft": "Draft"
     },
     "step_1": "The artisan accepted the deal",
-    "step_2": "Invite your friends",
-    "step_3": "Current orders",
-    "step_4": "Receipt of order",
-    "step_5": "Organize the collection with your friends",
+    "step_2": "The good deal in progress",
+    "step_3": "Goal achieved! 🎉",
+    "step_4": "Order sent to the artisan",
+    "step_5": "Organizer coordinates with artisan for delivery",
     "alert_editing": "Editing the deal!"
   },
   "wallet": {

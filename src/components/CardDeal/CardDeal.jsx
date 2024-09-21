@@ -114,7 +114,7 @@ export const CardDeal = ({
         }
       />
       <Badges
-        className="!left-60 !absolute !bg-blueblue-light-5 !top-[15px]"
+        className="!right-[15px] !absolute !bg-blueblue-light-5 !top-[15px]"
         color="warning"
         divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
         round="semi-round"

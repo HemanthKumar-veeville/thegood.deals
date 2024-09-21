@@ -7,172 +7,134 @@ import { blogImage, Line63, Line69, FranceFlag } from "../../images";
 import { WaitingBanner } from "../../components/Banners/WaitingBanner";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Badges } from "../../components/Badges";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getDealByDealId } from "../../redux/app/deals/dealSlice";
+import ImageSlider from "../../components/ImageSlider/ImageSlider";
 
 const WaitingDeal = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation();
+  const { state } = useLocation();
 
-  const handleBack = () => {
-    navigate("/");
-  };
+  const dispatch = useDispatch();
+  const dealState = useSelector((state) => state.deals);
+  const { deal, status } = dealState;
+  const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
+  console.log("dealData", dealData);
+  const queryParams = new URLSearchParams(location.search);
+  const deal_id = queryParams.get("deal_id");
+  const is_creator = queryParams.get("is_creator");
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const statusBanner = {
-    out_of_stock: {
-      text: t("waiting_deal.badges.out_of_stock"),
-      color: "warning",
-    },
-    finished: { text: t("waiting_deal.badges.finished"), color: "success" },
-    in_stock: { text: t("waiting_deal.badges.in_stock"), color: "success" },
-    waiting: { text: t("waiting_deal.badges.waiting"), color: "warning" },
-    draft: { text: t("waiting_deal.badges.draft"), color: "info" },
+  const handleBack = () => {
+    navigate("/");
   };
 
   const handleEditDeal = () => {
     alert(t("waiting_deal.alert_editing"));
   };
 
+  useEffect(() => {
+    dispatch(getDealByDealId(deal_id));
+  }, []);
+
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
-        <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-          <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
-            <div
-              className="inline-flex items-center gap-2 relative flex-[0_0_auto] cursor-pointer"
-              onClick={handleBack}
-            >
-              <ArrowLeft
-                className="!relative !w-[18px] !h-[18px]"
-                color="#637381"
-              />
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {t("waiting_deal.back_button")}
-              </div>
+        {/* Back Button */}
+        <div className="flex items-center gap-3 pb-4 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
+          <div
+            className="inline-flex items-center gap-2 relative flex-[0_0_auto] cursor-pointer"
+            onClick={handleBack}
+          >
+            <ArrowLeft
+              className="!relative !w-[18px] !h-[18px]"
+              color="#637381"
+            />
+            <div className="relative w-fit font-medium text-primary-text-color text-base leading-6 whitespace-nowrap">
+              {t("waiting_deal.back_button", "Back")}
             </div>
           </div>
-          <WaitingBanner />
-          <img
-            className="relative self-stretch w-full h-[150px] object-cover rounded-md"
-            alt={t("waiting_deal.blog_image_alt")}
-            src={blogImage}
-          />
-          <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-            {t("waiting_deal.title")}
-          </div>
-          <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-            <Map className="!relative !w-5 !h-5" />
-            <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {t("waiting_deal.location")}
-            </p>
-          </div>
-          <div
-            className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
-            onClick={handleEditDeal}
-          >
-            <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
-            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("waiting_deal.edit_button")}
-            </button>
-          </div>
         </div>
-        <Badges
-          className="!left-[45px] !absolute !top-[170px]"
-          color={statusBanner[location?.state?.deal?.dealStatus]?.color}
-          divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          text1={statusBanner[location?.state?.deal?.dealStatus]?.text}
-          text2={
-            location?.state?.deal?.dealStatus === "in_stock" ||
-            location?.state?.deal?.dealStatus === "finished"
-              ? statusBanner[location?.state?.deal?.dealStatus]?.text
-              : location?.state?.deal?.dealStatus
-          }
-        />
-        <Badges
-          className="!left-[280px] !absolute !bg-blueblue-light-5 !top-[170px]"
-          color="warning"
-          divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          imageSrc={FranceFlag}
-        />
+
+        {/* Waiting Banner */}
+        <WaitingBanner className="relative w-full bg-orange-100 text-orange-700 rounded-md p-3">
+          {t(
+            "waiting_deal.banner_message",
+            "Waiting for confirmation of the deal from the artisan"
+          )}
+        </WaitingBanner>
+
+        {/* Deal Image */}
+        <ImageSlider pictures={dealData?.image_url || [blogImage]} />
+
+        {/* Title */}
+        <div className="relative self-stretch font-semibold text-primary-color text-2xl leading-[30px]">
+          {dealData?.deal_title}
+        </div>
+
+        {/* Location */}
+        <div className="flex items-center gap-2.5 relative self-stretch w-full">
+          <Map className="!relative !w-5 !h-5" />
+          <p className="relative w-fit font-normal text-primary-color text-sm leading-[22px] whitespace-nowrap">
+            {dealData?.collection_location}
+          </p>
+        </div>
+
+        {/* Edit Deal Button */}
+        <div
+          className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full rounded-md border border-solid border-primary-color cursor-pointer"
+          onClick={handleEditDeal}
+        >
+          <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
+          <button className="all-[unset] w-fit font-medium text-primary-color text-base text-center leading-6 whitespace-nowrap">
+            {t("waiting_deal.edit_button", "Edit the deal")}
+          </button>
+        </div>
+
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt={t("waiting_deal.line_alt")}
+          alt={t("waiting_deal.line_alt", "Line separator")}
           src={Line69}
         />
-        <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  1
+
+        {/* Steps List */}
+        <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full">
+          {[
+            t("draft_deal.step_1", "The artisan accepted the deal"),
+            t("draft_deal.step_2", "The good deal in progress"),
+            t("draft_deal.step_3", "Goal achieved! 🎉"),
+            t("draft_deal.step_4", "Order sent to the artisan"),
+            t(
+              "draft_deal.step_5",
+              "Organizer coordinates with artisan for delivery"
+            ),
+          ].map((step, index) => (
+            <div
+              key={index}
+              className="inline-flex items-center gap-2.5 relative"
+            >
+              <div className="relative w-[52px] h-[50px]">
+                <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
+                  <div className="absolute top-2.5 left-[17px] font-medium text-primary-color text-xl leading-[26px]">
+                    {index + 1}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("waiting_deal.step_1")}
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  2
-                </div>
+              <div className="relative w-fit font-medium text-primary-color text-base leading-6">
+                {step}
               </div>
             </div>
-            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("waiting_deal.step_2")}
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  3
-                </div>
-              </div>
-            </div>
-            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("waiting_deal.step_3")}
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  4
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {t("waiting_deal.step_4")}
-              </div>
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  5
-                </div>
-              </div>
-            </div>
-            <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
-              {t("waiting_deal.step_5")}
-            </p>
-          </div>
+          ))}
         </div>
+
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt={t("waiting_deal.line_alt")}
+          alt={t("waiting_deal.line_alt", "Line separator")}
           src={Line63}
         />
       </div>

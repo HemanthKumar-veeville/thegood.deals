@@ -44,16 +44,19 @@ const ImageSlider = ({ pictures }) => {
   }, [isPlaying, currentIndex]);
 
   return (
-    <div className="flex flex-col h-fit items-start gap-2.5 relative self-stretch w-full">
-      <div className="flex flex-col items-center relative flex-1 self-stretch w-full grow">
+    <div className="flex flex-col h-[300px] items-start gap-2.5 relative self-stretch w-full">
+      <div className="flex flex-col items-center relative flex-1 self-stretch w-full grow h-full">
         {pictures.length > 0 && (
-          <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg">
+          <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg h-full">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {pictures.map((picture, index) => (
-                <div key={index} className="w-full flex-shrink-0 relative">
+                <div
+                  key={index}
+                  className="w-full flex-shrink-0 relative h-full"
+                >
                   <img
                     src={picture}
                     alt={`picture-${index}`}

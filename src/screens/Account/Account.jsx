@@ -220,7 +220,7 @@ const Account = () => {
             >
               <CardDeal
                 badgesColor="success"
-                badgesText1={deal.dealStatus || "No Status"} // Handle missing deal status
+                badgesText1={deal.deal_status || "No Status"} // Handle missing deal status
                 text={deal.deal_title || "No Title"} // Handle missing deal title
                 text1={deal.deal_status || "No Status"} // Handle missing deal status
                 participantsCount={deal.deal_participants_count || 0} // Handle missing participants

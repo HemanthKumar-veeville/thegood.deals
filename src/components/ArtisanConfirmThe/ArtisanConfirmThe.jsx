@@ -138,7 +138,7 @@ export const ArtisanConfirmThe = ({
         </div>
         <div className="flex self-stretch w-full items-center gap-2.5 relative flex-[0_0_auto]">
           <Map className="!relative !w-5 !h-5" />
-          <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
+          <p className="relative w-full font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] break-words [font-style:var(--body-small-regular-font-style)]">
             {dealState?.location || t("artisanConfirmThe.location")}
           </p>
         </div>
