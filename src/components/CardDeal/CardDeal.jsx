@@ -12,6 +12,7 @@ import {
   Rectangle4592,
 } from "../../images";
 import ImageSlider from "../ImageSlider/ImageSlider";
+import { UserAlt } from "../../icons/UserAlt";
 
 const statusBanner = {
   soon_out_stock: { text: "Soon to be out of stock", color: "warning" },
@@ -51,6 +52,7 @@ export const CardDeal = ({
   dealEndsIn,
   isGuestDeal,
   dealImages,
+  organizer,
 }) => {
   const calculateDaysLeft = (expiryDate) => {
     const now = new Date();
@@ -98,10 +100,20 @@ export const CardDeal = ({
               </div>
             </div>
           )}
+          {isGuestDeal && (
+            <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
+              <UserAlt className="!relative !w-5 !h-5" />
+              <div
+                className={`relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)] ${divClassNameOverride}`}
+              >
+                {`${organizer}`}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <Badges
-        className="!left-[15px] !absolute !top-[15px]"
+        className="!left-[15px] !absolute !top-[15px] !font-semibold"
         color={statusBanner[text1].color}
         divClassName={badgesDivClassName}
         round="semi-round"
@@ -116,7 +128,7 @@ export const CardDeal = ({
       <Badges
         className="!right-[15px] !absolute !bg-blueblue-light-5 !top-[15px]"
         color="warning"
-        divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
+        divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-bold ![font-family:'Inter',Helvetica] !leading-5"
         round="semi-round"
         state="duo-tone"
         imageSrc={FranceFlag}

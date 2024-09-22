@@ -299,55 +299,59 @@ const Account = () => {
                     />
                   )
                 }
+                organizer={deal?.organiser_name || "No Organizer"}
               />
             </div>
           ))}
         </div>
         {isFetchingMore && <CustomLoader />}
-        <img className="self-stretch w-full h-px" alt="Line" src={Line63} />
-        {status !== "loading" &&
-          [
-            {
-              icon: <UserAlt2 className="!w-5 !h-5" />,
-              text: t("account.my_information"),
-              action: "/my-information",
-            },
-            {
-              icon: <ClockDollar1 className="!w-5 !h-5" color="#1B4F4A" />,
-              text: t("account.wallet_details"),
-              action: "/admin-wallet",
-            },
-            {
-              icon: <Cog2 className="!w-5 !h-5" color="#1B4F4A" />,
-              text: t("account.settings"),
-              action: "/settings",
-            },
-            {
-              icon: <ChatAlt6 className="!w-5 !h-5" color="#1B4F4A" />,
-              text: t("account.acquire_help"),
-              action: "/help-me",
-            },
-            {
-              icon: <UserLock1 className="!w-5 !h-5" color="#1B4F4A" />,
-              text: t("account.sign_out"),
-              action: handleSignOut,
-            },
-          ].map(({ icon, text, action }) => (
-            <div
-              key={text}
-              className="inline-flex items-center gap-2.5 cursor-pointer hover:text-primary-color-dark"
-              onClick={
-                typeof action === "string"
-                  ? () => handleNavigation(action)
-                  : action
-              }
-            >
-              {icon}
-              <div className="font-normal text-primary-text-color text-base">
-                {text}
+        {status !== "loading" && (
+          <>
+            <img className="self-stretch w-full h-px" alt="Line" src={Line63} />
+            {[
+              {
+                icon: <UserAlt2 className="!w-5 !h-5" />,
+                text: t("account.my_information"),
+                action: "/my-information",
+              },
+              {
+                icon: <ClockDollar1 className="!w-5 !h-5" color="#1B4F4A" />,
+                text: t("account.wallet_details"),
+                action: "/admin-wallet",
+              },
+              {
+                icon: <Cog2 className="!w-5 !h-5" color="#1B4F4A" />,
+                text: t("account.settings"),
+                action: "/settings",
+              },
+              {
+                icon: <ChatAlt6 className="!w-5 !h-5" color="#1B4F4A" />,
+                text: t("account.acquire_help"),
+                action: "/help-me",
+              },
+              {
+                icon: <UserLock1 className="!w-5 !h-5" color="#1B4F4A" />,
+                text: t("account.sign_out"),
+                action: handleSignOut,
+              },
+            ].map(({ icon, text, action }) => (
+              <div
+                key={text}
+                className="inline-flex items-center gap-2.5 cursor-pointer hover:text-primary-color-dark"
+                onClick={
+                  typeof action === "string"
+                    ? () => handleNavigation(action)
+                    : action
+                }
+              >
+                {icon}
+                <div className="font-normal text-primary-text-color text-base">
+                  {text}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

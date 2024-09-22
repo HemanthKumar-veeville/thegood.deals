@@ -52,7 +52,7 @@ const AdminViewGoodDeal = () => {
   console.log({ dealState });
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex items-center justify-center gap-2 px-6 py-3 relative flex-1 grow bg-whitewhite rounded-md shadow-shadow-1">
             <Pencil className="!relative !w-5 !h-5 !ml-[-7.25px]" />
@@ -67,7 +67,7 @@ const AdminViewGoodDeal = () => {
             </button>
           </div>
         </div>
-        <ImageSlider pictures={dealState?.image_url || [blogImage]} />
+        <ImageSlider pictures={dealState?.deal_images || [blogImage]} />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {dealState?.title || t("admin.wine_crates")}
         </div>
@@ -92,7 +92,7 @@ const AdminViewGoodDeal = () => {
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Map className="!relative !w-5 !h-5" />
-          <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
+          <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px]">
             {dealState?.location}
           </p>
         </div>
@@ -101,14 +101,7 @@ const AdminViewGoodDeal = () => {
           alt="Line"
           src={Line63}
         />
-        <Badges
-          className="!absolute !left-[47px] !top-[86px]"
-          color="warning"
-          divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-          round="semi-round"
-          state="duo-tone"
-          text1={t("admin.soon_out_of_stock")}
-        />
+
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           <img
             className="relative w-[50px] h-[50px] object-cover"

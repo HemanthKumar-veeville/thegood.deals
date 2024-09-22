@@ -27,18 +27,31 @@ import AcceptConditions from "../../components/AcceptConditions";
 
 const CreateDeal = () => {
   const { t } = useTranslation(); // Initialize translation hook
+
+  // Helper function to generate calendar days
+  // Function to format date in 'YYYY-MM-DDTHH:mm' format
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   const [formData, setFormData] = useState({
     description: "",
-    collectionDate: "",
+    collectionDate: formatDate(new Date()),
     contentDescription: "",
     manufacturerInfo: "",
     iban: "",
     bic: "",
-    dealExpiration: "",
+    dealExpiration: formatDate(new Date()),
     acceptConditions: false,
-    collectionLocation: "",
+    collectionLocation: "home",
     pictures: [],
-    deliveryCost: "",
+    deliveryCost: 0,
   });
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
@@ -100,6 +113,9 @@ const CreateDeal = () => {
     e.preventDefault();
     setLoading(true); // Set loading to true at the start
     console.log({ formData, products, title });
+    sessionStorage.setItem("formData", JSON.stringify(formData));
+    sessionStorage.setItem("products", JSON.stringify(products));
+    sessionStorage.setItem("title", title);
     try {
       // Create FormData object and append form data
       const form = new FormData();
@@ -203,10 +219,6 @@ const CreateDeal = () => {
   const handleBack = () => {
     navigate("/");
   };
-
-  // useEffect(() => {
-  //   console.log({ products });
-  // }, [products]);
 
   return (
     <>

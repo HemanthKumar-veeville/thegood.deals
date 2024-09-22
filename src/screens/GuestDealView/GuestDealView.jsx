@@ -16,7 +16,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Badges } from "../../components/Badges";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
-import { getDealByDealId } from "../../redux/app/deals/dealSlice";
+import { fetchDealDetailsByDealId } from "../../redux/app/deals/dealSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { RatingStar } from "../../components/RatingStar";
@@ -28,18 +28,18 @@ const GuestDealView = () => {
   const dispatch = useDispatch();
   const dealState = useSelector((state) => state.deals);
   const { deal, status } = dealState;
-  const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
+  const dealData = deal?.Deal?.deal || {};
   console.log({ dealData });
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
 
   const handleBack = () => {
-    navigate("/", { state: { activeTab: "guests" } });
+    navigate("/");
   };
 
   const handleMyOrders = () => {
-    navigate("/admin-orders");
+    navigate("/admin-orders?deal_id=" + deal_id + "&is_creator=" + is_creator);
   };
 
   const statusBanner = {
@@ -55,14 +55,14 @@ const GuestDealView = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getDealByDealId(deal_id));
+    dispatch(fetchDealDetailsByDealId(deal_id));
   }, []);
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-          <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
+          <div className="flex items-center gap-3 pt-0 pb-3 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
             <div
               className="inline-flex items-center gap-2 relative flex-[0_0_auto] cursor-pointer"
               onClick={handleBack}
@@ -90,43 +90,38 @@ const GuestDealView = () => {
                   <br />
                 </span>
                 <span className="font-bold">
-                  {t("deal.time_left", { days: 10, hours: 6 })}
+                  {t("deal.time_left", { days: dealData?.end_in, hours: 6 })}
                 </span>
               </p>
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-[150px] object-cover"
-            alt={t("deal.image_alt")}
-            src={blogImage}
-          />
           <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
           <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-            {t("deal.title")}
+            {dealData?.title || t("deal.title")}
           </div>
           {location?.state?.deal?.dealStatus === "soon_out_stock" ? (
-            <ProgressBarYellow percentage={80} />
+            <ProgressBarYellow percentage={dealData?.progress?.split("%")[0]} />
           ) : (
-            <ProgressBarGreen percentage={90} />
+            <ProgressBarGreen percentage={dealData?.progress?.split("%")[0]} />
           )}
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("deal.end_in", { days: 10 })}
+                {t("deal.end_in", { days: dealData?.end_in })}
               </div>
             </div>
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("deal.participants", { count: 13 })}
+                {t("deal.participants", { count: dealData?.participants })}
               </div>
             </div>
           </div>
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <Map className="!relative !w-5 !h-5" />
-            <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {t("deal.location")}
+            <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px]">
+              {dealData?.collection_info?.location || t("deal.location")}
             </p>
           </div>
           <img
@@ -145,7 +140,7 @@ const GuestDealView = () => {
                 {t("artisanConfirmThe.organized_by")}
               </div>
               <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {dealData?.organiser?.name || "Abraham Thomas"}
+                {dealData?.organizer?.name || "Abraham Thomas"}
               </div>
               <div className="inline-flex h-5 items-center gap-2.5 relative">
                 <RatingStar
@@ -165,31 +160,9 @@ const GuestDealView = () => {
               {t("deal.my_orders")}
             </button>
           </div>
-          <Badges
-            className="!left-[15px] !absolute !top-[155px]"
-            color={statusBanner[location?.state?.deal?.dealStatus]?.color}
-            divClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-            round="semi-round"
-            state="duo-tone"
-            text1={statusBanner[location?.state?.deal?.dealStatus]?.text}
-            text2={
-              location?.state?.deal?.dealStatus === "in_stock" ||
-              location?.state?.deal?.dealStatus === "finished"
-                ? statusBanner[location?.state?.deal?.dealStatus]?.text
-                : location?.state?.deal?.dealStatus
-            }
-          />
-          <Badges
-            className="!left-60 !absolute !bg-blueblue-light-5 !top-[155px]"
-            color="warning"
-            divClassName="!text-blueblue !tracking-[0] !text-lg ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
-            round="semi-round"
-            state="duo-tone"
-            imageSrc={FranceFlag}
-          />
         </div>
         <img
-          className="relative self-stretch w-full h-[2px] object-cover"
+          className="relative self-stretch w-full h-px object-cover"
           alt="Line"
           src={Line69}
         />

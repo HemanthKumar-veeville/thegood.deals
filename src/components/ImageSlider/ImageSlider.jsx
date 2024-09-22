@@ -47,7 +47,7 @@ const ImageSlider = ({ pictures }) => {
     <div className="flex flex-col h-[300px] items-start gap-2.5 relative self-stretch w-full">
       <div className="flex flex-col items-center relative flex-1 self-stretch w-full grow h-full">
         {pictures.length > 0 && (
-          <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg h-full">
+          <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-t-md shadow-lg h-full">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}

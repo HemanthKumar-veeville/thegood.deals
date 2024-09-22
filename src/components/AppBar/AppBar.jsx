@@ -92,7 +92,9 @@ function AppBar() {
             <div
               className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
               onClick={() =>
-                !isUserLoggedIn ? navigate("/auth?login") : handleOpen()
+                !isUserLoggedIn
+                  ? navigate("/auth?login")
+                  : navigate("/my-information")
               }
             >
               {profile?.profile_image ? (
