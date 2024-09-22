@@ -64,9 +64,14 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
         onChange={(e) => setProductTitle(e.target.value)}
         className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke"
       />
-      <div className="flex-col items-start top-0 flex w-[260px]  left-0">
-        <div className=" w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
+      <div className="flex-col items-start flex w-[260px]">
+        <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
           Total stock
+        </div>
+        <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
+            by order
+          </div>
         </div>
       </div>
       <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke">
