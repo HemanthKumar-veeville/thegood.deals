@@ -18,7 +18,7 @@ const InviteLovedOnes = () => {
   const [newEmail, setNewEmail] = useState("");
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
-  const shareLink = `http://localhost:5173/deal_details?deal_id=${dealId}`;
+  const shareLink = `https://thegood.deals/deal_details?deal_id=${dealId}`;
   const navigate = useNavigate();
 
   const handleAddEmail = () => {
@@ -164,7 +164,7 @@ const InviteLovedOnes = () => {
           exclusivity of the deal 😉
         </p>
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-          {shareLink.split("?")[0]}
+          {shareLink.slice(0, 50).split("//")[1].split("deal_id").join("")}
         </div>
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"

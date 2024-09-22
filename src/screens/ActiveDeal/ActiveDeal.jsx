@@ -237,7 +237,7 @@ const ActiveDeal = () => {
           <div className="relative w-full h-[7px] mt-4 bg-gray-300 rounded-full">
             <div
               className="absolute h-[7px] bg-greengreen rounded-full"
-              style={{ width: `${(20 / 20) * 100}%` }}
+              style={{ width: `${(0 / 20) * 100}%` }}
             ></div>
           </div>
         </div>
@@ -264,12 +264,14 @@ const ActiveDeal = () => {
             </div>
             <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[22px] whitespace-nowrap">
-                €0
+                {`€${dealData?.current_amount || 0}`}
               </div>
               <div className="w-[67px] relative h-[22px]">
                 <div className="inline-flex items-center gap-1 relative">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-purplepurple text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    {t("active_deal.amount_target", { target: 1050 })}
+                    {t("active_deal.amount_target", {
+                      target: dealData?.orders_count * dealData?.deal_price,
+                    })}
                   </div>
                 </div>
               </div>
@@ -280,7 +282,12 @@ const ActiveDeal = () => {
           <div className="relative w-full h-[7px] mt-4 bg-gray-300 rounded-full">
             <div
               className="absolute h-[7px] bg-purplepurple rounded-full"
-              style={{ width: `${(40 / 1050) * 100}%` }}
+              style={{
+                width: `${
+                  (dealData?.current_amount ||
+                    0 / (dealData?.orders_count * dealData?.deal_price)) * 100
+                }%`,
+              }}
             ></div>
           </div>
         </div>
