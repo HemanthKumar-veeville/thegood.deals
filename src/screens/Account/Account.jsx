@@ -40,7 +40,6 @@ const Account = () => {
   const { status } = dealsState;
   const { profile } = useSelector((state) => state.user);
   const scrollableContainerRef = useRef(null);
-  const scrollableContainer = scrollableContainerRef.current;
 
   // Handle tab switching
   useEffect(() => {
@@ -73,19 +72,12 @@ const Account = () => {
 
       if (newDeals.length === 0) {
         setHasMoreDeals(false); // Stop further API calls if no new deals
-        scrollableContainer.removeEventListener(
-          "scroll",
-          handleContainerScroll
-        );
       } else {
         // Append new deals to existing ones
         setLoadedDeals((prevState) => ({
           ...prevState,
           [tab]: [...prevState[tab], ...newDeals],
         }));
-
-        // Increment the page only after successful fetch
-        setPage((prevPage) => prevPage + 1);
       }
     } catch (error) {
       console.error("Failed to load more deals: ", error);
@@ -104,11 +96,17 @@ const Account = () => {
       hasMoreDeals &&
       !isFetchingMore
     ) {
-      loadDeals(activeTab, page); // Load more deals when scrolled to the bottom
+      // Increment page before API call to prevent duplicate calls for the same page
+      setPage((prevPage) => {
+        const nextPage = prevPage + 1;
+        loadDeals(activeTab, nextPage); // Call loadDeals with the updated page number
+        return nextPage;
+      });
     }
   };
 
   useEffect(() => {
+    const scrollableContainer = scrollableContainerRef.current;
     if (scrollableContainer) {
       scrollableContainer.addEventListener("scroll", handleContainerScroll);
     }
