@@ -97,7 +97,9 @@ function AppBar() {
                   : navigate("/my-information")
               }
             >
-              {profile?.profile_image ? (
+              {profile?.profile_image &&
+              profile?.profile_image !==
+                "https://example.com/profiles/default.jpg" ? (
                 <img
                   className="w-[90%] h-[90%] rounded-full object-cover"
                   alt="photo"

@@ -111,7 +111,6 @@ export const VerificationOTP = () => {
         // localStorage.removeItem("otpInput");
         navigate("/");
       } else {
-        navigate("/verify");
         setLoading(false);
       }
     } catch (error) {
@@ -122,8 +121,8 @@ export const VerificationOTP = () => {
         text: error?.response?.data?.detail,
       });
       setLoading(false);
-      navigate("/verify");
     }
+    setOtp(Array(5).fill(""));
     setLoading(false);
   };
 
