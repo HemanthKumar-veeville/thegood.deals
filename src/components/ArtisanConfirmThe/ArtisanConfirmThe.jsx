@@ -17,6 +17,7 @@ import CustomLoader from "../CustomLoader/CustomLoader";
 import { createRequest } from "../../redux/app/requests/requestSlice";
 import Swal from "sweetalert2";
 import { validationByArtisan } from "../../redux/app/deals/dealSlice";
+import ImageSlider from "../../components/ImageSlider/ImageSlider";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -104,7 +105,7 @@ export const ArtisanConfirmThe = ({
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
-      <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
+      <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
         {pathname !== "/deal_details" && (
           <>
             <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
@@ -113,18 +114,14 @@ export const ArtisanConfirmThe = ({
             <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
               {t("artisanConfirmThe.confirmation_notice")}
             </p>
+            <img
+              className="relative self-stretch w-full h-px object-cover"
+              alt="Line"
+              src={Line63}
+            />
           </>
         )}
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
-        <img
-          className="relative self-stretch w-full h-[150px] object-cover"
-          alt="Blog image"
-          src={dealState?.image || blogImage} // Use dealState image if available
-        />
+        <ImageSlider pictures={dealState?.deal_images || [blogImage]} />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {dealState?.deal_title || t("artisanConfirmThe.wine_crates")}
         </p>
@@ -149,9 +146,9 @@ export const ArtisanConfirmThe = ({
         />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           <img
-            className="relative w-[50px] h-[50px] object-cover"
+            className="relative w-[50px] h-[50px] object-cover rounded-md"
             alt="Organizer"
-            src={Human}
+            src={dealState?.organiser?.organiser_image || Human}
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">

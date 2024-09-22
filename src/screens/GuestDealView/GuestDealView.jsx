@@ -11,16 +11,28 @@ import { Pencil1 } from "../../icons/Pencil1";
 import { UserAlt2 } from "../../icons/UserAlt2";
 import { Users22 } from "../../icons/Users22";
 import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
-import { blogImage, Line63, Line69, FranceFlag } from "../../images";
+import { blogImage, Line63, Line69, FranceFlag, Human } from "../../images";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Badges } from "../../components/Badges";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
+import { getDealByDealId } from "../../redux/app/deals/dealSlice";
+import { useDispatch, useSelector } from "react-redux";
+import ImageSlider from "../../components/ImageSlider/ImageSlider";
+import { RatingStar } from "../../components/RatingStar";
 
 const GuestDealView = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const dealState = useSelector((state) => state.deals);
+  const { deal, status } = dealState;
+  const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
+  console.log({ dealData });
+  const queryParams = new URLSearchParams(location.search);
+  const deal_id = queryParams.get("deal_id");
+  const is_creator = queryParams.get("is_creator");
 
   const handleBack = () => {
     navigate("/", { state: { activeTab: "guests" } });
@@ -40,6 +52,10 @@ const GuestDealView = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getDealByDealId(deal_id));
   }, []);
 
   return (
@@ -84,6 +100,7 @@ const GuestDealView = () => {
             alt={t("deal.image_alt")}
             src={blogImage}
           />
+          <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
           <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
             {t("deal.title")}
           </div>
@@ -117,6 +134,28 @@ const GuestDealView = () => {
             alt="Line"
             src={Line69}
           />
+          <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
+            <img
+              className="relative w-[50px] h-[50px] object-cover"
+              alt="Organizer"
+              src={Human}
+            />
+            <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
+              <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
+                {t("artisanConfirmThe.organized_by")}
+              </div>
+              <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+                {dealData?.organiser?.name || "Abraham Thomas"}
+              </div>
+              <div className="inline-flex h-5 items-center gap-2.5 relative">
+                <RatingStar
+                  className="!flex-[0_0_auto]"
+                  rating={dealData?.organiser?.rating || "four-star"}
+                  size="small"
+                />
+              </div>
+            </div>
+          </div>
           <div
             className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
             onClick={handleMyOrders}
@@ -155,84 +194,54 @@ const GuestDealView = () => {
           src={Line69}
         />
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto] mr-[-24.00px]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-primary-color rounded-[25px]">
-                <div className="absolute top-3 left-5 font-medium text-whitewhite text-xl leading-[26px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap">
-                  1
+          {[
+            {
+              step: 1,
+              bgColor: "bg-primary-color",
+              textColor: "text-whitewhite",
+            },
+            {
+              step: 2,
+              bgColor:
+                "bg-whitewhite border-2 border-solid border-primary-color",
+              textColor: "text-primary-color",
+            },
+            {
+              step: 3,
+              bgColor: "bg-graygray border-2 border-solid border-stroke",
+              textColor: "text-primary-color",
+            },
+            {
+              step: 4,
+              bgColor: "bg-graygray border-2 border-solid border-stroke",
+              textColor: "text-primary-color",
+            },
+            {
+              step: 5,
+              bgColor: "bg-graygray border-2 border-solid border-stroke",
+              textColor: "text-primary-color",
+            },
+          ].map(({ step, bgColor, textColor }) => (
+            <div
+              className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto] mr-[-24.00px]"
+              key={step}
+            >
+              <div className="relative w-[52px] h-[50px]">
+                <div
+                  className={`relative w-[50px] h-[50px] rounded-[25px] ${bgColor}`}
+                >
+                  <div
+                    className={`absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium ${textColor} text-xl tracking-[0] leading-[26px] whitespace-nowrap`}
+                  >
+                    {step}
+                  </div>
                 </div>
               </div>
+              <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
+                {t(`active_deal.step_${step}`)}
+              </p>
             </div>
-            <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("deal.step1")}
-            </p>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-whitewhite rounded-[25px] border-2 border-solid border-primary-color">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  2
-                </div>
-              </div>
-            </div>
-            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("deal.step2")}
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  3
-                </div>
-              </div>
-            </div>
-            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("deal.step3")}
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  4
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {t("deal.step4")}
-              </div>
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  5
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {t("deal.step5")}
-              </div>
-            </div>
-          </div>
-          <div className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-[52px] h-[50px]">
-              <div className="relative w-[50px] h-[50px] bg-graygray rounded-[25px] border-2 border-solid border-stroke">
-                <div className="absolute top-2.5 left-[17px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-xl tracking-[0] leading-[26px] whitespace-nowrap">
-                  6
-                </div>
-              </div>
-            </div>
-            <div className="inline-flex flex-col items-start justify-center relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {t("deal.step6")}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
         <img
           className="relative self-stretch w-full h-px object-cover"
