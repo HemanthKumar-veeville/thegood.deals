@@ -28,38 +28,117 @@ import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 const Account = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("created");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); // Start from page 1
   const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [loadedDeals, setLoadedDeals] = useState({ created: [], invited: [] });
+  const [hasMoreDeals, setHasMoreDeals] = useState(true); // Prevent further calls if no more deals
 
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
-  const { deals = [], status } = dealsState;
+  const { status } = dealsState;
   const { profile } = useSelector((state) => state.user);
   const scrollableContainerRef = useRef(null);
-  console.log({ deals });
+  const scrollableContainer = scrollableContainerRef.current;
+
+  // Handle tab switching
   useEffect(() => {
     const activeTabFromLocation = location?.state?.activeTab || activeTab;
     handleTabSwitch(activeTabFromLocation);
-  }, [location, activeTab, dispatch]);
+  }, [location, activeTab]);
 
-  const handleTabSwitch = (tab) => {
+  const handleTabSwitch = async (tab) => {
     setActiveTab(tab);
-    setPage(1);
-    dispatch(fetchDeals({ deal_type: tab, page: 1, limit: 3 }));
+    setPage(1); // Reset to first page on tab switch
+    setHasMoreDeals(true); // Reset hasMoreDeals flag
+    setLoadedDeals((prevState) => ({
+      ...prevState,
+      [tab]: [], // Clear the deals for the new tab
+    }));
+    loadDeals(tab, 1); // Load the first page of deals
+  };
+
+  // Fetch deals for the active tab
+  const loadDeals = async (tab, pageNumber) => {
+    if (status === "loading" || isFetchingMore || !hasMoreDeals) return; // Prevent multiple calls
+
+    setIsFetchingMore(true); // Lock API call
+
+    try {
+      const response = await dispatch(
+        fetchDeals({ deal_type: tab, page: pageNumber, limit: 3 }) // Fetch deals
+      ).unwrap();
+      const newDeals = response.Deals || [];
+
+      if (newDeals.length === 0) {
+        setHasMoreDeals(false); // Stop further API calls if no new deals
+        scrollableContainer.removeEventListener(
+          "scroll",
+          handleContainerScroll
+        );
+      } else {
+        // Append new deals to existing ones
+        setLoadedDeals((prevState) => ({
+          ...prevState,
+          [tab]: [...prevState[tab], ...newDeals],
+        }));
+
+        // Increment the page only after successful fetch
+        setPage((prevPage) => prevPage + 1);
+      }
+    } catch (error) {
+      console.error("Failed to load more deals: ", error);
+    } finally {
+      setIsFetchingMore(false); // Unlock API call
+    }
+  };
+
+  const handleContainerScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } =
+      scrollableContainerRef.current;
+
+    // Trigger loadMoreDeals when user scrolls to the bottom
+    if (
+      scrollTop + clientHeight >= scrollHeight - 50 &&
+      hasMoreDeals &&
+      !isFetchingMore
+    ) {
+      loadDeals(activeTab, page); // Load more deals when scrolled to the bottom
+    }
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    dispatch(fetchUserProfileWithDealsAndReviews());
-    dispatch(checkUserLoginStatus());
+    if (scrollableContainer) {
+      scrollableContainer.addEventListener("scroll", handleContainerScroll);
+    }
+    return () => {
+      if (scrollableContainer) {
+        scrollableContainer.removeEventListener(
+          "scroll",
+          handleContainerScroll
+        );
+      }
+    };
+  }, [page, activeTab]); // Watch for page and tab changes
+
+  // Fetch user profile and deals on initial load
+  useEffect(() => {
+    const fetchUserProfileData = async () => {
+      try {
+        await dispatch(fetchUserProfileWithDealsAndReviews());
+        await dispatch(checkUserLoginStatus());
+      } catch (error) {
+        console.error("Failed to fetch user profile or login status: ", error);
+      }
+    };
+    fetchUserProfileData();
   }, [dispatch]);
 
   const handleNavigation = (path) => navigate(path);
 
   const handleCardClick = (deal) => {
-    if (!deal || !deal.deal_id) return; // Handle case where deal data is empty or missing
+    if (!deal || !deal.deal_id) return;
 
     const route =
       deal.deal_status === "draft"
@@ -75,33 +154,20 @@ const Account = () => {
     });
   };
 
-  const loadMoreDeals = (direction) => {
-    if (status === "loading" || isFetchingMore) return;
-
-    setIsFetchingMore(true);
-    const nextPage = direction === "bottom" ? page + 1 : Math.max(1, page - 1);
-    dispatch(fetchDeals({ deal_type: activeTab, page: nextPage, limit: 3 }))
-      .then(() => setPage(nextPage))
-      .finally(() => setIsFetchingMore(false));
-  };
-
-  const handleContainerScroll = () => {
-    const { scrollTop, scrollHeight, clientHeight } =
-      scrollableContainerRef.current;
-    if (scrollTop === 0) loadMoreDeals("top");
-    else if (scrollTop + clientHeight >= scrollHeight - 50)
-      loadMoreDeals("bottom");
-  };
-
-  // Define handleSignOut function
-  const handleSignOut = () => {
-    dispatch(logoutUser()).then(() => {
+  const handleSignOut = async () => {
+    try {
+      await dispatch(logoutUser());
       navigate("/auth?login");
-    });
+    } catch (error) {
+      console.error("Failed to log out: ", error);
+    }
   };
 
   return (
-    <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-full">
+    <div
+      className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-[600px] overflow-y-auto"
+      ref={scrollableContainerRef}
+    >
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap capitalize">
           {`Hey, ${profile?.name || "User"} 👋🏻`}
@@ -156,11 +222,7 @@ const Account = () => {
             </div>
           ))}
         </div>
-        <div
-          className="h-[500px] overflow-y-auto custom-scrollbar"
-          ref={scrollableContainerRef}
-          onScroll={handleContainerScroll}
-        >
+        <div>
           {status === "loading" && <CustomLoader />}
           {status === "failed" && (
             <div className="w-[18rem]">
@@ -180,7 +242,7 @@ const Account = () => {
               />
             </div>
           )}
-          {status !== "loading" && deals?.Deals?.length === 0 && (
+          {status !== "loading" && loadedDeals[activeTab].length === 0 && (
             <div className="w-[18rem]">
               <SuccessAlert
                 className="!flex !bg-cyancyan-light-3 w-[100%]"
@@ -199,20 +261,20 @@ const Account = () => {
                     <>
                       You don't have any deals.
                       <br />
-                       Create one now!
+                      Create one now!
                     </>
                   ) : (
                     <>
                       You are not in any deals.
                       <br />
-                       Wait until you are invited!
+                      Wait until you are invited!
                     </>
                   )
                 }
               />
             </div>
           )}
-          {deals?.Deals?.map((deal) => (
+          {loadedDeals[activeTab]?.map((deal) => (
             <div
               key={deal.id}
               onClick={() => handleCardClick(deal)}
@@ -220,13 +282,13 @@ const Account = () => {
             >
               <CardDeal
                 badgesColor="success"
-                badgesText1={deal.deal_status || "No Status"} // Handle missing deal status
-                text={deal.deal_title || "No Title"} // Handle missing deal title
-                text1={deal.deal_status || "No Status"} // Handle missing deal status
-                participantsCount={deal.deal_participants_count || 0} // Handle missing participants
-                dealEndsIn={deal?.deal_ends_in || "N/A"} // Handle missing end date
+                badgesText1={deal.deal_status || "No Status"}
+                text={deal.deal_title || "No Title"}
+                text1={deal.deal_status || "No Status"}
+                participantsCount={deal.deal_participants_count || 0}
+                dealEndsIn={deal?.deal_ends_in || "N/A"}
                 isGuestDeal={activeTab === "invited"}
-                dealImages={deal?.images || [blogImage]} // Provide default image
+                dealImages={deal?.images || [blogImage]}
                 override={
                   deal?.deal_progress_percentage ===
                   0 ? null : deal.dealStatus === "soon_out_stock" ? (
