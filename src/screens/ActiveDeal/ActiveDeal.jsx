@@ -120,7 +120,7 @@ const ActiveDeal = () => {
             </div>
           </div>
           <div onClick={handleOrder}>
-            <ImageSlider pictures={dealData?.image_url || [blogImage]} />
+            <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
           </div>
           <div
             onClick={handleOrder}

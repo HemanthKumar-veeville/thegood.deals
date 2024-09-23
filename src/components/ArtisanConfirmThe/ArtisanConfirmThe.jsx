@@ -219,11 +219,7 @@ export const ArtisanConfirmThe = ({
           <DeliveryTruck4 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-transparent text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
             <span className="text-[#1b4f4a] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-              {dealState?.delivery_location ||
-                t("artisanConfirmThe.delivery_location")}
-            </span>
-            <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-              {dealState?.address || t("artisanConfirmThe.address")}
+              {dealState?.location || t("artisanConfirmThe.delivery_location")}
             </span>
           </p>
         </div>

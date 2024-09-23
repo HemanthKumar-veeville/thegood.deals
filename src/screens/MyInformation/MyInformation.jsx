@@ -114,9 +114,9 @@ const MyInformation = () => {
           </div>
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
             <img
-              className="w-[50px] h-[50px] relative object-cover"
+              className="w-[50px] h-[50px] relative object-cover rounded-md"
               alt="Rectangle"
-              src={profile?.avatar || Rectangle_5095} // Replace with real profile avatar
+              src={profile?.profile_image || Rectangle_5095} // Replace with real profile avatar
             />
             <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
@@ -136,7 +136,7 @@ const MyInformation = () => {
               <Box101 className="!relative !w-5 !h-5" />
               <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
                 {t("myInformation.orders_placed", {
-                  count: profile?.ordersCount || 0,
+                  count: profile?.orders_placed || 0,
                 })}
               </div>
             </div>
@@ -144,7 +144,7 @@ const MyInformation = () => {
               <Users2 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
                 {t("myInformation.collections_organized", {
-                  count: profile?.collectionsCount || 0,
+                  count: profile?.collections_organized || 0,
                 })}
               </div>
             </div>
@@ -195,7 +195,8 @@ const MyInformation = () => {
                       divClassName="!tracking-[0] !text-sm ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-[22px]"
                       divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
                       override={
-                        deal.status === "soon_out_stock" ? (
+                        deal?.progress === "0%" ? null : deal.status ===
+                          "soon_out_stock" ? (
                           <ProgressBarYellow percentage={deal.progress || 80} />
                         ) : (
                           <ProgressBarGreen percentage={deal.progress || 90} />
