@@ -41,6 +41,8 @@ const OTPInput = ({ value, onChange, index, inputRefs }) => (
           ].current.focus();
           e.preventDefault();
         }}
+        inputmode="numeric" // Ensures the numeric keyboard is displayed
+        pattern="[0-9]*" // Accepts only numeric input
         className="flex items-start justify-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke text-[#9CA3AF] text-base tracking-[0] leading-6 text-center focus: outline-[#1b4f4a]"
       />
     </div>
