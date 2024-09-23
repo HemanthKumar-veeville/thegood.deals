@@ -6,6 +6,7 @@ import { resetPassword } from "../../redux/app/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import CustomLoader from "../../components/CustomLoader/CustomLoader"; // Import CustomLoader
+import { useTranslation } from "react-i18next";
 
 const PasswordInput = ({
   value,
@@ -43,6 +44,7 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.user);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const emailParam = new URLSearchParams(window.location.search).get("email");
@@ -107,7 +109,7 @@ const ResetPassword = () => {
       {!loading && (
         <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
           <div className="relative w-fit mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-            Reset Password
+            New Password
           </div>
           <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px]">
             The password must be long enough and difficult for others to guess.
@@ -129,23 +131,21 @@ const ResetPassword = () => {
             togglePasswordVisibility={togglePasswordVisibility}
           />
 
-          <div className="relative w-[280px] h-[49px]">
-            <div className="flex w-[280px] items-center gap-[15px] absolute top-0 left-0">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm text-center tracking-[0] leading-[22px] whitespace-nowrap">
-                8 characters minimum
+          {/* Password Hints */}
+          <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
+            {[
+              t("signup.password_hints.min_length"),
+              t("signup.password_hints.uppercase_lowercase"),
+              t("signup.password_hints.special_character"),
+              t("signup.password_hints.number"),
+            ].map((requirement, idx) => (
+              <div
+                key={idx}
+                className="relative w-fit font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
+              >
+                <span className="mr-1">•</span> {requirement}
               </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm text-center tracking-[0] leading-[22px] whitespace-nowrap">
-                1 capital letter
-              </div>
-            </div>
-            <div className="flex w-[280px] items-center gap-[21px] absolute top-[27px] left-0">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm text-center tracking-[0] leading-[22px] whitespace-nowrap">
-                1 lowercase letter
-              </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm text-center tracking-[0] leading-[22px] whitespace-nowrap">
-                1 digit
-              </div>
-            </div>
+            ))}
           </div>
 
           <div onClick={handleSubmit} className="w-full">
