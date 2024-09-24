@@ -1,1 +1,0 @@
-import{g as i,c as u,r as e,j as a,a0 as g,e as f}from"./index-Djz2ckav.js";import d from"./CustomLoader-CFp697To.js";function h({element:o}){const r=i(s=>s.user.isUserLoggedIn),t=u(),[c,n]=e.useState(!0);return e.useEffect(()=>{(async()=>{await t(f()),n(!1)})()},[t]),c?a.jsx(d,{}):r?o:a.jsx(g,{to:"/auth?login"})}export{h as default};
