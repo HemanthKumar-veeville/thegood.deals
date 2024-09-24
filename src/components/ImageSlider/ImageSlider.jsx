@@ -44,7 +44,11 @@ const ImageSlider = ({ pictures }) => {
   }, [isPlaying, currentIndex]);
 
   return (
-    <div className="flex flex-col h-[300px] items-start gap-2.5 relative self-stretch w-full">
+    <div
+      className={`flex flex-col ${
+        pictures?.length > 1 ? "h-[300px]" : "h-[215px]"
+      } items-start gap-2.5 relative self-stretch w-full`}
+    >
       <div className="flex flex-col items-center relative flex-1 self-stretch w-full grow h-full">
         {pictures.length > 0 && (
           <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-t-md shadow-lg h-full">
