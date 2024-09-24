@@ -5,6 +5,8 @@ import { Header } from "../components/Header";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft1 } from "../icons/ArrowLeft1";
 import { useNavigate } from "react-router-dom";
+import { Label } from "../components/LegalNotice";
+import { GeneralConditions } from "../components/GeneralConditions";
 
 export const Legal = ({ heading }) => {
   const { t } = useTranslation();
@@ -34,66 +36,8 @@ export const Legal = ({ heading }) => {
               Back
             </div>
           </div>
-          <div className="flex flex-col gap-5 self-stretch w-full items-start relative flex-[0_0_auto]">
-            <div className="relative self-stretch mt-[-1.00px] font-heading-h1-mobile font-[number:var(--heading-h1-mobile-font-weight)] text-green text-[length:var(--heading-h1-mobile-font-size)] text-center tracking-[var(--heading-h1-mobile-letter-spacing)] leading-[var(--heading-h1-mobile-line-height)] [font-style:var(--heading-h1-mobile-font-style)]">
-              {heading}
-            </div>
-            <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg tracking-[0] leading-[27px]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-              tempus rutrum leo non finibus. Maecenas libero eros, tempus et
-              auctor et, viverra eu lacus. Curabitur auctor nec libero at porta.
-              Nulla facilisi. Maecenas semper quis velit sit amet congue.
-              Suspendisse potenti. Vivamus a diam arcu. Curabitur scelerisque
-              arcu metus, venenatis rhoncus mi ullamcorper ac. Mauris aliquam
-              viverra congue. Nulla facilisi. Duis in tempus massa. Quisque at
-              molestie risus, tincidunt sodales tellus. Phasellus sit amet
-              facilisis lectus.
-              <br />
-              Curabitur vitae nisl orci. Curabitur sit amet fringilla lectus.
-              Aliquam sollicitudin euismod lorem in sollicitudin. Praesent eros
-              dolor, malesuada eu placerat vel, euismod vitae enim. Aenean eget
-              risus in tortor commodo posuere. Nam lorem nisi, sagittis at
-              scelerisque nec, placerat quis ex. Donec scelerisque nibh in ipsum
-              aliquam tempus. Praesent at mi tristique, mattis diam in, egestas
-              tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Cras faucibus, mi in iaculis semper, purus erat pellentesque
-              dolor, nec auctor sem neque eu libero. Duis velit libero,
-              venenatis id pulvinar id, commodo ac sem. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit. Maecenas velit purus, varius et
-              mauris quis, congue feugiat mauris. Nullam sed mollis tellus, eu
-              pellentesque est. Duis scelerisque purus quis magna vestibulum
-              mattis.
-              <br />
-              Vivamus rhoncus odio a augue scelerisque, feugiat tristique lorem
-              dapibus. Integer efficitur pulvinar diam, nec bibendum odio
-              dapibus eget. Proin id magna et felis laoreet lacinia eget non
-              lacus. Mauris gravida tincidunt eros, quis imperdiet dui sodales
-              euismod. Interdum et malesuada fames ac ante ipsum primis in
-              faucibus. Sed posuere suscipit arcu vel hendrerit. Donec finibus
-              nulla condimentum justo luctus accumsan. Donec non auctor eros.
-              <br />
-              Quisque fringilla dui et nulla commodo lacinia. Lorem ipsum dolor
-              sit amet, consectetur adipiscing elit. Duis semper laoreet erat.
-              In laoreet augue sed metus bibendum, at molestie dui efficitur.
-              Sed sem dolor, laoreet ut egestas quis, suscipit ut risus. Ut sed
-              justo vel arcu imperdiet bibendum at a lorem. Nullam leo lacus,
-              ullamcorper sit amet dictum ullamcorper, ornare ut elit. Vivamus
-              blandit vulputate ligula nec efficitur. Proin sed elit non metus
-              aliquam mollis. Ut et dui sagittis, hendrerit dui vel, tincidunt
-              massa. Curabitur nunc dolor, pellentesque at dapibus sed, tempus
-              at lorem. Duis pharetra odio a ex dignissim commodo. Maecenas
-              malesuada sollicitudin tristique. Phasellus at tortor vel elit
-              faucibus scelerisque. Sed auctor sagittis eros, eget ornare nisi
-              rutrum vitae. Morbi rutrum semper ex vel porttitor.
-              <br />
-              Morbi et augue lacus. Nulla libero libero, posuere non ultricies
-              mattis, efficitur sagittis eros. Etiam dictum gravida turpis, at
-              maximus neque hendrerit et. Aenean non lacus malesuada, tincidunt
-              quam vel, gravida ex. Donec pretium porttitor efficitur. Duis
-              magna urna, accumsan eu purus ac, laoreet fringilla ex. Vivamus et
-              dui fringilla, mattis metus non, sodales urna.
-            </p>
-          </div>
+
+          <GeneralConditions />
         </div>
       </div>
       <div

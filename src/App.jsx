@@ -547,8 +547,9 @@ function App() {
       path: "/general-conditions",
       element: (
         <Layout>
-          <ProtectedRoute
-            element={<Legal heading="General conditions of sale" content="" />}
+          <Legal
+            heading="General Conditions of Sale and Use of TheGood.Deals"
+            content=""
           />
         </Layout>
       ),
