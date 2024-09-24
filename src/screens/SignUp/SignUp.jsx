@@ -238,7 +238,7 @@ export const SignUp = ({ setIsLoading }) => {
           setShowPassword(false); // Reset password visibility state
           setShowConfirmPassword(false); // Reset confirm password visibility state
           localStorage.removeItem("signupFormValues"); // Clear localStorage after successful submission
-          navigate("/verify", { state: { email: values.email } });
+          navigate(`/verify?email=${values?.email}`);
           window.scrollTo(0, 0);
         }
       } catch (error) {

@@ -58,7 +58,26 @@ export const VerificationOTP = () => {
   const inputRefs = useRef(otp.map(() => React.createRef()));
   const location = useLocation();
   const navigate = useNavigate();
-  const { state } = location;
+  const queryParams = new URLSearchParams(location.search);
+  const email = queryParams.get("email");
+
+  const handleResendOTP = async () => {
+    try {
+      const response = await axiosInstance.post("resend_code");
+
+      if (response?.status === 201) {
+        console.log("Mail Sent");
+        setSeconds(33);
+      }
+    } catch (error) {
+      console.error("There was an error!", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error?.response?.data?.detail,
+      });
+    }
+  };
 
   // useEffect(() => {
   //   const savedOtp = JSON.parse(localStorage.getItem("otpInput"));
@@ -68,6 +87,7 @@ export const VerificationOTP = () => {
   // }, []);
 
   useEffect(() => {
+    handleResendOTP();
     const timer = setInterval(() => {
       setSeconds((prevSeconds) => (prevSeconds > 0 ? prevSeconds - 1 : 0));
     }, 1000);
@@ -103,7 +123,7 @@ export const VerificationOTP = () => {
     console.log("OTP submitted:", otp.join(""));
 
     const formData = new FormData();
-    formData.append("email", state?.email);
+    formData.append("email", email);
     formData.append("verification_code", otp.join(""));
 
     try {
@@ -128,11 +148,6 @@ export const VerificationOTP = () => {
     setLoading(false);
   };
 
-  const handleResendOTP = () => {
-    console.log("Mail Sent");
-    setSeconds(33);
-  };
-
   return (
     <div className="relative w-full h-[640px] bg-primary-background mx-auto">
       {!loading && (
@@ -142,7 +157,7 @@ export const VerificationOTP = () => {
           </div>
           <p className="relative w-fit [font-family:'Inter',Helvetica] font-normal !text-[#1b4f4a] text-sm tracking-[0] leading-[22px]">
             {t("otp.code_sent")} <br />
-            {state?.email || "{email}"}
+            {email || "{email}"}
           </p>
           <div className="flex items-center justify-between relative self-stretch w-full flex-[0_0_auto]">
             {otp.map((value, index) => (

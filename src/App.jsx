@@ -180,7 +180,7 @@ function App() {
       path: "/verify",
       element: (
         <Layout>
-          <ProtectedRoute element={<VerificationOTP />} />
+          <VerificationOTP />
         </Layout>
       ),
     },
