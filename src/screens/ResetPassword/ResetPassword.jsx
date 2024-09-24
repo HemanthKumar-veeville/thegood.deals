@@ -1,163 +1,193 @@
 import React, { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { Button } from "../../components/Button/Button";
-import { EyeAlt4 } from "../../icons/EyeAlt4";
-import { useDispatch, useSelector } from "react-redux";
+import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
+import { useDispatch } from "react-redux";
 import { resetPassword } from "../../redux/app/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import CustomLoader from "../../components/CustomLoader/CustomLoader"; // Import CustomLoader
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { useTranslation } from "react-i18next";
 
-const PasswordInput = ({
-  value,
-  onChange,
+const InputField = ({
+  id,
+  name,
+  type = "text",
   placeholder,
-  showPassword,
-  togglePasswordVisibility,
-}) => (
-  <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-    <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-      <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-whitewhite rounded-md border border-solid border-stroke">
-        <div className="flex items-center justify-between relative flex-1 grow">
+  formik,
+  label,
+  showPassword = false,
+  toggleVisibility,
+}) => {
+  return (
+    <div className="w-full flex flex-col items-start gap-2 relative">
+      {label && (
+        <label
+          htmlFor={id}
+          className="[font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-sm leading-[22px] mb-[2px] w-full"
+        >
+          {label}
+        </label>
+      )}
+      <div className="w-full">
+        <div
+          className={`flex items-center gap-2.5 pl-5 pr-4 py-3 w-full bg-white rounded-md border cursor-pointer hover:bg-gray-100 ${
+            formik.touched[name] && formik.errors[name]
+              ? "border-red-500 border-solid"
+              : "focus-within:ring-1 focus-within:ring-[#1b4f4a] border"
+          }`}
+        >
           <input
-            type={showPassword ? "text" : "password"}
-            value={value}
-            onChange={onChange}
+            id={id}
+            name={name}
+            type={showPassword ? "text" : type}
             placeholder={placeholder}
-            className="flex-1 bg-transparent border-none outline-none"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values[name]}
+            className="flex-1 bg-transparent outline-none"
+            autoComplete="off"
           />
-          <div onClick={togglePasswordVisibility}>
-            <EyeAlt4 className="!relative !cursor-pointer !w-4 !h-4" />
-          </div>
+          {toggleVisibility && (
+            <button
+              type="button"
+              onClick={toggleVisibility}
+              className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              <EyeAlt8 />
+            </button>
+          )}
         </div>
+        {/* Error message */}
+        {formik.touched[name] && formik.errors[name] && (
+          <div className="text-red-500 text-sm mt-2">{formik.errors[name]}</div>
+        )}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const ResetPassword = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false); // Manage loading state
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.user);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const emailParam = new URLSearchParams(window.location.search).get("email");
-    if (emailParam) setEmail(emailParam);
+    if (emailParam) {
+      formik.setFieldValue("email", emailParam);
+    }
   }, []);
 
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
-
-  const validatePassword = () => {
-    const errors = [];
-
-    if (password.length < 8)
-      errors.push("Password must be at least 8 characters long.");
-    if (!/[A-Z]/.test(password))
-      errors.push("Password must contain at least one uppercase letter.");
-    if (!/[a-z]/.test(password))
-      errors.push("Password must contain at least one lowercase letter.");
-    if (!/[0-9]/.test(password))
-      errors.push("Password must contain at least one digit.");
-    if (password !== confirmPassword) errors.push("Passwords do not match.");
-
-    if (errors.length > 0) {
-      Swal.fire({
-        title: "Password Validation Failed",
-        html: `<ul style="text-align: left;">${errors
-          .map((error) => `<li style="margin-bottom: 8px;">${error}</li>`)
-          .join("")}</ul>`,
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSubmit = async () => {
-    if (validatePassword()) {
-      setLoading(true); // Start loading
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+      confirmPassword: "",
+      email: "",
+    },
+    validationSchema: Yup.object({
+      password: Yup.string()
+        .min(8, t("signup.password_hints.min_length"))
+        .matches(/[a-z]/, t("signup.password_hints.lowercase"))
+        .matches(/[A-Z]/, t("signup.password_hints.uppercase"))
+        .matches(/\d/, t("signup.password_hints.number"))
+        .matches(/[~#@$%&!*_?^-]/, t("signup.password_hints.special_character"))
+        .required(t("signup.errors.password")),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref("password"), null], t("signup.errors.confirm_password"))
+        .required(t("signup.errors.confirm_password")),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
       try {
-        await dispatch(
-          resetPassword({ email, password, confirmPassword })
-        ).unwrap();
+        await dispatch(resetPassword(values)).unwrap();
         navigate("/reset-password-success");
-      } catch (err) {
-        console.log({ err });
+      } catch (error) {
         Swal.fire({
-          title: "Error",
-          text: err?.detail,
+          title: t("signup.errors.error_title"),
+          text: error?.response?.data?.detail,
           icon: "error",
           confirmButtonText: "OK",
         });
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false);
       }
-    }
+    },
+  });
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
     <div className="relative w-full h-screen bg-primary-background">
-      {loading && <CustomLoader />} {/* Show CustomLoader when loading */}
+      {loading && <CustomLoader />}
       {!loading && (
         <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
-          <div className="relative w-fit mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-            New Password
+          <div className="relative w-fit font-heading-6 font-semibold text-primary-color text-[length:var(--heading-6-font-size)] text-center">
+            {t("resetPassword.newPassword")}
           </div>
-          <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px]">
-            The password must be long enough and difficult for others to guess.
+          <p className="font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
+            {t("resetPassword.passwordInstruction")}
           </p>
 
-          <PasswordInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your new password"
-            showPassword={showPassword}
-            togglePasswordVisibility={togglePasswordVisibility}
-          />
+          <form onSubmit={formik.handleSubmit} className="w-full space-y-5">
+            <InputField
+              id="password"
+              name="password"
+              type="password"
+              placeholder={t("signup.password")}
+              formik={formik}
+              showPassword={showPassword}
+              toggleVisibility={togglePasswordVisibility}
+            />
 
-          <PasswordInput
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm your new password"
-            showPassword={showPassword}
-            togglePasswordVisibility={togglePasswordVisibility}
-          />
+            <InputField
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              placeholder={t("signup.confirm_password")}
+              formik={formik}
+              showPassword={showConfirmPassword}
+              toggleVisibility={toggleConfirmPasswordVisibility}
+            />
 
-          {/* Password Hints */}
-          <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
-            {[
-              t("signup.password_hints.min_length"),
-              t("signup.password_hints.uppercase_lowercase"),
-              t("signup.password_hints.special_character"),
-              t("signup.password_hints.number"),
-            ].map((requirement, idx) => (
-              <div
-                key={idx}
-                className="relative w-fit font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
-              >
-                <span className="mr-1">•</span> {requirement}
-              </div>
-            ))}
-          </div>
+            {/* Password Hints */}
+            <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
+              {[
+                t("signup.password_hints.min_length"),
+                t("signup.password_hints.uppercase_lowercase"),
+                t("signup.password_hints.special_character"),
+                t("signup.password_hints.number"),
+              ].map((requirement, idx) => (
+                <div
+                  key={idx}
+                  className="font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
+                >
+                  <span className="mr-1">•</span> {requirement}
+                </div>
+              ))}
+            </div>
 
-          <div onClick={handleSubmit} className="w-full">
             <Button
-              buttonText="Change Password"
+              buttonText={t("resetPassword.changePasswordButton")}
               className="!self-stretch !flex-[0_0_auto] !flex !w-full"
               color="primary"
               kind="primary"
               round="semi-round"
               state="default"
+              type="submit"
             />
-          </div>
+          </form>
         </div>
       )}
     </div>
