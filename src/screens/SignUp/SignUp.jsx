@@ -177,7 +177,7 @@ export const SignUp = ({ setIsLoading }) => {
       countryCode: Yup.object().required(t("signup.errors.country_code")),
       phone: Yup.string()
         .matches(/^\d+$/, t("signup.errors.phone_number"))
-        .min(10, t("signup.errors.phone_number"))
+        .min(8, t("signup.errors.phone_number"))
         .max(13, t("signup.errors.phone_number"))
         .required(t("signup.errors.phone_number")),
       email: Yup.string()
