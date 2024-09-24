@@ -128,7 +128,7 @@ export const VerificationOTP = () => {
     setLoading(false);
   };
 
-  const handleMail = () => {
+  const handleResendOTP = () => {
     console.log("Mail Sent");
     setSeconds(33);
   };
@@ -160,8 +160,8 @@ export const VerificationOTP = () => {
               {t("otp.send_again")} ({seconds}s) {/* Send again in */}
             </div>
           )}
-          {/* {seconds === 0 && (
-            <div onClick={handleMail} className="!w-full">
+          {seconds === 0 && (
+            <div onClick={handleResendOTP} className="!w-full">
               <Button
                 buttonText={t("otp.send_code_again")} // Send Code Again
                 className="!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer"
@@ -171,7 +171,7 @@ export const VerificationOTP = () => {
                 state="active"
               />
             </div>
-          )} */}
+          )}
           <div
             onClick={!isButtonDisabled ? handleSubmit : null}
             className="!w-full"

@@ -3,432 +3,271 @@ import React from "react";
 export const GeneralConditions = () => {
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
-      <div className="flex flex-col items-start gap-4 self-stretch w-full relative flex-[0_0_auto]">
-        <div className="flex flex-col items-center justify-center gap-2.5 pt-0 pb-6 self-stretch w-full relative flex-[0_0_auto]">
-          <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-            General Conditions of Sale and Use of TheGood.Deals
+      <div className="flex flex-col items-start gap-4 self-stretch w-full relative">
+        <div className="flex flex-col items-start gap-2.5 pt-0 pb-6 w-full">
+          <p className="font-heading-6 font-semibold text-primary-color text-xl tracking-normal leading-tight text-left mt-6">
+            General Conditions of Sale and Use of thegood.deals
           </p>
         </div>
-        <div className=" flex flex-col items-center justify-center gap-2.5 pt-0 pb-6 self-stretch w-full relative flex-[0_0_auto]">
-          <p className="[font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 relative self-stretch">
-            <span className="[font-family:'Inter',Helvetica] font-normal text-[#637381] text-base tracking-[0] leading-6">
-              Welcome to TheGood.Deals, a marketplace platform dedicated to
+
+        <div className="flex flex-col items-start gap-2.5 pt-0 pb-6 w-full">
+          <p className="font-normal text-primary-text-color text-base tracking-normal leading-6">
+            <span className="font-normal text-[#637381]">
+              Welcome to thegood.deals, a marketplace platform dedicated to
               transactions between professional sellers and private consumers
               (B2C). These General Terms and Conditions of Sale (hereinafter
               "GTC") govern the rights and obligations of users of our
               marketplace. By accessing and using our site, you accept these GTC
               in full.
-              <br />
-              <br />
-              <br />
             </span>
           </p>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             1. Definitions
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            TheGood.Deals: The website and marketplace platform operated by
-            <br />
-            thegood.deals SAS accessible at www.thegood.deals.
-            <br />
-            <br />
-            User: Any person accessing the marketplace, whether simple visitors,
-            <br />
-            sellers or buyers.
+
+          <p className="text-[#637381] text-base leading-6">
+            <strong>thegood.deals:</strong> The website and marketplace platform
+            operated by thegood.deals SAS accessible at www.thegood.deals.
             <br />
             <br />
-            Seller: Any natural person registered on the marketplace offering
-            products for sale. The seller acting as an organizer
+            <strong>User:</strong> Any person accessing the marketplace, whether
+            visitors, sellers, or buyers.
             <br />
             <br />
-            Buyer: Any natural person acting as a consumer and placing
-            <br />
-            an order on the site.
-            <br />
-            <br />
-            Product: Any good or service offered for sale by sellers on the
-            marketplace.
+            <strong>Seller:</strong> Any natural person registered on the
+            marketplace offering products for sale. The seller acts as an
+            organizer.
             <br />
             <br />
+            <strong>Buyer:</strong> Any natural person acting as a consumer and
+            placing an order on the site.
             <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+            <br />
+            <strong>Product:</strong> Any good or service offered for sale by
+            sellers on the marketplace.
+          </p>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             2. Purpose of the T&Cs
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            These T&Cs define the conditions under which TheGood.Deals enables
-            the
-            <br />
-            connection between sellers and buyers. TheGood.Deals does not
-            intervene in the
-            <br />
-            transaction itself between the seller and the buyer, except for
-            facilitating payments via its
-            <br />
-            platform.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] uppercase leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <p className="text-[#637381] text-base leading-6">
+            These T&Cs define the conditions under which thegood.deals enables
+            the connection between sellers and buyers. thegood.deals does not
+            intervene in the transaction itself between the seller and the
+            buyer, except for facilitating payments via its platform.
+          </p>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             3. Access to the Marketplace
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            Access to TheGood.Deals is free for users.
-            <br />
-            Registration is mandatory for sellers wishing to offer their
-            products and for buyers wishing to place an order.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] uppercase leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              Access to <strong>thegood.deals</strong> is free for users.
+            </li>
+            <li>
+              Registration is mandatory for sellers wishing to offer their
+              products and for buyers wishing to place an order.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             4. Registration and Accounts
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              To use <strong>thegood.deals</strong> services, sellers and buyers
+              must register by providing truthful and up-to-date information.
+            </li>
+            <li>
+              Each user is responsible for maintaining the confidentiality of
+              their credentials and must immediately notify{" "}
+              <strong>thegood.deals</strong> in the event of loss or
+              unauthorized use of their account.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
+            5. Role of thegood.deals
           </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            To use TheGood.Deals services, sellers and buyers must register by
-            providing truthful and up-to-date information.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            Each user is responsible for maintaining the confidentiality of
-            their credentials and must immediately notify TheGood.Deals in the
-            event of loss or unauthorized use of their account.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
-            5. Role of TheGood.Deals
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            TheGood.Deals acts solely as a technical intermediary providing a
-            platform for connecting buyers and sellers.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            TheGood.Deals is not a party to the sales contract between the
-            seller and the buyer, and does not guarantee the quality of the
-            products or services sold.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              <strong>thegood.deals</strong> acts solely as a technical
+              intermediary providing a platform for connecting buyers and
+              sellers.
+            </li>
+            <li>
+              <strong>thegood.deals</strong> is not a party to the sales
+              contract between the seller and the buyer and does not guarantee
+              the quality of the products or services sold.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             6. Obligations of the Seller
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            The seller undertakes to offer products that comply with the laws
-            and regulations in force, and in particular with the rules relating
-            to consumer protection.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            The seller is solely responsible for the descriptions, prices and
-            availability of the products it offers on the platform.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            Sellers must comply with the pre-contractual information obligations
-            provided for by the Consumer Code.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              The seller undertakes to offer products that comply with the laws
+              and regulations in force, particularly consumer protection rules.
+            </li>
+            <li>
+              Sellers are responsible for their product descriptions, prices,
+              and availability on the platform.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             7. Order Process
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            The buyer places an order directly with the seller via the
-            TheGood.Deals platform.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            The buyer receives an order summary and a confirmation email after
-            validation of their purchase.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            Product offers are valid as long as they are visible on the
-            marketplace, while stocks last.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              Buyers place orders directly with sellers through the{" "}
+              <strong>thegood.deals</strong> platform.
+            </li>
+            <li>
+              Buyers receive order summaries and confirmation emails after
+              validating their purchase.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             8. Payment
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            TheGood.Deals offers a secure payment solution for transactions. The
-            buyer makes the payment through this solution.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            Payments can be made by bank card, e-wallet or any other means
-            available on the platform.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            TheGood.Deals retains a commission on each sale, deducted from the
-            amount paid to the seller.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              <strong>thegood.deals</strong> provides a secure payment solution
+              for transactions.
+            </li>
+            <li>
+              Payments can be made by bank card, e-wallet, or any other means
+              available on the platform.
+            </li>
+            <li>
+              <strong>thegood.deals</strong> retains a commission on each sale.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             9. Delivery
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            Delivery of the products is provided by the seller or by a transport
-            provider chosen by the latter. 
-            <br />
-            Delivery times are mentioned when ordering, and the seller is
-            responsible for respecting these times. 
-            <br />
-            In case of delivery delay or shipping related issue, buyer should
-            contact seller directly.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              Delivery of the products is provided by the seller or by a
+              transport provider chosen by the seller.
+            </li>
+            <li>
+              Delivery times are mentioned when ordering, and the seller is
+              responsible for respecting these times.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             10. Right of Withdrawal
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            In accordance with legal provisions, the buyer has a period of 14
-            days from receipt of the product to exercise his right of
-            withdrawal, without having to provide a reason or pay penalties. 
-            <br />
-            The buyer must notify the seller of his decision to withdraw by
-            means of the form provided or by any other explicit means. The costs
-            of returning the products are the responsibility of the buyer,
-            unless otherwise agreed with the seller.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              In accordance with legal provisions, the buyer has a period of 14
+              days from receipt of the product to exercise their right of
+              withdrawal.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             11. Legal Guarantees
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            The seller is bound by legal guarantees of conformity and hidden
-            defects. 
-            <br />
-            In the event of a lack of conformity or hidden defect, the buyer may
-            request the repair, replacement or reimbursement of the product
-            under the conditions provided for by law.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              The seller is bound by legal guarantees of conformity and hidden
+              defects.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             12. Liability
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            TheGood.Deals assumes no responsibility for any dispute between a
-            buyer and a seller. 
-            <br />
-            TheGood.Deals cannot be held responsible for errors or omissions
-            concerning the products presented by the sellers, nor for delays or
-            failures in delivery.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              <strong>thegood.deals</strong> assumes no responsibility for
+              disputes between buyers and sellers.
+            </li>
+            <li>
+              It cannot be held responsible for errors, omissions, or delays in
+              product deliveries.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             13. Dispute Resolution
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              In the event of a dispute, users should seek an amicable solution.
+            </li>
+            <li>
+              If no resolution is found, buyers may contact a consumer
+              association or the competent court.
+            </li>
+            <li>
+              <strong>thegood.deals</strong> also offers mediation services.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
+            14. Intellectual Property
           </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            In the event of a dispute between a seller and a buyer, the parties
-            undertake to seek an amicable solution. 
-            <br />
-            If no solution is found, the buyer can contact a consumer
-            association or the competent court.
-            <br />
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              All content on <strong>thegood.deals</strong> is the exclusive
+              property of <strong>thegood.deals</strong> or its sellers.
+            </li>
+            <li>Any unauthorized reproduction is prohibited.</li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
+            15. Protection of Personal Data
           </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            TheGood.Deals also offers a mediation service to facilitate the
-            resolution of disputes between users.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
-            14. Intellectual Property 
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            All content on TheGood.Deals (texts, images, logos, etc.) are the
-            exclusive property of TheGood.Deals or the sellers and are protected
-            by intellectual property laws. Any unauthorized reproduction is
-            prohibited.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
-            15. Protection of Personal Data 
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            TheGood.Deals complies with current legislation regarding the
-            protection of personal data. The information collected is processed
-            in accordance with our Privacy Policy. 
-            <br />
-            Users have the right to access, rectify and delete their personal
-            data.
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              <strong>thegood.deals</strong> complies with current legislation
+              regarding the protection of personal data.
+            </li>
+            <li>
+              Users have the right to access, rectify, or delete their personal
+              information.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
             16. Modification of the T&Cs
-            <br />
           </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            <br />
+          <ul className="list-disc text-[#637381] text-base leading-6 ml-6">
+            <li>
+              <strong>thegood.deals</strong> reserves the right to modify these
+              T&Cs at any time, with changes taking effect immediately upon
+              posting.
+            </li>
+            <li>
+              Continued use of the platform implies acceptance of these updates.
+            </li>
+          </ul>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
+            17. Applicable Law and Jurisdiction
           </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            TheGood.Deals reserves the right to modify these T&Cs at any time.
-            The modifications will be applicable as soon as they are posted
-            online. 
-            <br />
-            Continued use of the platform after the update of the T&Cs
-            constitutes acceptance of the new conditions.
-            <br />
+          <p className="text-[#637381] text-base leading-6">
+            These T&Cs are governed by French law, and disputes will be resolved
+            according to the legal provisions applicable to buyers and sellers'
+            domiciles.
+          </p>
+
+          <span className="font-semibold text-[#2a4e4a] text-xl text-left mt-6 uppercase">
+            18. Contact
           </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] uppercase leading-normal">
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
-            17. Applicable Law and Competent Jurisdiction 
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            These General Terms and Conditions are governed by French law. In
-            the event of a dispute, the competent courts will be those of the
-            place of domicile of the buyer or seller, according to the
-            applicable legal provisions.
-            <br />
-            <br />
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] leading-normal">
-            18.{" "}
-          </span>
-          <span className="text-[#111928] text-base font-bold font-['Inter'] uppercase leading-normal">
-            Contact
-            <br />
-          </span>
-          <span className="text-[#111928] text-base font-normal font-['Inter'] leading-normal">
-            <br />
-            For any questions or complaints regarding these T&Cs, you can
-            contact us at the following address: support@thegood.deals
-          </span>
+          <p className="text-[#637381] text-base leading-6">
+            For any questions or complaints regarding these T&Cs, please contact
+            us at: support@thegood.deals.
+          </p>
         </div>
       </div>
     </div>

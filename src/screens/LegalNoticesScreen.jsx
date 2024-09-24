@@ -5,10 +5,9 @@ import { Header } from "../components/Header";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft1 } from "../icons/ArrowLeft1";
 import { useNavigate } from "react-router-dom";
-import { Label } from "../components/LegalNotice";
-import { GeneralConditions } from "../components/GeneralConditions";
+import { LegalNotices } from "../components/LegalNotices";
 
-export const Legal = ({ heading }) => {
+export const LegalNoticesScreen = ({ heading }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -21,11 +20,11 @@ export const Legal = ({ heading }) => {
   };
 
   return (
-    <div className="flex flex-col w-[360px] items-center relative bg-light-grey">
+    <div className="flex flex-col w-full items-center relative bg-light-grey">
       <div className="items-center gap-[30px] pt-4 pb-12 px-5 flex-[0_0_auto] flex flex-col w-[360px] relative bg-light-grey">
         <div className="items-center gap-4 flex flex-col relative self-stretch w-full flex-[0_0_auto]">
           <div
-            className="flex w-[290px] items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
+            className="flex w-full items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
             onClick={handleBack}
           >
             <ArrowLeft1
@@ -36,8 +35,7 @@ export const Legal = ({ heading }) => {
               Back
             </div>
           </div>
-
-          <GeneralConditions />
+          <LegalNotices />
         </div>
       </div>
       <div
@@ -60,7 +58,7 @@ export const Legal = ({ heading }) => {
       <Footer
         breakpoint="mobile"
         buttonText="Subscribe"
-        className="!flex-[0_0_auto] !w-[360px]"
+        className="!flex-[0_0_auto]"
         divClassName="![white-space:unset] !w-[155px]"
         linksClassName="!h-[485px] !flex-[unset]"
         spanClassName="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"

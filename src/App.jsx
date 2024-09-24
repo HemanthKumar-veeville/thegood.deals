@@ -8,12 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkUserLoginStatus } from "./redux/app/user/userSlice";
 import "./App.css";
 import loadable from "@loadable/component";
-import { Legal } from "./screens/Legal";
 import { useTranslation } from "react-i18next";
 import Payment from "./components/Payment";
 import { loadStripe } from "@stripe/stripe-js";
 import DeleteAccount from "./screens/DeleteAccount";
 import TermsOfUse from "./screens/TermsOfUse/TermsOfUse";
+import { GeneralConditionsScreen } from "./screens/GeneralConditions";
+import { PrivacyCookiePolicy } from "./components/PrivacyCookiePolicy";
+import { PrivacyCookiePolicyScreen } from "./screens/PrivacyCookiePolicy";
+import { LegalNotices } from "./components/LegalNotices";
+import { LegalNoticesScreen } from "./screens/LegalNoticesScreen";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -547,10 +551,7 @@ function App() {
       path: "/general-conditions",
       element: (
         <Layout>
-          <Legal
-            heading="General Conditions of Sale and Use of TheGood.Deals"
-            content=""
-          />
+          <GeneralConditionsScreen />
         </Layout>
       ),
     },
@@ -558,18 +559,26 @@ function App() {
       path: "/privacy-policy",
       element: (
         <Layout>
-          <Legal heading="Privacy policy" content="" />
+          <PrivacyCookiePolicyScreen />
         </Layout>
       ),
     },
     {
-      path: "/newsletter-indication",
+      path: "/legal-notices",
       element: (
         <Layout>
-          <Legal heading="Newsletter indication" content="" />
+          <LegalNoticesScreen />
         </Layout>
       ),
     },
+    // {
+    //   path: "/newsletter-indication",
+    //   element: (
+    //     <Layout>
+    //       <Legal heading="Newsletter indication" content="" />
+    //     </Layout>
+    //   ),
+    // },
     {
       path: "/lost-password",
       element: (
