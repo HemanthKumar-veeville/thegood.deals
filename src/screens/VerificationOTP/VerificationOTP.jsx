@@ -131,6 +131,8 @@ export const VerificationOTP = () => {
 
       if (response?.status === 201) {
         // localStorage.removeItem("otpInput");
+        await dispatch(checkUserLoginStatus());
+
         navigate("/");
       } else {
         setLoading(false);
