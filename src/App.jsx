@@ -149,8 +149,8 @@ function App() {
       setIsReady(true);
     };
     checkLoginStatus();
-  }, [dispatch, isUserLoggedIn]);
-
+  }, []);
+  console.log({ isReady, isUserLoggedIn });
   if (!isReady) {
     return <CustomLoader />;
   }
