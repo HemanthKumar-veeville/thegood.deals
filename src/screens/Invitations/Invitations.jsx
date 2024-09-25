@@ -46,6 +46,7 @@ const Invitations = () => {
       })
     );
     await dispatch(fetchRequestsByDeal(deal_id));
+    await dispatch(fetchParticipantsByDeal(deal_id));
   };
 
   const handleRefuse = async (requestId) => {
@@ -57,6 +58,7 @@ const Invitations = () => {
       })
     );
     await dispatch(fetchRequestsByDeal(deal_id));
+    await dispatch(fetchParticipantsByDeal(deal_id));
   };
 
   const handleBackToDeal = () => {

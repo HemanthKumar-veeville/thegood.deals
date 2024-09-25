@@ -1,6 +1,6 @@
 import axios from "axios";
 const BASE_URL = "https://thegood.deals/api";
-// const BASE_URL = "https://3ea6-106-51-243-165.ngrok-free.app/";
+// const BASE_URL = "https://2086-106-51-243-165.ngrok-free.app/";
 // const BASE_URL = "https://";
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
