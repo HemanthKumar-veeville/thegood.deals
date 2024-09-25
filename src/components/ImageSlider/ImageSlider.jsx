@@ -46,7 +46,7 @@ const ImageSlider = ({ pictures }) => {
   return (
     <div
       className={`flex flex-col ${
-        pictures?.length > 1 ? "h-[300px]" : "h-[215px]"
+        pictures?.length > 1 ? "h-[215px]" : "h-[215px]"
       } items-start gap-2.5 relative self-stretch w-full`}
     >
       <div className="flex flex-col items-center relative flex-1 self-stretch w-full grow h-full">
