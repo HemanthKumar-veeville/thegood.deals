@@ -21,12 +21,29 @@ import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import { blogImage, Human, Line63 } from "../../images";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
+import { Cart } from "../../components/Cart/Cart";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const sampleProducts = [
+    {
+      name: "Case of Rosé - 6 bottles",
+      availability: 3,
+      originalPrice: 67.99,
+      price: 29.0,
+      quantity: 1,
+    },
+    {
+      name: "Case of White - 6 bottles",
+      availability: 15,
+      originalPrice: 67.99,
+      price: 29.0,
+      quantity: 1,
+    },
+  ];
 
   // Extract deal_id from the query parameters
   const queryParams = new URLSearchParams(location.search);
@@ -178,96 +195,7 @@ const AdminViewGoodDeal = () => {
           alt="Line"
           src={Line63}
         />
-        <div className="flex flex-col items-start gap-[15px] p-[15px] w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] relative self-stretch">
-          <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-            <ShoppingCart111 className="!relative !w-5 !h-5" color="#1B4F4A" />
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-              {t("admin.my_basket")}
-            </div>
-          </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
-          {dealState?.products?.map((product, index) => (
-            <>
-              <div
-                className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]"
-                key={index}
-              >
-                <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                    {product?.name}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-orangeorange text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    {product?.availability}
-                  </div>
-                </div>
-                <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="inline-flex flex-col items-start gap-3 relative flex-[0_0_auto]">
-                    <div className="relative w-[116px] h-9 mr-[-2.00px]">
-                      <div className="relative w-[114px] h-9 bg-whitewhite rounded-[5px] border border-solid border-stroke">
-                        <img
-                          className="absolute w-px h-9 -top-px left-[32px] object-cover"
-                          alt="Line"
-                          src={Line63}
-                        />
-                        <img
-                          className="absolute w-px h-9 -top-px left-[79px] object-cover"
-                          alt="Line"
-                          src={Line63}
-                        />
-                        <Minus1
-                          className="!absolute !w-3 !h-3 !top-[11px] !left-2.5"
-                          color="#1B4F4A"
-                        />
-                        <Plus3
-                          className="!absolute !w-3 !h-3 !top-[11px] !left-[90px]"
-                          color="#1B4F4A"
-                        />
-                        <div className="absolute top-[5px] left-[52px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                          1
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="inline-flex flex-col items-end relative flex-[0_0_auto]">
-                    <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-lg text-right tracking-[0] leading-[26px] whitespace-nowrap">
-                      {`€${product?.price}`}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <img
-                className="relative self-stretch w-full h-px object-cover"
-                alt="Line"
-                src={Line63}
-              />
-            </>
-          ))}
-          <div className="flex flex-col items-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="relative w-fit [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-xs text-center tracking-[0] leading-5 whitespace-nowrap">
-                {t("admin.total_price")}
-              </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg text-right tracking-[0] leading-[26px] whitespace-nowrap">
-                €{dealState?.total_price}
-              </div>
-            </div>
-          </div>
-          <div
-            className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"
-            onClick={handlePayment}
-          >
-            <Send2 className="!relative !w-5 !h-5" color="white" />
-            <button className="all-[unset] box-border text-whitewhite relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("admin.payment")}
-            </button>
-          </div>
-        </div>
+        <Cart products={sampleProducts} />
       </div>
     </div>
   );
