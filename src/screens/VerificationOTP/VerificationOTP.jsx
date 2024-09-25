@@ -6,7 +6,8 @@ import AppBar from "../../components/AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../helpers/helperMethods.js";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
-
+import { checkUserLoginStatus } from "../../redux/app/user/userSlice.js";
+import { useDispatch } from "react-redux";
 const OTPInput = ({ value, onChange, index, inputRefs }) => (
   <div className="flex flex-col w-12 h-12 items-start gap-[5px] relative">
     <div className="flex flex-col items-center gap-2.5 relative flex-1 self-stretch w-full grow">
@@ -60,7 +61,7 @@ export const VerificationOTP = () => {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const email = queryParams.get("email");
-
+  const dispatch = useDispatch();
   const handleResendOTP = async () => {
     try {
       const response = await axiosInstance.post("resend_code");
