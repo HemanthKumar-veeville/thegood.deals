@@ -30,6 +30,7 @@ import { getDealByDealId } from "../../redux/app/deals/dealSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
+import { Send2 } from "../../icons/Send2";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -82,6 +83,13 @@ const ActiveDeal = () => {
     dispatch(getDealByDealId(deal_id));
   }, []);
   console.log({ dealData });
+
+  const handleInviteLovedOnes = () => {
+    navigate(
+      `/invite-loved-ones?deal_id=${deal_id}` + "&is_creator=" + is_creator
+    );
+  };
+
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
@@ -160,6 +168,15 @@ const ActiveDeal = () => {
             <p className="w-full text-sm text-primary-color leading-[22px] break-words">
               {dealData?.collection_location || "No location available"}
             </p>
+          </div>
+          <div
+            className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
+            onClick={handleInviteLovedOnes}
+          >
+            <Send2 className="!relative !w-5 !h-5" />
+            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+              {t("invitations.invite_loved_ones")}
+            </button>
           </div>
           <div
             className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"

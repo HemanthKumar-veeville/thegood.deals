@@ -68,7 +68,9 @@ const Invitations = () => {
   };
 
   const handleInviteLovedOnes = () => {
-    navigate(`/invite-loved-ones?deal_id=${deal_id}`);
+    navigate(
+      `/invite-loved-ones?deal_id=${deal_id}` + "&is_creator=" + is_creator
+    );
   };
 
   // Check if either status is loading

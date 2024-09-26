@@ -18,6 +18,7 @@ const InviteLovedOnes = () => {
   const [newEmail, setNewEmail] = useState("");
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
+  const is_creator = queryParams.get("is_creator");
   const shareLink = `https://thegood.deals/deal_details?deal_id=${dealId}`;
   const navigate = useNavigate();
 
@@ -49,7 +50,9 @@ const InviteLovedOnes = () => {
   };
 
   const handleBack = () => {
-    navigate("/admin-invitations");
+    navigate(
+      "/admin-active-deal?deal_id=" + dealId + "&is_creator=" + is_creator
+    );
   };
 
   const handleShareViaWhatsApp = () => {
