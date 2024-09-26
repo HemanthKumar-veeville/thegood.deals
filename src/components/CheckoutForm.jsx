@@ -76,6 +76,34 @@ export default function CheckoutForm({ heading, btnText }) {
         spacingUnit: "2px",
         borderRadius: "4px",
       },
+      // Hide labels and other visual adjustments
+      rules: {
+        ".Label": {
+          display: "none", // Hide label
+        },
+      },
+    },
+  };
+
+  // Add appearance option for LinkAuthenticationElement
+  const linkAuthenticationOptions = {
+    defaultValues: { email },
+    appearance: {
+      theme: "flat",
+      variables: {
+        colorPrimaryText: "#262626",
+        colorPrimary: "#0570de",
+        colorBackground: "#ffffff",
+        colorText: "#30313d",
+        colorDanger: "#df1b41",
+        fontFamily: "Ideal Sans, system-ui, sans-serif",
+      },
+      // Add rule to hide the label
+      rules: {
+        ".Label": {
+          display: "none", // This is to hide the label
+        },
+      },
     },
   };
 
@@ -86,7 +114,7 @@ export default function CheckoutForm({ heading, btnText }) {
         onChange={(event) => {
           setEmail(event.value.email);
         }}
-        options={{ defaultValues: { email } }}
+        options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       {message && <div id="payment-message">{message}</div>}

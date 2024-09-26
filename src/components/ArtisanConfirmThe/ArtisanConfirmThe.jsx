@@ -69,13 +69,13 @@ export const ArtisanConfirmThe = ({
   const handleAcceptRequest = async () => {
     try {
       const response = await dispatch(createRequest(dealId));
-
+      console.log({ response });
       if (response.payload.code === 201) {
         navigate("/request-sent");
       } else {
         Swal.fire({
           icon: "error",
-          title: "User Not Logged In",
+          title: "Oops...",
           text:
             response.payload.message || "You need to login to send a request.",
         });
