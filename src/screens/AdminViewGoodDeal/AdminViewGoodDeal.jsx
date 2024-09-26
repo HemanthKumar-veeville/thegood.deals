@@ -58,10 +58,6 @@ const AdminViewGoodDeal = () => {
     dispatch(fetchDealDetailsByDealId(deal_id));
   }, []);
 
-  const handlePayment = () => {
-    navigate("/payment");
-  };
-
   if (status === "loading") {
     return <CustomLoader />;
   }
@@ -196,7 +192,7 @@ const AdminViewGoodDeal = () => {
           alt="Line"
           src={Line63}
         />
-        <Cart products={dealState?.products} />
+        <Cart products={dealState?.products} dealId={deal_id} />
       </div>
     </div>
   );

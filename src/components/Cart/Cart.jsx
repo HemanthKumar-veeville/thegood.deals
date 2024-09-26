@@ -4,9 +4,14 @@ import { ShoppingCart111 } from "../../icons/ShoppingCart111";
 import { Minus1 } from "../../icons/Minus1";
 import { Plus1 } from "../../icons/Plus1";
 import { Send1 } from "../../icons/Send1";
+import { useDispatch } from "react-redux";
+import { createOrder } from "../../redux/app/orders/orderSlice";
+import { useNavigate } from "react-router-dom";
 
-export const Cart = ({ products }) => {
+export const Cart = ({ products, dealId }) => {
   const [cartItems, setCartItems] = useState(products);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleQuantityChange = (index, action) => {
     const updatedItems = cartItems?.map((item, idx) => {
@@ -25,6 +30,22 @@ export const Cart = ({ products }) => {
   const totalSavings = cartItems?.reduce((acc, item) => {
     return acc + (item.max_retail_price - item.price) * item.quantity;
   }, 0);
+
+  const handlePayment = async () => {
+    try {
+      // Dispatch the createOrder thunk
+      const response = await dispatch(
+        createOrder({ dealId, products: cartItems })
+      ).unwrap();
+      // Handle success, like showing a success message or redirecting the user
+      console.log("Order placed successfully", response);
+      const orderId = response?.order_id;
+      navigate("/payment?orderId=" + orderId + "&dealId=" + dealId);
+    } catch (error) {
+      // Handle the error, like showing an error message
+      console.error("Failed to place the order:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-start gap-[15px] p-[15px] relative bg-whitewhite rounded-[5px]">
@@ -135,9 +156,7 @@ export const Cart = ({ products }) => {
       </div>
       <div
         className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md transition-transform transform hover:scale-95 active:scale-90"
-        onClick={() => {
-          // Handle Payment
-        }}
+        onClick={handlePayment}
       >
         <Send1 className="!relative !w-5 !h-5" />
         <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">

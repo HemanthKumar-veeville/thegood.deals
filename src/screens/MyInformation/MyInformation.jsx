@@ -157,7 +157,7 @@ const MyInformation = () => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <MapMarker1 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
-                {profile?.location}
+                {profile?.address}
               </div>
             </div>
           </div>

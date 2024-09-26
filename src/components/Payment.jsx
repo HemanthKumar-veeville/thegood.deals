@@ -12,7 +12,9 @@ function Payment({ heading, btnText, ...props }) {
     // Define an async function inside the useEffect
     const createPaymentIntent = async () => {
       try {
-        const { data } = await axiosInstance.post("create_payment_intent");
+        const { data } = await axios.post(
+          "http://localhost:5000/payments/create-setup-intent"
+        );
         console.log(data);
         setClientSecret(data.clientSecret);
       } catch (error) {
