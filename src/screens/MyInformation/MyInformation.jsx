@@ -22,6 +22,7 @@ import { FaArrowLeft, FaArrowRight, FaPlay, FaPause } from "react-icons/fa"; // 
 import { Warning1 } from "../../icons/Warning1";
 import { SuccessAlert } from "../../components/WarningAlert";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import { UserAlt } from "../../icons/UserAlt";
 
 const MyInformation = () => {
   const { t } = useTranslation();
@@ -99,7 +100,7 @@ const MyInformation = () => {
       {status === "succeeded" && (
         <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative">
           <div
-            className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke"
+            className="flex items-center gap-3 pt-0 pb-3 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke"
             onClick={handleBack}
           >
             <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
@@ -113,11 +114,16 @@ const MyInformation = () => {
             </div>
           </div>
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-            <img
-              className="w-[50px] h-[50px] relative object-cover rounded-md"
-              alt="Rectangle"
-              src={profile?.profile_image || Rectangle_5095} // Replace with real profile avatar
-            />
+            {profile?.profile_image !==
+            "https://example.com/profiles/default.jpg" ? (
+              <img
+                className="w-[50px] h-[50px] relative object-cover rounded-md"
+                alt="Rectangle"
+                src={profile?.profile_image || Rectangle_5095} // Replace with real profile avatar
+              />
+            ) : (
+              <UserAlt />
+            )}
             <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
                 {profile?.name || "User Name"}

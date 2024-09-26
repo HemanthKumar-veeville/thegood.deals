@@ -9,7 +9,7 @@ export const Cart = ({ products }) => {
   const [cartItems, setCartItems] = useState(products);
 
   const handleQuantityChange = (index, action) => {
-    const updatedItems = cartItems.map((item, idx) => {
+    const updatedItems = cartItems?.map((item, idx) => {
       if (idx === index) {
         if (action === "increment") {
           return { ...item, quantity: item.quantity + 1 };
@@ -22,12 +22,8 @@ export const Cart = ({ products }) => {
     setCartItems(updatedItems);
   };
 
-  const totalTTC = cartItems.reduce((acc, item) => {
-    return acc + item.price * item.quantity;
-  }, 0);
-
-  const totalSavings = cartItems.reduce((acc, item) => {
-    return acc + (item.originalPrice - item.price) * item.quantity;
+  const totalSavings = cartItems?.reduce((acc, item) => {
+    return acc + (item.max_retail_price - item.price) * item.quantity;
   }, 0);
 
   return (
@@ -44,7 +40,7 @@ export const Cart = ({ products }) => {
         src={Line63}
       />
 
-      {cartItems.map((product, index) => (
+      {cartItems?.map((product, index) => (
         <div
           key={index}
           className="items-start flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]"
@@ -84,19 +80,14 @@ export const Cart = ({ products }) => {
               </div>
               <div className="inline-flex items-center justify-center gap-2 relative flex-[0_0_auto]">
                 <div className="mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color leading-6 line-through relative w-fit text-sm text-right tracking-[0] whitespace-nowrap">
-                  {product.originalPrice} €
+                  {product.max_retail_price} €
                 </div>
                 <div className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-secondary-color leading-[22px] relative w-fit text-sm text-right tracking-[0] whitespace-nowrap">
                   {product.price} €
                 </div>
                 <div className="inline-flex items-center justify-center gap-px px-1.5 py-0 relative flex-[0_0_auto] bg-greengreen-dark rounded">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-[10px] tracking-[0] leading-5 whitespace-nowrap">
-                    {Math.round(
-                      ((product.originalPrice - product.price) /
-                        product.originalPrice) *
-                        100
-                    )}
-                    %
+                    {product?.discount}%
                   </div>
                 </div>
               </div>
@@ -118,15 +109,18 @@ export const Cart = ({ products }) => {
           <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
             <div className="mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color leading-6 line-through relative w-fit text-sm text-right tracking-[0] whitespace-nowrap">
               {cartItems
-                .reduce(
-                  (acc, item) => acc + item.originalPrice * item.quantity,
+                ?.reduce(
+                  (acc, item) => acc + item.max_retail_price * item.quantity,
                   0
                 )
-                .toFixed(2)}{" "}
+                ?.toFixed(2)}{" "}
               €
             </div>
             <div className="mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color leading-[22px] relative w-fit text-sm text-right tracking-[0] whitespace-nowrap">
-              {totalTTC.toFixed(2)} €
+              {cartItems
+                ?.reduce((acc, item) => acc + item.price * item.quantity, 0)
+                ?.toFixed(2)}{" "}
+              €
             </div>
           </div>
         </div>
@@ -135,7 +129,7 @@ export const Cart = ({ products }) => {
             Save
           </div>
           <div className="mt-[-1.00px] font-body-small-medium text-secondary-color leading-6 relative w-fit text-xs text-right tracking-[0] whitespace-nowrap">
-            {totalSavings.toFixed(2)} €
+            {totalSavings?.toFixed(2)} €
           </div>
         </div>
       </div>

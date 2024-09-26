@@ -196,7 +196,7 @@ const AdminViewGoodDeal = () => {
           alt="Line"
           src={Line63}
         />
-        <Cart products={sampleProducts} />
+        <Cart products={dealState?.products} />
       </div>
     </div>
   );

@@ -131,9 +131,9 @@ const GuestDealView = () => {
           />
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
             <img
-              className="relative w-[50px] h-[50px] object-cover"
+              className="relative w-[50px] h-[50px] object-cover rounded-md"
               alt="Organizer"
-              src={Human}
+              src={dealData?.organizer?.organiser_image || Human}
             />
             <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
