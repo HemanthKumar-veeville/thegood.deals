@@ -65,6 +65,7 @@ export const Cart = ({ products }) => {
                 <div className="relative w-[81.17px] h-[25px] mr-[-2.00px]">
                   <div className="relative w-[79px] h-[25px] bg-whitewhite rounded-[3.47px] border-[0.69px] border-solid border-stroke">
                     <span
+                      className="transition-transform transform hover:scale-95 active:scale-90"
                       onClick={() => handleQuantityChange(index, "decrement")}
                     >
                       <Minus1 className="!absolute !w-2 !h-2 !top-2 !left-[7px]" />
@@ -73,6 +74,7 @@ export const Cart = ({ products }) => {
                       {product.quantity}
                     </div>
                     <span
+                      className="transition-transform transform hover:scale-95 active:scale-90"
                       onClick={() => handleQuantityChange(index, "increment")}
                     >
                       <Plus1 className="!absolute !w-2 !h-2 !top-2 !left-[62px]" />
@@ -138,7 +140,7 @@ export const Cart = ({ products }) => {
         </div>
       </div>
       <div
-        className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"
+        className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md transition-transform transform hover:scale-95 active:scale-90"
         onClick={() => {
           // Handle Payment
         }}

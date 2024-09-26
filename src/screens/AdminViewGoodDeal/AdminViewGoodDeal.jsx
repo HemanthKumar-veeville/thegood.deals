@@ -88,11 +88,12 @@ const AdminViewGoodDeal = () => {
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {dealState?.title || t("admin.wine_crates")}
         </div>
-        {dealState?.status === "soon_out_stock" ? (
-          <ProgressBarYellow percentage={dealState?.progress} />
-        ) : (
-          <ProgressBarGreen percentage={dealState?.progress} />
-        )}
+        {dealState?.progress !== "0%" &&
+          (dealState?.status === "soon_out_stock" ? (
+            <ProgressBarYellow percentage={dealState?.progress} />
+          ) : (
+            <ProgressBarGreen percentage={dealState?.progress} />
+          ))}
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
