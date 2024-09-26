@@ -77,7 +77,7 @@ export const ArtisanConfirmThe = ({
           icon: "error",
           title: "Oops...",
           text:
-            response.payload.message || "You need to login to send a request.",
+            response.payload.detail || "You need to login to send a request.",
         });
         navigate("/auth?login");
       }
