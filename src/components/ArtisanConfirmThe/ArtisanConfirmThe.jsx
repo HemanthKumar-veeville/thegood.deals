@@ -73,13 +73,12 @@ export const ArtisanConfirmThe = ({
       if (response.payload.code === 201) {
         navigate("/request-sent");
       } else {
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Oops...",
-        //   text:
-        //     response.payload.message ||
-        //     "Something went wrong. Please try again.",
-        // });
+        Swal.fire({
+          icon: "error",
+          title: "User Not Logged In",
+          text:
+            response.payload.message || "You need to login to send a request.",
+        });
         navigate("/auth?login");
       }
     } catch (error) {
