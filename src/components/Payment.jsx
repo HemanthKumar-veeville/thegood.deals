@@ -18,12 +18,12 @@ function Payment({ heading, btnText, ...props }) {
         formData.append("currency", "eur");
 
         // Send the FormData with the POST request
-        const { data } = await axiosInstance.post(
+        const response = await axiosInstance.post(
           "/create_payment_intent",
           formData
         );
-        console.log(data);
-        setClientSecret(data.clientSecret);
+        console.log(response);
+        setClientSecret("");
       } catch (error) {
         console.error("Error creating PaymentIntent:", error);
       }
