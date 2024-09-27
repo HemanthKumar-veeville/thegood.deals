@@ -12,7 +12,16 @@ function Payment({ heading, btnText, ...props }) {
     // Define an async function inside the useEffect
     const createPaymentIntent = async () => {
       try {
-        const { data } = await axiosInstance.post("/create_payment_intent");
+        // Create a FormData object and append the static fields
+        const formData = new FormData();
+        formData.append("amount", 10);
+        formData.append("currency", "eur");
+
+        // Send the FormData with the POST request
+        const { data } = await axiosInstance.post(
+          "/create_payment_intent",
+          formData
+        );
         console.log(data);
         setClientSecret(data.clientSecret);
       } catch (error) {
