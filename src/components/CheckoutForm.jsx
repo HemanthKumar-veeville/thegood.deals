@@ -7,6 +7,7 @@ import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useTranslation } from "react-i18next";
 import { Line63 } from "../images";
 import { ArrowRight1 } from "../icons/ArrowRight1";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutForm({ heading, btnText }) {
   const stripe = useStripe();
@@ -15,6 +16,7 @@ export default function CheckoutForm({ heading, btnText }) {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("avisihks@gmail.com"); // Initial email state
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,6 +49,7 @@ export default function CheckoutForm({ heading, btnText }) {
         // Log the setupIntent details
         console.log("SetupIntent confirmed:", setupIntent);
         setMessage("Setup confirmed successfully.");
+        navigate("/thanks-withdrawal");
       }
     } catch (err) {
       console.error("Error in setup confirmation:", err);
