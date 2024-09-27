@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ArrowRight1 } from "../../icons/ArrowRight1";
 import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -10,6 +9,10 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
   const [withdrawalValidated, setWithdrawalValidated] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  // Extract dealId and orderId from query params
+  const searchParams = new URLSearchParams(location.search);
+  const dealId = searchParams.get("dealId");
+  const orderId = searchParams.get("orderId");
 
   const handleValidateWithdrawal = () => {
     // Logic for validating the withdrawal
@@ -34,7 +37,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {heading}
         </div>
-        <OrderInfo />
+        <OrderInfo orderId={orderId} />
         <Payment
           stripePromise={stripePromise}
           heading={heading}

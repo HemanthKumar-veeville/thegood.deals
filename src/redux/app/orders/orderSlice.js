@@ -4,6 +4,7 @@ import { axiosInstance } from "../../../helpers/helperMethods";
 // Initial state for orders
 const initialState = {
   orders: [],
+  order: null, // Store a single order when fetching by order_id and deal_id
   orderStatus: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
   orderError: null,
 };
@@ -46,6 +47,19 @@ export const fetchOrdersByDeal = createAsyncThunk(
   }
 );
 
+// Async thunk for fetching a specific order by order_id and deal_id
+export const fetchOrderById = createAsyncThunk(
+  "orders/fetchOrderById",
+  async ({ orderId }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/orders/${orderId}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // Order slice
 const orderSlice = createSlice({
   name: "orders",
@@ -56,29 +70,48 @@ const orderSlice = createSlice({
       // Create an order
       .addCase(createOrder.pending, (state) => {
         state.orderStatus = "loading";
+        state.orderError = null; // Reset error before a new request
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.orderStatus = "succeeded";
-        state.orders.push(action.payload);
-        state.orderError = null;
+        state.orders.push(action.payload); // Add the newly created order to the list
+        state.orderError = null; // Clear any errors
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.orderStatus = "failed";
-        state.orderError = action.payload;
+        state.orderError = action.payload; // Set the error message
       })
 
       // Fetch orders by deal
       .addCase(fetchOrdersByDeal.pending, (state) => {
         state.orderStatus = "loading";
+        state.orderError = null; // Reset error before a new request
       })
       .addCase(fetchOrdersByDeal.fulfilled, (state, action) => {
         state.orderStatus = "succeeded";
-        state.orders = action.payload;
-        state.orderError = null;
+        state.orders = action.payload; // Replace orders with the fetched list
+        state.orderError = null; // Clear any errors
       })
       .addCase(fetchOrdersByDeal.rejected, (state, action) => {
         state.orderStatus = "failed";
-        state.orderError = action.payload;
+        state.orderError = action.payload; // Set the error message
+      })
+
+      // Fetch order by order_id and deal_id
+      .addCase(fetchOrderById.pending, (state) => {
+        state.orderStatus = "loading";
+        state.orderError = null; // Reset error before a new request
+        state.order = null; // Clear previous order data
+      })
+      .addCase(fetchOrderById.fulfilled, (state, action) => {
+        state.orderStatus = "succeeded";
+        state.order = action.payload; // Store the fetched order in the state
+        state.orderError = null; // Clear any errors
+      })
+      .addCase(fetchOrderById.rejected, (state, action) => {
+        state.orderStatus = "failed";
+        state.orderError = action.payload; // Set the error message
+        state.order = null; // Clear order data on failure
       });
   },
 });
