@@ -22,8 +22,8 @@ function Payment({ heading, btnText, ...props }) {
           "/create_payment_intent",
           formData
         );
-        console.log(response);
-        setClientSecret("");
+        console.log(response?.data?.payment_intent[0]);
+        setClientSecret(response?.data?.payment_intent[0]);
       } catch (error) {
         console.error("Error creating PaymentIntent:", error);
       }
