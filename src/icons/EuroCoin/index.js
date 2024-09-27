@@ -1,0 +1,1 @@
+export { EuroCoin } from "./EuroCoin";

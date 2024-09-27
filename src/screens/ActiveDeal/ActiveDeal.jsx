@@ -10,6 +10,7 @@ import { Pencil1 } from "../../icons/Pencil1";
 import { UserAlt2 } from "../../icons/UserAlt2";
 import { Users22 } from "../../icons/Users22";
 import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
+import { EuroCoin } from "../../icons/EuroCoin";
 import {
   blogImage,
   Line571,
@@ -169,6 +170,20 @@ const ActiveDeal = () => {
               {dealData?.collection_location || "No location available"}
             </p>
           </div>
+          <div
+            className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
+            onClick={() => handleNavigation("/create-deal")}
+          >
+            <EuroCoin className="!relative !w-5 !h-5" />
+            <button className="box-border font-medium text-white text-base text-center">
+              Collect payment
+            </button>
+          </div>
+          <img
+            className="relative self-stretch w-full h-px object-cover"
+            alt="Line"
+            src={Line69}
+          />
           <div
             className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
             onClick={handleInviteLovedOnes}
