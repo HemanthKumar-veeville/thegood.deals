@@ -275,15 +275,15 @@ function App() {
       path: "/payment",
       element: (
         <Layout>
-          <ProtectedRoute
-            element={
-              <Withdrawal
-                heading="Provide Payment Details"
-                btnText="Validate Payment"
-                stripePromise={stripePromise}
-              />
-            }
+          {/* <ProtectedRoute
+            element={ */}
+          <Withdrawal
+            heading="Payment validation"
+            btnText="Validate Payment"
+            stripePromise={stripePromise}
           />
+          {/* }
+          /> */}
         </Layout>
       ),
     },

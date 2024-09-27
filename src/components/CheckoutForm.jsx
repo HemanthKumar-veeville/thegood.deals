@@ -108,7 +108,7 @@ export default function CheckoutForm({ heading, btnText }) {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit} className="mx-auto">
+    <form id="payment-form" onSubmit={handleSubmit} className="mx-auto w-full">
       <LinkAuthenticationElement
         id="link-authentication-element"
         onChange={(event) => {
@@ -117,14 +117,21 @@ export default function CheckoutForm({ heading, btnText }) {
         options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div
+          id="payment-message"
+          className="mt-3 p-3 text-red-600 bg-red-100 border border-red-400 rounded"
+        >
+          {message}
+        </div>
+      )}
       <img
-        className="relative self-stretch w-full h-px object-cover"
+        className="relative self-stretch w-full h-px object-cover mt-3"
         alt={t("withdrawal.line_alt")}
         src={Line63}
       />
       <div
-        className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md cursor-pointer"
+        className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md cursor-pointer"
         onClick={handleSubmit}
       >
         <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">

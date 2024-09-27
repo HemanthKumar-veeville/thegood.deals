@@ -4,6 +4,7 @@ import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Payment from "../../components/Payment";
+import { OrderInfo } from "../../components/OrderInfo/OrderInfo";
 
 const Withdrawal = ({ heading, btnText, stripePromise }) => {
   const [withdrawalValidated, setWithdrawalValidated] = useState(false);
@@ -33,6 +34,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {heading}
         </div>
+        <OrderInfo />
         <Payment
           stripePromise={stripePromise}
           heading={heading}
