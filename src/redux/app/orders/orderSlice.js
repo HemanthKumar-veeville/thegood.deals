@@ -60,6 +60,20 @@ export const fetchOrderById = createAsyncThunk(
   }
 );
 
+export const setupPaymentForOrder = createAsyncThunk(
+  "orders/setupPaymentForOrder",
+  async ({ orderId, setupIntent }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/orders/${orderId}/payment_setup`
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // Order slice
 const orderSlice = createSlice({
   name: "orders",

@@ -7,8 +7,9 @@ import { Send1 } from "../../icons/Send1";
 import { useDispatch } from "react-redux";
 import { createOrder } from "../../redux/app/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-export const Cart = ({ products, dealId }) => {
+export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const [cartItems, setCartItems] = useState(products);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,6 +45,12 @@ export const Cart = ({ products, dealId }) => {
     } catch (error) {
       // Handle the error, like showing an error message
       console.error("Failed to place the order:", error);
+      dispatch(fetchDealDetailsByDealId(dealId));
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error?.detail || "Failed to send request. Please try again.",
+      });
     }
   };
 

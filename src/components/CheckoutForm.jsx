@@ -7,29 +7,38 @@ import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useTranslation } from "react-i18next";
 import { Line63 } from "../images";
 import { ArrowRight1 } from "../icons/ArrowRight1";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setupPaymentForOrder } from "../redux/app/orders/orderSlice";
 
 export default function CheckoutForm({ heading, btnText }) {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("avisihks@gmail.com"); // Initial email state
+  const [email, setEmail] = useState(""); // Allow dynamic email entry
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation(); // Use location to access query params
+
+  // Extract orderId from the query parameters
+  const queryParams = new URLSearchParams(location.search);
+  const orderId = queryParams.get("orderId");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
+      setMessage("Stripe has not fully loaded yet. Please try again.");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      // Confirm SetupIntent and console log the response
+      // Confirm SetupIntent and handle the response
       const { setupIntent, error } = await stripe.confirmSetup({
         elements,
         confirmParams: {
@@ -46,10 +55,18 @@ export default function CheckoutForm({ heading, btnText }) {
         }
         console.error("Error during setup confirmation:", error);
       } else {
-        // Log the setupIntent details
+        // Log the setupIntent details and dispatch
         console.log("SetupIntent confirmed:", setupIntent);
-        setMessage("Setup confirmed successfully.");
-        navigate("/thanks-withdrawal");
+
+        try {
+          // Dispatch to Redux store
+          await dispatch(setupPaymentForOrder({ orderId, setupIntent }));
+          setMessage("Setup confirmed successfully.");
+          navigate("/thanks-withdrawal");
+        } catch (dispatchError) {
+          console.error("Error during dispatch:", dispatchError);
+          setMessage("An error occurred while processing the payment setup.");
+        }
       }
     } catch (err) {
       console.error("Error in setup confirmation:", err);
@@ -115,7 +132,7 @@ export default function CheckoutForm({ heading, btnText }) {
       <LinkAuthenticationElement
         id="link-authentication-element"
         onChange={(event) => {
-          setEmail(event.value.email);
+          setEmail(event.value.email); // Dynamically set the email when changed
         }}
         options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
       />
@@ -133,11 +150,12 @@ export default function CheckoutForm({ heading, btnText }) {
         alt={t("withdrawal.line_alt")}
         src={Line63}
       />
-      <div
-        className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md cursor-pointer"
-        onClick={handleSubmit}
-      >
-        <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+      <div className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
+        <button
+          type="submit"
+          disabled={isLoading || !stripe || !elements}
+          className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap"
+        >
           {btnText}
         </button>
         <ArrowRight1 className="!relative !w-5 !h-5" color="white" />

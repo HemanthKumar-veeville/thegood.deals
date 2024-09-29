@@ -192,7 +192,11 @@ const AdminViewGoodDeal = () => {
           alt="Line"
           src={Line63}
         />
-        <Cart products={dealState?.products} dealId={deal_id} />
+        <Cart
+          products={dealState?.products}
+          dealId={deal_id}
+          fetchDealDetailsByDealId={fetchDealDetailsByDealId}
+        />
       </div>
     </div>
   );
