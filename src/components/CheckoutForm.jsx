@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Line63 } from "../images";
 import { ArrowRight1 } from "../icons/ArrowRight1";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setupPaymentForOrder } from "../redux/app/orders/orderSlice";
 
 export default function CheckoutForm({ heading, btnText }) {
@@ -16,7 +16,8 @@ export default function CheckoutForm({ heading, btnText }) {
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState(""); // Allow dynamic email entry
+  const user = useSelector((state) => state.account.profile);
+  const [email, setEmail] = useState(user?.data?.email); // Allow dynamic email entry
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -104,6 +105,9 @@ export default function CheckoutForm({ heading, btnText }) {
         ".Label": {
           display: "none", // Hide label
         },
+        ".Input": {
+          minHeight: "48px", // Adjust height for input fields
+        },
       },
     },
   };
@@ -121,25 +125,53 @@ export default function CheckoutForm({ heading, btnText }) {
         colorDanger: "#df1b41",
         fontFamily: "Ideal Sans, system-ui, sans-serif",
       },
-      // Add rule to hide the label
+      // Add rule to hide the label and adjust the input size
       rules: {
         ".Label": {
-          display: "none", // This is to hide the label
+          display: "none", // Hide the label
+        },
+        ".Input": {
+          height: "76px", // Adjust height
+        },
+        ".p-LinkInputWrapper": {
+          height: "96px !important" /* Set the desired height */,
+          display: "flex",
+          "align-items": "center",
+        },
+        ".p-LinkInputWrapper input": {
+          height: "78px !important" /* Adjust input height */,
+          padding: "12px !important" /* Adjust padding for input */,
+          border: "1px solid #ccc !important" /* Custom border */,
+          "border-radius": "4px !important" /* Rounded corners */,
+          "font-size": "36px !important" /* Font size */,
+          width: "100% !important" /* Ensure it takes the full width */,
         },
       },
     },
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit} className="mx-auto w-full">
-      <LinkAuthenticationElement
-        id="link-authentication-element"
-        onChange={(event) => {
-          setEmail(event.value.email); // Dynamically set the email when changed
-        }}
-        options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
-      />
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
+    <form
+      id="payment-form"
+      onSubmit={handleSubmit}
+      className="mx-auto w-full max-w-lg space-y-4"
+    >
+      <div className="space-y-3">
+        <LinkAuthenticationElement
+          id="link-authentication-element"
+          onChange={(event) => {
+            setEmail(event.value.email); // Dynamically set the email when changed
+          }}
+          options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
+          className="!h-14" // Force height using Tailwind CSS
+        />
+        <PaymentElement
+          id="payment-element"
+          options={paymentElementOptions}
+          className="pt-3"
+        />
+      </div>
+
       {message && (
         <div
           id="payment-message"
@@ -148,11 +180,13 @@ export default function CheckoutForm({ heading, btnText }) {
           {message}
         </div>
       )}
+
       <img
         className="relative self-stretch w-full h-px object-cover mt-3"
         alt={t("withdrawal.line_alt")}
         src={Line63}
       />
+
       <div className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
         <button
           type="submit"
