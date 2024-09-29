@@ -26,6 +26,11 @@ function Payment({ orderId, heading, btnText, ...props }) {
         setClientSecret(response?.data?.payment_intent[0]);
       } catch (error) {
         console.error("Error creating PaymentIntent:", error);
+        await Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error?.detail || "Failed to Fetch intent. Please try again.",
+        });
       }
     };
 
