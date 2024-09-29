@@ -30,49 +30,52 @@ export default function CheckoutForm({ heading, btnText }) {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
+      // Stripe.js has not yet loaded
       setMessage("Stripe has not fully loaded yet. Please try again.");
       return;
     }
 
     setIsLoading(true);
+    setMessage(""); // Reset message before processing
 
     try {
-      // Confirm SetupIntent and handle the response
+      // Confirm the SetupIntent and handle the response
       const { setupIntent, error } = await stripe.confirmSetup({
         elements,
         confirmParams: {
-          // No return_url provided, using redirect: 'if_required'
+          // Optional: add additional metadata or params here
         },
-        redirect: "if_required", // Avoids redirect when not necessary
+        redirect: "if_required", // Avoids unnecessary redirects
       });
 
       if (error) {
+        // Handle errors from Stripe
         if (error.type === "card_error" || error.type === "validation_error") {
           setMessage(error.message);
         } else {
-          setMessage("An unexpected error occurred.");
+          setMessage("An unexpected error occurred. Please try again.");
         }
         console.error("Error during setup confirmation:", error);
       } else {
-        // Log the setupIntent details and dispatch
+        // SetupIntent was successfully confirmed
         console.log("SetupIntent confirmed:", setupIntent);
 
+        // Proceed to dispatch payment setup
         try {
-          // Dispatch to Redux store
           await dispatch(setupPaymentForOrder({ orderId, setupIntent }));
           setMessage("Setup confirmed successfully.");
-          navigate("/thanks-withdrawal");
+          navigate("/thanks-withdrawal"); // Navigate to success page
         } catch (dispatchError) {
           console.error("Error during dispatch:", dispatchError);
           setMessage("An error occurred while processing the payment setup.");
         }
       }
     } catch (err) {
-      console.error("Error in setup confirmation:", err);
-      setMessage("An error occurred during setup confirmation.");
+      // Handle unexpected errors
+      console.error("Unexpected error in setup confirmation:", err);
+      setMessage("An unexpected error occurred during setup confirmation.");
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Stop loading spinner
     }
   };
 

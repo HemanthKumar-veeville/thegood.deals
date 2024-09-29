@@ -42,6 +42,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
           stripePromise={stripePromise}
           heading={heading}
           btnText={btnText}
+          orderId={orderId}
         />
         <img
           className="relative self-stretch w-full h-px object-cover"

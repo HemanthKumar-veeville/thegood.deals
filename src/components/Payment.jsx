@@ -4,7 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { axiosInstance } from "../helpers/helperMethods";
 
-function Payment({ heading, btnText, ...props }) {
+function Payment({ orderId, heading, btnText, ...props }) {
   const { stripePromise } = props;
   const [clientSecret, setClientSecret] = useState("");
 
@@ -19,7 +19,7 @@ function Payment({ heading, btnText, ...props }) {
 
         // Send the FormData with the POST request
         const response = await axiosInstance.post(
-          "/create_payment_intent",
+          `/create_payment_intent/${orderId}`,
           formData
         );
         console.log(response?.data?.payment_intent[0]);

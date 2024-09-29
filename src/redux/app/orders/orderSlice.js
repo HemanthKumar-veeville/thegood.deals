@@ -63,9 +63,18 @@ export const fetchOrderById = createAsyncThunk(
 export const setupPaymentForOrder = createAsyncThunk(
   "orders/setupPaymentForOrder",
   async ({ orderId, setupIntent }, { rejectWithValue }) => {
+    console.log("setupIntent", setupIntent);
     try {
       const response = await axiosInstance.post(
-        `/orders/${orderId}/payment_setup`
+        `/store_setup_intent/${orderId}`,
+        {
+          setupIntent, // Sending setupIntent as part of the payload
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // Setting the Content-Type to JSON
+          },
+        }
       );
       return response.data;
     } catch (err) {
