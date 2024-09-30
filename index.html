@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <title>The Good Deals</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./favicon.jpg" type="image/x-icon" />
+    
     <style>
       @import url("https://fonts.googleapis.com/css?family=Source+Serif+Pro:700|Inter:600,var(--body-small-regular-font-weight),var(--16-medium-font-weight),500,400,var(--body-medium-regular-font-weight),var(--heading-6-font-weight),var(--body-medium-medium-font-weight)|Roboto:var(--text-medium-normal-font-weight)|Rethink+Sans:400");
     </style>
@@ -26,11 +30,21 @@
       a {
         text-decoration: none;
       }
+      /* Border radius for an img element */
+      .favicon-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%; /* This gives the image rounded corners */
+      }
     </style>
     <link href="tailwind.css" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Example usage of rounded favicon image -->
+    <img src="./favicon.jpg" alt="Favicon" class="favicon-img" />
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
