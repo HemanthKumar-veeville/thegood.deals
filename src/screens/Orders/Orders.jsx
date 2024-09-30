@@ -94,7 +94,7 @@ const Orders = ({ dealId, dealType }) => {
                 onClick={() => handleToggleOrderDetails(order.participant_name)}
               >
                 <SizeXlCorner
-                  className="h-12.5 w-12.5"
+                  className="h-11 w-11"
                   divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
                   text={order.participant_name.charAt(0).toUpperCase()}
                 />
@@ -122,7 +122,7 @@ const Orders = ({ dealId, dealType }) => {
                     : "max-h-0"
                 }`}
               >
-                <div className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite">
+                <div className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full">
                   <img
                     className="self-stretch w-full h-px object-cover"
                     alt={t("orders.line_alt")}
@@ -175,7 +175,7 @@ const Orders = ({ dealId, dealType }) => {
                 </div>
               </div>
               <img
-                className="self-stretch w-full h-px object-cover"
+                className="self-stretch w-full h-px object-cover mt-3"
                 alt={t("orders.line_alt")}
                 src={Line63}
               />
