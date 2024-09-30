@@ -32,6 +32,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { Send2 } from "../../icons/Send2";
+import { DangerAlert } from "../../components/DangerAlert";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -109,25 +110,39 @@ const ActiveDeal = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-start gap-[25px] px-[18px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-greengreen-light-6 rounded-lg">
-            <div className="flex items-center gap-3 relative flex-1 grow">
-              <div className="relative w-5 h-5 bg-greengreen rounded-[10px]">
-                <ClockAlt13
-                  className="!absolute !w-3 !h-3 !top-1 !left-1"
-                  color="white"
-                />
+          {dealData?.deal_ends_in === 0 && (
+            <div className="flex items-start gap-[25px] px-[18px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-greengreen-light-6 rounded-lg">
+              <div className="flex items-center gap-3 relative flex-1 grow">
+                <div className="relative w-5 h-5 bg-greengreen rounded-[10px]">
+                  <ClockAlt13
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                </div>
+                <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
+                  <span className="[font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
+                    {t("active_deal.deal_ends_in")}
+                    <br />
+                  </span>
+                  <span className="font-bold">
+                    {`${dealData?.deal_ends_in} days and 6 hours`}
+                  </span>
+                </p>
               </div>
-              <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
-                <span className="[font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
-                  {t("active_deal.deal_ends_in")}
-                  <br />
-                </span>
-                <span className="font-bold">
-                  {`${dealData?.deal_ends_in} days and 6 hours`}
-                </span>
-              </p>
             </div>
-          </div>
+          )}
+          {dealData?.deal_ends_in > 0 && (
+            <DangerAlert
+              alertMessage="The payment of one of the participants could not be made."
+              participants={[
+                { name: "Jean Dupont", status: "failed" },
+                { name: "Ben Affleck", status: "failed" },
+                { name: "Thomas Bessont", status: "success" },
+                { name: "Miracle Saris", status: "success" },
+                { name: "Dulce Carder", status: "success" },
+              ]}
+            />
+          )}
           <div onClick={handleOrder}>
             <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
           </div>

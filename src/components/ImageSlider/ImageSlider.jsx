@@ -64,7 +64,7 @@ const ImageSlider = ({ pictures }) => {
                   <img
                     src={picture}
                     alt={`picture-${index}`}
-                    className={`object-cover w-full h-auto rounded-md ${
+                    className={`object-contain w-full h-auto rounded-md ${
                       index === 0 ? "border-4 border-yellow-500" : ""
                     }`}
                   />

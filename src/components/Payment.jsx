@@ -19,7 +19,7 @@ function Payment({ orderId, heading, btnText, ...props }) {
 
         // Send the FormData with the POST request
         const response = await axiosInstance.post(
-          `/create_payment_intent/${orderId}`,
+          `/create_payment_intent`,
           formData
         );
         console.log(response?.data?.payment_intent[0]);
