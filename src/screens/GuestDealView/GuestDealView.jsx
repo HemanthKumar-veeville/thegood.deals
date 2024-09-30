@@ -58,6 +58,12 @@ const GuestDealView = () => {
     dispatch(fetchDealDetailsByDealId(deal_id));
   }, []);
 
+  const handleOrder = () => {
+    navigate(
+      "/admin-view-deal?deal_id=" + deal_id + "&deal_type=" + is_creator
+    );
+  };
+
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
@@ -95,8 +101,13 @@ const GuestDealView = () => {
               </p>
             </div>
           </div>
-          <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
-          <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
+          <div onClick={handleOrder}>
+            <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
+          </div>
+          <div
+            onClick={handleOrder}
+            className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]"
+          >
             {dealData?.title || t("deal.title")}
           </div>
           {location?.state?.deal?.dealStatus === "soon_out_stock" ? (

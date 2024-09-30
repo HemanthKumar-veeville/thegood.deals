@@ -97,7 +97,6 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.orderStatus = "succeeded";
-        state.orders.push(action.payload); // Add the newly created order to the list
         state.orderError = null; // Clear any errors
       })
       .addCase(createOrder.rejected, (state, action) => {

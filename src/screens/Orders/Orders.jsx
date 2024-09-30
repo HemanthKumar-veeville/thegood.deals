@@ -32,7 +32,7 @@ const Orders = ({ dealId, dealType }) => {
     dispatch(
       fetchOrdersByDeal({
         dealId: deal_id,
-        dealType: is_creator ? "created" : "invited",
+        dealType: is_creator === "true" ? "created" : "invited",
       })
     );
   }, []);
@@ -90,7 +90,7 @@ const Orders = ({ dealId, dealType }) => {
           {ordersState?.map((order) => (
             <div key={order.participant_name}>
               <div
-                className="inline-flex items-center gap-4 cursor-pointer"
+                className="inline-flex items-center gap-4 cursor-pointer mt-3"
                 onClick={() => handleToggleOrderDetails(order.participant_name)}
               >
                 <SizeXlCorner
