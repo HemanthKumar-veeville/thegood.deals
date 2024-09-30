@@ -19,7 +19,7 @@ const InviteLovedOnes = () => {
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
-  const shareLink = `https://thegood.deals/deal_details?deal_id=${dealId}`;
+  const shareLink = `https://thegood.deals/deal_details_invite?deal_id=${dealId}`;
   const navigate = useNavigate();
 
   const handleAddEmail = () => {

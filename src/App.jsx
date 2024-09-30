@@ -18,6 +18,7 @@ import { PrivacyCookiePolicy } from "./components/PrivacyCookiePolicy";
 import { PrivacyCookiePolicyScreen } from "./screens/PrivacyCookiePolicy";
 import { LegalNotices } from "./components/LegalNotices";
 import { LegalNoticesScreen } from "./screens/LegalNoticesScreen";
+import InviteParticipants from "./screens/InviteParticipants/InviteParticipants";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -452,6 +453,14 @@ function App() {
       element: (
         <Layout>
           <ArtisanConfirmTheScreen />
+        </Layout>
+      ),
+    },
+    {
+      path: "/deal_details_invite",
+      element: (
+        <Layout>
+          <InviteParticipants />
         </Layout>
       ),
     },
