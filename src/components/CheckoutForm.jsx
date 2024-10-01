@@ -11,7 +11,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setupPaymentForOrder } from "../redux/app/orders/orderSlice";
 
-export default function CheckoutForm({ heading, btnText }) {
+export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
@@ -63,7 +63,9 @@ export default function CheckoutForm({ heading, btnText }) {
 
         // Proceed to dispatch payment setup
         try {
-          await dispatch(setupPaymentForOrder({ orderId, setupIntent }));
+          await dispatch(
+            setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId })
+          );
           setMessage("Setup confirmed successfully.");
           navigate("/thanks-withdrawal"); // Navigate to success page
         } catch (dispatchError) {

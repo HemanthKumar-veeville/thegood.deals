@@ -7,6 +7,7 @@ import { axiosInstance } from "../helpers/helperMethods";
 function Payment({ orderId, heading, btnText, ...props }) {
   const { stripePromise } = props;
   const [clientSecret, setClientSecret] = useState("");
+  const [stripeCustomerId, setStripeCustomerId] = useState("");
 
   useEffect(() => {
     // Define an async function inside the useEffect
@@ -24,6 +25,7 @@ function Payment({ orderId, heading, btnText, ...props }) {
         );
         console.log(response?.data?.payment_intent[0]);
         setClientSecret(response?.data?.payment_intent[0]);
+        setStripeCustomerId(response?.data?.payment_intent[1]);
       } catch (error) {
         console.error("Error creating PaymentIntent:", error);
         await Swal.fire({
@@ -42,7 +44,11 @@ function Payment({ orderId, heading, btnText, ...props }) {
     <>
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm heading={heading} btnText={btnText} />
+          <CheckoutForm
+            heading={heading}
+            btnText={btnText}
+            stripeCustomerId={stripeCustomerId}
+          />
         </Elements>
       )}
     </>
