@@ -86,7 +86,7 @@ function AboutUs() {
           className="items-center gap-2 flex flex-col relative self-stretch w-full flex-[0_0_auto]"
         >
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
-            <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
+            <p className="mx-auto w-[300px] relative self-stretch mt-[12.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
               {t("about_us.about_good_deals")}
             </p>
             <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
