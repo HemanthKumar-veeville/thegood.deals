@@ -130,7 +130,7 @@ function AppBar() {
       </header>
       {/* Sidebar */}
       {open && <SideBar onClose={handleOpen} />}
-      {languageOpen && <LanguageDropdownScreen />}
+      {languageOpen && <LanguageDropdownScreen onClose={handleLanguageOpen} />}
     </div>
   );
 }
