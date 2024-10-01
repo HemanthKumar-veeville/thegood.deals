@@ -185,11 +185,7 @@ const MyInformation = () => {
               {/* Carousel Slider for Deals */}
               <Slider ref={sliderRef} {...sliderSettings} className="w-full">
                 {userDeals?.map((deal) => (
-                  <div
-                    key={deal.deal_id}
-                    onClick={() => handleCardClick(deal)}
-                    className="cursor-pointer"
-                  >
+                  <div key={deal.deal_id} className="cursor-pointer">
                     <CardDeal
                       badgesColor="success"
                       badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"
