@@ -244,7 +244,7 @@ export const SignUp = ({ setIsLoading }) => {
       } catch (error) {
         Swal.fire({
           title: t("signup.errors.error_title"),
-          text: error?.response?.data?.detail,
+          text: error?.response?.data?.detail || "Something went wrong",
           icon: "error",
           confirmButtonText: "OK",
         });
