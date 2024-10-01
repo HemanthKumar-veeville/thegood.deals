@@ -165,7 +165,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
             setEmail(event.value.email); // Dynamically set the email when changed
           }}
           options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
-          className="!h-14" // Force height using Tailwind CSS
+          // className="!h-14" // Force height using Tailwind CSS
         />
         <PaymentElement
           id="payment-element"

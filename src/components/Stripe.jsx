@@ -7,7 +7,7 @@ import axios from "axios";
 import PaymentForm from "./PaymentForm";
 
 const stripe = loadStripe(
-  "pk_test_51PrkFjP5N2kE7iWZygQ2zB9AQ4sYqu1Dpojd9yprqAJ2lMYjO9A9pcgfM8qQ6Gd62L1qn0r7zllqmpZFTVlr0uYh002moYDqvd"
+  "pk_test_51PplNp04KHQUtznoy8HmY5meaJK4aZgRjwuckLfjquqCSJMvfXEjacj3pADbzg2SDbNuWr0zRhrFymRRstAjzh3S00USzDZqAJ"
 );
 
 const StripePayment = () => {
