@@ -7,6 +7,8 @@ import SideBar from "../../screens/SideBar/SideBar";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Line63 } from "../../images";
+import { LanguageDropdown } from "../LanguageDropdown/LanguageDropdown";
+import LanguageDropdownScreen from "../../screens/LanguageDropdown/LanguageDropdown";
 
 /**
  * AppBar component renders the top navigation bar of the application.
@@ -14,6 +16,8 @@ import { Line63 } from "../../images";
  */
 function AppBar() {
   const [open, setOpen] = useState(false);
+  const [languageOpen, setLanguageOpen] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
   const [isUser, setIsUser] = useState(true);
@@ -27,6 +31,10 @@ function AppBar() {
    */
   const handleOpen = () => {
     setOpen(!open);
+  };
+
+  const handleLanguageOpen = () => {
+    setLanguageOpen(!languageOpen);
   };
 
   /**
@@ -87,29 +95,32 @@ function AppBar() {
               </div>
             </div>
           </div>
-          {/* User icon */}
-          {isUser && (
-            <div
-              className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
-              onClick={() =>
-                !isUserLoggedIn
-                  ? navigate("/auth?login")
-                  : navigate("/my-information")
-              }
-            >
-              {profile?.profile_image &&
-              profile?.profile_image !==
-                "https://example.com/profiles/default.jpg" ? (
-                <img
-                  className="w-[90%] h-[90%] rounded-full object-cover"
-                  alt="photo"
-                  src={profile?.profile_image}
-                />
-              ) : (
-                <UserAlt className="!relative !w-6 !h-6" />
-              )}
-            </div>
-          )}
+          <div className="flex justify-center items-center">
+            <LanguageDropdown handleLanguageOpen={handleLanguageOpen} />
+            {/* User icon */}
+            {isUser && (
+              <div
+                className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
+                onClick={() =>
+                  !isUserLoggedIn
+                    ? navigate("/auth?login")
+                    : navigate("/my-information")
+                }
+              >
+                {profile?.profile_image &&
+                profile?.profile_image !==
+                  "https://example.com/profiles/default.jpg" ? (
+                  <img
+                    className="w-[90%] h-[90%] rounded-full object-cover"
+                    alt="photo"
+                    src={profile?.profile_image}
+                  />
+                ) : (
+                  <UserAlt className="!relative !w-6 !h-6" />
+                )}
+              </div>
+            )}
+          </div>
         </div>
         <img
           className="relative self-stretch w-full h-px mb-1 object-cover"
@@ -119,6 +130,7 @@ function AppBar() {
       </header>
       {/* Sidebar */}
       {open && <SideBar onClose={handleOpen} />}
+      {languageOpen && <LanguageDropdownScreen />}
     </div>
   );
 }
