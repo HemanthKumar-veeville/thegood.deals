@@ -75,7 +75,7 @@ export const ArtisanConfirmThe = ({
       } else {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
+          title: "Error...",
           text:
             response.payload.detail || "You need to login to send a request.",
         });
@@ -84,7 +84,7 @@ export const ArtisanConfirmThe = ({
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Error...",
         text: "Failed to send request. Please try again.",
       });
     }

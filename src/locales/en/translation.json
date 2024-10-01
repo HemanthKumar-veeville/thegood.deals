@@ -780,7 +780,7 @@
       "country": "Country is required",
       "accept_privacy_policy": "You must accept the privacy policy",
       "currency": "You must enter the currency",
-      "error_title": "Oops..."
+      "error_title": "Error..."
     }
   }
 }

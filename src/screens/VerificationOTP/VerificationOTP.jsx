@@ -74,7 +74,7 @@ export const VerificationOTP = () => {
       console.error("There was an error!", error);
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Error...",
         text: error?.response?.data?.detail,
       });
     }
@@ -141,7 +141,7 @@ export const VerificationOTP = () => {
       console.error("There was an error!", error);
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Error...",
         text: error?.response?.data?.detail,
       });
       setLoading(false);

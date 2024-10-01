@@ -47,7 +47,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
       console.error("Failed to place the order:", error);
       await Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Error...",
         text: error?.detail || "Failed to send request. Please try again.",
       });
       dispatch(fetchDealDetailsByDealId(dealId));

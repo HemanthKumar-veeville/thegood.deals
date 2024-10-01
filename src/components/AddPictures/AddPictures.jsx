@@ -16,7 +16,7 @@ const AddPictures = ({ onChange }) => {
     if (totalFiles > 10) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Error...",
         text: "You can only select up to 10 files in total.",
       });
       return;

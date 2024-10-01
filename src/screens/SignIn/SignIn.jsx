@@ -56,7 +56,7 @@ const SignIn = ({ setIsLoading }) => {
         console.error("There was an error!", error);
         Swal.fire({
           icon: "error",
-          title: "Oops...",
+          title: "Error...",
           text: error?.response?.data?.detail,
         });
         setIsLoading(false);

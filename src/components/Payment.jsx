@@ -28,7 +28,7 @@ function Payment({ orderId, heading, btnText, ...props }) {
         console.error("Error creating PaymentIntent:", error);
         await Swal.fire({
           icon: "error",
-          title: "Oops...",
+          title: "Error...",
           text: error?.detail || "Failed to Fetch intent. Please try again.",
         });
       }

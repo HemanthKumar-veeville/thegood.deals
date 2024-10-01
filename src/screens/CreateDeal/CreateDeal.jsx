@@ -163,7 +163,7 @@ const CreateDeal = () => {
       console.error("Failed to create deal:", err);
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Error...",
         text: err?.detail || "An error occurred while creating the deal",
       });
     } finally {
