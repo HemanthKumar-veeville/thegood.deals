@@ -1,4 +1,4 @@
-// src/screens/SideBar/SideBar.jsx
+// src/screens/LanguageDropDown/LanguageDropDown.jsx
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -8,31 +8,31 @@ import { FranceFlag, UK_Flag_Icon } from "../../images";
 import { useLanguage } from "../../context/LanguageContext";
 
 /**
- * SideBar component
+ * LanguageDropDown component
  *
- * This component renders a sidebar with navigation links and language selection.
+ * This component renders a LanguageDropDown with navigation links and language selection.
  * It uses various hooks for state management, navigation, and translations.
  *
  * @param {Object} props - Component props
- * @param {Function} props.onClose - Function to call when the sidebar is closed
- * @returns {JSX.Element} The rendered sidebar component
+ * @param {Function} props.onClose - Function to call when the LanguageDropDown is closed
+ * @returns {JSX.Element} The rendered LanguageDropDown component
  */
-const SideBar = React.memo(({ onClose }) => {
+const LanguageDropDown = React.memo(({ onClose }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const { selectedLanguage, setSelectedLanguage } = useLanguage();
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const { t, i18n } = useTranslation();
 
-  // Show the sidebar when the component is mounted
+  // Show the LanguageDropDown when the component is mounted
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
   /**
-   * Handle closing the sidebar
+   * Handle closing the LanguageDropDown
    *
-   * This function sets the sidebar visibility to false and calls the onClose prop after a delay.
+   * This function sets the LanguageDropDown visibility to false and calls the onClose prop after a delay.
    */
   const handleClose = useCallback(() => {
     setIsVisible(false);
@@ -76,15 +76,27 @@ const SideBar = React.memo(({ onClose }) => {
    */
   const renderMenuItems = () =>
     menuItems.map((item, index) => (
-      <div
+      <button
         key={index}
-        className="flex items-start gap-2 px-0 py-3 relative self-stretch w-full flex-[0_0_auto]"
+        className="w-full text-green inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-green cursor-pointer mb-3"
         onClick={item.onClick}
       >
-        <div className="relative flex-1 mt-[-1.00px] font-text-medium-normal text-[#2a4e4a] text-[length:var(--text-medium-normal-font-size)] tracking-[var(--text-medium-normal-letter-spacing)] leading-[var(--text-medium-normal-line-height)]">
-          {item.label}
-        </div>
-      </div>
+        <span className="font-normal text-base leading-6 whitespace-nowrap flex items-center gap-2">
+          {t(`side_bar.language.${item.label.toLocaleLowerCase()}`)}
+          <img
+            src={item.label === "English" ? UK_Flag_Icon : FranceFlag}
+            style={{
+              width: "20px",
+              height: item.label === "English" ? "17px" : "20px",
+            }}
+            alt={
+              item.label === "English"
+                ? t("side_bar.flag_alt.uk")
+                : t("side_bar.flag_alt.france")
+            }
+          />
+        </span>
+      </button>
     ));
 
   return (
@@ -104,4 +116,4 @@ const SideBar = React.memo(({ onClose }) => {
   );
 });
 
-export default SideBar;
+export default LanguageDropDown;

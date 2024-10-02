@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { Dropdown } from "../../components/CountryDropDown";
 import { ChevronDown } from "../../icons/ChevronDown";
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 
 const InputField = ({
   id,
@@ -133,6 +134,7 @@ export const SignUp = ({ setIsLoading }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const { selectedLanguage, setSelectedLanguage } = useLanguage();
 
   // Load saved form values from localStorage
   useEffect(() => {
@@ -141,7 +143,7 @@ export const SignUp = ({ setIsLoading }) => {
       formik.setValues(JSON.parse(savedValues));
     }
   }, []);
-  console.log(i18n.language);
+  console.log({ selectedLanguage });
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -149,7 +151,7 @@ export const SignUp = ({ setIsLoading }) => {
       countryCode: { code: "+33", iso: "fr", name: "France" },
       phone: "",
       email: "",
-      language: "English",
+      language: "",
       password: "",
       confirmPassword: "",
       address: "",
@@ -275,11 +277,11 @@ export const SignUp = ({ setIsLoading }) => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
-  useEffect(() => {
-    formik.values.language === "English"
-      ? i18n.changeLanguage("en")
-      : i18n.changeLanguage("fr");
-  }, [formik.values.language]);
+  // useEffect(() => {
+  //   formik.values.language === "English"
+  //     ? i18n.changeLanguage("en")
+  //     : i18n.changeLanguage("fr");
+  // }, [formik.values.language]);
 
   return (
     <div className="flex flex-col w-full items-start gap-[20px] px-[35px] py-[15px] absolute top-[118px] left-0 bg-primary-background">
@@ -348,9 +350,7 @@ export const SignUp = ({ setIsLoading }) => {
                   : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
               } hover:bg-gray-100 cursor-pointer appearance-none`}
             >
-              <option value="French" defaultValue={true}>
-                {t("language.french")}
-              </option>
+              <option value="French">{t("language.french")}</option>
               <option value="English">{t("language.english")}</option>
             </select>
             <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
