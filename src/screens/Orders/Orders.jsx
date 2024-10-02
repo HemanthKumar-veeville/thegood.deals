@@ -94,9 +94,16 @@ const Orders = ({ dealId, dealType }) => {
                 onClick={() => handleToggleOrderDetails(order.participant_name)}
               >
                 <SizeXlCorner
-                  className="h-11 w-11"
+                  className="h-14 w-14"
                   divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
-                  text={order.participant_name.charAt(0).toUpperCase()}
+                  text={
+                    order.participant_name
+                      .split(" ")[0]
+                      .charAt(0)
+                      .toUpperCase() +
+                    "." +
+                    order.participant_name.split(" ")[1].charAt(0).toUpperCase()
+                  }
                 />
                 <div className="inline-flex flex-col items-start gap-1.5">
                   <div className="mt-[-1px] font-medium text-primary-color text-base">

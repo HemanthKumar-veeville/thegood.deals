@@ -12,7 +12,7 @@ export const LanguageDropdown = ({ handleLanguageOpen }) => {
   return (
     <div
       className="relative inline-flex items-center cursor-pointer"
-      onClick={() => handleLanguageOpen(selectedLanguage.code)}
+      onClick={() => handleLanguageOpen()}
     >
       <div className="flex items-center">
         <span className="mr-2">{selectedLanguage.flag}</span>

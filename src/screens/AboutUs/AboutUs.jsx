@@ -185,7 +185,7 @@ function AboutUs() {
             <div className="flex flex-col items-start gap-3 relative self-stretch w-full flex-[0_0_auto]">
               <div className="gap-5 flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
                 <p
-                  className={`w-52 text-[length:var(--heading-h2-mobile-font-size)] leading-[var(--heading-h2-mobile-line-height)] relative self-stretch mt-[-1.00px] font-heading-h2-mobile font-[number:var(--heading-h2-mobile-font-weight)] text-green tracking-[var(--heading-h2-mobile-letter-spacing)] [font-style:var(--heading-h2-mobile-font-style)] ${headingClassName}`}
+                  className={`w-64 text-[length:var(--heading-h2-mobile-font-size)] leading-[var(--heading-h2-mobile-line-height)] relative self-stretch mt-[-1.00px] font-heading-h2-mobile font-[number:var(--heading-h2-mobile-font-weight)] text-green tracking-[var(--heading-h2-mobile-letter-spacing)] [font-style:var(--heading-h2-mobile-font-style)] ${headingClassName}`}
                 >
                   {t("about_us.why_choose_us")}
                 </p>

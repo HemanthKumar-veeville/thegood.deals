@@ -119,7 +119,7 @@ export const Header = ({
                   onClick={() => navigate("/auth?login")}
                 >
                   <span className="all-[unset] box-border relative w-fit [font-family:'Rethink_Sans',Helvetica] font-normal text-base tracking-[0] leading-6 whitespace-nowrap hover:bg-[#1b4f4a] hover:text-white cursor-pointer">
-                    Manage my good deals
+                    {buttonText1}
                   </span>
                 </button>
               </div>
