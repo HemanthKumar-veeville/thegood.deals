@@ -66,7 +66,7 @@ export const VerificationOTP = () => {
     try {
       const response = await axiosInstance.post("resend_code");
 
-      if (response?.status === 201) {
+      if (response?.status === 200) {
         console.log("Mail Sent");
         setSeconds(33);
       }

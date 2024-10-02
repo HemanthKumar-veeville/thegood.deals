@@ -151,7 +151,7 @@ export const SignUp = ({ setIsLoading }) => {
       countryCode: { code: "+33", iso: "fr", name: "France" },
       phone: "",
       email: "",
-      language: "",
+      language: "French",
       password: "",
       confirmPassword: "",
       address: "",
