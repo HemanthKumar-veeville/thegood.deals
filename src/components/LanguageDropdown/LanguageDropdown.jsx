@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDown } from "../../icons/ChevronDown";
 import { UK_Flag_Icon, FranceFlag } from "../../images";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,10 @@ export const LanguageDropdown = ({ handleLanguageOpen }) => {
   const { t, i18n } = useTranslation();
   const { selectedLanguage, setSelectedLanguage } = useLanguage();
 
-  console.log({ selectedLanguage });
+  useEffect(() => {
+    i18n.changeLanguage(selectedLanguage === "english" ? "en" : "fr");
+  }, [selectedLanguage]);
+
   return (
     <div
       className="relative inline-flex items-center cursor-pointer mr-1"
