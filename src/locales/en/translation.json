@@ -782,5 +782,13 @@
       "currency": "You must enter the currency",
       "error_title": "Error..."
     }
+  },
+  "login": {
+    "title": "Log in",
+    "email_placeholder": "E-mail",
+    "password_placeholder": "Password",
+    "login_button": "Login",
+    "login_with": "Login with",
+    "forgot_password": "Forgot your password ?"
   }
 }

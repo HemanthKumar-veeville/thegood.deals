@@ -772,5 +772,13 @@
       "currency": "Vous devez entrer la devise",
       "error_title": "Erreur..."
     }
+  },
+  "login": {
+    "title": "Se connecter",
+    "email_placeholder": "E-mail",
+    "password_placeholder": "Mot de passe",
+    "login_button": "Se connecter",
+    "login_with": "Connexion avec",
+    "forgot_password": "Mot de passe oublié ?"
   }
 }

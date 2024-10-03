@@ -11,11 +11,13 @@ import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../helpers/helperMethods.js";
 import { useDispatch } from "react-redux";
 import { checkUserLoginStatus } from "../../redux/app/user/userSlice.js";
+import { useTranslation } from "react-i18next";
 
 const SignIn = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const savedValues = JSON.parse(localStorage.getItem("signInForm"));
@@ -81,7 +83,7 @@ const SignIn = ({ setIsLoading }) => {
   return (
     <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute top-[118px] left-0">
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-        To log in
+        {t("login.title")}
       </div>
       <form
         onSubmit={formik.handleSubmit}
@@ -93,7 +95,7 @@ const SignIn = ({ setIsLoading }) => {
               id="email"
               name="email"
               type="email"
-              placeholder="E-mail"
+              placeholder={t("login.email_placeholder")}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
@@ -116,7 +118,7 @@ const SignIn = ({ setIsLoading }) => {
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
+                placeholder={t("login.password_placeholder")}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
@@ -143,7 +145,7 @@ const SignIn = ({ setIsLoading }) => {
           </div>
         </div>
         <Button
-          buttonText="To log in"
+          buttonText={t("login.login_button")}
           className="!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer"
           color="primary"
           kind="primary"
@@ -161,7 +163,7 @@ const SignIn = ({ setIsLoading }) => {
           />
           <div className="flex w-[138px] h-7 items-start justify-center gap-2.5 px-2.5 py-0.5 absolute top-0 left-[76px] bg-primary-background">
             <div className="relative w-fit mt-[-1.00px] ml-[-3.13px] mr-[-3.13px] [font-family:'Inter',Helvetica] font-normal text-secondary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Connection with
+              {t("login.login_with")}
             </div>
           </div>
         </div>
@@ -191,7 +193,7 @@ const SignIn = ({ setIsLoading }) => {
         onClick={handleForgotPassword}
       >
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-darkdark text-base tracking-[0] leading-6 whitespace-nowrap hover:underline cursor-pointer">
-          Forgot your password ?
+          {t("login.forgot_password")}
         </div>
       </div>
     </div>

@@ -134,7 +134,6 @@ export const SignUp = ({ setIsLoading }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-  const { selectedLanguage, setSelectedLanguage } = useLanguage();
 
   // Load saved form values from localStorage
   useEffect(() => {
@@ -143,7 +142,7 @@ export const SignUp = ({ setIsLoading }) => {
       formik.setValues(JSON.parse(savedValues));
     }
   }, []);
-  console.log({ selectedLanguage });
+
   const formik = useFormik({
     initialValues: {
       firstName: "",

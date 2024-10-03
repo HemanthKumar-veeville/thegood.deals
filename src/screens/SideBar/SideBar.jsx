@@ -181,28 +181,6 @@ const SideBar = React.memo(({ onClose }) => {
               t("side_bar.my_account"),
               isUserLoggedIn ? "/" : "/auth?login"
             )}
-            <button
-              className="w-full text-green inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-green cursor-pointer"
-              onClick={handleLanguageChange}
-            >
-              <span className="font-normal text-base leading-6 whitespace-nowrap flex items-center gap-2">
-                {t(`side_bar.language.${selectedLanguage}`)}
-                <img
-                  src={
-                    selectedLanguage === "english" ? UK_Flag_Icon : FranceFlag
-                  }
-                  style={{
-                    width: "20px",
-                    height: selectedLanguage === "english" ? "17px" : "20px",
-                  }}
-                  alt={
-                    selectedLanguage === "english"
-                      ? t("side_bar.flag_alt.uk")
-                      : t("side_bar.flag_alt.france")
-                  }
-                />
-              </span>
-            </button>
           </div>
         </div>
       </div>
