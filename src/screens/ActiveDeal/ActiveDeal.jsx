@@ -33,6 +33,7 @@ import { useTranslation } from "react-i18next";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { Send2 } from "../../icons/Send2";
 import { DangerAlert } from "../../components/DangerAlert";
+import { chargeGroupPayment } from "../../redux/app/payments/paymentSlice";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -90,6 +91,11 @@ const ActiveDeal = () => {
     navigate(
       `/invite-loved-ones?deal_id=${deal_id}` + "&is_creator=" + is_creator
     );
+  };
+
+  const chargeDeal = () => {
+    const res = dispatch(chargeGroupPayment({ dealId: deal_id }));
+    console.log({ res });
   };
 
   return (
@@ -187,7 +193,7 @@ const ActiveDeal = () => {
           </div>
           <div
             className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
-            onClick={() => handleNavigation("/create-deal")}
+            onClick={chargeDeal}
           >
             <EuroCoin className="!relative !w-5 !h-5" />
             <button className="box-border font-medium text-white text-base text-center">

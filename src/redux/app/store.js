@@ -7,6 +7,7 @@ import publicSlice from "./public/publicSlice";
 import orderSlice from "./orders/orderSlice";
 import requestSlice from "./requests/requestSlice";
 import participantSlice from "./participants/participantSlice";
+import paymentSlice from "./payments/paymentSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     orders: orderSlice,
     requests: requestSlice,
     participants: participantSlice,
+    payments: paymentSlice,
   },
 });
 
