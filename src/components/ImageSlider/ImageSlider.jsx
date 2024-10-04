@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ImageLoader from "../ImageLoader/ImageLoader";
 
 const ImageSlider = ({ pictures }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -59,15 +60,9 @@ const ImageSlider = ({ pictures }) => {
               {pictures.map((picture, index) => (
                 <div
                   key={index}
-                  className="w-full flex-shrink-0 relative h-full"
+                  className="!w-full flex-shrink-0 relative !h-full"
                 >
-                  <img
-                    src={picture}
-                    alt={`picture-${index}`}
-                    className={`object-contain w-full h-auto rounded-md ${
-                      index === 0 ? "border-4 border-yellow-500" : ""
-                    }`}
-                  />
+                  <ImageLoader picture={picture} index={index} />
                 </div>
               ))}
             </div>

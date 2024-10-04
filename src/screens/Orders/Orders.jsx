@@ -26,7 +26,8 @@ const Orders = ({ dealId, dealType }) => {
   const { orders, orderStatus, orderError } = useSelector(
     (state) => state.orders
   );
-  const ordersState = orders?.Orders;
+  console.log({ orders });
+  const ordersState = orders?.Orders?.length > 0 ? orders?.Orders[0] : null;
 
   useEffect(() => {
     dispatch(
@@ -87,36 +88,41 @@ const Orders = ({ dealId, dealType }) => {
             {t("orders.my_orders")}
           </div>
 
-          {ordersState?.map((order) => (
-            <div key={order.participant_name}>
+          {ordersState?.orders?.map((order) => (
+            <div key={ordersState.participant_name}>
               <div
                 className="inline-flex items-center gap-4 cursor-pointer mt-3"
-                onClick={() => handleToggleOrderDetails(order.participant_name)}
+                onClick={() =>
+                  handleToggleOrderDetails(ordersState.participant_name)
+                }
               >
                 <SizeXlCorner
                   className="h-14 w-14"
                   divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
                   text={
-                    order.participant_name
+                    ordersState.participant_name
                       .split(" ")[0]
                       .charAt(0)
                       .toUpperCase() +
                     "." +
-                    order.participant_name.split(" ")[1].charAt(0).toUpperCase()
+                    ordersState.participant_name
+                      .split(" ")[1]
+                      .charAt(0)
+                      .toUpperCase()
                   }
                 />
                 <div className="inline-flex flex-col items-start gap-1.5">
                   <div className="mt-[-1px] font-medium text-primary-color text-base">
-                    {order.participant_name}
+                    {ordersState.participant_name}
                   </div>
                   <div className="inline-flex items-center gap-2.5">
                     <Box44 className="w-5 h-5" />
                     <p className="mt-[-1px] font-normal text-primary-text-color text-sm leading-5.5">
-                      {order.order_count} {t("orders.order_on_deal")}
+                      {ordersState.order_count} {t("orders.order_on_deal")}
                     </p>
                   </div>
                 </div>
-                {isOrderDetailsVisible[order.participant_name] ? (
+                {isOrderDetailsVisible[ordersState.participant_name] ? (
                   <ChevronUp className="w-6 h-6" color="#1B4F4A" />
                 ) : (
                   <ChevronDown1 className="w-6 h-6" color="#1B4F4A" />
@@ -124,7 +130,7 @@ const Orders = ({ dealId, dealType }) => {
               </div>
               <div
                 className={`transition-all duration-500 overflow-hidden ${
-                  isOrderDetailsVisible[order.participant_name]
+                  isOrderDetailsVisible[ordersState.participant_name]
                     ? "max-h-screen"
                     : "max-h-0"
                 }`}

@@ -220,7 +220,7 @@ const Account = () => {
             </div>
           ))}
         </div>
-        <div>
+        <div className="w-full">
           {status === "loading" && <CustomLoader />}
           {status === "failed" && (
             <div className="w-[18rem]">
@@ -276,7 +276,7 @@ const Account = () => {
             <div
               key={deal.id}
               onClick={() => handleCardClick(deal)}
-              className="cursor-pointer mb-5"
+              className="cursor-pointer mb-5 w-full"
             >
               <CardDeal
                 badgesColor="success"

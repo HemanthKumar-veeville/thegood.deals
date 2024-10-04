@@ -158,11 +158,16 @@ export default {
           "0%, 100%": { transform: "scale(1)" },
           "50%": { transform: "scale(0.9)" },
         },
+        shimmer: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         scrollLeft: "scrollLeft 20s linear infinite",
         scrollRight: "scrollRight 20s linear infinite",
         "click-effect": "click-effect 0.2s ease-in-out",
+        shimmer: "shimmer 2s infinite",
       },
     },
   },
