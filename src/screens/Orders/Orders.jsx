@@ -12,6 +12,7 @@ import { Line63 } from "../../images";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
+import { OrderInfo } from "../../components/OrderInfo/OrderInfo.jsx";
 
 const Orders = ({ dealId, dealType }) => {
   const navigate = useNavigate();
@@ -167,6 +168,7 @@ const Orders = ({ dealId, dealType }) => {
                       </div>
                     </div>
                   ))}
+
                   <div className="flex items-end justify-between self-stretch">
                     <div className="flex items-center gap-2.5 grow">
                       <div className="mt-[-1px] font-semibold text-primary-color text-lg">

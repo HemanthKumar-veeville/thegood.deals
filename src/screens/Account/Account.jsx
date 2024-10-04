@@ -240,7 +240,7 @@ const Account = () => {
               />
             </div>
           )}
-          {status !== "loading" && loadedDeals[activeTab].length === 0 && (
+          {status === "succeeded" && loadedDeals[activeTab].length === 0 && (
             <div className="w-[18rem]">
               <SuccessAlert
                 className="!flex !bg-cyancyan-light-3 w-[100%]"
