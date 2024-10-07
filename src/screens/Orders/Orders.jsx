@@ -28,7 +28,7 @@ const Orders = ({ dealId, dealType }) => {
     (state) => state.orders
   );
   console.log({ orders });
-  const ordersState = orders?.Orders?.length > 0 ? orders?.Orders[0] : null;
+  const ordersState = orders?.Orders?.length > 0 ? orders?.Orders : null;
 
   useEffect(() => {
     dispatch(
@@ -64,9 +64,9 @@ const Orders = ({ dealId, dealType }) => {
   if (orderStatus === "loading") {
     return <CustomLoader />;
   }
-  console.log("ordersState", orders);
+  console.log("ordersState", ordersState);
   return (
-    <div className="flex flex-col w-full h-screen items-start relative bg-primary-background mx-auto">
+    <div className="flex flex-col w-full h-full items-start relative bg-primary-background mx-auto">
       {orderStatus === "succeeded" && (
         <div className="flex flex-col w-full items-start gap-4 px-8 py-4 relative">
           <div
@@ -89,41 +89,44 @@ const Orders = ({ dealId, dealType }) => {
             {t("orders.my_orders")}
           </div>
 
-          {ordersState?.orders?.map((order) => (
-            <div key={ordersState.participant_name}>
+          {ordersState?.map((participant) => (
+            <div key={participant.participant_id}>
               <div
-                className="inline-flex items-center gap-4 cursor-pointer mt-3"
+                className="inline-flex items-center justify-between w-full gap-4 cursor-pointer mt-3"
                 onClick={() =>
-                  handleToggleOrderDetails(ordersState.participant_name)
+                  handleToggleOrderDetails(participant.participant_name)
                 }
               >
-                <SizeXlCorner
-                  className="h-14 w-14"
-                  divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
-                  text={
-                    ordersState.participant_name
-                      .split(" ")[0]
-                      .charAt(0)
-                      .toUpperCase() +
-                    "." +
-                    ordersState.participant_name
-                      .split(" ")[1]
-                      .charAt(0)
-                      .toUpperCase()
-                  }
-                />
-                <div className="inline-flex flex-col items-start gap-1.5">
-                  <div className="mt-[-1px] font-medium text-primary-color text-base">
-                    {ordersState.participant_name}
-                  </div>
-                  <div className="inline-flex items-center gap-2.5">
-                    <Box44 className="w-5 h-5" />
-                    <p className="mt-[-1px] font-normal text-primary-text-color text-sm leading-5.5">
-                      {ordersState.order_count} {t("orders.order_on_deal")}
-                    </p>
+                <div className="flex gap-5">
+                  <SizeXlCorner
+                    className="h-14 w-14"
+                    divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
+                    text={
+                      participant.participant_name
+                        .split(" ")[0]
+                        .charAt(0)
+                        .toUpperCase() +
+                      "." +
+                      participant.participant_name
+                        .split(" ")[1]
+                        .charAt(0)
+                        .toUpperCase() +
+                      "."
+                    }
+                  />
+                  <div className="inline-flex flex-col items-start gap-1.5">
+                    <div className="mt-[-1px] font-medium text-primary-color text-base">
+                      {participant.participant_name}
+                    </div>
+                    <div className="inline-flex items-center gap-2.5">
+                      <Box44 className="w-5 h-5" />
+                      <p className="mt-[-1px] font-normal text-primary-text-color text-sm leading-5.5">
+                        {participant.orders_count} {t("orders.order_on_deal")}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                {isOrderDetailsVisible[ordersState.participant_name] ? (
+                {isOrderDetailsVisible[participant.participant_name] ? (
                   <ChevronUp className="w-6 h-6" color="#1B4F4A" />
                 ) : (
                   <ChevronDown1 className="w-6 h-6" color="#1B4F4A" />
@@ -131,8 +134,8 @@ const Orders = ({ dealId, dealType }) => {
               </div>
               <div
                 className={`transition-all duration-500 overflow-hidden ${
-                  isOrderDetailsVisible[ordersState.participant_name]
-                    ? "max-h-screen"
+                  isOrderDetailsVisible[participant.participant_name]
+                    ? "max-h-full"
                     : "max-h-0"
                 }`}
               >
@@ -142,50 +145,98 @@ const Orders = ({ dealId, dealType }) => {
                     alt={t("orders.line_alt")}
                     src={Line63}
                   />
-                  {order.products.map((product, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col items-start gap-1.5 self-stretch"
-                    >
-                      <div className="flex items-center gap-2.5 self-stretch">
-                        <p className="mt-[-1px] font-normal text-primary-color text-base">
-                          {product.product_title}
-                        </p>
-                      </div>
-                      <div className="flex items-end justify-between self-stretch">
-                        <div className="flex items-center gap-2.5 grow">
-                          <div className="mt-[-1px] font-semibold text-secondary-color text-base">
-                            {product.product_quantity} products
+                  {/* Orders Details */}
+                  <div
+                    className={`transition-all duration-500 overflow-hidden ${
+                      isOrderDetailsVisible[participant.participant_name]
+                        ? "max-h-full"
+                        : "max-h-0"
+                    }`}
+                  >
+                    {participant.orders.map((order) => (
+                      <div
+                        key={order.order_id}
+                        className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full"
+                      >
+                        {/* Products in Each Order */}
+                        {order.products.map((product, index) => (
+                          <div
+                            key={index}
+                            className="flex flex-col items-start gap-1.5 self-stretch"
+                          >
+                            <p className="mt-[-1px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
+                              {product.product_title}
+                            </p>
+                            <div className="flex items-center justify-between gap-2.5 self-stretch">
+                              <div className="flex items-center justify-between w-full">
+                                <p className="mt-[-1px] font-semibold text-secondary-color text-base">
+                                  {product.product_quantity} products
+                                </p>
+                                <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
+                                  € {product.product_price} x{" "}
+                                  {product.product_quantity} = €{" "}
+                                  {product.product_price *
+                                    product.product_quantity}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        {/* Fees Section */}
+                        <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
+                          {/* Service Fees */}
+                          <div className="flex items-center justify-between w-full">
+                            <p className=" font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                              Service Fees
+                            </p>
+                            <p className="font-semibold text-primary-color text-sm text-right">
+                              {participant.service_fees} €
+                            </p>
+                          </div>
+                          {/* Payment Fees */}
+                          <div className="flex items-center justify-between w-full">
+                            <p className=" font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                              Payment Fees
+                            </p>
+                            <p className="font-semibold text-primary-color text-sm text-right">
+                              {participant.payment_fees} €
+                            </p>
+                          </div>
+                          {/* Delivery Fees */}
+                          <div className="flex items-center justify-between w-full">
+                            <p className=" font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                              Delivery Fees
+                            </p>
+                            <p className="font-semibold text-primary-color text-sm text-right">
+                              {participant.delivery_fees}
+                            </p>
                           </div>
                         </div>
-                        <div className="inline-flex flex-col items-end">
-                          <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
-                            €{product.product_price} x{" "}
-                            {product.product_quantity} = €
-                            {product.product_price * product.product_quantity}
-                          </p>
+                        <img
+                          className="self-stretch w-full h-px object-cover"
+                          alt={t("orders.line_alt")}
+                          src={Line63}
+                        />
+                        {/* Total Per Order */}
+                        <div className="flex items-end justify-between self-stretch">
+                          <div className="flex items-center gap-2.5 grow">
+                            <div className="font-semibold text-primary-color text-lg">
+                              {t("orders.total")}
+                            </div>
+                          </div>
+                          <div className="inline-flex flex-col items-end">
+                            <div className="font-semibold text-primary-color text-lg text-right">
+                              € {participant?.total_ttc}
+                            </div>
+                          </div>
                         </div>
+                        <img
+                          className="self-stretch w-full h-px object-cover"
+                          alt={t("orders.line_alt")}
+                          src={Line63}
+                        />
                       </div>
-                    </div>
-                  ))}
-
-                  <div className="flex items-end justify-between self-stretch">
-                    <div className="flex items-center gap-2.5 grow">
-                      <div className="mt-[-1px] font-semibold text-primary-color text-lg">
-                        {t("orders.total")}
-                      </div>
-                    </div>
-                    <div className="inline-flex flex-col items-end">
-                      <div className="mt-[-1px] font-semibold text-primary-color text-lg text-right">
-                        €
-                        {order.products.reduce(
-                          (total, product) =>
-                            total +
-                            product.product_price * product.product_quantity,
-                          0
-                        )}
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -196,6 +247,7 @@ const Orders = ({ dealId, dealType }) => {
               />
             </div>
           ))}
+
           {orders?.message && (
             <div className="w-full">
               <SuccessAlert

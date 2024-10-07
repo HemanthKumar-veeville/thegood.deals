@@ -20,7 +20,6 @@ const DraftDeal = () => {
   const dealState = useSelector((state) => state.deals);
   const { deal, status } = dealState;
   const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
-  console.log("dealData", dealData);
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
@@ -63,10 +62,10 @@ const DraftDeal = () => {
         {/* Banner */}
         <DraftBanner className="relative w-full bg-blue-100 text-blue-800 rounded-md p-3" />
 
-        <ImageSlider pictures={dealData?.image_url || [blogImage]} />
+        <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
 
         {/* Title */}
-        <div className="relative self-stretch font-semibold text-primary-color text-2xl leading-[30px]">
+        <div className="relative self-stretch font-semibold text-primary-color text-2xl leading-[30px] [font-family:'Inter-SemiBold',Helvetica] tracking-[0]">
           {dealData?.deal_title}
         </div>
 

@@ -130,10 +130,10 @@ export const OrderInfo = ({ orderId }) => {
             </div>
             <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
               <div className="[font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color leading-6 line-through relative w-fit mt-[-1.00px] text-sm text-right tracking-[0] whitespace-nowrap">
-                {order?.original_price ?? "135,98"} €
+                {orderState?.mrp ?? "XX"} €
               </div>
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-sm text-right tracking-[0] leading-[22px] whitespace-nowrap">
-                {order?.total_price ?? "63.06"} €
+                {orderState?.total_ttc ?? "XX"} €
               </div>
             </div>
           </div>
@@ -143,7 +143,7 @@ export const OrderInfo = ({ orderId }) => {
             Save
           </div>
           <div className="font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-secondary-color leading-[var(--body-small-medium-line-height)] relative w-fit mt-[-1.00px] text-[length:var(--body-small-medium-font-size)] text-right tracking-[var(--body-small-medium-letter-spacing)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-            {order?.savings ?? "77,98"} €
+            {orderState?.discount ?? "XX"} €
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Box43 } from "../../icons/Box43";
@@ -49,6 +49,8 @@ const ActiveDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
+  const [isCollectionInProgress, setIsCollectionInProgress] = useState(false);
+  const [chargeStats, setChargeStats] = useState([]);
 
   const handleBack = () => {
     navigate("/");
@@ -98,9 +100,22 @@ const ActiveDeal = () => {
     );
   };
 
-  const chargeDeal = () => {
-    const res = dispatch(chargeGroupPayment({ dealId: deal_id }));
-    console.log({ res });
+  const chargeDeal = async () => {
+    setIsCollectionInProgress(true);
+    try {
+      // Attempt the API call
+      const res = await dispatch(chargeGroupPayment({ dealId: deal_id }));
+      setChargeStats(res?.data?.deal_payment_stats);
+      // Handle success (you can process the response here if needed)
+      console.log("Response:", res);
+    } catch (error) {
+      // Handle any errors that occur during the API call
+      console.error("Error charging deal:", error);
+    } finally {
+      // This block will always run, regardless of success or failure
+      setIsCollectionInProgress(false);
+      // You can add any cleanup logic or final steps here if needed
+    }
   };
 
   return (
@@ -154,16 +169,10 @@ const ActiveDeal = () => {
                 </div>
               </div>
             )}
-            {dealData?.deal_ends_in > 0 && (
+            {Array.isArray(chargeStats) && chargeStats?.length > 0 && (
               <DangerAlert
                 alertMessage="The payment of one of the participants could not be made."
-                participants={[
-                  { name: "Jean Dupont", status: "failed" },
-                  { name: "Ben Affleck", status: "failed" },
-                  { name: "Thomas Bessont", status: "success" },
-                  { name: "Miracle Saris", status: "success" },
-                  { name: "Dulce Carder", status: "success" },
-                ]}
+                participants={(Array.isArray(chargeStats) && chargeStats) || []}
               />
             )}
             <div onClick={handleOrder}>
@@ -202,21 +211,30 @@ const ActiveDeal = () => {
               </div>
             </div>
             {/* Location */}
-            <div className="flex items-center gap-2.5 w-full">
+            <div
+              className={`${
+                isCollectionInProgress
+                  ? "flex items-center gap-2.5 w-full"
+                  : "flex items-center gap-2.5 w-full"
+              }`}
+            >
               <Map className="w-5 h-5" />
               <p className="w-full text-sm text-primary-color leading-[22px] break-words">
                 {dealData?.collection_location || "No location available"}
               </p>
             </div>
-            <div
-              className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
-              onClick={chargeDeal}
-            >
-              <EuroCoin className="!relative !w-5 !h-5" />
-              <button className="box-border font-medium text-white text-base text-center">
-                Collect payment
-              </button>
-            </div>
+            {!isCollectionInProgress && (
+              <div
+                className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
+                onClick={chargeDeal}
+              >
+                <EuroCoin className="!relative !w-5 !h-5" />
+                <button className="box-border font-medium text-white text-base text-center">
+                  Collect payment
+                </button>
+              </div>
+            )}
+            {isCollectionInProgress && <CustomLoader />}
             <img
               className="relative self-stretch w-full h-px object-cover"
               alt="Line"

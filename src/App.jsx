@@ -48,6 +48,9 @@ const ViewGoodDeal = loadable(() =>
 const ThanksForWithdrawal = loadable(() =>
   import("./screens/ThanksForWithdrawal/ThanksForWithdrawal")
 );
+const ThanksPayment = loadable(() =>
+  import("./screens/ThanksPayment/ThanksPayment")
+);
 const InviteLovedOnes = loadable(() =>
   import("./screens/InviteLovedOnes/InviteLovedOnes")
 );
@@ -293,6 +296,14 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<ThanksForWithdrawal />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/thanks-payment-setup",
+      element: (
+        <Layout>
+          <ProtectedRoute element={<ThanksPayment />} />
         </Layout>
       ),
     },

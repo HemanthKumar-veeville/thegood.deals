@@ -10,7 +10,8 @@ export const ShowCustomErrorModal = ({
   message = "We're sorry, something has gone wrong. Please try later",
   buttonText = "Got it",
   shouldCloseOnOverlayClick = true, // Default to true unless specified
-  handleClick,
+  handleClick = () => MySwal.close(), // Default functionality to close modal
+  onClose, // New prop to handle state reset when modal closes
 }) => {
   MySwal.fire({
     html: (
@@ -24,7 +25,7 @@ export const ShowCustomErrorModal = ({
               />
             </div>
             <div className="gap-[15px] self-stretch w-full flex-[0_0_auto] flex flex-col items-center relative">
-              <p className=" relative self-stretch mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-darkdark text-[length:var(--body-large-semibold-font-size)] text-center tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] [font-style:var(--body-large-semibold-font-style)]">
+              <p className="relative self-stretch mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-darkdark text-[length:var(--body-large-semibold-font-size)] text-center tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] [font-style:var(--body-large-semibold-font-style)]">
                 {message}
               </p>
             </div>
@@ -51,5 +52,6 @@ export const ShowCustomErrorModal = ({
     },
     backdrop: true,
     allowOutsideClick: shouldCloseOnOverlayClick, // Control overlay click behavior
+    willClose: onClose, // Trigger on modal close
   });
 };

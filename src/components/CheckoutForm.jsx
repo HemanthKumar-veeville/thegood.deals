@@ -10,6 +10,7 @@ import { ArrowRight1 } from "../icons/ArrowRight1";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setupPaymentForOrder } from "../redux/app/orders/orderSlice";
+import CustomLoader from "./CustomLoader/CustomLoader";
 
 export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const stripe = useStripe();
@@ -22,6 +23,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation(); // Use location to access query params
+  const [isConfirmSetUpLoading, setIsConfirmSetupLoading] = useState(false);
 
   // Extract orderId from the query parameters
   const queryParams = new URLSearchParams(location.search);
@@ -62,15 +64,18 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
         console.log("SetupIntent confirmed:", setupIntent);
 
         // Proceed to dispatch payment setup
+        setIsConfirmSetupLoading(true);
         try {
           await dispatch(
             setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId })
           );
           setMessage("Setup confirmed successfully.");
-          navigate("/thanks-withdrawal"); // Navigate to success page
+          navigate(`/thanks-payment-setup?orderId=${orderId}`); // Navigate to success page
         } catch (dispatchError) {
           console.error("Error during dispatch:", dispatchError);
           setMessage("An error occurred while processing the payment setup.");
+        } finally {
+          setIsConfirmSetupLoading(false);
         }
       }
     } catch (err) {
@@ -158,22 +163,24 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
       onSubmit={handleSubmit}
       className="mx-auto w-full max-w-lg space-y-4"
     >
-      <div className="space-y-3">
-        <LinkAuthenticationElement
-          id="link-authentication-element"
-          onChange={(event) => {
-            setEmail(event.value.email); // Dynamically set the email when changed
-          }}
-          options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
-          // className="!h-14" // Force height using Tailwind CSS
-        />
-        <PaymentElement
-          id="payment-element"
-          options={paymentElementOptions}
-          className="pt-3"
-        />
-      </div>
-
+      {!isConfirmSetUpLoading && (
+        <div className="space-y-3">
+          <LinkAuthenticationElement
+            id="link-authentication-element"
+            onChange={(event) => {
+              setEmail(event.value.email); // Dynamically set the email when changed
+            }}
+            options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
+            // className="!h-14" // Force height using Tailwind CSS
+          />
+          <PaymentElement
+            id="payment-element"
+            options={paymentElementOptions}
+            className="pt-3"
+          />
+        </div>
+      )}
+      {isConfirmSetUpLoading && <CustomLoader />}
       {message && (
         <div
           id="payment-message"

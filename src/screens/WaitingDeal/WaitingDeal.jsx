@@ -1,16 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Map } from "../../icons/Map";
 import { Pencil1 } from "../../icons/Pencil1";
-import { blogImage, Line63, Line69, FranceFlag } from "../../images";
+import { blogImage, Line63, Line69 } from "../../images";
 import { WaitingBanner } from "../../components/Banners/WaitingBanner";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Badges } from "../../components/Badges";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDealByDealId } from "../../redux/app/deals/dealSlice";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 
 const WaitingDeal = () => {
   const { t } = useTranslation();
@@ -19,12 +18,11 @@ const WaitingDeal = () => {
 
   const dispatch = useDispatch();
   const dealState = useSelector((state) => state.deals);
-  const { deal, status } = dealState;
+  const { deal } = dealState;
   const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
-  console.log("dealData", dealData);
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
-  const is_creator = queryParams.get("is_creator");
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,12 +33,12 @@ const WaitingDeal = () => {
   };
 
   const handleEditDeal = () => {
-    alert(t("waiting_deal.alert_editing"));
+    setShowErrorModal(true); // Show the modal when edit is clicked
   };
 
   useEffect(() => {
     dispatch(getDealByDealId(deal_id));
-  }, []);
+  }, [deal_id, dispatch]);
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
@@ -60,7 +58,13 @@ const WaitingDeal = () => {
             </div>
           </div>
         </div>
-
+        {showErrorModal && (
+          <ShowCustomErrorModal
+            message="You can't edit the deal, if the deal status is waiting."
+            buttonText="Got it"
+            onClose={() => setShowErrorModal(false)} // Reset modal state on close
+          />
+        )}
         {/* Waiting Banner */}
         <WaitingBanner className="relative w-full bg-orange-100 text-orange-700 rounded-md p-3">
           {t(
@@ -70,10 +74,10 @@ const WaitingDeal = () => {
         </WaitingBanner>
 
         {/* Deal Image */}
-        <ImageSlider pictures={dealData?.image_url || [blogImage]} />
+        <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
 
         {/* Title */}
-        <div className="relative self-stretch font-semibold text-primary-color text-2xl leading-[30px]">
+        <div className="relative self-stretch font-semibold text-primary-color text-2xl leading-[30px] [font-family:'Inter-SemiBold',Helvetica] tracking-[0]">
           {dealData?.deal_title}
         </div>
 
