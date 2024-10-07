@@ -6,7 +6,7 @@ import { CrossCircle3 } from "../icons/CrossCircle3/CrossCircle3";
 
 export const DangerAlert = ({ alertMessage, participants }) => {
   const [showList, setShowList] = useState(false);
-
+  console.log({ participants });
   // Toggle list open/close and rotate the chevron
   const toggleList = () => {
     setShowList(!showList);
@@ -49,20 +49,23 @@ export const DangerAlert = ({ alertMessage, participants }) => {
           style={{ overflow: "hidden" }} // Hides content when the list is closing
         >
           {participants.map((participant, index) => (
-            <div key={index} className="flex items-center px-4 py-2 gap-2.5">
-              {participant.status === "failed" ? (
+            <div
+              key={participant?.order_id}
+              className="flex items-center px-4 py-2 gap-2.5"
+            >
+              {participant?.payment_status !== "succeeded" ? (
                 <CrossCircle3 className="w-5 h-5" color="#F23030" />
               ) : (
                 <CheckmarkCircle1 className="w-5 h-5" color="#13C296" />
               )}
               <p
                 className={`${
-                  participant.status === "failed"
+                  participant?.payment_status !== "succeeded"
                     ? "font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-redred text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]"
                     : "text-[#13C296] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]"
                 }`}
               >
-                {participant.name}
+                {participant?.username}
               </p>
             </div>
           ))}

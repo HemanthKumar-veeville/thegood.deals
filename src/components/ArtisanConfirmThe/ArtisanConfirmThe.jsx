@@ -48,17 +48,13 @@ export const ArtisanConfirmThe = ({
     const formData = { status: "accept", reason_for_refusal: "" };
 
     try {
-      // Dispatch the async thunk with formData as the dealUpdate
       const resultAction = await dispatch(
         validationByArtisan({ dealId, dealUpdate: formData })
       );
       console.log("resultAction", resultAction);
-      // Check if the thunk was fulfilled
       if (validationByArtisan.fulfilled.match(resultAction)) {
-        // Navigate to the confirmation page
         navigate("/deal-confirmed");
       } else {
-        // Handle any validation errors here
         console.error("Validation failed:", resultAction.payload);
       }
     } catch (error) {
@@ -75,17 +71,18 @@ export const ArtisanConfirmThe = ({
       } else {
         Swal.fire({
           icon: "error",
-          title: "Error...",
+          title: t("artisanConfirmThe.error_title"),
           text:
-            response.payload.detail || "You need to login to send a request.",
+            response.payload.detail ||
+            t("artisanConfirmThe.error_login_required"),
         });
         navigate("/auth?login");
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Error...",
-        text: "Failed to send request. Please try again.",
+        title: t("artisanConfirmThe.error_title"),
+        text: t("artisanConfirmThe.error_request_failed"),
       });
     }
   };
@@ -154,12 +151,16 @@ export const ArtisanConfirmThe = ({
               {t("artisanConfirmThe.organized_by")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              {dealState?.organiser.name || "Abraham Thomas"}
+              {dealState?.organiser.name ||
+                t("artisanConfirmThe.organizer_name")}
             </div>
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar
                 className="!flex-[0_0_auto]"
-                rating={dealState?.organiser.rating || "four-star"}
+                rating={
+                  dealState?.organiser.rating ||
+                  t("artisanConfirmThe.organizer_rating")
+                }
                 size="small"
               />
             </div>
@@ -301,7 +302,7 @@ export const ArtisanConfirmThe = ({
               >
                 <CrossCircle className="!relative !w-5 !h-5 !ml-[-6.75px]" />
                 <button className="all-[unset] box-border mr-[-6.75px] text-red relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                  Ignore
+                  {t("artisanConfirmThe.ignore")}
                 </button>
               </div>
               <div
@@ -310,7 +311,7 @@ export const ArtisanConfirmThe = ({
               >
                 <Send1 className="!relative !w-5 !h-5 !ml-[-13.25px]" />
                 <button className="all-[unset] box-border mr-[-13.25px] text-white relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                  Accept
+                  {t("artisanConfirmThe.accept")}
                 </button>
               </div>
             </div>

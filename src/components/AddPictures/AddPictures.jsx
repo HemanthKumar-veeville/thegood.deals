@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { FaTrash, FaStar } from "react-icons/fa"; // Import the trash and star icons from react-icons
 import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next"; // Import useTranslation
 
 const AddPictures = ({ onChange }) => {
+  const { t } = useTranslation(); // Initialize translation hook
+
   const [pictures, setPictures] = useState([]);
   const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [files, setFiles] = useState([]);
+
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     setFiles(files);
@@ -16,8 +20,8 @@ const AddPictures = ({ onChange }) => {
     if (totalFiles > 10) {
       Swal.fire({
         icon: "error",
-        title: "Error...",
-        text: "You can only select up to 10 files in total.",
+        title: t("add_pictures.error_title"), // Use translation
+        text: t("add_pictures.error_limit"), // Use translation
       });
       return;
     }
@@ -117,7 +121,7 @@ const AddPictures = ({ onChange }) => {
                 <div key={index} className="w-full flex-shrink-0 relative">
                   <img
                     src={picture}
-                    alt={`picture-${index}`}
+                    alt={t("add_pictures.image_alt_text", { index })} // Use translation for image alt text
                     className="object-cover w-full h-auto rounded-md"
                   />
                   <button
@@ -153,7 +157,10 @@ const AddPictures = ({ onChange }) => {
                   onClick={togglePlayPause}
                   className="w-8 h-8 bg-white rounded-full focus:outline-none flex items-center justify-center"
                 >
-                  {isPlaying ? "❚❚" : "▶"}
+                  {isPlaying
+                    ? t("add_pictures.pause_icon")
+                    : t("add_pictures.play_icon")}{" "}
+                  {/* Use translation for play/pause */}
                 </button>
                 {pictures.map((_, index) => (
                   <button
@@ -182,7 +189,8 @@ const AddPictures = ({ onChange }) => {
           >
             <div className="flex items-center justify-center gap-2 px-6 py-2 relative flex-[0_0_auto] rounded-[50px] border border-solid border-[#1b4f4a] cursor-pointer">
               <CirclePlus55 className="!relative !w-5 !h-5" color="#1B4F4A" />{" "}
-              Add pictures
+              {t("add_pictures.file_input_label")}{" "}
+              {/* Use translation for file input label */}
             </div>
             <input
               type="file"

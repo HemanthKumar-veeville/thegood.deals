@@ -1,16 +1,19 @@
 import React from "react";
 import { LockAlt } from "../../icons/LockAltScreen/LockAltScreen";
 import { Line63 } from "../../images";
+import { useTranslation } from "react-i18next";
 
 export const Access = ({ isUserLoggedIn, handleAccept }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-col items-start gap-[15px] p-[15px] relative bg-whitewhite rounded-[5px]">
       <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
         <LockAlt className="!relative !w-5 !h-5" />
         <p className="relative flex-1 mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] [font-style:var(--body-large-bold-font-style)]">
           {isUserLoggedIn
-            ? "To participate in the deal, the organizer must give you access"
-            : "You must be logged in to order"}
+            ? t("access.participate_in_deal")
+            : t("access.must_be_logged_in")}
         </p>
       </div>
       <img
@@ -29,7 +32,9 @@ export const Access = ({ isUserLoggedIn, handleAccept }) => {
             )}
           </span>
           <span>
-            {isUserLoggedIn ? "I request access" : "Log in / Create an account"}
+            {isUserLoggedIn
+              ? t("access.request_access")
+              : t("access.login_create_account")}
           </span>
         </p>
       </div>

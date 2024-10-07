@@ -633,7 +633,14 @@
     "refuse": "Refuse",
     "confirm": "Confirm",
     "refused": "You have refused the deal.",
-    "confirmed": "You have confirmed the deal."
+    "confirmed": "You have confirmed the deal.",
+    "organizer_name": "Abraham Thomas",
+    "organizer_rating": "four-star",
+    "ignore": "Ignore",
+    "accept": "Accept",
+    "error_title": "Error...",
+    "error_login_required": "You need to login to send a request.",
+    "error_request_failed": "Failed to send request. Please try again."
   },
   "guestsSendReviews": {
     "giveYourOpinion": "Give your opinion!",
@@ -790,5 +797,26 @@
     "login_button": "Login",
     "login_with": "Login with",
     "forgot_password": "Forgot your password ?"
+  },
+  "access": {
+    "participate_in_deal": "To participate in the deal, the organizer must give you access",
+    "must_be_logged_in": "You must be logged in to order",
+    "request_access": "I request access",
+    "login_create_account": "Log in / Create an account"
+  },
+  "add_pictures": {
+    "error_title": "Error...",
+    "error_limit": "You can only select up to 10 files in total.",
+    "file_input_label": "Add pictures",
+    "play_icon": "▶",
+    "pause_icon": "❚❚",
+    "image_alt_text": "picture-{index}"
+  },
+  "app": {
+    "logo_part1": "thegood",
+    "logo_separator": ".",
+    "logo_part2": "deals",
+    "default_profile_image_url": "https://example.com/profiles/default.jpg",
+    "alt_profile_photo": "Profile Photo"
   }
 }

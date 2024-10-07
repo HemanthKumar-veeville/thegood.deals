@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { Line63 } from "../../images";
 import { LanguageDropdown } from "../LanguageDropdown/LanguageDropdown";
 import LanguageDropdownScreen from "../../screens/LanguageDropdown/LanguageDropdown";
+import { useTranslation } from "react-i18next"; // Importing i18next
 
 /**
  * AppBar component renders the top navigation bar of the application.
@@ -17,15 +18,15 @@ import LanguageDropdownScreen from "../../screens/LanguageDropdown/LanguageDropd
 function AppBar() {
   const [open, setOpen] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
+  const { t } = useTranslation(); // Initialize translation hook
 
   const navigate = useNavigate();
   const location = useLocation();
   const [isUser, setIsUser] = useState(true);
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
 
-  const { profile, userDeals, userReviews } = useSelector(
-    (state) => state.user
-  );
+  const { profile } = useSelector((state) => state.user);
+
   /**
    * Toggles the sidebar open state.
    */
@@ -45,14 +46,17 @@ function AppBar() {
   };
 
   useEffect(() => {
-    if (
-      location?.pathname === "/artisan-validation" ||
-      location?.pathname === "/deal-confirmed" ||
-      location?.pathname === "/deal-refused" ||
-      location?.pathname === "/deal-refused-message" ||
-      location?.pathname === "/artisan-send-review" ||
-      location?.pathname === "/deal_details"
-    ) {
+    // Externalize paths to config/constants
+    const userPages = [
+      "/artisan-validation",
+      "/deal-confirmed",
+      "/deal-refused",
+      "/deal-refused-message",
+      "/artisan-send-review",
+      "/deal_details",
+    ];
+
+    if (userPages.includes(location?.pathname)) {
       setIsUser(false);
     } else {
       setIsUser(true);
@@ -88,9 +92,15 @@ function AppBar() {
                   className="relative w-fit mt-[-1.00px] font-bold text-[28px] text-center tracking-[0] leading-[normal] whitespace-nowrap cursor-pointer"
                   onClick={handleLogoClick}
                 >
-                  <span className="text-primary-color">thegood</span>
-                  <span className="text-custom-yellow">.</span>
-                  <span className="text-custom-orange">deals</span>
+                  <span className="text-primary-color">
+                    {t("app.logo_part1")}
+                  </span>
+                  <span className="text-custom-yellow">
+                    {t("app.logo_separator")}
+                  </span>
+                  <span className="text-custom-orange">
+                    {t("app.logo_part2")}
+                  </span>
                 </div>
               </div>
             </div>
@@ -109,10 +119,10 @@ function AppBar() {
               >
                 {profile?.profile_image &&
                 profile?.profile_image !==
-                  "https://example.com/profiles/default.jpg" ? (
+                  t("app.default_profile_image_url") ? ( // Use translation for default image URL
                   <img
                     className="w-[90%] h-[90%] rounded-full object-cover"
-                    alt="photo"
+                    alt={t("app.alt_profile_photo")} // Use translation for alt text
                     src={profile?.profile_image}
                   />
                 ) : (
