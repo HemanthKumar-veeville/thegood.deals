@@ -782,122 +782,122 @@
     "forgot_password": "Mot de passe oublié ?"
   },
   "access": {
-    "participate_in_deal": "Pour participer à la commande, l'organisateur doit vous donner accès",
+    "participate_in_deal": "Pour participer au deal, l’organisateur doit vous donner l’accès",
     "must_be_logged_in": "Vous devez être connecté pour commander",
-    "request_access": "Je demande l'accès",
+    "request_access": "Je demande l’accès",
     "login_create_account": "Se connecter / Créer un compte"
   },
   "add_pictures": {
-    "error_title": "Erreur...",
-    "error_limit": "Vous pouvez sélectionner jusqu'à 10 fichiers au maximum.",
+    "error_title": "Erreur...", //v
+    "error_limit": "Vous pouvez sélectionner jusqu'à 10 fichiers au maximum.", //v
     "file_input_label": "Ajouter des photos",
     "play_icon": "▶",
     "pause_icon": "❚❚",
-    "image_alt_text": "image-{index}"
+    "image_alt_text": "image-{index}" //v
   },
   "app": {
     "logo_part1": "thegood",
     "logo_separator": ".",
     "logo_part2": "deals",
     "default_profile_image_url": "https://example.com/profiles/default.jpg",
-    "alt_profile_photo": "Photo de profil"
+    "alt_profile_photo": "Photo de profil" //v
   },
   "bankingInfo": {
-    "copySuccess": "Copié dans le presse-papiers !",
-    "copyFail": "Échec de la copie : "
+    "copySuccess": "Copié dans le presse-papiers !", //v
+    "copyFail": "Échec de la copie : " //v
   },
   "draftBanner": {
-    "draftMessage": "Cette commande est un brouillon.",
-    "completePrompt": "Veuillez la compléter."
+    "draftMessage": "Ce deal est un brouillon.",
+    "completePrompt": "Veuillez le compléter"
   },
   "waitingBanner": {
-    "waitingMessage": "En attente de confirmation de la commande par l'artisan"
+    "waitingMessage": "En attente de la confirmation du deal par l’artisan"
   },
   "successAlert": {
-    "defaultText": "Votre article a été ajouté avec succès",
-    "messageSent": "Message envoyé avec succès",
-    "loremIpsumLong": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression et de la composition. Le Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur anonyme a assemblé un livre de spécimens de polices de caractères.",
-    "viewStatus": "Voir le statut",
-    "dismiss": "Fermer",
-    "loremIpsumShort": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression."
+    "defaultText": "Votre article a été ajouté avec succès", //v
+    "messageSent": "Message envoyé avec succès", //v
+    "loremIpsumLong": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression et de la composition. Le Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur anonyme a assemblé un livre de spécimens de polices de caractères.", //v
+    "viewStatus": "Voir le statut", //v
+    "dismiss": "Fermer", //v
+    "loremIpsumShort": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression." //v
   },
   "artisan": {
     "cardDeal": {
-      "soonOutStock": "Bientôt en rupture de stock",
+      "soonOutStock": "Bientôt en rupture",
       "finished": "Terminé",
       "inStock": "En stock",
-      "waiting": "En attente de l'artisan",
+      "waiting": "En attente de l’artisan",
       "draft": "Brouillon",
-      "endsIn": "se termine dans {{days}} jours",
-      "dealFinished": "Commande terminée",
-      "styleTypePrimaryText": "80% vendu",
+      "endsIn": "fin dans {{days}} jours",
+      "dealFinished": "Deal terminé",
+      "styleTypePrimaryText": "80% vendus",
       "text": "Caisse de vin<br/>Domaine de Cigaluse",
       "text1": "se termine dans 12 jours",
       "participants": "{{count}} participants",
-      "authorName": "Nom de l'auteur",
-      "badgesText": "Presque en rupture de stock"
+      "authorName": "Author name",
+      "badgesText": "Prêt à être publié"
     }
   },
   "cart": {
     "myBasket": "Mon panier",
-    "available": "{{count}} disponibles",
+    "available": "{{count}} dispos",
     "totalTTC": "TOTAL TTC",
-    "save": "Sauvegarder",
+    "save": "Économisez",
     "payment": "Paiement",
-    "errorTitle": "Erreur...",
-    "errorMessage": "Échec de l'envoi de la requête. Veuillez réessayer."
+    "errorTitle": "Erreur...", //v
+    "errorMessage": "Échec de l'envoi de la requête. Veuillez réessayer." //v
   },
   "collectionLocation": {
-    "dealDeliveryCosts": "Frais de livraison de la commande",
-    "collectionLocationTitle": "Lieu de retrait",
+    "dealDeliveryCosts": "Frais de livraison du deal",
+    "collectionLocationTitle": "Lieu de collecte",
     "deliveryCostDescription": "Vous avez la possibilité de partager les frais de livraison entre les participants.",
     "atMyHome": "Chez moi",
-    "deliveryIncluded": "Livraison incluse",
-    "provideAnotherLocation": "Je propose un autre lieu",
-    "addShippingCosts": "J'ajoute les frais de livraison",
+    "deliveryIncluded": "La livraison est incluse",
+    "provideAnotherLocation": "Je renseigne un autre lieu",
+    "addShippingCosts": "J’ajoute les frais de livraison",
     "placeholderLocation": "ex. Chez Abraham 24 rue des Vignobles, 33000 Bordeaux",
-    "placeholderCost": "345,00 €"
+    "placeholderCost": "ex. 29.00 € "
   },
   "dealExpiration": {
-    "expirationDateTitle": "Date d'expiration de la commande",
-    "expirationDateDescription": "Maximum 30 jours à partir de cette date"
+    "expirationDateTitle": "Date d’expiration du deal",
+    "expirationDateDescription": "Maximum 30 jours à compter de ce jour"
   },
   "placeholder": {
-    "selectLanguageTitle": "Sélectionnez la langue",
+    "selectLanguageTitle": "Sélectionnez la langue", //v
     "languageOptions": {
-      "english": "Anglais",
-      "french": "Français"
+      "english": "Anglais", //v
+      "french": "Français" //v
     },
     "defaultLanguage": "Langue"
   },
   "customErrorModal": {
-    "defaultMessage": "Nous sommes désolés, quelque chose a mal tourné. Veuillez réessayer plus tard",
-    "buttonText": "J'ai compris"
+    "defaultMessage": "Nous sommes désolés, quelque chose a mal tourné. Veuillez réessayer plus tard", //v
+    "buttonText": "J'ai compris" //v
   },
   "header": {
-    "mainText": "Créez, Partagez et Savourez avec une commande groupée !",
+    "mainText": "Créez, Partagez et Savourez avec une  commande groupée !",
     "subText": "En quelques clics, créez une commande, invitez vos proches et partagez le plaisir de découvrir ensemble les saveurs uniques de l'artisanat local. Profitez de tarifs avantageux, soutenez les artisans de votre région, et transformez chaque achat en une expérience conviviale et enrichissante.",
     "createDealButton": "Créer un good deal",
     "manageDealsButton": "Gérer mes good deals",
     "contactUsButton": "Contactez-nous"
   },
   "imageLoader": {
-    "imageAlt": "Image",
-    "error": "Échec du chargement de l'image.",
-    "loading": "Chargement de l'image..."
+    "imageAlt": "Image", //v
+    "error": "Échec du chargement de l'image.", //v
+    "loading": "Chargement de l'image..." //v
   },
   "order": {
-    "orderLabel": "Commander",
+    "orderLabel": "Commande",
     "serviceFeesLabel": "Frais de service",
     "serviceFeesTooltip": "Commission de TheGoodDeals de 6%",
     "paymentFeesLabel": "Frais de paiement",
     "deliveryFeesLabel": "Frais de livraison",
     "totalTTC": "TOTAL TTC",
-    "saveLabel": "Sauvegarder",
-    "priceUnknown": "Prix inconnu",
-    "totalUnknown": "Total inconnu",
-    "discountUnknown": "Remise inconnue",
-    "error": "Erreur : {{error}}"
+    "saveLabel": "Économisez",
+    "priceUnknown": "Prix inconnu", //v
+    "totalUnknown": "Total inconnu", //v
+    "discountUnknown": "Remise inconnue", //v
+    "error": "Erreur : {{error}}" //v
   },
   "productInfo": {
     "productTitleLabel": "Titre du produit",
@@ -905,32 +905,32 @@
     "totalStockLabel": "Stock total",
     "byOrderText": "par commande",
     "totalStockPlaceholder": "ex. 32",
-    "minQuantityLabel": "Quantité minimale",
-    "maxQuantityLabel": "Quantité maximale",
-    "maximumRetailPriceLabel": "Prix de vente maximal",
-    "maximumRetailPricePlaceholder": "ex. 29,00 €",
+    "minQuantityLabel": "Quantité minimum",
+    "maxQuantityLabel": "Quantité maximum",
+    "maximumRetailPriceLabel": "Prix de référence",
+    "maximumRetailPricePlaceholder": "ex. 29.00 €",
     "goodDealPriceLabel": "Prix du good deal",
-    "goodDealPricePlaceholder": "ex. 29,00 €",
+    "goodDealPricePlaceholder": "ex. 29.00 € ",
     "estimatedDiscountLabel": "Remise estimée",
-    "estimatedDiscountText": "% par rapport au prix public",
+    "estimatedDiscountText": "par rapport au prix public",
     "addButtonText": "Ajouter"
   },
   "ProductList": {
-    "productListTitle": "Liste des produits",
-    "noProductsMessage": "Aucun produit ajouté pour le moment.",
-    "totalStock": "Stock total",
-    "minQuantity": "Quantité min.",
-    "maxQuantity": "Quantité max.",
-    "marketPrice": "Prix du marché",
-    "goodDealPrice": "Prix du good deal",
-    "estimatedDiscount": "Remise estimée"
+    "productListTitle": "Liste des produits", //v
+    "noProductsMessage": "Aucun produit ajouté pour le moment.", //v
+    "totalStock": "Stock total", //v
+    "minQuantity": "Quantité min.", //v
+    "maxQuantity": "Quantité max.", //v
+    "marketPrice": "Prix du marché", //v
+    "goodDealPrice": "Prix du good deal", //v
+    "estimatedDiscount": "Remise estimée" //v
   },
   "ProductQuantity": {
     "byOrder": "par commande",
     "lineAltText": "Ligne"
   },
   "ProgressBarYellow": {
-    "sold": "{{percentage}}% vendu"
+    "sold": "{{percentage}}% vendus"
   },
   "SuccessAlert": {
     "messageSent": "Message envoyé avec succès",
@@ -942,68 +942,68 @@
     "message": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression."
   },
   "TextInput": {
-    "placeholder": "Placeholder"
+    "placeholder": "Placeholder" //v
   },
   "TitleInput": {
     "label": "Titre",
     "placeholder": "ex. Caisses de vin"
   },
   "checkout": {
-    "stripe_not_loaded": "Stripe n'est pas encore complètement chargé. Veuillez réessayer.",
-    "unexpected_error": "Une erreur inattendue est survenue. Veuillez réessayer.",
-    "setup_confirmed": "Configuration confirmée avec succès.",
-    "processing_error": "Une erreur est survenue lors du traitement de la configuration de paiement.",
-    "unexpected_error_setup": "Une erreur inattendue est survenue lors de la confirmation de la configuration.",
-    "line_alt": "Séparateur pour les sections de paiement",
-    "submit_button": "Soumettre le paiement"
+    "stripe_not_loaded": "Stripe n'est pas encore complètement chargé. Veuillez réessayer.", //v
+    "unexpected_error": "Une erreur inattendue est survenue. Veuillez réessayer.", //v
+    "setup_confirmed": "Configuration confirmée avec succès.", //v
+    "processing_error": "Une erreur est survenue lors du traitement de la configuration de paiement.", //v
+    "unexpected_error_setup": "Une erreur inattendue est survenue lors de la confirmation de la configuration.", //v
+    "line_alt": "Séparateur pour les sections de paiement", //v
+    "submit_button": "Soumettre le paiement" //v
   },
   "DangerAlert": {
-    "alert_message": "Une nouvelle demande a été envoyée automatiquement.",
-    "show_list": "Afficher la liste"
+    "alert_message": "Une nouvelle demande à été envoyé automatiquement.",
+    "show_list": "Voir la liste"
   },
   "GeneralConditions": {
-    "heading": "Conditions Générales de Vente et d'Utilisation de thegood.deals",
-    "introduction": "Bienvenue sur thegood.deals, une plateforme dédiée aux transactions entre vendeurs professionnels et consommateurs particuliers (B2C). Ces Conditions Générales de Vente (ci-après 'CGV') régissent les droits et obligations des utilisateurs de notre place de marché. En accédant et en utilisant notre site, vous acceptez ces CGV dans leur intégralité.",
+    "heading": "Conditions Générales de Vente et d’utilisation de TheGood.Deals",
+    "introduction": "Bienvenue sur TheGood.Deals, une plateforme de marketplace dédiée aux transactions entre vendeurs professionnels et consommateurs particuliers (B2C). Ces Conditions Générales de Vente (ci-après 'CGV') régissent les droits et obligations des utilisateurs de notre marketplace. En accédant et en utilisant notre site, vous acceptez l'intégralité des présentes CGV.",
     "section_1": {
       "title": "1. Définitions",
       "content": {
-        "thegoodDeals": "thegood.deals : Le site web et la plateforme de place de marché opérée par thegood.deals SAS, accessible à www.thegood.deals.",
-        "user": "Utilisateur : Toute personne accédant à la place de marché, qu'il s'agisse de visiteurs, de vendeurs ou d'acheteurs.",
-        "seller": "Vendeur : Toute personne physique inscrite sur la place de marché proposant des produits à la vente. Le vendeur agit en tant qu'organisateur.",
-        "buyer": "Acheteur : Toute personne physique agissant en tant que consommateur et passant une commande sur le site.",
-        "product": "Produit : Tout bien ou service proposé à la vente par les vendeurs sur la place de marché."
+        "thegoodDeals": "TheGood.Deals : Le site internet et la plateforme de marketplace opérée par thegood.deals SAS accessible à l’adresse www.thegood.deals.",
+        "user": "Utilisateur : Toute personne accédant à la marketplace, qu'il s'agisse de simples visiteurs, de vendeurs ou d'acheteurs.",
+        "seller": "Vendeur : Toute personne physique inscrit sur la marketplace proposant des produits à la vente. Le vendeur agissant en tant qu’organisateur",
+        "buyer": "Acheteur : Toute personne physique agissant en tant que consommateur et passant commande sur le site.",
+        "product": "Produit : Tout bien ou service mis en vente par les vendeurs sur la marketplace."
       }
     },
     "section_2": {
       "title": "2. Objet des CGV",
-      "content": "Ces CGV définissent les conditions dans lesquelles thegood.deals permet la mise en relation entre vendeurs et acheteurs. thegood.deals n'intervient pas dans la transaction elle-même entre le vendeur et l'acheteur, à l'exception de la facilitation des paiements via sa plateforme."
+      "content": "Les présentes CGV définissent les conditions dans lesquelles TheGood.Deals permet la mise en relation entre les vendeurs et les acheteurs. TheGood.Deals n’intervient pas dans la transaction proprement dite entre le vendeur et l’acheteur, sauf pour la facilitation des paiements via sa plateforme."
     },
     "section_3": {
-      "title": "3. Accès à la Place de Marché",
+      "title": "3. Accès à la Marketplace",
       "content": [
-        "L'accès à thegood.deals est gratuit pour les utilisateurs.",
-        "L'inscription est obligatoire pour les vendeurs souhaitant proposer leurs produits et pour les acheteurs souhaitant passer commande."
+        "L’accès à TheGood.Deals est gratuit pour les utilisateurs.",
+        "L'inscription est obligatoire pour les vendeurs souhaitant proposer leurs produits et pour les acheteurs souhaitant effectuer une commande."
       ]
     },
     "section_4": {
       "title": "4. Inscription et Comptes",
       "content": [
-        "Pour utiliser les services de thegood.deals, les vendeurs et acheteurs doivent s'inscrire en fournissant des informations véridiques et à jour.",
-        "Chaque utilisateur est responsable de la confidentialité de ses identifiants et doit immédiatement notifier thegood.deals en cas de perte ou d'utilisation non autorisée de son compte."
+        "Pour utiliser les services de TheGood.Deals, les vendeurs et les acheteurs doivent s'inscrire en fournissant des informations véridiques et à jour.",
+        "Chaque utilisateur est responsable de la confidentialité de ses identifiants et doit immédiatement informer TheGood.Deals en cas de perte ou d'utilisation non autorisée de son compte."
       ]
     },
     "section_5": {
-      "title": "5. Rôle de thegood.deals",
+      "title": "5. Rôle de TheGood.Deals",
       "content": [
-        "thegood.deals agit uniquement en tant qu'intermédiaire technique fournissant une plateforme de mise en relation entre acheteurs et vendeurs.",
-        "thegood.deals n'est pas partie au contrat de vente entre le vendeur et l'acheteur et ne garantit pas la qualité des produits ou services vendus."
+        "TheGood.Deals agit uniquement en tant qu'intermédiaire technique mettant à disposition une plateforme pour la mise en relation entre acheteurs et vendeurs.",
+        "TheGood.Deals n'est pas partie au contrat de vente qui lie le vendeur et l'acheteur, et ne garantit pas la qualité des produits ou services vendus."
       ]
     },
     "section_6": {
       "title": "6. Obligations du Vendeur",
       "content": [
-        "Le vendeur s'engage à proposer des produits conformes aux lois et règlements en vigueur, notamment les règles de protection des consommateurs.",
-        "Les vendeurs sont responsables des descriptions, prix et disponibilité de leurs produits sur la plateforme."
+        "Le vendeur s'engage à proposer des produits conformes aux lois et règlements en vigueur,et notamment aux règles relatives à la protection du consommateur.",
+        "Le vendeur est seul responsable des descriptions, des prix et de la disponibilité des produits qu'il propose sur la plateforme."
       ]
     },
     "section_7": {
