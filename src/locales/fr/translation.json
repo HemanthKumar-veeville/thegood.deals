@@ -788,23 +788,23 @@
     "login_create_account": "Se connecter / Créer un compte"
   },
   "add_pictures": {
-    "error_title": "Erreur...", //v
-    "error_limit": "Vous pouvez sélectionner jusqu'à 10 fichiers au maximum.", //v
+    "error_title": "Erreur...",
+    "error_limit": "Vous pouvez sélectionner jusqu'à 10 fichiers au maximum.",
     "file_input_label": "Ajouter des photos",
     "play_icon": "▶",
     "pause_icon": "❚❚",
-    "image_alt_text": "image-{index}" //v
+    "image_alt_text": "image-{index}"
   },
   "app": {
     "logo_part1": "thegood",
     "logo_separator": ".",
     "logo_part2": "deals",
     "default_profile_image_url": "https://example.com/profiles/default.jpg",
-    "alt_profile_photo": "Photo de profil" //v
+    "alt_profile_photo": "Photo de profil"
   },
   "bankingInfo": {
-    "copySuccess": "Copié dans le presse-papiers !", //v
-    "copyFail": "Échec de la copie : " //v
+    "copySuccess": "Copié dans le presse-papiers !",
+    "copyFail": "Échec de la copie : "
   },
   "draftBanner": {
     "draftMessage": "Ce deal est un brouillon.",
@@ -814,12 +814,12 @@
     "waitingMessage": "En attente de la confirmation du deal par l’artisan"
   },
   "successAlert": {
-    "defaultText": "Votre article a été ajouté avec succès", //v
-    "messageSent": "Message envoyé avec succès", //v
+    "defaultText": "Votre article a été ajouté avec succès",
+    "messageSent": "Message envoyé avec succès",
     "loremIpsumLong": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression et de la composition. Le Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur anonyme a assemblé un livre de spécimens de polices de caractères.", //v
-    "viewStatus": "Voir le statut", //v
-    "dismiss": "Fermer", //v
-    "loremIpsumShort": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression." //v
+    "viewStatus": "Voir le statut",
+    "dismiss": "Fermer",
+    "loremIpsumShort": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression."
   },
   "artisan": {
     "cardDeal": {
@@ -844,8 +844,8 @@
     "totalTTC": "TOTAL TTC",
     "save": "Économisez",
     "payment": "Paiement",
-    "errorTitle": "Erreur...", //v
-    "errorMessage": "Échec de l'envoi de la requête. Veuillez réessayer." //v
+    "errorTitle": "Erreur...",
+    "errorMessage": "Échec de l'envoi de la requête. Veuillez réessayer."
   },
   "collectionLocation": {
     "dealDeliveryCosts": "Frais de livraison du deal",
@@ -863,16 +863,16 @@
     "expirationDateDescription": "Maximum 30 jours à compter de ce jour"
   },
   "placeholder": {
-    "selectLanguageTitle": "Sélectionnez la langue", //v
+    "selectLanguageTitle": "Sélectionnez la langue",
     "languageOptions": {
-      "english": "Anglais", //v
-      "french": "Français" //v
+      "english": "Anglais",
+      "french": "Français"
     },
     "defaultLanguage": "Langue"
   },
   "customErrorModal": {
-    "defaultMessage": "Nous sommes désolés, quelque chose a mal tourné. Veuillez réessayer plus tard", //v
-    "buttonText": "J'ai compris" //v
+    "defaultMessage": "Nous sommes désolés, quelque chose a mal tourné. Veuillez réessayer plus tard",
+    "buttonText": "J'ai compris"
   },
   "header": {
     "mainText": "Créez, Partagez et Savourez avec une  commande groupée !",
@@ -882,9 +882,9 @@
     "contactUsButton": "Contactez-nous"
   },
   "imageLoader": {
-    "imageAlt": "Image", //v
-    "error": "Échec du chargement de l'image.", //v
-    "loading": "Chargement de l'image..." //v
+    "imageAlt": "Image",
+    "error": "Échec du chargement de l'image.",
+    "loading": "Chargement de l'image..."
   },
   "order": {
     "orderLabel": "Commande",
@@ -894,10 +894,10 @@
     "deliveryFeesLabel": "Frais de livraison",
     "totalTTC": "TOTAL TTC",
     "saveLabel": "Économisez",
-    "priceUnknown": "Prix inconnu", //v
-    "totalUnknown": "Total inconnu", //v
-    "discountUnknown": "Remise inconnue", //v
-    "error": "Erreur : {{error}}" //v
+    "priceUnknown": "Prix inconnu",
+    "totalUnknown": "Total inconnu",
+    "discountUnknown": "Remise inconnue",
+    "error": "Erreur : {{error}}"
   },
   "productInfo": {
     "productTitleLabel": "Titre du produit",
@@ -916,14 +916,14 @@
     "addButtonText": "Ajouter"
   },
   "ProductList": {
-    "productListTitle": "Liste des produits", //v
-    "noProductsMessage": "Aucun produit ajouté pour le moment.", //v
-    "totalStock": "Stock total", //v
-    "minQuantity": "Quantité min.", //v
-    "maxQuantity": "Quantité max.", //v
-    "marketPrice": "Prix du marché", //v
-    "goodDealPrice": "Prix du good deal", //v
-    "estimatedDiscount": "Remise estimée" //v
+    "productListTitle": "Liste des produits",
+    "noProductsMessage": "Aucun produit ajouté pour le moment.",
+    "totalStock": "Stock total",
+    "minQuantity": "Quantité min.",
+    "maxQuantity": "Quantité max.",
+    "marketPrice": "Prix du marché",
+    "goodDealPrice": "Prix du good deal",
+    "estimatedDiscount": "Remise estimée"
   },
   "ProductQuantity": {
     "byOrder": "par commande",
@@ -942,20 +942,20 @@
     "message": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression."
   },
   "TextInput": {
-    "placeholder": "Placeholder" //v
+    "placeholder": "Placeholder"
   },
   "TitleInput": {
     "label": "Titre",
     "placeholder": "ex. Caisses de vin"
   },
   "checkout": {
-    "stripe_not_loaded": "Stripe n'est pas encore complètement chargé. Veuillez réessayer.", //v
-    "unexpected_error": "Une erreur inattendue est survenue. Veuillez réessayer.", //v
-    "setup_confirmed": "Configuration confirmée avec succès.", //v
-    "processing_error": "Une erreur est survenue lors du traitement de la configuration de paiement.", //v
-    "unexpected_error_setup": "Une erreur inattendue est survenue lors de la confirmation de la configuration.", //v
-    "line_alt": "Séparateur pour les sections de paiement", //v
-    "submit_button": "Soumettre le paiement" //v
+    "stripe_not_loaded": "Stripe n'est pas encore complètement chargé. Veuillez réessayer.",
+    "unexpected_error": "Une erreur inattendue est survenue. Veuillez réessayer.",
+    "setup_confirmed": "Configuration confirmée avec succès.",
+    "processing_error": "Une erreur est survenue lors du traitement de la configuration de paiement.",
+    "unexpected_error_setup": "Une erreur inattendue est survenue lors de la confirmation de la configuration.",
+    "line_alt": "Séparateur pour les sections de paiement",
+    "submit_button": "Soumettre le paiement"
   },
   "DangerAlert": {
     "alert_message": "Une nouvelle demande à été envoyé automatiquement.",
@@ -1003,86 +1003,90 @@
       "title": "6. Obligations du Vendeur",
       "content": [
         "Le vendeur s'engage à proposer des produits conformes aux lois et règlements en vigueur,et notamment aux règles relatives à la protection du consommateur.",
-        "Le vendeur est seul responsable des descriptions, des prix et de la disponibilité des produits qu'il propose sur la plateforme."
+        "Le vendeur est seul responsable des descriptions, des prix et de la disponibilité des produits qu'il propose sur la plateforme.",
+        "Les vendeurs doivent respecter les obligations d’information précontractuelle prévues par le Code de la consommation."
       ]
     },
     "section_7": {
       "title": "7. Processus de Commande",
       "content": [
-        "Les acheteurs passent commande directement auprès des vendeurs via la plateforme thegood.deals.",
-        "Les acheteurs reçoivent des résumés de commande et des e-mails de confirmation après validation de leur achat."
+        "L’acheteur passe commande directement auprès du vendeur via la plateforme TheGood.Deals.",
+        "L'acheteur reçoit un récapitulatif de commande et un e-mail de confirmation après validation de son achat.",
+        "Les offres de produits sont valables tant qu'elles sont visibles sur la marketplace, dans la limite des stocks disponibles."
       ]
     },
     "section_8": {
       "title": "8. Paiement",
       "content": [
-        "thegood.deals propose une solution de paiement sécurisée pour les transactions.",
+        "TheGood.Deals propose une solution de paiement sécurisé pour les transactions. L’acheteur effectue le paiement par le biais de cette solution.",
         "Les paiements peuvent être effectués par carte bancaire, portefeuille électronique ou tout autre moyen disponible sur la plateforme.",
-        "thegood.deals retient une commission sur chaque vente."
+        "TheGood.Deals retient une commission sur chaque vente, déduite du montant versé au vendeur."
       ]
     },
     "section_9": {
       "title": "9. Livraison",
       "content": [
-        "La livraison des produits est assurée par le vendeur ou par un prestataire de transport choisi par le vendeur.",
-        "Les délais de livraison sont mentionnés lors de la commande, et le vendeur est responsable de respecter ces délais."
+        "La livraison des produits est assurée par le vendeur ou par un prestataire de transport choisi par ce dernier. ",
+        "Les délais de livraison sont mentionnés lors de la commande, et le vendeur est responsable du respect de ces délais. ",
+        "En cas de retard de livraison ou de problème lié à l'expédition, l'acheteur doit contacter directement le vendeur."
       ]
     },
     "section_10": {
       "title": "10. Droit de Rétractation",
       "content": [
-        "Conformément aux dispositions légales, l'acheteur dispose d'un délai de 14 jours à compter de la réception du produit pour exercer son droit de rétractation."
+        "Conformément aux dispositions légales, l’acheteur dispose d’un délai de 14 jours à compter de la réception du produit pour exercer son droit de rétractation, sans avoir à justifier de motif ni à payer de pénalités. ",
+        "L’acheteur doit notifier sa décision de rétractation au vendeur par le biais du formulaire mis à disposition ou par tout autre moyen explicite. Les frais de retour des produits sont à la charge de l’acheteur, sauf accord contraire avec le vendeur."
       ]
     },
     "section_11": {
       "title": "11. Garanties Légales",
       "content": [
-        "Le vendeur est tenu des garanties légales de conformité et des vices cachés."
+        "Le vendeur est tenu des garanties légales de conformité et des vices cachés. ",
+        "En cas de défaut de conformité ou de vice caché, l’acheteur peut demander la réparation, le remplacement ou le remboursement du produit dans les conditions prévues par la loi."
       ]
     },
     "section_12": {
       "title": "12. Responsabilité",
       "content": [
-        "thegood.deals n'assume aucune responsabilité en cas de litiges entre acheteurs et vendeurs.",
-        "Il ne peut être tenu responsable des erreurs, omissions ou retards dans les livraisons de produits."
+        "TheGood.Deals décline toute responsabilité en cas de litige entre un acheteur et un vendeur.",
+        "TheGood.Deals ne pourra être tenue responsable des erreurs ou omissions concernant les produits présentés par les vendeurs, ni des retards ou défauts de livraison."
       ]
     },
     "section_13": {
       "title": "13. Résolution des Litiges",
       "content": [
-        "En cas de litige, les utilisateurs doivent rechercher une solution amiable.",
-        "Si aucune solution n'est trouvée, les acheteurs peuvent contacter une association de consommateurs ou le tribunal compétent.",
-        "thegood.deals propose également des services de médiation."
+        "En cas de litige entre un vendeur et un acheteur, les parties s’engagent à rechercher une solution amiable. ",
+        "Si aucune solution n’est trouvée, l’acheteur peut saisir une association de consommateurs ou le tribunal compétent. ",
+        "TheGood.Deals propose également un service de médiation pour faciliter la résolution des litiges entre utilisateurs."
       ]
     },
     "section_14": {
-      "title": "14. Propriété Intellectuelle",
+      "title": "14. Propriété Intellectuelle ",
       "content": [
-        "Tout le contenu de thegood.deals est la propriété exclusive de thegood.deals ou de ses vendeurs.",
-        "Toute reproduction non autorisée est interdite."
+        "Tous les contenus présents sur TheGood.Deals (textes, images, logos, etc.) sont la propriété exclusive de TheGood.Deals ou des vendeurs et sont protégés par les lois sur la propriété intellectuelle. Toute reproduction non autorisée est interdite."
       ]
     },
     "section_15": {
-      "title": "15. Protection des Données Personnelles",
+      "title": "15. Protection des Données Personnelles ",
       "content": [
-        "thegood.deals respecte la législation en vigueur en matière de protection des données personnelles.",
-        "Les utilisateurs disposent du droit d'accès, de rectification ou de suppression de leurs informations personnelles."
+        "TheGood.Deals respecte la législation en vigueur en matière de protection des données personnelles. Les informations collectées sont traitées conformément à notre Politique de Confidentialité. ",
+        "Les utilisateurs disposent d’un droit d’accès, de rectification et de suppression de leurs données personnelles."
       ]
     },
     "section_16": {
       "title": "16. Modification des CGV",
       "content": [
-        "thegood.deals se réserve le droit de modifier ces CGV à tout moment, les changements prenant effet immédiatement après leur publication.",
-        "La poursuite de l'utilisation de la plateforme implique l'acceptation de ces mises à jour."
+        "TheGood.Deals se réserve le droit de modifier à tout moment les présentes CGV. Les modifications seront applicables dès leur mise en ligne. ",
+        "L’utilisation continue de la plateforme après la mise à jour des CGV vaut acceptation des nouvelles conditions."
       ]
     },
     "section_17": {
-      "title": "17. Droit Applicable et Juridiction",
-      "content": "Ces CGV sont régies par le droit français, et les litiges seront résolus selon les dispositions légales applicables aux domiciles des acheteurs et des vendeurs."
+      "title": "17. Loi Applicable et Juridiction Compétente",
+      "content": "Les présentes CGV sont régies par la loi française. En cas de litige, les tribunaux compétents seront ceux du lieu du domicile de l’acheteur ou du vendeur, selon les dispositions légales applicables."
     },
     "section_18": {
       "title": "18. Contact",
-      "content": "Pour toute question ou réclamation concernant ces CGV, veuillez nous contacter à : support@thegood.deals."
+      "content": "Pour toute question ou réclamation concernant les présentes CGV, vous pouvez nous contacter à l'adresse suivante : support@thegood.deals"
     }
   },
   "Label": {
@@ -1096,21 +1100,21 @@
     "trademarks_content": "thegood.deals® est une marque déposée de thegood.deals..."
   },
   "LegalNotices": {
-    "title": "Mentions Légales",
+    "title": "Mentions légales",
     "contact_information": {
-      "title": "Informations de Contact",
-      "description": "La prestation de services via ce site est réalisée sous le nom de thegood.deals par thegood.deals, une société française domiciliée au 679 Avenue de la République (Lille) 59800 Lille sous le numéro SIRET 93148811800015.",
-      "directors": "L'entreprise peut être contactée par les moyens suivants. Les fondateurs et directeurs de thegood.deals sont Anthony Brabant et Abraham THOMAS."
+      "title": "Informations de contact",
+      "description": "La prestation de services par le biais de ce site Web est effectuée sous le nom de thegood.deals par thegood.deals, société française domiciliée au 679 AVENUE DE LA REPUBLIQUE (LILLE) 59800 LILLE sous le numéro SIRET 93148811800015.",
+      "directors": "L'entreprise peut être contactée via les canaux suivants. Les fondateurs et administrateurs de thegood.deals sont Anthony BRABANT et Abraham THOMAS."
     },
     "copyright": {
-      "title": "Droits d'auteur",
-      "description1": "Tout le contenu hébergé ou mis à disposition sur le site www.thegood.deals, tels que les textes, graphiques, logos, icônes de boutons, images, téléchargements numériques et collections de données sont la propriété de thegood.deals ou de ses fournisseurs et sont protégés par la législation internationale en matière de propriété intellectuelle, de droits d'auteur et de droits de bases de données.",
-      "description2": "Aucune extraction ou réutilisation systématique d'une partie du contenu de thegood.deals n'est autorisée sans notre consentement écrit express..."
+      "title": "Copyright",
+      "description1": "Tous les contenus hébergés ou mis à disposition sur le site www.thegood.deals, tels que les textes, graphiques, logos, icônes de boutons, images, téléchargements numériques et les collectes de données sont la propriété de thegood.deals ou de ses fournisseurs et sont protégés par la législation internationale sur la propriété intellectuelle, les droits de copyright, et les bases de données. Tous les contenus hébergés ou mis à disposition à travers ce site Web sont la propriété exclusive de thegood.deals, et sont protégés par les lois espagnoles et internationales sur les droits de propriété intellectuelle et les droits des bases de données.",
+      "description2": "Aucune extraction ou réutilisation systématique d'une partie quelconque du contenu de thegood.deals n'est autorisée sans notre consentement exprès par écrit. En particulier, l'utilisation d'outils de recherche et d'exploration de données ou de robots pour l'extraction (en une ou plusieurs occasions) de portions substantielles des services de thegood.deals est interdite sans notre consentement explicite par écrit. Il ne vous est pas non plus permis de créer ou de publier vos propres bases de données lorsqu'elles contiennent des portions substantielles de thegood.deals (ex. nos listes de produits et nos listes de prix) sans notre consentement explicite par écrit."
     },
     "trademarks": {
-      "title": "Marques",
-      "description1": "thegood.deals® est une marque déposée de thegood.deals. De plus, les graphiques, logos, en-têtes de page, icônes de boutons, scripts et noms de services qui sont inclus ou disponibles via le site web de thegood.deals sont des marques ou une habillage commercial de thegood.deals.",
-      "description2": "Les marques et l'habillage commercial de thegood.deals ne peuvent être utilisés pour représenter un produit ou un service qui n'est pas de thegood.deals..."
+      "title": "Marques déposées",
+      "description1": "thegood.deals® est une marque déposée de thegood.deals. De plus, les graphiques, logos, en- têtes de page, icônes de boutons, scripts et noms de services qui sont inclus ou disponibles sur le site Web thegood.deals sont des marques déposées ou représentent l'image de la marque thegood.deals.",
+      "description2": "Les marques déposées et l’image de la marque thegood.deals ne peuvent être utilisées pour représenter un produit ou un service qui n'appartient pas à thegood.deals, ou d'une manière susceptible de créer de la confusion parmi les utilisateurs ou de dénigrer ou discréditer thegood.deals. Toutes les autres marques déposées qui ne sont pas la propriété de thegood.deals et qui sont incluses ou disponibles sur le site Web de thegood.deals appartiennent à leurs propriétaires respectifs, qui peuvent ou non être affiliés ou liés d’une quelconque façon à thegood.deals, ou parrainés par thegood.deals."
     }
   },
   "Payment": {
@@ -1125,83 +1129,86 @@
     "submit_button": "Soumettre le paiement"
   },
   "PrivacyCookiePolicy": {
-    "title": "Politique de Confidentialité et des Cookies",
+    "title": "Politique de confidentialité et relative aux cookies",
     "introduction": {
-      "title": "1. Introduction",
-      "content": "Cette Politique de Confidentialité et des Cookies définit les termes et conditions dans lesquels thegood.deals..."
+      "title": "1. INTRODUCTION",
+      "content": "Cette Politique de confidentialité et relative aux Cookies établit les conditions générales sous lesquelles thegood.deals (ci-après « thegood.deals », « nous », « notre » ou « nos ») traite les données personnelles que vous nous fournissez via le site internet www.thegood.deals (ci-après le « Site internet ») ou tout autre service en ligne associé. Nous nous engageons à respecter la confidentialité de vos informations et à protéger vos données personnelles conformément aux lois en vigueur, y compris le Règlement Général sur la Protection des Données (RGPD)."
     },
     "dataController": {
-      "title": "2. Identité du Responsable du Traitement",
-      "content": "Propriétaire : thegood.deals SAS, Siège social : 679 Av. de la République, 59800 Lille..."
+      "title": "2. IDENTITÉ DU RESPONSABLE DU TRAITEMENT",
+      "content": "Propriétaire: thegood.deals SAS Siège social: 679 Av. de la République, 59800 Lille Numéro d'immatriculation: 93148811800015 Contact: bonjour@thegood.deals"
     },
     "personalData": {
-      "title": "3. Collecte et Traitement des Données Personnelles",
+      "title": "3. COLLECTE ET TRAITEMENT DES DONNÉES PERSONNELLES",
       "items": [
-        "Gestion des comptes utilisateurs : Informations telles que nom, prénom, adresse e-mail...",
-        "Traitement des commandes : Les informations nécessaires à la gestion des commandes...",
-        "Envoi d'informations et de communications commerciales : Si vous avez donné votre consentement...",
-        "Amélioration de nos services : Nous utilisons des données de navigation anonymisées pour analyser les habitudes des utilisateurs...",
-        "Gestion des plaintes et du support client : Vos données peuvent être utilisées pour traiter..."
+        "Nous collectons et traitons vos données personnelles pour les finalités",
+        "Gestion des comptes utilisateurs : Les informations telles que nom, prénom, adresse e-mail, et coordonnées sont recueillies pour vous identifier comme utilisateur du Site, créer votre compte et vous donner accès aux services",
+        "Traitement des commandes : Les informations nécessaires à la gestion des commandes (adresse de livraison, détails de facturation, coordonnées) seront traitées pour garantir la bonne exécution des transactions. ",
+        "Envoi d’informations et de communications commerciales : Si vous avez donné votre consentement, nous pourrons utiliser vos données pour vous envoyer des informations sur les produits et services susceptibles de vous intéresser. ",
+        "Amélioration de nos services : Nous utilisons les données de navigation anonymisées pour analyser les habitudes des utilisateurs afin d’améliorer l'expérience sur notre Site.",
+        "Gestion des réclamations et du support client : Vos données peuvent être utilisées pour traiter toute demande d’assistance ou réclamation que vous soumettez via le Site."
       ]
     },
     "legitimacy": {
-      "title": "4. Légitimité du Traitement",
+      "title": "4. LÉGITIMITÉ DU TRAITEMENT",
       "items": [
-        "Exécution d'un contrat : Lorsque vous passez une commande ou créez un compte sur notre plateforme...",
-        "Consentement : Nous recueillons votre consentement explicite pour des actions telles que l'envoi de communications marketing...",
-        "Intérêt légitime : Pour améliorer nos services ou assurer la sécurité de notre Site..."
+        "Le traitement de vos données personnelles est fondé sur les bases juridiques suivantes : ",
+        "Exécution d’un contrat : Lorsque vous passez une commande ou créez un compte sur notre plateforme, vos données sont traitées pour exécuter le contrat auquel vous êtes partie. ",
+        "Consentement : Nous recueillons votre consentement explicite pour les actions comme l’envoi de communications marketing. ",
+        "Intérêt légitime : Pour améliorer nos services ou assurer la sécurité de notre Site, nous pouvons traiter certaines informations sans votre consentement préalable, tout en respectant vos droits et libertés."
       ]
     },
     "dataDisclosure": {
-      "title": "5. Divulgation des Données",
-      "content": "Vos données personnelles ne seront partagées qu'avec :",
+      "title": "5. DIVULGATION DES DONNÉES",
+      "content": "Les destinataires de vos données peuvent se situer dans ou hors de l’Espace Économique Européen (EEE), dans le cadre de garanties appropriées pour la protection de vos informations.",
       "items": [
-        "Nos prestataires de services : Ceux impliqués dans la gestion du Site...",
-        "Les autorités publiques : Lorsque la loi l'exige.",
-        "Les partenaires commerciaux : Avec votre consentement, pour l'envoi de promotions ou d'offres tierces."
+        "Vos données personnelles ne seront partagées qu’avec : Nos prestataires de services : Ceux qui interviennent dans le cadre de la gestion du Site, du traitement des commandes ou des opérations de marketing. ",
+        "Les autorités publiques : Lorsque cela est requis par la loi.",
+        "Partenaires commerciaux : Avec votre consentement, pour l’envoi de promotions ou d’offres de tiers."
       ]
     },
     "dataStorage": {
-      "title": "6. Durée de Conservation des Données",
+      "title": "6. DURÉE DE CONSERVATION DES DONNÉES",
       "items": [
-        "Pour l'exécution d'un contrat : pour le temps nécessaire à la gestion de votre commande et des relations client.",
-        "Pour les communications marketing : jusqu'à ce que vous retiriez votre consentement.",
-        "Pour le respect des obligations légales : pour la durée imposée par la législation applicable."
+        "Nous conservons vos données personnelles pendant la durée nécessaire aux finalités pour lesquelles elles ont été collectées, notamment :",
+        "Pour l’exécution d’un contrat : durant le temps nécessaire à la gestion de votre commande et de la relation client. ",
+        "Pour des communications marketing : jusqu’à ce que vous retiriez votre consentement. ",
+        "Pour le respect d’obligations légales : pour la durée imposée par la législation applicable."
       ]
     },
     "yourRights": {
-      "title": "7. Vos Droits",
-      "content": "Conformément au RGPD, vous disposez des droits suivants sur vos données personnelles :",
+      "title": "7. VOS DROITS",
+      "content": "En vertu du RGPD, vous disposez des droits suivants sur vos données personnelles : ",
       "items": [
-        "Accès : Vous pouvez demander l'accès aux données personnelles que nous détenons à votre sujet.",
-        "Rectification : Vous pouvez demander la correction d'informations inexactes ou incomplètes.",
-        "Suppression : Vous avez le droit de demander la suppression de vos données personnelles dans certains cas...",
-        "Opposition : Vous pouvez vous opposer au traitement de vos données pour des raisons légitimes...",
-        "Limitation : Vous pouvez demander que le traitement de vos données soit limité dans certains cas...",
-        "Portabilité : Vous pouvez demander à recevoir une copie de vos données personnelles dans un format structuré..."
+        "Accès : Vous pouvez demander à accéder aux données personnelles que nous détenons vous concernant.",
+        "Rectification : Vous pouvez demander à corriger les informations inexactes ou incomplètes.",
+        "Suppression : Vous avez le droit de demander la suppression de vos données personnelles dans certains cas.",
+        "Opposition : Vous pouvez vous opposer au traitement de vos données pour des motifs légitimes, y compris à des fins de marketing direct.",
+        "Limitation : Vous pouvez demander à ce que le traitement de vos données soit limité dans certains cas.",
+        "Portabilité : Vous pouvez demander à recevoir une copie de vos données personnelles dans un format structuré et lisible par machine."
       ],
-      "contact": "Pour exercer vos droits, vous pouvez nous contacter à l'adresse e-mail suivante : bonjour@thegood.deals"
+      "contact": "Pour exercer vos droits, vous pouvez nous contacter à l’adresse e-mail suivante : bonjour@thegood.deals"
     },
     "useOfCookies": {
-      "title": "8. Utilisation des Cookies",
-      "content": "Un cookie est un petit fichier stocké sur votre appareil lorsque vous visitez notre Site. Nous utilisons des cookies aux fins suivantes :",
+      "title": "8. UTILISATION DES COOKIES",
+      "content": "Un cookie est un fichier de petite taille stocké sur votre appareil lorsque vous visitez notre Site. Nous utilisons des cookies Améliorer la navigation sur le Site : Personnaliser le contenu, mémoriser vos préférences et faciliter l'accès aux services.",
       "items": [
-        "Améliorer la navigation sur le Site : Personnaliser le contenu, mémoriser vos préférences...",
-        "Analyser le trafic : Nous utilisons des outils tels que Google Analytics pour collecter des informations anonymes...",
-        "Publicité ciblée : Des cookies publicitaires peuvent être utilisés pour afficher des annonces adaptées à vos intérêts."
+        "Analyser la fréquentation : Nous utilisons des outils tels que Google Analytics pour collecter des informations anonymes sur la manière dont les visiteurs utilisent notre Site.",
+        "Publicité ciblée : Des cookies publicitaires peuvent être utilisés pour afficher des annonces adaptées à vos centres d’intérêt.",
+        "Vous pouvez à tout moment gérer les cookies depuis les paramètres de votre navigateur. Toutefois, certaines fonctionnalités du Site peuvent être altérées si vous désactivez certains types de cookies. Pour plus d'informations, veuillez consulter notre Politique relative aux Cookies qui décrit plus en détail les types de cookies que nous utilisons et comment les gérer."
       ]
     },
     "dataSecurity": {
-      "title": "9. Sécurité des Données",
-      "content": "Nous mettons en œuvre toutes les mesures de sécurité techniques et organisationnelles appropriées pour protéger vos données personnelles contre tout accès non autorisé, perte ou altération..."
+      "title": "9. SÉCURITÉ DES DONNÉES ",
+      "content": "Nous mettons en œuvre toutes les mesures de sécurité techniques et organisationnelles appropriées pour protéger vos données personnelles contre toute forme d’accès non autorisé, de perte ou d’altération. Ces mesures incluent notamment le chiffrement des données sensibles et l'accès restreint aux informations."
     },
     "policyChanges": {
-      "title": "10. Modifications de la Politique de Confidentialité",
-      "content": "Cette Politique de Confidentialité peut être modifiée périodiquement pour refléter les changements dans nos pratiques ou les évolutions légales..."
+      "title": "10. MODIFICATIONS DE LA POLITIQUE DE CONFIDENTIALITÉ",
+      "content": "Cette Politique de confidentialité peut être modifiée périodiquement pour refléter les changements dans nos pratiques ou les évolutions légales. Nous vous informerons de toute mise à jour importante par le biais du Site ou par d’autres moyens appropriés."
     },
     "contact": {
-      "title": "11. Contact",
-      "content": "Pour toute question concernant cette Politique de Confidentialité ou vos données personnelles, vous pouvez nous contacter à bonjour@thegood.deals."
+      "title": "11. CONTACT",
+      "content": "Pour toute question concernant cette Politique de confidentialité ou vos données personnelles, vous pouvez nous contacter à bonjour@thegood.deals"
     }
   },
   "StripePayment": {
