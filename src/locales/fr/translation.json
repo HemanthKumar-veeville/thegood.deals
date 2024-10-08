@@ -816,7 +816,7 @@
   "successAlert": {
     "defaultText": "Votre article a été ajouté avec succès",
     "messageSent": "Message envoyé avec succès",
-    "loremIpsumLong": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression et de la composition. Le Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur anonyme a assemblé un livre de spécimens de polices de caractères.", //v
+    "loremIpsumLong": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression et de la composition. Le Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur anonyme a assemblé un livre de spécimens de polices de caractères.",
     "viewStatus": "Voir le statut",
     "dismiss": "Fermer",
     "loremIpsumShort": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression."
