@@ -8,8 +8,10 @@ import { useDispatch } from "react-redux";
 import { createOrder } from "../../redux/app/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useTranslation } from "react-i18next"; // Import the translation hook
 
 export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
+  const { t } = useTranslation(); // Initialize the translation hook
   const [cartItems, setCartItems] = useState(products);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,17 +40,14 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
       const response = await dispatch(
         createOrder({ dealId, products: cartItems })
       ).unwrap();
-      // Handle success, like showing a success message or redirecting the user
-      console.log("Order placed successfully", response);
       const orderId = response?.order_id;
       navigate("/payment?orderId=" + orderId + "&dealId=" + dealId);
     } catch (error) {
-      // Handle the error, like showing an error message
-      console.error("Failed to place the order:", error);
+      // Handle error with SweetAlert
       await Swal.fire({
         icon: "error",
-        title: "Error...",
-        text: error?.detail || "Failed to send request. Please try again.",
+        title: t("cart.errorTitle"),
+        text: error?.detail || t("cart.errorMessage"),
       });
       dispatch(fetchDealDetailsByDealId(dealId));
     }
@@ -59,7 +58,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
       <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
         <ShoppingCart111 className="!relative !w-5 !h-5" />
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Bold',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-          My basket
+          {t("cart.myBasket")}
         </div>
       </div>
       <img
@@ -80,7 +79,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
           </div>
           <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-orangeorange text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {product.availability} available
+              {t("cart.available", { count: product.availability })}
             </div>
           </div>
           <div className="flex items-end justify-between self-stretch w-full relative flex-[0_0_auto]">
@@ -132,7 +131,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
       <div className="items-end flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
         <div className="flex items-end justify-between self-stretch w-full relative flex-[0_0_auto]">
           <div className="relative w-fit font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-xs text-center tracking-[0] leading-5 whitespace-nowrap">
-            TOTAL TTC
+            {t("cart.totalTTC")}
           </div>
           <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
             <div className="mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color leading-6 line-through relative w-fit text-sm text-right tracking-[0] whitespace-nowrap">
@@ -154,7 +153,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
         </div>
         <div className="flex items-end justify-between self-stretch w-full relative flex-[0_0_auto]">
           <div className="relative w-fit font-body-extra-small-text-regular text-secondary-color text-xs text-center tracking-[0] leading-5 whitespace-nowrap">
-            Save
+            {t("cart.save")}
           </div>
           <div className="mt-[-1.00px] font-body-small-medium text-secondary-color leading-6 relative w-fit text-xs text-right tracking-[0] whitespace-nowrap">
             {totalSavings?.toFixed(2)} €
@@ -167,7 +166,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
       >
         <Send1 className="!relative !w-5 !h-5" />
         <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-          Payment
+          {t("cart.payment")}
         </button>
       </div>
     </div>

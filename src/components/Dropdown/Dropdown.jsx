@@ -2,25 +2,33 @@ import React, { useState } from "react";
 import { ChevronDown1 } from "../../icons/ChevronDown1";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
+import { useTranslation } from "react-i18next"; // Import translation hook
 
 export const Placeholder = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState("Language");
+  const { t } = useTranslation(); // Initialize translation
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    t("placeholder.defaultLanguage")
+  );
 
   const handleButtonClick = () => {
     Swal.fire({
-      title: "Select the Language",
+      title: t("placeholder.selectLanguageTitle"),
       html: `
         <ul class="language-list space-y-2">
           <li class="language-item py-2 px-4 rounded-md cursor-pointer ${
-            selectedLanguage !== "English"
+            selectedLanguage !== t("placeholder.languageOptions.english")
               ? "bg-blue-100"
               : "bg-[#2a4e4a] text-whitewhite"
-          } hover:bg-gray-200" data-language="English">English</li>
+          } hover:bg-gray-200" data-language="${t(
+        "placeholder.languageOptions.english"
+      )}">${t("placeholder.languageOptions.english")}</li>
           <li class="language-item py-2 px-4 rounded-md cursor-pointer ${
-            selectedLanguage !== "French"
+            selectedLanguage !== t("placeholder.languageOptions.french")
               ? "bg-blue-100"
               : "bg-[#2a4e4a] text-whitewhite"
-          } hover:bg-gray-200" data-language="French">French</li>
+          } hover:bg-gray-200" data-language="${t(
+        "placeholder.languageOptions.french"
+      )}">${t("placeholder.languageOptions.french")}</li>
         </ul>
       `,
       showConfirmButton: false,

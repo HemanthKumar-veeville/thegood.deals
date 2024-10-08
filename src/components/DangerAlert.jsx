@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import { CheckmarkCircle1 } from "../icons/CheckmarkCircle1/CheckmarkCircle1";
 import { ChevronDown } from "../icons/ChevronDown/ChevronDown";
 import { CrossCircle3 } from "../icons/CrossCircle3/CrossCircle3";
+import { useTranslation } from "react-i18next"; // Import useTranslation
 
 export const DangerAlert = ({ alertMessage, participants }) => {
+  const { t } = useTranslation(); // Initialize translation hook
   const [showList, setShowList] = useState(false);
-  console.log({ participants });
+
   // Toggle list open/close and rotate the chevron
   const toggleList = () => {
     setShowList(!showList);
@@ -21,7 +23,7 @@ export const DangerAlert = ({ alertMessage, participants }) => {
         <p className="[font-family:'Inter-Regular',Helvetica] font-normal text-[#bc1c21] text-sm tracking-[0] leading-5 w-full">
           {alertMessage}{" "}
           <span className="[font-family:'Inter-Bold',Helvetica] font-bold">
-            A new request has been sent automatically.
+            {t("DangerAlert.alert_message")} {/* Translated text */}
           </span>
         </p>
       </div>
@@ -30,8 +32,7 @@ export const DangerAlert = ({ alertMessage, participants }) => {
           onClick={toggleList}
           className="flex items-center justify-between w-full px-4 py-3 bg-white rounded-md border border-gray-300 font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]"
         >
-          Show the list
-          {/* Rotating ChevronDown */}
+          {t("DangerAlert.show_list")} {/* Translated button text */}
           <motion.div
             animate={{ rotate: showList ? 180 : 0 }} // Rotate the chevron based on the list state
             transition={{ duration: 0.3 }}

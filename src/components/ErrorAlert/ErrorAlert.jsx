@@ -3,16 +3,19 @@ import withReactContent from "sweetalert2-react-content";
 import React from "react";
 import { Warning1 } from "../../icons/Warning1";
 import { Button } from "../Button/Button";
+import { useTranslation } from "react-i18next"; // Import translation hook
 
 const MySwal = withReactContent(Swal);
 
 export const ShowCustomErrorModal = ({
-  message = "We're sorry, something has gone wrong. Please try later",
-  buttonText = "Got it",
-  shouldCloseOnOverlayClick = true, // Default to true unless specified
-  handleClick = () => MySwal.close(), // Default functionality to close modal
-  onClose, // New prop to handle state reset when modal closes
+  message,
+  buttonText,
+  shouldCloseOnOverlayClick = true,
+  handleClick = () => MySwal.close(),
+  onClose,
 }) => {
+  const { t } = useTranslation(); // Initialize translation hook
+
   MySwal.fire({
     html: (
       <div className="flex flex-col items-center gap-5 px-[15px] py-[30px] relative bg-white rounded-[20px]">
@@ -26,7 +29,7 @@ export const ShowCustomErrorModal = ({
             </div>
             <div className="gap-[15px] self-stretch w-full flex-[0_0_auto] flex flex-col items-center relative">
               <p className="relative self-stretch mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-darkdark text-[length:var(--body-large-semibold-font-size)] text-center tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] [font-style:var(--body-large-semibold-font-style)]">
-                {message}
+                {message || t("customErrorModal.defaultMessage")}
               </p>
             </div>
           </div>
@@ -36,7 +39,7 @@ export const ShowCustomErrorModal = ({
           onClick={handleClick}
         >
           <Button
-            buttonText={buttonText}
+            buttonText={buttonText || t("customErrorModal.buttonText")}
             className="!flex-[0_0_auto] !flex !bg-redred !w-[190px]"
             color="primary"
             kind="primary"
@@ -51,7 +54,7 @@ export const ShowCustomErrorModal = ({
       popup: "p-0 bg-transparent shadow-none flex justify-center items-center",
     },
     backdrop: true,
-    allowOutsideClick: shouldCloseOnOverlayClick, // Control overlay click behavior
-    willClose: onClose, // Trigger on modal close
+    allowOutsideClick: shouldCloseOnOverlayClick,
+    willClose: onClose,
   });
 };

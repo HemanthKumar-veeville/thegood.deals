@@ -1,8 +1,11 @@
 import React from "react";
 import { SuccessAlert } from "../../components/SuccessAlert";
 import { Pencil } from "../../icons/Pencil";
+import { useTranslation } from "react-i18next"; // Import useTranslation hook
 
 export const DraftBanner = () => {
+  const { t } = useTranslation(); // Initialize translation hook
+
   return (
     <SuccessAlert
       className="!flex !bg-cyancyan-light-3 w-[100%]"
@@ -15,9 +18,9 @@ export const DraftBanner = () => {
       style="three"
       text={
         <>
-          This deal is a draft.
+          {t("draftBanner.draftMessage")}
           <br />
-          Please complete it
+          {t("draftBanner.completePrompt")}
         </>
       }
     />

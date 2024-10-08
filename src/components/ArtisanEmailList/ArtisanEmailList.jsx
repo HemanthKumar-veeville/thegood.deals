@@ -14,7 +14,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
   const items = [
     {
       initials: "AT",
-      name: "Abraham Thomas",
+      name: t("artisanEmailList.abrahamThomas"), // Use translation for name
       orders: 1,
       expanded: true,
       products: [
@@ -35,7 +35,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
     },
     {
       initials: "JD",
-      name: "Jane Doe",
+      name: t("artisanEmailList.janeDoe"), // Use translation for name
       orders: 1,
       expanded: false,
       products: [
@@ -56,7 +56,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
     },
     {
       initials: "KD",
-      name: "Kate Doe",
+      name: t("artisanEmailList.kateDoe"), // Use translation for name
       orders: 1,
       expanded: false,
       products: [

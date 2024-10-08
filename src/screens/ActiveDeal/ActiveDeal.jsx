@@ -52,6 +52,8 @@ const ActiveDeal = () => {
   const is_creator = queryParams.get("is_creator");
   const [isCollectionInProgress, setIsCollectionInProgress] = useState(false);
   const [chargeStats, setChargeStats] = useState([]);
+  const [isPaymentCollectedForAllOrders, setIsPaymentCollectedForAllOrders] =
+    useState(false);
 
   const handleBack = () => {
     navigate("/");
@@ -108,6 +110,9 @@ const ActiveDeal = () => {
       const res = await dispatch(chargeGroupPayment({ dealId: deal_id }));
 
       setChargeStats(res?.payload?.deal_payment_stats);
+      setIsPaymentCollectedForAllOrders(
+        res?.payload?.payment_collected_for_all_orders
+      );
       // Handle success (you can process the response here if needed)
     } catch (error) {
       // Handle any errors that occur during the API call
@@ -149,7 +154,7 @@ const ActiveDeal = () => {
                 </div>
               </div>
             </div>
-            {Array.isArray(chargeStats) && chargeStats?.length > 0 && (
+            {isPaymentCollectedForAllOrders && (
               <div className="flex items-start gap-[25px] px-[18px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-greengreen-light-6 rounded-lg">
                 <div className="flex items-center gap-3 relative flex-1 grow">
                   <div className="relative w-5 h-5 bg-greengreen rounded-[10px]">
@@ -185,12 +190,16 @@ const ActiveDeal = () => {
                 </div>
               </div>
             )}
-            {Array.isArray(chargeStats) && chargeStats?.length > 0 && (
-              <DangerAlert
-                alertMessage="The payment of one of the participants could not be made."
-                participants={(Array.isArray(chargeStats) && chargeStats) || []}
-              />
-            )}
+            {Array.isArray(chargeStats) &&
+              chargeStats?.length > 0 &&
+              !isPaymentCollectedForAllOrders && (
+                <DangerAlert
+                  alertMessage="The payment of one of the participants could not be made."
+                  participants={
+                    (Array.isArray(chargeStats) && chargeStats) || []
+                  }
+                />
+              )}
             <div onClick={handleOrder}>
               <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
             </div>

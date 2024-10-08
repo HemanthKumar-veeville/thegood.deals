@@ -39,10 +39,8 @@ export const ArtisanDeniedThe = ({
 
       // Check if the thunk was fulfilled
       if (validationByArtisan.fulfilled.match(resultAction)) {
-        // Navigate to the refusal message page
         navigate("/deal-refused-message");
       } else {
-        // Handle any validation errors here
         console.error("Validation failed:", resultAction.payload);
       }
     } catch (error) {
@@ -57,6 +55,7 @@ export const ArtisanDeniedThe = ({
   return (
     <div className="flex flex-col w-full min-h-screen items-start relative bg-primary-background h-full">
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+        {/* Header Text */}
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {t("artisanDeniedThe.not_agree")}
         </p>
@@ -68,6 +67,7 @@ export const ArtisanDeniedThe = ({
           alt="Line"
           src={Line63}
         />
+        {/* Feedback Form */}
         <div className="flex flex-col h-[220px] items-start gap-2.5 relative self-stretch w-full">
           <p className="relative w-fit mt-[-1.00px] font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-primary-color text-[length:var(--body-large-medium-font-size)] tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
             {t("artisanDeniedThe.indicate_info")}
@@ -92,6 +92,7 @@ export const ArtisanDeniedThe = ({
             </div>
           </div>
         </div>
+        {/* Submit Button */}
         <div
           onClick={() => handleSubmit(dealId)}
           className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
@@ -106,6 +107,7 @@ export const ArtisanDeniedThe = ({
           alt="Line"
           src={Line63}
         />
+        {/* Cancel Button */}
         <div
           onClick={handleCancel}
           className="gap-2 border border-solid border-primary-color flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"

@@ -29,9 +29,12 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         </div>
       </div>
       <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+        {/* Dear Craftsman */}
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {t("artisanEmail.dearCraftsman")}
         </p>
+
+        {/* Main Body Text */}
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
           {t("artisanEmail.confirmCreation")}
           <br />
@@ -41,28 +44,38 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
           <br />
           {t("artisanEmail.dealConfirmed")}
         </p>
+
+        {/* Horizontal Line */}
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt={t("artisanEmail.line")}
           src={Line63}
         />
+
+        {/* Blog Image */}
         <img
           className="relative self-stretch w-full h-[150px] object-cover"
-          alt="Blog image"
+          alt={t("artisanEmail.blogImageAlt")}
           src={blogImage}
         />
+
+        {/* Deal Title */}
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {t("artisanEmail.dealTitle")}
         </p>
+
+        {/* Horizontal Line */}
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt={t("artisanEmail.line")}
           src={Line63}
         />
+
+        {/* Organizer Info */}
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           <img
             className="relative w-[50px] h-[50px] object-cover"
-            alt="Rectangle"
+            alt={t("artisanEmail.rectangleAlt")}
             src={Human}
           />
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
@@ -70,22 +83,26 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
               {t("artisanEmail.organizedBy")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              Abraham Thomas
+              {t("artisanEmail.organizerName")}
             </div>
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar
                 className="!flex-[0_0_auto]"
-                rating="four-star"
+                rating={t("artisanEmail.rating")}
                 size="small"
               />
             </div>
           </div>
         </div>
+
+        {/* Horizontal Line */}
         <img
           className="relative self-stretch w-full h-px object-cover"
           alt={t("artisanEmail.line")}
           src={Line63}
         />
+
+        {/* CTA Button */}
         <div
           className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"
           onClick={handleButtonClick}

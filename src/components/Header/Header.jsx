@@ -1,33 +1,28 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
 import PropTypes from "prop-types";
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // Import translation hook
 
 export const Header = ({
   breakpoint,
   className,
   crEzPartagezEtClassName,
-  text = "Créez, Partagez et Savourez avec une&nbsp;&nbsp;commande groupée !",
-  text1 = "En quelques clics, créez une commande, invitez vos proches et partagez le plaisir de découvrir ensemble les saveurs uniques de l&#39;artisanat local. Profitez de tarifs avantageux, soutenez les artisans de votre région, et transformez chaque achat en une expérience conviviale et enrichissante.",
-  buttonText = "Créer un good deal",
+  text,
+  text1,
+  buttonText,
   buttonStylePrimarySmallClassName,
   buttonDivClassName,
-  buttonText1 = "Gérer mes good deals",
+  buttonText1,
   type,
 }) => {
+  const { t } = useTranslation(); // Initialize translation hook
   const navigate = useNavigate();
   const location = useLocation();
+
   const handleNavigate = (event) => {
     const button = event.currentTarget;
-
-    // Add the click effect class
     button.classList.add("animate-click-effect");
 
-    // Remove the class after the animation completes
     button.addEventListener(
       "animationend",
       () => {
@@ -37,6 +32,7 @@ export const Header = ({
       { once: true }
     );
   };
+
   return (
     <div
       className={`flex flex-col items-start overflow-hidden rounded-[30px] ${
@@ -86,7 +82,7 @@ export const Header = ({
                 : "leading-[var(--heading-h1-line-height)]"
             } ${crEzPartagezEtClassName}`}
           >
-            {text}
+            {text || t("header.mainText")}
           </p>
         </div>
         <div
@@ -99,7 +95,7 @@ export const Header = ({
           }`}
         >
           <p className="[font-family:'Rethink_Sans',Helvetica] self-stretch mt-[-1.00px] tracking-[0] text-lg text-light-grey font-normal leading-[27px] relative">
-            {text1}
+            {text1 || t("header.subText")}
           </p>
           {(location?.pathname === "about-us" ||
             location?.pathname === "/how-it-works" ||
@@ -111,7 +107,7 @@ export const Header = ({
                   onClick={() => navigate("/auth?login")}
                 >
                   <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal  text-base tracking-[0] leading-6 whitespace-nowrap hover:text-[#FFF]">
-                    {buttonText}
+                    {buttonText || t("header.createDealButton")}
                   </button>
                 </button>
                 <button
@@ -119,7 +115,7 @@ export const Header = ({
                   onClick={() => navigate("/auth?login")}
                 >
                   <span className="all-[unset] box-border relative w-fit [font-family:'Rethink_Sans',Helvetica] font-normal text-base tracking-[0] leading-6 whitespace-nowrap hover:bg-[#1b4f4a] hover:text-white cursor-pointer">
-                    {buttonText1}
+                    {buttonText1 || t("header.manageDealsButton")}
                   </span>
                 </button>
               </div>
@@ -132,8 +128,8 @@ export const Header = ({
               <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-[#2a4e4a] text-base tracking-[0] leading-6 whitespace-nowrap ">
                 {location?.pathname !== "/contact-us" &&
                 location?.pathname !== "/general-conditions"
-                  ? buttonText
-                  : "Contact us"}
+                  ? buttonText || t("header.createDealButton")
+                  : t("header.contactUsButton")}
               </button>
             </button>
           )}

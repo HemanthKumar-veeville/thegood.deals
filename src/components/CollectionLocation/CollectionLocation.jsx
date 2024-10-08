@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Textarea } from "../Textarea";
 import { WebsiteMoney } from "../../icons/WebsiteMoney";
+import { useTranslation } from "react-i18next"; // Import translation hook
 
 const CollectionLocation = ({ type, onChange, value }) => {
+  const { t } = useTranslation(); // Initialize translation
   const [isAtHome, setIsAtHome] = useState(true);
   const [deliveryCost, setDeliveryCost] = useState("");
 
@@ -26,15 +28,14 @@ const CollectionLocation = ({ type, onChange, value }) => {
       <div className="flex items-center gap-2.5 relative w-full">
         <div className="font-medium text-[#1b4f4a] text-lg">
           {type === "deliveryCost"
-            ? "Deal delivery costs"
-            : "Collection location"}
+            ? t("collectionLocation.dealDeliveryCosts")
+            : t("collectionLocation.collectionLocationTitle")}
         </div>
       </div>
       {type === "deliveryCost" && (
         <div className="inline-flex items-start gap-2.5 relative">
           <p className="relative w-[291px] mt-3 font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
-            You have the option to share the delivery costs between
-            participants.
+            {t("collectionLocation.deliveryCostDescription")}
           </p>
         </div>
       )}
@@ -68,7 +69,9 @@ const CollectionLocation = ({ type, onChange, value }) => {
           )}
         </div>
         <span className="ml-2 text-[#1b4f4a]">
-          {!(type === "deliveryCost") ? "At my home" : "Delivery is included"}
+          {!(type === "deliveryCost")
+            ? t("collectionLocation.atMyHome")
+            : t("collectionLocation.deliveryIncluded")}
         </span>
       </div>
 
@@ -103,10 +106,11 @@ const CollectionLocation = ({ type, onChange, value }) => {
         </div>
         <span className="ml-2 text-[#1b4f4a]">
           {!(type === "deliveryCost")
-            ? "I am providing another location"
-            : "I add the shipping costs"}
+            ? t("collectionLocation.provideAnotherLocation")
+            : t("collectionLocation.addShippingCosts")}
         </span>
       </div>
+
       {!isAtHome && type === "collectionLocation" && (
         <div className="w-full mt-2">
           <Textarea
@@ -121,27 +125,27 @@ const CollectionLocation = ({ type, onChange, value }) => {
             helperText="off"
             label=""
             label1="on"
-            placeholder="ex. Chez Abraham 24 rue des Vignobles, 33000 Bordeaux"
+            placeholder={t("collectionLocation.placeholderLocation")}
             secondLabel="on"
             secondLabelText="0/250"
             state="default"
           />
         </div>
       )}
+
       {!isAtHome && type === "deliveryCost" && (
         <div className="w-full mt-4">
           <div className="relative w-full max-w-sm">
             {/* Input field */}
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              {/* Increased icon size */}
               <WebsiteMoney className="w-6 h-6" />
             </div>
             <input
               type="text"
-              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-12 p-2.5 focus:outline-none" // Adjusted padding to add space between icon and date
+              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-12 p-2.5 focus:outline-none"
               value={deliveryCost}
               onChange={handleChange}
-              placeholder="345 . 00 €"
+              placeholder={t("collectionLocation.placeholderCost")}
             />
           </div>
         </div>

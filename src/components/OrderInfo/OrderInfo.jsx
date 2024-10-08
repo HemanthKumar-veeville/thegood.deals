@@ -3,10 +3,12 @@ import { InfoCircle8 } from "../../icons/InfoCircle8/InfoCircle8";
 import { fetchOrderById } from "../../redux/app/orders/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CustomLoader from "../CustomLoader/CustomLoader";
+import { useTranslation } from "react-i18next"; // Initialize translation
 
 export const OrderInfo = ({ orderId }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const tooltipRef = useRef(null);
+  const { t } = useTranslation(); // Use translation
 
   const dispatch = useDispatch();
 
@@ -19,7 +21,7 @@ export const OrderInfo = ({ orderId }) => {
   // Dispatch fetchOrderById on component mount
   useEffect(() => {
     dispatch(fetchOrderById({ orderId }));
-  }, []);
+  }, [dispatch, orderId]);
 
   console.log({ orderState });
 
@@ -47,7 +49,7 @@ export const OrderInfo = ({ orderId }) => {
   }
 
   if (orderStatus === "failed") {
-    return <div>Error: {orderError}</div>;
+    return <div>{t("order.error", { error: orderError })}</div>;
   }
 
   return (
@@ -55,12 +57,12 @@ export const OrderInfo = ({ orderId }) => {
       <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
         <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex w-[162.5px] items-center gap-[5px] relative">
-            <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-              Order
+            <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular text-primary-text-color">
+              {t("order.orderLabel")} {/* Localized 'Order' */}
             </div>
           </div>
           <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-sm text-right tracking-[0] leading-[22px] whitespace-nowrap">
+            <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-sm text-right">
               {orderState?.order_total} €
             </div>
           </div>
@@ -70,8 +72,8 @@ export const OrderInfo = ({ orderId }) => {
         <div className="flex flex-col items-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex w-full items-center gap-[5px] relative">
-              <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                Service Fees
+              <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular text-primary-text-color">
+                {t("order.serviceFeesLabel")} {/* Localized 'Service Fees' */}
               </div>
               <div className="relative">
                 <span onClick={handleToggleTooltip}>
@@ -82,68 +84,73 @@ export const OrderInfo = ({ orderId }) => {
                     ref={tooltipRef}
                     className="absolute z-10 w-[260px] p-2 bg-white text-gray-800 border border-gray-300 rounded-md shadow-lg bottom-full left-1/2 transform -translate-x-1/2 mb-2"
                   >
-                    TheGoodDeals Commission of 6%
+                    {t("order.serviceFeesTooltip")}{" "}
+                    {/* Localized tooltip text */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white border border-gray-300 -bottom-1 rotate-45"></div>
                   </div>
                 )}
               </div>
             </div>
             <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-sm text-right tracking-[0] leading-[22px] whitespace-nowrap">
+              <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-sm text-right">
                 {orderState?.service_fees} €
               </div>
             </div>
           </div>
         </div>
 
-        {/* Rest of the component code */}
+        {/* Payment Fees */}
         <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex w-[162.5px] items-center gap-[5px] relative">
-            <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-              Payment Fees
+            <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular text-primary-text-color">
+              {t("order.paymentFeesLabel")} {/* Localized 'Payment Fees' */}
             </div>
           </div>
           <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-sm text-right tracking-[0] leading-[22px] whitespace-nowrap">
+            <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-sm text-right">
               {orderState?.payment_fees} €
             </div>
           </div>
         </div>
 
+        {/* Delivery Fees */}
         <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex w-[162.5px] items-center gap-[5px] relative">
-            <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-              Delivery Fees
+            <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular text-primary-text-color">
+              {t("order.deliveryFeesLabel")} {/* Localized 'Delivery Fees' */}
             </div>
           </div>
           <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-sm text-right tracking-[0] leading-[22px] whitespace-nowrap">
-              {orderState?.delivery_fees}
+            <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-sm text-right">
+              {orderState?.delivery_fees} €
             </div>
           </div>
         </div>
 
+        {/* TOTAL TTC */}
         <div className="flex flex-col items-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-            <div className="relative w-fit font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-              TOTAL TTC
+            <div className="relative w-fit font-body-extra-small-text-regular text-primary-text-color">
+              {t("order.totalTTC")} {/* Localized 'TOTAL TTC' */}
             </div>
             <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
-              <div className="[font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color leading-6 line-through relative w-fit mt-[-1.00px] text-sm text-right tracking-[0] whitespace-nowrap">
-                {orderState?.mrp ?? "XX"} €
+              <div className="font-normal text-primary-text-color leading-6 line-through relative w-fit mt-[-1.00px] text-sm text-right">
+                {orderState?.mrp ?? t("order.priceUnknown")} €
               </div>
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-sm text-right tracking-[0] leading-[22px] whitespace-nowrap">
-                {orderState?.total_ttc ?? "XX"} €
+              <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-sm text-right">
+                {orderState?.total_ttc ?? t("order.totalUnknown")} €
               </div>
             </div>
           </div>
         </div>
+
+        {/* Save */}
         <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-          <div className="relative w-fit font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-secondary-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-            Save
+          <div className="relative w-fit font-body-extra-small-text-regular text-secondary-color">
+            {t("order.saveLabel")} {/* Localized 'Save' */}
           </div>
-          <div className="font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-secondary-color leading-[var(--body-small-medium-line-height)] relative w-fit mt-[-1.00px] text-[length:var(--body-small-medium-font-size)] text-right tracking-[var(--body-small-medium-letter-spacing)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-            {orderState?.discount ?? "XX"} €
+          <div className="font-small-medium text-secondary-color leading-small relative w-fit mt-[-1.00px] text-right">
+            {orderState?.discount ?? t("order.discountUnknown")} €
           </div>
         </div>
       </div>

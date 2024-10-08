@@ -1,18 +1,19 @@
-// BankingInfo.js
 import React, { useState } from "react";
 import { Write2 } from "../../icons/Write2";
+import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 
 const BankingInfo = ({ label, placeholder, onChange, type }) => {
   const [value, setValue] = useState("");
+  const { t } = useTranslation(); // Initialize the translation hook
 
   const handleCopy = () => {
     navigator.clipboard
       .writeText(value)
       .then(() => {
-        alert("Copied to clipboard!");
+        alert(t("bankingInfo.copySuccess")); // Use translation key for success message
       })
       .catch((err) => {
-        console.error("Failed to copy: ", err);
+        console.error(t("bankingInfo.copyFail"), err); // Use translation key for failure message
       });
   };
 

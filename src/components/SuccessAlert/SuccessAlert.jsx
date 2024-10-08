@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { CheckmarkCircle1 } from "../../icons/CheckmarkCircle1";
 import { CheckmarkCircle5 } from "../../icons/CheckmarkCircle5";
+import { useTranslation } from "react-i18next"; // Import translation hook
 
 export const SuccessAlert = ({
   style,
@@ -19,8 +20,10 @@ export const SuccessAlert = ({
     />
   ),
   divClassName,
-  text = "Your item has been added successfully",
+  text = "Your item has been added successfully", // Default text replaced with translation logic below
 }) => {
+  const { t } = useTranslation(); // Use translation hook
+
   return (
     <div
       className={`inline-flex items-start gap-[25px] rounded-lg relative ${
@@ -86,18 +89,15 @@ export const SuccessAlert = ({
               {style === "one" && (
                 <>
                   <div className="relative w-fit mt-[-1.00px] font-body-large-semibold font-[number:var(--body-large-semibold-font-weight)] text-darkdark text-[length:var(--body-large-semibold-font-size)] tracking-[var(--body-large-semibold-letter-spacing)] leading-[var(--body-large-semibold-line-height)] whitespace-nowrap [font-style:var(--body-large-semibold-font-style)]">
-                    Message Sent Successfully
+                    {t("SuccessAlert.messageSent")}
                   </div>
                   <p className="relative w-[740px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the
-                    industry&#39;s standard dummy text ever since the 1500s,
-                    when
+                    {t("SuccessAlert.messageDescription")}
                   </p>
                 </>
               )}
 
-              {style === "two" && <>Message Sent Successfully</>}
+              {style === "two" && <>{t("SuccessAlert.messageSent")}</>}
             </div>
             <div
               className={`relative ${
@@ -133,20 +133,15 @@ export const SuccessAlert = ({
               {style === "one" && (
                 <>
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-greengreen text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    View Status
+                    {t("SuccessAlert.viewStatus")}
                   </div>
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-darkdark text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                    Dismiss
+                    {t("SuccessAlert.dismiss")}
                   </div>
                 </>
               )}
 
-              {style === "two" && (
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry.
-                </p>
-              )}
+              {style === "two" && <p>{t("SuccessAlert.messageDescription")}</p>}
             </div>
           </div>
         </>
@@ -162,7 +157,7 @@ export const SuccessAlert = ({
           <p
             className={`relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-[#004434] text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)] ${divClassName}`}
           >
-            {text}
+            {t("SuccessAlert.itemAdded")}
           </p>
         </div>
       )}

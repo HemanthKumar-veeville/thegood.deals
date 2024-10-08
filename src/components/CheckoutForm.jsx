@@ -19,7 +19,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.account.profile);
   const [email, setEmail] = useState(user?.data?.email); // Allow dynamic email entry
-  const { t } = useTranslation();
+  const { t } = useTranslation(); // Use translation hook
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation(); // Use location to access query params
@@ -34,7 +34,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded
-      setMessage("Stripe has not fully loaded yet. Please try again.");
+      setMessage(t("checkout.stripe_not_loaded")); // Translated message
       return;
     }
 
@@ -56,7 +56,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
         if (error.type === "card_error" || error.type === "validation_error") {
           setMessage(error.message);
         } else {
-          setMessage("An unexpected error occurred. Please try again.");
+          setMessage(t("checkout.unexpected_error")); // Translated message
         }
         console.error("Error during setup confirmation:", error);
       } else {
@@ -69,11 +69,11 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
           await dispatch(
             setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId })
           );
-          setMessage("Setup confirmed successfully.");
+          setMessage(t("checkout.setup_confirmed")); // Translated message
           navigate(`/thanks-payment-setup?orderId=${orderId}`); // Navigate to success page
         } catch (dispatchError) {
           console.error("Error during dispatch:", dispatchError);
-          setMessage("An error occurred while processing the payment setup.");
+          setMessage(t("checkout.processing_error")); // Translated message
         } finally {
           setIsConfirmSetupLoading(false);
         }
@@ -81,7 +81,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
     } catch (err) {
       // Handle unexpected errors
       console.error("Unexpected error in setup confirmation:", err);
-      setMessage("An unexpected error occurred during setup confirmation.");
+      setMessage(t("checkout.unexpected_error_setup")); // Translated message
     } finally {
       setIsLoading(false); // Stop loading spinner
     }
@@ -171,7 +171,6 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
               setEmail(event.value.email); // Dynamically set the email when changed
             }}
             options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
-            // className="!h-14" // Force height using Tailwind CSS
           />
           <PaymentElement
             id="payment-element"
@@ -192,7 +191,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
 
       <img
         className="relative self-stretch w-full h-px object-cover mt-3"
-        alt={t("withdrawal.line_alt")}
+        alt={t("checkout.line_alt")} // Translated image alt text
         src={Line63}
       />
 
@@ -202,7 +201,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
           disabled={isLoading || !stripe || !elements}
           className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap"
         >
-          {btnText}
+          {t("checkout.submit_button")} {/* Translated button text */}
         </button>
         <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
       </div>

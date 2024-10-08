@@ -2,8 +2,11 @@ import React from "react";
 import { Minus1 } from "../../icons/Minus1";
 import { Plus } from "../../icons/Plus";
 import { Line_146_2 } from "../../images";
+import { useTranslation } from "react-i18next";
 
 const ProductQuantity = ({ label, value, setValue }) => {
+  const { t } = useTranslation(); // Use translation hook
+
   const increaseQuantity = () => {
     setValue((prevValue) => prevValue + 1);
   };
@@ -20,7 +23,7 @@ const ProductQuantity = ({ label, value, setValue }) => {
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-            by order
+            {t("ProductQuantity.byOrder")}
           </div>
         </div>
       </div>
@@ -30,12 +33,12 @@ const ProductQuantity = ({ label, value, setValue }) => {
             <div className="relative w-[114px] h-9 bg-white rounded-[5px] border border-solid border-stroke">
               <img
                 className="absolute w-px h-9 -top-px left-[33px] object-cover"
-                alt="Line"
+                alt={t("ProductQuantity.lineAltText")}
                 src={Line_146_2}
               />
               <img
                 className="absolute w-px h-9 -top-px left-[79px] object-cover"
-                alt="Line"
+                alt={t("ProductQuantity.lineAltText")}
                 src={Line_146_2}
               />
               <div onClick={decreaseQuantity} className="cursor-pointer">

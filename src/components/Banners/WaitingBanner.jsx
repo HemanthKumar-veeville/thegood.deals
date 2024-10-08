@@ -1,8 +1,11 @@
 import React from "react";
 import { SuccessAlert } from "../../components/WarningAlert";
 import { Warning1 } from "../../icons/Warning1";
+import { useTranslation } from "react-i18next"; // Import useTranslation hook
 
 export const WaitingBanner = () => {
+  const { t } = useTranslation(); // Initialize translation hook
+
   return (
     <SuccessAlert
       className="!flex !bg-orangeorange-light-5"
@@ -16,7 +19,7 @@ export const WaitingBanner = () => {
         />
       }
       style="three"
-      text="Waiting for confirmation of the deal from the artisian"
+      text={t("waitingBanner.waitingMessage")}
     />
   );
 };

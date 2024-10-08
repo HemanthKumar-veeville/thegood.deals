@@ -667,9 +667,13 @@
     "ensureCorrectInfo": "We want to ensure that all information is correct in order to trigger payment.",
     "dealConfirmed": "Once the deal is confirmed, it will be offered for sale.",
     "line": "Line",
-    "dealTitle": "Wine cratesDomaine de Cigaluse",
+    "dealTitle": "Wine crates Domaine de Cigaluse",
     "organizedBy": "Collection organized by",
-    "seeTheDeal": "See the deal"
+    "seeTheDeal": "See the deal",
+    "blogImageAlt": "Blog image",
+    "rectangleAlt": "Rectangle image",
+    "organizerName": "Abraham Thomas",
+    "rating": "four-star"
   },
   "artisanEmailList": {
     "dearCraftsman": "Dear craftsman, please confirm the order form 🧾",
@@ -818,5 +822,426 @@
     "logo_part2": "deals",
     "default_profile_image_url": "https://example.com/profiles/default.jpg",
     "alt_profile_photo": "Profile Photo"
+  },
+  "bankingInfo": {
+    "copySuccess": "Copied to clipboard!",
+    "copyFail": "Failed to copy: "
+  },
+  "draftBanner": {
+    "draftMessage": "This deal is a draft.",
+    "completePrompt": "Please complete it."
+  },
+  "waitingBanner": {
+    "waitingMessage": "Waiting for confirmation of the deal from the artisian"
+  },
+  "successAlert": {
+    "defaultText": "Your item has been added successfully",
+    "messageSent": "Message Sent Successfully",
+    "loremIpsumLong": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when",
+    "viewStatus": "View Status",
+    "dismiss": "Dismiss",
+    "loremIpsumShort": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+  },
+  "artisan": {
+    "cardDeal": {
+      "soonOutStock": "Soon to be out of stock",
+      "finished": "Finished",
+      "inStock": "In stock",
+      "waiting": "Waiting for the artisan",
+      "draft": "Draft",
+      "endsIn": "ends in {{days}} days",
+      "dealFinished": "Deal finished",
+      "styleTypePrimaryText": "80% sold",
+      "text": "Wine crates<br/>Domaine de Cigaluse",
+      "text1": "ends in 12 days",
+      "participants": "{{count}} participants",
+      "authorName": "Author name",
+      "badgesText": "Almost out of stock"
+    }
+  },
+  "cart": {
+    "myBasket": "My basket",
+    "available": "{{count}} available",
+    "totalTTC": "TOTAL TTC",
+    "save": "Save",
+    "payment": "Payment",
+    "errorTitle": "Error...",
+    "errorMessage": "Failed to send request. Please try again."
+  },
+  "collectionLocation": {
+    "dealDeliveryCosts": "Deal delivery costs",
+    "collectionLocationTitle": "Collection location",
+    "deliveryCostDescription": "You have the option to share the delivery costs between participants.",
+    "atMyHome": "At my home",
+    "deliveryIncluded": "Delivery is included",
+    "provideAnotherLocation": "I am providing another location",
+    "addShippingCosts": "I add the shipping costs",
+    "placeholderLocation": "ex. Chez Abraham 24 rue des Vignobles, 33000 Bordeaux",
+    "placeholderCost": "345 . 00 €"
+  },
+  "dealExpiration": {
+    "expirationDateTitle": "Deal expiration date",
+    "expirationDateDescription": "Maximum 30 days from this day"
+  },
+  "placeholder": {
+    "selectLanguageTitle": "Select the Language",
+    "languageOptions": {
+      "english": "English",
+      "french": "French"
+    },
+    "defaultLanguage": "Language"
+  },
+  "customErrorModal": {
+    "defaultMessage": "We're sorry, something has gone wrong. Please try later",
+    "buttonText": "Got it"
+  },
+  "header": {
+    "mainText": "Créez, Partagez et Savourez avec une commande groupée !",
+    "subText": "En quelques clics, créez une commande, invitez vos proches et partagez le plaisir de découvrir ensemble les saveurs uniques de l'artisanat local. Profitez de tarifs avantageux, soutenez les artisans de votre région, et transformez chaque achat en une expérience conviviale et enrichissante.",
+    "createDealButton": "Créer un good deal",
+    "manageDealsButton": "Gérer mes good deals",
+    "contactUsButton": "Contact us"
+  },
+  "imageLoader": {
+    "imageAlt": "Image",
+    "error": "Failed to load the image.",
+    "loading": "Loading image..."
+  },
+  "order": {
+    "orderLabel": "Order",
+    "serviceFeesLabel": "Service Fees",
+    "serviceFeesTooltip": "TheGoodDeals Commission of 6%",
+    "paymentFeesLabel": "Payment Fees",
+    "deliveryFeesLabel": "Delivery Fees",
+    "totalTTC": "TOTAL TTC",
+    "saveLabel": "Save",
+    "priceUnknown": "Price Unknown",
+    "totalUnknown": "Total Unknown",
+    "discountUnknown": "Discount Unknown",
+    "error": "Error: {{error}}"
+  },
+  "productInfo": {
+    "productTitleLabel": "Product Title",
+    "productTitlePlaceholder": "ex. Case of Rosé - 6 bottles",
+    "totalStockLabel": "Total stock",
+    "byOrderText": "by order",
+    "totalStockPlaceholder": "ex. 32",
+    "minQuantityLabel": "Minimum quantity",
+    "maxQuantityLabel": "Maximum quantity",
+    "maximumRetailPriceLabel": "Maximum retail price",
+    "maximumRetailPricePlaceholder": "ex. €29.00",
+    "goodDealPriceLabel": "Good deal price",
+    "goodDealPricePlaceholder": "ex. €29.00",
+    "estimatedDiscountLabel": "Estimated discount",
+    "estimatedDiscountText": "% compared to the public price",
+    "addButtonText": "Add"
+  },
+  "productTitleLabel": "Product Title",
+  "productTitlePlaceholder": "ex. Case of Rosé - 6 bottles",
+  "totalStockLabel": "Total stock",
+  "byOrderText": "by order",
+  "totalStockPlaceholder": "ex. 32",
+  "minQuantityLabel": "Minimum quantity",
+  "maxQuantityLabel": "Maximum quantity",
+  "maximumRetailPriceLabel": "Maximum retail price",
+  "maximumRetailPricePlaceholder": "ex. €29.00",
+  "goodDealPriceLabel": "Good deal price",
+  "goodDealPricePlaceholder": "ex. €29.00",
+  "estimatedDiscountLabel": "Estimated discount",
+  "estimatedDiscountText": "compared to the public price",
+  "addButtonText": "Add",
+  "ProductList": {
+    "productListTitle": "Product List",
+    "noProductsMessage": "No products added yet.",
+    "totalStock": "Total Stock",
+    "minQuantity": "Min Quantity",
+    "maxQuantity": "Max Quantity",
+    "marketPrice": "Market Price",
+    "goodDealPrice": "Good Deal Price",
+    "estimatedDiscount": "Estimated Discount"
+  },
+  "ProductQuantity": {
+    "byOrder": "by order",
+    "lineAltText": "Line"
+  },
+  "ProgressBarYellow": {
+    "sold": "{{percentage}}% sold"
+  },
+  "SuccessAlert": {
+    "messageSent": "Message Sent Successfully",
+    "messageDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    "viewStatus": "View Status",
+    "dismiss": "Dismiss",
+    "itemAdded": "Your item has been added successfully",
+    "title": "Message Sent Successfully",
+    "message": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+  },
+  "TextInput": {
+    "placeholder": "Placeholder"
+  },
+  "TitleInput": {
+    "label": "Title",
+    "placeholder": "ex. Wine Boxes"
+  },
+  "checkout": {
+    "stripe_not_loaded": "Stripe has not fully loaded yet. Please try again.",
+    "unexpected_error": "An unexpected error occurred. Please try again.",
+    "setup_confirmed": "Setup confirmed successfully.",
+    "processing_error": "An error occurred while processing the payment setup.",
+    "unexpected_error_setup": "An unexpected error occurred during setup confirmation.",
+    "line_alt": "Line divider for payment sections",
+    "submit_button": "Submit Payment"
+  },
+  "DangerAlert": {
+    "alert_message": "A new request has been sent automatically.",
+    "show_list": "Show the list"
+  },
+  "GeneralConditions": {
+    "heading": "General Conditions of Sale and Use of thegood.deals",
+    "introduction": "Welcome to thegood.deals, a marketplace platform dedicated to transactions between professional sellers and private consumers (B2C). These General Terms and Conditions of Sale (hereinafter 'GTC') govern the rights and obligations of users of our marketplace. By accessing and using our site, you accept these GTC in full.",
+    "section_1": {
+      "title": "1. Definitions",
+      "content": {
+        "thegoodDeals": "thegood.deals: The website and marketplace platform operated by thegood.deals SAS accessible at www.thegood.deals.",
+        "user": "User: Any person accessing the marketplace, whether visitors, sellers, or buyers.",
+        "seller": "Seller: Any natural person registered on the marketplace offering products for sale. The seller acts as an organizer.",
+        "buyer": "Buyer: Any natural person acting as a consumer and placing an order on the site.",
+        "product": "Product: Any good or service offered for sale by sellers on the marketplace."
+      }
+    },
+    "section_2": {
+      "title": "2. Purpose of the T&Cs",
+      "content": "These T&Cs define the conditions under which thegood.deals enables the connection between sellers and buyers. thegood.deals does not intervene in the transaction itself between the seller and the buyer, except for facilitating payments via its platform."
+    },
+    "section_3": {
+      "title": "3. Access to the Marketplace",
+      "content": [
+        "Access to thegood.deals is free for users.",
+        "Registration is mandatory for sellers wishing to offer their products and for buyers wishing to place an order."
+      ]
+    },
+    "section_4": {
+      "title": "4. Registration and Accounts",
+      "content": [
+        "To use thegood.deals services, sellers and buyers must register by providing truthful and up-to-date information.",
+        "Each user is responsible for maintaining the confidentiality of their credentials and must immediately notify thegood.deals in the event of loss or unauthorized use of their account."
+      ]
+    },
+    "section_5": {
+      "title": "5. Role of thegood.deals",
+      "content": [
+        "thegood.deals acts solely as a technical intermediary providing a platform for connecting buyers and sellers.",
+        "thegood.deals is not a party to the sales contract between the seller and the buyer and does not guarantee the quality of the products or services sold."
+      ]
+    },
+    "section_6": {
+      "title": "6. Obligations of the Seller",
+      "content": [
+        "The seller undertakes to offer products that comply with the laws and regulations in force, particularly consumer protection rules.",
+        "Sellers are responsible for their product descriptions, prices, and availability on the platform."
+      ]
+    },
+    "section_7": {
+      "title": "7. Order Process",
+      "content": [
+        "Buyers place orders directly with sellers through the thegood.deals platform.",
+        "Buyers receive order summaries and confirmation emails after validating their purchase."
+      ]
+    },
+    "section_8": {
+      "title": "8. Payment",
+      "content": [
+        "thegood.deals provides a secure payment solution for transactions.",
+        "Payments can be made by bank card, e-wallet, or any other means available on the platform.",
+        "thegood.deals retains a commission on each sale."
+      ]
+    },
+    "section_9": {
+      "title": "9. Delivery",
+      "content": [
+        "Delivery of the products is provided by the seller or by a transport provider chosen by the seller.",
+        "Delivery times are mentioned when ordering, and the seller is responsible for respecting these times."
+      ]
+    },
+    "section_10": {
+      "title": "10. Right of Withdrawal",
+      "content": [
+        "In accordance with legal provisions, the buyer has a period of 14 days from receipt of the product to exercise their right of withdrawal."
+      ]
+    },
+    "section_11": {
+      "title": "11. Legal Guarantees",
+      "content": [
+        "The seller is bound by legal guarantees of conformity and hidden defects."
+      ]
+    },
+    "section_12": {
+      "title": "12. Liability",
+      "content": [
+        "thegood.deals assumes no responsibility for disputes between buyers and sellers.",
+        "It cannot be held responsible for errors, omissions, or delays in product deliveries."
+      ]
+    },
+    "section_13": {
+      "title": "13. Dispute Resolution",
+      "content": [
+        "In the event of a dispute, users should seek an amicable solution.",
+        "If no resolution is found, buyers may contact a consumer association or the competent court.",
+        "thegood.deals also offers mediation services."
+      ]
+    },
+    "section_14": {
+      "title": "14. Intellectual Property",
+      "content": [
+        "All content on thegood.deals is the exclusive property of thegood.deals or its sellers.",
+        "Any unauthorized reproduction is prohibited."
+      ]
+    },
+    "section_15": {
+      "title": "15. Protection of Personal Data",
+      "content": [
+        "thegood.deals complies with current legislation regarding the protection of personal data.",
+        "Users have the right to access, rectify, or delete their personal information."
+      ]
+    },
+    "section_16": {
+      "title": "16. Modification of the T&Cs",
+      "content": [
+        "thegood.deals reserves the right to modify these T&Cs at any time, with changes taking effect immediately upon posting.",
+        "Continued use of the platform implies acceptance of these updates."
+      ]
+    },
+    "section_17": {
+      "title": "17. Applicable Law and Jurisdiction",
+      "content": "These T&Cs are governed by French law, and disputes will be resolved according to the legal provisions applicable to buyers and sellers' domiciles."
+    },
+    "section_18": {
+      "title": "18. Contact",
+      "content": "For any questions or complaints regarding these T&Cs, please contact us at: support@thegood.deals."
+    }
+  },
+  "Label": {
+    "contact_information": "Contact information",
+    "provision_of_services": "The provision of services through this website...",
+    "contact_channels": "The company can be contacted via the following channels.",
+    "founders_directors": "The founders and directors of thegood.deals...",
+    "copyright_title": "Copyright",
+    "copyright_content": "All content hosted or made available on the website...",
+    "trademarks_title": "Trademarks",
+    "trademarks_content": "hegood.deals® is a registered trademark of thegood.deals..."
+  },
+  "LegalNotices": {
+    "title": "Legal Notices",
+    "contact_information": {
+      "title": "Contact Information",
+      "description": "The provision of services through this website is carried out under the name of thegood.deals by thegood.deals, a French company domiciled at 679 Avenue de la République (Lille) 59800 Lille under the SIRET number 93148811800015.",
+      "directors": "The company can be contacted via the following channels. The founders and directors of thegood.deals are Anthony Brabant and Abraham THOMAS."
+    },
+    "copyright": {
+      "title": "Copyright",
+      "description1": "All content hosted or made available on the website www.thegood.deals, such as texts, graphics, logos, button icons, images, digital downloads, and data collections are the property of thegood.deals or its suppliers and are protected by international legislation on intellectual property, copyright rights, and databases.",
+      "description2": "No systematic extraction or reuse of any part of the content of thegood.deals is permitted without our express written consent..."
+    },
+    "trademarks": {
+      "title": "Trademarks",
+      "description1": "thegood.deals® is a registered trademark of thegood.deals. In addition, the graphics, logos, page headers, button icons, scripts, and service names that are included in or available through the thegood.deals website are trademarks or trade dress of thegood.deals.",
+      "description2": "The trademarks and trade dress of thegood.deals may not be used to represent any product or service that is not thegood.deals’s..."
+    }
+  },
+  "Payment": {
+    "error_title": "Error...",
+    "fetch_error_message": "Failed to Fetch intent. Please try again.",
+    "heading": "Complete your payment",
+    "button_text": "Submit Payment"
+  },
+  "PaymentForm": {
+    "in_progress": "Payment in Progress...",
+    "error_message": "Some Error Occurred !!",
+    "submit_button": "Submit Payment"
+  },
+  "PrivacyCookiePolicy": {
+    "title": "Privacy and Cookie Policy",
+    "introduction": {
+      "title": "1. Introduction",
+      "content": "This Privacy and Cookie Policy sets out the terms and conditions under which thegood.deals..."
+    },
+    "dataController": {
+      "title": "2. Identity of the Data Controller",
+      "content": "Owner: thegood.deals SAS, Registered office: 679 Av. de la République, 59800 Lille..."
+    },
+    "personalData": {
+      "title": "3. Collection and Processing of Personal Data",
+      "items": [
+        "Management of user accounts: Information such as surname, first name, email address...",
+        "Processing of orders: The information necessary for order management...",
+        "Sending information and commercial communications: If you have given your consent...",
+        "Improving our services: We use anonymized browsing data to analyze user habits...",
+        "Complaints and customer support management: Your data may be used to process..."
+      ]
+    },
+    "legitimacy": {
+      "title": "4. Legitimacy of Processing",
+      "items": [
+        "Performance of a contract: When you place an order or create an account on our platform...",
+        "Consent: We collect your explicit consent for actions such as sending marketing communications...",
+        "Legitimate interest: To improve our services or ensure the security of our Site..."
+      ]
+    },
+    "dataDisclosure": {
+      "title": "5. Data Disclosure",
+      "content": "Your personal data will only be shared with:",
+      "items": [
+        "Our service providers: Those involved in the management of the Site...",
+        "Public authorities: When required by law.",
+        "Business partners: With your consent, for sending promotions or third-party offers."
+      ]
+    },
+    "dataStorage": {
+      "title": "6. Data Storage Duration",
+      "items": [
+        "For the performance of a contract: for the time necessary to manage your order and customer relations.",
+        "For marketing communications: until you withdraw your consent.",
+        "For compliance with legal obligations: for the duration imposed by applicable law."
+      ]
+    },
+    "yourRights": {
+      "title": "7. Your Rights",
+      "content": "Under the GDPR, you have the following rights over your personal data:",
+      "items": [
+        "Access: You can request access to the personal data we hold about you.",
+        "Rectification: You can request to correct inaccurate or incomplete information.",
+        "Deletion: You have the right to request the deletion of your personal data in certain cases...",
+        "Objection: You can object to the processing of your data for legitimate reasons...",
+        "Limitation: You can request that the processing of your data be limited in certain cases...",
+        "Portability: You can request to receive a copy of your personal data in a structured..."
+      ],
+      "contact": "To exercise your rights, you can contact us at the following email address: bonjour@thegood.deals"
+    },
+    "useOfCookies": {
+      "title": "8. Use of Cookies",
+      "content": "A cookie is a small file stored on your device when you visit our Site. We use cookies for the following purposes:",
+      "items": [
+        "Improve navigation on the Site: Personalize content, remember your preferences...",
+        "Analyze traffic: We use tools such as Google Analytics to collect anonymous information...",
+        "Targeted Advertising: Advertising cookies may be used to display ads tailored to your interests."
+      ]
+    },
+    "dataSecurity": {
+      "title": "9. Data Security",
+      "content": "We implement all appropriate technical and organizational security measures to protect your personal data against unauthorized access, loss, or alteration..."
+    },
+    "policyChanges": {
+      "title": "10. Changes to the Privacy Policy",
+      "content": "This Privacy Policy may be amended periodically to reflect changes in our practices or legal developments..."
+    },
+    "contact": {
+      "title": "11. Contact",
+      "content": "For any questions regarding this Privacy Policy or your personal data, you can contact us at bonjour@thegood.deals."
+    }
+  },
+  "StripePayment": {
+    "fetchError": "Error fetching payment intent:",
+    "paymentFormHeading": "Complete Your Payment",
+    "payNow": "Pay Now"
   }
 }

@@ -53,7 +53,7 @@ const OTPInput = ({ value, onChange, index, inputRefs }) => (
 export const VerificationOTP = () => {
   const { t } = useTranslation(); // Initialize translation hook
   const [otp, setOtp] = useState(Array(5).fill(""));
-  const [seconds, setSeconds] = useState(33);
+  const [seconds, setSeconds] = useState(180);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const inputRefs = useRef(otp.map(() => React.createRef()));
@@ -68,7 +68,7 @@ export const VerificationOTP = () => {
 
       if (response?.status === 200) {
         console.log("Mail Sent");
-        setSeconds(33);
+        setSeconds(180);
       }
     } catch (error) {
       console.error("There was an error!", error);

@@ -1,8 +1,3 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
 import PropTypes from "prop-types";
 import React from "react";
 import { ClockAlt12 } from "../../icons/ClockAlt12";
@@ -11,14 +6,17 @@ import { Users2 } from "../../icons/Users2";
 import { Badges } from "../Badges";
 import { StyleTypePrimary } from "../StyleTypePrimary";
 import { Rectangle_4592 } from "../../images";
+import { useTranslation } from "react-i18next"; // Import translation hook
 
 export const CardDeal = ({
   className,
-  styleTypePrimaryText = "80% vendus",
-  text = "Caisses de vins<br/>Domaine de Cigaluse",
-  text1 = "fin dans 12 jours",
-  badgesText = "Bientôt en rupture",
+  styleTypePrimaryText,
+  text,
+  text1,
+  badgesText,
 }) => {
+  const { t } = useTranslation(); // Initialize the translation hook
+
   return (
     <div
       className={`flex flex-col w-[290px] items-start relative rounded-lg overflow-hidden shadow-shadow-1 ${className}`}
@@ -38,27 +36,27 @@ export const CardDeal = ({
             lineClassName="!w-[197px]"
             overlapClassName="!w-[260px]"
             overlapGroupClassName="bg-[url(/static/img/line-59.svg)]"
-            text={styleTypePrimaryText}
+            text={t("artisan.cardDeal.styleTypePrimaryText")}
           />
           <p className="relative self-stretch font-body-medium-bold font-[number:var(--body-medium-bold-font-weight)] text-primary-color text-[length:var(--body-medium-bold-font-size)] tracking-[var(--body-medium-bold-letter-spacing)] leading-[var(--body-medium-bold-line-height)] [font-style:var(--body-medium-bold-font-style)]">
-            {text}
+            {t("artisan.cardDeal.text")}
           </p>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt12 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {text1}
+              {t("artisan.cardDeal.text1")}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <Users2 className="!relative !w-5 !h-5" color="#111928" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              13 participants
+              {t("artisan.cardDeal.participants", { count: 13 })}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <UserAlt className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              Author name
+              {t("artisan.cardDeal.authorName")}
             </div>
           </div>
         </div>
@@ -68,7 +66,7 @@ export const CardDeal = ({
         color="warning"
         round="semi-round"
         state="duo-tone"
-        text1={badgesText}
+        text1={t("artisan.cardDeal.badgesText")}
       />
       <Badges
         className="!left-60 !absolute !bg-blueblue-light-5 !top-[15px]"
