@@ -805,12 +805,12 @@
     "waitingMessage": "En attente de la confirmation du deal par l’artisan"
   },
   "successAlert": {
-    "defaultText": "Votre article a été ajouté avec succès",
-    "messageSent": "Message envoyé avec succès",
-    "loremIpsumLong": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression et de la composition. Le Lorem Ipsum est le texte factice standard de l'industrie depuis les années 1500, lorsqu'un imprimeur anonyme a assemblé un livre de spécimens de polices de caractères.",
+    "defaultText": "Votre article a été ajouté avec succès.",
+    "messageSent": "Message envoyé avec succès.",
+    "loremIpsumLong": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when",
     "viewStatus": "Voir le statut",
-    "dismiss": "Fermer",
-    "loremIpsumShort": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression."
+    "dismiss": "Ignorer",
+    "loremIpsumShort": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   "artisan": {
     "cardDeal": {
@@ -862,8 +862,8 @@
     "defaultLanguage": "Langue"
   },
   "customErrorModal": {
-    "defaultMessage": "Nous sommes désolés, quelque chose a mal tourné. Veuillez réessayer plus tard",
-    "buttonText": "J'ai compris"
+    "defaultMessage": "Nous sommes désolés, une erreur s'est produite. Veuillez réessayer plus tard.",
+    "buttonText": "Compris"
   },
   "header": {
     "mainText": "Créez, Partagez et Savourez avec une  commande groupée !",
@@ -880,15 +880,15 @@
   "order": {
     "orderLabel": "Commande",
     "serviceFeesLabel": "Frais de service",
-    "serviceFeesTooltip": "Commission de TheGoodDeals de 6%",
+    "serviceFeesTooltip": "Commission de TheGoodDeals de 6 %",
     "paymentFeesLabel": "Frais de paiement",
     "deliveryFeesLabel": "Frais de livraison",
     "totalTTC": "TOTAL TTC",
-    "saveLabel": "Économisez",
+    "saveLabel": "Enregistrer",
     "priceUnknown": "Prix inconnu",
     "totalUnknown": "Total inconnu",
     "discountUnknown": "Remise inconnue",
-    "error": "Erreur : {{error}}"
+    "error": "Erreur : {{error}}"
   },
   "productInfo": {
     "productTitleLabel": "Titre du produit",
@@ -910,11 +910,11 @@
     "productListTitle": "Liste des produits",
     "noProductsMessage": "Aucun produit ajouté pour le moment.",
     "totalStock": "Stock total",
-    "minQuantity": "Quantité min.",
-    "maxQuantity": "Quantité max.",
-    "marketPrice": "Prix du marché",
-    "goodDealPrice": "Prix du good deal",
-    "estimatedDiscount": "Remise estimée"
+    "minQuantity": "Quantité minimum",
+    "maxQuantity": "Quantité maximum",
+    "marketPrice": "Prix de référence",
+    "goodDealPrice": "Prix du Good Deal",
+    "estimatedDiscount": "Remise estimée"
   },
   "ProductQuantity": {
     "byOrder": "par commande",
@@ -933,7 +933,7 @@
     "message": "Le Lorem Ipsum est simplement un faux texte de l'industrie de l'impression."
   },
   "TextInput": {
-    "placeholder": "Placeholder"
+    "placeholder": "Texte indicatif"
   },
   "TitleInput": {
     "label": "Titre",
@@ -1110,14 +1110,14 @@
   },
   "Payment": {
     "error_title": "Erreur...",
-    "fetch_error_message": "Échec du chargement de l'intention de paiement. Veuillez réessayer.",
+    "fetch_error_message": "Échec de la récupération de l'intention. Veuillez réessayer.",
     "heading": "Complétez votre paiement",
-    "button_text": "Soumettre le paiement"
+    "button_text": "Soumettre le paiement"
   },
   "PaymentForm": {
     "in_progress": "Paiement en cours...",
-    "error_message": "Une erreur est survenue !!",
-    "submit_button": "Soumettre le paiement"
+    "error_message": "Une erreur s'est produite !!",
+    "submit_button": "Soumettre le paiement"
   },
   "PrivacyCookiePolicy": {
     "title": "Politique de confidentialité et relative aux cookies",
@@ -1203,52 +1203,19 @@
     }
   },
   "StripePayment": {
-    "fetchError": "Erreur lors du chargement de l'intention de paiement :",
+    "fetchError": "Erreur lors de la récupération de l'intention de paiement :",
     "paymentFormHeading": "Complétez votre paiement",
     "payNow": "Payer maintenant"
   },
   "orders": {
-    "back_to_deal": "Retour à la commande",
-    "line_alt": "Ligne séparatrice",
+    "back_to_deal": "Retour au deal",
+    "line_alt": "Ligne",
     "my_orders": "Mes commandes",
-    "order_on_deal": "commande(s) sur la commande",
+    "order_on_deal": "commande sur le deal",
     "total": "Total",
     "service_fees": "Frais de service",
     "payment_fees": "Frais de paiement",
     "delivery_fees": "Frais de livraison",
-    "products": {
-      "title": "Titre du produit",
-      "quantity": "Quantité",
-      "price": "Prix"
-    },
-    "loading": "Chargement des commandes...",
-    "error": {
-      "fetch_failed": "Échec du chargement des commandes. Veuillez réessayer.",
-      "order_not_found": "Aucune commande trouvée pour cette commande."
-    },
-    "successAlert": {
-      "message": "Message envoyé avec succès",
-      "success": "Succès",
-      "dismiss": "Fermer"
-    },
-    "order_details": {
-      "participant_name": "Nom du participant",
-      "products_in_order": "Produits dans la commande",
-      "fees_section": {
-        "service_fees": "Frais de service",
-        "payment_fees": "Frais de paiement",
-        "delivery_fees": "Frais de livraison"
-      },
-      "total_per_order": "Total par commande",
-      "orders_count": "Nombre de commandes",
-      "expand_details": "Développer les détails",
-      "collapse_details": "Réduire les détails"
-    },
-    "message_alert": {
-      "success": "Votre message a été envoyé avec succès",
-      "warning": "Avertissement : une nouvelle demande a été envoyée automatiquement."
-    },
-    "case_of_rose": "Case of Rosé - 6 bottles",
-    "case_of_white": "Case of White - 6 bottles"
+    "products": "produits"
   }
 }

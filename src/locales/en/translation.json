@@ -1234,5 +1234,16 @@
     "fetchError": "Error fetching payment intent:",
     "paymentFormHeading": "Complete Your Payment",
     "payNow": "Pay Now"
+  },
+  "orders": {
+    "back_to_deal": "Back to Deal",
+    "line_alt": "Line separator",
+    "my_orders": "My Orders",
+    "order_on_deal": "order on deal",
+    "total": "Total",
+    "service_fees": "Service Fees",
+    "payment_fees": "Payment Fees",
+    "delivery_fees": "Delivery Fees",
+    "products": "products"
   }
 }

@@ -170,7 +170,8 @@ const Orders = ({ dealId, dealType }) => {
                             <div className="flex items-center justify-between gap-2.5 self-stretch">
                               <div className="flex items-center justify-between w-full">
                                 <p className="mt-[-1px] font-semibold text-secondary-color text-base">
-                                  {product.product_quantity} products
+                                  {product.product_quantity}{" "}
+                                  {t("orders.products")}
                                 </p>
                                 <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                                   € {product.product_price} x{" "}
@@ -186,8 +187,8 @@ const Orders = ({ dealId, dealType }) => {
                         <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
                           {/* Service Fees */}
                           <div className="flex items-center justify-between w-full">
-                            <p className=" font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                              Service Fees
+                            <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                              {t("orders.service_fees")}
                             </p>
                             <p className="font-semibold text-primary-color text-sm text-right">
                               {participant.service_fees} €
@@ -195,8 +196,8 @@ const Orders = ({ dealId, dealType }) => {
                           </div>
                           {/* Payment Fees */}
                           <div className="flex items-center justify-between w-full">
-                            <p className=" font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                              Payment Fees
+                            <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                              {t("orders.payment_fees")}
                             </p>
                             <p className="font-semibold text-primary-color text-sm text-right">
                               {participant.payment_fees} €
@@ -204,8 +205,8 @@ const Orders = ({ dealId, dealType }) => {
                           </div>
                           {/* Delivery Fees */}
                           <div className="flex items-center justify-between w-full">
-                            <p className=" font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                              Delivery Fees
+                            <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                              {t("orders.delivery_fees")}
                             </p>
                             <p className="font-semibold text-primary-color text-sm text-right">
                               {participant.delivery_fees}

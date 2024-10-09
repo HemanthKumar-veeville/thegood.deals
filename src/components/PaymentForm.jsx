@@ -44,6 +44,12 @@ const PaymentForm = () => {
             <PaymentElement />
           </div>
         </div>
+        {/* Add the authorization message */}
+        <p className="mt-4 text-gray-600">
+          {t("PaymentForm.authorization_message", {
+            businessName: "thegood.deals",
+          })}
+        </p>
         {message && <p>{message}</p>} {/* Display the message */}
         <button
           type="submit"

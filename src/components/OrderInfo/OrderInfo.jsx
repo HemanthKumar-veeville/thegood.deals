@@ -77,7 +77,10 @@ export const OrderInfo = ({ orderId }) => {
               </div>
               <div className="relative">
                 <span onClick={handleToggleTooltip}>
-                  <InfoCircle8 className="!relative !w-3.5 !h-3.5 cursor-pointer" />
+                  <InfoCircle8
+                    className="!relative !w-3.5 !h-3.5 cursor-pointer"
+                    color="#2a4e4a"
+                  />
                 </span>
                 {showTooltip && (
                   <div

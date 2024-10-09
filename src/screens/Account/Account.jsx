@@ -168,7 +168,7 @@ const Account = () => {
     >
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap capitalize">
-          {`Hey, ${profile?.name || "User"} 👋🏻`}
+          {`Hey, ${profile?.name || ""} 👋🏻`}
         </div>
         <div
           className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
