@@ -1234,49 +1234,5 @@
     "fetchError": "Error fetching payment intent:",
     "paymentFormHeading": "Complete Your Payment",
     "payNow": "Pay Now"
-  },
-  "orders": {
-    "back_to_deal": "Retour à la commande",
-    "line_alt": "Ligne séparatrice",
-    "my_orders": "Mes commandes",
-    "order_on_deal": "commande(s) sur la commande",
-    "total": "Total",
-    "service_fees": "Frais de service",
-    "payment_fees": "Frais de paiement",
-    "delivery_fees": "Frais de livraison",
-    "products": {
-      "title": "Titre du produit",
-      "quantity": "Quantité",
-      "price": "Prix"
-    },
-    "loading": "Chargement des commandes...",
-    "error": {
-      "fetch_failed": "Échec du chargement des commandes. Veuillez réessayer.",
-      "order_not_found": "Aucune commande trouvée pour cette commande."
-    },
-    "successAlert": {
-      "message": "Message envoyé avec succès",
-      "success": "Succès",
-      "dismiss": "Fermer"
-    },
-    "order_details": {
-      "participant_name": "Nom du participant",
-      "products_in_order": "Produits dans la commande",
-      "fees_section": {
-        "service_fees": "Frais de service",
-        "payment_fees": "Frais de paiement",
-        "delivery_fees": "Frais de livraison"
-      },
-      "total_per_order": "Total par commande",
-      "orders_count": "Nombre de commandes",
-      "expand_details": "Développer les détails",
-      "collapse_details": "Réduire les détails"
-    },
-    "message_alert": {
-      "success": "Votre message a été envoyé avec succès",
-      "warning": "Avertissement : une nouvelle demande a été envoyée automatiquement."
-    },
-    "case_of_rose": "Case of Rosé - 6 bottles",
-    "case_of_white": "Case of White - 6 bottles"
   }
 }
