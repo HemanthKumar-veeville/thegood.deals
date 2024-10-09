@@ -137,14 +137,11 @@ function App() {
   const [stripePromise, setStripePromise] = useState(null);
 
   useEffect(() => {
-    // fetch("/api/config").then(async (r) => {
-    // const { publishableKey } = await r.json();
     setStripePromise(
       loadStripe(
         "pk_test_51PplNp04KHQUtznoy8HmY5meaJK4aZgRjwuckLfjquqCSJMvfXEjacj3pADbzg2SDbNuWr0zRhrFymRRstAjzh3S00USzDZqAJ"
       )
     );
-    // });
   }, []);
 
   useEffect(() => {
@@ -153,8 +150,8 @@ function App() {
       setIsReady(true);
     };
     checkLoginStatus();
-  }, []);
-  console.log({ isReady, isUserLoggedIn });
+  }, [dispatch]);
+
   if (!isReady) {
     return <CustomLoader />;
   }
@@ -219,9 +216,9 @@ function App() {
           <ProtectedRoute
             element={
               <Message
-                heading="It’s sent! . 🎉"
-                description="Your request has been sent to the organiser. You will be notified when the organiser accepts or refuses your request."
-                action={t("lostPassword.checkEmailAction")}
+                heading={t("App.Message.requestSent.heading")}
+                description={t("App.Message.requestSent.description")}
+                action={t("App.Message.lostPassword.checkEmailAction")}
               />
             }
           />
@@ -267,8 +264,8 @@ function App() {
           <ProtectedRoute
             element={
               <Withdrawal
-                heading="Validation of withdrawal"
-                btnText="Validate the withdrawal"
+                heading={t("App.Withdrawal.adminWithdrawal.heading")}
+                btnText={t("App.Withdrawal.adminWithdrawal.btnText")}
               />
             }
           />
@@ -282,8 +279,8 @@ function App() {
           <ProtectedRoute
             element={
               <Withdrawal
-                heading="Payment validation"
-                btnText="Validate Payment"
+                heading={t("App.Withdrawal.payment.heading")}
+                btnText={t("App.Withdrawal.payment.btnText")}
                 stripePromise={stripePromise}
               />
             }
@@ -343,7 +340,9 @@ function App() {
       path: "/help-request-sent",
       element: (
         <Layout>
-          <InvitationSent description="Our team will respond to you within 48 hours maximum." />
+          <InvitationSent
+            description={t("App.InvitationSent.helpRequest.sentDescription")}
+          />
         </Layout>
       ),
     },
@@ -480,9 +479,9 @@ function App() {
       element: (
         <Layout>
           <Message
-            heading={t("artisanApproved.heading")}
-            description={t("artisanApproved.description")}
-            action={t("artisanApproved.action")}
+            heading={t("App.Message.artisanApproved.heading")}
+            description={t("App.Message.artisanApproved.description")}
+            action={t("App.Message.artisanApproved.action")}
           />
         </Layout>
       ),
@@ -500,9 +499,9 @@ function App() {
       element: (
         <Layout>
           <Message
-            heading="It's deleted! 🗑️"
-            description={`This is just goodbye!\nCome back whenever you want.`}
-            action={t("artisanApproved.action")}
+            heading={t("App.Message.deleteAccount.heading")}
+            description={t("App.Message.deleteAccount.description")}
+            action={t("App.Message.deleteAccount.action")}
           />
         </Layout>
       ),
@@ -520,9 +519,9 @@ function App() {
       element: (
         <Layout>
           <Message
-            heading={t("artisanRefused.heading")}
-            description={t("artisanRefused.description")}
-            action={t("artisanRefused.action")}
+            heading={t("App.Message.artisanRefused.heading")}
+            description={t("App.Message.artisanRefused.description")}
+            action={t("App.Message.artisanRefused.action")}
           />
         </Layout>
       ),
@@ -591,14 +590,6 @@ function App() {
         </Layout>
       ),
     },
-    // {
-    //   path: "/newsletter-indication",
-    //   element: (
-    //     <Layout>
-    //       <Legal heading="Newsletter indication" content="" />
-    //     </Layout>
-    //   ),
-    // },
     {
       path: "/lost-password",
       element: (
@@ -612,9 +603,9 @@ function App() {
       element: (
         <Layout>
           <Message
-            heading={t("lostPassword.checkEmailHead")}
-            description={t("lostPassword.checkEmailDesc")}
-            action={t("lostPassword.checkEmailAction")}
+            heading={t("App.Message.lostPassword.checkEmailHead")}
+            description={t("App.Message.lostPassword.checkEmailDesc")}
+            action={t("App.Message.lostPassword.checkEmailAction")}
           />
         </Layout>
       ),
@@ -632,9 +623,9 @@ function App() {
       element: (
         <Layout>
           <Message
-            heading={t("resetPassword.resetHead")}
-            description={t("resetPassword.resetDesc")}
-            action={t("resetPassword.resetAction")}
+            heading={t("App.Message.resetPassword.resetHead")}
+            description={t("App.Message.resetPassword.resetDesc")}
+            action={t("App.Message.resetPassword.resetAction")}
           />
         </Layout>
       ),

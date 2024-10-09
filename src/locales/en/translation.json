@@ -1245,5 +1245,53 @@
     "payment_fees": "Payment Fees",
     "delivery_fees": "Delivery Fees",
     "products": "products"
+  },
+  "App": {
+    "Message": {
+      "requestSent": {
+        "heading": "It’s sent! 🎉",
+        "description": "Your request has been sent to the organiser. You will be notified when the organiser accepts or refuses your request."
+      },
+      "artisanApproved": {
+        "heading": "Deal Confirmed",
+        "description": "The artisan has approved your deal. You can now proceed to finalize the payment.",
+        "action": "Proceed to Payment"
+      },
+      "deleteAccount": {
+        "heading": "It's deleted! 🗑️",
+        "description": "This is just goodbye!\nCome back whenever you want.",
+        "action": "Go back to Home"
+      },
+      "artisanRefused": {
+        "heading": "Deal Refused",
+        "description": "The artisan has refused your deal. You can try creating a new one or contact support for more help.",
+        "action": "Create a new deal"
+      },
+      "lostPassword": {
+        "checkEmailHead": "Check your email",
+        "checkEmailDesc": "A password reset link has been sent to your email address.",
+        "checkEmailAction": "Back to login"
+      },
+      "resetPassword": {
+        "resetHead": "Password reset successful!",
+        "resetDesc": "Your password has been successfully updated. You can now log in with your new password.",
+        "resetAction": "Log in"
+      }
+    },
+    "Withdrawal": {
+      "adminWithdrawal": {
+        "heading": "Validation of withdrawal",
+        "btnText": "Validate the withdrawal"
+      },
+      "payment": {
+        "heading": "Payment validation",
+        "btnText": "Validate Payment"
+      }
+    },
+    "InvitationSent": {
+      "helpRequest": {
+        "sentDescription": "Our team will respond to you within 48 hours maximum."
+      }
+    }
   }
 }

@@ -1217,5 +1217,53 @@
     "payment_fees": "Frais de paiement",
     "delivery_fees": "Frais de livraison",
     "products": "produits"
+  },
+  "App": {
+    "Message": {
+      "requestSent": {
+        "heading": "C'est envoyé ! 🎉",
+        "description": "Votre demande a été envoyée à l'organisateur. Vous serez informé lorsque l'organisateur acceptera ou refusera votre demande."
+      },
+      "artisanApproved": {
+        "heading": "Accord confirmé",
+        "description": "L'artisan a approuvé votre accord. Vous pouvez maintenant procéder à la finalisation du paiement.",
+        "action": "Procéder au paiement"
+      },
+      "deleteAccount": {
+        "heading": "C'est supprimé ! 🗑️",
+        "description": "C'est juste un au revoir !\nRevenez quand vous voulez.",
+        "action": "Retourner à l'accueil"
+      },
+      "artisanRefused": {
+        "heading": "Accord refusé",
+        "description": "L'artisan a refusé votre accord. Vous pouvez essayer d'en créer un nouveau ou contacter le support pour plus d'aide.",
+        "action": "Créer un nouvel accord"
+      },
+      "lostPassword": {
+        "checkEmailHead": "Vérifiez votre e-mail",
+        "checkEmailDesc": "Un lien de réinitialisation du mot de passe a été envoyé à votre adresse e-mail.",
+        "checkEmailAction": "Retour à la connexion"
+      },
+      "resetPassword": {
+        "resetHead": "Réinitialisation réussie !",
+        "resetDesc": "Votre mot de passe a été mis à jour avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+        "resetAction": "Se connecter"
+      }
+    },
+    "Withdrawal": {
+      "adminWithdrawal": {
+        "heading": "Validation du retrait",
+        "btnText": "Valider le retrait"
+      },
+      "payment": {
+        "heading": "Validation du paiement",
+        "btnText": "Valider le paiement"
+      }
+    },
+    "InvitationSent": {
+      "helpRequest": {
+        "sentDescription": "Notre équipe vous répondra dans un délai de 48 heures maximum."
+      }
+    }
   }
 }
