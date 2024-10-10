@@ -783,11 +783,10 @@
     "passwordPlaceholder": "Password",
     "confirmPasswordPlaceholder": "Confirm your password",
     "passwordCriteria": {
-      "8characters": "8 characters",
-      "1capitalLetter": "1 capital letter",
-      "1lowerCase": "1 lower case",
-      "1digit": "1 digit",
-      "special_character": "1 special character"
+      "8characters": "At least 8 characters",
+      "1capitalLetter": "Capital and lowercase letters",
+      "1digit": "A number",
+      "special_character": "A special character ~ #@$%&! *_?^-"
     },
     "passwordChangedSuccess": "Password changed successfully!",
     "passwordCriteriaError": "Please make sure the password meets all criteria and both passwords match.",

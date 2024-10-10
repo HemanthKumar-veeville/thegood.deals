@@ -781,13 +781,12 @@
     "newPassword": "Nouveau mot de passe",
     "passwordInstruction": "Le mot de passe doit être suffisamment long et difficile à deviner pour les autres.",
     "passwordPlaceholder": "Mot de passe",
-    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "confirmPasswordPlaceholder": "Confirmer votre mdp",
     "passwordCriteria": {
-      "8characters": "8 caractères",
-      "1capitalLetter": "1 lettre majuscule",
-      "1lowerCase": "1 lettre minuscule",
-      "1digit": "1 chiffre",
-      "special_character": "1 caractère spécial"
+      "8characters": "Au moins 8 caractères",
+      "1capitalLetter": "Des lettres majuscules et minuscules",
+      "1digit": "Un chiffre",
+      "special_character": "Un caractère spécial ~ #@$%&! *_?^-"
     },
     "passwordChangedSuccess": "Mot de passe modifié avec succès !",
     "passwordCriteriaError": "Veuillez vous assurer que le mot de passe respecte tous les critères et que les deux mots de passe correspondent.",
@@ -1377,8 +1376,8 @@
         "checkEmailAction": "Retour à la connexion"
       },
       "resetPassword": {
-        "resetHead": "Réinitialisation réussie !",
-        "resetDesc": "Votre mot de passe a été mis à jour avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+        "resetHead": "Mot de passe modifié 👍🏻",
+        "resetDesc": "Vous pouvez vous connecter avec ce nouveau mot de passe.",
         "resetAction": "Se connecter"
       }
     },
@@ -1509,18 +1508,18 @@
     }
   },
   "lost_password": {
-    "title": "Forgot Password",
-    "description": "Please enter your email address to receive a password reset link.",
-    "email_placeholder": "Enter your email",
-    "send_link_button": "Send Reset Link",
+    "title": "Mot de passe oublié",
+    "description": "Entrez votre email et nous vous enverrons un lien de récupération.",
+    "email_placeholder": "E-mail",
+    "send_link_button": "Recevoir le lien",
     "errors": {
-      "empty_email": "Please enter your email address.",
-      "invalid_at": "Email address must contain an '@' symbol.",
-      "invalid_domain": "Email address must contain a valid domain (e.g., 'example@domain.com').",
-      "invalid_email": "Please enter a valid email address.",
-      "invalid_email_title": "Invalid Email",
-      "send_error": "There was an error sending the reset link. Please try again later.",
-      "error_title": "Error"
+      "empty_email": "Veuillez entrer votre adresse e-mail.",
+      "invalid_at": "L'adresse e-mail doit contenir un symbole '@'.",
+      "invalid_domain": "L'adresse e-mail doit contenir un domaine valide (par ex. 'exemple@domaine.com').",
+      "invalid_email": "Veuillez entrer une adresse e-mail valide.",
+      "invalid_email_title": "E-mail invalide",
+      "send_error": "Une erreur s'est produite lors de l'envoi du lien de réinitialisation. Veuillez réessayer plus tard.",
+      "error_title": "Erreur"
     }
   }
 }

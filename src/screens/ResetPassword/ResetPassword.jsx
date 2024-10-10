@@ -181,7 +181,6 @@ const ResetPassword = () => {
               {[
                 t("resetPassword.passwordCriteria.8characters"),
                 t("resetPassword.passwordCriteria.1capitalLetter"),
-                t("resetPassword.passwordCriteria.1lowerCase"),
                 t("resetPassword.passwordCriteria.special_character"),
                 t("resetPassword.passwordCriteria.1digit"),
               ].map((requirement, idx) => (
