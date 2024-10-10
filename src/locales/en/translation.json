@@ -378,7 +378,8 @@
     "deal_expiration_label": "Deal expiration date",
     "add_products_label": "Add products",
     "add_another_product_label": "Add another product",
-    "next_step_button": "Next step"
+    "next_step_button": "Next step",
+    "accept_conditions_label": "I accept the General Conditions of Sale"
   },
   "inform_craftsman": {
     "confirm_deal_title": "Confirm the deal with the artisan",
@@ -1513,6 +1514,23 @@
       "invalid_email_title": "Invalid Email",
       "send_error": "There was an error sending the reset link. Please try again later.",
       "error_title": "Error"
+    }
+  },
+  "inviteLovedOnes": {
+    "title": "Invite your friends to order 🍎",
+    "description": "Once your invitations have been sent, your friends will be able to order.",
+    "via_messaging": "Via messaging or SMS",
+    "via_email_invitations": "Via email invitations",
+    "placeholder_email": "ex. contact@gmail.com",
+    "add_loved_one": "Add a loved one",
+    "send_invitation": "Send invitation",
+    "share_link_title": "Otherwise, copy and paste this share link 🔗",
+    "share_link_description": "This link is to be shared between you in order to maintain the exclusivity of the deal 😉",
+    "copy_link": "Copy link",
+    "back_button": "Back",
+    "copied_to_clipboard": {
+      "title": "Copied...",
+      "message": "Link copied to clipboard!"
     }
   }
 }

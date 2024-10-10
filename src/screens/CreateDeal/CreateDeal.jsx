@@ -253,7 +253,7 @@ const CreateDeal = () => {
                 name="description"
                 type="description"
                 value={formData.description}
-                onChange={(e) => handleChange("description", e)}
+                onChange={handleChange}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg !leading-[26px]"
                 divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
@@ -311,7 +311,7 @@ const CreateDeal = () => {
                 name="contentDescription"
                 type="contentDescription"
                 value={formData.contentDescription}
-                onChange={(e) => handleChange("contentDescription", e)}
+                onChange={handleChange}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg !leading-[26px]"
                 divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
@@ -335,7 +335,7 @@ const CreateDeal = () => {
                 name="manufacturerInfo"
                 type="manufacturerInfo"
                 value={formData.manufacturerInfo}
-                onChange={(e) => handleChange("manufacturerInfo", e)}
+                onChange={handleChange}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg ![white-space:unset] !leading-[26px] !w-[236px]"
                 divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
@@ -367,7 +367,7 @@ const CreateDeal = () => {
                 name="iban"
                 type="iban"
                 value={formData.iban}
-                onChange={(e) => handleChange("iban", e)}
+                onChange={handleChange}
                 label={t("create_deal.iban_label")}
                 placeholder={t("create_deal.iban_placeholder")}
               />
@@ -382,7 +382,7 @@ const CreateDeal = () => {
                 name="bic"
                 type="bic"
                 value={formData.bic}
-                onChange={(e) => handleChange("bic", e)}
+                onChange={handleChange}
                 label={t("create_deal.bic_label")}
                 placeholder={t("create_deal.bic_placeholder")}
               />
