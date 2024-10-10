@@ -129,10 +129,8 @@ const ActiveDeal = () => {
       {status === "loading" && <CustomLoader />}
       {status === "failed" && (
         <ShowCustomErrorModal
-          message={
-            error?.detail || "Something went wrong, Please try again later"
-          }
-          buttonText="Try Again"
+          message={error?.detail || t("active_deal.error")}
+          buttonText={t("active_deal.try_again")}
           shouldCloseOnOverlayClick={false}
           handleClick={fetchDeal}
         />
@@ -184,7 +182,9 @@ const ActiveDeal = () => {
                       <br />
                     </span>
                     <span className="font-bold">
-                      {`${dealData?.deal_ends_in} days and 6 hours`}
+                      {t("active_deal.endsIn", {
+                        days: dealData?.deal_ends_in,
+                      })}{" "}
                     </span>
                   </p>
                 </div>
@@ -194,7 +194,7 @@ const ActiveDeal = () => {
               chargeStats?.length > 0 &&
               !isPaymentCollectedForAllOrders && (
                 <DangerAlert
-                  alertMessage="The payment of one of the participants could not be made."
+                  alertMessage={t("active_deal.danger_alert")}
                   participants={
                     (Array.isArray(chargeStats) && chargeStats) || []
                   }
@@ -223,7 +223,9 @@ const ActiveDeal = () => {
               <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
                 <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                  {`ends in ${dealData?.deal_ends_in} days`}
+                  {t("active_deal.endsIn", {
+                    days: dealData?.deal_ends_in,
+                  })}
                 </div>
               </div>
               <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
@@ -245,7 +247,7 @@ const ActiveDeal = () => {
             >
               <Map className="w-5 h-5" />
               <p className="w-full text-sm text-primary-color leading-[22px] break-words">
-                {dealData?.collection_location || "No location available"}
+                {dealData?.collection_location || "-"}
               </p>
             </div>
             {!isCollectionInProgress && (
@@ -255,7 +257,7 @@ const ActiveDeal = () => {
               >
                 <EuroCoin className="!relative !w-5 !h-5" />
                 <button className="box-border font-medium text-white text-base text-center">
-                  Collect payment
+                  {t("active_deal.collect_payment")}
                 </button>
               </div>
             )}
@@ -289,7 +291,7 @@ const ActiveDeal = () => {
             >
               <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                Managing my friends
+                {t("active_deal.manage_friends")}
               </button>
             </div>
             <div

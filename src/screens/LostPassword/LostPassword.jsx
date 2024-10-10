@@ -6,12 +6,14 @@ import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../redux/app/user/userSlice"; // Import the forgotPassword thunk
 import { useNavigate } from "react-router-dom";
 import CustomLoader from "../../components/CustomLoader/CustomLoader"; // Assuming you have a CustomLoader component
+import { useTranslation } from "react-i18next";
 
 const LostPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false); // State to manage loading
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -20,24 +22,24 @@ const LostPassword = () => {
   const validateEmail = (email) => {
     // Check if the email is empty
     if (!email) {
-      return "Please enter your email address.";
+      return t("lost_password.errors.empty_email");
     }
 
     // Check if the email contains an "@" symbol
     if (!email.includes("@")) {
-      return "Email address must contain an '@' symbol.";
+      return t("lost_password.errors.invalid_at");
     }
 
     // Check if the email contains a domain
     const parts = email.split("@");
     if (parts.length !== 2 || !parts[1].includes(".")) {
-      return "Email address must contain a valid domain (e.g., 'example@domain.com').";
+      return t("lost_password.errors.invalid_domain");
     }
 
     // Check for general email validity
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return "Please enter a valid email address.";
+      return t("lost_password.errors.invalid_email");
     }
 
     return null; // Return null if no validation errors
@@ -48,7 +50,7 @@ const LostPassword = () => {
     if (validationError) {
       Swal.fire({
         icon: "warning",
-        title: "Invalid Email",
+        title: t("lost_password.errors.invalid_email_title"),
         text: validationError,
       });
       return;
@@ -61,12 +63,10 @@ const LostPassword = () => {
       navigate("/check-email"); // Navigate to the check-email page
     } catch (err) {
       console.log(err);
-      const errorMessage =
-        err?.detail ||
-        "There was an error sending the reset link. Please try again later.";
+      const errorMessage = err?.detail || t("lost_password.errors.send_error");
       Swal.fire({
         icon: "error",
-        title: "Error",
+        title: t("lost_password.errors.error_title"),
         text: errorMessage,
       });
     } finally {
@@ -93,15 +93,15 @@ const LostPassword = () => {
                 color="#637381"
               />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                Back
+                {t("common.back")}
               </div>
             </div>
           </div>
           <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-            Forgot Password
+            {t("lost_password.title")}
           </div>
           <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px]">
-            Please enter your email address to receive a password reset link.
+            {t("lost_password.description")}
           </p>
           <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
             <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
@@ -110,7 +110,7 @@ const LostPassword = () => {
                   type="email"
                   value={email}
                   onChange={handleEmailChange}
-                  placeholder="Enter your email"
+                  placeholder={t("lost_password.email_placeholder")}
                   className="w-full border-none outline-none"
                 />
               </div>
@@ -118,7 +118,7 @@ const LostPassword = () => {
           </div>
           <div onClick={handleSendLink} className="w-full">
             <Button
-              buttonText="Send Reset Link"
+              buttonText={t("lost_password.send_link_button")}
               className="!self-stretch !flex-[0_0_auto] !flex !w-full"
               color="primary"
               kind="primary"

@@ -12,11 +12,13 @@ import {
 } from "../../redux/app/account/accountSlice";
 import { ChevronDown } from "../../icons/ChevronDown";
 import { UserAlt } from "../../icons/UserAlt";
+import { useTranslation } from "react-i18next"; // Import useTranslation for localization
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { profile: fetchedProfile } = useSelector((state) => state.account);
+  const { t } = useTranslation(); // Initialize the translation hook
   const [fileUploaded, setFileUploaded] = useState(null);
 
   const initialProfileState = {
@@ -61,7 +63,7 @@ const EditProfile = () => {
         postal_code,
         country,
         profile_picture,
-        language, // Assuming language comes from the backend
+        language,
       } = fetchedProfile.data;
 
       setProfile({
@@ -156,13 +158,13 @@ const EditProfile = () => {
             color="#637381"
           />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
-            Back
+            {t("edit_profile.back")}
           </div>
         </div>
         <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-[#1b4f4a] text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-          My account ✏️
+          {t("edit_profile.title")}
         </div>
-        <div className="flex items-center justify-start relative self-stretch w-full flex-[0_0_auto]  gap-[15px]">
+        <div className="flex items-center justify-start relative self-stretch w-full flex-[0_0_auto] gap-[15px]">
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
             {profile?.profilepicture === "" ? (
               <UserAlt />
@@ -177,7 +179,7 @@ const EditProfile = () => {
           <div className="inline-flex items-center justify-center gap-1.5 px-3 py-[5px] relative flex-[0_0_auto] bg-[#1b4f4a] rounded-[5px]">
             <PencilAlt className="!relative !w-3.5 !h-3.5" color="white" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              Change profile picture
+              {t("edit_profile.change_profile_picture")}
             </div>
             <input
               type="file"
@@ -189,14 +191,14 @@ const EditProfile = () => {
         </div>
 
         <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
-          Your information
+          {t("edit_profile.your_information")}
         </div>
-        {/* Profile Information Fields */}
+
         {[
-          { name: "firstName", label: "First Name" },
-          { name: "lastName", label: "Last Name" },
-          { name: "phone", label: "Phone" },
-          { name: "email", label: "Email" },
+          { name: "firstName", label: t("edit_profile.first_name") },
+          { name: "lastName", label: t("edit_profile.last_name") },
+          { name: "phone", label: t("edit_profile.phone") },
+          { name: "email", label: t("edit_profile.email") },
         ].map(({ name, label }) => (
           <div
             key={name}
@@ -214,7 +216,6 @@ const EditProfile = () => {
           </div>
         ))}
 
-        {/* Language Dropdown */}
         <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
           <div className="relative w-full">
             <select
@@ -232,22 +233,20 @@ const EditProfile = () => {
           </div>
         </div>
 
-        {/* Change Password Section */}
         <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
-          change my password
+          {t("edit_profile.change_password")}
         </div>
 
-        {/* Current and New Password Fields */}
         {[
           {
             name: "currentPassword",
-            label: "Current Password",
+            label: t("edit_profile.current_password"),
             showPassword: showPassword.current,
             toggleVisibility: () => togglePasswordVisibility("current"),
           },
           {
             name: "newPassword",
-            label: "New Password",
+            label: t("edit_profile.new_password"),
             showPassword: showPassword.new,
             toggleVisibility: () => togglePasswordVisibility("new"),
           },
@@ -274,35 +273,52 @@ const EditProfile = () => {
           </div>
         ))}
 
-        {/* Password Requirements */}
         <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
-          {["8 characters", "1 capital letter", "1 lower case", "1 digit"].map(
-            (requirement, idx) => (
-              <div
-                key={idx}
-                className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
-              >
-                <span className="mr-1">•</span> {requirement}
-              </div>
-            )
-          )}
+          {[
+            "edit_profile.password_requirements.characters",
+            "edit_profile.password_requirements.capital_letter",
+            "edit_profile.password_requirements.lower_case",
+            "edit_profile.password_requirements.digit",
+          ].map((requirement, idx) => (
+            <div
+              key={idx}
+              className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
+            >
+              <span className="mr-1">•</span> {t(requirement)}
+            </div>
+          ))}
         </div>
 
-        {/* Address Section */}
         <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
-          Your address
+          {t("edit_profile.your_address")}
         </div>
 
         {[
-          { name: "address", label: "Address", heading: "Address" },
+          {
+            name: "address",
+            label: t("edit_profile.address"),
+            heading: t("edit_profile.address"),
+          },
           {
             name: "additionalAddress",
-            label: "Additional Address",
-            heading: "Additional Address",
+            label: t("edit_profile.additional_address"),
+            heading: t("edit_profile.additional_address"),
           },
-          { name: "city", label: "City", heading: "City" },
-          { name: "postalCode", label: "Postal Code", heading: "Postal Code" },
-          { name: "country", label: "Country", heading: "Country" },
+          {
+            name: "city",
+            label: t("edit_profile.city"),
+            heading: t("edit_profile.city"),
+          },
+          {
+            name: "postalCode",
+            label: t("edit_profile.postal_code"),
+            heading: t("edit_profile.postal_code"),
+          },
+          {
+            name: "country",
+            label: t("edit_profile.country"),
+            heading: t("edit_profile.country"),
+          },
         ].map(({ name, label, heading }) => (
           <div
             key={name}
@@ -311,7 +327,7 @@ const EditProfile = () => {
             <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
               <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
                 <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                  {heading} (required)
+                  {heading} {t("edit_profile.required")}
                 </div>
               </div>
               <div
@@ -329,10 +345,9 @@ const EditProfile = () => {
           </div>
         ))}
 
-        {/* Confirm Changes Button */}
         <div onClick={handleSave} className="w-full">
           <Button
-            buttonText="Confirm changes"
+            buttonText={t("edit_profile.confirm_changes")}
             className="!self-stretch !flex-[0_0_auto] !flex !w-full"
             color="primary"
             kind="primary"

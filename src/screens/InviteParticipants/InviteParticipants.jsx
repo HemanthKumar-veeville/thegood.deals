@@ -77,18 +77,17 @@ export const InviteParticipants = ({
       } else {
         Swal.fire({
           icon: "error",
-          title: "Error...",
-          text:
-            response.payload.detail || "You need to login to send a request.",
+          title: t("errors.title"),
+          text: response.payload.detail || t("errors.login_required"),
         });
-        if (response?.payload?.detail !== "400: Invite already exists")
+        if (response?.payload?.detail !== t("errors.already_exists"))
           navigate("/auth?login");
       }
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Error...",
-        text: "Failed to send request. Please try again.",
+        title: t("errors.title"),
+        text: t("errors.request_failed"),
       });
     }
   };
@@ -142,7 +141,8 @@ export const InviteParticipants = ({
               {t("artisanConfirmThe.organized_by")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              {dealState?.organiser.name || "Abraham Thomas"}
+              {dealState?.organiser.name ||
+                t("artisanConfirmThe.organizer_name")}
             </div>
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar

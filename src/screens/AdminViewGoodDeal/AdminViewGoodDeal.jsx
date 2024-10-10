@@ -28,22 +28,6 @@ const AdminViewGoodDeal = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const sampleProducts = [
-    {
-      name: "Case of Rosé - 6 bottles",
-      availability: 3,
-      originalPrice: 67.99,
-      price: 29.0,
-      quantity: 1,
-    },
-    {
-      name: "Case of White - 6 bottles",
-      availability: 15,
-      originalPrice: 67.99,
-      price: 29.0,
-      quantity: 1,
-    },
-  ];
 
   // Extract deal_id from the query parameters
   const queryParams = new URLSearchParams(location.search);

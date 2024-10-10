@@ -233,7 +233,7 @@ const MyInformation = () => {
                 />
               }
               style="three"
-              text="No deals available"
+              text={t("myInformation.no_deals")}
             />
           )}
           <img
@@ -307,7 +307,7 @@ const MyInformation = () => {
                   />
                 }
                 style="three"
-                text="No reviews available"
+                text={t("myInformation.no_reviews")}
               />
             </div>
           )}

@@ -19,6 +19,7 @@ const InputField = ({
   label,
   showPassword = false,
   toggleVisibility,
+  t,
 }) => {
   return (
     <div className="w-full flex flex-col items-start gap-2 relative">
@@ -161,6 +162,7 @@ const ResetPassword = () => {
               formik={formik}
               showPassword={showPassword}
               toggleVisibility={togglePasswordVisibility}
+              t={t}
             />
 
             <InputField
@@ -171,6 +173,7 @@ const ResetPassword = () => {
               formik={formik}
               showPassword={showConfirmPassword}
               toggleVisibility={toggleConfirmPasswordVisibility}
+              t={t}
             />
 
             {/* Password Hints */}

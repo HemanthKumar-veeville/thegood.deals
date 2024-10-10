@@ -31,10 +31,10 @@ const Notifications = () => {
   };
 
   const notifications = [
-    { name: "Newsletter", enabled: true },
-    { name: "SMS", enabled: false },
-    { name: "Email", enabled: false },
-    { name: "Whatsapp", enabled: false },
+    { name: t("notifications.newsletter"), enabled: true },
+    { name: t("notifications.sms"), enabled: false },
+    { name: t("notifications.emails"), enabled: false },
+    { name: t("notifications.whatsapp"), enabled: false },
   ];
 
   return (
@@ -50,7 +50,7 @@ const Notifications = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-text-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-              {t("common.back")}
+              {t("notifications.back")}
             </div>
           </div>
         </div>

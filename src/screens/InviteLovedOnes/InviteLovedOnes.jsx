@@ -5,15 +5,15 @@ import { Envelope } from "../../icons/Envelope";
 import { FacebookMessenger2 } from "../../icons/FacebookMessenger2";
 import { Plus } from "../../icons/Plus";
 import { Send1 } from "../../icons/Send1";
-import { UserAlt2 } from "../../icons/UserAlt2";
-import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
 import { Whatsapp } from "../../icons/Whatsapp";
 import { Line63 } from "../../images";
+import { useTranslation } from "react-i18next";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const InviteLovedOnes = () => {
+  const { t } = useTranslation(); // Using the translation hook
   const [emails, setEmails] = useState([]);
   const [newEmail, setNewEmail] = useState("");
   const queryParams = new URLSearchParams(location.search);
@@ -40,8 +40,8 @@ const InviteLovedOnes = () => {
       .then(() => {
         Swal.fire({
           icon: "success",
-          title: "Copied...",
-          text: "Link copied to clipboard!",
+          title: t("inviteLovedOnes.copied_to_clipboard.title"),
+          text: t("inviteLovedOnes.copied_to_clipboard.message"),
         });
       })
       .catch((err) => {
@@ -78,14 +78,10 @@ const InviteLovedOnes = () => {
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
         <p className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          Invite your friends
-          <br />
-          to order 🍎
+          {t("inviteLovedOnes.title")}
         </p>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          Once your invitations have been sent,
-          <br />
-          your friends will be able to order.
+          {t("inviteLovedOnes.description")}
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"
@@ -93,7 +89,7 @@ const InviteLovedOnes = () => {
           src={Line63}
         />
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-          Via messaging or SMS
+          {t("inviteLovedOnes.via_messaging")}
         </div>
         <div className="items-start justify-center gap-5 self-stretch w-full flex-[0_0_auto] flex relative">
           <div
@@ -124,7 +120,7 @@ const InviteLovedOnes = () => {
           src={Line63}
         />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
-          Via email invitations
+          {t("inviteLovedOnes.via_email_invitations")}
         </div>
         <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke">
           <Envelope className="!relative !w-4 !h-4" color="#6B7280" />
@@ -132,7 +128,7 @@ const InviteLovedOnes = () => {
             type="email"
             value={newEmail}
             onChange={(e) => setNewEmail(e.target.value)}
-            placeholder="ex. contact@gmail.com"
+            placeholder={t("inviteLovedOnes.placeholder_email")}
             className="flex-1 grow bg-transparent outline-none [font-family:'Inter',Helvetica] text-darkdark-6 text-base"
           />
         </div>
@@ -142,7 +138,7 @@ const InviteLovedOnes = () => {
         >
           <Plus className="!relative !w-5 !h-5" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Add a loved one
+            {t("inviteLovedOnes.add_loved_one")}
           </button>
         </div>
         <div
@@ -150,7 +146,7 @@ const InviteLovedOnes = () => {
           onClick={handleSendInvitations}
         >
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Send invitation
+            {t("inviteLovedOnes.send_invitation")}
           </button>
           <Send1 className="!relative !w-5 !h-5" color="white" />
         </div>
@@ -160,11 +156,10 @@ const InviteLovedOnes = () => {
           src={Line63}
         />
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
-          Otherwise, copy and paste this share link 🔗
+          {t("inviteLovedOnes.share_link_title")}
         </p>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          This link is to be shared between you in order to maintain the
-          exclusivity of the deal 😉
+          {t("inviteLovedOnes.share_link_description")}
         </p>
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
           {shareLink.slice(0, 50).split("//")[1].split("deal_id").join("")}
@@ -175,7 +170,7 @@ const InviteLovedOnes = () => {
         >
           <CopyAlt className="!relative !w-5 !h-5" color="#1B4F4A" />
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Copy link
+            {t("inviteLovedOnes.copy_link")}
           </button>
         </div>
         <img
@@ -188,7 +183,7 @@ const InviteLovedOnes = () => {
           onClick={handleBack}
         >
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Back
+            {t("inviteLovedOnes.back_button")}
           </button>
         </button>
       </div>

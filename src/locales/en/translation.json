@@ -267,6 +267,33 @@
     "enter_email": "Enter your email",
     "subscribe": "Subscribe"
   },
+  "edit_profile": {
+    "title": "My account ✏️",
+    "back": "Back",
+    "change_profile_picture": "Change profile picture",
+    "your_information": "Your information",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone",
+    "email": "Email",
+    "language": "Language",
+    "change_password": "Change my password",
+    "current_password": "Current Password",
+    "new_password": "New Password",
+    "password_requirements": {
+      "characters": "8 characters",
+      "capital_letter": "1 capital letter",
+      "lower_case": "1 lower case",
+      "digit": "1 digit"
+    },
+    "your_address": "Your address",
+    "address": "Address",
+    "additional_address": "Additional Address",
+    "city": "City",
+    "postal_code": "Postal Code",
+    "country": "Country",
+    "confirm_changes": "Confirm changes"
+  },
   "public_need_help": {
     "back": "Back",
     "title": "Need help? 🛟",
@@ -295,7 +322,7 @@
     "login": "To log in"
   },
   "account": {
-    "greeting": "Anthony",
+    "greeting": "Hey, {{name}} 👋🏻",
     "create_deal": "Create a good deal",
     "my_good_deals": "My good deals",
     "created": "Created",
@@ -304,16 +331,43 @@
     "wallet_details": "Wallet details",
     "settings": "Settings",
     "acquire_help": "Acquire help",
-    "sign_out": "Sign out"
+    "sign_out": "Sign out",
+    "error_loading_deals": "Error fetching the deals",
+    "no_created_deals": "You don't have any deals. Create one now!",
+    "no_invited_deals": "You are not in any deals. Wait until you are invited!",
+    "no_orders": "No orders available",
+    "no_title": "No Title",
+    "no_status": "No Status",
+    "no_organizer": "No Organizer",
+    "console_failed_load_deals": "Failed to load more deals:",
+    "console_failed_profile_status": "Failed to fetch user profile or login status:",
+    "console_failed_logout": "Failed to log out:"
   },
   "create_deal": {
+    "console_input_change": "Input changed:",
+    "console_submit": "Submitting deal with data:",
+    "console_append_file": "Appending file:",
+    "console_invalid_file": "Invalid file object",
+    "console_no_pictures": "No pictures selected.",
+    "console_success": "Deal successfully created:",
+    "console_failure": "Failed to create deal:",
+    "console_fetching": "Fetching deal with ID:",
+    "console_fetching_error": "Failed to fetch deal:",
+    "error_title": "Error",
+    "error_message": "An error occurred while creating the deal.",
+    "default_title": "Default Title",
+    "default_description": "Default Description",
+    "default_content_description": "Default Content Description",
+    "default_manufacturer_info": "Default Manufacturer Info",
+    "default_iban": "Default IBAN",
+    "default_bic": "Default BIC",
+    "default_collection_location": "Default Collection Location",
     "title": "Create a good deal",
     "description_label": "Description of the deal",
     "description_placeholder": "ex. I discovered this incredible winery...",
-    "collection_location": "Collection Location",
     "collection_date_label": "Approximate collection date",
     "content_description_label": "Describe the content",
-    "content_description_placeholder": "ex. Each order will include a varied selection of ... bottles",
+    "content_description_placeholder": "ex. Each order will include a varied selection of bottles",
     "artisan_info_label": "Information from the artisan/manufacturer",
     "artisan_info_placeholder": "ex. Domaine de Cigalus 11200 Bizanet",
     "banking_info_label": "Banking information for the artisan",
@@ -322,20 +376,28 @@
     "bic_label": "BIC",
     "bic_placeholder": "XXXXXXXXXXX",
     "deal_expiration_label": "Deal expiration date",
-    "product_list_label": "Product List",
     "add_products_label": "Add products",
     "add_another_product_label": "Add another product",
-    "min_products_label": "Minimum products by order",
-    "accept_conditions_label": "I accept the General Conditions of Sale",
     "next_step_button": "Next step"
   },
   "inform_craftsman": {
-    "confirm_deal_title": "Confirm the good deal with the artisan",
-    "confirm_deal_message": "We will send an email to the artisan to confirm the deal with him.",
-    "indicate_email": "Indicate the email of the artisan",
-    "email_placeholder": "ex. contact@gmail.com",
+    "confirm_deal_title": "Confirm the deal with the artisan",
+    "confirm_deal_message": "We will send an email to the artisan to confirm the deal.",
+    "indicate_email": "Enter the artisan's email address",
+    "email_placeholder": "e.g., contact@gmail.com",
     "send_to_artisan": "Send to artisan",
-    "finish_later": "Finish later"
+    "finish_later": "Finish later",
+    "errors": {
+      "email_empty": "Please enter your email address.",
+      "invalid_at_symbol": "Email address must contain an '@' symbol.",
+      "invalid_domain": "Email address must contain a valid domain (e.g., 'example@domain.com').",
+      "invalid_format": "Please enter a valid email address.",
+      "invalid_email": "Invalid Email",
+      "missing_deal_id": "Error",
+      "deal_id_missing_message": "Deal ID is missing in the URL.",
+      "invitation_failed": "Error",
+      "invitation_failed_message": "There was an error inviting the artisan. Please try again later."
+    }
   },
   "thanks_to_admin": {
     "thanks_message": "THANKS ! . 🎉",
@@ -359,7 +421,13 @@
     "step_3": "Goal achieved ! 🎉",
     "step_4": "Order sent to the artisan",
     "step_5": "Organizer coordinates with artisan for delivery",
-    "deal_ends_in": "Deal ends in"
+    "deal_ends_in": "Deal ends in",
+    "manage_friends": "Managing my friends",
+    "collect_payment": "Collect payment",
+    "endsIn": "ends in {{days}} days",
+    "danger_alert": "The payment of one of the participants could not be made.",
+    "error": "Something went wrong, Please try again later",
+    "try_again": "Try Again"
   },
   "draft_deal": {
     "back_button": "Back",
@@ -540,11 +608,15 @@
   },
   "notifications": {
     "title": "Notifications 🔔",
+    "back": "Back",
     "dealStatus": "Deal Status",
     "newDeals": "New Deals",
     "invitations": "Invitations",
     "messages": "Messages",
-    "emails": "Emails"
+    "emails": "Emails",
+    "newsletter": "Newsletter",
+    "sms": "SMS",
+    "whatsapp": "Whatsapp"
   },
   "language": {
     "change": "Change language 📣",
@@ -590,7 +662,9 @@
     "deals": "These deals ✌🏻",
     "ratings": "Ratings ⭐️",
     "rating_title": "I Really Love This Product!",
-    "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula."
+    "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula.",
+    "no_reviews": "No reviews available",
+    "no_deals": "No deals available"
   },
   "artisanDeniedThe": {
     "not_agree": "You don't agree with the deal? 😕",
@@ -1424,6 +1498,21 @@
       "privacy_policy": "Privacy Policy",
       "general_conditions": "General Conditions of Sales and Use",
       "enter_email": "Enter your email"
+    }
+  },
+  "lost_password": {
+    "title": "Forgot Password",
+    "description": "Please enter your email address to receive a password reset link.",
+    "email_placeholder": "Enter your email",
+    "send_link_button": "Send Reset Link",
+    "errors": {
+      "empty_email": "Please enter your email address.",
+      "invalid_at": "Email address must contain an '@' symbol.",
+      "invalid_domain": "Email address must contain a valid domain (e.g., 'example@domain.com').",
+      "invalid_email": "Please enter a valid email address.",
+      "invalid_email_title": "Invalid Email",
+      "send_error": "There was an error sending the reset link. Please try again later.",
+      "error_title": "Error"
     }
   }
 }

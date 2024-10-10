@@ -46,7 +46,6 @@ const LanguageDropDown = React.memo(({ onClose }) => {
    */
 
   const handleLanguageChange = (language, sub) => {
-    console.log("Executed");
     setSelectedLanguage(language);
     i18n.changeLanguage(sub);
     handleClose();

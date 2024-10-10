@@ -15,8 +15,6 @@ import { CheckBox } from "../../components/CheckBox";
 import { ArrowRight1 } from "../../icons/ArrowRight1";
 import { Line63 } from "../../images";
 import { Plus3 } from "../../icons/Plus3";
-import { Minus1 } from "../../icons/Minus1";
-import { Plus1 } from "../../icons/Plus1";
 import ProductList from "../../components/ProductInfo/ProductList";
 import { useDispatch } from "react-redux";
 import { addNewDeal, getDealByDealId } from "../../redux/app/deals/dealSlice";
@@ -29,7 +27,6 @@ const CreateDeal = () => {
   const { t } = useTranslation(); // Initialize translation hook
 
   // Helper function to generate calendar days
-  // Function to format date in 'YYYY-MM-DDTHH:mm' format
   const formatDate = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
@@ -73,7 +70,7 @@ const CreateDeal = () => {
         acceptConditions: !formData.acceptConditions,
       }));
     } else {
-      console.log(e.target.value);
+      console.log(t("create_deal.console_input_change"), e.target.value); // Log translated message
       setFormData((prevState) => ({
         ...prevState,
         [type]: e.target.value,
@@ -112,10 +109,8 @@ const CreateDeal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true at the start
-    console.log({ formData, products, title });
-    sessionStorage.setItem("formData", JSON.stringify(formData));
-    sessionStorage.setItem("products", JSON.stringify(products));
-    sessionStorage.setItem("title", title);
+    console.log(t("create_deal.console_submit"), { formData, products, title }); // Translated console message
+
     try {
       // Create FormData object and append form data
       const form = new FormData();
@@ -130,18 +125,19 @@ const CreateDeal = () => {
       form.append("deal_expiration_date", formData.dealExpiration);
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
-      // Log file names before appending them to FormData
+
+      // Append image files
       if (formData.pictures && formData.pictures.length > 0) {
         formData.pictures.forEach((file, index) => {
           if (file instanceof File) {
-            console.log(`Appending file: ${file.name}`);
-            form.append("images", file); // Append file objects with their metadata
+            console.log(t("create_deal.console_append_file"), file.name); // Translated log message
+            form.append("images", file); // Append file objects
           } else {
-            console.error("Invalid file object", file);
+            console.error(t("create_deal.console_invalid_file")); // Translated error message
           }
         });
       } else {
-        console.error("No pictures selected.");
+        console.error(t("create_deal.console_no_pictures")); // Translated error message
       }
 
       // Append product details
@@ -151,23 +147,21 @@ const CreateDeal = () => {
         });
       });
 
-      // Dispatch the action to add a new deal
+      // Dispatch action to add a new deal
       const resultAction = await dispatch(addNewDeal(form)).unwrap();
       const dealId = resultAction.deal_id;
 
-      // Handle successful submission
-      console.log("Deal successfully created:", resultAction);
+      console.log(t("create_deal.console_success"), resultAction); // Success message
       navigate(`/inform-deal?id=${dealId}`);
     } catch (err) {
-      // Handle error during submission
-      console.error("Failed to create deal:", err);
+      console.error(t("create_deal.console_failure"), err); // Failure message
       Swal.fire({
         icon: "error",
-        title: "Error...",
-        text: err?.detail || "An error occurred while creating the deal",
+        title: t("create_deal.error_title"), // Translated title
+        text: err?.detail || t("create_deal.error_message"), // Translated error message
       });
     } finally {
-      setLoading(false); // Set loading to false after the API call is completed
+      setLoading(false); // Set loading to false after the API call
     }
   };
 
@@ -179,42 +173,48 @@ const CreateDeal = () => {
     const fetchDeal = async () => {
       if (dealId) {
         setLoading(true);
-        console.log("Fetching deal with deal ID:", dealId);
+        console.log(t("create_deal.console_fetching"), dealId); // Translated fetching message
         try {
           const response = await dispatch(getDealByDealId(dealId)).unwrap();
           const dealData = response?.Deal[0];
 
           if (dealData) {
-            setTitle(dealData.deal_title ?? "Default Title");
+            setTitle(dealData.deal_title ?? t("create_deal.default_title"));
 
             setFormData({
-              description: dealData.description ?? "Default Description",
-              collectionDate: dealData.collection_date ?? "2024-09-20T17:42",
+              description:
+                dealData.description ?? t("create_deal.default_description"),
+              collectionDate:
+                dealData.collection_date ?? formatDate(new Date()),
               contentDescription:
-                dealData.content_description ?? "Default Content Description",
+                dealData.content_description ??
+                t("create_deal.default_content_description"),
               manufacturerInfo:
-                dealData.artisan_information ?? "Default Manufacturer Info",
-              iban: dealData.banking_info?.iban ?? "Default IBAN",
-              bic: dealData.banking_info?.bic ?? "Default BIC",
+                dealData.artisan_information ??
+                t("create_deal.default_manufacturer_info"),
+              iban:
+                dealData.banking_info?.iban ?? t("create_deal.default_iban"),
+              bic: dealData.banking_info?.bic ?? t("create_deal.default_bic"),
               dealExpiration:
-                dealData.deal_expiration_date ?? "2024-09-20T17:42",
+                dealData.deal_expiration_date ?? formatDate(new Date()),
               acceptConditions: dealData.terms_accepted ?? false,
               collectionLocation:
-                dealData.collection_location ?? "Default Collection Location",
+                dealData.collection_location ??
+                t("create_deal.default_collection_location"),
               pictures: dealData.images ?? [],
             });
 
             setProducts(dealData.products ?? []);
           }
         } catch (err) {
-          console.error("Failed to fetch deal:", err);
+          console.error(t("create_deal.console_fetching_error"), err); // Fetch error message
         }
         setLoading(false);
       }
     };
 
     fetchDeal();
-  }, [dealId]);
+  }, [dealId, t]);
 
   const handleBack = () => {
     navigate("/");
@@ -244,7 +244,7 @@ const CreateDeal = () => {
               </div>
             </div>
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-              {t("create_deal.title")} {/* Create a good deal */}
+              {t("create_deal.title")}
             </div>
             <AddPictures onChange={handleAddPictures} setForm={setImagesForm} />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
@@ -253,7 +253,7 @@ const CreateDeal = () => {
                 name="description"
                 type="description"
                 value={formData.description}
-                onChange={handleChange}
+                onChange={(e) => handleChange("description", e)}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg !leading-[26px]"
                 divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
@@ -280,8 +280,7 @@ const CreateDeal = () => {
               />
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
-              {t("create_deal.collection_date_label")}{" "}
-              {/* Approximate collection date */}
+              {t("create_deal.collection_date_label")}
             </div>
             <div className="w-full">
               <DatePicker
@@ -312,7 +311,7 @@ const CreateDeal = () => {
                 name="contentDescription"
                 type="contentDescription"
                 value={formData.contentDescription}
-                onChange={handleChange}
+                onChange={(e) => handleChange("contentDescription", e)}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg !leading-[26px]"
                 divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
@@ -336,7 +335,7 @@ const CreateDeal = () => {
                 name="manufacturerInfo"
                 type="manufacturerInfo"
                 value={formData.manufacturerInfo}
-                onChange={handleChange}
+                onChange={(e) => handleChange("manufacturerInfo", e)}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg ![white-space:unset] !leading-[26px] !w-[236px]"
                 divClassNameOverride="!tracking-[0] !text-base !flex-1 ![white-space:unset] ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-6 !w-[unset]"
@@ -368,7 +367,7 @@ const CreateDeal = () => {
                 name="iban"
                 type="iban"
                 value={formData.iban}
-                onChange={handleChange}
+                onChange={(e) => handleChange("iban", e)}
                 label={t("create_deal.iban_label")}
                 placeholder={t("create_deal.iban_placeholder")}
               />
@@ -383,7 +382,7 @@ const CreateDeal = () => {
                 name="bic"
                 type="bic"
                 value={formData.bic}
-                onChange={handleChange}
+                onChange={(e) => handleChange("bic", e)}
                 label={t("create_deal.bic_label")}
                 placeholder={t("create_deal.bic_placeholder")}
               />
@@ -414,7 +413,7 @@ const CreateDeal = () => {
             />
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
-                {t("create_deal.add_products_label")} {/* Add products */}
+                {t("create_deal.add_products_label")}
               </div>
             </div>
             {addMode === true && (
@@ -434,8 +433,7 @@ const CreateDeal = () => {
                   type="button"
                   className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap"
                 >
-                  {t("create_deal.add_another_product_label")}{" "}
-                  {/* Add another product */}
+                  {t("create_deal.add_another_product_label")}
                 </button>
               </div>
             )}
@@ -450,7 +448,7 @@ const CreateDeal = () => {
               className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
             >
               <div className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                {t("create_deal.next_step_button")} {/* Next step */}
+                {t("create_deal.next_step_button")}
               </div>
               <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
             </button>

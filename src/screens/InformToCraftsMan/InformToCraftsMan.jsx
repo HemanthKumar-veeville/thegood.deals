@@ -28,18 +28,18 @@ const InformToCraftsMan = () => {
 
   const validateEmail = (email) => {
     if (!email) {
-      return "Please enter your email address.";
+      return t("inform_craftsman.errors.email_empty");
     }
     if (!email.includes("@")) {
-      return "Email address must contain an '@' symbol.";
+      return t("inform_craftsman.errors.invalid_at_symbol");
     }
     const parts = email.split("@");
     if (parts.length !== 2 || !parts[1].includes(".")) {
-      return "Email address must contain a valid domain (e.g., 'example@domain.com').";
+      return t("inform_craftsman.errors.invalid_domain");
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return "Please enter a valid email address.";
+      return t("inform_craftsman.errors.invalid_format");
     }
     return null; // Return null if no validation errors
   };
@@ -49,7 +49,7 @@ const InformToCraftsMan = () => {
     if (validationError) {
       Swal.fire({
         icon: "warning",
-        title: "Invalid Email",
+        title: t("inform_craftsman.errors.invalid_email"),
         text: validationError,
       });
       return;
@@ -58,8 +58,8 @@ const InformToCraftsMan = () => {
     if (!dealId) {
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "Deal ID is missing in the URL.",
+        title: t("inform_craftsman.errors.missing_deal_id"),
+        text: t("inform_craftsman.errors.deal_id_missing_message"),
       });
       return;
     }
@@ -73,8 +73,8 @@ const InformToCraftsMan = () => {
       console.error("Failed to invite artisan:", err);
       Swal.fire({
         icon: "error",
-        title: "Error",
-        text: "There was an error inviting the artisan. Please try again later.",
+        title: t("inform_craftsman.errors.invitation_failed"),
+        text: t("inform_craftsman.errors.invitation_failed_message"),
       });
     } finally {
       setLoading(false); // Stop loading
