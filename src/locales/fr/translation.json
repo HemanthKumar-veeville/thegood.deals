@@ -49,7 +49,17 @@
     },
     "faq": {
       "button_text": "Des questions ? Contactez-nous",
-      "text": "Vous trouverez des réponses aux questions les plus courantes concernant notre plateforme de commande groupée de produits artisanaux."
+      "text": "Vous trouverez des réponses aux questions les plus courantes concernant notre plateforme de commande groupée de produits artisanaux.",
+      "que1": "How does bulk ordering work on your platform?",
+      "que2": "Who are the partner artisans?",
+      "que3": "How do I invite my friends to join a group order?",
+      "que4": "How is the price of products calculated?",
+      "que5": "How does delivery work?",
+      "ans1": "This is a detailed answer for the first question.",
+      "ans2": "This is a detailed answer for the second question.",
+      "ans3": "This is a detailed answer for the third question.",
+      "ans4": "This is a detailed answer for the fourth question.",
+      "ans5": "This is a detailed answer for the fifth question."
     },
     "footer": {
       "subscribe": "S’abonner",
@@ -411,7 +421,13 @@
     "step_3": "Objectif atteint ! 🎉",
     "step_4": "Commandes envoyées à l’artisan",
     "step_5": "L'organisateur coordonne la livraison avec l'artisan",
-    "deal_ends_in": "Le deal se termine dans"
+    "deal_ends_in": "Le deal se termine dans",
+    "manage_friends": "Managing my friends",
+    "collect_payment": "Collect payment",
+    "endsIn": "ends in {{days}} days",
+    "danger_alert": "The payment of one of the participants could not be made.",
+    "error": "Something went wrong, Please try again later",
+    "try_again": "Try Again"
   },
   "draft_deal": {
     "back_button": "Retour",
@@ -472,17 +488,6 @@
     "validate_button": "Valider le retrait",
     "back_button": "Retour",
     "line_alt": "Ligne"
-  },
-  "DeleteAccount": {
-    "common": {
-      "back": "Retour"
-    },
-    "delete_account": {
-      "heading": "Supprimer mon compte",
-      "description": "Vous êtes sur le point de supprimer vos données de l'application. Une fois supprimé, votre compte ne pourra pas être récupéré.",
-      "confirmation": "Êtes-vous sûr ?",
-      "button_text": "Je supprime mon compte"
-    }
   },
   "invitations": {
     "back_to_deal": "Retour au deal",
@@ -570,6 +575,7 @@
     "step3": "Objectif atteint ! 🎉",
     "step4": "Commandes envoyées à l’artisan",
     "step5": "L’organisateur coordonne la livraison avec l'artisan",
+    "step6": "Delivery and Closing of the deal",
     "image_alt": "Image de blog"
   },
   "status": {
@@ -657,7 +663,9 @@
     "deals": "Ces deals ✌🏻",
     "ratings": "Évaluations ⭐️",
     "rating_title": "J'adore ce produit!",
-    "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula."
+    "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula.",
+    "no_reviews": "No reviews available",
+    "no_deals": "No deals available"
   },
   "artisanDeniedThe": {
     "not_agree": "Vous n’êtes pas d’accord avec le deal ? 😕",
@@ -694,7 +702,14 @@
     "refuse": "Refuser",
     "confirm": "Confirmer",
     "refused": "Vous avez refusé le deal.",
-    "confirmed": "Vous avez confirmé le deal."
+    "confirmed": "Vous avez confirmé le deal.",
+    "organizer_name": "Abraham Thomas",
+    "organizer_rating": "four-star",
+    "ignore": "Ignore",
+    "accept": "Accept",
+    "error_title": "Error...",
+    "error_login_required": "You need to login to send a request.",
+    "error_request_failed": "Failed to send request. Please try again."
   },
   "guestsSendReviews": {
     "giveYourOpinion": "Donnez-vous votre avis !",
@@ -723,7 +738,11 @@
     "line": "Line",
     "dealTitle": "Caisses de vins Domaine de Cigaluse",
     "organizedBy": "Collecte organisée par",
-    "seeTheDeal": "Voir le deal"
+    "seeTheDeal": "Voir le deal",
+    "blogImageAlt": "Blog image",
+    "rectangleAlt": "Rectangle image",
+    "organizerName": "Abraham Thomas",
+    "rating": "four-star"
   },
   "artisanEmailList": {
     "dearCraftsman": "Cher artisan, merci de confirmer le bon de commande 🧾",
@@ -851,7 +870,9 @@
       "country": "Le pays est requis",
       "accept_privacy_policy": "Vous devez accepter la politique de confidentialité",
       "currency": "Vous devez entrer la devise",
-      "error_title": "Erreur..."
+      "error_title": "Erreur...",
+      "error_desc": "Something went wrong, Please try again later",
+      "error_ack": "OK"
     }
   },
   "login": {
@@ -868,16 +889,6 @@
     "line_alt": "Séparateur de ligne",
     "show_password": "Afficher le mot de passe",
     "hide_password": "Masquer le mot de passe"
-  },
-  "TermsOfUse": {
-    "back": "Retour",
-    "heading": "Conditions d'utilisation 🔒",
-    "all_agreement_button": "Tous les accords",
-    "confirm_selection_button": "Confirmer la sélection",
-    "consent_management": "Gestion du consentement",
-    "data_access_portability": "Accès aux données et portabilité",
-    "data_deletion": "Suppression des données",
-    "privacy_policy": "Politique de confidentialité"
   },
   "access": {
     "participate_in_deal": "Pour participer au deal, l’organisateur doit vous donner l’accès",
@@ -1013,6 +1024,20 @@
     "estimatedDiscountText": "par rapport au prix public",
     "addButtonText": "Ajouter"
   },
+  "productTitleLabel": "Product Title",
+  "productTitlePlaceholder": "ex. Case of Rosé - 6 bottles",
+  "totalStockLabel": "Total stock",
+  "byOrderText": "by order",
+  "totalStockPlaceholder": "ex. 32",
+  "minQuantityLabel": "Minimum quantity",
+  "maxQuantityLabel": "Maximum quantity",
+  "maximumRetailPriceLabel": "Maximum retail price",
+  "maximumRetailPricePlaceholder": "ex. €29.00",
+  "goodDealPriceLabel": "Good deal price",
+  "goodDealPricePlaceholder": "ex. €29.00",
+  "estimatedDiscountLabel": "Estimated discount",
+  "estimatedDiscountText": "compared to the public price",
+  "addButtonText": "Add",
   "ProductList": {
     "productListTitle": "Liste des produits",
     "noProductsMessage": "Aucun produit ajouté pour le moment.",
@@ -1373,34 +1398,6 @@
       }
     }
   },
-  "legal_notices": {
-    "back": "Retour",
-    "contact_us": {
-      "create_good_deal": "Créer une Bonne Affaire",
-      "manage_good_deal": "Gérer une Bonne Affaire",
-      "other_questions": "Autres questions ?",
-      "other_questions_description": "Si vous avez d'autres questions, n'hésitez pas à nous contacter."
-    },
-    "footer": {
-      "subscribe": "S'abonner",
-      "sitemap": "Plan du site",
-      "about": "À propos",
-      "newsletter_commitment": "Notre newsletter engagée",
-      "stay_informed": "Restez informé (une fois par mois seulement) de nos actualités",
-      "consent_agreement": "En vous abonnant, vous acceptez notre ",
-      "receive_updates": "et consentez à recevoir des mises à jour de notre part.",
-      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
-      "how_it_works": "Comment ça marche ?",
-      "bulk_order": "Commande groupée",
-      "support_contact": "Support / Contact",
-      "faqs": "FAQ",
-      "information": "Informations",
-      "legal_notices": "Mentions légales",
-      "privacy_policy": "Politique de confidentialité",
-      "general_conditions": "Conditions Générales de Vente et d'Utilisation",
-      "enter_email": "Entrez votre email"
-    }
-  },
   "privacy_cookie_policy": {
     "back": "Retour",
     "contact_us": {
@@ -1455,6 +1452,75 @@
       "privacy_policy": "Politique de confidentialité",
       "general_conditions": "Conditions Générales de Vente et d'Utilisation",
       "enter_email": "Entrez votre email"
+    }
+  },
+  "DeleteAccount": {
+    "common": {
+      "back": "Retour"
+    },
+    "delete_account": {
+      "heading": "Supprimer mon compte",
+      "description": "Vous êtes sur le point de supprimer vos données de l'application. Une fois supprimé, votre compte ne pourra pas être récupéré.",
+      "confirmation": "Êtes-vous sûr ?",
+      "button_text": "Je supprime mon compte"
+    }
+  },
+  "Withdrawal": {
+    "line_alt": "Line separator",
+    "back_button": "Back",
+    "validate_payment_button": "Validate payment"
+  },
+  "TermsOfUse": {
+    "back": "Retour",
+    "heading": "Conditions d'utilisation 🔒",
+    "all_agreement_button": "Tous les accords",
+    "confirm_selection_button": "Confirmer la sélection",
+    "consent_management": "Gestion du consentement",
+    "data_access_portability": "Accès aux données et portabilité",
+    "data_deletion": "Suppression des données",
+    "privacy_policy": "Politique de confidentialité"
+  },
+  "legal_notices": {
+    "back": "Retour",
+    "contact_us": {
+      "create_good_deal": "Créer une Bonne Affaire",
+      "manage_good_deal": "Gérer une Bonne Affaire",
+      "other_questions": "Autres questions ?",
+      "other_questions_description": "Si vous avez d'autres questions, n'hésitez pas à nous contacter."
+    },
+    "footer": {
+      "subscribe": "S'abonner",
+      "sitemap": "Plan du site",
+      "about": "À propos",
+      "newsletter_commitment": "Notre newsletter engagée",
+      "stay_informed": "Restez informé (une fois par mois seulement) de nos actualités",
+      "consent_agreement": "En vous abonnant, vous acceptez notre ",
+      "receive_updates": "et consentez à recevoir des mises à jour de notre part.",
+      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "how_it_works": "Comment ça marche ?",
+      "bulk_order": "Commande groupée",
+      "support_contact": "Support / Contact",
+      "faqs": "FAQ",
+      "information": "Informations",
+      "legal_notices": "Mentions légales",
+      "privacy_policy": "Politique de confidentialité",
+      "general_conditions": "Conditions Générales de Vente et d'Utilisation",
+      "enter_email": "Entrez votre email"
+    }
+  },
+  "lost_password": {
+    "title": "Forgot Password",
+    "description": "Please enter your email address to receive a password reset link.",
+    "email_placeholder": "Enter your email",
+    "send_link_button": "Send Reset Link",
+    "errors": {
+      "empty_email": "Please enter your email address.",
+      "invalid_at": "Email address must contain an '@' symbol.",
+      "invalid_domain": "Email address must contain a valid domain (e.g., 'example@domain.com').",
+      "invalid_email": "Please enter a valid email address.",
+      "invalid_email_title": "Invalid Email",
+      "send_error": "There was an error sending the reset link. Please try again later.",
+      "error_title": "Error"
     }
   }
 }
