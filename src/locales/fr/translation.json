@@ -387,7 +387,9 @@
     "step_3": "Objectif atteint ! 🎉",
     "step_4": "Commandes envoyées à l’artisan",
     "step_5": "L'organisateur coordonne la livraison avec l'artisan",
-    "alert_editing": "Modification du deal !"
+    "alert_editing": "Modification du deal !",
+    "error_message": "Vous ne pouvez pas modifier l'offre si le statut de l'offre est en attente.",
+    "got_it": "Compris"
   },
   "wallet": {
     "back_button": "Retour",
@@ -408,6 +410,17 @@
     "validate_button": "Valider le retrait",
     "back_button": "Retour",
     "line_alt": "Ligne"
+  },
+  "DeleteAccount": {
+    "common": {
+      "back": "Retour"
+    },
+    "delete_account": {
+      "heading": "Supprimer mon compte",
+      "description": "Vous êtes sur le point de supprimer vos données de l'application. Une fois supprimé, votre compte ne pourra pas être récupéré.",
+      "confirmation": "Êtes-vous sûr ?",
+      "button_text": "Je supprime mon compte"
+    }
   },
   "invitations": {
     "back_to_deal": "Retour au deal",
@@ -453,7 +466,8 @@
     "transfer_complete": "Le virement est effectué !",
     "receive_funds": "L’artisan devrait recevoir les fonds sur son compte d’ici 3 à 4 jours.",
     "back_to_home": "Retour à l’accueil",
-    "line_alt": "Ligne"
+    "line_alt": "Ligne",
+    "debit_info": "Vous serez débité une fois que l'objectif sera atteint."
   },
   "invite_loved_ones": {
     "title": "Inviter vos proches à commander 🍎",
@@ -682,16 +696,26 @@
     "newPassword": "Nouveau mot de passe",
     "passwordInstruction": "Le mot de passe doit être suffisamment long et difficile à deviner pour les autres.",
     "passwordPlaceholder": "Mot de passe",
-    "confirmPasswordPlaceholder": "Confirmer votre mdp",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
     "passwordCriteria": {
-      "8characters": "Au moins 8 caractères",
-      "1capitalLetter": "Des lettres majuscules et minuscules",
-      "1lowerCase": "1 caractère spécial ~ #@$%&! *_?^-",
-      "1digit": "Un chiffre"
+      "8characters": "8 caractères",
+      "1capitalLetter": "1 lettre majuscule",
+      "1lowerCase": "1 lettre minuscule",
+      "1digit": "1 chiffre",
+      "special_character": "1 caractère spécial"
     },
-    "passwordChangedSuccess": "Mot de passe changé avec succès !",
+    "passwordChangedSuccess": "Mot de passe modifié avec succès !",
     "passwordCriteriaError": "Veuillez vous assurer que le mot de passe respecte tous les critères et que les deux mots de passe correspondent.",
     "changePasswordButton": "Changer le mot de passe",
+    "errors": {
+      "password": "Le mot de passe est requis",
+      "confirm_password": "La confirmation du mot de passe est requise et doit correspondre",
+      "error_title": "Erreur...",
+      "generic_error": "Une erreur est survenue, veuillez réessayer.",
+      "confirm": "OK"
+    },
+    "show_password": "Afficher le mot de passe",
+    "hide_password": "Masquer le mot de passe",
     "resetHead": "Mot de passe changé 👍🏻",
     "resetDesc": "Vous pouvez vous connecter avec ce nouveau mot de passe.",
     "resetAction": "Se connecter"
@@ -765,12 +789,29 @@
     }
   },
   "login": {
-    "title": "Se connecter",
+    "title": "Connexion",
     "email_placeholder": "E-mail",
     "password_placeholder": "Mot de passe",
     "login_button": "Se connecter",
-    "login_with": "Connexion avec",
-    "forgot_password": "Mot de passe oublié ?"
+    "login_with": "Se connecter avec",
+    "forgot_password": "Mot de passe oublié ?",
+    "invalid_email": "Adresse e-mail invalide",
+    "required": "Requis",
+    "error_title": "Erreur...",
+    "error_message": "Une erreur est survenue, veuillez réessayer.",
+    "line_alt": "Séparateur de ligne",
+    "show_password": "Afficher le mot de passe",
+    "hide_password": "Masquer le mot de passe"
+  },
+  "TermsOfUse": {
+    "back": "Retour",
+    "heading": "Conditions d'utilisation 🔒",
+    "all_agreement_button": "Tous les accords",
+    "confirm_selection_button": "Confirmer la sélection",
+    "consent_management": "Gestion du consentement",
+    "data_access_portability": "Accès aux données et portabilité",
+    "data_deletion": "Suppression des données",
+    "privacy_policy": "Politique de confidentialité"
   },
   "access": {
     "participate_in_deal": "Pour participer au deal, l’organisateur doit vous donner l’accès",
@@ -1264,6 +1305,90 @@
       "helpRequest": {
         "sentDescription": "Notre équipe vous répondra dans un délai de 48 heures maximum."
       }
+    }
+  },
+  "legal_notices": {
+    "back": "Retour",
+    "contact_us": {
+      "create_good_deal": "Créer une Bonne Affaire",
+      "manage_good_deal": "Gérer une Bonne Affaire",
+      "other_questions": "Autres questions ?",
+      "other_questions_description": "Si vous avez d'autres questions, n'hésitez pas à nous contacter."
+    },
+    "footer": {
+      "subscribe": "S'abonner",
+      "sitemap": "Plan du site",
+      "about": "À propos",
+      "newsletter_commitment": "Notre newsletter engagée",
+      "stay_informed": "Restez informé (une fois par mois seulement) de nos actualités",
+      "consent_agreement": "En vous abonnant, vous acceptez notre ",
+      "receive_updates": "et consentez à recevoir des mises à jour de notre part.",
+      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "how_it_works": "Comment ça marche ?",
+      "bulk_order": "Commande groupée",
+      "support_contact": "Support / Contact",
+      "faqs": "FAQ",
+      "information": "Informations",
+      "legal_notices": "Mentions légales",
+      "privacy_policy": "Politique de confidentialité",
+      "general_conditions": "Conditions Générales de Vente et d'Utilisation",
+      "enter_email": "Entrez votre email"
+    }
+  },
+  "privacy_cookie_policy": {
+    "back": "Retour",
+    "contact_us": {
+      "create_good_deal": "Créer une Bonne Affaire",
+      "manage_good_deal": "Gérer une Bonne Affaire",
+      "other_questions": "Autres questions ?",
+      "other_questions_description": "Si vous avez d'autres questions, n'hésitez pas à nous contacter."
+    },
+    "footer": {
+      "subscribe": "S'abonner",
+      "sitemap": "Plan du site",
+      "about": "À propos",
+      "newsletter_commitment": "Notre newsletter engagée",
+      "stay_informed": "Restez informé (une fois par mois seulement) de nos actualités",
+      "consent_agreement": "En vous abonnant, vous acceptez notre ",
+      "receive_updates": "et consentez à recevoir des mises à jour de notre part.",
+      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "how_it_works": "Comment ça marche ?",
+      "bulk_order": "Commande groupée",
+      "support_contact": "Support / Contact",
+      "faqs": "FAQ",
+      "information": "Informations",
+      "legal_notices": "Mentions légales",
+      "privacy_policy": "Politique de confidentialité",
+      "general_conditions": "Conditions Générales de Vente et d'Utilisation",
+      "enter_email": "Entrez votre email"
+    }
+  },
+  "general_conditions": {
+    "back": "Retour",
+    "contact_us": {
+      "create_good_deal": "Créer une Bonne Affaire",
+      "manage_good_deal": "Gérer une Bonne Affaire",
+      "other_questions": "Autres questions ?",
+      "other_questions_description": "Si vous avez d'autres questions, n'hésitez pas à nous contacter."
+    },
+    "footer": {
+      "subscribe": "S'abonner",
+      "sitemap": "Plan du site",
+      "about": "À propos",
+      "newsletter_commitment": "Notre newsletter engagée",
+      "stay_informed": "Restez informé (une fois par mois seulement) de nos actualités",
+      "consent_agreement": "En vous abonnant, vous acceptez notre ",
+      "receive_updates": "et consentez à recevoir des mises à jour de notre part.",
+      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "how_it_works": "Comment ça marche ?",
+      "bulk_order": "Commande groupée",
+      "support_contact": "Support / Contact",
+      "faqs": "FAQ",
+      "information": "Informations",
+      "legal_notices": "Mentions légales",
+      "privacy_policy": "Politique de confidentialité",
+      "general_conditions": "Conditions Générales de Vente et d'Utilisation",
+      "enter_email": "Entrez votre email"
     }
   }
 }

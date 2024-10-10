@@ -397,7 +397,9 @@
     "step_3": "Goal achieved! 🎉",
     "step_4": "Order sent to the artisan",
     "step_5": "Organizer coordinates with artisan for delivery",
-    "alert_editing": "Editing the deal!"
+    "alert_editing": "Editing the deal!",
+    "error_message": "You can't edit the deal, if the deal status is waiting.",
+    "got_it": "Got it"
   },
   "wallet": {
     "back_button": "Back",
@@ -463,7 +465,8 @@
     "transfer_complete": "The transfer is complete!",
     "receive_funds": "You should receive the funds in your account within 3 to 4 days.",
     "back_to_home": "Back to Home",
-    "line_alt": "Line"
+    "line_alt": "Line",
+    "debit_info": "You will be debited once the target is reached."
   },
   "invite_loved_ones": {
     "title": "Invite your friends to order 🍎",
@@ -708,11 +711,21 @@
       "8characters": "8 characters",
       "1capitalLetter": "1 capital letter",
       "1lowerCase": "1 lower case",
-      "1digit": "1 digit"
+      "1digit": "1 digit",
+      "special_character": "1 special character"
     },
     "passwordChangedSuccess": "Password changed successfully!",
     "passwordCriteriaError": "Please make sure the password meets all criteria and both passwords match.",
     "changePasswordButton": "Change password",
+    "errors": {
+      "password": "Password is required",
+      "confirm_password": "Confirm password is required and must match",
+      "error_title": "Error...",
+      "generic_error": "An error occurred, please try again.",
+      "confirm": "OK"
+    },
+    "show_password": "Show password",
+    "hide_password": "Hide password",
     "resetHead": "Password changed 👍🏻",
     "resetDesc": "You can log in with this new password.",
     "resetAction": "To log in"
@@ -782,7 +795,9 @@
       "country": "Country is required",
       "accept_privacy_policy": "You must accept the privacy policy",
       "currency": "You must enter the currency",
-      "error_title": "Error..."
+      "error_title": "Error...",
+      "error_desc": "Something went wrong, Please try again later",
+      "error_ack": "OK"
     }
   },
   "login": {
@@ -791,7 +806,14 @@
     "password_placeholder": "Password",
     "login_button": "Login",
     "login_with": "Login with",
-    "forgot_password": "Forgot your password ?"
+    "forgot_password": "Forgot your password?",
+    "invalid_email": "Invalid email address",
+    "required": "Required",
+    "error_title": "Error...",
+    "error_message": "An error occurred, please try again.",
+    "line_alt": "Line separator",
+    "show_password": "Show password",
+    "hide_password": "Hide password"
   },
   "access": {
     "participate_in_deal": "To participate in the deal, the organizer must give you access",
@@ -1292,6 +1314,116 @@
       "helpRequest": {
         "sentDescription": "Our team will respond to you within 48 hours maximum."
       }
+    }
+  },
+  "privacy_cookie_policy": {
+    "back": "Back",
+    "contact_us": {
+      "create_good_deal": "Create a Good Deal",
+      "manage_good_deal": "Manage a Good Deal",
+      "other_questions": "Other Questions?",
+      "other_questions_description": "If you have more inquiries, feel free to reach out to us."
+    },
+    "footer": {
+      "subscribe": "Subscribe",
+      "sitemap": "Sitemap",
+      "about": "About",
+      "newsletter_commitment": "Our committed newsletter",
+      "stay_informed": "Stay informed (only once a month) of our news",
+      "consent_agreement": "By subscribing, you agree to our ",
+      "receive_updates": "and consent to receive updates from our company.",
+      "copyright": "© 2024 The Good Deals. All rights reserved.",
+      "how_it_works": "How does it work?",
+      "bulk_order": "Bulk order",
+      "support_contact": "Support / Contact",
+      "faqs": "FAQs",
+      "information": "Information",
+      "legal_notices": "Legal notices",
+      "privacy_policy": "Privacy Policy",
+      "general_conditions": "General Conditions of Sales and Use",
+      "enter_email": "Enter your email"
+    }
+  },
+  "general_conditions": {
+    "back": "Back",
+    "contact_us": {
+      "create_good_deal": "Create a Good Deal",
+      "manage_good_deal": "Manage a Good Deal",
+      "other_questions": "Other Questions?",
+      "other_questions_description": "If you have more inquiries, feel free to reach out to us."
+    },
+    "footer": {
+      "subscribe": "Subscribe",
+      "sitemap": "Sitemap",
+      "about": "About",
+      "newsletter_commitment": "Our committed newsletter",
+      "stay_informed": "Stay informed (only once a month) of our news",
+      "consent_agreement": "By subscribing, you agree to our ",
+      "receive_updates": "and consent to receive updates from our company.",
+      "copyright": "© 2024 The Good Deals. All rights reserved.",
+      "how_it_works": "How does it work?",
+      "bulk_order": "Bulk order",
+      "support_contact": "Support / Contact",
+      "faqs": "FAQs",
+      "information": "Information",
+      "legal_notices": "Legal notices",
+      "privacy_policy": "Privacy Policy",
+      "general_conditions": "General Conditions of Sales and Use",
+      "enter_email": "Enter your email"
+    }
+  },
+  "DeleteAccount": {
+    "common": {
+      "back": "Back"
+    },
+    "delete_account": {
+      "heading": "Delete my account",
+      "description": "You are about to delete your data from the app. Once deleted, your account cannot be recovered.",
+      "confirmation": "Are you sure?",
+      "button_text": "I am deleting my account"
+    }
+  },
+  "Withdrawal": {
+    "line_alt": "Line separator",
+    "back_button": "Back",
+    "validate_payment_button": "Validate payment"
+  },
+  "TermsOfUse": {
+    "back": "Back",
+    "heading": "Terms of Use 🔒",
+    "all_agreement_button": "All agreement",
+    "confirm_selection_button": "Confirm selection",
+    "consent_management": "Consent Management",
+    "data_access_portability": "Data Access & Portability",
+    "data_deletion": "Data Deletion",
+    "privacy_policy": "Privacy Policy"
+  },
+  "legal_notices": {
+    "back": "Back",
+    "contact_us": {
+      "create_good_deal": "Create a Good Deal",
+      "manage_good_deal": "Manage a Good Deal",
+      "other_questions": "Other Questions?",
+      "other_questions_description": "If you have more inquiries, feel free to reach out to us."
+    },
+    "footer": {
+      "subscribe": "Subscribe",
+      "sitemap": "Sitemap",
+      "about": "About",
+      "newsletter_commitment": "Our committed newsletter",
+      "stay_informed": "Stay informed (only once a month) of our news",
+      "consent_agreement": "By subscribing, you agree to our ",
+      "receive_updates": "and consent to receive updates from our company.",
+      "copyright": "© 2024 The Good Deals. All rights reserved.",
+      "how_it_works": "How does it work?",
+      "bulk_order": "Bulk order",
+      "support_contact": "Support / Contact",
+      "faqs": "FAQs",
+      "information": "Information",
+      "legal_notices": "Legal notices",
+      "privacy_policy": "Privacy Policy",
+      "general_conditions": "General Conditions of Sales and Use",
+      "enter_email": "Enter your email"
     }
   }
 }

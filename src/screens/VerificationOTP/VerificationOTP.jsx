@@ -67,14 +67,13 @@ export const VerificationOTP = () => {
       const response = await axiosInstance.post("resend_code");
 
       if (response?.status === 200) {
-        console.log("Mail Sent");
         setSeconds(180);
       }
     } catch (error) {
-      console.error("There was an error!", error);
+      console.error(t("Payment.error_title"), error);
       Swal.fire({
         icon: "error",
-        title: "Error...",
+        title: t("Payment.error_title"),
         text: error?.response?.data?.detail,
       });
     }
@@ -121,7 +120,6 @@ export const VerificationOTP = () => {
 
   const handleSubmit = async () => {
     setLoading(true); // Show loader
-    console.log("OTP submitted:", otp.join(""));
 
     const formData = new FormData();
     formData.append("email", email);
@@ -138,10 +136,10 @@ export const VerificationOTP = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.error("There was an error!", error);
+      console.error(t("Payment.error_title"), error);
       Swal.fire({
         icon: "error",
-        title: "Error...",
+        title: t("Payment.error_title"),
         text: error?.response?.data?.detail,
       });
       setLoading(false);

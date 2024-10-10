@@ -32,10 +32,10 @@ const TermsOfUse = () => {
   };
 
   const notifications = [
-    { name: "Consent Management", enabled: true },
-    { name: "Data Access & Portability", enabled: false },
-    { name: "Data Deletion", enabled: false },
-    { name: "Privacy Policy", enabled: false },
+    { name: t("TermsOfUse.consent_management"), enabled: true },
+    { name: t("TermsOfUse.data_access_portability"), enabled: false },
+    { name: t("TermsOfUse.data_deletion"), enabled: false },
+    { name: t("TermsOfUse.privacy_policy"), enabled: false },
   ];
 
   return (
@@ -51,12 +51,13 @@ const TermsOfUse = () => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-text-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-              {t("common.back")}
+              {t("TermsOfUse.back")} {/* Translation for 'Back' */}
             </div>
           </div>
         </div>
         <div className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          Terms of Use 🔒
+          {t("TermsOfUse.heading", "Terms of Use 🔒")}{" "}
+          {/* Translation for 'Terms of Use 🔒' */}
         </div>
         <div className="flex flex-col items-start self-stretch w-full relative flex-[0_0_auto]">
           {notifications &&
@@ -102,7 +103,8 @@ const TermsOfUse = () => {
         </div>
         <div className="gap-2 border border-solid border-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer">
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            Confirm selection
+            {t("TermsOfUse.confirm_selection_button", "Confirm selection")}{" "}
+            {/* Translation for 'Confirm selection' */}
           </button>
         </div>
       </div>

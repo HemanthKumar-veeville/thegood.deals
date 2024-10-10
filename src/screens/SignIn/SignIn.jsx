@@ -17,7 +17,7 @@ const SignIn = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const savedValues = JSON.parse(localStorage.getItem("signInForm"));
@@ -32,8 +32,10 @@ const SignIn = ({ setIsLoading }) => {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().required("Required"),
+      email: Yup.string()
+        .email(t("login.invalid_email"))
+        .required(t("login.required")),
+      password: Yup.string().required(t("login.required")),
     }),
     onSubmit: async (values) => {
       setIsLoading(true);
@@ -58,8 +60,8 @@ const SignIn = ({ setIsLoading }) => {
         console.error("There was an error!", error);
         Swal.fire({
           icon: "error",
-          title: "Error...",
-          text: error?.response?.data?.detail,
+          title: t("login.error_title"),
+          text: error?.response?.data?.detail || t("login.error_message"),
         });
         setIsLoading(false);
       }
@@ -132,7 +134,11 @@ const SignIn = ({ setIsLoading }) => {
                 type="button"
                 onClick={togglePasswordVisibility}
                 className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={
+                  showPassword
+                    ? t("login.hide_password")
+                    : t("login.show_password")
+                }
               >
                 <EyeAlt8 />
               </button>
@@ -158,7 +164,7 @@ const SignIn = ({ setIsLoading }) => {
         <div className="relative w-[290px] h-7">
           <img
             className="absolute w-[290px] h-px top-[13px] left-0 object-cover"
-            alt="Line"
+            alt={t("login.line_alt")}
             src="https://c.animaapp.com/pST4Ri5V/img/line-61-1.svg"
           />
           <div className="flex w-[138px] h-7 items-start justify-center gap-2.5 px-2.5 py-0.5 absolute top-0 left-[76px] bg-primary-background">

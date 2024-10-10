@@ -54,7 +54,11 @@ const InputField = ({
               type="button"
               onClick={toggleVisibility}
               className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={
+                showPassword
+                  ? t("resetPassword.hide_password")
+                  : t("resetPassword.show_password")
+              }
             >
               <EyeAlt8 />
             </button>
@@ -92,15 +96,21 @@ const ResetPassword = () => {
     },
     validationSchema: Yup.object({
       password: Yup.string()
-        .min(8, t("signup.password_hints.min_length"))
-        .matches(/[a-z]/, t("signup.password_hints.lowercase"))
-        .matches(/[A-Z]/, t("signup.password_hints.uppercase"))
-        .matches(/\d/, t("signup.password_hints.number"))
-        .matches(/[~#@$%&!*_?^-]/, t("signup.password_hints.special_character"))
-        .required(t("signup.errors.password")),
+        .min(8, t("resetPassword.passwordCriteria.8characters"))
+        .matches(/[a-z]/, t("resetPassword.passwordCriteria.1lowerCase"))
+        .matches(/[A-Z]/, t("resetPassword.passwordCriteria.1capitalLetter"))
+        .matches(/\d/, t("resetPassword.passwordCriteria.1digit"))
+        .matches(
+          /[~#@$%&!*_?^-]/,
+          t("resetPassword.passwordCriteria.special_character")
+        )
+        .required(t("resetPassword.errors.password")),
       confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), null], t("signup.errors.confirm_password"))
-        .required(t("signup.errors.confirm_password")),
+        .oneOf(
+          [Yup.ref("password"), null],
+          t("resetPassword.errors.confirm_password")
+        )
+        .required(t("resetPassword.errors.confirm_password")),
     }),
     onSubmit: async (values) => {
       setLoading(true);
@@ -109,10 +119,12 @@ const ResetPassword = () => {
         navigate("/reset-password-success");
       } catch (error) {
         Swal.fire({
-          title: t("signup.errors.error_title"),
-          text: error?.response?.data?.detail,
+          title: t("resetPassword.errors.error_title"),
+          text:
+            error?.response?.data?.detail ||
+            t("resetPassword.errors.generic_error"),
           icon: "error",
-          confirmButtonText: "OK",
+          confirmButtonText: t("resetPassword.errors.confirm"),
         });
       } finally {
         setLoading(false);
@@ -145,7 +157,7 @@ const ResetPassword = () => {
               id="password"
               name="password"
               type="password"
-              placeholder={t("signup.password")}
+              placeholder={t("resetPassword.passwordPlaceholder")}
               formik={formik}
               showPassword={showPassword}
               toggleVisibility={togglePasswordVisibility}
@@ -155,7 +167,7 @@ const ResetPassword = () => {
               id="confirmPassword"
               name="confirmPassword"
               type="password"
-              placeholder={t("signup.confirm_password")}
+              placeholder={t("resetPassword.confirmPasswordPlaceholder")}
               formik={formik}
               showPassword={showConfirmPassword}
               toggleVisibility={toggleConfirmPasswordVisibility}
@@ -164,10 +176,11 @@ const ResetPassword = () => {
             {/* Password Hints */}
             <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
               {[
-                t("signup.password_hints.min_length"),
-                t("signup.password_hints.uppercase_lowercase"),
-                t("signup.password_hints.special_character"),
-                t("signup.password_hints.number"),
+                t("resetPassword.passwordCriteria.8characters"),
+                t("resetPassword.passwordCriteria.1capitalLetter"),
+                t("resetPassword.passwordCriteria.1lowerCase"),
+                t("resetPassword.passwordCriteria.special_character"),
+                t("resetPassword.passwordCriteria.1digit"),
               ].map((requirement, idx) => (
                 <div
                   key={idx}

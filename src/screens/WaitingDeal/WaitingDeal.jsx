@@ -60,8 +60,8 @@ const WaitingDeal = () => {
         </div>
         {showErrorModal && (
           <ShowCustomErrorModal
-            message="You can't edit the deal, if the deal status is waiting."
-            buttonText="Got it"
+            message={t("waiting_deal.error_message")}
+            buttonText={t("waiting_deal.got_it")}
             onClose={() => setShowErrorModal(false)} // Reset modal state on close
           />
         )}

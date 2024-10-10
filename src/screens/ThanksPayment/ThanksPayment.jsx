@@ -27,7 +27,7 @@ const ThanksPayment = () => {
           {t("thanks_withdrawal.thanks")} 🎉
         </div>
         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          You will be debited once the target is reached.
+          {t("thanks_withdrawal.debit_info")}
         </p>
         <img
           className="relative self-stretch w-full h-px object-cover"

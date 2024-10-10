@@ -32,7 +32,7 @@ export const LegalNoticesScreen = ({ heading }) => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("legal_notices.back")} {/* Translation for 'Back' */}
             </div>
           </div>
           <LegalNotices />
@@ -46,41 +46,41 @@ export const LegalNoticesScreen = ({ heading }) => {
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
           buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText={t("contact_us.create_good_deal")}
-          buttonText1={t("contact_us.manage_good_deal")}
+          buttonText={t("legal_notices.contact_us.create_good_deal")}
+          buttonText1={t("legal_notices.contact_us.manage_good_deal")}
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text={t("contact_us.other_questions")}
-          text1={t("contact_us.other_questions_description")}
+          text={t("legal_notices.contact_us.other_questions")}
+          text1={t("legal_notices.contact_us.other_questions_description")}
           type="green"
         />
       </div>
       <Footer
         breakpoint="mobile"
-        buttonText="Subscribe"
+        buttonText={t("legal_notices.footer.subscribe")}
         className="!flex-[0_0_auto]"
         divClassName="![white-space:unset] !w-[155px]"
         linksClassName="!h-[485px] !flex-[unset]"
         spanClassName="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassName1="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassNameOverride="!text-[unset]"
-        text="Sitemap"
-        text1="About"
-        text10="Our committed newsletter"
-        text11="Stay informed (only once a month) of our news"
-        text12="By subscribing, you agree to our "
-        text13=" and consent to receive updates from our company."
-        text14="© 2024 The Good Deals. All rights reserved."
-        text2="How does it work?"
-        text3="Bulk order"
-        text4="Support / Contact"
-        text5="FAQs"
-        text6="Information"
-        text7="Legal notices"
-        text8="Privacy Policy"
-        text9="General Conditions of Sales and Use"
+        text={t("legal_notices.footer.sitemap")}
+        text1={t("legal_notices.footer.about")}
+        text10={t("legal_notices.footer.newsletter_commitment")}
+        text11={t("legal_notices.footer.stay_informed")}
+        text12={t("legal_notices.footer.consent_agreement")}
+        text13={t("legal_notices.footer.receive_updates")}
+        text14={t("legal_notices.footer.copyright")}
+        text2={t("legal_notices.footer.how_it_works")}
+        text3={t("legal_notices.footer.bulk_order")}
+        text4={t("legal_notices.footer.support_contact")}
+        text5={t("legal_notices.footer.faqs")}
+        text6={t("legal_notices.footer.information")}
+        text7={t("legal_notices.footer.legal_notices")}
+        text8={t("legal_notices.footer.privacy_policy")}
+        text9={t("legal_notices.footer.general_conditions")}
         textInputDivClassName="!mt-[-1.00px] !text-[#4f4f4f] !ml-[-1.00px]"
-        textInputText="Enter your email"
+        textInputText={t("legal_notices.footer.enter_email")}
         textInputTextInputClassName="!self-stretch !border-white !rounded-[100px] !mr-[-2.00px] !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !w-full"
       />
     </div>

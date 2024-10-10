@@ -9,6 +9,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
   const [withdrawalValidated, setWithdrawalValidated] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+
   // Extract dealId and orderId from query params
   const searchParams = new URLSearchParams(location.search);
   const dealId = searchParams.get("dealId");
@@ -22,7 +23,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
 
   const handleBack = () => {
     // Logic for going back
-    btnText === "Validate payment"
+    btnText === t("withdrawal.validate_payment_button")
       ? navigate("/admin-view-deal")
       : navigate("/admin-wallet");
   };
@@ -46,7 +47,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
         />
         <img
           className="relative self-stretch w-full h-px object-cover"
-          alt={t("withdrawal.line_alt")}
+          alt={t("withdrawal.line_alt")} // Translation for alt text
           src={Line63}
         />
         <button
@@ -54,7 +55,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
           onClick={handleBack}
         >
           <div className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-            {t("withdrawal.back_button")}
+            {t("withdrawal.back_button")} {/* Translation for 'Back' button */}
           </div>
         </button>
       </div>

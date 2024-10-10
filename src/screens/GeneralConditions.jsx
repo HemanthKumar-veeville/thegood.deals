@@ -32,7 +32,7 @@ export const GeneralConditionsScreen = ({ heading }) => {
               color="#637381"
             />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
-              Back
+              {t("general_conditions.back")}
             </div>
           </div>
           <GeneralConditions />
@@ -46,41 +46,41 @@ export const GeneralConditionsScreen = ({ heading }) => {
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
           buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText={t("contact_us.create_good_deal")}
-          buttonText1={t("contact_us.manage_good_deal")}
+          buttonText={t("general_conditions.contact_us.create_good_deal")}
+          buttonText1={t("general_conditions.contact_us.manage_good_deal")}
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
-          text={t("contact_us.other_questions")}
-          text1={t("contact_us.other_questions_description")}
+          text={t("general_conditions.contact_us.other_questions")}
+          text1={t("general_conditions.contact_us.other_questions_description")}
           type="green"
         />
       </div>
       <Footer
         breakpoint="mobile"
-        buttonText="Subscribe"
+        buttonText={t("general_conditions.footer.subscribe")}
         className="!flex-[0_0_auto]"
         divClassName="![white-space:unset] !w-[155px]"
         linksClassName="!h-[485px] !flex-[unset]"
         spanClassName="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassName1="!tracking-[0] !text-xs !font-normal ![font-family:'Rethink_Sans',Helvetica] !leading-[18px]"
         spanClassNameOverride="!text-[unset]"
-        text="Sitemap"
-        text1="About"
-        text10="Our committed newsletter"
-        text11="Stay informed (only once a month) of our news"
-        text12="By subscribing, you agree to our "
-        text13=" and consent to receive updates from our company."
-        text14="© 2024 The Good Deals. All rights reserved."
-        text2="How does it work?"
-        text3="Bulk order"
-        text4="Support / Contact"
-        text5="FAQs"
-        text6="Information"
-        text7="Legal notices"
-        text8="Privacy Policy"
-        text9="General Conditions of Sales and Use"
+        text={t("general_conditions.footer.sitemap")}
+        text1={t("general_conditions.footer.about")}
+        text10={t("general_conditions.footer.newsletter_commitment")}
+        text11={t("general_conditions.footer.stay_informed")}
+        text12={t("general_conditions.footer.consent_agreement")}
+        text13={t("general_conditions.footer.receive_updates")}
+        text14={t("general_conditions.footer.copyright")}
+        text2={t("general_conditions.footer.how_it_works")}
+        text3={t("general_conditions.footer.bulk_order")}
+        text4={t("general_conditions.footer.support_contact")}
+        text5={t("general_conditions.footer.faqs")}
+        text6={t("general_conditions.footer.information")}
+        text7={t("general_conditions.footer.legal_notices")}
+        text8={t("general_conditions.footer.privacy_policy")}
+        text9={t("general_conditions.footer.general_conditions")}
         textInputDivClassName="!mt-[-1.00px] !text-[#4f4f4f] !ml-[-1.00px]"
-        textInputText="Enter your email"
+        textInputText={t("general_conditions.footer.enter_email")}
         textInputTextInputClassName="!self-stretch !border-white !rounded-[100px] !mr-[-2.00px] !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !w-full"
       />
     </div>
