@@ -247,7 +247,7 @@ export const SignUp = ({ setIsLoading }) => {
           title: t("signup.errors.error_title"),
           text: error?.response?.data?.detail || t("signup.errors.error_desc"),
           icon: "error",
-          confirmButtonText: t("signup.error_ack"),
+          confirmButtonText: t("signup.errors.error_ack"),
         });
         setIsLoading(false);
       }

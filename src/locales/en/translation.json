@@ -292,7 +292,9 @@
     "city": "City",
     "postal_code": "Postal Code",
     "country": "Country",
-    "confirm_changes": "Confirm changes"
+    "confirm_changes": "Confirm changes",
+    "required": "(required)",
+    "error": "Something went wrong, Please try again later"
   },
   "public_need_help": {
     "back": "Back",
@@ -308,7 +310,17 @@
     "send_message": "Send my message",
     "faq_title": "Our FAQ may also be useful to you 💡",
     "see_faq": "See the FAQ page",
-    "fill_all_fields": "Please fill out all fields and accept the privacy policy before submitting."
+    "fill_all_fields": "Please fill out all fields and accept the privacy policy before submitting.",
+    "name_required": "Please enter your name.",
+    "name_too_short": "The name entered is too short. Please provide a valid name.",
+    "invalid_email": "The email address entered is not valid. Please provide a correct email.",
+    "email_required": "Please enter your email address.",
+    "phone_required": "Please provide your phone number.",
+    "invalid_phone": "The phone number entered is invalid. Please check and try again.",
+    "message_required": "Please enter your message.",
+    "message_too_short": "Your message is too short. Please provide more details.",
+    "accept_privacy_policy": "You must agree to the privacy policy to continue.",
+    "error_generic": "An unexpected error occurred. Please try again later."
   },
   "auth": {
     "login_tab": "Log in",
@@ -980,8 +992,8 @@
     "defaultLanguage": "Language"
   },
   "customErrorModal": {
-    "defaultMessage": "We're sorry, something has gone wrong. Please try later",
-    "buttonText": "Got it"
+    "defaultMessage": "Nous sommes désolés, une erreur est survenue. Veuillez réessayer plus tard.",
+    "buttonText": "Compris"
   },
   "header": {
     "mainText": "Créez, Partagez et Savourez avec une commande groupée !",
@@ -1532,5 +1544,9 @@
       "title": "Copied...",
       "message": "Link copied to clipboard!"
     }
+  },
+  "customSuccessModal": {
+    "defaultMessage": "Information Saved Succesfully",
+    "buttonText": "Got it"
   }
 }

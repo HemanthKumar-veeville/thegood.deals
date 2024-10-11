@@ -13,6 +13,8 @@ import {
 import { ChevronDown } from "../../icons/ChevronDown";
 import { UserAlt } from "../../icons/UserAlt";
 import { useTranslation } from "react-i18next"; // Import useTranslation for localization
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -20,6 +22,9 @@ const EditProfile = () => {
   const { profile: fetchedProfile } = useSelector((state) => state.account);
   const { t } = useTranslation(); // Initialize the translation hook
   const [fileUploaded, setFileUploaded] = useState(null);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [serverMessage, setServerMessage] = useState("");
 
   const initialProfileState = {
     firstName: "",
@@ -98,11 +103,41 @@ const EditProfile = () => {
     }));
   };
 
-  const handleSave = useCallback(() => {
-    setEditField(null);
-    dispatch(updateUserProfile({ ...profile, profilepicture: fileUploaded })); // Only call updateUserProfile on button click
-    dispatch(fetchUserProfile()); // Fetch updated profile after saving
-  }, [dispatch, profile]);
+  const handleSave = useCallback(async () => {
+    try {
+      setEditField(null);
+
+      // Call updateUserProfile and check response
+      const res = await dispatch(
+        updateUserProfile({ ...profile, profilepicture: fileUploaded })
+      );
+
+      // Check if there's an error in the response
+      if (res?.payload?.detail) {
+        console.log({ error: res.payload.detail });
+        throw new Error(res.payload.detail); // Explicitly throw the error
+      } else {
+        const res = await dispatch(fetchUserProfile());
+        if (res?.payload?.detail) {
+          console.log({ error: res.payload.detail });
+          throw new Error(res.payload.detail); // Explicitly throw the error
+        }
+      }
+
+      // If no error, show success modal
+      setShowSuccessModal(true);
+      console.log("success");
+    } catch (error) {
+      // Check if error is an object, and convert it to a string if necessary
+      const errorMessage =
+        typeof error === "object" ? t("edit_profile.error") : error;
+
+      // Show error modal when an error is caught
+      setShowErrorModal(true);
+      setServerMessage(errorMessage); // Use the stringified or raw error message
+      console.log(errorMessage);
+    }
+  }, [dispatch, profile, fileUploaded]);
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
@@ -147,10 +182,10 @@ const EditProfile = () => {
     );
 
   return (
-    <div className="flex flex-col w-[360px] items-start relative bg-primary-background">
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+    <div className="flex flex-col w-full items-start relative bg-primary-background">
+      <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div
-          className="flex w-[290px] items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
+          className="flex w-full items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
           onClick={handleBack}
         >
           <ArrowLeft1
@@ -176,6 +211,20 @@ const EditProfile = () => {
               />
             )}
           </div>
+          {showErrorModal && (
+            <ShowCustomErrorModal
+              message={serverMessage}
+              buttonText={t("waiting_deal.got_it")}
+              onClose={() => setShowErrorModal(false)} // Reset modal state on close
+            />
+          )}
+          {showSuccessModal && (
+            <ShowCustomSuccessModal
+              message={serverMessage}
+              buttonText={t("waiting_deal.got_it")}
+              onClose={() => setShowSuccessModal(false)} // Reset modal state on close
+            />
+          )}
           <div className="inline-flex items-center justify-center gap-1.5 px-3 py-[5px] relative flex-[0_0_auto] bg-[#1b4f4a] rounded-[5px]">
             <PencilAlt className="!relative !w-3.5 !h-3.5" color="white" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-[22px] whitespace-nowrap">
@@ -325,9 +374,10 @@ const EditProfile = () => {
             className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
           >
             <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-              <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
+              <div className="flex w-full items-start gap-2.5 relative flex-[0_0_auto]">
                 <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                  {heading} {t("edit_profile.required")}
+                  {heading}{" "}
+                  {name !== "additionalAddress" && t("edit_profile.required")}
                 </div>
               </div>
               <div

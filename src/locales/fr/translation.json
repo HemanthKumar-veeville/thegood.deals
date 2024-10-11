@@ -270,8 +270,8 @@
   "edit_profile": {
     "title": "Mon compte ✏️",
     "back": "Retour",
-    "change_profile_picture": "Changer la photo de profil",
-    "your_information": "Vos informations",
+    "change_profile_picture": "Modifier la photo de profil",
+    "your_information": "Vos infos",
     "first_name": "Prénom",
     "last_name": "Nom de famille",
     "phone": "Téléphone",
@@ -282,17 +282,19 @@
     "new_password": "Nouveau mot de passe",
     "password_requirements": {
       "characters": "8 caractères",
-      "capital_letter": "1 lettre majuscule",
-      "lower_case": "1 lettre minuscule",
+      "capital_letter": "1 majuscule",
+      "lower_case": "1 minuscule",
       "digit": "1 chiffre"
     },
     "your_address": "Votre adresse",
     "address": "Adresse",
-    "additional_address": "Adresse complémentaire",
+    "additional_address": "Complément d’adresse",
     "city": "Ville",
     "postal_code": "Code postal",
     "country": "Pays",
-    "confirm_changes": "Confirmer les changements"
+    "confirm_changes": "Confirmer les modifications",
+    "required": "(requis)",
+    "error": "Une erreur est survenue. Veuillez réessayer plus tard."
   },
   "public_need_help": {
     "back": "Retour",
@@ -308,7 +310,17 @@
     "send_message": "Envoyer mon message",
     "faq_title": "Notre FAQ peut aussi vous être utile 💡",
     "see_faq": "Voir la page FAQ",
-    "fill_all_fields": "Veuillez remplir tous les champs et accepter la politique de confidentialité avant de soumettre."
+    "fill_all_fields": "Veuillez remplir tous les champs et accepter la politique de confidentialité avant de soumettre.",
+    "name_required": "Veuillez entrer votre nom.",
+    "name_too_short": "Le nom fourni est trop court. Veuillez entrer un nom valide.",
+    "invalid_email": "L'adresse e-mail saisie n'est pas valide. Veuillez fournir une adresse correcte.",
+    "email_required": "Veuillez entrer votre adresse e-mail.",
+    "phone_required": "Veuillez fournir votre numéro de téléphone.",
+    "invalid_phone": "Le numéro de téléphone saisi est invalide. Veuillez vérifier et réessayer.",
+    "message_required": "Veuillez entrer votre message.",
+    "message_too_short": "Votre message est trop court. Veuillez fournir plus de détails.",
+    "accept_privacy_policy": "Vous devez accepter la politique de confidentialité pour continuer.",
+    "error_generic": "Une erreur inattendue est survenue. Veuillez réessayer plus tard."
   },
   "auth": {
     "login_tab": "Se connecter",
@@ -427,7 +439,7 @@
     "collect_payment": "Collect payment",
     "endsIn": "ends in {{days}} days",
     "danger_alert": "The payment of one of the participants could not be made.",
-    "error": "Something went wrong, Please try again later",
+    "error": "Une erreur est survenue. Veuillez réessayer plus tard.",
     "try_again": "Try Again"
   },
   "draft_deal": {
@@ -1539,5 +1551,9 @@
       "title": "Copié...",
       "message": "Lien copié dans le presse-papier !"
     }
+  },
+  "customSuccessModal": {
+    "defaultMessage": "Informations enregistrées avec succès",
+    "buttonText": "Compris"
   }
 }
