@@ -339,6 +339,7 @@
     "my_good_deals": "My good deals",
     "created": "Created",
     "invited": "Invited",
+    "my_orders": "My Orders",
     "my_information": "My information",
     "wallet_details": "Wallet details",
     "settings": "Settings",
@@ -601,6 +602,7 @@
   "settings": {
     "title": "Settings",
     "edit_profile": "Edit my profile",
+    "payment_method": "Edit payment method",
     "notifications": "Notifications",
     "language": "Language",
     "currency": "Currency",

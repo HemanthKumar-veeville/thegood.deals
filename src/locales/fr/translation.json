@@ -339,6 +339,7 @@
     "my_good_deals": "Mes good deals",
     "created": "Créés",
     "invited": "Invités",
+    "my_orders": "Mes commandes",
     "my_information": "Mes informations",
     "wallet_details": "Détails du wallet",
     "settings": "Paramètres",
@@ -601,11 +602,12 @@
   "settings": {
     "title": "Paramètres",
     "edit_profile": "Modifier mon profil",
+    "payment_method": "Modifier le moyen de paiement",
     "notifications": "Notifications",
     "language": "Langue",
     "currency": "Devise",
     "trash_account": "Supprimer mon compte",
-    "terms": "Conditions d'utilisation"
+    "terms": "Conditions d’utilisation"
   },
   "profile": {
     "my_account": "Mon compte",
@@ -1484,13 +1486,13 @@
   },
   "TermsOfUse": {
     "back": "Retour",
-    "heading": "Conditions d'utilisation 🔒",
-    "all_agreement_button": "Tous les accords",
+    "heading": "Condition d’utilisation",
+    "all_agreement_button": "Tout accepter",
     "confirm_selection_button": "Confirmer la sélection",
     "consent_management": "Gestion du consentement",
-    "data_access_portability": "Accès aux données et portabilité",
-    "data_deletion": "Suppression des données",
-    "privacy_policy": "Politique de confidentialité"
+    "data_access_portability": "Accès et portabilité des données",
+    "data_deletion": "Suppression des données (droit à l'oubli)",
+    "privacy_policy": "Politiques de conservation des données"
   },
   "legal_notices": {
     "back": "Retour",

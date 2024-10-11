@@ -24,6 +24,7 @@ import {
 } from "../../redux/app/user/userSlice";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
+import { Box44 } from "../../icons/Box44/Box44.jsx";
 
 const Account = () => {
   const { t } = useTranslation();
@@ -312,6 +313,11 @@ const Account = () => {
               {
                 icon: <UserAlt2 className="!w-5 !h-5" />,
                 text: t("account.my_information"),
+                action: "/my-information",
+              },
+              {
+                icon: <Box44 className="!w-5 !h-5" />,
+                text: t("account.my_orders"),
                 action: "/my-information",
               },
               {

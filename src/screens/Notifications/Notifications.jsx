@@ -32,14 +32,14 @@ const Notifications = () => {
 
   const notifications = [
     { name: t("notifications.newsletter"), enabled: true },
-    { name: t("notifications.sms"), enabled: false },
-    { name: t("notifications.emails"), enabled: false },
-    { name: t("notifications.whatsapp"), enabled: false },
+    { name: t("notifications.sms"), enabled: true },
+    { name: t("notifications.emails"), enabled: true },
+    { name: t("notifications.whatsapp"), enabled: true },
   ];
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background">
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div
           className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke"
           onClick={handleBack}
@@ -75,7 +75,7 @@ const Notifications = () => {
                       ? "bg-primary-color"
                       : "bg-gray-300"
                   }`}
-                  onClick={() => handleToggle(type)}
+                  // onClick={() => handleToggle(type)}
                 >
                   <div
                     className={`relative w-[18px] h-[18px] top-1 bg-white rounded-[9px] transition-transform ${

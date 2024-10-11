@@ -31,10 +31,12 @@ function AppBar() {
    * Toggles the sidebar open state.
    */
   const handleOpen = () => {
+    setLanguageOpen(false);
     setOpen(!open);
   };
 
   const handleLanguageOpen = () => {
+    setOpen(false);
     setLanguageOpen(!languageOpen);
   };
 

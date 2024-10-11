@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { BellAlt12 } from "../../icons/BellAlt12";
@@ -9,11 +9,12 @@ import { UserAlt4 } from "../../icons/UserAlt4/UserAlt4";
 import { useNavigate } from "react-router-dom";
 import { CrossCircle } from "../../icons/CrossCircle";
 import { LockAlt } from "../../icons/LockAltScreen/LockAltScreen";
+import { CreditCard1 } from "../../icons/CreditCard1/CreditCard1";
 
 const SettingsPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
+  const [disabled, setDisabled] = useState(true);
   const handleBack = () => {
     navigate("/");
   };
@@ -38,7 +39,7 @@ const SettingsPage = () => {
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background">
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
         <div
           className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
           onClick={handleBack}
@@ -71,6 +72,35 @@ const SettingsPage = () => {
               className="!relative !w-[18px] !h-[18px]"
               color="#1B4F4A"
             />
+          </div>
+          <div
+            className={`relative w-full ${
+              disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+            }`}
+          >
+            {/* Conditionally render the Coming Soon badge below the UI when disabled */}
+            {/* {disabled && (
+              <div className={`w-full mt-2`}>
+                <div className="inline-block bg-yellow-500 text-white text-xs font-semibold py-1 px-3 rounded-full text-left">
+                  Coming Soon
+                </div>
+              </div>
+            )} */}
+            <div
+              className={`flex h-[54px] items-center justify-between px-0 py-[15px] self-stretch w-full border-b [border-bottom-style:solid] border-stroke`}
+              onClick={!disabled ? handleProfileEdit : undefined} // Disable click if disabled
+            >
+              <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+                <CreditCard1 className="!relative !w-[18px] !h-[18px]" />
+                <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
+                  {t("settings.payment_method")}
+                </div>
+              </div>
+              <ChevronRight7
+                className="!relative !w-[18px] !h-[18px]"
+                color="#1B4F4A"
+              />
+            </div>
           </div>
           <div
             className="flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke cursor-pointer"
@@ -133,19 +163,34 @@ const SettingsPage = () => {
             />
           </div>
           <div
-            className="flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke cursor-pointer"
-            onClick={handleDeleteAccount}
+            className={`relative w-full  ${
+              disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+            }`}
           >
-            <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-              <CrossCircle className="!relative !w-[18px] !h-[18px]" />
-              <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-                {t("settings.trash_account")}
+            {/* Conditionally render the Coming Soon badge below the UI when disabled */}
+            {/* {disabled && (
+              <div className="w-full mt-2">
+                <div className="inline-block bg-yellow-500 text-white text-xs font-semibold py-1 px-3 rounded-full">
+                  Coming Soon
+                </div>
               </div>
+            )} */}
+
+            <div
+              className={`flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke`}
+              onClick={!disabled ? handleDeleteAccount : undefined} // Disable click if disabled
+            >
+              <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+                <CrossCircle className="!relative !w-[18px] !h-[18px]" />
+                <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
+                  {t("settings.trash_account")}
+                </div>
+              </div>
+              <ChevronRight7
+                className="!relative !w-[18px] !h-[18px]"
+                color="#1B4F4A"
+              />
             </div>
-            <ChevronRight7
-              className="!relative !w-[18px] !h-[18px]"
-              color="#1B4F4A"
-            />
           </div>
         </div>
       </div>

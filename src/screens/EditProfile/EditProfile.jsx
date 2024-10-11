@@ -15,11 +15,14 @@ import { UserAlt } from "../../icons/UserAlt";
 import { useTranslation } from "react-i18next"; // Import useTranslation for localization
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
+import CustomLoader from "../../components/CustomLoader/CustomLoader";
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { profile: fetchedProfile } = useSelector((state) => state.account);
+  const { profile: fetchedProfile, status } = useSelector(
+    (state) => state.account
+  );
   const { t } = useTranslation(); // Initialize the translation hook
   const [fileUploaded, setFileUploaded] = useState(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -183,207 +186,80 @@ const EditProfile = () => {
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
-      <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
-        <div
-          className="flex w-full items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
-          onClick={handleBack}
-        >
-          <ArrowLeft1
-            className="!relative !w-[18px] !h-[18px]"
-            color="#637381"
-          />
-          <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
-            {t("edit_profile.back")}
+      {status === "loading" && <CustomLoader />}
+      {status !== "loading" && (
+        <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+          <div
+            className="flex w-full items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
+            onClick={handleBack}
+          >
+            <ArrowLeft1
+              className="!relative !w-[18px] !h-[18px]"
+              color="#637381"
+            />
+            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#637381] text-base tracking-[0] leading-6 whitespace-nowrap">
+              {t("edit_profile.back")}
+            </div>
           </div>
-        </div>
-        <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-[#1b4f4a] text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
-          {t("edit_profile.title")}
-        </div>
-        <div className="flex items-center justify-start relative self-stretch w-full flex-[0_0_auto] gap-[15px]">
-          <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-            {profile?.profilepicture === "" ? (
-              <UserAlt />
-            ) : (
-              <img
-                className="relative w-[50px] h-[50px] object-cover rounded-lg"
-                alt="Profile"
-                src={profile.profilepicture}
+          <div className="relative w-fit font-heading-6 font-[number:var(--heading-6-font-weight)] text-[#1b4f4a] text-[length:var(--heading-6-font-size)] text-center tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] whitespace-nowrap [font-style:var(--heading-6-font-style)]">
+            {t("edit_profile.title")}
+          </div>
+          <div className="flex items-center justify-start relative self-stretch w-full flex-[0_0_auto] gap-[15px]">
+            <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
+              {profile?.profilepicture === "" ? (
+                <UserAlt />
+              ) : (
+                <img
+                  className="relative w-[50px] h-[50px] object-cover rounded-lg"
+                  alt="Profile"
+                  src={profile.profilepicture}
+                />
+              )}
+            </div>
+            {showErrorModal && (
+              <ShowCustomErrorModal
+                message={serverMessage}
+                buttonText={t("waiting_deal.got_it")}
+                onClose={() => setShowErrorModal(false)} // Reset modal state on close
               />
             )}
-          </div>
-          {showErrorModal && (
-            <ShowCustomErrorModal
-              message={serverMessage}
-              buttonText={t("waiting_deal.got_it")}
-              onClose={() => setShowErrorModal(false)} // Reset modal state on close
-            />
-          )}
-          {showSuccessModal && (
-            <ShowCustomSuccessModal
-              message={serverMessage}
-              buttonText={t("waiting_deal.got_it")}
-              onClose={() => setShowSuccessModal(false)} // Reset modal state on close
-            />
-          )}
-          <div className="inline-flex items-center justify-center gap-1.5 px-3 py-[5px] relative flex-[0_0_auto] bg-[#1b4f4a] rounded-[5px]">
-            <PencilAlt className="!relative !w-3.5 !h-3.5" color="white" />
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {t("edit_profile.change_profile_picture")}
-            </div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handlePhotoChange}
-              className="absolute inset-0 opacity-0 cursor-pointer"
-            />
-          </div>
-        </div>
-
-        <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
-          {t("edit_profile.your_information")}
-        </div>
-
-        {[
-          { name: "firstName", label: t("edit_profile.first_name") },
-          { name: "lastName", label: t("edit_profile.last_name") },
-          { name: "phone", label: t("edit_profile.phone") },
-          { name: "email", label: t("edit_profile.email") },
-        ].map(({ name, label }) => (
-          <div
-            key={name}
-            className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-            onClick={() => handleEdit(name)}
-          >
-            <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                <div className="flex items-center justify-between relative flex-1 grow">
-                  {renderField(name, profile[name], "text", label)}
-                  <Pencil className="!relative !w-4 !h-4" />
-                </div>
+            {showSuccessModal && (
+              <ShowCustomSuccessModal
+                message={serverMessage}
+                buttonText={t("waiting_deal.got_it")}
+                onClose={() => setShowSuccessModal(false)} // Reset modal state on close
+              />
+            )}
+            <div className="inline-flex items-center justify-center gap-1.5 px-3 py-[5px] relative flex-[0_0_auto] bg-[#1b4f4a] rounded-[5px]">
+              <PencilAlt className="!relative !w-3.5 !h-3.5" color="white" />
+              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-white text-sm tracking-[0] leading-[22px] whitespace-nowrap">
+                {t("edit_profile.change_profile_picture")}
               </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
             </div>
           </div>
-        ))}
 
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="relative w-full">
-            <select
-              name="language"
-              value={profile.language}
-              onChange={handleChange}
-              className="w-full pl-5 pr-10 py-3 bg-white rounded-md border border-solid border-stroke text-darkdark-5 text-base font-normal focus:outline-none appearance-none"
-            >
-              <option value="French">French</option>
-              <option value="English">English</option>
-            </select>
-            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-              <ChevronDown className="!relative !w-4 !h-4" />
-            </div>
+          <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
+            {t("edit_profile.your_information")}
           </div>
-        </div>
 
-        <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
-          {t("edit_profile.change_password")}
-        </div>
-
-        {[
-          {
-            name: "currentPassword",
-            label: t("edit_profile.current_password"),
-            showPassword: showPassword.current,
-            toggleVisibility: () => togglePasswordVisibility("current"),
-          },
-          {
-            name: "newPassword",
-            label: t("edit_profile.new_password"),
-            showPassword: showPassword.new,
-            toggleVisibility: () => togglePasswordVisibility("new"),
-          },
-        ].map(({ name, label, showPassword, toggleVisibility }) => (
-          <div
-            key={name}
-            className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
-          >
-            <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-              <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                <div className="flex items-center justify-between relative flex-1 grow">
-                  {renderField(
-                    name,
-                    profile[name],
-                    showPassword ? "text" : "password",
-                    label
-                  )}
-                  <div onClick={toggleVisibility}>
-                    <EyeAlt4 className="!relative !w-4 !h-4 cursor-pointer" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2">
           {[
-            "edit_profile.password_requirements.characters",
-            "edit_profile.password_requirements.capital_letter",
-            "edit_profile.password_requirements.lower_case",
-            "edit_profile.password_requirements.digit",
-          ].map((requirement, idx) => (
+            { name: "firstName", label: t("edit_profile.first_name") },
+            { name: "lastName", label: t("edit_profile.last_name") },
+            { name: "phone", label: t("edit_profile.phone") },
+            { name: "email", label: t("edit_profile.email") },
+          ].map(({ name, label }) => (
             <div
-              key={idx}
-              className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
+              key={name}
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+              onClick={() => handleEdit(name)}
             >
-              <span className="mr-1">•</span> {t(requirement)}
-            </div>
-          ))}
-        </div>
-
-        <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
-          {t("edit_profile.your_address")}
-        </div>
-
-        {[
-          {
-            name: "address",
-            label: t("edit_profile.address"),
-            heading: t("edit_profile.address"),
-          },
-          {
-            name: "additionalAddress",
-            label: t("edit_profile.additional_address"),
-            heading: t("edit_profile.additional_address"),
-          },
-          {
-            name: "city",
-            label: t("edit_profile.city"),
-            heading: t("edit_profile.city"),
-          },
-          {
-            name: "postalCode",
-            label: t("edit_profile.postal_code"),
-            heading: t("edit_profile.postal_code"),
-          },
-          {
-            name: "country",
-            label: t("edit_profile.country"),
-            heading: t("edit_profile.country"),
-          },
-        ].map(({ name, label, heading }) => (
-          <div
-            key={name}
-            className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
-          >
-            <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-              <div className="flex w-full items-start gap-2.5 relative flex-[0_0_auto]">
-                <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
-                  {heading}{" "}
-                  {name !== "additionalAddress" && t("edit_profile.required")}
-                </div>
-              </div>
-              <div
-                className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
-                onClick={() => handleEdit(name)}
-              >
+              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
                 <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
                   <div className="flex items-center justify-between relative flex-1 grow">
                     {renderField(name, profile[name], "text", label)}
@@ -392,20 +268,150 @@ const EditProfile = () => {
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
 
-        <div onClick={handleSave} className="w-full">
-          <Button
-            buttonText={t("edit_profile.confirm_changes")}
-            className="!self-stretch !flex-[0_0_auto] !flex !w-full"
-            color="primary"
-            kind="primary"
-            round="semi-round"
-            state="default"
-          />
+          <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
+            <div className="relative w-full">
+              <select
+                name="language"
+                value={profile.language}
+                onChange={handleChange}
+                className="w-full pl-5 pr-10 py-3 bg-white rounded-md border border-solid border-stroke text-darkdark-5 text-base font-normal focus:outline-none appearance-none"
+              >
+                <option value="French">French</option>
+                <option value="English">English</option>
+              </select>
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                <ChevronDown className="!relative !w-4 !h-4" />
+              </div>
+            </div>
+          </div>
+
+          <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
+            {t("edit_profile.change_password")}
+          </div>
+
+          {[
+            {
+              name: "currentPassword",
+              label: t("edit_profile.current_password"),
+              showPassword: showPassword.current,
+              toggleVisibility: () => togglePasswordVisibility("current"),
+            },
+            {
+              name: "newPassword",
+              label: t("edit_profile.new_password"),
+              showPassword: showPassword.new,
+              toggleVisibility: () => togglePasswordVisibility("new"),
+            },
+          ].map(({ name, label, showPassword, toggleVisibility }) => (
+            <div
+              key={name}
+              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
+            >
+              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                  <div className="flex items-center justify-between relative flex-1 grow">
+                    {renderField(
+                      name,
+                      profile[name],
+                      showPassword ? "text" : "password",
+                      label
+                    )}
+                    <div onClick={toggleVisibility}>
+                      <EyeAlt4 className="!relative !w-4 !h-4 cursor-pointer" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2 w-[19rem]">
+            {[
+              "edit_profile.password_requirements.characters",
+              "edit_profile.password_requirements.capital_letter",
+              "edit_profile.password_requirements.lower_case",
+              "edit_profile.password_requirements.digit",
+            ].map((requirement, idx) => (
+              <div
+                key={idx}
+                className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
+              >
+                <span className="mr-1">•</span> {t(requirement)}
+              </div>
+            ))}
+          </div>
+
+          <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
+            {t("edit_profile.your_address")}
+          </div>
+
+          {[
+            {
+              name: "address",
+              label: t("edit_profile.address"),
+              heading: t("edit_profile.address"),
+            },
+            {
+              name: "additionalAddress",
+              label: t("edit_profile.additional_address"),
+              heading: t("edit_profile.additional_address"),
+            },
+            {
+              name: "city",
+              label: t("edit_profile.city"),
+              heading: t("edit_profile.city"),
+            },
+            {
+              name: "postalCode",
+              label: t("edit_profile.postal_code"),
+              heading: t("edit_profile.postal_code"),
+            },
+            {
+              name: "country",
+              label: t("edit_profile.country"),
+              heading: t("edit_profile.country"),
+            },
+          ].map(({ name, label, heading }) => (
+            <div
+              key={name}
+              className="flex flex-col h-20 items-start gap-[5px] relative self-stretch w-full cursor-pointer"
+            >
+              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
+                <div className="flex w-full items-start gap-2.5 relative flex-[0_0_auto]">
+                  <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                    {heading}{" "}
+                    {name !== "additionalAddress" && t("edit_profile.required")}
+                  </div>
+                </div>
+                <div
+                  className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
+                  onClick={() => handleEdit(name)}
+                >
+                  <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
+                    <div className="flex items-center justify-between relative flex-1 grow">
+                      {renderField(name, profile[name], "text", label)}
+                      <Pencil className="!relative !w-4 !h-4" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div onClick={handleSave} className="w-full">
+            <Button
+              buttonText={t("edit_profile.confirm_changes")}
+              className="!self-stretch !flex-[0_0_auto] !flex !w-full"
+              color="primary"
+              kind="primary"
+              round="semi-round"
+              state="default"
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
