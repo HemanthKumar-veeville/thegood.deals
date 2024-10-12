@@ -890,11 +890,11 @@
     }
   },
   "login": {
-    "title": "Connexion",
+    "title": "Se connecter",
     "email_placeholder": "E-mail",
     "password_placeholder": "Mot de passe",
     "login_button": "Se connecter",
-    "login_with": "Se connecter avec",
+    "login_with": "Connexion avec",
     "forgot_password": "Mot de passe oublié ?",
     "invalid_email": "Adresse e-mail invalide",
     "required": "Requis",
