@@ -18,6 +18,7 @@ const SignIn = ({ setIsLoading }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const savedValues = JSON.parse(localStorage.getItem("signInForm"));
@@ -25,6 +26,27 @@ const SignIn = ({ setIsLoading }) => {
       formik.setValues(savedValues);
     }
   }, []);
+
+  const login = async (formData) => {
+    try {
+      const response = await axiosInstance.post("login", formData);
+
+      if (response?.status === 200) {
+        // Optionally log or access the cookie if needed
+        console.log("Cookies:", document.cookie);
+
+        // Proceed with your success actions
+        localStorage.removeItem("signInForm");
+        dispatch(checkUserLoginStatus());
+        navigate("/");
+      }
+      console.log({ response });
+    } catch (error) {
+      console.error("There was an error!", error);
+      setErrorMessage(error.message);
+      setIsLoading(false);
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -42,35 +64,17 @@ const SignIn = ({ setIsLoading }) => {
       const formData = new FormData();
       formData.append("email", values.email);
       formData.append("password", values.password);
-      try {
-        const response = await axiosInstance.post("login", formData);
-
-        if (response?.status === 200) {
-          // Optionally log or access the cookie if needed
-          console.log("Cookies:", document.cookie);
-
-          // Proceed with your success actions
-          localStorage.removeItem("signInForm");
-          dispatch(checkUserLoginStatus());
-          navigate("/");
-          formik.resetForm();
-        }
-        console.log({ response });
-      } catch (error) {
-        console.error("There was an error!", error);
-        Swal.fire({
-          icon: "error",
-          title: t("login.error_title"),
-          text: error?.response?.data?.detail || t("login.error_message"),
-        });
-        setIsLoading(false);
-      }
+      await login(formData);
     },
   });
 
   useEffect(() => {
     localStorage.setItem("signInForm", JSON.stringify(formik.values));
   }, [formik.values]);
+
+  useEffect(() => {
+    console.log({ errorMessage });
+  }, [errorMessage]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -113,7 +117,11 @@ const SignIn = ({ setIsLoading }) => {
             ) : null}
           </div>
         </div>
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
+        <div
+          className={`flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full ${
+            formik.touched.email && formik.errors.email ? "mt-8" : ""
+          }`}
+        >
           <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
             <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-stroke hover:bg-gray-100 cursor-pointer">
               <input
@@ -152,7 +160,9 @@ const SignIn = ({ setIsLoading }) => {
         </div>
         <Button
           buttonText={t("login.login_button")}
-          className="!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer"
+          className={`!self-stretch !flex-[0_0_auto] !flex !w-full hover:bg-secondary-background cursor-pointer ${
+            formik.touched.password && formik.errors.password ? "mt-8" : ""
+          }`}
           color="primary"
           kind="primary"
           round="semi-round"
