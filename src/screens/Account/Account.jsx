@@ -318,7 +318,7 @@ const Account = () => {
               {
                 icon: <Box44 className="!w-5 !h-5" />,
                 text: t("account.my_orders"),
-                action: "/my-information",
+                action: "/admin-orders",
               },
               {
                 icon: <ClockDollar1 className="!w-5 !h-5" color="#1B4F4A" />,

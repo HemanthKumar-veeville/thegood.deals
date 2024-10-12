@@ -23,7 +23,7 @@ export const ShowCustomWarningModal = ({
           <div className="w-full gap-2.5 flex flex-col items-center relative">
             <div className="relative w-[60px] h-[60px] bg-yellow-light rounded-[37px]">
               <Warning1
-                className="!absolute !w-6 !h-6 !top-[18px] !left-[18px]"
+                className="!absolute !w-full !h-full"
                 color="#FFC107" // Warning color (yellow)
               />
             </div>

@@ -9,6 +9,12 @@ const initialState = {
   profile: null, // To store user profile information
   userDeals: [], // To store user deals
   userReviews: [], // To store user reviews
+  signInForm: {
+    email: "",
+    password: "",
+    errorMessage: "",
+    isError: false,
+  },
 };
 
 // Async thunk for checking if the user is logged in
@@ -97,7 +103,20 @@ export const logoutUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    updateSignInForm: (state, action) => {
+      state.signInForm = action.payload;
+    },
+    resetSignInForm: (state) => {
+      state.signInForm = { email: "", password: "" };
+    },
+    setErrorMessage: (state, action) => {
+      state.signInForm.errorMessage = action.payload; // Action for setting error message
+    },
+    setIsError: (state, action) => {
+      state.signInForm.isError = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Handle user login status check
@@ -173,4 +192,10 @@ const userSlice = createSlice({
   },
 });
 
+export const {
+  updateSignInForm,
+  resetSignInForm,
+  setErrorMessage,
+  setIsError,
+} = userSlice.actions;
 export default userSlice.reducer;

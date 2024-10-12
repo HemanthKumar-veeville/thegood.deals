@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrdersByDeal } from "../../redux/app/orders/orderSlice"; // Adjust the import path as needed
+import {
+  fetchOrdersByDeal,
+  fetchOrders,
+} from "../../redux/app/orders/orderSlice"; // Adjust the import path as needed
 import { SizeXlCorner } from "../../components/SizeXlCorner";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { Box44 } from "../../icons/Box44";
@@ -31,12 +34,16 @@ const Orders = ({ dealId, dealType }) => {
   const ordersState = orders?.Orders?.length > 0 ? orders?.Orders : null;
 
   useEffect(() => {
-    dispatch(
-      fetchOrdersByDeal({
-        dealId: deal_id,
-        dealType: is_creator === "true" ? "created" : "invited",
-      })
-    );
+    if (deal_id) {
+      dispatch(
+        fetchOrdersByDeal({
+          dealId: deal_id,
+          dealType: is_creator === "true" ? "created" : "invited",
+        })
+      );
+    } else {
+      dispatch(fetchOrders());
+    }
   }, []);
 
   const handleToggleOrderDetails = (name) => {
@@ -153,13 +160,13 @@ const Orders = ({ dealId, dealType }) => {
                         : "max-h-0"
                     }`}
                   >
-                    {participant.orders.map((order) => (
+                    {participant?.orders?.map((order) => (
                       <div
                         key={order.order_id}
                         className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full"
                       >
                         {/* Products in Each Order */}
-                        {order.products.map((product, index) => (
+                        {order?.products?.map((product, index) => (
                           <div
                             key={index}
                             className="flex flex-col items-start gap-1.5 self-stretch"

@@ -7,6 +7,8 @@ import { forgotPassword } from "../../redux/app/user/userSlice"; // Import the f
 import { useNavigate } from "react-router-dom";
 import CustomLoader from "../../components/CustomLoader/CustomLoader"; // Assuming you have a CustomLoader component
 import { useTranslation } from "react-i18next";
+import { ShowCustomWarningModal } from "../../components/ShowCustomWarningModal/ShowCustomWarningModal";
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 
 const LostPassword = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +16,10 @@ const LostPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [isWarning, setIsWarning] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -46,13 +52,11 @@ const LostPassword = () => {
   };
 
   const handleSendLink = async () => {
+    setWarningMessage("");
     const validationError = validateEmail(email);
     if (validationError) {
-      Swal.fire({
-        icon: "warning",
-        title: t("lost_password.errors.invalid_email_title"),
-        text: validationError,
-      });
+      setWarningMessage(validationError);
+      setIsWarning(true);
       return;
     }
 
@@ -64,11 +68,8 @@ const LostPassword = () => {
     } catch (err) {
       console.log(err);
       const errorMessage = err?.detail || t("lost_password.errors.send_error");
-      Swal.fire({
-        icon: "error",
-        title: t("lost_password.errors.error_title"),
-        text: errorMessage,
-      });
+      setErrorMessage(errorMessage);
+      setIsError(true);
     } finally {
       setLoading(false); // Stop loading
     }
@@ -81,8 +82,22 @@ const LostPassword = () => {
   return (
     <div className="relative w-full h-screen bg-primary-background">
       {loading && <CustomLoader />} {/* Show loader when loading is true */}
+      {isWarning && (
+        <ShowCustomWarningModal
+          message={warningMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsWarning(false)} // Reset modal state on close
+        />
+      )}
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)} // Reset modal state on close
+        />
+      )}
       {!loading && (
-        <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
+        <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
           <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
             <div
               className="inline-flex items-center gap-2 relative flex-[0_0_auto]"

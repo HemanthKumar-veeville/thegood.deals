@@ -47,6 +47,19 @@ export const fetchOrdersByDeal = createAsyncThunk(
   }
 );
 
+// Async thunk for fetching orders for a specific deal
+export const fetchOrders = createAsyncThunk(
+  "orders/fetchOrders",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/orders`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // Async thunk for fetching a specific order by order_id and deal_id
 export const fetchOrderById = createAsyncThunk(
   "orders/fetchOrderById",
@@ -115,6 +128,21 @@ const orderSlice = createSlice({
         state.orderError = null; // Clear any errors
       })
       .addCase(fetchOrdersByDeal.rejected, (state, action) => {
+        state.orderStatus = "failed";
+        state.orderError = action.payload; // Set the error message
+      })
+
+      // Fetch orders
+      .addCase(fetchOrders.pending, (state) => {
+        state.orderStatus = "loading";
+        state.orderError = null; // Reset error before a new request
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.orderStatus = "succeeded";
+        state.orders = action.payload; // Replace orders with the fetched list
+        state.orderError = null; // Clear any errors
+      })
+      .addCase(fetchOrders.rejected, (state, action) => {
         state.orderStatus = "failed";
         state.orderError = action.payload; // Set the error message
       })

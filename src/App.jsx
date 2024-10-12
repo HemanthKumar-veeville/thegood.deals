@@ -583,6 +583,14 @@ function App() {
       ),
     },
     {
+      path: "/newsletter-indication",
+      element: (
+        <Layout>
+          <PrivacyCookiePolicyScreen />
+        </Layout>
+      ),
+    },
+    {
       path: "/legal-notices",
       element: (
         <Layout>

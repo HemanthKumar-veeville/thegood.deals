@@ -837,12 +837,14 @@
     "subtitle": "Vos infos",
     "first_name": "Prénom",
     "last_name": "Nom",
-    "mobile_number": "Numéro de mobile",
+    "mobile_number": "Mobile number",
     "email": "E-mail",
     "language": "Langue",
     "currency": "Devise",
+    "setup_pass": "Votre mot de passe",
     "password": "Mot de passe",
     "confirm_password": "Confirmer votre mdp",
+    "setup_addr": "Votre adresse",
     "address": "Adresse (requis)",
     "additional_address": "Complément d’adresse",
     "city": "Ville (requis)",
@@ -1386,9 +1388,9 @@
         "action": "Créer un nouvel accord"
       },
       "lostPassword": {
-        "checkEmailHead": "Vérifiez votre e-mail",
-        "checkEmailDesc": "Un lien de réinitialisation du mot de passe a été envoyé à votre adresse e-mail.",
-        "checkEmailAction": "Retour à la connexion"
+        "checkEmailHead": "Vérifier votre email 📧",
+        "checkEmailDesc": "Un lien de récupération vient d’être envoyer sur votre email. Pensez à vérifier vos spams !",
+        "checkEmailAction": "Retour à l’accueil"
       },
       "resetPassword": {
         "resetHead": "Mot de passe modifié 👍🏻",
@@ -1415,10 +1417,10 @@
   "privacy_cookie_policy": {
     "back": "Retour",
     "contact_us": {
-      "create_good_deal": "Créer une Bonne Affaire",
+      "create_good_deal": "Contactez-nous",
       "manage_good_deal": "Gérer une Bonne Affaire",
-      "other_questions": "Autres questions ?",
-      "other_questions_description": "Si vous avez d'autres questions, n'hésitez pas à nous contacter."
+      "other_questions": "D’autres questions ?",
+      "other_questions_description": "Si vous avez d’autres questions ou besoin de plus d’informations, n’hésitez pas à nous contacter. Nous sommes là pour vous accompagner dans cette belle aventure de découvertes et de partages !"
     },
     "footer": {
       "subscribe": "S'abonner",

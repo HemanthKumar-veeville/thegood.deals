@@ -292,6 +292,33 @@ export const SignUp = ({ setIsLoading }) => {
         onSubmit={formik.handleSubmit}
         className="flex flex-col w-full gap-[20px]"
       >
+        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
+          <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
+            <select
+              id="language"
+              name="language"
+              value={formik.values.language}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full pl-5 pr-10 py-3 bg-white rounded-md border ${
+                formik.touched.language && formik.errors.language
+                  ? "border-red-500"
+                  : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
+              } hover:bg-gray-100 cursor-pointer appearance-none`}
+            >
+              <option value="French">{t("language.french")}</option>
+              <option value="English">{t("language.english")}</option>
+            </select>
+            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+              <ChevronDown className="w-4 h-4 text-gray-600" />
+            </div>
+          </div>
+          {formik.touched.language && formik.errors.language ? (
+            <div className="text-red-500 text-sm mt-[2px]">
+              {formik.errors.language}
+            </div>
+          ) : null}
+        </div>
         <InputField
           id="firstName"
           name="firstName"
@@ -333,33 +360,6 @@ export const SignUp = ({ setIsLoading }) => {
           placeholder={t("signup.email")}
           formik={formik}
         />
-        <div className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full">
-          <div className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap">
-            <select
-              id="language"
-              name="language"
-              value={formik.values.language}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={`w-full pl-5 pr-10 py-3 bg-white rounded-md border ${
-                formik.touched.language && formik.errors.language
-                  ? "border-red-500"
-                  : "focus:outline-none focus:ring-1 focus:ring-[#1b4f4a]"
-              } hover:bg-gray-100 cursor-pointer appearance-none`}
-            >
-              <option value="French">{t("language.french")}</option>
-              <option value="English">{t("language.english")}</option>
-            </select>
-            <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-              <ChevronDown className="w-4 h-4 text-gray-600" />
-            </div>
-          </div>
-          {formik.touched.language && formik.errors.language ? (
-            <div className="text-red-500 text-sm mt-[2px]">
-              {formik.errors.language}
-            </div>
-          ) : null}
-        </div>
 
         {/* Currency Dropdown */}
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
@@ -396,7 +396,7 @@ export const SignUp = ({ setIsLoading }) => {
         </div>
 
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
-          {t("signup.password")}
+          {t("signup.setup_pass")}
         </div>
         <InputField
           id="password"
@@ -435,7 +435,7 @@ export const SignUp = ({ setIsLoading }) => {
         </div>
 
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
-          {t("signup.address")}
+          {t("signup.setup_addr")}
         </div>
         <InputField
           id="address"
