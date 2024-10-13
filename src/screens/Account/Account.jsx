@@ -242,7 +242,7 @@ const Account = () => {
             </div>
           )}
           {status === "succeeded" && loadedDeals[activeTab].length === 0 && (
-            <div className="w-[18rem]">
+            <div className="w-full">
               <SuccessAlert
                 className="!flex !bg-cyancyan-light-3 w-[100%]"
                 divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
@@ -258,15 +258,15 @@ const Account = () => {
                 text={
                   activeTab === "created" ? (
                     <>
-                      You don't have any deals.
+                      {t("create_deal.created_empty")}
                       <br />
-                      Create one now!
+                      {t("create_deal.created_action")}
                     </>
                   ) : (
                     <>
-                      You are not in any deals.
+                      {t("create_deal.invited_empty")}
                       <br />
-                      Wait until you are invited!
+                      {t("create_deal.invited_action")}
                     </>
                   )
                 }
@@ -343,10 +343,16 @@ const Account = () => {
             ].map(({ icon, text, action }) => (
               <div
                 key={text}
-                className="inline-flex items-center gap-2.5 cursor-pointer hover:text-primary-color-dark"
+                className={`inline-flex items-center gap-2.5 cursor-pointer ${
+                  action === "/admin-orders" || action === "/admin-wallet"
+                    ? "cursor-not-allowed opacity-50"
+                    : "hover:text-primary-color-dark"
+                }`}
                 onClick={
-                  typeof action === "string"
+                  typeof action === "string" && action !== "/admin-orders"
                     ? () => handleNavigation(action)
+                    : action === "/admin-orders"
+                    ? null
                     : action
                 }
               >
@@ -354,6 +360,11 @@ const Account = () => {
                 <div className="font-normal text-primary-text-color text-base">
                   {text}
                 </div>
+                {(action === "/admin-orders" || action === "/admin-wallet") && (
+                  <div className="ml-2 bg-secondary-color text-white rounded-full px-2 py-1 text-xs">
+                    Coming Soon
+                  </div>
+                )}
               </div>
             ))}
           </>

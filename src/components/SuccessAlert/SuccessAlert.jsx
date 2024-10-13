@@ -157,7 +157,7 @@ export const SuccessAlert = ({
           <p
             className={`relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-[#004434] text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)] ${divClassName}`}
           >
-            {t("SuccessAlert.itemAdded")}
+            {text}
           </p>
         </div>
       )}

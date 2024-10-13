@@ -10,7 +10,7 @@ const CollectionLocation = ({ type, onChange, value }) => {
 
   const handleAtHomeChange = () => {
     setIsAtHome(true);
-    onchange("");
+    // onchange("");
   };
 
   const handleProvideLocationChange = () => {

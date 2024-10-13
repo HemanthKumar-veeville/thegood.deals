@@ -16,15 +16,26 @@ import { ArrowRight1 } from "../../icons/ArrowRight1";
 import { Line63 } from "../../images";
 import { Plus3 } from "../../icons/Plus3";
 import ProductList from "../../components/ProductInfo/ProductList";
-import { useDispatch } from "react-redux";
-import { addNewDeal, getDealByDealId } from "../../redux/app/deals/dealSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addNewDeal,
+  getDealByDealId,
+  updateDealForm,
+  updateTitle,
+  updateImages,
+} from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import Swal from "sweetalert2";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import AcceptConditions from "../../components/AcceptConditions";
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 
 const CreateDeal = () => {
   const { t } = useTranslation(); // Initialize translation hook
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const dealForm = useSelector((state) => state.deals.dealForm);
+  const dealTitle = useSelector((state) => state.deals.title);
 
   // Helper function to generate calendar days
   const formatDate = (date) => {
@@ -36,24 +47,11 @@ const CreateDeal = () => {
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
-
-  const [formData, setFormData] = useState({
-    description: "",
-    collectionDate: formatDate(new Date()),
-    contentDescription: "",
-    manufacturerInfo: "",
-    iban: "",
-    bic: "",
-    dealExpiration: formatDate(new Date()),
-    acceptConditions: false,
-    collectionLocation: "home",
-    pictures: [],
-    deliveryCost: 0,
-  });
+  const [formData, setFormData] = useState(dealForm);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
   const [addMode, setAddMode] = useState(true);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(dealTitle);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(location.search);
@@ -155,11 +153,8 @@ const CreateDeal = () => {
       navigate(`/inform-deal?id=${dealId}`);
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
-      Swal.fire({
-        icon: "error",
-        title: t("create_deal.error_title"), // Translated title
-        text: err?.detail || t("create_deal.error_message"), // Translated error message
-      });
+      setIsError(true);
+      setErrorMessage(err?.detail || t("create_deal.error_message"));
     } finally {
       setLoading(false); // Set loading to false after the API call
     }
@@ -220,9 +215,21 @@ const CreateDeal = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    dispatch(updateTitle(title));
+    dispatch(updateDealForm(formData));
+  }, [formData, title]);
+
   return (
     <>
       {loading && <CustomLoader />}
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)} // Reset modal state on close
+        />
+      )}
       {!loading && (
         <form
           onSubmit={handleSubmit}
@@ -252,7 +259,7 @@ const CreateDeal = () => {
               <Textarea
                 name="description"
                 type="description"
-                value={formData.description}
+                description={formData.description}
                 onChange={handleChange}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg !leading-[26px]"
@@ -354,7 +361,7 @@ const CreateDeal = () => {
               alt="Line"
               src={Line63}
             />
-            <p className="relative w-[230px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px]">
+            <p className="relative w-full [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px]">
               {t("create_deal.banking_info_label")}
             </p>
             <div className="w-full h-6">

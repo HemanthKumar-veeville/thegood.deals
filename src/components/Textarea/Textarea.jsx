@@ -17,8 +17,9 @@ export const Textarea = ({
   onChange,
   type,
   maxLength = 250, // Adding a prop for maximum length
+  description,
 }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(description || "");
   const [focusState, setFocusState] = useState(state);
 
   const handleFocus = () => {

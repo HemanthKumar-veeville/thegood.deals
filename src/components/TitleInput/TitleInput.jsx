@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next"; // Import translation hook
 
 const TitleInput = ({ dealTitle, setDealTitle }) => {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(dealTitle);
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
     setDealTitle(e.target.value);

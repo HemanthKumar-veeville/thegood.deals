@@ -56,22 +56,22 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
   return (
     <div className="flex flex-col items-start gap-[15px] p-[15px] relative self-stretch w-full flex-[0_0_auto] bg-white rounded-[5px]">
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
-        {t("productTitleLabel")}
+        {t("productInfo.productTitleLabel")}
       </div>
       <input
         type="text"
-        placeholder={t("productTitlePlaceholder")}
+        placeholder={t("productInfo.productTitlePlaceholder")}
         value={productTitle}
         onChange={(e) => setProductTitle(e.target.value)}
         className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke"
       />
       <div className="flex-col items-start flex w-[260px]">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
-          {t("totalStockLabel")}
+          {t("productInfo.totalStockLabel")}
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-            {t("byOrderText")}
+            {t("productInfo.byProductText")}
           </div>
         </div>
       </div>
@@ -79,32 +79,32 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
         <Box4 className="!relative !w-4 !h-4" />
         <input
           type="number"
-          placeholder={t("totalStockPlaceholder")}
+          placeholder={t("productInfo.totalStockPlaceholder")}
           value={totalStock}
           onChange={(e) => setTotalStock(e.target.value)}
           className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
         />
       </div>
       <ProductQuantity
-        label={t("minQuantityLabel")}
+        label={t("productInfo.minQuantityLabel")}
         value={minQuantity}
         setValue={setMinQuantity}
       />
       <ProductQuantity
-        label={t("maxQuantityLabel")}
+        label={t("productInfo.maxQuantityLabel")}
         value={maxQuantity}
         setValue={setMaxQuantity}
       />
       <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
         <div className="relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
-          {t("maximumRetailPriceLabel")}
+          {t("productInfo.maximumRetailPriceLabel")}
         </div>
       </div>
       <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke">
         <WebsiteMoney className="!relative !w-4 !h-4" color="#6B7280" />
         <input
           type="number"
-          placeholder={t("maximumRetailPricePlaceholder")}
+          placeholder={t("productInfo.maximumRetailPricePlaceholder")}
           value={maximumRetailPrice}
           onChange={(e) => setMaximumRetailPrice(e.target.value)}
           className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
@@ -112,14 +112,14 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
       </div>
       <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
         <div className="relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
-          {t("goodDealPriceLabel")}
+          {t("productInfo.goodDealPriceLabel")}
         </div>
       </div>
       <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke">
         <WebsiteMoney className="!relative !w-4 !h-4" color="#6B7280" />
         <input
           type="number"
-          placeholder={t("goodDealPricePlaceholder")}
+          placeholder={t("productInfo.goodDealPricePlaceholder")}
           value={goodDealPrice}
           onChange={(e) => setGoodDealPrice(e.target.value)}
           className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
@@ -127,11 +127,11 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
       </div>
       <div className="flex flex-col w-[260px] items-start relative flex-[0_0_auto]">
         <div className="relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
-          {t("estimatedDiscountLabel")}
+          {t("productInfo.estimatedDiscountLabel")}
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <p className="relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-            {discountPercentage}% {t("estimatedDiscountText")}
+            {discountPercentage}% {t("productInfo.estimatedDiscountText")}
           </p>
         </div>
       </div>
@@ -151,7 +151,7 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
       >
         <Plus3 className="!relative !w-5 !h-5" />
         <button className="all-[unset] box-border relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-          {t("addButtonText")}
+          {t("productInfo.addButtonText")}
         </button>
       </div>
     </div>

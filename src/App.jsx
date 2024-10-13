@@ -19,6 +19,7 @@ import { PrivacyCookiePolicyScreen } from "./screens/PrivacyCookiePolicy";
 import { LegalNotices } from "./components/LegalNotices";
 import { LegalNoticesScreen } from "./screens/LegalNoticesScreen";
 import InviteParticipants from "./screens/InviteParticipants/InviteParticipants";
+import { NewsLetterScreen } from "./screens/NewsLetterScreen/NewsLetterScreen";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -586,7 +587,7 @@ function App() {
       path: "/newsletter-indication",
       element: (
         <Layout>
-          <PrivacyCookiePolicyScreen />
+          <NewsLetterScreen />
         </Layout>
       ),
     },
