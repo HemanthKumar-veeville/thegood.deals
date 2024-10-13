@@ -343,13 +343,15 @@ const Account = () => {
             ].map(({ icon, text, action }) => (
               <div
                 key={text}
-                className={`inline-flex items-center gap-2.5 cursor-pointer ${
+                className={`inline-flex items-center gap-2.5 ${
                   action === "/admin-orders" || action === "/admin-wallet"
                     ? "cursor-not-allowed opacity-50"
-                    : "hover:text-primary-color-dark"
+                    : "hover:text-primary-color-dark cursor-pointer"
                 }`}
                 onClick={
-                  typeof action === "string" && action !== "/admin-orders"
+                  typeof action === "string" &&
+                  action !== "/admin-orders" &&
+                  action !== "/admin-wallet"
                     ? () => handleNavigation(action)
                     : action === "/admin-orders"
                     ? null
