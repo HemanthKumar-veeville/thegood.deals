@@ -25,7 +25,6 @@ import {
   updateImages,
 } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
-import Swal from "sweetalert2";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import AcceptConditions from "../../components/AcceptConditions";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";

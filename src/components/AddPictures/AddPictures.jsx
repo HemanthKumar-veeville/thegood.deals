@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { FaTrash, FaStar } from "react-icons/fa"; // Import the trash and star icons from react-icons
-import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next"; // Import useTranslation
+import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
 const AddPictures = ({ onChange }) => {
   const { t } = useTranslation(); // Initialize translation hook
@@ -12,17 +12,16 @@ const AddPictures = ({ onChange }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [files, setFiles] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
     setFiles(files);
     const totalFiles = pictures.length + files.length;
     if (totalFiles > 10) {
-      Swal.fire({
-        icon: "error",
-        title: t("add_pictures.error_title"), // Use translation
-        text: t("add_pictures.error_limit"), // Use translation
-      });
+      setIsError(true);
+      setErrorMessage(t("add_pictures.error_limit"));
       return;
     }
 
@@ -111,6 +110,13 @@ const AddPictures = ({ onChange }) => {
   return (
     <div className="flex flex-col h-fit items-start gap-2.5 relative self-stretch w-full">
       <div className="flex flex-col items-center relative flex-1 self-stretch w-full grow">
+        {isError && (
+          <ShowCustomErrorModal
+            message={errorMessage}
+            buttonText={t("waiting_deal.got_it")}
+            onClose={() => setIsError(false)} // Reset modal state on close
+          />
+        )}
         {pictures.length > 0 && (
           <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg h-64">
             <div

@@ -220,7 +220,7 @@ const EditProfile = () => {
               <ShowCustomErrorModal
                 message={serverMessage}
                 buttonText={t("waiting_deal.got_it")}
-                onClose={() => dispatch(setIsError(true))} // Reset modal state on close
+                onClose={() => setShowErrorModal(true)} // Reset modal state on close
               />
             )}
             {showSuccessModal && (

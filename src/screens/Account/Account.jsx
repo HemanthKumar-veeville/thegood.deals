@@ -362,11 +362,11 @@ const Account = () => {
                 <div className="font-normal text-primary-text-color text-base">
                   {text}
                 </div>
-                {(action === "/admin-orders" || action === "/admin-wallet") && (
+                {/* {(action === "/admin-orders" || action === "/admin-wallet") && (
                   <div className="ml-2 bg-secondary-color text-white rounded-full px-2 py-1 text-xs">
                     Coming Soon
                   </div>
-                )}
+                )} */}
               </div>
             ))}
           </>

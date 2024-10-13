@@ -7,14 +7,16 @@ import { Send1 } from "../../icons/Send1";
 import { useDispatch } from "react-redux";
 import { createOrder } from "../../redux/app/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next"; // Import the translation hook
+import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
 export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const { t } = useTranslation(); // Initialize the translation hook
   const [cartItems, setCartItems] = useState(products);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleQuantityChange = (index, action) => {
     const updatedItems = cartItems?.map((item, idx) => {
@@ -44,12 +46,8 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
       navigate("/payment?orderId=" + orderId + "&dealId=" + dealId);
     } catch (error) {
       // Handle error with SweetAlert
-      await Swal.fire({
-        icon: "error",
-        title: t("cart.errorTitle"),
-        text: error?.detail || t("cart.errorMessage"),
-      });
-      dispatch(fetchDealDetailsByDealId(dealId));
+      setIsError(true);
+      setErrorMessage(error?.detail || t("cart.errorMessage"));
     }
   };
 
@@ -66,7 +64,13 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
         alt="Line"
         src={Line63}
       />
-
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)} // Reset modal state on close
+        />
+      )}
       {cartItems?.map((product, index) => (
         <div
           key={index}

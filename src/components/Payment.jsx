@@ -3,13 +3,14 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { axiosInstance } from "../helpers/helperMethods";
 import { useTranslation } from "react-i18next"; // Import useTranslation hook
-import Swal from "sweetalert2";
+import { ShowCustomErrorModal } from "../components/ErrorAlert/ErrorAlert.jsx";
 
 function Payment({ orderId, heading, btnText, ...props }) {
   const { stripePromise } = props;
   const [clientSecret, setClientSecret] = useState("");
   const [stripeCustomerId, setStripeCustomerId] = useState("");
-
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const { t } = useTranslation(); // Initialize translation hook
 
   useEffect(() => {
@@ -31,11 +32,8 @@ function Payment({ orderId, heading, btnText, ...props }) {
         setStripeCustomerId(response?.data?.payment_intent[1]);
       } catch (error) {
         console.error("Error creating PaymentIntent:", error);
-        await Swal.fire({
-          icon: "error",
-          title: t("Payment.error_title"), // Use translation for the error title
-          text: error?.detail || t("Payment.fetch_error_message"), // Use translation for the error message
-        });
+        setIsError(true);
+        setErrorMessage(error?.detail || t("Payment.fetch_error_message"));
       }
     };
 
@@ -45,6 +43,13 @@ function Payment({ orderId, heading, btnText, ...props }) {
 
   return (
     <>
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)} // Reset modal state on close
+        />
+      )}
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <CheckoutForm

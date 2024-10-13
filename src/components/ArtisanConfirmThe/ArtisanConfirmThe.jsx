@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDealValidationDetails } from "../../redux/app/deals/dealSlice";
 import { useTranslation } from "react-i18next";
@@ -15,7 +15,6 @@ import { Line63, blogImage, Human } from "../../images";
 import { useNavigate, useLocation } from "react-router-dom";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import { createRequest } from "../../redux/app/requests/requestSlice";
-import Swal from "sweetalert2";
 import { validationByArtisan } from "../../redux/app/deals/dealSlice";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 
@@ -35,6 +34,8 @@ export const ArtisanConfirmThe = ({
   const pathLocation = useLocation();
   const pathname = pathLocation?.pathname;
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     dispatch(fetchDealValidationDetails(dealId));
@@ -69,21 +70,15 @@ export const ArtisanConfirmThe = ({
       if (response.payload.code === 201) {
         navigate("/request-sent");
       } else {
-        Swal.fire({
-          icon: "error",
-          title: t("artisanConfirmThe.error_title"),
-          text:
-            response.payload.detail ||
-            t("artisanConfirmThe.error_login_required"),
-        });
+        setIsError(true);
+        setErrorMessage(
+          response.payload.detail || t("artisanConfirmThe.error_login_required")
+        );
         navigate("/auth?login");
       }
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: t("artisanConfirmThe.error_title"),
-        text: t("artisanConfirmThe.error_request_failed"),
-      });
+      setIsError(true);
+      setErrorMessage(t("artisanConfirmThe.error_request_failed"));
     }
   };
 
@@ -102,6 +97,13 @@ export const ArtisanConfirmThe = ({
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
       <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
+        {isError && (
+          <ShowCustomErrorModal
+            message={errorMessage}
+            buttonText={t("waiting_deal.got_it")}
+            onClose={() => setIsError(false)} // Reset modal state on close
+          />
+        )}
         {pathname !== "/deal_details" && (
           <>
             <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">

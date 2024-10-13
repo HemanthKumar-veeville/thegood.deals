@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2"; // Import SweetAlert2
 import { useDispatch, useSelector } from "react-redux";
 import { ArrowRight } from "../../icons/ArrowRight";
 import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { Envelope } from "../../icons/Envelope";
 import { Line63 } from "../../images";
-import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { inviteArtisan } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader"; // Assuming you have a CustomLoader component
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 
 const InformToCraftsMan = () => {
   const [email, setEmail] = useState("");
@@ -18,6 +17,8 @@ const InformToCraftsMan = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { status, error } = useSelector((state) => state.deals);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [searchParams] = useSearchParams();
   const dealId = searchParams.get("id"); // Get the 'id' from the URL
@@ -47,20 +48,14 @@ const InformToCraftsMan = () => {
   const handleSubmit = async () => {
     const validationError = validateEmail(email);
     if (validationError) {
-      Swal.fire({
-        icon: "warning",
-        title: t("inform_craftsman.errors.invalid_email"),
-        text: validationError,
-      });
+      setIsError(true);
+      setErrorMessage(validationError);
       return;
     }
 
     if (!dealId) {
-      Swal.fire({
-        icon: "error",
-        title: t("inform_craftsman.errors.missing_deal_id"),
-        text: t("inform_craftsman.errors.deal_id_missing_message"),
-      });
+      setIsError(true);
+      setErrorMessage(t("inform_craftsman.errors.deal_id_missing_message"));
       return;
     }
 
@@ -71,11 +66,8 @@ const InformToCraftsMan = () => {
       navigate("/thanks-admin");
     } catch (err) {
       console.error("Failed to invite artisan:", err);
-      Swal.fire({
-        icon: "error",
-        title: t("inform_craftsman.errors.invitation_failed"),
-        text: t("inform_craftsman.errors.invitation_failed_message"),
-      });
+      setIsError(true);
+      setErrorMessage(t("inform_craftsman.errors.invitation_failed_message"));
     } finally {
       setLoading(false); // Stop loading
     }
@@ -91,6 +83,13 @@ const InformToCraftsMan = () => {
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background mx-auto">
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)} // Reset modal state on close
+        />
+      )}
       {loading && <CustomLoader />} {/* Show loader when loading is true */}
       {!loading && (
         <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
