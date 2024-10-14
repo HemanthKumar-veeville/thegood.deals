@@ -11,11 +11,11 @@ import { ChevronDown1 } from "../../icons/ChevronDown1";
 import { ChevronUp } from "../../icons/ChevronUp";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Line63 } from "../../images";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { OrderInfo } from "../../components/OrderInfo/OrderInfo.jsx";
+import { Line } from "../../components/Line/Line.jsx";
 
 const Orders = ({ dealId, dealType }) => {
   const navigate = useNavigate();
@@ -87,11 +87,7 @@ const Orders = ({ dealId, dealType }) => {
               </div>
             </div>
           </div>
-          <img
-            className="self-stretch w-full h-px object-cover"
-            alt={t("orders.line_alt")}
-            src={Line63}
-          />
+          <Line />
           <div className="relative self-stretch font-semibold text-primary-color text-2xl">
             {t("orders.my_orders")}
           </div>
@@ -147,11 +143,7 @@ const Orders = ({ dealId, dealType }) => {
                 }`}
               >
                 <div className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full">
-                  <img
-                    className="self-stretch w-full h-px object-cover"
-                    alt={t("orders.line_alt")}
-                    src={Line63}
-                  />
+                  <Line />
                   {/* Orders Details */}
                   <div
                     className={`transition-all duration-500 overflow-hidden ${
@@ -220,11 +212,7 @@ const Orders = ({ dealId, dealType }) => {
                             </p>
                           </div>
                         </div>
-                        <img
-                          className="self-stretch w-full h-px object-cover"
-                          alt={t("orders.line_alt")}
-                          src={Line63}
-                        />
+                        <Line />
                         {/* Total Per Order */}
                         <div className="flex items-end justify-between self-stretch">
                           <div className="flex items-center gap-2.5 grow">
@@ -238,21 +226,13 @@ const Orders = ({ dealId, dealType }) => {
                             </div>
                           </div>
                         </div>
-                        <img
-                          className="self-stretch w-full h-px object-cover"
-                          alt={t("orders.line_alt")}
-                          src={Line63}
-                        />
+                        <Line />
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
-              <img
-                className="self-stretch w-full h-px object-cover mt-3"
-                alt={t("orders.line_alt")}
-                src={Line63}
-              />
+              <Line />
             </div>
           ))}
 

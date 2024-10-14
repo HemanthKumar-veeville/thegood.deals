@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { ArrowRight } from "../../icons/ArrowRight";
 import { CirclePlus55 } from "../../icons/CirclePlus55";
 import { Envelope } from "../../icons/Envelope";
-import { Line63 } from "../../images";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { inviteArtisan } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader"; // Assuming you have a CustomLoader component
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import { Line } from "../../components/Line/Line";
 
 const InformToCraftsMan = () => {
   const [email, setEmail] = useState("");
@@ -99,11 +99,7 @@ const InformToCraftsMan = () => {
           <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
             {t("inform_craftsman.confirm_deal_message")}
           </p>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
           <p className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
             {t("inform_craftsman.indicate_email")}
           </p>
@@ -126,11 +122,7 @@ const InformToCraftsMan = () => {
             </button>
             <ArrowRight className="!relative !w-5 !h-5" color="white" />
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
           <div
             className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
             onClick={handleFinishLater}

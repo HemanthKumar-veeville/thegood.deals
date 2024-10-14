@@ -7,7 +7,6 @@ import { CrossCircle2 } from "../../icons/CrossCircle2";
 import { Send2 } from "../../icons/Send2";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Line63 } from "../../images";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchRequestsByDeal,
@@ -17,6 +16,7 @@ import { fetchParticipantsByDeal } from "../../redux/app/participants/participan
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
+import { Line } from "../../components/Line/Line.jsx";
 
 const Invitations = () => {
   const navigate = useNavigate();
@@ -148,11 +148,7 @@ const Invitations = () => {
                     )}
                   </div>
                 </div>
-                <img
-                  className="relative self-stretch w-full h-px object-cover"
-                  alt={t("invitations.line_alt")}
-                  src={Line63}
-                />
+                <Line />
               </div>
             ))}
           </>
@@ -184,11 +180,7 @@ const Invitations = () => {
             {t("invitations.invite_loved_ones")}
           </button>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("invitations.line_alt")}
-          src={Line63}
-        />
+        <Line />
         <div className="flex flex-col items-start gap-[15px] self-stretch w-full relative flex-[0_0_auto]">
           <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-lg tracking-[0] leading-[26px]">
             {t("invitations.list_of_relatives")}

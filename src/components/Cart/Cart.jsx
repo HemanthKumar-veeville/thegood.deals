@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Line63 } from "../../images";
 import { ShoppingCart111 } from "../../icons/ShoppingCart111";
 import { Minus1 } from "../../icons/Minus1";
 import { Plus1 } from "../../icons/Plus1";
@@ -9,6 +8,7 @@ import { createOrder } from "../../redux/app/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next"; // Import the translation hook
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
+import { Line } from "../Line/Line";
 
 export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const { t } = useTranslation(); // Initialize the translation hook
@@ -59,11 +59,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
           {t("cart.myBasket")}
         </div>
       </div>
-      <img
-        className="relative self-stretch w-full h-px object-cover"
-        alt="Line"
-        src={Line63}
-      />
+      <Line />
       {isError && (
         <ShowCustomErrorModal
           message={errorMessage}
@@ -124,11 +120,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
               </div>
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
         </div>
       ))}
 

@@ -13,7 +13,6 @@ import ProductInfo from "../../components/ProductInfo/ProductInfo";
 import { Button } from "../../components/Button/Button";
 import { CheckBox } from "../../components/CheckBox";
 import { ArrowRight1 } from "../../icons/ArrowRight1";
-import { Line63 } from "../../images";
 import { Plus3 } from "../../icons/Plus3";
 import ProductList from "../../components/ProductInfo/ProductList";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +27,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import AcceptConditions from "../../components/AcceptConditions";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import { Line } from "../../components/Line/Line";
 
 const CreateDeal = () => {
   const { t } = useTranslation(); // Initialize translation hook
@@ -273,11 +273,7 @@ const CreateDeal = () => {
                 state="default"
               />
             </div>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <div className="!w-full">
               <CollectionLocation
                 type="collectionLocation"
@@ -295,11 +291,7 @@ const CreateDeal = () => {
                 onChange={handleDateChange}
               />
             </div>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <div className="!w-full">
               <CollectionLocation
                 type="deliveryCost"
@@ -307,11 +299,7 @@ const CreateDeal = () => {
                 value={formData.deliveryCost}
               />
             </div>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <div className="w-full">
               <Textarea
                 name="contentDescription"
@@ -331,11 +319,7 @@ const CreateDeal = () => {
                 state="default"
               />
             </div>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <div className="w-full">
               <Textarea
                 name="manufacturerInfo"
@@ -355,11 +339,7 @@ const CreateDeal = () => {
                 state="default"
               />
             </div>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <p className="relative w-full [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px]">
               {t("create_deal.banking_info_label")}
             </p>
@@ -393,11 +373,7 @@ const CreateDeal = () => {
                 placeholder={t("create_deal.bic_placeholder")}
               />
             </div>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <DealExpiration />
             <div className="w-full">
               <DatePicker
@@ -406,17 +382,9 @@ const CreateDeal = () => {
                 onChange={handleDateChange}
               />
             </div>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <ProductList products={products} />
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
                 {t("create_deal.add_products_label")}
@@ -443,11 +411,7 @@ const CreateDeal = () => {
                 </button>
               </div>
             )}
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
             <AcceptConditions formData={formData} handleChange={handleChange} />
             <button
               type="submit"

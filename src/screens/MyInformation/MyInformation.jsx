@@ -12,7 +12,7 @@ import { MapMarker1 } from "../../icons/MapMarker1";
 import { Star7 } from "../../icons/Star7";
 import { StarFill1 } from "../../icons/StarFill1";
 import { Users2 } from "../../icons/Users2";
-import { Ellipse, Line63, Rectangle_5095 } from "../../images";
+import { Ellipse, Rectangle_5095 } from "../../images";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,7 @@ import { Warning1 } from "../../icons/Warning1";
 import { SuccessAlert } from "../../components/WarningAlert";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { UserAlt } from "../../icons/UserAlt";
+import { Line } from "../../components/Line/Line";
 
 const MyInformation = () => {
   const { t } = useTranslation();
@@ -161,22 +162,14 @@ const MyInformation = () => {
               </div>
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
           <div className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color">
             <EnvelopeAlt className="!relative !w-5 !h-5" color="#1B4F4A" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] text-center tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
               {t("myInformation.contact", { name: profile?.name || "User" })}
             </button>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
           <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
             {t("myInformation.deals")}
           </div>
@@ -236,11 +229,7 @@ const MyInformation = () => {
               text={t("myInformation.no_deals")}
             />
           )}
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
           <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
             {t("myInformation.ratings")}
           </div>

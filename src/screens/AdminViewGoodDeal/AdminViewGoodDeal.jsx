@@ -18,12 +18,13 @@ import { ShoppingCart111 } from "../../icons/ShoppingCart111";
 import { Users2 } from "../../icons/Users2";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
-import { blogImage, Human, Line63 } from "../../images";
+import { blogImage, Human } from "../../images";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { Cart } from "../../components/Cart/Cart";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { UserAlt } from "../../icons/UserAlt";
+import { Line } from "../../components/Line/Line";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -118,12 +119,7 @@ const AdminViewGoodDeal = () => {
             {dealState?.location}
           </p>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
-
+        <Line />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto] rounded-md">
           {dealState?.organizer?.organiser_image && (
             <img
@@ -158,11 +154,7 @@ const AdminViewGoodDeal = () => {
           </span>
           <span className="font-bold underline">{t("common.read_more")}</span>
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
@@ -175,11 +167,7 @@ const AdminViewGoodDeal = () => {
           </span>
           <span className="font-bold underline">{t("common.read_more")}</span>
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
@@ -198,11 +186,7 @@ const AdminViewGoodDeal = () => {
             {dealState?.collection_info?.location}
           </p>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <Cart
           products={dealState?.products}
           dealId={deal_id}

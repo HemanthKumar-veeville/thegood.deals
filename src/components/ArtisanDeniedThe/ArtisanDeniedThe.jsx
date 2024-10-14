@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next"; // Import useTranslation hook
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { ArrowRight1 } from "../../icons/ArrowRight1";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
-import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { validationByArtisan } from "../../redux/app/deals/dealSlice";
+import { Line } from "../Line/Line";
 
 export const ArtisanDeniedThe = ({
   HEADERHeaderOpenClassName,
@@ -62,11 +62,7 @@ export const ArtisanDeniedThe = ({
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
           {t("artisanDeniedThe.send_info")}
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         {/* Feedback Form */}
         <div className="flex flex-col h-[220px] items-start gap-2.5 relative self-stretch w-full">
           <p className="relative w-fit mt-[-1.00px] font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-primary-color text-[length:var(--body-large-medium-font-size)] tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
@@ -102,11 +98,7 @@ export const ArtisanDeniedThe = ({
           </button>
           <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         {/* Cancel Button */}
         <div
           onClick={handleCancel}

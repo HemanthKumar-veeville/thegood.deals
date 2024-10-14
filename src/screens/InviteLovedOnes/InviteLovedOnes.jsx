@@ -6,11 +6,11 @@ import { FacebookMessenger2 } from "../../icons/FacebookMessenger2";
 import { Plus } from "../../icons/Plus";
 import { Send1 } from "../../icons/Send1";
 import { Whatsapp } from "../../icons/Whatsapp";
-import { Line63 } from "../../images";
 import { useTranslation } from "react-i18next";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Line } from "../../components/Line/Line";
 
 const InviteLovedOnes = () => {
   const { t } = useTranslation(); // Using the translation hook
@@ -83,11 +83,7 @@ const InviteLovedOnes = () => {
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
           {t("inviteLovedOnes.description")}
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
           {t("inviteLovedOnes.via_messaging")}
         </div>
@@ -114,11 +110,7 @@ const InviteLovedOnes = () => {
             <ChatAlt1 className="!absolute !w-5 !h-5 !top-[13px] !left-3" />
           </div>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6">
           {t("inviteLovedOnes.via_email_invitations")}
         </div>
@@ -150,11 +142,7 @@ const InviteLovedOnes = () => {
           </button>
           <Send1 className="!relative !w-5 !h-5" color="white" />
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {t("inviteLovedOnes.share_link_title")}
         </p>
@@ -173,11 +161,7 @@ const InviteLovedOnes = () => {
             {t("inviteLovedOnes.copy_link")}
           </button>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <button
           className="all-[unset] box-border gap-2 border border-solid border-primary-color flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
           onClick={handleBack}

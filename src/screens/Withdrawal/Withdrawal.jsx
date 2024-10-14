@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Payment from "../../components/Payment";
 import { OrderInfo } from "../../components/OrderInfo/OrderInfo";
+import { Line } from "../../components/Line/Line";
 
 const Withdrawal = ({ heading, btnText, stripePromise }) => {
   const [withdrawalValidated, setWithdrawalValidated] = useState(false);
@@ -45,11 +45,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
           btnText={btnText}
           orderId={orderId}
         />
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("withdrawal.line_alt")} // Translation for alt text
-          src={Line63}
-        />
+        <Line />
         <button
           className="all-[unset] box-border flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
           onClick={handleBack}

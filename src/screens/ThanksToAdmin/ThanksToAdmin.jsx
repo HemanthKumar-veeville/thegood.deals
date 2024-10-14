@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
-import { Line63 } from "../../images";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Line } from "../../components/Line/Line";
 
 const ThanksToAdmin = () => {
   const navigate = useNavigate();
@@ -27,11 +27,7 @@ const ThanksToAdmin = () => {
           {t("thanks_to_admin.confirmation_message")}
           {/* Once the deal is confirmed by the artisan, we will notify you by email. */}
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
           onClick={handleBack}

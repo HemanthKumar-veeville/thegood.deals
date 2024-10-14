@@ -7,7 +7,7 @@ import { Phone2 } from "../../icons/Phone2";
 import { Send1 } from "../../icons/Send1";
 import { UserAlt4 } from "../../icons/UserAlt4/UserAlt4";
 import AppBar from "../../components/AppBar/AppBar";
-import { Line63 } from "../../images";
+import { Line } from "../../components/Line/Line";
 
 export const AdminNeedHelp = () => {
   return (
@@ -30,11 +30,7 @@ export const AdminNeedHelp = () => {
         <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
           Our team is here to answer your questions.
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div className="relative w-fit font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
           Via our form
         </div>
@@ -89,11 +85,7 @@ export const AdminNeedHelp = () => {
           </button>
           <Send1 className="!relative !w-5 !h-5" color="white" />
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           Our FAQ may also be useful to you 💡
         </p>

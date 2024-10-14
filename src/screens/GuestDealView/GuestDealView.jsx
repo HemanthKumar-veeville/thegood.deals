@@ -11,7 +11,7 @@ import { Pencil1 } from "../../icons/Pencil1";
 import { UserAlt2 } from "../../icons/UserAlt2";
 import { Users22 } from "../../icons/Users22";
 import { VerticalLine3 } from "../../icons/VerticalLine3/VerticalLine3";
-import { blogImage, Line63, Line69, FranceFlag, Human } from "../../images";
+import { blogImage, Line69, FranceFlag, Human } from "../../images";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Badges } from "../../components/Badges";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
@@ -20,6 +20,7 @@ import { fetchDealDetailsByDealId } from "../../redux/app/deals/dealSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { RatingStar } from "../../components/RatingStar";
+import { Line } from "../../components/Line/Line";
 
 const GuestDealView = () => {
   const { t } = useTranslation();
@@ -227,11 +228,7 @@ const GuestDealView = () => {
             </div>
           ))}
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
       </div>
     </div>
   );

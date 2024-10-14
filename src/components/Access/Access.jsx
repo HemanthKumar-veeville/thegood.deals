@@ -1,7 +1,7 @@
 import React from "react";
 import { LockAlt } from "../../icons/LockAltScreen/LockAltScreen";
-import { Line63 } from "../../images";
 import { useTranslation } from "react-i18next";
+import { Line } from "../Line/Line";
 
 export const Access = ({ isUserLoggedIn, handleAccept }) => {
   const { t } = useTranslation();
@@ -16,11 +16,7 @@ export const Access = ({ isUserLoggedIn, handleAccept }) => {
             : t("access.must_be_logged_in")}
         </p>
       </div>
-      <img
-        className="relative self-stretch w-full h-px object-cover"
-        alt="Line"
-        src={Line63}
-      />
+      <Line />
       <div
         onClick={handleAccept}
         className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"

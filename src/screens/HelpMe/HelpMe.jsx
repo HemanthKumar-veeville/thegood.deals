@@ -5,7 +5,6 @@ import { ArrowRightCircle2 } from "../../icons/ArrowRightCircle2";
 import { Envelope } from "../../icons/Envelope";
 import { Send1 } from "../../icons/Send1";
 import { UserAlt5 } from "../../icons/UserAlt5";
-import { Line63 } from "../../images";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +12,7 @@ import { submitHelpRequest } from "../../redux/app/public/publicSlice";
 import { Dropdown } from "../../components/CountryDropDown";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Line } from "../../components/Line/Line";
 
 const PublicNeedHelp = () => {
   const { t } = useTranslation();
@@ -90,14 +90,14 @@ const PublicNeedHelp = () => {
             </div>
           </div>
         </div>
-        <img className="w-full h-px object-cover" alt="Line" src={Line63} />
+        <Line />
         <div className="text-primary-color text-lg font-medium">
           {t("public_need_help.title")}
         </div>
         <p className="text-primary-text-color">
           {t("public_need_help.description")}
         </p>
-        <img className="w-full h-px object-cover" alt="Line" src={Line63} />
+        <Line />
         <div className="font-medium text-primary-color text-base">
           {t("public_need_help.form_title")}
         </div>
@@ -213,7 +213,7 @@ const PublicNeedHelp = () => {
             <Send1 className="w-5 h-5" color="white" fill="white" />
           </div>
         </form>
-        <img className="w-full h-px object-cover" alt="Line" src={Line63} />
+        <Line />
         <p className="text-primary-color text-lg font-medium">
           {t("public_need_help.faq_title")}
         </p>

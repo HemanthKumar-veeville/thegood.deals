@@ -10,7 +10,7 @@ import { UserAlt5 } from "../../icons/UserAlt5";
 import { UserLock1 } from "../../icons/UserLock1";
 import { Users3 } from "../../icons/Users3";
 import { ChatAlt6 } from "../../icons/ChatAlt6";
-import { blogImage, Line63 } from "../../images";
+import { blogImage } from "../../images";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
@@ -25,7 +25,7 @@ import {
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { Box44 } from "../../icons/Box44/Box44.jsx";
-
+import { Line } from "../../components/Line/Line.jsx";
 const Account = () => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("created");
@@ -180,7 +180,7 @@ const Account = () => {
             {t("account.create_deal")}
           </button>
         </div>
-        <img className="self-stretch w-full h-px" alt="Line" src={Line63} />
+        <Line />
         <div className="relative w-fit font-semibold text-primary-color text-2xl text-center">
           {t("account.my_good_deals")}
         </div>
@@ -308,7 +308,7 @@ const Account = () => {
         {isFetchingMore && <CustomLoader />}
         {status !== "loading" && (
           <>
-            <img className="self-stretch w-full h-px" alt="Line" src={Line63} />
+            <Line />
             {[
               {
                 icon: <UserAlt2 className="!w-5 !h-5" />,

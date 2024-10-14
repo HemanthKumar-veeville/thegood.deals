@@ -5,12 +5,12 @@ import {
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useTranslation } from "react-i18next";
-import { Line63 } from "../images";
 import { ArrowRight1 } from "../icons/ArrowRight1";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setupPaymentForOrder } from "../redux/app/orders/orderSlice";
 import CustomLoader from "./CustomLoader/CustomLoader";
+import { Line } from "./Line/Line";
 
 export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const stripe = useStripe();
@@ -188,13 +188,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
           {message}
         </div>
       )}
-
-      <img
-        className="relative self-stretch w-full h-px object-cover mt-3"
-        alt={t("checkout.line_alt")} // Translated image alt text
-        src={Line63}
-      />
-
+      <Line />
       <div className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
         <button
           type="submit"

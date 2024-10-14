@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next"; // Import useTranslation hook
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
-import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
+import { Line } from "../../components/Line/Line";
 
 const ThanksForWithdrawal = () => {
   const { t } = useTranslation(); // Initialize the translation hook
@@ -27,11 +27,7 @@ const ThanksForWithdrawal = () => {
           <br />
           {t("thanks_withdrawal.receive_funds")}
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("thanks_withdrawal.line_alt")}
-          src={Line63}
-        />
+        <Line />
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
           onClick={handleBackToHome}

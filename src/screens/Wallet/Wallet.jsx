@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next"; // Importing the hook for transl
 import { ArrowLeft2 } from "../../icons/ArrowLeft2";
 import { Box4 } from "../../icons/Box4";
 import { FileExport2 } from "../../icons/FileExport2";
-import { Line63 } from "../../images";
 import { useNavigate } from "react-router-dom";
+import { Line } from "../../components/Line/Line";
 
 const Wallet = () => {
   const { t } = useTranslation(); // Using the translation hook
@@ -85,11 +85,7 @@ const Wallet = () => {
             {t("wallet.unlock_funds_button")}
           </button>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("wallet.line_alt")}
-          src={Line63}
-        />
+        <Line />
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
           onClick={handleBackToHome}

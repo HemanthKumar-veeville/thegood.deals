@@ -14,12 +14,12 @@ import { ShoppingCart11 } from "../../icons/ShoppingCart11";
 import { Users2 } from "../../icons/Users2";
 import {
   blogImage,
-  Line63,
   Line_146_2,
   Line60,
   Line59,
   Rectangle_4592_5,
 } from "../../images";
+import { Line } from "../../components/Line/Line";
 
 const ViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -88,11 +88,7 @@ const ViewGoodDeal = () => {
             {t("view_good_deal.location")}
           </p>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("view_good_deal.line_alt")}
-          src={Line63}
-        />
+        <Line />
         <Badges
           className="!left-[47px] !absolute !top-[86px]"
           color="warning"
@@ -127,11 +123,7 @@ const ViewGoodDeal = () => {
             {t("view_good_deal.read_more")}
           </span>
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("view_good_deal.line_alt")}
-          src={Line63}
-        />
+        <Line />
         <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
           <Box41 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
@@ -146,11 +138,7 @@ const ViewGoodDeal = () => {
             {t("view_good_deal.read_more")}
           </span>
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("view_good_deal.line_alt")}
-          src={Line63}
-        />
+        <Line />
         <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
           <Box41 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
@@ -169,11 +157,7 @@ const ViewGoodDeal = () => {
             {t("view_good_deal.delivery_address")}
           </p>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("view_good_deal.line_alt")}
-          src={Line63}
-        />
+        <Line />
         <div className="flex flex-col items-start gap-[15px] p-[15px] w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] relative self-stretch">
           <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
             <ShoppingCart11 className="!relative !w-5 !h-5" color="#1B4F4A" />
@@ -181,11 +165,7 @@ const ViewGoodDeal = () => {
               {t("view_good_deal.my_basket")}
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt={t("view_good_deal.line_alt")}
-            src={Line63}
-          />
+          <Line />
           <div className="flex flex-col items-start gap-[5px] self-stretch w-full relative flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
@@ -241,11 +221,7 @@ const ViewGoodDeal = () => {
               </div>
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt={t("view_good_deal.line_alt")}
-            src={Line63}
-          />
+          <Line />
           <div className="flex flex-col items-start gap-[5px] self-stretch w-full relative flex-[0_0_auto]">
             <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
               <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
@@ -299,11 +275,7 @@ const ViewGoodDeal = () => {
               </div>
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt={t("view_good_deal.line_alt")}
-            src={Line63}
-          />
+          <Line />
           <div className="flex flex-col items-end gap-[5px] self-stretch w-full relative flex-[0_0_auto]">
             <div className="flex flex-col items-start self-stretch w-full relative flex-[0_0_auto]">
               <div className="flex flex-col items-end gap-[5px] self-stretch w-full relative flex-[0_0_auto]">

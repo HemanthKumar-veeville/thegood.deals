@@ -2,8 +2,9 @@ import React from "react";
 import { Send1 } from "../../icons/Send1";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { RatingStar } from "../RatingStar";
-import { blogImage, Human, Line63 } from "../../images";
+import { blogImage, Human } from "../../images";
 import { useTranslation } from "react-i18next";
+import { Line } from "../Line/Line";
 
 export const ArtisanEmail = ({ HEADERClassName }) => {
   const { t } = useTranslation(); // Initialize the translation hook
@@ -46,11 +47,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         </p>
 
         {/* Horizontal Line */}
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("artisanEmail.line")}
-          src={Line63}
-        />
+        <Line />
 
         {/* Blog Image */}
         <img
@@ -65,11 +62,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         </p>
 
         {/* Horizontal Line */}
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("artisanEmail.line")}
-          src={Line63}
-        />
+        <Line />
 
         {/* Organizer Info */}
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
@@ -96,11 +89,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
         </div>
 
         {/* Horizontal Line */}
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("artisanEmail.line")}
-          src={Line63}
-        />
+        <Line />
 
         {/* CTA Button */}
         <div

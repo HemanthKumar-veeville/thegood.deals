@@ -6,10 +6,10 @@ import { VerticalLine } from "../../icons/VerticalLine";
 import SideBar from "../../screens/SideBar/SideBar";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Line63 } from "../../images";
 import { LanguageDropdown } from "../LanguageDropdown/LanguageDropdown";
 import LanguageDropdownScreen from "../../screens/LanguageDropdown/LanguageDropdown";
 import { useTranslation } from "react-i18next"; // Importing i18next
+import { Line } from "../Line/Line";
 
 /**
  * AppBar component renders the top navigation bar of the application.
@@ -134,11 +134,7 @@ function AppBar() {
             )}
           </div>
         </div>
-        <img
-          className="relative self-stretch w-full h-px mb-1 object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
       </header>
       {/* Sidebar */}
       {open && <SideBar onClose={handleOpen} />}

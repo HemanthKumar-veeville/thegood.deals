@@ -16,7 +16,6 @@ import {
   Line571,
   Line59,
   Line60,
-  Line63,
   Line69,
   Line_570_1,
   Line_571_1,
@@ -37,6 +36,7 @@ import { chargeGroupPayment } from "../../redux/app/payments/paymentSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { CheckmarkCircle } from "../../icons/CheckmarkCircle";
+import { Line } from "../../components/Line/Line";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -439,11 +439,7 @@ const ActiveDeal = () => {
               </div>
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
           <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             {[
               {
@@ -494,11 +490,7 @@ const ActiveDeal = () => {
               </div>
             ))}
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
         </div>
       )}
     </div>

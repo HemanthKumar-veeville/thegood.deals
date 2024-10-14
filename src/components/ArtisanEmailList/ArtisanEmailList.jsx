@@ -5,8 +5,8 @@ import { ChevronUp } from "../../icons/ChevronUp";
 import { Send1 } from "../../icons/Send1";
 import { LogoTheGoodDeals } from "../LogoTheGoodDeals";
 import { SizeXlCorner } from "../SizeXlCorner";
-import { Line63 } from "../../images"; // Ensure correct import path
 import { useTranslation } from "react-i18next"; // Import useTranslation hook
+import { Line } from "../Line/Line";
 
 export const ArtisanEmailList = ({ HEADERClassName }) => {
   const { t } = useTranslation(); // Initialize the translation hook
@@ -127,11 +127,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             {t("artisanEmailList.confirmInformation")}
           </button>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("artisanEmailList.line")}
-          src={Line63}
-        />
+        <Line />
         {items.map((item, index) => (
           <div
             className={`flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto] ${
@@ -139,11 +135,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             }`}
             key={index}
           >
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt={t("artisanEmailList.line")}
-              src={Line63}
-            />
+            <Line />
             <div
               className="flex items-center gap-[15px] relative flex-[0_0_auto] cursor-pointer"
               onClick={() => toggleExpand(index)}
@@ -172,11 +164,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             </div>
             {expandedItems[index] && (
               <div className="flex flex-col items-start gap-[15px] pt-0 pb-[15px] px-[15px] relative self-stretch w-full flex-[0_0_auto]">
-                <img
-                  className="relative self-stretch w-full h-px mt-[-1.00px] object-cover"
-                  alt={t("artisanEmailList.line")}
-                  src={Line63}
-                />
+                <Line />
                 {item.products.map((product, idx) => (
                   <div
                     key={idx}
@@ -218,11 +206,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
             )}
           </div>
         ))}
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("artisanEmailList.line")}
-          src={Line63}
-        />
+        <Line />
         <div className="flex-col items-start gap-[15px] p-[15px] self-stretch w-full bg-white rounded-[5px] flex relative flex-[0_0_auto]">
           <div className="items-end flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex justify-between self-stretch w-full items-end relative flex-[0_0_auto]">

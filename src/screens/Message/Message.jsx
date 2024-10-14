@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
-import { Line63 } from "../../images";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Line } from "../../components/Line/Line";
 
 const Message = ({ heading, description, action }) => {
   const navigate = useNavigate();
@@ -35,11 +35,7 @@ const Message = ({ heading, description, action }) => {
             </>
           ))}
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="line"
-          src={Line63}
-        />
+        <Line />
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
           onClick={handleBack}

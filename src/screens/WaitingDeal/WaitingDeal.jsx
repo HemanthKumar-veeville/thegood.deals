@@ -3,13 +3,14 @@ import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Map } from "../../icons/Map";
 import { Pencil1 } from "../../icons/Pencil1";
-import { blogImage, Line63, Line69 } from "../../images";
+import { blogImage, Line69 } from "../../images";
 import { WaitingBanner } from "../../components/Banners/WaitingBanner";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDealByDealId } from "../../redux/app/deals/dealSlice";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import { Line } from "../../components/Line/Line";
 
 const WaitingDeal = () => {
   const { t } = useTranslation();
@@ -135,12 +136,7 @@ const WaitingDeal = () => {
             </div>
           ))}
         </div>
-
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("waiting_deal.line_alt", "Line separator")}
-          src={Line63}
-        />
+        <Line />
       </div>
     </div>
   );

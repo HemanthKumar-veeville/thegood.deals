@@ -11,13 +11,14 @@ import { Map } from "../../icons/Map";
 import { Send1 } from "../../icons/Send1";
 import { VerticalLine2 } from "../../icons/VerticalLine2";
 import { RatingStar } from "../RatingStar";
-import { Line63, blogImage, Human } from "../../images";
+import { blogImage, Human } from "../../images";
 import { useNavigate, useLocation } from "react-router-dom";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import { createRequest } from "../../redux/app/requests/requestSlice";
 import { validationByArtisan } from "../../redux/app/deals/dealSlice";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { UserAlt } from "../../icons/UserAlt";
+import { Line } from "../Line/Line";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -113,11 +114,7 @@ export const ArtisanConfirmThe = ({
             <p className="relative self-stretch font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
               {t("artisanConfirmThe.confirmation_notice")}
             </p>
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line63}
-            />
+            <Line />
           </>
         )}
         <ImageSlider pictures={dealState?.deal_images || [blogImage]} />
@@ -138,11 +135,7 @@ export const ArtisanConfirmThe = ({
             {dealState?.location || t("artisanConfirmThe.location")}
           </p>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
           {dealState?.organiser?.organiser_image && (
             <img
@@ -184,11 +177,7 @@ export const ArtisanConfirmThe = ({
             {t("artisanConfirmThe.read_more")}
           </span>
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
@@ -204,11 +193,7 @@ export const ArtisanConfirmThe = ({
             {t("artisanConfirmThe.read_more")}
           </span>
         </p>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
@@ -236,11 +221,7 @@ export const ArtisanConfirmThe = ({
               {t("artisanConfirmThe.good_deal")}
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line63}
-          />
+          <Line />
           {dealState?.products.map((product, index) => (
             <div
               key={index}
@@ -271,11 +252,7 @@ export const ArtisanConfirmThe = ({
                   </div>
                 </div>
               </div>
-              <img
-                className="relative self-stretch w-full h-px object-cover"
-                alt="Line"
-                src={Line63}
-              />
+              <Line />
             </div>
           ))}
           {pathname !== "/deal_details" && (
