@@ -87,7 +87,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
             </div>
           </div>
           <div className="flex items-end justify-between self-stretch w-full relative flex-[0_0_auto]">
-            <div className="flex w-[260px] items-end justify-between relative self-stretch">
+            <div className="flex w-full items-end justify-between relative self-stretch">
               <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
                 <div className="relative w-[81.17px] h-[25px] mr-[-2.00px]">
                   <div className="relative w-[79px] h-[25px] bg-whitewhite rounded-[3.47px] border-[0.69px] border-solid border-stroke">

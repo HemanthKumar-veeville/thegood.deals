@@ -256,7 +256,7 @@ const Orders = ({ dealId, dealType }) => {
             </div>
           ))}
 
-          {orders?.message && (
+          {!orders?.message && (
             <div className="w-full">
               <SuccessAlert
                 className="!flex !bg-cyancyan-light-3 w-[100%]"
@@ -270,7 +270,7 @@ const Orders = ({ dealId, dealType }) => {
                   />
                 }
                 style="three"
-                text={orders?.message}
+                text={t("orders.empty")}
               />
             </div>
           )}

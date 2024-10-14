@@ -1363,7 +1363,8 @@
     "service_fees": "Service Fees",
     "payment_fees": "Payment Fees",
     "delivery_fees": "Delivery Fees",
-    "products": "products"
+    "products": "products",
+    "empty": "You don't have any orders now."
   },
   "App": {
     "Message": {

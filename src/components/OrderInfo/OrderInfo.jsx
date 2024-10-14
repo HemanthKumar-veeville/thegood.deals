@@ -85,7 +85,7 @@ export const OrderInfo = ({ orderId }) => {
                 {showTooltip && (
                   <div
                     ref={tooltipRef}
-                    className="absolute z-10 w-[260px] p-2 bg-white text-gray-800 border border-gray-300 rounded-md shadow-lg bottom-full left-1/2 transform -translate-x-1/2 mb-2"
+                    className="absolute z-10 w-[265px] p-2 bg-white text-gray-800 border border-gray-300 rounded-md shadow-lg bottom-full left-1/2 transform -translate-x-1/2 mb-2"
                   >
                     {t("order.serviceFeesTooltip")}{" "}
                     {/* Localized tooltip text */}

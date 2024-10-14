@@ -544,7 +544,7 @@
     "available": "disponible",
     "total": "TOTAL",
     "total_ttc": "TOTAL TTC",
-    "save": "Enregistrer",
+    "save": "Économisez",
     "payment": "Paiement"
   },
   "thanks_withdrawal": {
@@ -553,7 +553,7 @@
     "receive_funds": "L’artisan devrait recevoir les fonds sur son compte d’ici 3 à 4 jours.",
     "back_to_home": "Retour à l’accueil",
     "line_alt": "Ligne",
-    "debit_info": "Vous serez débité une fois que l'objectif sera atteint."
+    "debit_info": "Le prélèvement sera effectué une fois que l'objectif est atteint."
   },
   "invite_loved_ones": {
     "title": "Inviter vos proches à commander 🍎",
@@ -1019,11 +1019,11 @@
   "order": {
     "orderLabel": "Commande",
     "serviceFeesLabel": "Frais de service",
-    "serviceFeesTooltip": "Commission de TheGoodDeals de 6 %",
+    "serviceFeesTooltip": "Commission TheGoodDeals de 6 %",
     "paymentFeesLabel": "Frais de paiement",
     "deliveryFeesLabel": "Frais de livraison",
     "totalTTC": "TOTAL TTC",
-    "saveLabel": "Enregistrer",
+    "saveLabel": "Économisez",
     "priceUnknown": "Prix inconnu",
     "totalUnknown": "Total inconnu",
     "discountUnknown": "Remise inconnue",
@@ -1370,7 +1370,8 @@
     "service_fees": "Frais de service",
     "payment_fees": "Frais de paiement",
     "delivery_fees": "Frais de livraison",
-    "products": "produits"
+    "products": "produits",
+    "empty": "Vous n'avez aucune commande pour le moment."
   },
   "App": {
     "Message": {

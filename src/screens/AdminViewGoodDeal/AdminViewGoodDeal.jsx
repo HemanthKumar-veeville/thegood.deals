@@ -22,6 +22,8 @@ import { blogImage, Human, Line63 } from "../../images";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { Cart } from "../../components/Cart/Cart";
+import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
+import { UserAlt } from "../../icons/UserAlt";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -46,10 +48,28 @@ const AdminViewGoodDeal = () => {
     return <CustomLoader />;
   }
 
+  const handleBack = () => {
+    navigate("/");
+  };
+
   console.log({ dealState });
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+        <div className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke">
+          <div
+            className="inline-flex items-center gap-2 relative flex-[0_0_auto] cursor-pointer"
+            onClick={handleBack}
+          >
+            <ArrowLeft
+              className="!relative !w-[18px] !h-[18px]"
+              color="#637381"
+            />
+            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-text-color text-base tracking-[0] leading-6 whitespace-nowrap">
+              {t("common.back")}
+            </div>
+          </div>
+        </div>
         {is_creator && (
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="flex items-center justify-center gap-2 px-6 py-3 relative flex-1 grow bg-whitewhite rounded-md shadow-shadow-1">
@@ -80,7 +100,9 @@ const AdminViewGoodDeal = () => {
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {dealState?.end_in}
+              {t("active_deal.endsIn", {
+                days: dealState?.ends_in,
+              })}
             </div>
           </div>
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
@@ -102,12 +124,15 @@ const AdminViewGoodDeal = () => {
           src={Line63}
         />
 
-        <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-          <img
-            className="relative w-[50px] h-[50px] object-cover"
-            alt="Organizer"
-            src={Human}
-          />
+        <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto] rounded-md">
+          {dealState?.organizer?.organiser_image && (
+            <img
+              className="relative w-[50px] h-[50px] object-cover rounded-md"
+              alt="Organizer"
+              src={dealState?.organizer?.organiser_image}
+            />
+          )}
+          {!dealState?.organizer?.organiser_image && <UserAlt />}
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
               {t("admin.collection_organized_by")}
