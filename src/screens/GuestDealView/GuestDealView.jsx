@@ -136,11 +136,7 @@ const GuestDealView = () => {
               {dealData?.collection_info?.location || t("deal.location")}
             </p>
           </div>
-          <img
-            className="relative self-stretch w-full h-[2px] object-cover"
-            alt="Line"
-            src={Line69}
-          />
+          <Line />
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
             <img
               className="relative w-[50px] h-[50px] object-cover rounded-md"

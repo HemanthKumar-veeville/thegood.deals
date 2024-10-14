@@ -100,13 +100,7 @@ const WaitingDeal = () => {
             {t("waiting_deal.edit_button", "Edit the deal")}
           </button>
         </div>
-
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt={t("waiting_deal.line_alt", "Line separator")}
-          src={Line69}
-        />
-
+        <Line />
         {/* Steps List */}
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full">
           {[

@@ -264,11 +264,7 @@ const ActiveDeal = () => {
               </div>
             )}
             {isCollectionInProgress && <CustomLoader />}
-            <img
-              className="relative self-stretch w-full h-px object-cover"
-              alt="Line"
-              src={Line69}
-            />
+            <Line />
             <div
               className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
               onClick={handleMyOrders}
@@ -306,11 +302,7 @@ const ActiveDeal = () => {
               </button>
             </div>
           </div>
-          <img
-            className="relative self-stretch w-full h-px object-cover"
-            alt="Line"
-            src={Line69}
-          />
+          <Line />
           <div className="flex flex-col items-start p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
             <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto]">
               <div className="inline-flex items-center gap-3.5 relative flex-[0_0_auto]">

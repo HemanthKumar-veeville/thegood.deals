@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getDealByDealId } from "../../redux/app/deals/dealSlice";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
+import { Line } from "../../components/Line/Line";
 
 const DraftDeal = () => {
   const { t } = useTranslation();
@@ -54,11 +55,7 @@ const DraftDeal = () => {
             </div>
           </div>
         </div>
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line69}
-        />
+        <Line />
         {/* Banner */}
         <DraftBanner className="relative w-full bg-blue-100 text-blue-800 rounded-md p-3" />
 
@@ -77,11 +74,7 @@ const DraftDeal = () => {
           </button>
         </div>
 
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line69}
-        />
+        <Line />
 
         {/* Steps List */}
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full">
@@ -113,11 +106,7 @@ const DraftDeal = () => {
           ))}
         </div>
 
-        <img
-          className="relative self-stretch w-full h-px object-cover"
-          alt="Line"
-          src={Line63}
-        />
+        <Line />
       </div>
     </div>
   );
