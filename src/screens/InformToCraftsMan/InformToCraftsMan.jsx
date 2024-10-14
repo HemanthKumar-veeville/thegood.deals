@@ -74,7 +74,7 @@ const InformToCraftsMan = () => {
   };
 
   const handleFinishLater = () => {
-    navigate("/admin-draft-deal");
+    navigate(`/admin-draft-deal?deal_id=${dealId}`);
   };
 
   useEffect(() => {

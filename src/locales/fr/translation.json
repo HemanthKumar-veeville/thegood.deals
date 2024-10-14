@@ -430,7 +430,7 @@
     "orders_available": "sur {{available}} dispos",
     "wallet_label": "Deal wallet",
     "amount_collected_label": "Montant du deal collecté",
-    "amount_target": "sur €{{target}}",
+    "amount_target": "sur {{target}} €",
     "relatives_label": "Mes proches",
     "participants_label": "Invités sur le deal",
     "participants_count": "{{count}} participants",
@@ -440,12 +440,13 @@
     "step_4": "Commandes envoyées à l’artisan",
     "step_5": "L'organisateur coordonne la livraison avec l'artisan",
     "deal_ends_in": "Le deal se termine dans",
-    "manage_friends": "Managing my friends",
+    "manage_friends": "Gérer mes proches",
     "collect_payment": "Collect payment",
-    "endsIn": "ends in {{days}} days",
+    "endsIn": "fin dans {{days}} jours",
     "danger_alert": "The payment of one of the participants could not be made.",
     "error": "Une erreur est survenue. Veuillez réessayer plus tard.",
-    "try_again": "Try Again"
+    "try_again": "Try Again",
+    "deal_completed": "Le deal est payé. L’artisan va préparer vos commandes."
   },
   "draft_deal": {
     "back_button": "Retour",
@@ -1378,9 +1379,9 @@
         "description": "Votre demande a été envoyée à l'organisateur. Vous serez informé lorsque l'organisateur acceptera ou refusera votre demande."
       },
       "artisanApproved": {
-        "heading": "Accord confirmé",
-        "description": "L'artisan a approuvé votre accord. Vous pouvez maintenant procéder à la finalisation du paiement.",
-        "action": "Procéder au paiement"
+        "heading": "Merci ! 🎉",
+        "description": "Le deal va désormais être publié ! Les invités vont pouvoir commander.",
+        "action": "Retour à l’accueil"
       },
       "deleteAccount": {
         "heading": "C'est supprimé ! 🗑️",
@@ -1388,9 +1389,9 @@
         "action": "Retourner à l'accueil"
       },
       "artisanRefused": {
-        "heading": "Accord refusé",
-        "description": "L'artisan a refusé votre accord. Vous pouvez essayer d'en créer un nouveau ou contacter le support pour plus d'aide.",
-        "action": "Créer un nouvel accord"
+        "heading": "Merci ! 👍🏻",
+        "description": "Une fois le deal corrigé par l’organisateur, vous recevrez un mail pour confirmer à nouveau les infos.",
+        "action": "Retour à l’accueil"
       },
       "lostPassword": {
         "checkEmailHead": "Vérifier votre email 📧",
@@ -1415,7 +1416,7 @@
     },
     "InvitationSent": {
       "helpRequest": {
-        "sentDescription": "Notre équipe vous répondra dans un délai de 48 heures maximum."
+        "sentDescription": "Notre équipe va vous répondre dans un délai maximum de 48h."
       }
     }
   },
@@ -1545,15 +1546,15 @@
     }
   },
   "inviteLovedOnes": {
-    "title": "Invitez vos amis à commander 🍎",
-    "description": "Une fois vos invitations envoyées, vos amis pourront commander.",
+    "title": "Inviter vos proches à commander 🍎",
+    "description": "Une fois vos invitations envoyées, vos proches pourront commandées.",
     "via_messaging": "Via messagerie ou SMS",
-    "via_email_invitations": "Via invitations par email",
+    "via_email_invitations": "Via invitations e-mails",
     "placeholder_email": "ex. contact@gmail.com",
     "add_loved_one": "Ajouter un proche",
     "send_invitation": "Envoyer l'invitation",
-    "share_link_title": "Sinon, copiez et collez ce lien de partage 🔗",
-    "share_link_description": "Ce lien est à partager entre vous afin de maintenir l'exclusivité de l'offre 😉",
+    "share_link_title": "Copier-coller ce lien de partage 🔗",
+    "share_link_description": "Ce lien est à partager entre vous afin de conserver l’exclusivité du deal 😉",
     "copy_link": "Copier le lien",
     "back_button": "Retour",
     "copied_to_clipboard": {

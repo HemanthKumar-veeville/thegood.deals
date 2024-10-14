@@ -445,7 +445,8 @@
     "endsIn": "ends in {{days}} days",
     "danger_alert": "The payment of one of the participants could not be made.",
     "error": "Something went wrong, Please try again later",
-    "try_again": "Try Again"
+    "try_again": "Try Again",
+    "deal_completed": "The deal is paid. The artisan will prepare your orders."
   },
   "draft_deal": {
     "back_button": "Back",

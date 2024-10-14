@@ -17,6 +17,7 @@ import CustomLoader from "../CustomLoader/CustomLoader";
 import { createRequest } from "../../redux/app/requests/requestSlice";
 import { validationByArtisan } from "../../redux/app/deals/dealSlice";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
+import { UserAlt } from "../../icons/UserAlt";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -143,11 +144,14 @@ export const ArtisanConfirmThe = ({
           src={Line63}
         />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-          <img
-            className="relative w-[50px] h-[50px] object-cover rounded-md"
-            alt="Organizer"
-            src={dealState?.organiser?.organiser_image || Human}
-          />
+          {dealState?.organiser?.organiser_image && (
+            <img
+              className="relative w-[50px] h-[50px] object-cover rounded-md"
+              alt="Organizer"
+              src={dealState?.organiser?.organiser_image}
+            />
+          )}
+          {!dealState?.organiser?.organiser_image && <UserAlt />}
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
               {t("artisanConfirmThe.organized_by")}
@@ -278,10 +282,13 @@ export const ArtisanConfirmThe = ({
             <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
               <div
                 onClick={handleRefuse}
-                className="gap-2 bg-white border border-solid border-red shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
+                className="gap-2 bg-white border border-solid border-redred shadow-shadow-1 flex items-center justify-center px-6 py-3 relative flex-1 grow rounded-md cursor-pointer"
               >
-                <CrossCircle className="!relative !w-5 !h-5 !ml-[-6.75px]" />
-                <button className="all-[unset] box-border mr-[-6.75px] text-red relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                <CrossCircle
+                  className="!relative !w-5 !h-5 !ml-[-6.75px]"
+                  fill="#F23030"
+                />
+                <button className="all-[unset] box-border mr-[-6.75px] text-redred relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                   {t("artisanConfirmThe.refuse")}
                 </button>
               </div>

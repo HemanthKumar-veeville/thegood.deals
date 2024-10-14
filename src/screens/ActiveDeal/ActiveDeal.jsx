@@ -162,7 +162,9 @@ const ActiveDeal = () => {
                     />
                   </div>
                   <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
-                    <span className="font-bold">{`The deal is over.`}</span>
+                    <span className="font-bold">
+                      {t("active_deal.deal_completed")}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -269,15 +271,6 @@ const ActiveDeal = () => {
             />
             <div
               className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
-              onClick={handleInviteLovedOnes}
-            >
-              <Send2 className="!relative !w-5 !h-5" />
-              <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                {t("invitations.invite_loved_ones")}
-              </button>
-            </div>
-            <div
-              className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
               onClick={handleMyOrders}
             >
               <Box44 className="!relative !w-5 !h-5" />
@@ -292,6 +285,15 @@ const ActiveDeal = () => {
               <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                 {t("active_deal.manage_friends")}
+              </button>
+            </div>
+            <div
+              className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
+              onClick={handleInviteLovedOnes}
+            >
+              <Send2 className="!relative !w-5 !h-5" />
+              <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                {t("invitations.invite_loved_ones")}
               </button>
             </div>
             <div
@@ -379,7 +381,7 @@ const ActiveDeal = () => {
               </div>
               <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[22px] whitespace-nowrap">
-                  {`€${dealData?.current_amount || 0}`}
+                  {`${dealData?.current_amount || 0} €`}
                 </div>
                 <div className="w-[67px] relative h-[22px]">
                   <div className="inline-flex items-center gap-1 relative">

@@ -70,7 +70,7 @@ function AppBar() {
       <header className="flex flex-col w-screen max-w-[400px] h-16 items-start relative bg-primary-background border-b border-stroke z-50">
         <div
           className={`flex h-16 items-center ${
-            isUser ? "justify-between" : "justify-center"
+            isUser ? "justify-between" : "justify-between"
           } pl-5 pr-3 py-0 relative self-stretch w-full`}
         >
           {/* Sidebar toggle button */}
