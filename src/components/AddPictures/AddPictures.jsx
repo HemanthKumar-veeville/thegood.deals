@@ -118,7 +118,7 @@ const AddPictures = ({ onChange }) => {
           />
         )}
         {pictures.length > 0 && (
-          <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg h-64">
+          <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-lg shadow-lg">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -128,7 +128,7 @@ const AddPictures = ({ onChange }) => {
                   <img
                     src={picture}
                     alt={t("add_pictures.image_alt_text", { index })} // Use translation for image alt text
-                    className="object-cover w-full h-auto rounded-md"
+                    className="object-contain w-full h-auto max-h-64 rounded-md" // Updated styling
                   />
                   <button
                     onClick={(event) => handleDelete(index, event)}

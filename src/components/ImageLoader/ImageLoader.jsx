@@ -22,7 +22,7 @@ const ImageLoader = ({ picture, index }) => {
         <img
           src={picture}
           alt={`${t("imageLoader.imageAlt")} ${index + 1}`} // Using translated alt text
-          className={`object-contain w-full h-full rounded-md ${
+          className={`object-contain  max-h-64 w-full h-full rounded-md ${
             index === 0 ? "border-4 border-yellow-500" : ""
           }`}
         />
