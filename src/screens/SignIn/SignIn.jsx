@@ -82,8 +82,25 @@ const SignIn = ({ setIsLoading }) => {
     navigate("/lost-password");
   };
 
-  const handleGoogleSignIn = () => {
-    // Google sign-in functionality goes here
+  const handleGoogleSignIn = async () => {
+    try {
+      // Directly call the backend API route
+      const res = await axiosInstance("/login/google");
+
+      // Handle success (store token, navigate, etc.)
+      console.log("Login successful:", res.data);
+
+      // You might want to store the received token or handle navigation here
+      // For example:
+      // localStorage.setItem('token', res.data.token);
+      // navigate('/dashboard');
+    } catch (error) {
+      // Handle error
+      console.error(
+        "Google Sign-In error:",
+        error.response ? error.response.data : error.message
+      );
+    }
   };
 
   return (

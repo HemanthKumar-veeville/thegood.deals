@@ -74,188 +74,190 @@ const Orders = ({ dealId, dealType }) => {
   console.log("ordersState", ordersState);
   return (
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background mx-auto">
-      {orderStatus === "succeeded" && (
-        <div className="flex flex-col w-full items-start gap-4 px-8 py-4 relative">
-          <div
-            className="flex items-center gap-3 pt-0 px-0 relative self-stretch w-full border-b border-stroke cursor-pointer"
-            onClick={handleBackToDeal}
-          >
-            <div className="inline-flex items-center gap-2">
-              <ArrowLeft1 className="w-4.5 h-4.5" color="#637381" />
-              <div className="mt-[-1px] font-medium text-primary-text-color text-base">
-                {t("orders.back_to_deal")}
-              </div>
+      <div className="flex flex-col w-full items-start gap-4 px-8 py-4 relative">
+        <div
+          className="flex items-center gap-3 pt-0 px-0 relative self-stretch w-full border-b border-stroke cursor-pointer"
+          onClick={handleBackToDeal}
+        >
+          <div className="inline-flex items-center gap-2">
+            <ArrowLeft1 className="w-4.5 h-4.5" color="#637381" />
+            <div className="mt-[-1px] font-medium text-primary-text-color text-base">
+              {t("orders.back_to_deal")}
             </div>
           </div>
-          <Line />
-          <div className="relative self-stretch font-semibold text-primary-color text-2xl">
-            {t("orders.my_orders")}
-          </div>
-
-          {ordersState?.map((participant) => (
-            <div key={participant.participant_id}>
-              <div
-                className="inline-flex items-center justify-between w-full gap-4 cursor-pointer mt-3"
-                onClick={() =>
-                  handleToggleOrderDetails(participant.participant_name)
-                }
-              >
-                <div className="flex gap-5">
-                  <SizeXlCorner
-                    className="h-14 w-14"
-                    divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
-                    text={
-                      participant.participant_name
-                        .split(" ")[0]
-                        .charAt(0)
-                        .toUpperCase() +
-                      "." +
-                      participant.participant_name
-                        .split(" ")[1]
-                        .charAt(0)
-                        .toUpperCase() +
-                      "."
-                    }
-                  />
-                  <div className="inline-flex flex-col items-start gap-1.5">
-                    <div className="mt-[-1px] font-medium text-primary-color text-base">
-                      {participant.participant_name}
-                    </div>
-                    <div className="inline-flex items-center gap-2.5">
-                      <Box44 className="w-5 h-5" />
-                      <p className="mt-[-1px] font-normal text-primary-text-color text-sm leading-5.5">
-                        {participant.orders_count} {t("orders.order_on_deal")}
-                      </p>
+        </div>
+        <Line />
+        <div className="relative self-stretch font-semibold text-primary-color text-2xl">
+          {t("orders.my_orders")}
+        </div>
+        {orderStatus === "succeeded" && (
+          <>
+            {!orders?.message && (
+              <div className="w-full">
+                <SuccessAlert
+                  className="!flex !bg-cyancyan-light-3 w-[100%]"
+                  divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
+                  frameClassName="!flex-1 !flex !grow"
+                  groupClassName="!bg-cyancyan"
+                  icon={
+                    <Warning1
+                      className="!absolute !w-3 !h-3 !top-1 !left-1"
+                      color="white"
+                    />
+                  }
+                  style="three"
+                  text={t("orders.empty")}
+                />
+              </div>
+            )}
+            {ordersState?.map((participant) => (
+              <div key={participant.participant_id}>
+                <div
+                  className="inline-flex items-center justify-between w-full gap-4 cursor-pointer mt-3"
+                  onClick={() =>
+                    handleToggleOrderDetails(participant.participant_name)
+                  }
+                >
+                  <div className="flex gap-5">
+                    <SizeXlCorner
+                      className="h-14 w-14"
+                      divClassName="tracking-0 text-lg font-semibold left-2 leading-10 top-1"
+                      text={
+                        participant.participant_name
+                          .split(" ")[0]
+                          .charAt(0)
+                          .toUpperCase() +
+                        "." +
+                        participant.participant_name
+                          .split(" ")[1]
+                          .charAt(0)
+                          .toUpperCase() +
+                        "."
+                      }
+                    />
+                    <div className="inline-flex flex-col items-start gap-1.5">
+                      <div className="mt-[-1px] font-medium text-primary-color text-base">
+                        {participant.participant_name}
+                      </div>
+                      <div className="inline-flex items-center gap-2.5">
+                        <Box44 className="w-5 h-5" />
+                        <p className="mt-[-1px] font-normal text-primary-text-color text-sm leading-5.5">
+                          {participant.orders_count} {t("orders.order_on_deal")}
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  {isOrderDetailsVisible[participant.participant_name] ? (
+                    <ChevronUp className="w-6 h-6" color="#1B4F4A" />
+                  ) : (
+                    <ChevronDown1 className="w-6 h-6" color="#1B4F4A" />
+                  )}
                 </div>
-                {isOrderDetailsVisible[participant.participant_name] ? (
-                  <ChevronUp className="w-6 h-6" color="#1B4F4A" />
-                ) : (
-                  <ChevronDown1 className="w-6 h-6" color="#1B4F4A" />
-                )}
-              </div>
-              <div
-                className={`transition-all duration-500 overflow-hidden ${
-                  isOrderDetailsVisible[participant.participant_name]
-                    ? "max-h-full"
-                    : "max-h-0"
-                }`}
-              >
-                <div className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full">
-                  <Line />
-                  {/* Orders Details */}
-                  <div
-                    className={`transition-all duration-500 overflow-hidden ${
-                      isOrderDetailsVisible[participant.participant_name]
-                        ? "max-h-full"
-                        : "max-h-0"
-                    }`}
-                  >
-                    {participant?.orders?.map((order) => (
-                      <div
-                        key={order.order_id}
-                        className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full"
-                      >
-                        {/* Products in Each Order */}
-                        {order?.products?.map((product, index) => (
-                          <div
-                            key={index}
-                            className="flex flex-col items-start gap-1.5 self-stretch"
-                          >
-                            <p className="mt-[-1px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
-                              {product.product_title}
-                            </p>
-                            <div className="flex items-center justify-between gap-2.5 self-stretch">
-                              <div className="flex items-center justify-between w-full">
-                                <p className="mt-[-1px] font-semibold text-secondary-color text-base">
-                                  {product.product_quantity}{" "}
-                                  {t("orders.products")}
-                                </p>
-                                <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
-                                  € {product.product_price} x{" "}
-                                  {product.product_quantity} = €{" "}
-                                  {product.product_price *
-                                    product.product_quantity}
-                                </p>
+                <div
+                  className={`transition-all duration-500 overflow-hidden ${
+                    isOrderDetailsVisible[participant.participant_name]
+                      ? "max-h-full"
+                      : "max-h-0"
+                  }`}
+                >
+                  <div className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full">
+                    <Line />
+                    {/* Orders Details */}
+                    <div
+                      className={`transition-all duration-500 overflow-hidden ${
+                        isOrderDetailsVisible[participant.participant_name]
+                          ? "max-h-full"
+                          : "max-h-0"
+                      }`}
+                    >
+                      {participant?.orders?.map((order) => (
+                        <div
+                          key={order.order_id}
+                          className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full"
+                        >
+                          {/* Products in Each Order */}
+                          {order?.products?.map((product, index) => (
+                            <div
+                              key={index}
+                              className="flex flex-col items-start gap-1.5 self-stretch"
+                            >
+                              <p className="mt-[-1px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
+                                {product.product_title}
+                              </p>
+                              <div className="flex items-center justify-between gap-2.5 self-stretch">
+                                <div className="flex items-center justify-between w-full">
+                                  <p className="mt-[-1px] font-semibold text-secondary-color text-base">
+                                    {product.product_quantity}{" "}
+                                    {t("orders.products")}
+                                  </p>
+                                  <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
+                                    € {product.product_price} x{" "}
+                                    {product.product_quantity} = €{" "}
+                                    {product.product_price *
+                                      product.product_quantity}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                          {/* Fees Section */}
+                          <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
+                            {/* Service Fees */}
+                            <div className="flex items-center justify-between w-full">
+                              <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                                {t("orders.service_fees")}
+                              </p>
+                              <p className="font-semibold text-primary-color text-sm text-right">
+                                {participant.service_fees} €
+                              </p>
+                            </div>
+                            {/* Payment Fees */}
+                            <div className="flex items-center justify-between w-full">
+                              <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                                {t("orders.payment_fees")}
+                              </p>
+                              <p className="font-semibold text-primary-color text-sm text-right">
+                                {participant.payment_fees} €
+                              </p>
+                            </div>
+                            {/* Delivery Fees */}
+                            <div className="flex items-center justify-between w-full">
+                              <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                                {t("orders.delivery_fees")}
+                              </p>
+                              <p className="font-semibold text-primary-color text-sm text-right">
+                                {participant.delivery_fees}
+                              </p>
+                            </div>
+                          </div>
+                          <Line />
+                          {/* Total Per Order */}
+                          <div className="flex items-end justify-between self-stretch">
+                            <div className="flex items-center gap-2.5 grow">
+                              <div className="font-semibold text-primary-color text-lg">
+                                {t("orders.total")}
+                              </div>
+                            </div>
+                            <div className="inline-flex flex-col items-end">
+                              <div className="font-semibold text-primary-color text-lg text-right">
+                                € {participant?.total_ttc}
                               </div>
                             </div>
                           </div>
-                        ))}
-                        {/* Fees Section */}
-                        <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
-                          {/* Service Fees */}
-                          <div className="flex items-center justify-between w-full">
-                            <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                              {t("orders.service_fees")}
-                            </p>
-                            <p className="font-semibold text-primary-color text-sm text-right">
-                              {participant.service_fees} €
-                            </p>
-                          </div>
-                          {/* Payment Fees */}
-                          <div className="flex items-center justify-between w-full">
-                            <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                              {t("orders.payment_fees")}
-                            </p>
-                            <p className="font-semibold text-primary-color text-sm text-right">
-                              {participant.payment_fees} €
-                            </p>
-                          </div>
-                          {/* Delivery Fees */}
-                          <div className="flex items-center justify-between w-full">
-                            <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
-                              {t("orders.delivery_fees")}
-                            </p>
-                            <p className="font-semibold text-primary-color text-sm text-right">
-                              {participant.delivery_fees}
-                            </p>
-                          </div>
+                          <Line />
                         </div>
-                        <Line />
-                        {/* Total Per Order */}
-                        <div className="flex items-end justify-between self-stretch">
-                          <div className="flex items-center gap-2.5 grow">
-                            <div className="font-semibold text-primary-color text-lg">
-                              {t("orders.total")}
-                            </div>
-                          </div>
-                          <div className="inline-flex flex-col items-end">
-                            <div className="font-semibold text-primary-color text-lg text-right">
-                              € {participant?.total_ttc}
-                            </div>
-                          </div>
-                        </div>
-                        <Line />
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
+                <div className="mt-3">
+                  <Line />
+                </div>
               </div>
-              <Line />
-            </div>
-          ))}
-
-          {!orders?.message && (
-            <div className="w-full">
-              <SuccessAlert
-                className="!flex !bg-cyancyan-light-3 w-[100%]"
-                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
-                frameClassName="!flex-1 !flex !grow"
-                groupClassName="!bg-cyancyan"
-                icon={
-                  <Warning1
-                    className="!absolute !w-3 !h-3 !top-1 !left-1"
-                    color="white"
-                  />
-                }
-                style="three"
-                text={t("orders.empty")}
-              />
-            </div>
-          )}
-        </div>
-      )}
+            ))}
+          </>
+        )}
+      </div>
       {orderStatus === "loading" && <CustomLoader />}
     </div>
   );
