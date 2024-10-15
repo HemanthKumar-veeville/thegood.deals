@@ -29,22 +29,22 @@ import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { Line } from "../../components/Line/Line";
 
 const UpdateDeal = () => {
-  const { t } = useTranslation(); // Initialize translation hook
+  const { t } = useTranslation();
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dealForm = useSelector((state) => state.deals.dealForm);
   const dealTitle = useSelector((state) => state.deals.title);
 
-  // Helper function to generate calendar days
   const formatDate = (date) => {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
+
   const [formData, setFormData] = useState(dealForm);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
@@ -55,6 +55,7 @@ const UpdateDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
   const [imagesForm, setImagesForm] = useState(new FormData());
+
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
@@ -66,7 +67,6 @@ const UpdateDeal = () => {
         acceptConditions: !formData.acceptConditions,
       }));
     } else {
-      console.log(t("create_deal.console_input_change"), e.target.value); // Log translated message
       setFormData((prevState) => ({
         ...prevState,
         [type]: e.target.value,
@@ -81,7 +81,7 @@ const UpdateDeal = () => {
     }));
   };
 
-  const handleLocationChange = (collectionLocation, e) => {
+  const handleLocationChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       collectionLocation: e.target.value,
@@ -104,11 +104,9 @@ const UpdateDeal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true at the start
-    console.log(t("create_deal.console_submit"), { formData, products, title }); // Translated console message
+    setLoading(true);
 
     try {
-      // Create FormData object and append form data
       const form = new FormData();
       form.append("title", title);
       form.append("description", formData.description);
@@ -122,39 +120,30 @@ const UpdateDeal = () => {
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
 
-      // Append image files
       if (formData.pictures && formData.pictures.length > 0) {
-        formData.pictures.forEach((file, index) => {
+        formData.pictures.forEach((file) => {
           if (file instanceof File) {
-            console.log(t("create_deal.console_append_file"), file.name); // Translated log message
-            form.append("images", file); // Append file objects
-          } else {
-            console.error(t("create_deal.console_invalid_file")); // Translated error message
+            form.append("images", file);
           }
         });
-      } else {
-        console.error(t("create_deal.console_no_pictures")); // Translated error message
       }
 
-      // Append product details
       products.forEach((product, index) => {
         Object.keys(product).forEach((key) => {
           form.append(`products[${index}][${key}]`, product[key]);
         });
       });
 
-      // Dispatch action to add a new deal
-      const resultAction = await dispatch(addNewDeal(form)).unwrap();
-      const dealId = resultAction.deal_id;
-
-      console.log(t("create_deal.console_success"), resultAction); // Success message
+      const resultAction = await dispatch(
+        updateDealForm({ dealId, form })
+      ).unwrap();
+      console.log(t("create_deal.console_success"), resultAction);
       navigate(`/inform-deal?id=${dealId}`);
     } catch (err) {
-      console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
       setErrorMessage(err?.detail || t("create_deal.error_message"));
     } finally {
-      setLoading(false); // Set loading to false after the API call
+      setLoading(false);
     }
   };
 
@@ -166,14 +155,12 @@ const UpdateDeal = () => {
     const fetchDeal = async () => {
       if (dealId) {
         setLoading(true);
-        console.log(t("create_deal.console_fetching"), dealId); // Translated fetching message
         try {
           const response = await dispatch(getDealByDealId(dealId)).unwrap();
           const dealData = response?.Deal[0];
 
           if (dealData) {
             setTitle(dealData.deal_title ?? t("create_deal.default_title"));
-
             setFormData({
               description:
                 dealData.description ?? t("create_deal.default_description"),
@@ -196,11 +183,10 @@ const UpdateDeal = () => {
                 t("create_deal.default_collection_location"),
               pictures: dealData.images ?? [],
             });
-
             setProducts(dealData.products ?? []);
           }
         } catch (err) {
-          console.error(t("create_deal.console_fetching_error"), err); // Fetch error message
+          console.error(t("create_deal.console_fetching_error"), err);
         }
         setLoading(false);
       }
@@ -209,14 +195,14 @@ const UpdateDeal = () => {
     fetchDeal();
   }, [dealId, t]);
 
-  const handleBack = () => {
-    navigate("/");
-  };
-
   useEffect(() => {
     dispatch(updateTitle(title));
     dispatch(updateDealForm(formData));
   }, [formData, title]);
+
+  const handleBack = () => {
+    navigate("/");
+  };
 
   return (
     <>
@@ -225,7 +211,7 @@ const UpdateDeal = () => {
         <ShowCustomErrorModal
           message={errorMessage}
           buttonText={t("waiting_deal.got_it")}
-          onClose={() => setIsError(false)} // Reset modal state on close
+          onClose={() => setIsError(false)}
         />
       )}
       {!loading && (

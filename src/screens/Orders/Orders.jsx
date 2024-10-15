@@ -55,13 +55,13 @@ const Orders = ({ dealId, dealType }) => {
 
   const handleBackToDeal = () => {
     console.log(is_creator);
-    is_creator === "true"
-      ? navigate(
-          "/admin-active-deal?deal_id=" + deal_id + "&is_creator=" + is_creator
-        )
-      : navigate(
-          "/guest-deal-view?deal_id=" + deal_id + "&is_creator=" + is_creator
-        );
+    // is_creator === "true"
+    //   ? navigate(
+    //       "/admin-active-deal?deal_id=" + deal_id + "&is_creator=" + is_creator
+    //     )
+    //   : navigate(
+    //       "/guest-deal-view?deal_id=" + deal_id + "&is_creator=" + is_creator
+    //     );
   };
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const Orders = ({ dealId, dealType }) => {
         </div>
         {orderStatus === "succeeded" && (
           <>
-            {!orders?.message && (
+            {orders?.message && (
               <div className="w-full">
                 <SuccessAlert
                   className="!flex !bg-cyancyan-light-3 w-[100%]"

@@ -20,6 +20,7 @@ import { LegalNotices } from "./components/LegalNotices";
 import { LegalNoticesScreen } from "./screens/LegalNoticesScreen";
 import InviteParticipants from "./screens/InviteParticipants/InviteParticipants";
 import { NewsLetterScreen } from "./screens/NewsLetterScreen/NewsLetterScreen";
+import UpdateDeal from "./screens/UpdateDeal/UpdateDeal";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -191,6 +192,14 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<CreateDeal />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/update-deal",
+      element: (
+        <Layout>
+          <ProtectedRoute element={<UpdateDeal />} />
         </Layout>
       ),
     },
