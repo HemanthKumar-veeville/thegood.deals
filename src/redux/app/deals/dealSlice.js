@@ -63,6 +63,19 @@ export const getDealByDealId = createAsyncThunk(
   }
 );
 
+// Async thunk for fetching a deal by deal_id
+export const getDealByDealIdForEdit = createAsyncThunk(
+  "deals/getDealByDealIdForEdit",
+  async (dealId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/deals/${dealId}/edit`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // Async thunk for fetching deal details by deal_id
 export const fetchDealDetailsByDealId = createAsyncThunk(
   "deals/fetchDealDetailsByDealId",
@@ -194,6 +207,18 @@ const dealSlice = createSlice({
         state.deal = action.payload;
       })
       .addCase(getDealByDealId.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle getDealByDealIdForEdit cases
+      .addCase(getDealByDealIdForEdit.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getDealByDealIdForEdit.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.deal = action.payload;
+      })
+      .addCase(getDealByDealIdForEdit.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })

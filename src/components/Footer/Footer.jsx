@@ -157,7 +157,7 @@ export const Footer = ({
             </div>
             <div className="w-full flex self-stretch flex-col items-start flex-[0_0_auto] relative">
               <div
-                onClick={() => handleNavigation("/")}
+                onClick={() => handleNavigation("/legal-notices")}
                 className="w-full flex self-stretch items-start flex-[0_0_auto] px-0 py-2 relative"
               >
                 <div className="[font-family:'Rethink_Sans',Helvetica] mt-[-1.00px] tracking-[0] text-sm flex-1 text-light-grey font-normal leading-[21px] relative">

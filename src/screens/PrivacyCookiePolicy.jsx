@@ -15,7 +15,7 @@ export const PrivacyCookiePolicyScreen = ({ heading }) => {
   }, []);
 
   const handleBack = () => {
-    navigate("/auth?signup");
+    navigate(-1);
   };
 
   return (

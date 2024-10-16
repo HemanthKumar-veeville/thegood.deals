@@ -16,7 +16,7 @@ export const LegalNoticesScreen = ({ heading }) => {
   }, []);
 
   const handleBack = () => {
-    navigate("/auth?signup");
+    navigate(-1);
   };
 
   return (

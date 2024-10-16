@@ -16,7 +16,7 @@ export const GeneralConditionsScreen = ({ heading }) => {
   }, []);
 
   const handleBack = () => {
-    navigate("/auth?signup");
+    navigate(-1);
   };
 
   return (

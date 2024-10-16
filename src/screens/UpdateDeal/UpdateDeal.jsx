@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 import { useNavigate } from "react-router-dom";
+import AppBar from "../../components/AppBar/AppBar";
 import AddPictures from "../../components/AddPictures/AddPictures";
 import TitleInput from "../../components/TitleInput/TitleInput";
 import { Textarea } from "../../components/Textarea";
@@ -17,7 +18,7 @@ import ProductList from "../../components/ProductInfo/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addNewDeal,
-  getDealByDealId,
+  getDealByDealIdForEdit,
   updateDealForm,
   updateTitle,
   updateImages,
@@ -29,22 +30,22 @@ import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { Line } from "../../components/Line/Line";
 
 const UpdateDeal = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(); // Initialize translation hook
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dealForm = useSelector((state) => state.deals.dealForm);
   const dealTitle = useSelector((state) => state.deals.title);
 
+  // Helper function to generate calendar days
   const formatDate = (date) => {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
-
   const [formData, setFormData] = useState(dealForm);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
@@ -55,7 +56,6 @@ const UpdateDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
   const [imagesForm, setImagesForm] = useState(new FormData());
-
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
@@ -67,6 +67,7 @@ const UpdateDeal = () => {
         acceptConditions: !formData.acceptConditions,
       }));
     } else {
+      console.log(t("create_deal.console_input_change"), e.target.value); // Log translated message
       setFormData((prevState) => ({
         ...prevState,
         [type]: e.target.value,
@@ -81,7 +82,7 @@ const UpdateDeal = () => {
     }));
   };
 
-  const handleLocationChange = (e) => {
+  const handleLocationChange = (collectionLocation, e) => {
     setFormData((prevState) => ({
       ...prevState,
       collectionLocation: e.target.value,
@@ -104,9 +105,11 @@ const UpdateDeal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true); // Set loading to true at the start
+    console.log(t("create_deal.console_submit"), { formData, products, title }); // Translated console message
 
     try {
+      // Create FormData object and append form data
       const form = new FormData();
       form.append("title", title);
       form.append("description", formData.description);
@@ -120,30 +123,39 @@ const UpdateDeal = () => {
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
 
+      // Append image files
       if (formData.pictures && formData.pictures.length > 0) {
-        formData.pictures.forEach((file) => {
+        formData.pictures.forEach((file, index) => {
           if (file instanceof File) {
-            form.append("images", file);
+            console.log(t("create_deal.console_append_file"), file.name); // Translated log message
+            form.append("images", file); // Append file objects
+          } else {
+            console.error(t("create_deal.console_invalid_file")); // Translated error message
           }
         });
+      } else {
+        console.error(t("create_deal.console_no_pictures")); // Translated error message
       }
 
+      // Append product details
       products.forEach((product, index) => {
         Object.keys(product).forEach((key) => {
           form.append(`products[${index}][${key}]`, product[key]);
         });
       });
 
-      const resultAction = await dispatch(
-        updateDealForm({ dealId, form })
-      ).unwrap();
-      console.log(t("create_deal.console_success"), resultAction);
+      // Dispatch action to add a new deal
+      const resultAction = await dispatch(addNewDeal(form)).unwrap();
+      const dealId = resultAction.deal_id;
+
+      console.log(t("create_deal.console_success"), resultAction); // Success message
       navigate(`/inform-deal?id=${dealId}`);
     } catch (err) {
+      console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
       setErrorMessage(err?.detail || t("create_deal.error_message"));
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading to false after the API call
     }
   };
 
@@ -155,38 +167,35 @@ const UpdateDeal = () => {
     const fetchDeal = async () => {
       if (dealId) {
         setLoading(true);
+        console.log(t("create_deal.console_fetching"), dealId); // Translated fetching message
         try {
-          const response = await dispatch(getDealByDealId(dealId)).unwrap();
-          const dealData = response?.Deal[0];
+          const response = await dispatch(
+            getDealByDealIdForEdit(dealId)
+          ).unwrap();
+          const dealData = response;
 
           if (dealData) {
-            setTitle(dealData.deal_title ?? t("create_deal.default_title"));
+            setTitle(dealData.title);
+
             setFormData({
-              description:
-                dealData.description ?? t("create_deal.default_description"),
+              description: dealData.description,
               collectionDate:
                 dealData.collection_date ?? formatDate(new Date()),
-              contentDescription:
-                dealData.content_description ??
-                t("create_deal.default_content_description"),
-              manufacturerInfo:
-                dealData.artisan_information ??
-                t("create_deal.default_manufacturer_info"),
-              iban:
-                dealData.banking_info?.iban ?? t("create_deal.default_iban"),
-              bic: dealData.banking_info?.bic ?? t("create_deal.default_bic"),
+              contentDescription: dealData.content_description,
+              manufacturerInfo: dealData.artisan_information,
+              iban: dealData.banking_info?.iban,
+              bic: dealData.banking_info?.bic,
               dealExpiration:
                 dealData.deal_expiration_date ?? formatDate(new Date()),
               acceptConditions: dealData.terms_accepted ?? false,
-              collectionLocation:
-                dealData.collection_location ??
-                t("create_deal.default_collection_location"),
+              collectionLocation: dealData.collection_location,
               pictures: dealData.images ?? [],
             });
+
             setProducts(dealData.products ?? []);
           }
         } catch (err) {
-          console.error(t("create_deal.console_fetching_error"), err);
+          console.error(t("create_deal.console_fetching_error"), err); // Fetch error message
         }
         setLoading(false);
       }
@@ -195,14 +204,14 @@ const UpdateDeal = () => {
     fetchDeal();
   }, [dealId, t]);
 
+  const handleBack = () => {
+    navigate("/");
+  };
+
   useEffect(() => {
     dispatch(updateTitle(title));
     dispatch(updateDealForm(formData));
   }, [formData, title]);
-
-  const handleBack = () => {
-    navigate("/");
-  };
 
   return (
     <>
@@ -211,7 +220,7 @@ const UpdateDeal = () => {
         <ShowCustomErrorModal
           message={errorMessage}
           buttonText={t("waiting_deal.got_it")}
-          onClose={() => setIsError(false)}
+          onClose={() => setIsError(false)} // Reset modal state on close
         />
       )}
       {!loading && (
