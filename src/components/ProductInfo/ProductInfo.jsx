@@ -7,17 +7,31 @@ import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdated";
 import { Line_60_1, Polygon_1_1 } from "../../images";
 import { Box4 } from "../../icons/Box4";
 
-const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
+const ProductInfo = ({
+  addProduct,
+  addMode,
+  setAddMode,
+  product,
+  onDelete,
+}) => {
   const { t } = useTranslation(); // Initialize useTranslation hook
 
-  const [minQuantity, setMinQuantity] = useState(2);
-  const [maxQuantity, setMaxQuantity] = useState(13);
-  const [goodDealPrice, setGoodDealPrice] = useState("");
-  const [maximumRetailPrice, setMaximumRetailPrice] = useState("");
-  const [productTitle, setProductTitle] = useState("");
-  const [totalStock, setTotalStock] = useState("");
-  const [discountPercentage, setDiscountPercentage] = useState(0);
-
+  const [minQuantity, setMinQuantity] = useState(
+    product?.minimum_quantity || 2
+  );
+  const [maxQuantity, setMaxQuantity] = useState(
+    product?.maximum_quantity || 13
+  );
+  const [goodDealPrice, setGoodDealPrice] = useState(product?.deal_price || "");
+  const [maximumRetailPrice, setMaximumRetailPrice] = useState(
+    product?.market_price || ""
+  );
+  const [productTitle, setProductTitle] = useState(product?.product_name || "");
+  const [totalStock, setTotalStock] = useState(product?.total_stock || "");
+  const [discountPercentage, setDiscountPercentage] = useState(
+    product?.estimated_discount || 0
+  );
+  console.log({ product });
   useEffect(() => {
     if (
       maximumRetailPrice &&
@@ -33,6 +47,7 @@ const ProductInfo = ({ addProduct, addMode, setAddMode }) => {
   }, [maximumRetailPrice, goodDealPrice]);
 
   const handleAddClick = () => {
+    onDelete(product?.product_id);
     const newProduct = {
       name: productTitle,
       minimum_quantity: minQuantity,

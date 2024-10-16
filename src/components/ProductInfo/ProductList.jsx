@@ -1,8 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { FiEdit, FiTrash2 } from "react-icons/fi"; // Importing edit and delete icons from react-icons
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, onEdit, onDelete }) => {
   const { t } = useTranslation(); // Use the translation hook
+  console.log({ products });
 
   return (
     <div className="flex flex-col items-start gap-[15px] p-[15px] bg-white rounded-[5px] w-full">
@@ -19,9 +21,21 @@ const ProductList = ({ products }) => {
             key={index}
             className="flex flex-col items-start gap-[5px] p-[10px] bg-gray-100 rounded-[5px] w-full"
           >
-            <h3 className="font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">
-              {product.name}
-            </h3>
+            <div className="flex justify-between w-full">
+              <h3 className="font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">
+                {product.name || product.product_name}
+              </h3>
+              <div className="flex gap-2">
+                <FiEdit
+                  className="text-[#4a90e2] cursor-pointer"
+                  onClick={() => onEdit(product)}
+                />
+                <FiTrash2
+                  className="text-[#e74c3c] cursor-pointer"
+                  onClick={() => onDelete(product?.product_id)}
+                />
+              </div>
+            </div>
             <p className="text-darkdark-6 text-sm">
               {t("ProductList.totalStock")}: {product.total_stock}
             </p>

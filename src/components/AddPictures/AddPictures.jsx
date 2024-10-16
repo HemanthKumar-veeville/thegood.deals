@@ -4,10 +4,10 @@ import { FaTrash, FaStar } from "react-icons/fa"; // Import the trash and star i
 import { useTranslation } from "react-i18next"; // Import useTranslation
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
-const AddPictures = ({ onChange }) => {
+const AddPictures = ({ onChange, images }) => {
   const { t } = useTranslation(); // Initialize translation hook
 
-  const [pictures, setPictures] = useState([]);
+  const [pictures, setPictures] = useState(images || []);
   const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);

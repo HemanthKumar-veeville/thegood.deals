@@ -20,8 +20,8 @@ const getDaysInMonth = (month, year) => {
   return days;
 };
 
-const ModernDatePicker = ({ name, onChange }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const ModernDatePicker = ({ name, onChange, date }) => {
+  const [selectedDate, setSelectedDate] = useState(new Date(date || ""));
   const [showCalendar, setShowCalendar] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(selectedDate.getMonth());
   const [currentYear, setCurrentYear] = useState(selectedDate.getFullYear());

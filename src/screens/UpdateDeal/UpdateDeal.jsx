@@ -17,7 +17,7 @@ import { Plus3 } from "../../icons/Plus3";
 import ProductList from "../../components/ProductInfo/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addNewDeal,
+  updateDealByDealId,
   getDealByDealIdForEdit,
   updateDealForm,
   updateTitle,
@@ -35,6 +35,7 @@ const UpdateDeal = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dealForm = useSelector((state) => state.deals.dealForm);
   const dealTitle = useSelector((state) => state.deals.title);
+  const [productUnderEdit, setProductUnderEdit] = useState(null);
 
   // Helper function to generate calendar days
   const formatDate = (date) => {
@@ -49,7 +50,7 @@ const UpdateDeal = () => {
   const [formData, setFormData] = useState(dealForm);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
-  const [addMode, setAddMode] = useState(true);
+  const [addMode, setAddMode] = useState(false);
   const [title, setTitle] = useState(dealTitle);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const UpdateDeal = () => {
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
-
+  console.log({ products });
   const handleChange = (type, e) => {
     if (type === "acceptConditions") {
       setFormData((prevState) => ({
@@ -140,16 +141,19 @@ const UpdateDeal = () => {
       // Append product details
       products.forEach((product, index) => {
         Object.keys(product).forEach((key) => {
-          form.append(`products[${index}][${key}]`, product[key]);
+          if (key !== "product_id")
+            form.append(`products[${index}][${key}]`, product[key]);
         });
       });
 
       // Dispatch action to add a new deal
-      const resultAction = await dispatch(addNewDeal(form)).unwrap();
-      const dealId = resultAction.deal_id;
+      const resultAction = await dispatch(
+        updateDealByDealId({ dealId, updatedDeal: form })
+      ).unwrap();
+      resultAction.deal_id;
 
       console.log(t("create_deal.console_success"), resultAction); // Success message
-      navigate(`/inform-deal?id=${dealId}`);
+      navigate(`/inform-deal?id=${resultAction.deal_id}`);
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
@@ -180,16 +184,19 @@ const UpdateDeal = () => {
             setFormData({
               description: dealData.description,
               collectionDate:
-                dealData.collection_date ?? formatDate(new Date()),
+                dealData.collection_date?.slice(0, 16) ??
+                formatDate(new Date()),
               contentDescription: dealData.content_description,
               manufacturerInfo: dealData.artisan_information,
-              iban: dealData.banking_info?.iban,
-              bic: dealData.banking_info?.bic,
+              iban: dealData.banking_information?.iban,
+              bic: dealData.banking_information?.bic,
               dealExpiration:
-                dealData.deal_expiration_date ?? formatDate(new Date()),
+                dealData.deal_expiration_date?.slice(0, 16) ??
+                formatDate(new Date()),
               acceptConditions: dealData.terms_accepted ?? false,
               collectionLocation: dealData.collection_location,
               pictures: dealData.images ?? [],
+              deliveryCost: 0,
             });
 
             setProducts(dealData.products ?? []);
@@ -212,6 +219,18 @@ const UpdateDeal = () => {
     dispatch(updateTitle(title));
     dispatch(updateDealForm(formData));
   }, [formData, title]);
+
+  const onEdit = (productToBeEdited) => {
+    setAddMode(true);
+    setProductUnderEdit(productToBeEdited);
+  };
+
+  const onDelete = (productId) => {
+    console.log("Delete exc");
+    setProducts((prevProducts) =>
+      prevProducts?.filter((product) => product?.product_id !== productId)
+    );
+  };
 
   return (
     <>
@@ -246,7 +265,11 @@ const UpdateDeal = () => {
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
               {t("create_deal.title")}
             </div>
-            <AddPictures onChange={handleAddPictures} setForm={setImagesForm} />
+            <AddPictures
+              onChange={handleAddPictures}
+              setForm={setImagesForm}
+              images={formData?.pictures}
+            />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">
               <Textarea
@@ -286,19 +309,11 @@ const UpdateDeal = () => {
               />
             </div>
             <Line />
-            <div className="!w-full">
-              <CollectionLocation
-                type="deliveryCost"
-                onChange={handleDeliveryCostChange}
-                value={formData.deliveryCost}
-              />
-            </div>
-            <Line />
             <div className="w-full">
               <Textarea
                 name="contentDescription"
                 type="contentDescription"
-                value={formData.contentDescription}
+                description={formData.contentDescription}
                 onChange={handleChange}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg !leading-[26px]"
@@ -318,7 +333,7 @@ const UpdateDeal = () => {
               <Textarea
                 name="manufacturerInfo"
                 type="manufacturerInfo"
-                value={formData.manufacturerInfo}
+                description={formData.manufacturerInfo}
                 onChange={handleChange}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg ![white-space:unset] !leading-[26px] !w-[236px]"
@@ -346,7 +361,7 @@ const UpdateDeal = () => {
               <BankingInfo
                 name="iban"
                 type="iban"
-                value={formData.iban}
+                info={formData.iban}
                 onChange={handleChange}
                 label={t("create_deal.iban_label")}
                 placeholder={t("create_deal.iban_placeholder")}
@@ -361,7 +376,7 @@ const UpdateDeal = () => {
               <BankingInfo
                 name="bic"
                 type="bic"
-                value={formData.bic}
+                info={formData.bic}
                 onChange={handleChange}
                 label={t("create_deal.bic_label")}
                 placeholder={t("create_deal.bic_placeholder")}
@@ -372,12 +387,16 @@ const UpdateDeal = () => {
             <div className="w-full">
               <DatePicker
                 name="dealExpiration"
-                value={formData.dealExpiration}
+                date={formData.dealExpiration}
                 onChange={handleDateChange}
               />
             </div>
             <Line />
-            <ProductList products={products} />
+            <ProductList
+              products={products}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
             <Line />
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
@@ -389,6 +408,8 @@ const UpdateDeal = () => {
                 addProduct={addProduct}
                 setAddMode={setAddMode}
                 addMode={addMode}
+                product={productUnderEdit}
+                onDelete={onDelete}
               />
             )}
             {!addMode && (

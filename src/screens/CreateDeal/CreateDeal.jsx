@@ -292,14 +292,6 @@ const CreateDeal = () => {
               />
             </div>
             <Line />
-            <div className="!w-full">
-              <CollectionLocation
-                type="deliveryCost"
-                onChange={handleDeliveryCostChange}
-                value={formData.deliveryCost}
-              />
-            </div>
-            <Line />
             <div className="w-full">
               <Textarea
                 name="contentDescription"
