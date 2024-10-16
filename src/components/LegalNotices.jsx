@@ -7,7 +7,7 @@ export const LegalNotices = () => {
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
       <div className="flex flex-col items-start gap-4 self-stretch w-full relative">
-        <div className="flex flex-col items-start gap-2.5 pt-0 pb-6 w-full">
+        <div className="flex flex-col items-start gap-2.5 pt-0 w-full">
           <p className="font-heading-6 font-semibold text-primary-color text-xl tracking-normal leading-tight text-left mt-6">
             {t("LegalNotices.title")}
           </p>
