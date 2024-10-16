@@ -1371,7 +1371,8 @@
     "payment_fees": "Frais de paiement",
     "delivery_fees": "Frais de livraison",
     "products": "produits",
-    "empty": "Vous n'avez aucune commande pour le moment."
+    "empty": "Vous n'avez aucune commande pour le moment.",
+    "summary": "Récapitulatif de la commande"
   },
   "App": {
     "Message": {

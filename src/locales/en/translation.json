@@ -1364,7 +1364,8 @@
     "payment_fees": "Payment Fees",
     "delivery_fees": "Delivery Fees",
     "products": "products",
-    "empty": "You don't have any orders now."
+    "empty": "You don't have any orders now.",
+    "summary": "Order summary"
   },
   "App": {
     "Message": {

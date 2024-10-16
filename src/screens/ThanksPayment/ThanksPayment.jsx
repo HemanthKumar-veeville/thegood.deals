@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next"; // Import useTranslation hook
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { useNavigate } from "react-router-dom";
-import { OrderInfo } from "../../components/OrderInfo/OrderInfo";
 import { Line } from "../../components/Line/Line";
+import { OrderSummary } from "../../components/OrderSummary/OrderSummary";
 
 const ThanksPayment = () => {
   const { t } = useTranslation(); // Initialize the translation hook
@@ -30,7 +30,7 @@ const ThanksPayment = () => {
           {t("thanks_withdrawal.debit_info")}
         </p>
         <Line />
-        <OrderInfo orderId={orderId} />
+        <OrderSummary orderId={orderId} />
         <Line />
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"

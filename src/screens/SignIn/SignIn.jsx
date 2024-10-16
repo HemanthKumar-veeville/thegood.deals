@@ -38,8 +38,9 @@ const SignIn = ({ setIsLoading }) => {
       }
     } catch (error) {
       // Extract the error message correctly
+      console.log(error);
       const errorMsg =
-        error.response?.data?.message || // Server error response
+        error.response?.data?.detail || // Server error response
         error.message || // General error message
         t("login.error"); // Fallback to a default message
 
