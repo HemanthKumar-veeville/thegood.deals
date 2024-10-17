@@ -24,7 +24,9 @@ const DraftDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
-
+  const handleEditDeal = () => {
+    navigate("/update-deal?deal_id=" + deal_id);
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -67,7 +69,10 @@ const DraftDeal = () => {
         </div>
 
         {/* Edit Button */}
-        <div className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full rounded-md border border-solid border-primary-color">
+        <div
+          className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full rounded-md border border-solid border-primary-color"
+          onClick={handleEditDeal}
+        >
           <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <button className="all-[unset] w-fit font-medium text-primary-color text-base text-center leading-6 whitespace-nowrap">
             {t("draft_deal.edit_button", "Edit the deal")}

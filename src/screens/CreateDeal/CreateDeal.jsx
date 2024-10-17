@@ -35,6 +35,7 @@ const CreateDeal = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dealForm = useSelector((state) => state.deals.dealForm);
   const dealTitle = useSelector((state) => state.deals.title);
+  const [productUnderEdit, setProductUnderEdit] = useState(null);
 
   // Helper function to generate calendar days
   const formatDate = (date) => {
@@ -173,29 +174,24 @@ const CreateDeal = () => {
           const dealData = response?.Deal[0];
 
           if (dealData) {
-            setTitle(dealData.deal_title ?? t("create_deal.default_title"));
+            setTitle(dealData.deal_title);
 
             setFormData({
-              description:
-                dealData.description ?? t("create_deal.default_description"),
+              description: dealData.description,
               collectionDate:
-                dealData.collection_date ?? formatDate(new Date()),
-              contentDescription:
-                dealData.content_description ??
-                t("create_deal.default_content_description"),
-              manufacturerInfo:
-                dealData.artisan_information ??
-                t("create_deal.default_manufacturer_info"),
-              iban:
-                dealData.banking_info?.iban ?? t("create_deal.default_iban"),
-              bic: dealData.banking_info?.bic ?? t("create_deal.default_bic"),
+                dealData.collection_date?.slice(0, 16) ??
+                formatDate(new Date()),
+              contentDescription: dealData.content_description,
+              manufacturerInfo: dealData.artisan_information,
+              iban: dealData.banking_info?.iban,
+              bic: dealData.banking_info?.bic,
               dealExpiration:
-                dealData.deal_expiration_date ?? formatDate(new Date()),
+                dealData.deal_expiration_date?.slice(0, 16) ??
+                formatDate(new Date()),
               acceptConditions: dealData.terms_accepted ?? false,
-              collectionLocation:
-                dealData.collection_location ??
-                t("create_deal.default_collection_location"),
+              collectionLocation: dealData.collection_location,
               pictures: dealData.images ?? [],
+              deliveryCost: 0,
             });
 
             setProducts(dealData.products ?? []);
@@ -218,6 +214,20 @@ const CreateDeal = () => {
     dispatch(updateTitle(title));
     dispatch(updateDealForm(formData));
   }, [formData, title]);
+
+  const onEdit = (productToBeEdited) => {
+    setAddMode(true);
+
+    setProductUnderEdit(productToBeEdited);
+  };
+
+  const onDelete = (productId) => {
+    console.log("Delete exc");
+
+    setProducts((prevProducts) =>
+      prevProducts?.filter((product) => product?.product_id !== productId)
+    );
+  };
 
   return (
     <>
@@ -252,7 +262,11 @@ const CreateDeal = () => {
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
               {t("create_deal.title")}
             </div>
-            <AddPictures onChange={handleAddPictures} setForm={setImagesForm} />
+            <AddPictures
+              onChange={handleAddPictures}
+              setForm={setImagesForm}
+              images={formData?.pictures}
+            />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">
               <Textarea
@@ -296,7 +310,7 @@ const CreateDeal = () => {
               <Textarea
                 name="contentDescription"
                 type="contentDescription"
-                value={formData.contentDescription}
+                description={formData.contentDescription}
                 onChange={handleChange}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg !leading-[26px]"
@@ -316,7 +330,7 @@ const CreateDeal = () => {
               <Textarea
                 name="manufacturerInfo"
                 type="manufacturerInfo"
-                value={formData.manufacturerInfo}
+                description={formData.manufacturerInfo}
                 onChange={handleChange}
                 className="!self-stretch !w-full"
                 divClassName="!text-[#1b4f4a] !text-lg ![white-space:unset] !leading-[26px] !w-[236px]"
@@ -344,7 +358,7 @@ const CreateDeal = () => {
               <BankingInfo
                 name="iban"
                 type="iban"
-                value={formData.iban}
+                info={formData.iban}
                 onChange={handleChange}
                 label={t("create_deal.iban_label")}
                 placeholder={t("create_deal.iban_placeholder")}
@@ -359,7 +373,7 @@ const CreateDeal = () => {
               <BankingInfo
                 name="bic"
                 type="bic"
-                value={formData.bic}
+                info={formData.bic}
                 onChange={handleChange}
                 label={t("create_deal.bic_label")}
                 placeholder={t("create_deal.bic_placeholder")}
@@ -370,12 +384,16 @@ const CreateDeal = () => {
             <div className="w-full">
               <DatePicker
                 name="dealExpiration"
-                value={formData.dealExpiration}
+                date={formData.dealExpiration}
                 onChange={handleDateChange}
               />
             </div>
             <Line />
-            <ProductList products={products} />
+            <ProductList
+              products={products}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
             <Line />
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
@@ -387,6 +405,8 @@ const CreateDeal = () => {
                 addProduct={addProduct}
                 setAddMode={setAddMode}
                 addMode={addMode}
+                product={productUnderEdit}
+                onDelete={onDelete}
               />
             )}
             {!addMode && (

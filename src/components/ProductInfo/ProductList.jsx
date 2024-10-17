@@ -23,7 +23,7 @@ const ProductList = ({ products, onEdit, onDelete }) => {
           >
             <div className="flex justify-between w-full">
               <h3 className="font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">
-                {product.name || product.product_name}
+                {product.name}
               </h3>
               <div className="flex gap-2">
                 <FiEdit

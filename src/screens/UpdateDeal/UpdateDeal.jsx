@@ -112,6 +112,7 @@ const UpdateDeal = () => {
     try {
       // Create FormData object and append form data
       const form = new FormData();
+      console.log({ formData });
       form.append("title", title);
       form.append("description", formData.description);
       form.append("collection_location", formData.collectionLocation);
@@ -123,9 +124,10 @@ const UpdateDeal = () => {
       form.append("deal_expiration_date", formData.dealExpiration);
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
-
+      console.log({ pictures: formData?.pictures });
       // Append image files
       if (formData.pictures && formData.pictures.length > 0) {
+        console.log("pictures available");
         formData.pictures.forEach((file, index) => {
           if (file instanceof File) {
             console.log(t("create_deal.console_append_file"), file.name); // Translated log message
@@ -150,10 +152,9 @@ const UpdateDeal = () => {
       const resultAction = await dispatch(
         updateDealByDealId({ dealId, updatedDeal: form })
       ).unwrap();
-      resultAction.deal_id;
 
       console.log(t("create_deal.console_success"), resultAction); // Success message
-      navigate(`/inform-deal?id=${resultAction.deal_id}`);
+      navigate(`/inform-deal?id=${dealId}`);
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
@@ -169,47 +170,45 @@ const UpdateDeal = () => {
 
   useEffect(() => {
     const fetchDeal = async () => {
-      if (dealId) {
-        setLoading(true);
-        console.log(t("create_deal.console_fetching"), dealId); // Translated fetching message
-        try {
-          const response = await dispatch(
-            getDealByDealIdForEdit(dealId)
-          ).unwrap();
-          const dealData = response;
+      setLoading(true);
+      console.log(t("create_deal.console_fetching"), dealId); // Translated fetching message
+      try {
+        const response = await dispatch(
+          getDealByDealIdForEdit(dealId)
+        ).unwrap();
+        const dealData = response;
 
-          if (dealData) {
-            setTitle(dealData.title);
+        if (dealData) {
+          console.log({ images: dealData?.images });
+          setTitle(dealData.title);
+          console.log({ imgs: dealData?.images });
+          setFormData({
+            description: dealData.description,
+            collectionDate:
+              dealData.collection_date?.slice(0, 16) ?? formatDate(new Date()),
+            contentDescription: dealData.content_description,
+            manufacturerInfo: dealData.artisan_information,
+            iban: dealData.banking_information?.iban,
+            bic: dealData.banking_information?.bic,
+            dealExpiration:
+              dealData.deal_expiration_date?.slice(0, 16) ??
+              formatDate(new Date()),
+            acceptConditions: dealData.terms_accepted ?? false,
+            collectionLocation: dealData.collection_location,
+            pictures: dealData?.images || [],
+            deliveryCost: 0,
+          });
 
-            setFormData({
-              description: dealData.description,
-              collectionDate:
-                dealData.collection_date?.slice(0, 16) ??
-                formatDate(new Date()),
-              contentDescription: dealData.content_description,
-              manufacturerInfo: dealData.artisan_information,
-              iban: dealData.banking_information?.iban,
-              bic: dealData.banking_information?.bic,
-              dealExpiration:
-                dealData.deal_expiration_date?.slice(0, 16) ??
-                formatDate(new Date()),
-              acceptConditions: dealData.terms_accepted ?? false,
-              collectionLocation: dealData.collection_location,
-              pictures: dealData.images ?? [],
-              deliveryCost: 0,
-            });
-
-            setProducts(dealData.products ?? []);
-          }
-        } catch (err) {
-          console.error(t("create_deal.console_fetching_error"), err); // Fetch error message
+          setProducts(dealData.products ?? []);
         }
-        setLoading(false);
+      } catch (err) {
+        console.error(t("create_deal.console_fetching_error"), err); // Fetch error message
       }
+      setLoading(false);
     };
 
     fetchDeal();
-  }, [dealId, t]);
+  }, []);
 
   const handleBack = () => {
     navigate("/");

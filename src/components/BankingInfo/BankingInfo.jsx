@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Write2 } from "../../icons/Write2";
 import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 
-const BankingInfo = ({ label, placeholder, onChange, typ, info }) => {
+const BankingInfo = ({ label, placeholder, onChange, type, info }) => {
   const [value, setValue] = useState(info || "");
   const { t } = useTranslation(); // Initialize the translation hook
   console.log({ info });
