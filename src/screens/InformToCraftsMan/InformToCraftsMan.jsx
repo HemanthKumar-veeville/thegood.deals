@@ -9,6 +9,7 @@ import { inviteArtisan } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader"; // Assuming you have a CustomLoader component
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { Line } from "../../components/Line/Line";
+import { createStripeAccount } from "../../helpers/helperMethods";
 
 const InformToCraftsMan = () => {
   const [email, setEmail] = useState("");
@@ -61,6 +62,8 @@ const InformToCraftsMan = () => {
 
     try {
       setLoading(true); // Start loading
+      const response = await createStripeAccount(email);
+      console.log({ response });
       await dispatch(inviteArtisan({ dealId, email })).unwrap();
       setEmail(""); // Clear the email input
       navigate("/thanks-admin");

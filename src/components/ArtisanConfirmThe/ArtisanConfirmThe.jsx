@@ -19,6 +19,7 @@ import { validationByArtisan } from "../../redux/app/deals/dealSlice";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../Line/Line";
+import { onboardStripeAccount } from "../../helpers/helperMethods";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -56,7 +57,11 @@ export const ArtisanConfirmThe = ({
       );
       console.log("resultAction", resultAction);
       if (validationByArtisan.fulfilled.match(resultAction)) {
-        navigate("/deal-confirmed");
+        await onboardStripeAccount({
+          accountId: "acct_1QB7bOP1dSZSoI9Q",
+          refreshUrl: `https://thegood.deals/artisan-validation?deal_id=${dealId}`,
+          returnUrl: "https://thegood.deals/deal-confirmed",
+        });
       } else {
         console.error("Validation failed:", resultAction.payload);
       }
@@ -119,20 +124,20 @@ export const ArtisanConfirmThe = ({
         )}
         <ImageSlider pictures={dealState?.deal_images || [blogImage]} />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          {dealState?.deal_title || t("artisanConfirmThe.wine_crates")}
+          {dealState?.deal_title || "-"}
         </p>
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {dealState?.deal_duration || t("artisanConfirmThe.deal_duration")}
+              {dealState?.deal_duration || "-"}
             </p>
           </div>
         </div>
         <div className="flex self-stretch w-full items-center gap-2.5 relative flex-[0_0_auto]">
           <Map className="!relative !w-5 !h-5" />
           <p className="relative w-full font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] break-words [font-style:var(--body-small-regular-font-style)]">
-            {dealState?.location || t("artisanConfirmThe.location")}
+            {dealState?.collection_location || "-"}
           </p>
         </div>
         <Line />
@@ -150,8 +155,7 @@ export const ArtisanConfirmThe = ({
               {t("artisanConfirmThe.organized_by")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              {dealState?.organiser.name ||
-                t("artisanConfirmThe.organizer_name")}
+              {dealState?.organiser.name || "-"}
             </div>
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar
@@ -170,8 +174,7 @@ export const ArtisanConfirmThe = ({
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {dealState?.deal_description ||
-              t("artisanConfirmThe.deal_description")}
+            {dealState?.deal_description || "-"}
           </span>
           <span className="font-bold text-[#1b4f4a] underline">
             {t("artisanConfirmThe.read_more")}
@@ -186,8 +189,7 @@ export const ArtisanConfirmThe = ({
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {dealState?.["what's included"] ||
-              t("artisanConfirmThe.customers_receive")}
+            {dealState?.["what's included"] || "-"}
           </span>
           <span className="font-bold text-[#1b4f4a] underline">
             {t("artisanConfirmThe.read_more")}
@@ -210,7 +212,7 @@ export const ArtisanConfirmThe = ({
           <DeliveryTruck4 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-transparent text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
             <span className="text-[#1b4f4a] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-              {dealState?.location || "-"}
+              {dealState?.collection_location || "-"}
             </span>
           </p>
         </div>
