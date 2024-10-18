@@ -26,7 +26,7 @@ const ProductInfo = ({
   const [maximumRetailPrice, setMaximumRetailPrice] = useState(
     product?.market_price || ""
   );
-  const [productTitle, setProductTitle] = useState(product?.product_name || "");
+  const [productTitle, setProductTitle] = useState(product?.name || "");
   const [totalStock, setTotalStock] = useState(product?.total_stock || "");
   const [discountPercentage, setDiscountPercentage] = useState(
     product?.estimated_discount || 0
