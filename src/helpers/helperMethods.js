@@ -89,3 +89,46 @@ export const onboardStripeAccount = async ({
     }
   }
 };
+
+export const payToArtisan = async () => {
+  try {
+    // Define the payload for the API request
+    const payload = {
+      amount: 200, // Amount in cents (e.g., 200 = $2)
+      currency: "usd", // Currency code
+      destination: "acct_1QB7bOP1dSZSoI9Q", // Artisan's connected account ID
+      description: "Payment for artisan work", // Description of the transfer
+    };
+
+    // Make the API call to transfer funds
+    const response = await axios.post(
+      "http://localhost:3000/api/stripe/transfer-funds",
+      payload
+    );
+
+    // Handle the response
+    if (response.data.success) {
+      const transferData = response.data.data;
+      console.log("Funds transferred successfully!");
+      console.log("Transfer ID:", transferData.id);
+      console.log("Amount Transferred:", transferData.amount / 100, "USD");
+      console.log("Destination Account:", transferData.destination);
+      console.log("Transfer Description:", transferData.description);
+      console.log("Transaction ID:", transferData.balance_transaction);
+    } else {
+      console.error("Failed to transfer funds:", response.data.message);
+    }
+  } catch (error) {
+    // Handle errors
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      console.error("Server error:", error.response.data.message);
+    } else if (error.request) {
+      // No response received from the server
+      console.error("No response received:", error.request);
+    } else {
+      // Error in setting up the request
+      console.error("Error in request setup:", error.message);
+    }
+  }
+};

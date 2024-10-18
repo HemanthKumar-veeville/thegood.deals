@@ -442,11 +442,14 @@
     "deal_ends_in": "Deal ends in",
     "manage_friends": "Managing my friends",
     "collect_payment": "Collect payment",
+    "pay_artisan": "Pay to artisan",
     "endsIn": "ends in {{days}} days",
     "danger_alert": "The payment of one of the participants could not be made.",
     "error": "Something went wrong, Please try again later",
     "try_again": "Try Again",
-    "deal_completed": "The deal is paid. The artisan will prepare your orders."
+    "deal_completed": "The deal is paid. The artisan will prepare your orders.",
+    "deal_collected": "The amount has been collected from all the participants.",
+    "deal_completed_status": "Artisan Preparing Orders"
   },
   "draft_deal": {
     "back_button": "Back",

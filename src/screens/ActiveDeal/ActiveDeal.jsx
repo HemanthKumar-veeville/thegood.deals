@@ -37,6 +37,7 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { CheckmarkCircle } from "../../icons/CheckmarkCircle";
 import { Line } from "../../components/Line/Line";
+import axios from "axios";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ const ActiveDeal = () => {
   const [chargeStats, setChargeStats] = useState([]);
   const [isPaymentCollectedForAllOrders, setIsPaymentCollectedForAllOrders] =
     useState(false);
+  const [isDealPaid, setIsDealPaid] = useState(false);
 
   const handleBack = () => {
     navigate("/");
@@ -101,6 +103,56 @@ const ActiveDeal = () => {
     navigate(
       `/invite-loved-ones?deal_id=${deal_id}` + "&is_creator=" + is_creator
     );
+  };
+
+  const payToArtisan = async () => {
+    setIsCollectionInProgress(true);
+
+    try {
+      // Define the payload for the API request
+      const payload = {
+        amount: 200, // Amount in cents (e.g., 200 = $2)
+        currency: "usd", // Currency code
+        destination: "acct_1QB7bOP1dSZSoI9Q", // Artisan's connected account ID
+        description: "Payment for artisan work", // Description of the transfer
+      };
+
+      // Make the API call to transfer funds
+      const response = await axios.post(
+        "http://localhost:3000/api/stripe/transfer-funds",
+        payload
+      );
+
+      // Handle the response
+      if (response.data.success) {
+        const transferData = response.data.data;
+        console.log("Funds transferred successfully!");
+        console.log("Transfer ID:", transferData.id);
+        console.log("Amount Transferred:", transferData.amount / 100, "USD");
+        console.log("Destination Account:", transferData.destination);
+        console.log("Transfer Description:", transferData.description);
+        console.log("Transaction ID:", transferData.balance_transaction);
+        setIsDealPaid(true);
+      } else {
+        console.error("Failed to transfer funds:", response.data.message);
+      }
+    } catch (error) {
+      // Handle errors
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error("Server error:", error.response.data.message);
+      } else if (error.request) {
+        // No response received from the server
+        console.error("No response received:", error.request);
+      } else {
+        // Error in setting up the request
+        console.error("Error in request setup:", error.message);
+      }
+    } finally {
+      // This block will always run, regardless of success or failure
+      setIsCollectionInProgress(false);
+      // You can add any cleanup logic or final steps here if needed
+    }
   };
 
   const chargeDeal = async () => {
@@ -163,7 +215,9 @@ const ActiveDeal = () => {
                   </div>
                   <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
                     <span className="font-bold">
-                      {t("active_deal.deal_completed")}
+                      {isDealPaid
+                        ? t("active_deal.deal_completed")
+                        : t("active_deal.deal_collected")}
                     </span>
                   </p>
                 </div>
@@ -252,14 +306,24 @@ const ActiveDeal = () => {
                 {dealData?.collection_location || "-"}
               </p>
             </div>
-            {!isCollectionInProgress && (
+            {!isCollectionInProgress && !isDealPaid && (
               <div
                 className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
-                onClick={chargeDeal}
+                onClick={
+                  !isPaymentCollectedForAllOrders
+                    ? chargeDeal
+                    : !isDealPaid
+                    ? payToArtisan
+                    : null
+                }
               >
                 <EuroCoin className="!relative !w-5 !h-5" />
                 <button className="box-border font-medium text-white text-base text-center">
-                  {t("active_deal.collect_payment")}
+                  {!isPaymentCollectedForAllOrders
+                    ? t("active_deal.collect_payment")
+                    : !isDealPaid
+                    ? t("active_deal.pay_artisan")
+                    : t("active_deal.deal_completed_status")}
                 </button>
               </div>
             )}
