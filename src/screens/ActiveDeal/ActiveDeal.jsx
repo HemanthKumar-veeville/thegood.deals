@@ -313,7 +313,7 @@ const ActiveDeal = () => {
                   !isPaymentCollectedForAllOrders
                     ? chargeDeal
                     : !isDealPaid
-                    ? payToArtisan
+                    ? null
                     : null
                 }
               >

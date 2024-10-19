@@ -57,11 +57,7 @@ export const ArtisanConfirmThe = ({
       );
       console.log("resultAction", resultAction);
       if (validationByArtisan.fulfilled.match(resultAction)) {
-        await onboardStripeAccount({
-          accountId: "acct_1QB7bOP1dSZSoI9Q",
-          refreshUrl: `https://thegood.deals/artisan-validation?deal_id=${dealId}`,
-          returnUrl: "https://thegood.deals/deal-confirmed",
-        });
+        navigate("/deal-confirmed");
       } else {
         console.error("Validation failed:", resultAction.payload);
       }

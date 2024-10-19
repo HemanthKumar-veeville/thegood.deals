@@ -3,7 +3,7 @@ import i18next from "i18next";
 
 // Base URL for your API
 const BASE_URL = "https://thegood.deals/api";
-
+// const BASE_URL = "https://3a4f-106-206-54-30.ngrok-free.app/";
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
 console.log({ currentLanguage });

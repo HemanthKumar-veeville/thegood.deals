@@ -275,13 +275,20 @@ const dealSlice = createSlice({
       })
       .addCase(updateDealByDealId.fulfilled, (state, action) => {
         state.status = "succeeded";
-        // // Update the deals array with the updated deal
-        // state.deals = state.deals.map((deal) =>
-        //   deal.id === action.payload.id ? action.payload : deal
-        // );
         state.deal = action.payload; // Update the specific deal if needed
       })
       .addCase(updateDealByDealId.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle validation be artisan
+      .addCase(validationByArtisan.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(validationByArtisan.fulfilled, (state, action) => {
+        state.status = "succeeded";
+      })
+      .addCase(validationByArtisan.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
