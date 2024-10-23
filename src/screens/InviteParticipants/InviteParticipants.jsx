@@ -21,6 +21,7 @@ import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { ClockAlt13 } from "../../icons/ClockAlt13";
 import { Access } from "../../components/Access/Access";
 import { Line } from "../../components/Line/Line";
+import { UserAlt } from "../../icons/UserAlt";
 
 export const InviteParticipants = ({
   HEADERIcon = (
@@ -110,29 +111,33 @@ export const InviteParticipants = ({
       <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
         <ImageSlider pictures={dealState?.deal_images || [blogImage]} />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
-          {dealState?.deal_title || t("artisanConfirmThe.wine_crates")}
+          {dealState?.deal_title || "-"}
         </p>
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {dealState?.deal_duration || t("artisanConfirmThe.deal_duration")}
+              {dealState?.deal_duration || "-"}
             </p>
           </div>
         </div>
         <div className="flex self-stretch w-full items-center gap-2.5 relative flex-[0_0_auto]">
           <Map className="!relative !w-5 !h-5" />
           <p className="relative w-full font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] break-words [font-style:var(--body-small-regular-font-style)]">
-            {dealState?.location || t("artisanConfirmThe.location")}
+            {dealState?.collection_location || "-"}
           </p>
         </div>
         <Line />
         <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-          <img
-            className="relative w-[50px] h-[50px] object-cover rounded-md"
-            alt="Organizer"
-            src={dealState?.organiser?.organiser_image || Human}
-          />
+          {dealState?.organiser?.organiser_image ? (
+            <img
+              className="relative w-[50px] h-[50px] object-cover rounded-md"
+              alt="Organizer"
+              src={dealState?.organiser?.organiser_image}
+            />
+          ) : (
+            <UserAlt />
+          )}
           <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
               {t("artisanConfirmThe.organized_by")}
@@ -171,8 +176,7 @@ export const InviteParticipants = ({
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {dealState?.["what's included"] ||
-              t("artisanConfirmThe.customers_receive")}
+            {dealState?.["what's included"] || "-"}
           </span>
           <span className="font-bold text-[#1b4f4a] underline">
             {t("artisanConfirmThe.read_more")}
@@ -187,15 +191,15 @@ export const InviteParticipants = ({
         </div>
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
-          <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-            {dealState?.delivery_date || t("artisanConfirmThe.delivery_date")}
+          <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
+            {dealState?.collection_date || "-"}
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <DeliveryTruck4 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-transparent text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] [font-style:var(--body-medium-regular-font-style)]">
             <span className="text-[#1b4f4a] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-              {dealState?.location || t("artisanConfirmThe.delivery_location")}
+              {dealState?.collection_location || "-"}
             </span>
           </p>
         </div>

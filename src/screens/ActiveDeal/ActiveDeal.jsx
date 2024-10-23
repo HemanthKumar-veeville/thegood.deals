@@ -87,8 +87,19 @@ const ActiveDeal = () => {
     waiting: { text: t("active_deal.waiting"), color: "warning" },
     draft: { text: t("active_deal.draft"), color: "info" },
   };
-  const fetchDeal = () => {
-    dispatch(getDealByDealId(deal_id));
+  const fetchDeal = async () => {
+    try {
+      const res = await dispatch(getDealByDealId(deal_id));
+      console.log({
+        res: res?.payload?.Deal[0]?.payment_collected_for_all_orders,
+      });
+      setIsPaymentCollectedForAllOrders(
+        res?.payload?.Deal[0]?.payment_collected_for_all_orders
+      );
+      setIsDealPaid(res?.payload?.Deal[0]?.is_artisan_paid);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
