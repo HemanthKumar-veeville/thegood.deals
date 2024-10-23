@@ -50,7 +50,7 @@ const AdminViewGoodDeal = () => {
   }
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   console.log({ dealState });

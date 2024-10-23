@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { RatingStar } from "../../components/RatingStar";
 import { Line } from "../../components/Line/Line";
+import { Send1 } from "../../icons/Send1";
 
 const GuestDealView = () => {
   const { t } = useTranslation();
@@ -160,12 +161,22 @@ const GuestDealView = () => {
             </div>
           </div>
           <div
+            className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
+            onClick={handleOrder}
+          >
+            <Send1 className="!relative !w-5 !h-5" color="white" />
+
+            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+              {t("active_deal.place_order")}
+            </button>
+          </div>
+          <div
             className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
             onClick={handleMyOrders}
           >
             <Box44 className="!relative !w-5 !h-5" />
             <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("deal.my_orders")}
+              {t("active_deal.my_orders_label")}
             </button>
           </div>
         </div>
