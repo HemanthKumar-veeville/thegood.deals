@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Swal from "sweetalert2"; // Import SweetAlert2
 import { Button } from "../../components/Button/Button";
 import { ArrowLeft1 } from "../../icons/ArrowLeft1";
 import { useDispatch } from "react-redux";

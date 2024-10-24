@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next"; // Import the useTranslation hook
-import Swal from "sweetalert2";
 import { Button } from "../../components/Button/Button.jsx";
 import AppBar from "../../components/AppBar/AppBar";
 import { useLocation, useNavigate } from "react-router-dom";

@@ -9,8 +9,9 @@ import { Whatsapp } from "../../icons/Whatsapp";
 import { useTranslation } from "react-i18next";
 import AppBar from "../../components/AppBar/AppBar";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { Line } from "../../components/Line/Line";
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 
 const InviteLovedOnes = () => {
   const { t } = useTranslation(); // Using the translation hook
@@ -21,6 +22,10 @@ const InviteLovedOnes = () => {
   const is_creator = queryParams.get("is_creator");
   const shareLink = `https://thegood.deals/deal_details_invite?deal_id=${dealId}`;
   const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleAddEmail = () => {
     if (newEmail) {
@@ -34,19 +39,15 @@ const InviteLovedOnes = () => {
     navigate("/admin-invitations-sent");
   };
 
-  const handleCopyLink = () => {
-    navigator.clipboard
-      .writeText(shareLink)
-      .then(() => {
-        Swal.fire({
-          icon: "success",
-          title: t("inviteLovedOnes.copied_to_clipboard.title"),
-          text: t("inviteLovedOnes.copied_to_clipboard.message"),
-        });
-      })
-      .catch((err) => {
-        console.error("Could not copy text: ", err);
-      });
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareLink);
+      setIsSuccess(true);
+      setSuccessMessage(t("inviteLovedOnes.copied_to_clipboard.message"));
+    } catch (err) {
+      setIsError(true);
+      setErrorMessage(err);
+    }
   };
 
   const handleBack = () => {
@@ -76,6 +77,20 @@ const InviteLovedOnes = () => {
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)}
+        />
+      )}
+      {isSuccess && (
+        <ShowCustomSuccessModal
+          message={successMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsSuccess(false)} // Reset modal state on close
+        />
+      )}
       <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
         <p className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {t("inviteLovedOnes.title")}

@@ -6,9 +6,9 @@ import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
 import { useDispatch } from "react-redux";
 import { resetPassword } from "../../redux/app/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { useTranslation } from "react-i18next";
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 
 const InputField = ({
   id,
@@ -81,6 +81,8 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const emailParam = new URLSearchParams(window.location.search).get("email");
@@ -119,14 +121,11 @@ const ResetPassword = () => {
         await dispatch(resetPassword(values)).unwrap();
         navigate("/reset-password-success");
       } catch (error) {
-        Swal.fire({
-          title: t("resetPassword.errors.error_title"),
-          text:
-            error?.response?.data?.detail ||
-            t("resetPassword.errors.generic_error"),
-          icon: "error",
-          confirmButtonText: t("resetPassword.errors.confirm"),
-        });
+        setIsError(true);
+        setErrorMessage(
+          error?.response?.data?.detail ||
+            t("resetPassword.errors.generic_error")
+        );
       } finally {
         setLoading(false);
       }
@@ -144,6 +143,13 @@ const ResetPassword = () => {
   return (
     <div className="relative w-full h-screen bg-primary-background">
       {loading && <CustomLoader />}
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)}
+        />
+      )}
       {!loading && (
         <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
           <div className="relative w-fit font-heading-6 font-semibold text-primary-color text-[length:var(--heading-6-font-size)] text-center">

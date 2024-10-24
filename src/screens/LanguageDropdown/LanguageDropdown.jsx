@@ -1,7 +1,6 @@
 // src/screens/LanguageDropDown/LanguageDropDown.jsx
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { FranceFlag, UK_Flag_Icon } from "../../images";

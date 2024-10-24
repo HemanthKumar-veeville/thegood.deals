@@ -1,7 +1,6 @@
 // src/screens/SideBar/SideBar.jsx
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { FranceFlag, UK_Flag_Icon } from "../../images";
@@ -53,48 +52,6 @@ const SideBar = React.memo(({ onClose }) => {
     },
     [navigate, handleClose]
   );
-
-  /**
-   * Handle language change using SweetAlert2
-   *
-   * This function displays a SweetAlert2 modal for language selection and updates the selected language.
-   */
-  const handleLanguageChange = useCallback(() => {
-    Swal.fire({
-      title: t("side_bar.select_language"),
-      showCancelButton: false,
-      showConfirmButton: false,
-      showCloseButton: true,
-      html: `
-        <button id="english-button" class="swal2-confirm swal2-styled ${
-          selectedLanguage === "english"
-            ? "bg-blue-500 text-white"
-            : "bg-gray-200 text-black"
-        } px-4 py-2 rounded-md mr-2">${t("side_bar.language.english")}</button>
-        <button id="french-button" class="swal2-confirm swal2-styled ${
-          selectedLanguage === "french"
-            ? "bg-blue-500 text-white"
-            : "bg-gray-200 text-black"
-        } px-4 py-2 rounded-md">${t("side_bar.language.french")}</button>
-      `,
-      didOpen: () => {
-        const englishButton = Swal.getPopup().querySelector("#english-button");
-        const frenchButton = Swal.getPopup().querySelector("#french-button");
-
-        englishButton.addEventListener("click", () => {
-          setSelectedLanguage("english");
-          i18n.changeLanguage("en");
-          Swal.close();
-        });
-
-        frenchButton.addEventListener("click", () => {
-          setSelectedLanguage("french");
-          i18n.changeLanguage("fr");
-          Swal.close();
-        });
-      },
-    });
-  }, [selectedLanguage, setSelectedLanguage, i18n, t]);
 
   // Memoize menu items to avoid unnecessary re-renders
   const menuItems = useMemo(

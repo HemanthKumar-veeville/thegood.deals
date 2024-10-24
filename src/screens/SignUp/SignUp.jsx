@@ -5,11 +5,11 @@ import { Button } from "../../components/Button/Button";
 import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../helpers/helperMethods";
-import Swal from "sweetalert2";
 import { Dropdown } from "../../components/CountryDropDown";
 import { ChevronDown } from "../../icons/ChevronDown";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../context/LanguageContext";
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 
 const InputField = ({
   id,
@@ -134,6 +134,8 @@ export const SignUp = ({ setIsLoading }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Load saved form values from localStorage
   useEffect(() => {
@@ -243,12 +245,10 @@ export const SignUp = ({ setIsLoading }) => {
           window.scrollTo(0, 0);
         }
       } catch (error) {
-        Swal.fire({
-          title: t("signup.errors.error_title"),
-          text: error?.response?.data?.detail || t("signup.errors.error_desc"),
-          icon: "error",
-          confirmButtonText: t("signup.errors.error_ack"),
-        });
+        setIsError(true);
+        setErrorMessage(
+          error?.response?.data?.detail || t("signup.errors.error_desc")
+        );
         setIsLoading(false);
       }
     },
@@ -288,6 +288,13 @@ export const SignUp = ({ setIsLoading }) => {
       <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg text-center tracking-[0] leading-[26px] whitespace-nowrap">
         {t("signup.subtitle")}
       </div>
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)}
+        />
+      )}
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col w-full gap-[20px]"

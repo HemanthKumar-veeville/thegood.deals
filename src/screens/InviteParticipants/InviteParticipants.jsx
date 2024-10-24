@@ -15,13 +15,13 @@ import { blogImage, Human } from "../../images";
 import { useNavigate, useLocation } from "react-router-dom";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { createRequest } from "../../redux/app/requests/requestSlice";
-import Swal from "sweetalert2";
 import { validationByArtisan } from "../../redux/app/deals/dealSlice";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { ClockAlt13 } from "../../icons/ClockAlt13";
 import { Access } from "../../components/Access/Access";
 import { Line } from "../../components/Line/Line";
 import { UserAlt } from "../../icons/UserAlt";
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 
 export const InviteParticipants = ({
   HEADERIcon = (
@@ -39,6 +39,8 @@ export const InviteParticipants = ({
   const pathLocation = useLocation();
   const pathname = pathLocation?.pathname;
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     dispatch(fetchDealValidationDetails(dealId));
@@ -77,20 +79,14 @@ export const InviteParticipants = ({
       if (response.payload.code === 201) {
         navigate("/request-sent");
       } else {
-        Swal.fire({
-          icon: "error",
-          title: t("errors.title"),
-          text: response.payload.detail || t("errors.login_required"),
-        });
+        setErrorMessage(response.payload.detail || t("errors.login_required"));
+        setIsError(true);
         if (response?.payload?.detail !== t("errors.already_exists"))
           navigate("/auth?login");
       }
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: t("errors.title"),
-        text: t("errors.request_failed"),
-      });
+      setErrorMessage(error || t("errors.request_failed"));
+      setIsError(true);
     }
   };
 
@@ -108,6 +104,13 @@ export const InviteParticipants = ({
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)}
+        />
+      )}
       <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
         <ImageSlider pictures={dealState?.deal_images || [blogImage]} />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
