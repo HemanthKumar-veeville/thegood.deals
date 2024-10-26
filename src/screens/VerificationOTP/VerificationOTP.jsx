@@ -157,17 +157,15 @@ export const VerificationOTP = () => {
       if (response?.status === 201) {
         dispatch(checkUserLoginStatus());
         navigate("/");
-      } else {
-        setLoading(false);
       }
     } catch (error) {
       console.error(t("Payment.error_title"), error);
       setIsError(true);
       setErrorMessage(error?.response?.data?.detail);
+    } finally {
+      setOtp(Array(5).fill(""));
       setLoading(false);
     }
-    setOtp(Array(5).fill(""));
-    setLoading(false);
   };
 
   return (

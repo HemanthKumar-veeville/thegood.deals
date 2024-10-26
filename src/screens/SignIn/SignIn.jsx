@@ -84,6 +84,7 @@ const SignIn = ({ setIsLoading }) => {
   };
 
   const handleGoogleSignIn = async () => {
+    setIsLoading(true);
     try {
       // Directly call the backend API route
       const res = await axiosInstance("/login/google");
@@ -101,6 +102,8 @@ const SignIn = ({ setIsLoading }) => {
         "Google Sign-In error:",
         error.response ? error.response.data : error.message
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 

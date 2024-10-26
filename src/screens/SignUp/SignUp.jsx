@@ -249,6 +249,7 @@ export const SignUp = ({ setIsLoading }) => {
         setErrorMessage(
           error?.response?.data?.detail || t("signup.errors.error_desc")
         );
+      } finally {
         setIsLoading(false);
       }
     },

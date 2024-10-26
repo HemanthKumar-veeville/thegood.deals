@@ -4,6 +4,7 @@ import CheckoutForm from "./CheckoutForm";
 import { axiosInstance } from "../helpers/helperMethods";
 import { useTranslation } from "react-i18next"; // Import useTranslation hook
 import { ShowCustomErrorModal } from "../components/ErrorAlert/ErrorAlert.jsx";
+import CustomLoader from "./CustomLoader/CustomLoader.jsx";
 
 function Payment({ orderId, heading, btnText, ...props }) {
   const { stripePromise } = props;
@@ -12,10 +13,12 @@ function Payment({ orderId, heading, btnText, ...props }) {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { t } = useTranslation(); // Initialize translation hook
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Define an async function inside the useEffect
     const createPaymentIntent = async () => {
+      setLoading(true);
       try {
         // Create a FormData object and append the static fields
         const formData = new FormData();
@@ -34,6 +37,8 @@ function Payment({ orderId, heading, btnText, ...props }) {
         console.error("Error creating PaymentIntent:", error);
         setIsError(true);
         setErrorMessage(error?.detail || t("Payment.fetch_error_message"));
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -50,6 +55,7 @@ function Payment({ orderId, heading, btnText, ...props }) {
           onClose={() => setIsError(false)} // Reset modal state on close
         />
       )}
+      {loading && <CustomLoader />}
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <CheckoutForm

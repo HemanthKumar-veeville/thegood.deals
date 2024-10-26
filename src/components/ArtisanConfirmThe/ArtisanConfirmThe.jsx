@@ -57,6 +57,7 @@ export const ArtisanConfirmThe = ({
       );
       console.log("resultAction", resultAction);
       if (validationByArtisan.fulfilled.match(resultAction)) {
+        onboardStripeAccount();
         navigate("/deal-confirmed");
       } else {
         console.error("Validation failed:", resultAction.payload);
