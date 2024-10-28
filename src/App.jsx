@@ -148,8 +148,14 @@ function App() {
 
   useEffect(async () => {
     const checkLoginStatus = async () => {
-      await dispatch(checkUserLoginStatus());
-      setIsReady(true);
+      setIsReady(false);
+      try {
+        await dispatch(checkUserLoginStatus());
+      } catch (error) {
+        console.error("Error checking login status:", error);
+      } finally {
+        setIsReady(true);
+      }
     };
     await checkLoginStatus();
   }, [dispatch]);
