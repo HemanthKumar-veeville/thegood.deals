@@ -71,6 +71,7 @@ const requestSlice = createSlice({
       // Fetch requests by deal
       .addCase(fetchRequestsByDeal.pending, (state) => {
         state.requestStatus = "loading";
+        state.requestError = null;
       })
       .addCase(fetchRequestsByDeal.fulfilled, (state, action) => {
         state.requestStatus = "succeeded";
@@ -84,6 +85,7 @@ const requestSlice = createSlice({
       // Create new request
       .addCase(createRequest.pending, (state) => {
         state.requestStatus = "loading";
+        state.requestError = null;
       })
       .addCase(createRequest.fulfilled, (state, action) => {
         state.requestStatus = "succeeded";
@@ -97,11 +99,12 @@ const requestSlice = createSlice({
       // Process request (accept/refuse)
       .addCase(processRequest.pending, (state) => {
         state.processStatus = "loading";
+        state.processError = null;
       })
       .addCase(processRequest.fulfilled, (state, action) => {
         state.processStatus = "succeeded";
         state.processError = null;
-        // You can update the request list or handle the specific request update logic here
+        // TODO: Implement request list update logic
       })
       .addCase(processRequest.rejected, (state, action) => {
         state.processStatus = "failed";

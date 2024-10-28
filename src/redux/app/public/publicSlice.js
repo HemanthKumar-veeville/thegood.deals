@@ -44,6 +44,8 @@ const publicSlice = createSlice({
       // Submit help request
       .addCase(submitHelpRequest.pending, (state) => {
         state.helpRequestStatus = "loading";
+        state.helpRequestError = null; // Reset error when starting new request
+        state.helpRequestMessage = null; // Consider resetting message as well
       })
       .addCase(submitHelpRequest.fulfilled, (state, action) => {
         state.helpRequestStatus = "succeeded";
@@ -53,6 +55,7 @@ const publicSlice = createSlice({
       .addCase(submitHelpRequest.rejected, (state, action) => {
         state.helpRequestStatus = "failed";
         state.helpRequestError = action.payload;
+        state.helpRequestMessage = null; // Consider resetting message on failure
       });
   },
 });

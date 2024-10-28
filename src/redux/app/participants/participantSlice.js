@@ -32,6 +32,7 @@ const participantSlice = createSlice({
       // Fetch participants by deal
       .addCase(fetchParticipantsByDeal.pending, (state) => {
         state.participantStatus = "loading";
+        state.participantError = null;
       })
       .addCase(fetchParticipantsByDeal.fulfilled, (state, action) => {
         state.participantStatus = "succeeded";

@@ -49,6 +49,7 @@ const reviewSlice = createSlice({
       // Submit participant review
       .addCase(submitParticipantReview.pending, (state) => {
         state.reviewStatus = "loading";
+        state.reviewError = null; // Add error reset
       })
       .addCase(submitParticipantReview.fulfilled, (state) => {
         state.reviewStatus = "succeeded";
@@ -61,6 +62,7 @@ const reviewSlice = createSlice({
       // Submit organizer review
       .addCase(submitOrganizerReview.pending, (state) => {
         state.reviewStatus = "loading";
+        state.reviewError = null; // Add error reset
       })
       .addCase(submitOrganizerReview.fulfilled, (state) => {
         state.reviewStatus = "succeeded";

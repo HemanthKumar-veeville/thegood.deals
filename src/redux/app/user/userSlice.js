@@ -122,6 +122,7 @@ const userSlice = createSlice({
       // Handle user login status check
       .addCase(checkUserLoginStatus.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(checkUserLoginStatus.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -135,6 +136,7 @@ const userSlice = createSlice({
       // Fetch user profile with deals and reviews
       .addCase(fetchUserProfileWithDealsAndReviews.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(
         fetchUserProfileWithDealsAndReviews.fulfilled,
@@ -156,6 +158,7 @@ const userSlice = createSlice({
       // Handle forgot password
       .addCase(forgotPassword.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(forgotPassword.fulfilled, (state) => {
         state.status = "succeeded";
@@ -168,6 +171,7 @@ const userSlice = createSlice({
       // Handle reset password
       .addCase(resetPassword.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(resetPassword.fulfilled, (state) => {
         state.status = "succeeded";
@@ -184,10 +188,15 @@ const userSlice = createSlice({
         state.userDeals = [];
         state.userReviews = [];
         state.status = "idle";
+        state.error = null;
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
       });
   },
 });

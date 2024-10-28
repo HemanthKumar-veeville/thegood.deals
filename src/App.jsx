@@ -146,12 +146,12 @@ function App() {
     );
   }, []);
 
-  useEffect(() => {
+  useEffect(async () => {
     const checkLoginStatus = async () => {
       await dispatch(checkUserLoginStatus());
       setIsReady(true);
     };
-    checkLoginStatus();
+    await checkLoginStatus();
   }, [dispatch]);
 
   if (!isReady) {

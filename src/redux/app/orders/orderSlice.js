@@ -162,6 +162,20 @@ const orderSlice = createSlice({
         state.orderStatus = "failed";
         state.orderError = action.payload; // Set the error message
         state.order = null; // Clear order data on failure
+      })
+
+      // setup Payment For Order
+      .addCase(setupPaymentForOrder.pending, (state) => {
+        state.orderStatus = "loading";
+        state.orderError = null;
+      })
+      .addCase(setupPaymentForOrder.fulfilled, (state, action) => {
+        state.orderStatus = "succeeded";
+        state.orderError = null;
+      })
+      .addCase(setupPaymentForOrder.rejected, (state, action) => {
+        state.orderStatus = "failed";
+        state.orderError = action.payload;
       });
   },
 });
