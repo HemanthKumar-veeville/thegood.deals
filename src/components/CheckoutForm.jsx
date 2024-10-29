@@ -2,7 +2,7 @@ import {
   PaymentElement,
   LinkAuthenticationElement,
 } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useTranslation } from "react-i18next";
 import { ArrowRight1 } from "../icons/ArrowRight1";
@@ -27,6 +27,9 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const dispatch = useDispatch();
   const location = useLocation(); // Use location to access query params
   const [isConfirmSetUpLoading, setIsConfirmSetupLoading] = useState(false);
+  const [isError, setIsError] = useState(
+    orderStatus === "failed" ? true : false
+  );
 
   // Extract orderId from the query parameters
   const queryParams = new URLSearchParams(location.search);
@@ -160,17 +163,6 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
       },
     },
   };
-
-  if (orderStatus === "failed") {
-    return (
-      <ShowCustomErrorModal
-        message={orderError?.detail}
-        buttonText={t("waiting_deal.got_it")}
-        shouldCloseOnOverlayClick={false}
-        // handleClick={fetchOrder}
-      />
-    );
-  }
 
   return (
     <form
