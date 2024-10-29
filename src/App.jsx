@@ -146,7 +146,7 @@ function App() {
     );
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     const checkLoginStatus = async () => {
       setIsReady(false);
       try {
@@ -157,7 +157,7 @@ function App() {
         setIsReady(true);
       }
     };
-    await checkLoginStatus();
+    checkLoginStatus();
   }, [dispatch]);
 
   if (!isReady) {

@@ -42,8 +42,8 @@ export const ArtisanConfirmThe = ({
   const [errorMessage, setErrorMessage] = useState("");
   const [accountId, setAccountId] = useState(null);
 
-  useEffect(async () => {
-    const details = await dispatch(fetchDealValidationDetails(dealId)).unwrap();
+  useEffect(() => {
+    const details = dispatch(fetchDealValidationDetails(dealId)).unwrap();
     console.log({ details });
     setAccountId(details?.Deal?.artisan_acc_id);
   }, [dispatch, dealId]);
