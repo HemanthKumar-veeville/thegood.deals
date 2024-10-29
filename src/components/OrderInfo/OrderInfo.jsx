@@ -4,6 +4,7 @@ import { fetchOrderById } from "../../redux/app/orders/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import { useTranslation } from "react-i18next"; // Initialize translation
+import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
 export const OrderInfo = ({ orderId }) => {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -17,10 +18,12 @@ export const OrderInfo = ({ orderId }) => {
   const orderStatus = useSelector((state) => state.orders.orderStatus);
   const orderError = useSelector((state) => state.orders.orderError);
   const orderState = order?.Orders;
-
+  const fetchOrder = () => {
+    dispatch(fetchOrderById({ orderId }));
+  };
   // Dispatch fetchOrderById on component mount
   useEffect(() => {
-    dispatch(fetchOrderById({ orderId }));
+    fetchOrder();
   }, [dispatch, orderId]);
 
   console.log({ orderState });
@@ -49,7 +52,14 @@ export const OrderInfo = ({ orderId }) => {
   }
 
   if (orderStatus === "failed") {
-    return <div>{t("order.error", { error: orderError })}</div>;
+    return (
+      <ShowCustomErrorModal
+        message={orderError?.detail}
+        buttonText={t("waiting_deal.got_it")}
+        shouldCloseOnOverlayClick={false}
+        // handleClick={fetchOrder}
+      />
+    );
   }
 
   return (

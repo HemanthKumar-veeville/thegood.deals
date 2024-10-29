@@ -63,7 +63,7 @@ const InformToCraftsMan = () => {
     try {
       setLoading(true); // Start loading
       await dispatch(inviteArtisan({ dealId, email })).unwrap();
-      await createStripeAccount(email);
+      await createStripeAccount(email, dealId);
       setEmail(""); // Clear the email input
       navigate("/thanks-admin");
     } catch (err) {

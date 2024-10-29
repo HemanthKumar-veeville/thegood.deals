@@ -3,10 +3,9 @@ import i18next from "i18next";
 
 // Base URL for your API
 const BASE_URL = "https://thegood.deals/api";
-// const BASE_URL = "https://9396-106-51-243-165.ngrok-free.app/";
+// const BASE_URL = "https://c796-106-51-243-165.ngrok-free.app/";
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
-console.log({ currentLanguage });
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -20,12 +19,12 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-export const createStripeAccount = async (email) => {
+export const createStripeAccount = async (email, dealId) => {
   try {
     const formData = new FormData();
     formData.append("email", email);
     const response = await axiosInstance.post(
-      "/create_stripe_account",
+      `create_stripe_account/${dealId}`,
       formData
     );
 
@@ -49,14 +48,10 @@ export const onboardStripeAccount = async ({
   returnUrl,
 }) => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/api/stripe/create-account-link",
-      {
-        accountId,
-        refreshUrl,
-        returnUrl,
-      }
-    );
+    const response = await axiosInstance.post(`/onboarding_link/${accountId}`, {
+      refreshUrl,
+      returnUrl,
+    });
 
     // Handling the success response
     if (response.data.success) {

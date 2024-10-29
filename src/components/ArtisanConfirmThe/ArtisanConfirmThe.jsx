@@ -20,6 +20,7 @@ import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../Line/Line";
 import { onboardStripeAccount } from "../../helpers/helperMethods";
+import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -39,9 +40,12 @@ export const ArtisanConfirmThe = ({
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [accountId, setAccountId] = useState(null);
 
-  useEffect(() => {
-    dispatch(fetchDealValidationDetails(dealId));
+  useEffect(async () => {
+    const details = await dispatch(fetchDealValidationDetails(dealId)).unwrap();
+    console.log({ details });
+    setAccountId(details?.Deal?.artisan_acc_id);
   }, [dispatch, dealId]);
 
   const handleRefuse = () => {
@@ -57,8 +61,9 @@ export const ArtisanConfirmThe = ({
       );
       console.log("resultAction", resultAction);
       if (validationByArtisan.fulfilled.match(resultAction)) {
-        onboardStripeAccount();
-        navigate("/deal-confirmed");
+        const refreshUrl = `https://thegood.deals/artisan-validation?deal_id=${dealId}`;
+        const returnUrl = `https://thegood.deals/deal-confirmed`;
+        await onboardStripeAccount({ accountId, refreshUrl, returnUrl });
       } else {
         console.error("Validation failed:", resultAction.payload);
       }

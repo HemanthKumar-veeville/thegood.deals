@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setupPaymentForOrder } from "../redux/app/orders/orderSlice";
 import CustomLoader from "./CustomLoader/CustomLoader";
 import { Line } from "./Line/Line";
+import { ShowCustomErrorModal } from "./ErrorAlert/ErrorAlert";
 
 export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const stripe = useStripe();
@@ -18,6 +19,8 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.account.profile);
+  const orderError = useSelector((state) => state.orders.orderError);
+  const orderStatus = useSelector((state) => state.orders.orderStatus);
   const [email, setEmail] = useState(user?.data?.email); // Allow dynamic email entry
   const { t } = useTranslation(); // Use translation hook
   const navigate = useNavigate();
@@ -68,8 +71,9 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
         try {
           await dispatch(
             setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId })
-          );
+          ).unwrap();
           setMessage(t("checkout.setup_confirmed")); // Translated message
+
           navigate(`/thanks-payment-setup?orderId=${orderId}`); // Navigate to success page
         } catch (dispatchError) {
           console.error("Error during dispatch:", dispatchError);
@@ -156,6 +160,17 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
       },
     },
   };
+
+  if (orderStatus === "failed") {
+    return (
+      <ShowCustomErrorModal
+        message={orderError?.detail}
+        buttonText={t("waiting_deal.got_it")}
+        shouldCloseOnOverlayClick={false}
+        // handleClick={fetchOrder}
+      />
+    );
+  }
 
   return (
     <form
