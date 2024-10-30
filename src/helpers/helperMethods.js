@@ -2,8 +2,8 @@ import axios from "axios";
 import i18next from "i18next";
 
 // Base URL for your API
-// const BASE_URL = "https://thegood.deals/api";
-const BASE_URL = "https://ed28-49-204-129-158.ngrok-free.app/";
+const BASE_URL = "https://thegood.deals/api";
+// const BASE_URL = "https://29e3-49-204-129-158.ngrok-free.app/";
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
 
