@@ -21,6 +21,31 @@ export const chargeGroupPayment = createAsyncThunk(
   }
 );
 
+// Async thunk for payout
+export const payoutArtisan = createAsyncThunk(
+  "payments/payoutArtisan",
+  async ({ dealId, amount, currency }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/pay_artisan/${dealId}`,
+        {
+          amount,
+          currency,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // Add any additional headers if needed
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // Async thunk for fetching Stripe balance for a deal
 export const fetchStripeBalance = createAsyncThunk(
   "payments/fetchStripeBalance",
@@ -51,6 +76,18 @@ const paymentSlice = createSlice({
         state.error = null; // Clear any errors
       })
       .addCase(chargeGroupPayment.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload; // Set the error message
+      })
+      .addCase(payoutArtisan.pending, (state) => {
+        state.status = "loading";
+        state.error = null; // Reset error before a new request
+      })
+      .addCase(payoutArtisan.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.error = null; // Clear any errors
+      })
+      .addCase(payoutArtisan.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload; // Set the error message
       })
