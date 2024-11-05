@@ -1581,6 +1581,8 @@
     "wallet_info_amount": "€1050",
     "info_text": "We will verify the participants' payments, before settling the deal owed to the artisan.",
     "unlock_funds_button": "Pay the artisan",
-    "back_to_home_button": "Return to home"
+    "back_to_home_button": "Return to home",
+    "approved_balance": "Approved",
+    "available_balance": "Available"
   }
 }

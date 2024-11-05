@@ -1588,6 +1588,8 @@
     "wallet_info_amount": "1050 €",
     "info_text": "Nous procéderons à la vérification des paiements des participants, avant de régler le deal dû à l’artisan.",
     "unlock_funds_button": "Payer l’artisan",
-    "back_to_home_button": "Retour à l'accueil"
+    "back_to_home_button": "Retour à l'accueil",
+    "approved_balance": "Approuvé",
+    "available_balance": "Disponible"
   }
 }

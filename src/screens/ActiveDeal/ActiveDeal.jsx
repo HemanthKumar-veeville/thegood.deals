@@ -118,7 +118,7 @@ const ActiveDeal = () => {
   };
 
   const payToArtisan = async () => {
-    navigate("/deal-wallet");
+    navigate(`/deal-wallet?deal_id=${deal_id}`);
   };
 
   const chargeDeal = async () => {

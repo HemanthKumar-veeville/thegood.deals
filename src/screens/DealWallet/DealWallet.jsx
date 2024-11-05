@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft2 } from "../../icons/ArrowLeft2";
 import { Box4 } from "../../icons/Box4";
 import { FileExport2 } from "../../icons/FileExport2";
-import { useNavigate } from "react-router-dom";
 import { Line } from "../../components/Line/Line";
+import { fetchStripeBalance } from "../../redux/app/payments/paymentSlice";
 
 const DealWallet = () => {
   const { t } = useTranslation();
   const [fundsUnlocked, setFundsUnlocked] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get balance and loading status from Redux store
+  const { balance, status, error } = useSelector((state) => state.payments);
+  const availableBalance = balance?.balance?.available[0];
+  const pendingBalance = balance?.balance?.pending[0];
+  console.log({ availableBalance });
+  // Extract deal_id from query params
+  const dealId = new URLSearchParams(location.search).get("deal_id");
 
   const handleUnlockFunds = () => {
     setFundsUnlocked(true);
@@ -22,7 +34,11 @@ const DealWallet = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    // Dispatch fetchStripeBalance when the component mounts
+    if (dealId) {
+      dispatch(fetchStripeBalance({ dealId }));
+    }
+  }, [dealId, dispatch]);
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background mx-auto">
@@ -65,11 +81,26 @@ const DealWallet = () => {
                 </div>
               </div>
             </div>
-            <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
-              <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
-                {t("deal_wallet.wallet_info_amount")}
+
+            <div className="w-full flex justify-between items-center">
+              <div className="relative mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
+                {`${t("deal_wallet.approved_balance")}`}
               </div>
-              <div className="relative w-[91px] h-[22px]" />
+              <div className="relative mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
+                {`${availableBalance?.currency === "eur" ? "€" : "USD" || "€"}${
+                  availableBalance?.amount || 0
+                }`}
+              </div>
+            </div>
+            <div className="w-full flex justify-between items-center">
+              <div className="relative mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
+                {`${t("deal_wallet.available_balance")}`}
+              </div>
+              <div className="relative mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
+                {`${pendingBalance?.currency === "eur" ? "€" : "USD" || "€"}${
+                  pendingBalance?.amount || 0
+                }`}
+              </div>
             </div>
           </div>
         </div>
