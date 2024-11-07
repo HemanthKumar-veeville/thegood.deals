@@ -70,7 +70,7 @@ const InformToCraftsMan = () => {
       console.error("Failed to invite artisan:", err);
       setIsError(true);
       setErrorMessage(
-        err.detail || t("inform_craftsman.errors.invitation_failed_message")
+        err?.detail || t("inform_craftsman.errors.invitation_failed_message")
       );
     } finally {
       setLoading(false); // Stop loading

@@ -4,8 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 // Base URL for your API
 const BASE_URL = "https://thegood.deals/api";
-// const BASE_URL =
-//   "https://ff35-2401-4900-4e7a-8a06-a175-d020-19d-e895.ngrok-free.app/";
+// const BASE_URL = "https://7861-106-51-243-165.ngrok-free.app/";
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
 const stripePromise = loadStripe(
@@ -32,19 +31,19 @@ export const createStripeAccount = async (email, dealId) => {
       business_type: "individual", // Explicitly specify business_type
       individual: {
         email: email,
-        first_name: "John", // Replace with actual user input
-        last_name: "Doe", // Replace with actual user input
-        address: {
-          city: "Paris", // Replace with actual user input
-          country: "FR",
-          line1: "123 Rue de Example", // Replace with actual user input
-          postal_code: "75001", // Replace with actual user input
-        },
-        dob: {
-          day: 15, // Replace with actual user input
-          month: 6, // Replace with actual user input
-          year: 1990, // Replace with actual user input
-        },
+        // first_name: "John", // Replace with actual user input
+        // last_name: "Doe", // Replace with actual user input
+        // address: {
+        //   city: "Paris", // Replace with actual user input
+        //   country: "FR",
+        //   line1: "123 Rue de Example", // Replace with actual user input
+        //   postal_code: "75001", // Replace with actual user input
+        // },
+        // dob: {
+        //   day: 15, // Replace with actual user input
+        //   month: 6, // Replace with actual user input
+        //   year: 1990, // Replace with actual user input
+        // },
       },
       tos_shown_and_accepted: true,
     });
