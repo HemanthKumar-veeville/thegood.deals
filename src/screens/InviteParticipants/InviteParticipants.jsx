@@ -22,6 +22,7 @@ import { Access } from "../../components/Access/Access";
 import { Line } from "../../components/Line/Line";
 import { UserAlt } from "../../icons/UserAlt";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 
 export const InviteParticipants = ({
   HEADERIcon = (
@@ -35,12 +36,15 @@ export const InviteParticipants = ({
   const { deal, status, error } = useSelector((state) => state.deals);
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
+  const is_request_sent = queryParams.get("is_request_sent");
   const dealState = deal?.Deal;
   const pathLocation = useLocation();
   const pathname = pathLocation?.pathname;
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isRequestSent, setIsRequestSent] = useState(is_request_sent || false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     dispatch(fetchDealValidationDetails(dealId));
@@ -74,18 +78,16 @@ export const InviteParticipants = ({
 
   const handleAcceptRequest = async () => {
     try {
-      const response = await dispatch(createRequest(dealId));
+      const response = await dispatch(createRequest(dealId)).unwrap();
       console.log({ response });
-      if (response.payload.code === 201) {
-        navigate("/request-sent");
-      } else {
-        setErrorMessage(response.payload.detail || t("errors.login_required"));
-        setIsError(true);
-        if (response?.payload?.detail !== t("errors.already_exists"))
-          navigate("/auth?login");
+      if (response?.detail === "Request created successfully") {
+        setIsSuccess(true);
+        setIsRequestSent(true);
+      } else if (response?.is_user_logged_in === false) {
+        navigate("/auth?signin");
       }
     } catch (error) {
-      setErrorMessage(error || t("errors.request_failed"));
+      setErrorMessage(error?.detail || t("errors.request_failed"));
       setIsError(true);
     }
   };
@@ -109,6 +111,13 @@ export const InviteParticipants = ({
           message={errorMessage}
           buttonText={t("waiting_deal.got_it")}
           onClose={() => setIsError(false)}
+        />
+      )}
+      {isSuccess && (
+        <ShowCustomSuccessModal
+          message={"Once the organizer confirms, you will be able to order."}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsSuccess(false)} // Reset modal state on close
         />
       )}
       <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
@@ -206,7 +215,11 @@ export const InviteParticipants = ({
             </span>
           </p>
         </div>
-        <Access isUserLoggedIn={isUserLoggedIn} handleAccept={handleAccept} />
+        <Access
+          isUserLoggedIn={isUserLoggedIn}
+          handleAccept={handleAccept}
+          isRequestSent={isRequestSent}
+        />
       </div>
     </div>
   );

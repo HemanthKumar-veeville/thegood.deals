@@ -136,6 +136,7 @@ function App() {
   const [isReady, setIsReady] = useState(false);
   const dispatch = useDispatch();
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
+  const isRequestSent = useSelector((state) => state.user.isRequestSent);
   const { t } = useTranslation(); // Initialize the translation hook
   const [stripePromise, setStripePromise] = useState(null);
 
@@ -173,7 +174,9 @@ function App() {
           {!isUserLoggedIn ? (
             <Home />
           ) : (
-            <ProtectedRoute element={<Account />} />
+            <ProtectedRoute
+              element={<Account isRequestSent={isRequestSent} />}
+            />
           )}
         </Layout>
       ),

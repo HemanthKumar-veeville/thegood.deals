@@ -26,14 +26,17 @@ import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { Box44 } from "../../icons/Box44/Box44.jsx";
 import { Line } from "../../components/Line/Line.jsx";
-const Account = () => {
+import Cookies from "js-cookie";
+
+const Account = ({ isRequestSent }) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("created");
   const [page, setPage] = useState(1); // Start from page 1
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [loadedDeals, setLoadedDeals] = useState({ created: [], invited: [] });
   const [hasMoreDeals, setHasMoreDeals] = useState(true); // Prevent further calls if no more deals
-
+  const deal_id = Cookies.get("deal_id");
+  console.log({ deal_id });
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -41,6 +44,13 @@ const Account = () => {
   const { status } = dealsState;
   const { profile } = useSelector((state) => state.user);
   const scrollableContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (isRequestSent)
+      navigate(
+        `/deal_details_invite?deal_id=${deal_id}&&is_request_sent=${isRequestSent}`
+      );
+  }, []);
 
   // Handle tab switching
   useEffect(() => {

@@ -919,7 +919,10 @@
     "participate_in_deal": "To participate in the deal, the organizer must give you access",
     "must_be_logged_in": "You must be logged in to order",
     "request_access": "I request access",
-    "login_create_account": "Log in / Create an account"
+    "login_create_account": "Log in / Create an account",
+    "in_process_desc": "Your request has been sent to the organizer",
+    "in_process": "Request in progress",
+    "req_confirm": "Once the organizer confirms, you will be able to order."
   },
   "add_pictures": {
     "error_title": "Error...",

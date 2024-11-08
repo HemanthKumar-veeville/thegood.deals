@@ -4,7 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 // Base URL for your API
 const BASE_URL = "https://thegood.deals/api";
-// const BASE_URL = "https://7861-106-51-243-165.ngrok-free.app/";
+// const BASE_URL = "https://cd99-106-51-243-165.ngrok-free.app/";
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
 const stripePromise = loadStripe(
