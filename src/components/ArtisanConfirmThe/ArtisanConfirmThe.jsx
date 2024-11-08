@@ -21,6 +21,7 @@ import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../Line/Line";
 import { onboardStripeAccount } from "../../helpers/helperMethods";
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
+import { InfoCircle8 } from "../../icons/InfoCircle8/InfoCircle8";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -264,6 +265,25 @@ export const ArtisanConfirmThe = ({
               <Line />
             </div>
           ))}
+          <div className="flex items-center gap-[15px] relative">
+            <InfoCircle8
+              className="!relative !w-4.5 !h-4.5 cursor-pointer"
+              color="#2a4e4a"
+            />
+            <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-black text-sm tracking-tight leading-5">
+              <span className="[font-family:'Inter-Regular',Helvetica] font-normal text-black text-sm tracking-tight leading-5">
+                If you do not have a Stripe account, you will be redirected to
+                create a Stripe account to collect the payment at the end of the
+                deal in accordance with{" "}
+              </span>
+
+              <span className="underline">KYC</span>
+
+              <span className="[font-family:'Inter-Regular',Helvetica] font-normal text-black text-sm tracking-tight leading-5">
+                .
+              </span>
+            </p>
+          </div>
           {pathname !== "/deal_details" && (
             <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
               <div

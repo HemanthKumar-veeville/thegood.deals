@@ -23,7 +23,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
       if (idx === index) {
         if (action === "increment") {
           return { ...item, quantity: item.quantity + 1 };
-        } else if (action === "decrement" && item.quantity > 1) {
+        } else if (action === "decrement" && item.quantity >= 1) {
           return { ...item, quantity: item.quantity - 1 };
         }
       }
@@ -156,15 +156,18 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
           </div>
         </div>
       </div>
-      <div
-        className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md transition-transform transform hover:scale-95 active:scale-90"
-        onClick={handlePayment}
-      >
-        <Send1 className="!relative !w-5 !h-5" />
-        <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-          {t("cart.payment")}
-        </button>
-      </div>
+      {cartItems?.length !==
+        cartItems?.filter((product) => product?.quantity === 0)?.length && (
+        <div
+          className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md transition-transform transform hover:scale-95 active:scale-90"
+          onClick={handlePayment}
+        >
+          <Send1 className="!relative !w-5 !h-5" />
+          <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+            {t("cart.payment")}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
