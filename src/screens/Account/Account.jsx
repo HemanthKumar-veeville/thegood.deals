@@ -26,7 +26,6 @@ import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { Box44 } from "../../icons/Box44/Box44.jsx";
 import { Line } from "../../components/Line/Line.jsx";
-import Cookies from "js-cookie";
 
 const Account = ({ isRequestSent }) => {
   const { t } = useTranslation();
@@ -35,8 +34,7 @@ const Account = ({ isRequestSent }) => {
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [loadedDeals, setLoadedDeals] = useState({ created: [], invited: [] });
   const [hasMoreDeals, setHasMoreDeals] = useState(true); // Prevent further calls if no more deals
-  const deal_id = Cookies.get("deal_id");
-  console.log({ deal_id });
+
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -48,7 +46,7 @@ const Account = ({ isRequestSent }) => {
   useEffect(() => {
     if (isRequestSent)
       navigate(
-        `/deal_details_invite?deal_id=${deal_id}&&is_request_sent=${isRequestSent}`
+        `/deal_details_invite?deal_id=3ce2731f-82ca-4ed8-a3f5-9acb7c4c679d&&is_request_sent=${isRequestSent}`
       );
   }, []);
 
