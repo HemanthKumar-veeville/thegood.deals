@@ -129,7 +129,8 @@ const userSlice = createSlice({
         state.status = "succeeded";
         state.isUserLoggedIn = action.payload.is_user_logged_in;
         state.isUserActivated = action.payload.is_user_activated;
-        state.isRequestSent = action.payload.deal_cookies_present;
+        if (!state.isRequestSent)
+          state.isRequestSent = action.payload.deal_cookies_present;
       })
       .addCase(checkUserLoginStatus.rejected, (state, action) => {
         state.status = "failed";
