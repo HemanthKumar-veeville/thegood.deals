@@ -272,15 +272,13 @@ export const ArtisanConfirmThe = ({
             />
             <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-black text-sm tracking-tight leading-5">
               <span className="[font-family:'Inter-Regular',Helvetica] font-normal text-black text-sm tracking-tight leading-5">
-                If you do not have a Stripe account, you will be redirected to
-                create a Stripe account to collect the payment at the end of the
-                deal in accordance with{" "}
+                {t("stripeAccount.message.part1")}
+              </span>{" "}
+              <span className="underline">
+                {t("stripeAccount.message.kyc")}
               </span>
-
-              <span className="underline">KYC</span>
-
               <span className="[font-family:'Inter-Regular',Helvetica] font-normal text-black text-sm tracking-tight leading-5">
-                .
+                {t("stripeAccount.message.part2")}
               </span>
             </p>
           </div>

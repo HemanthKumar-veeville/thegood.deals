@@ -1591,5 +1591,12 @@
     "back_to_home_button": "Retour à l'accueil",
     "approved_balance": "Approuvé",
     "available_balance": "Disponible"
+  },
+  "stripeAccount": {
+    "message": {
+      "part1": "Si vous n'avez pas de compte Stripe, vous serez redirigé pour créer un compte Stripe afin de collecter le paiement à la fin de la transaction conformément à la réglementation",
+      "kyc": " KYC",
+      "part2": "."
+    }
   }
 }
