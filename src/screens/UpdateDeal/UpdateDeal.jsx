@@ -57,6 +57,8 @@ const UpdateDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
   const [imagesForm, setImagesForm] = useState(new FormData());
+  const [existingImages, setExistingImages] = useState([]);
+
   const addProduct = (product) => {
     setProducts([...products, product]);
   };
@@ -125,6 +127,7 @@ const UpdateDeal = () => {
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
       console.log({ pictures: formData?.pictures });
+      form.append("existing_images", existingImages);
       // Append image files
       if (formData.pictures && formData.pictures.length > 0) {
         console.log("pictures available");
@@ -182,6 +185,7 @@ const UpdateDeal = () => {
           console.log({ images: dealData?.images });
           setTitle(dealData.title);
           console.log({ imgs: dealData?.images });
+          setExistingImages(dealData?.images);
           setFormData({
             description: dealData.description,
             collectionDate:
@@ -268,6 +272,8 @@ const UpdateDeal = () => {
               onChange={handleAddPictures}
               setForm={setImagesForm}
               images={formData?.pictures}
+              existingImages={existingImages}
+              setExistingImages={setExistingImages}
             />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">

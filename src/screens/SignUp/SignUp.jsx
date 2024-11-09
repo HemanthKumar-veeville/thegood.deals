@@ -10,6 +10,7 @@ import { ChevronDown } from "../../icons/ChevronDown";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../context/LanguageContext";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import Swal from "sweetalert2";
 
 const InputField = ({
   id,
@@ -144,7 +145,7 @@ export const SignUp = ({ setIsLoading }) => {
       formik.setValues(JSON.parse(savedValues));
     }
   }, []);
-
+  console.log({ errorMessage });
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -246,9 +247,15 @@ export const SignUp = ({ setIsLoading }) => {
         }
       } catch (error) {
         setIsError(true);
-        setErrorMessage(
-          error?.response?.data?.detail || t("signup.errors.error_desc")
-        );
+        console.log({ error: error });
+
+        // Display SweetAlert with error message
+        Swal.fire({
+          title: "Error!",
+          text: error?.response?.data?.detail || t("signup.errors.error_desc"),
+          icon: "error",
+          confirmButtonText: "OK",
+        });
       } finally {
         setIsLoading(false);
       }

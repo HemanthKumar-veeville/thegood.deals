@@ -4,9 +4,14 @@ import { FaTrash, FaStar } from "react-icons/fa"; // Import the trash and star i
 import { useTranslation } from "react-i18next"; // Import useTranslation
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
-const AddPictures = ({ onChange, images }) => {
+const AddPictures = ({
+  onChange,
+  images,
+  setExistingImages,
+  existingImages,
+}) => {
   const { t } = useTranslation(); // Initialize translation hook
-
+  console.log({ existingImages });
   const [pictures, setPictures] = useState(images || []);
   const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -36,7 +41,19 @@ const AddPictures = ({ onChange, images }) => {
     });
   };
 
-  const handleDelete = (index, event) => {
+  const handleDelete = (index, picture, event) => {
+    const fileArray = picture?.split("/");
+    const fileIndex = fileArray?.length - 1;
+    const fileName = fileArray[fileIndex];
+    setExistingImages((prevImages) =>
+      prevImages?.filter((img) => {
+        const imgArray = img?.split("/");
+        const imgIndex = imgArray?.length - 1;
+        const imgName = imgArray[imgIndex];
+
+        return fileName === imgName;
+      })
+    );
     event.preventDefault();
     event.stopPropagation();
     const updatedPictures = pictures.filter((_, i) => i !== index);
@@ -131,7 +148,7 @@ const AddPictures = ({ onChange, images }) => {
                     className="object-contain w-full h-auto max-h-64 rounded-md" // Updated styling
                   />
                   <button
-                    onClick={(event) => handleDelete(index, event)}
+                    onClick={(event) => handleDelete(index, picture, event)}
                     className="absolute top-2 right-2 bg-white rounded-full p-1"
                   >
                     <FaTrash className="w-4 h-4 text-red-600" />

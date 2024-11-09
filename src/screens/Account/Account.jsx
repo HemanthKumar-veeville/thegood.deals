@@ -27,7 +27,7 @@ import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { Box44 } from "../../icons/Box44/Box44.jsx";
 import { Line } from "../../components/Line/Line.jsx";
 
-const Account = ({ isRequestSent }) => {
+const Account = ({ isRequestSent, dealId }) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("created");
   const [page, setPage] = useState(1); // Start from page 1
@@ -46,7 +46,7 @@ const Account = ({ isRequestSent }) => {
   useEffect(() => {
     if (isRequestSent)
       navigate(
-        `/deal_details_invite?deal_id=3ce2731f-82ca-4ed8-a3f5-9acb7c4c679d&&is_request_sent=${isRequestSent}`
+        `/deal_details_invite?deal_id=${dealId}&&is_request_sent=${isRequestSent}`
       );
   }, []);
 

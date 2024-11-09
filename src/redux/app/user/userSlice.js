@@ -3,6 +3,7 @@ import { axiosInstance } from "../../../helpers/helperMethods";
 
 const initialState = {
   isUserLoggedIn: false,
+  dealId: null,
   isUserActivated: false,
   isRequestSent: false,
   status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -131,6 +132,7 @@ const userSlice = createSlice({
         state.isUserActivated = action.payload.is_user_activated;
         if (!state.isRequestSent)
           state.isRequestSent = action.payload.deal_cookies_present;
+        if (!state.dealId) state.dealId = action.payload.deal_cookies_present;
       })
       .addCase(checkUserLoginStatus.rejected, (state, action) => {
         state.status = "failed";
@@ -186,6 +188,8 @@ const userSlice = createSlice({
       // Handle user logout
       .addCase(logoutUser.fulfilled, (state) => {
         state.isUserLoggedIn = false;
+        state.isRequestSent = false;
+        state.dealId = null;
         state.isUserActivated = false;
         state.profile = null;
         state.userDeals = [];
