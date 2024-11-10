@@ -44,7 +44,8 @@ function AppBar() {
    * Navigates to the home page when the logo is clicked.
    */
   const handleLogoClick = () => {
-    navigate("/");
+    navigate("/", { replace: true });
+    window.location.reload();
   };
 
   useEffect(() => {
