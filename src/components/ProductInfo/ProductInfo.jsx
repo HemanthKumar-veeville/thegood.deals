@@ -12,6 +12,7 @@ const ProductInfo = ({
   addMode,
   setAddMode,
   product,
+  setProduct,
   onDelete,
 }) => {
   const { t } = useTranslation(); // Initialize useTranslation hook
@@ -28,6 +29,7 @@ const ProductInfo = ({
   );
   const [productTitle, setProductTitle] = useState(product?.name || "");
   const [totalStock, setTotalStock] = useState(product?.total_stock || "");
+
   const [discountPercentage, setDiscountPercentage] = useState(
     product?.estimated_discount || 0
   );
@@ -45,10 +47,11 @@ const ProductInfo = ({
       setDiscountPercentage(0);
     }
   }, [maximumRetailPrice, goodDealPrice]);
-
+  console.log({ addMode });
   const handleAddClick = () => {
-    onDelete(product?.product_id);
+    // onDelete(product?.product_id);
     const newProduct = {
+      product_id: product?.product_id || productTitle + Math.random(1, 1000),
       name: productTitle,
       minimum_quantity: minQuantity,
       maximum_quantity: maxQuantity,
@@ -66,6 +69,7 @@ const ProductInfo = ({
     setTotalStock("");
     setDiscountPercentage(0);
     setAddMode(!addMode);
+    setProduct(null);
   };
 
   return (

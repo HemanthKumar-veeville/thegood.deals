@@ -5,6 +5,10 @@ import { FiEdit, FiTrash2 } from "react-icons/fi"; // Importing edit and delete 
 const ProductList = ({ products, onEdit, onDelete }) => {
   const { t } = useTranslation(); // Use the translation hook
   console.log({ products });
+  const editDeal = (product) => {
+    onDelete(product?.product_id);
+    onEdit(product);
+  };
 
   return (
     <div className="flex flex-col items-start gap-[15px] p-[15px] bg-white rounded-[5px] w-full">
@@ -28,7 +32,7 @@ const ProductList = ({ products, onEdit, onDelete }) => {
               <div className="flex gap-2">
                 <FiEdit
                   className="text-[#4a90e2] cursor-pointer"
-                  onClick={() => onEdit(product)}
+                  onClick={() => editDeal(product)}
                 />
                 <FiTrash2
                   className="text-[#e74c3c] cursor-pointer"

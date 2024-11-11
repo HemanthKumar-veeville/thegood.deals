@@ -376,6 +376,7 @@
     "default_bic": "BIC par défaut",
     "default_collection_location": "Lieu de collecte par défaut",
     "title": "Créer un good deal",
+    "update_title": "Modifier un good deal",
     "description_label": "Déscription du deal",
     "description_placeholder": "ex. J’ai découvert ce domaine viticole incroyable...",
     "collection_date_label": "Date approximative de collecte",

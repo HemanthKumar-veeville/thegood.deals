@@ -266,7 +266,7 @@ const UpdateDeal = () => {
               </div>
             </div>
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-              {t("create_deal.title")}
+              {t("create_deal.update_title")}
             </div>
             <AddPictures
               onChange={handleAddPictures}
@@ -396,12 +396,16 @@ const UpdateDeal = () => {
                 onChange={handleDateChange}
               />
             </div>
-            <Line />
-            <ProductList
-              products={products}
-              onEdit={onEdit}
-              onDelete={onDelete}
-            />
+            {!addMode && (
+              <>
+                <Line />
+                <ProductList
+                  products={products}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              </>
+            )}
             <Line />
             <div className="flex w-[250px] items-start gap-2.5 relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px] whitespace-nowrap">
@@ -414,6 +418,7 @@ const UpdateDeal = () => {
                 setAddMode={setAddMode}
                 addMode={addMode}
                 product={productUnderEdit}
+                setProduct={setProductUnderEdit}
                 onDelete={onDelete}
               />
             )}

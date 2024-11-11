@@ -376,6 +376,7 @@
     "default_bic": "Default BIC",
     "default_collection_location": "Default Collection Location",
     "title": "Create a good deal",
+    "update_title": "Edit a good deal",
     "description_label": "Description of the deal",
     "description_placeholder": "ex. I discovered this incredible winery...",
     "collection_date_label": "Approximate collection date",
