@@ -184,12 +184,16 @@ export function calculateDaysBetweenDates(startDate, endDate) {
   return differenceInDays;
 }
 
-export function formatDate(dateString, locale) {
+export function formatDateReversed(dateString, locale) {
   const date = new Date(dateString);
 
-  // Format the date to month and day format based on the locale
-  return new Intl.DateTimeFormat(locale, {
-    day: "numeric",
+  // Format the date to month and day format with month first based on the locale
+  const formattedMonth = new Intl.DateTimeFormat(locale, {
     month: "long",
   }).format(date);
+  const formattedDay = new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+  }).format(date);
+
+  return `${formattedMonth} ${formattedDay}`;
 }

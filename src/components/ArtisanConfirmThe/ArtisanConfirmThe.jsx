@@ -23,6 +23,7 @@ import { onboardStripeAccount } from "../../helpers/helperMethods";
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 import { InfoCircle8 } from "../../icons/InfoCircle8/InfoCircle8";
 import { calculateDaysBetweenDates } from "../../helpers/helperMethods";
+import { formatDateReversed } from "../../helpers/helperMethods";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -140,8 +141,14 @@ export const ArtisanConfirmThe = ({
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
               {t("artisanConfirmThe.deal_duration", {
-                start_date: dealState?.deal_start_date,
-                end_date: dealState?.deal_end_date,
+                start_date: formatDateReversed(
+                  dealState?.deal_start_date || "2024-12-08",
+                  "fr-FR"
+                ),
+                end_date: formatDateReversed(
+                  dealState?.deal_end_date || "2024-12-08",
+                  "fr-FR"
+                ),
                 days: calculateDaysBetweenDates(
                   dealState?.deal_start_date,
                   dealState?.deal_end_date
@@ -221,7 +228,10 @@ export const ArtisanConfirmThe = ({
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="text-wrap relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-            {dealState?.collection_date || "-"}
+            {formatDateReversed(
+              dealState?.collection_date || "2024-12-08",
+              "fr-FR"
+            ) || "-"}
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
