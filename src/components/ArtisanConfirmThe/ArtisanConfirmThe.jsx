@@ -22,6 +22,7 @@ import { Line } from "../Line/Line";
 import { onboardStripeAccount } from "../../helpers/helperMethods";
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 import { InfoCircle8 } from "../../icons/InfoCircle8/InfoCircle8";
+import { calculateDaysBetweenDates } from "../../helpers/helperMethods";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -138,7 +139,14 @@ export const ArtisanConfirmThe = ({
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
             <p className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-              {dealState?.deal_duration || "-"}
+              {t("artisanConfirmThe.deal_duration", {
+                start_date: dealState?.deal_start_date,
+                end_date: dealState?.deal_end_date,
+                days: calculateDaysBetweenDates(
+                  dealState?.deal_start_date,
+                  dealState?.deal_end_date
+                ),
+              })}
             </p>
           </div>
         </div>
@@ -197,7 +205,7 @@ export const ArtisanConfirmThe = ({
         </div>
         <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
           <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {dealState?.["what's included"] || "-"}
+            {dealState?.content_description || "-"}
           </span>
           <span className="font-bold text-[#1b4f4a] underline">
             {t("artisanConfirmThe.read_more")}

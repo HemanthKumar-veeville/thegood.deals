@@ -706,7 +706,7 @@
     "thank_you": "Cher artisan, merci de valider ce deal 🤝",
     "confirmation_notice": "Une fois le deal confirmé, celui-ci sera proposé à la vente.",
     "wine_crates": "Caisses de vins Domaine de Cigaluse",
-    "deal_duration": "du 15 au 30 août (soit 15 jours)",
+    "deal_duration": "du {{start_date}} au {{end_date}} (soit {{days}} jours)",
     "location": "Domaine de Cigalus 11200 Bizanet",
     "organized_by": "Collecte organisée par",
     "about_deal": "À propos du deal",

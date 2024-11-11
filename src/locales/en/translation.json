@@ -706,7 +706,7 @@
     "thank_you": "Dear craftsman, thank you for validating this deal 🤝",
     "confirmation_notice": "Once the deal is confirmed, it will be offered for sale.",
     "wine_crates": "Wine cratesDomaine de Cigaluse",
-    "deal_duration": "from August 15 to 30 (15 days)",
+    "deal_duration": "from {{start_date}} to {{end_date}} ({{days}} days)",
     "location": "Domaine de Cigalus 11200 Bizanet",
     "organized_by": "Collection organized by",
     "about_deal": "About the deal",

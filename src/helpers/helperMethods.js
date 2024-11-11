@@ -3,8 +3,8 @@ import i18next from "i18next";
 import { loadStripe } from "@stripe/stripe-js";
 
 // Base URL for your API
-const BASE_URL = "https://thegood.deals/api";
-// const BASE_URL = "https://cd99-106-51-243-165.ngrok-free.app/";
+// const BASE_URL = "https://thegood.deals/api";
+const BASE_URL = "https://f15c-106-51-243-165.ngrok-free.app/";
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
 const stripePromise = loadStripe(
@@ -171,3 +171,15 @@ export const payToArtisan = async () => {
     }
   }
 };
+
+export function calculateDaysBetweenDates(startDate, endDate) {
+  // Parse the dates
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  // Calculate the difference in milliseconds and convert to days
+  const differenceInTime = end - start;
+  const differenceInDays = differenceInTime / (1000 * 60 * 60 * 24);
+
+  return differenceInDays;
+}
