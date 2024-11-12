@@ -31,11 +31,11 @@ jobs:
 
       - name: Archive production build artifacts
         if: github.ref == 'refs/heads/main' # Only archive for production
-        run: tar -czf production-build.tar.gz ./dist
+        run: tar -czf production-build.tar.gz ./dist node_modules
 
       - name: Archive staging build artifacts
         if: github.ref == 'refs/heads/development' # Only archive for staging
-        run: tar -czf staging-build.tar.gz ./dist
+        run: tar -czf staging-build.tar.gz ./dist node_modules
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -68,8 +68,7 @@ jobs:
           scp -i prod_key.pem -o StrictHostKeyChecking=no production-build.tar.gz $USER@$HOST:/path/to/production
           ssh -i prod_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
             cd /path/to/production &&
-            tar -xzf production-build.tar.gz &&
-            npm install
+            tar -xzf production-build.tar.gz
           "
 
   deploy-staging:
@@ -95,6 +94,5 @@ jobs:
           scp -i staging_key.pem -o StrictHostKeyChecking=no staging-build.tar.gz $USER@$HOST:/path/to/staging
           ssh -i staging_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
             cd /path/to/staging &&
-            tar -xzf staging-build.tar.gz &&
-            npm install
+            tar -xzf staging-build.tar.gz
           "
