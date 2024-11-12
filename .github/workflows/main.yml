@@ -67,7 +67,7 @@ jobs:
           chmod 600 prod_key.pem
           scp -i prod_key.pem -o StrictHostKeyChecking=no production-build.tar.gz $USER@$HOST:/path/to/production
           ssh -i prod_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
-            cd /path/to/production &&
+            cd /usr/share/nginx/html &&
             tar -xzf production-build.tar.gz
           "
 
