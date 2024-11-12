@@ -31,11 +31,11 @@ jobs:
 
       - name: Archive production build artifacts
         if: github.ref == 'refs/heads/main' # Only archive for production
-        run: tar -czf production-build.tar.gz ./dist node_modules
+        run: tar -czf production-build.tar.gz -C dist .
 
       - name: Archive staging build artifacts
         if: github.ref == 'refs/heads/development' # Only archive for staging
-        run: tar -czf staging-build.tar.gz ./dist node_modules
+        run: tar -czf staging-build.tar.gz -C dist .
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
