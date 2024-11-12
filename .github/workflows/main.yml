@@ -29,14 +29,33 @@ jobs:
       - name: Build project
         run: npm run build # Assumes a build script is defined in package.json
 
+      - name: Archive production build artifacts
+        if: github.ref == 'refs/heads/main' # Only archive for production
+        run: tar -czf production-build.tar.gz ./build
+
+      - name: Archive staging build artifacts
+        if: github.ref == 'refs/heads/development' # Only archive for staging
+        run: tar -czf staging-build.tar.gz ./build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifact
+          path: |
+            production-build.tar.gz
+            staging-build.tar.gz
+
   deploy-production:
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' # Deploy only if on the main branch
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: ./ # Download artifacts to the current directory
 
       - name: Deploy to Production Server
         env:
@@ -46,11 +65,11 @@ jobs:
         run: |
           echo "$KEY" > prod_key.pem
           chmod 600 prod_key.pem
+          scp -i prod_key.pem -o StrictHostKeyChecking=no production-build.tar.gz $USER@$HOST:/path/to/production
           ssh -i prod_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
             cd /path/to/production &&
-            git pull &&
-            npm install &&
-            npm run build
+            tar -xzf production-build.tar.gz &&
+            npm install
           "
 
   deploy-staging:
@@ -59,8 +78,11 @@ jobs:
     if: github.ref == 'refs/heads/development' # Deploy only if on the development branch
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: ./ # Download artifacts to the current directory
 
       - name: Deploy to Staging Server
         env:
@@ -70,9 +92,9 @@ jobs:
         run: |
           echo "$KEY" > staging_key.pem
           chmod 600 staging_key.pem
+          scp -i staging_key.pem -o StrictHostKeyChecking=no staging-build.tar.gz $USER@$HOST:/path/to/staging
           ssh -i staging_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
             cd /path/to/staging &&
-            git pull &&
-            npm install &&
-            npm run build
+            tar -xzf staging-build.tar.gz &&
+            npm install
           "
