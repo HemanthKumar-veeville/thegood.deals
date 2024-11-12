@@ -23,7 +23,7 @@ import { onboardStripeAccount } from "../../helpers/helperMethods";
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 import { InfoCircle8 } from "../../icons/InfoCircle8/InfoCircle8";
 import { calculateDaysBetweenDates } from "../../helpers/helperMethods";
-import { formatDateReversed } from "../../helpers/helperMethods";
+import { formatDateReversed, formatDate } from "../../helpers/helperMethods";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -228,10 +228,8 @@ export const ArtisanConfirmThe = ({
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="text-wrap relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-text-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
-            {formatDateReversed(
-              dealState?.collection_date || "2024-12-08",
-              "fr-FR"
-            ) || "-"}
+            {formatDate(dealState?.collection_date || "2024-12-08", "fr") ||
+              "-"}
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">

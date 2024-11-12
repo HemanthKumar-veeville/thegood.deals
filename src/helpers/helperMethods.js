@@ -197,3 +197,70 @@ export function formatDateReversed(dateString, locale) {
 
   return `${formattedMonth} ${formattedDay}`;
 }
+
+export function formatDate(dateStr, language = "en") {
+  const date = new Date(dateStr);
+
+  // Capitalized weekday and month names for exact control over language output
+  const weekdays = {
+    en: [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    fr: [
+      "Dimanche",
+      "Lundi",
+      "Mardi",
+      "Mercredi",
+      "Jeudi",
+      "Vendredi",
+      "Samedi",
+    ],
+  };
+  const months = {
+    en: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    fr: [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
+    ],
+  };
+
+  // Get day of the week, month, and day
+  const weekday = weekdays[language][date.getDay()];
+  const month = months[language][date.getMonth()];
+  const day = date.getDate();
+
+  // Time string based on language
+  const timeString =
+    language === "en" ? "between 10 a.m. and 3 p.m." : "entre 10 h et 15 h";
+
+  return `${weekday} ${month} ${day}, ${timeString}`;
+}

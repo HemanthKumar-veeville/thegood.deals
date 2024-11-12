@@ -25,6 +25,7 @@ import { Cart } from "../../components/Cart/Cart";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../../components/Line/Line";
+import { formatDate } from "../../helpers/helperMethods";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -177,7 +178,10 @@ const AdminViewGoodDeal = () => {
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
           <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
-            {dealState?.collection_info?.date}
+            {formatDate(
+              dealState?.collection_info?.date || "2024-12-08",
+              "fr"
+            ) || "-"}
           </p>
         </div>
         <div className="flex items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
