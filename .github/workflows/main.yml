@@ -3,8 +3,8 @@ name: Frontend CI/CD Pipeline
 on:
   push:
     branches:
-      - main          # Production branch
-      - development   # Staging branch
+      - main # Production branch
+      - development # Staging branch
   pull_request:
     branches:
       - main
@@ -16,30 +16,46 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'  # Specify your Node.js version
+          node-version: "16" # Specify your Node.js version
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test  # Skip if no tests are set up
-
       - name: Build project
-        run: npm run build  # Assumes a build script is defined in package.json
+        run: npm run build # Assumes a build script is defined in package.json
+
+      - name: Archive production build artifacts
+        if: github.ref == 'refs/heads/main' # Only archive for production
+        run: tar -czf production-build.tar.gz -C dist .
+
+      - name: Archive staging build artifacts
+        if: github.ref == 'refs/heads/development' # Only archive for staging
+        run: tar -czf staging-build.tar.gz -C dist .
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: |
+            production-build.tar.gz
+            staging-build.tar.gz
 
   deploy-production:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'  # Deploy only if on the main branch
+    if: github.ref == 'refs/heads/main' # Deploy only if on the main branch
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./ # Download artifacts to the current directory
 
       - name: Deploy to Production Server
         env:
@@ -49,21 +65,26 @@ jobs:
         run: |
           echo "$KEY" > prod_key.pem
           chmod 600 prod_key.pem
+          # Upload to /tmp to avoid permission issues
+          scp -i prod_key.pem -o StrictHostKeyChecking=no production-build.tar.gz $USER@$HOST:/tmp
           ssh -i prod_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
-            cd /path/to/production &&
-            git pull &&
-            npm install &&
-            npm run build
+            sudo mv /tmp/production-build.tar.gz /usr/share/nginx/html &&
+            cd /usr/share/nginx/html &&
+            sudo tar -xzf production-build.tar.gz &&
+            sudo rm production-build.tar.gz
           "
 
   deploy-staging:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/development'  # Deploy only if on the development branch
+    if: github.ref == 'refs/heads/development' # Deploy only if on the development branch
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./ # Download artifacts to the current directory
 
       - name: Deploy to Staging Server
         env:
@@ -73,9 +94,11 @@ jobs:
         run: |
           echo "$KEY" > staging_key.pem
           chmod 600 staging_key.pem
+          # Upload to /tmp to avoid permission issues
+          scp -i staging_key.pem -o StrictHostKeyChecking=no staging-build.tar.gz $USER@$HOST:/tmp
           ssh -i staging_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
-            cd /path/to/staging &&
-            git pull &&
-            npm install &&
-            npm run build
+            sudo mv /tmp/staging-build.tar.gz /usr/share/nginx/html &&
+            cd /usr/share/nginx/html &&
+            sudo tar -xzf staging-build.tar.gz &&
+            sudo rm staging-build.tar.gz
           "
