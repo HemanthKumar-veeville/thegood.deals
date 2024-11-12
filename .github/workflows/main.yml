@@ -65,7 +65,7 @@ jobs:
         run: |
           echo "$KEY" > prod_key.pem
           chmod 600 prod_key.pem
-          scp -i prod_key.pem -o StrictHostKeyChecking=no production-build.tar.gz $USER@$HOST:/path/to/production
+          scp -i prod_key.pem -o StrictHostKeyChecking=no production-build.tar.gz $USER@$HOST:/usr/share/nginx/html
           ssh -i prod_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
             cd /usr/share/nginx/html &&
             tar -xzf production-build.tar.gz
@@ -91,7 +91,7 @@ jobs:
         run: |
           echo "$KEY" > staging_key.pem
           chmod 600 staging_key.pem
-          scp -i staging_key.pem -o StrictHostKeyChecking=no staging-build.tar.gz $USER@$HOST:/path/to/staging
+          scp -i staging_key.pem -o StrictHostKeyChecking=no staging-build.tar.gz $USER@$HOST:/usr/share/nginx/html
           ssh -i staging_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
             cd /usr/share/nginx/html &&
             tar -xzf staging-build.tar.gz
