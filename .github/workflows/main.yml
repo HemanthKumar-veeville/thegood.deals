@@ -93,6 +93,6 @@ jobs:
           chmod 600 staging_key.pem
           scp -i staging_key.pem -o StrictHostKeyChecking=no staging-build.tar.gz $USER@$HOST:/path/to/staging
           ssh -i staging_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
-            cd /path/to/staging &&
+            cd /usr/share/nginx/html &&
             tar -xzf staging-build.tar.gz
           "
