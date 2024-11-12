@@ -120,7 +120,7 @@ export const InviteParticipants = ({
       )}
       {isSuccess && (
         <ShowCustomSuccessModal
-          message={"Once the organizer confirms, you will be able to order."}
+          message={t("artisanConfirmThe.success_desc")}
           buttonText={t("waiting_deal.got_it")}
           onClose={() => setIsSuccess(false)} // Reset modal state on close
         />

@@ -491,7 +491,7 @@
     "step_5": "L'organisateur coordonne la livraison avec l'artisan",
     "alert_editing": "Modification du deal !",
     "error_message": "Vous ne pouvez pas modifier l'offre si le statut de l'offre est en attente.",
-    "got_it": "Compris"
+    "got_it": "Compris !"
   },
   "wallet": {
     "back_button": "Retour",
@@ -734,7 +734,8 @@
     "accept": "Accept",
     "error_title": "Error...",
     "error_login_required": "You need to login to send a request.",
-    "error_request_failed": "Failed to send request. Please try again."
+    "error_request_failed": "Failed to send request. Please try again.",
+    "success_desc": "Une fois que l’organisateur aura confirmé, vous pourrez commander."
   },
   "guestsSendReviews": {
     "giveYourOpinion": "Donnez-vous votre avis !",
@@ -1010,7 +1011,7 @@
   },
   "customErrorModal": {
     "defaultMessage": "Nous sommes désolés, une erreur s'est produite. Veuillez réessayer plus tard.",
-    "buttonText": "Compris"
+    "buttonText": "Compris !"
   },
   "header": {
     "mainText": "Créez, Partagez et Savourez avec une  commande groupée !",
@@ -1574,7 +1575,7 @@
   },
   "customSuccessModal": {
     "defaultMessage": "Informations enregistrées avec succès",
-    "buttonText": "Compris"
+    "buttonText": "Compris !"
   },
   "newsLetterIndication": {
     "title": "Informations sur la newsletter",

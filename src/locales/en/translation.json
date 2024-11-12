@@ -734,7 +734,8 @@
     "accept": "Accept",
     "error_title": "Error...",
     "error_login_required": "You need to login to send a request.",
-    "error_request_failed": "Failed to send request. Please try again."
+    "error_request_failed": "Failed to send request. Please try again.",
+    "success_desc": "Once the organizer confirms, you will be able to order."
   },
   "guestsSendReviews": {
     "giveYourOpinion": "Give your opinion!",
