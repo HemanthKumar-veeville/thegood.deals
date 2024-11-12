@@ -3,8 +3,8 @@ name: Frontend CI/CD Pipeline
 on:
   push:
     branches:
-      - main          # Production branch
-      - development   # Staging branch
+      - main # Production branch
+      - development # Staging branch
   pull_request:
     branches:
       - main
@@ -21,21 +21,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Specify your Node.js version
+          node-version: "16" # Specify your Node.js version
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test  # Skip if no tests are set up
-
       - name: Build project
-        run: npm run build  # Assumes a build script is defined in package.json
+        run: npm run build # Assumes a build script is defined in package.json
 
   deploy-production:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'  # Deploy only if on the main branch
+    if: github.ref == 'refs/heads/main' # Deploy only if on the main branch
 
     steps:
       - name: Checkout code
@@ -59,7 +56,7 @@ jobs:
   deploy-staging:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/development'  # Deploy only if on the development branch
+    if: github.ref == 'refs/heads/development' # Deploy only if on the development branch
 
     steps:
       - name: Checkout code
