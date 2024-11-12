@@ -65,10 +65,13 @@ jobs:
         run: |
           echo "$KEY" > prod_key.pem
           chmod 600 prod_key.pem
-          scp -i prod_key.pem -o StrictHostKeyChecking=no production-build.tar.gz $USER@$HOST:/usr/share/nginx/html
+          # Upload to /tmp to avoid permission issues
+          scp -i prod_key.pem -o StrictHostKeyChecking=no production-build.tar.gz $USER@$HOST:/tmp
           ssh -i prod_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
+            sudo mv /tmp/production-build.tar.gz /usr/share/nginx/html &&
             cd /usr/share/nginx/html &&
-            tar -xzf production-build.tar.gz
+            sudo tar -xzf production-build.tar.gz &&
+            sudo rm production-build.tar.gz
           "
 
   deploy-staging:
@@ -91,8 +94,11 @@ jobs:
         run: |
           echo "$KEY" > staging_key.pem
           chmod 600 staging_key.pem
-          scp -i staging_key.pem -o StrictHostKeyChecking=no staging-build.tar.gz $USER@$HOST:/usr/share/nginx/html
+          # Upload to /tmp to avoid permission issues
+          scp -i staging_key.pem -o StrictHostKeyChecking=no staging-build.tar.gz $USER@$HOST:/tmp
           ssh -i staging_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
+            sudo mv /tmp/staging-build.tar.gz /usr/share/nginx/html &&
             cd /usr/share/nginx/html &&
-            tar -xzf staging-build.tar.gz
+            sudo tar -xzf staging-build.tar.gz &&
+            sudo rm staging-build.tar.gz
           "
