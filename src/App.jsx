@@ -123,7 +123,6 @@ const AppBar = loadable(() => import("./components/AppBar/AppBar"), {
 
 // Layout component to include AppBar across all routes
 function Layout({ children }) {
-  console.log("layout");
   return (
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen">
       <AppBar />
