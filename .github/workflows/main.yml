@@ -1,0 +1,81 @@
+name: Frontend CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main          # Production branch
+      - development   # Staging branch
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test  # Skip if no tests are set up
+
+      - name: Build project
+        run: npm run build  # Assumes a build script is defined in package.json
+
+  deploy-production:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'  # Deploy only if on the main branch
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Production Server
+        env:
+          HOST: ${{ secrets.PROD_SERVER_HOST }}
+          USER: ${{ secrets.PROD_SERVER_USER }}
+          KEY: ${{ secrets.PROD_SERVER_KEY }}
+        run: |
+          echo "$KEY" > prod_key.pem
+          chmod 600 prod_key.pem
+          ssh -i prod_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
+            cd /path/to/production &&
+            git pull &&
+            npm install &&
+            npm run build
+          "
+
+  deploy-staging:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/development'  # Deploy only if on the development branch
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Staging Server
+        env:
+          HOST: ${{ secrets.STAGING_SERVER_HOST }}
+          USER: ${{ secrets.STAGING_SERVER_USER }}
+          KEY: ${{ secrets.STAGING_SERVER_KEY }}
+        run: |
+          echo "$KEY" > staging_key.pem
+          chmod 600 staging_key.pem
+          ssh -i staging_key.pem -o StrictHostKeyChecking=no $USER@$HOST "
+            cd /path/to/staging &&
+            git pull &&
+            npm install &&
+            npm run build
+          "
