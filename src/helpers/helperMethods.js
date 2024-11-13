@@ -1,16 +1,16 @@
 import axios from "axios";
 import i18next from "i18next";
 import { loadStripe } from "@stripe/stripe-js";
-import { BASE_URL } from "../config";
+// Base URL for your API
+const BASE_URL = "https://51.44.56.148/api";
 
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
 const stripePromise = loadStripe(
   "pk_test_51PplNp04KHQUtznoy8HmY5meaJK4aZgRjwuckLfjquqCSJMvfXEjacj3pADbzg2SDbNuWr0zRhrFymRRstAjzh3S00USzDZqAJ"
 );
-console.log({ BASE_URL });
 export const axiosInstance = axios.create({
-  baseURL: `${BASE_URL}api/`,
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "multipart/form-data",
     "Access-Control-Allow-Origin": "*",
@@ -64,7 +64,7 @@ export const createStripeAccount = async (email, dealId) => {
 
     // Handling the response
     if (response.status === 200) {
-      console.log("Account created .successfully:", response.data);
+      console.log("Account created successfully:", response.data);
     } else {
       console.log("Failed to create account:", response);
     }
