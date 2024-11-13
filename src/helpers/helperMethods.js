@@ -1,8 +1,7 @@
 import axios from "axios";
 import i18next from "i18next";
 import { loadStripe } from "@stripe/stripe-js";
-// Base URL for your API
-const BASE_URL = "https://51.44.56.148/api";
+import { BASE_URL } from "../config";
 
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
