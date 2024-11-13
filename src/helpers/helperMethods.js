@@ -63,7 +63,7 @@ export const createStripeAccount = async (email, dealId) => {
 
     // Handling the response
     if (response.status === 200) {
-      console.log("Account created successfully:", response.data);
+      console.log("Account created .successfully:", response.data);
     } else {
       console.log("Failed to create account:", response);
     }
