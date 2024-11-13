@@ -1,7 +1,8 @@
 import axios from "axios";
 import i18next from "i18next";
 import { loadStripe } from "@stripe/stripe-js";
-import { BASE_URL } from "../config";
+// Base URL for your API
+const BASE_URL = "https://51.44.56.148/api";
 
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
@@ -23,7 +24,7 @@ export const axiosInstance = axios.create({
 export const createStripeAccount = async (email, dealId) => {
   try {
     const stripe = await stripePromise;
-    console.log("Check");
+
     // Create the account token with the required fields
     const { token, error } = await stripe.createToken("account", {
       business_type: "individual", // Explicitly specify business_type
