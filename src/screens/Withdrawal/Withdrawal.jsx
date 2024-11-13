@@ -22,10 +22,7 @@ const Withdrawal = ({ heading, btnText, stripePromise }) => {
   };
 
   const handleBack = () => {
-    // Logic for going back
-    btnText === t("withdrawal.validate_payment_button")
-      ? navigate("/admin-view-deal")
-      : navigate("/admin-wallet");
+    navigate(-1);
   };
 
   useEffect(() => {
