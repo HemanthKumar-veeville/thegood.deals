@@ -1,11 +1,8 @@
 import axios from "axios";
 import i18next from "i18next";
 import { loadStripe } from "@stripe/stripe-js";
+import { BASE_URL } from "../config";
 
-// Base URL for your API
-// const BASE_URL = "https://thegood.deals/api";
-const BASE_URL = "https://51.44.56.148/api";
-// const BASE_URL = "https://f15c-106-51-243-165.ngrok-free.app/";
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
 const stripePromise = loadStripe(
