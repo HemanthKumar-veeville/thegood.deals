@@ -8,8 +8,9 @@ const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no la
 const stripePromise = loadStripe(
   "pk_test_51PplNp04KHQUtznoy8HmY5meaJK4aZgRjwuckLfjquqCSJMvfXEjacj3pADbzg2SDbNuWr0zRhrFymRRstAjzh3S00USzDZqAJ"
 );
+console.log({ BASE_URL });
 export const axiosInstance = axios.create({
-  baseURL: `${BASE_URL}/api/`,
+  baseURL: `${BASE_URL}api/`,
   headers: {
     "Content-Type": "multipart/form-data",
     "Access-Control-Allow-Origin": "*",
