@@ -144,7 +144,7 @@ function App() {
   useEffect(() => {
     setStripePromise(
       loadStripe(
-        "pk_live_51QHjfQCk1crzlHGC2RGD1w9ho2p1Fd7Wx4nEzCik2qMFRs7mxDITOExCwWepZ6NWeCyuXSwoTCShGxckmjRWIe0h00KHT1Qmg6"
+        "pk_test_51PplNp04KHQUtznoy8HmY5meaJK4aZgRjwuckLfjquqCSJMvfXEjacj3pADbzg2SDbNuWr0zRhrFymRRstAjzh3S00USzDZqAJ"
       )
     );
   }, []);
