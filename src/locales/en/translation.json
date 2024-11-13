@@ -445,7 +445,7 @@
     "manage_friends": "Managing my friends",
     "collect_payment": "Collect payment",
     "pay_artisan": "Pay to artisan",
-    "endsIn": "ends in {{days}} days",
+    "endsIn": "{{days}} days",
     "danger_alert": "The payment of one of the participants could not be made.",
     "error": "Something went wrong, Please try again later",
     "try_again": "Try Again",

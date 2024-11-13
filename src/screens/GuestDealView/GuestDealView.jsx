@@ -98,7 +98,7 @@ const GuestDealView = () => {
                   <br />
                 </span>
                 <span className="font-bold">
-                  {t("deal.time_left", { days: dealData?.end_in, hours: 6 })}
+                  {t("deal.time_left", { days: dealData?.ends_in, hours: 6 })}
                 </span>
               </p>
             </div>
@@ -121,7 +121,7 @@ const GuestDealView = () => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("deal.end_in", { days: dealData?.end_in })}
+                {t("deal.end_in", { days: dealData?.ends_in })}
               </div>
             </div>
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
