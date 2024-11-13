@@ -23,7 +23,7 @@ export const axiosInstance = axios.create({
 export const createStripeAccount = async (email, dealId) => {
   try {
     const stripe = await stripePromise;
-
+    console.log("Check");
     // Create the account token with the required fields
     const { token, error } = await stripe.createToken("account", {
       business_type: "individual", // Explicitly specify business_type
