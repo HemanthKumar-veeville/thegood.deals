@@ -27,7 +27,7 @@ const initialState = {
     bic: "",
     dealExpiration: formatDate(new Date()),
     acceptConditions: false,
-    collectionLocation: "home",
+    collectionLocation: "",
     pictures: [],
     deliveryCost: 0,
   },
