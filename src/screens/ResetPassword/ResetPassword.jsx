@@ -104,7 +104,7 @@ const ResetPassword = () => {
         .matches(/[A-Z]/, t("resetPassword.passwordCriteria.1capitalLetter"))
         .matches(/\d/, t("resetPassword.passwordCriteria.1digit"))
         .matches(
-          /[~#@$%&!*_?^-]/,
+          /[!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~€¢£¥§©®«»¼½¾±°¿÷ÐÑØ×ƒÆßæœ©®¥×ß«¬÷ÐÑØÞµ¶·ß±×‡•◊œß€™‰≈∆«»−×÷≠≤≥Ω∑]/,
           t("resetPassword.passwordCriteria.special_character")
         )
         .required(t("resetPassword.errors.password")),

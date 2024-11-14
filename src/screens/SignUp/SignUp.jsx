@@ -193,7 +193,10 @@ export const SignUp = ({ setIsLoading }) => {
         .matches(/[a-z]/, t("signup.password_hints.lowercase"))
         .matches(/[A-Z]/, t("signup.password_hints.uppercase"))
         .matches(/\d/, t("signup.password_hints.number"))
-        .matches(/[~#@$%&!*_?^-]/, t("signup.password_hints.special_character"))
+        .matches(
+          /[!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~€¢£¥§©®«»¼½¾±°¿÷ÐÑØ×ƒÆßæœ©®¥×ß«¬÷ÐÑØÞµ¶·ß±×‡•◊œß€™‰≈∆«»−×÷≠≤≥Ω∑]/,
+          t("signup.password_hints.special_character")
+        )
         .required(t("signup.errors.password")),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], t("signup.errors.confirm_password"))
