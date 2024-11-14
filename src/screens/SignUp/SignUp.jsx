@@ -194,7 +194,7 @@ export const SignUp = ({ setIsLoading }) => {
         .matches(/[A-Z]/, t("signup.password_hints.uppercase"))
         .matches(/\d/, t("signup.password_hints.number"))
         .matches(
-          /[!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~€¢£¥§©®«»¼½¾±°¿÷ÐÑØ×ƒÆßæœ©®¥×ß«¬÷ÐÑØÞµ¶·ß±×‡•◊œß€™‰≈∆«»−×÷≠≤≥Ω∑]/,
+          /[!\"#$%&'()*+,-./:;<=>?@[\\]_`{}~€¢£¥§©®«»¼½¾±°¿÷ÐÑØ×ƒÆßæœ©®¥×ß«¬÷ÐÑØÞµ¶·ß±×‡•◊œß€™‰≈∆«»−×÷≠≤≥Ω∑]/,
           t("signup.password_hints.special_character")
         )
         .required(t("signup.errors.password")),
