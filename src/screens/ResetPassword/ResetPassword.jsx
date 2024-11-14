@@ -104,8 +104,8 @@ const ResetPassword = () => {
         .matches(/[A-Z]/, t("resetPassword.passwordCriteria.1capitalLetter"))
         .matches(/\d/, t("resetPassword.passwordCriteria.1digit"))
         .matches(
-          /[!\"#$%&'()*+,-./:;<=>?@[\\]_`{}~€¢£¥§©®«»¼½¾±°¿÷ÐÑØ×ƒÆßæœ©®¥×ß«¬÷ÐÑØÞµ¶·ß±×‡•◊œß€™‰≈∆«»−×÷≠≤≥Ω∑]/,
-          t("resetPassword.passwordCriteria.special_character")
+          /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?€£¥§©®«»¼½¾±°¿÷ÐÑØ×ƒÆßæœ]+/,
+          t("signup.password_hints.special_character")
         )
         .required(t("resetPassword.errors.password")),
       confirmPassword: Yup.string()
