@@ -848,13 +848,13 @@
     "subtitle": "Vos infos",
     "first_name": "Prénom",
     "last_name": "Nom",
-    "mobile_number": "Mobile number",
+    "mobile_number": "Numéro de téléphone",
     "email": "E-mail",
     "language": "Langue",
     "currency": "Devise",
     "setup_pass": "Votre mot de passe",
     "password": "Mot de passe",
-    "confirm_password": "Confirmer votre mdp",
+    "confirm_password": "Confirmer votre mot de passe",
     "setup_addr": "Votre adresse",
     "address": "Adresse (requis)",
     "additional_address": "Complément d’adresse",
@@ -1500,7 +1500,7 @@
   },
   "Withdrawal": {
     "line_alt": "Line separator",
-    "back_button": "Back",
+    "back_button": "Retour",
     "validate_payment_button": "Validate payment"
   },
   "TermsOfUse": {
