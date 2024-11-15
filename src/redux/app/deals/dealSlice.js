@@ -23,8 +23,6 @@ const initialState = {
     collectionDate: formatDate(new Date()),
     contentDescription: "",
     manufacturerInfo: "",
-    iban: "",
-    bic: "",
     dealExpiration: formatDate(new Date()),
     acceptConditions: false,
     collectionLocation: "",
