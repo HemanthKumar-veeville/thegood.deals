@@ -163,7 +163,7 @@ const AdminViewGoodDeal = () => {
           </div>
         </div>
         <ReadMore
-          description={dealState?.description || "-"}
+          description={dealState?.content_description || "-"}
           readMoreText={t("artisanConfirmThe.read_more")}
           readLessText={t("artisanConfirmThe.read_less")}
         />
