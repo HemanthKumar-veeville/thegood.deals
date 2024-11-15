@@ -45,9 +45,7 @@ const Wallet = loadable(() => import("./screens/Wallet/Wallet"));
 const Withdrawal = loadable(() => import("./screens/Withdrawal/Withdrawal"));
 const Invitations = loadable(() => import("./screens/Invitations/Invitations"));
 const Orders = loadable(() => import("./screens/Orders/Orders"));
-const ViewGoodDeal = loadable(() =>
-  import("./screens/ViewGoodDeal/ViewGoodDeal")
-);
+
 const ThanksForWithdrawal = loadable(() =>
   import("./screens/ThanksForWithdrawal/ThanksForWithdrawal")
 );

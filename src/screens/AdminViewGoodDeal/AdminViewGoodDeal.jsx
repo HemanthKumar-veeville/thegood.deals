@@ -26,6 +26,7 @@ import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../../components/Line/Line";
 import { formatDate } from "../../helpers/helperMethods";
+import ReadMore from "../../components/Readmore/Readmore";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -149,12 +150,11 @@ const AdminViewGoodDeal = () => {
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px]">
           {t("admin.about_the_deal")}
         </div>
-        <p className="[font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 relative self-stretch">
-          <span className="[font-family:'Inter',Helvetica] font-normal text-[#637381] text-base tracking-[0] leading-6">
-            {dealState?.description}
-          </span>
-          <span className="font-bold underline">{t("common.read_more")}</span>
-        </p>
+        <ReadMore
+          description={dealState?.description || "-"}
+          readMoreText={t("artisanConfirmThe.read_more")}
+          readLessText={t("artisanConfirmThe.read_less")}
+        />
         <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
@@ -162,12 +162,11 @@ const AdminViewGoodDeal = () => {
             {t("admin.what_you_receive")}
           </div>
         </div>
-        <p className="[font-family:'Inter',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6 relative self-stretch">
-          <span className="[font-family:'Inter',Helvetica] font-normal text-[#637381] text-base tracking-[0] leading-6">
-            {t("admin.bulk_order_includes")}{" "}
-          </span>
-          <span className="font-bold underline">{t("common.read_more")}</span>
-        </p>
+        <ReadMore
+          description={dealState?.description || "-"}
+          readMoreText={t("artisanConfirmThe.read_more")}
+          readLessText={t("artisanConfirmThe.read_less")}
+        />
         <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
