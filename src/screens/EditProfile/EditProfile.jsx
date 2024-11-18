@@ -34,8 +34,8 @@ const EditProfile = () => {
     lastName: "",
     phone: "",
     email: "",
-    currentPassword: "*******************",
-    newPassword: "*******************",
+    currentPassword: "",
+    newPassword: "",
     language: "English", // Default language state
     address: "",
     additionalAddress: "",
@@ -79,8 +79,8 @@ const EditProfile = () => {
         lastName: last_name || "",
         phone: phone || "",
         email: email || "",
-        currentPassword: "*******************",
-        newPassword: "*******************",
+        currentPassword: "",
+        newPassword: "",
         language: language || "French",
         address: address || "",
         additionalAddress: addl_address || "",
@@ -288,62 +288,6 @@ const EditProfile = () => {
           </div>
 
           <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
-            {t("edit_profile.change_password")}
-          </div>
-
-          {[
-            {
-              name: "currentPassword",
-              label: t("edit_profile.current_password"),
-              showPassword: showPassword.current,
-              toggleVisibility: () => togglePasswordVisibility("current"),
-            },
-            {
-              name: "newPassword",
-              label: t("edit_profile.new_password"),
-              showPassword: showPassword.new,
-              toggleVisibility: () => togglePasswordVisibility("new"),
-            },
-          ].map(({ name, label, showPassword, toggleVisibility }) => (
-            <div
-              key={name}
-              className="flex flex-col h-12 items-start gap-[5px] relative self-stretch w-full"
-            >
-              <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
-                <div className="flex items-center gap-2.5 pl-5 pr-4 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke">
-                  <div className="flex items-center justify-between relative flex-1 grow">
-                    {renderField(
-                      name,
-                      profile[name],
-                      showPassword ? "text" : "password",
-                      label
-                    )}
-                    <div onClick={toggleVisibility}>
-                      <EyeAlt4 className="!relative !w-4 !h-4 cursor-pointer" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          <div className="flex flex-wrap text-[#637381] text-sm gap-x-4 gap-y-2 mt-2 w-[19rem]">
-            {[
-              "edit_profile.password_requirements.characters",
-              "edit_profile.password_requirements.capital_letter",
-              "edit_profile.password_requirements.lower_case",
-              "edit_profile.password_requirements.digit",
-            ].map((requirement, idx) => (
-              <div
-                key={idx}
-                className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-center tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]"
-              >
-                <span className="mr-1">•</span> {t(requirement)}
-              </div>
-            ))}
-          </div>
-
-          <div className="relative w-fit font-body-large-medium font-[number:var(--body-large-medium-font-weight)] text-[#1b4f4a] text-[length:var(--body-large-medium-font-size)] text-center tracking-[var(--body-large-medium-letter-spacing)] leading-[var(--body-large-medium-line-height)] whitespace-nowrap [font-style:var(--body-large-medium-font-style)]">
             {t("edit_profile.your_address")}
           </div>
 
@@ -380,7 +324,7 @@ const EditProfile = () => {
             >
               <div className="flex flex-col items-start gap-2.5 relative flex-1 self-stretch w-full grow">
                 <div className="flex w-full items-start gap-2.5 relative flex-[0_0_auto]">
-                  <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                  <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] [font-style:var(--body-small-medium-font-style)]">
                     {heading}{" "}
                     {name !== "additionalAddress" && t("edit_profile.required")}
                   </div>
