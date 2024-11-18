@@ -66,6 +66,24 @@ const GuestDealView = () => {
     );
   };
 
+  const getDealProgress = (products) => {
+    // Calculate the total deal progress percentage sum
+    const totalDealProgress = products.reduce((sum, product) => {
+      const dealProgress =
+        ((product.total_stock - product.availability) / product.total_stock) *
+        100;
+      return sum + dealProgress;
+    }, 0);
+
+    // Calculate the average deal progress percentage and round to 2 decimal points
+    const averageDealProgress = (totalDealProgress / products.length).toFixed(
+      2
+    );
+
+    // Return the value as a number
+    return parseFloat(averageDealProgress);
+  };
+
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
@@ -113,7 +131,9 @@ const GuestDealView = () => {
             {dealData?.title || t("deal.title")}
           </div>
           {location?.state?.deal?.dealStatus === "soon_out_stock" ? (
-            <ProgressBarYellow percentage={dealData?.progress?.split("%")[0]} />
+            <ProgressBarYellow
+              percentage={getDealProgress(dealData?.products || [])}
+            />
           ) : (
             <ProgressBarGreen percentage={dealData?.progress?.split("%")[0]} />
           )}
