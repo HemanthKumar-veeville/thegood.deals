@@ -67,6 +67,7 @@ const GuestDealView = () => {
   };
 
   const getDealProgress = (products) => {
+    console.log({ products });
     // Calculate the total deal progress percentage sum
     const totalDealProgress = products.reduce((sum, product) => {
       const dealProgress =
@@ -79,7 +80,7 @@ const GuestDealView = () => {
     const averageDealProgress = (totalDealProgress / products.length).toFixed(
       2
     );
-
+    console.log({ averageDealProgress });
     // Return the value as a number
     return parseFloat(averageDealProgress);
   };
@@ -135,7 +136,9 @@ const GuestDealView = () => {
               percentage={getDealProgress(dealData?.products || [])}
             />
           ) : (
-            <ProgressBarGreen percentage={dealData?.progress?.split("%")[0]} />
+            <ProgressBarGreen
+              percentage={getDealProgress(dealData?.products || [])}
+            />
           )}
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
