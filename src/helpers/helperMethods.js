@@ -18,6 +18,7 @@ export const axiosInstance = axios.create({
     "Accept-Language": currentLanguage, // Dynamically set Accept-Language header
   },
   withCredentials: true,
+  timeout: 30000,
 });
 
 export const createStripeAccount = async (email, dealId) => {
