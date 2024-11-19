@@ -9,7 +9,7 @@ function DeleteAccount() {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate("/settings");
+    navigate(-1);
   };
 
   const handleDelete = () => {

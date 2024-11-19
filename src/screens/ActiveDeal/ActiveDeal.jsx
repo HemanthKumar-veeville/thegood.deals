@@ -59,7 +59,7 @@ const ActiveDeal = () => {
   const [isDealPaid, setIsDealPaid] = useState(false);
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const handleMyOrders = () => {

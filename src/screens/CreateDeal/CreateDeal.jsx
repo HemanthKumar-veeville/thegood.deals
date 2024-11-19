@@ -203,7 +203,7 @@ const CreateDeal = () => {
   }, [dealId, t]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   useEffect(() => {

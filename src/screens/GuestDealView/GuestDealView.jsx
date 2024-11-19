@@ -38,7 +38,7 @@ const GuestDealView = () => {
   const is_creator = queryParams.get("is_creator");
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const handleMyOrders = () => {

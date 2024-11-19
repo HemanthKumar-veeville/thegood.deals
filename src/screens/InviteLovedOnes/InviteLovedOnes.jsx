@@ -51,9 +51,7 @@ const InviteLovedOnes = () => {
   };
 
   const handleBack = () => {
-    navigate(
-      "/admin-active-deal?deal_id=" + dealId + "&is_creator=" + is_creator
-    );
+    navigate(-1);
   };
 
   const handleShareViaWhatsApp = () => {

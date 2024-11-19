@@ -125,7 +125,7 @@ const EditProfile = () => {
   }, [fetchedProfile]);
 
   const handleBack = useCallback(() => {
-    navigate("/settings");
+    navigate(-1);
   }, [navigate]);
 
   const handleEdit = (field) => setEditField(field);

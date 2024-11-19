@@ -32,7 +32,7 @@ const CurrencySelection = () => {
   }, [currency]);
 
   const handleBack = () => {
-    navigate("/settings");
+    navigate(-1);
   };
 
   const handleCurrencyChange = (currency) => {
