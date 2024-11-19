@@ -6,6 +6,7 @@ import { Pencil } from "../../icons/Pencil";
 import { PencilAlt } from "../../icons/PencilAlt";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
 import {
   fetchUserProfile,
   updateUserProfile,
@@ -16,6 +17,7 @@ import { useTranslation } from "react-i18next"; // Import useTranslation for loc
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
+import { NameDropdown } from "../../components/CountryNameDropDown";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ const EditProfile = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
+  const [selectedCode, setSelectedCode] = useState(null);
 
   const initialProfileState = {
     firstName: "",
@@ -44,6 +47,35 @@ const EditProfile = () => {
     country: "",
     profilepicture: "",
   };
+
+  const formik = useFormik({
+    initialValues: {
+      country: selectedCode || "",
+    },
+    enableReinitialize: true,
+    onSubmit: async (values) => {
+      try {
+        const res = await dispatch(
+          updateUserProfile({ country: values.country })
+        );
+
+        if (res?.payload?.detail) {
+          throw new Error(res.payload.detail);
+        } else {
+          const refetchRes = await dispatch(fetchUserProfile());
+          if (refetchRes?.payload?.detail) {
+            throw new Error(refetchRes.payload.detail);
+          }
+        }
+
+        setShowSuccessModal(true);
+        setServerMessage(t("edit_profile.success"));
+      } catch (error) {
+        setShowErrorModal(true);
+        setServerMessage(t("edit_profile.error"));
+      }
+    },
+  });
 
   const [profile, setProfile] = useState(initialProfileState);
   const [editField, setEditField] = useState(null);
@@ -312,11 +344,6 @@ const EditProfile = () => {
               label: t("edit_profile.postal_code"),
               heading: t("edit_profile.postal_code"),
             },
-            {
-              name: "country",
-              label: t("edit_profile.country"),
-              heading: t("edit_profile.country"),
-            },
           ].map(({ name, label, heading }) => (
             <div
               key={name}
@@ -343,7 +370,15 @@ const EditProfile = () => {
               </div>
             </div>
           ))}
-
+          <div className="flex h-12 items-start gap-[5px] relative self-stretch !w-full">
+            <NameDropdown
+              id="country"
+              name="country"
+              selectedCode={selectedCode}
+              setSelectedCode={setSelectedCode}
+              formik={formik}
+            />
+          </div>
           <div onClick={handleSave} className="w-full">
             <Button
               buttonText={t("edit_profile.confirm_changes")}

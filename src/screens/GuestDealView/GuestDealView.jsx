@@ -22,6 +22,7 @@ import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { RatingStar } from "../../components/RatingStar";
 import { Line } from "../../components/Line/Line";
 import { Send1 } from "../../icons/Send1";
+import { getDealProgress } from "../../helpers/helperMethods";
 
 const GuestDealView = () => {
   const { t } = useTranslation();
@@ -64,25 +65,6 @@ const GuestDealView = () => {
     navigate(
       "/admin-view-deal?deal_id=" + deal_id + "&deal_type=" + is_creator
     );
-  };
-
-  const getDealProgress = (products) => {
-    console.log({ products });
-    // Calculate the total deal progress percentage sum
-    const totalDealProgress = products.reduce((sum, product) => {
-      const dealProgress =
-        ((product.total_stock - product.availability) / product.total_stock) *
-        100;
-      return sum + dealProgress;
-    }, 0);
-
-    // Calculate the average deal progress percentage and round to 2 decimal points
-    const averageDealProgress = (totalDealProgress / products.length).toFixed(
-      2
-    );
-    console.log({ averageDealProgress });
-    // Return the value as a number
-    return parseFloat(averageDealProgress);
   };
 
   return (

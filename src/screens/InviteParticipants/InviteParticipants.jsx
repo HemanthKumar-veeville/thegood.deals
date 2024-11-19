@@ -29,6 +29,9 @@ import {
   formatDate,
 } from "../../helpers/helperMethods";
 import ReadMore from "../../components/Readmore/Readmore";
+import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
+import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
+import { getDealProgress } from "../../helpers/helperMethods";
 
 export const InviteParticipants = ({
   HEADERIcon = (
@@ -131,6 +134,15 @@ export const InviteParticipants = ({
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {dealState?.deal_title || "-"}
         </p>
+        {dealState?.status === "soon_out_stock" ? (
+          <ProgressBarYellow
+            percentage={getDealProgress(dealState?.products || [])}
+          />
+        ) : (
+          <ProgressBarGreen
+            percentage={getDealProgress(dealState?.products || [])}
+          />
+        )}
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
