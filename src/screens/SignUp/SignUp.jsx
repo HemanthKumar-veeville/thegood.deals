@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../context/LanguageContext";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import Swal from "sweetalert2";
+import { NameDropdown } from "../../components/CountryNameDropDown";
 
 const InputField = ({
   id,
@@ -137,6 +138,7 @@ export const SignUp = ({ setIsLoading }) => {
   const { t, i18n } = useTranslation();
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedCode, setSelectedCode] = useState(null);
 
   // Load saved form values from localStorage
   useEffect(() => {
@@ -483,14 +485,15 @@ export const SignUp = ({ setIsLoading }) => {
           formik={formik}
           label={t("signup.postal_code")}
         />
-        <InputField
-          id="country"
-          name="country"
-          placeholder={t("signup.country")}
-          formik={formik}
-          label={t("signup.country")}
-        />
-
+        <div className="flex h-12 items-start gap-[5px] relative self-stretch !w-full">
+          <NameDropdown
+            id="country"
+            name="country"
+            selectedCode={selectedCode}
+            setSelectedCode={setSelectedCode}
+            formik={formik}
+          />
+        </div>
         <div className="flex flex-wrap items-center gap-[10px_10px] relative self-stretch w-full flex-[0_0_auto]">
           <input
             id="acceptPrivacyPolicy"
