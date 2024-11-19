@@ -90,7 +90,7 @@ export const GuestsSendReviews = ({
               className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke focus:outline-none focus:ring-2 focus:ring-[#2a4e4a] placeholder:text-[#637381] text-[#637381]"
               value={organizerRemarks}
               onChange={(e) => handleTextAreaChange(setOrganizerRemarks, e)}
-              maxLength={250}
+              maxLength={1000}
               placeholder={t("guestsSendReviews.remarks")}
             />
           </div>
@@ -126,7 +126,7 @@ export const GuestsSendReviews = ({
               className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke focus:outline-none focus:ring-2 focus:ring-[#2a4e4a] placeholder:text-[#637381] text-[#637381]"
               value={productRemarks}
               onChange={(e) => handleTextAreaChange(setProductRemarks, e)}
-              maxLength={250}
+              maxLength={1000}
               placeholder={t("guestsSendReviews.remarks")}
             />
           </div>
@@ -162,7 +162,7 @@ export const GuestsSendReviews = ({
               className="h-[120px] flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke focus:outline-none focus:ring-2 focus:ring-[#2a4e4a] placeholder:text-[#637381] text-[#637381]"
               value={platformRemarks}
               onChange={(e) => handleTextAreaChange(setPlatformRemarks, e)}
-              maxLength={250}
+              maxLength={1000}
               placeholder={t("guestsSendReviews.remarks")}
             />
           </div>
