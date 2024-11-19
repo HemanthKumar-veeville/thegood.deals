@@ -51,7 +51,7 @@ const AddPictures = ({
         const imgIndex = imgArray?.length - 1;
         const imgName = imgArray[imgIndex];
 
-        return fileName === imgName;
+        return fileName !== imgName;
       })
     );
     event.preventDefault();
