@@ -33,17 +33,17 @@ const EditProfile = () => {
   const [selectedCode, setSelectedCode] = useState(null);
 
   const initialProfileState = {
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     phone: "",
     email: "",
     currentPassword: "",
     newPassword: "",
     language: "English", // Default language state
     address: "",
-    additionalAddress: "",
+    addl_address: "",
     city: "",
-    postalCode: "",
+    postal_code: "",
     country: "",
     profilepicture: "",
   };
@@ -107,17 +107,17 @@ const EditProfile = () => {
       } = fetchedProfile.data;
 
       setProfile({
-        firstName: first_name || "",
-        lastName: last_name || "",
+        firstname: first_name || "",
+        lastname: last_name || "",
         phone: phone || "",
         email: email || "",
         currentPassword: "",
         newPassword: "",
         language: language || "French",
         address: address || "",
-        additionalAddress: addl_address || "",
+        addl_address: addl_address || "",
         city: city || "",
-        postalCode: postal_code || "",
+        postal_code: postal_code || "",
         country: country || "",
         profilepicture: profile_picture || "",
       });
@@ -281,8 +281,8 @@ const EditProfile = () => {
           </div>
 
           {[
-            { name: "firstName", label: t("edit_profile.first_name") },
-            { name: "lastName", label: t("edit_profile.last_name") },
+            { name: "firstname", label: t("edit_profile.first_name") },
+            { name: "lastname", label: t("edit_profile.last_name") },
             { name: "phone", label: t("edit_profile.phone") },
             { name: "email", label: t("edit_profile.email") },
           ].map(({ name, label }) => (
@@ -330,7 +330,7 @@ const EditProfile = () => {
               heading: t("edit_profile.address"),
             },
             {
-              name: "additionalAddress",
+              name: "addl_address",
               label: t("edit_profile.additional_address"),
               heading: t("edit_profile.additional_address"),
             },
@@ -340,7 +340,7 @@ const EditProfile = () => {
               heading: t("edit_profile.city"),
             },
             {
-              name: "postalCode",
+              name: "postal_code",
               label: t("edit_profile.postal_code"),
               heading: t("edit_profile.postal_code"),
             },
@@ -353,7 +353,7 @@ const EditProfile = () => {
                 <div className="flex w-full items-start gap-2.5 relative flex-[0_0_auto]">
                   <div className="font-[number:var(--body-small-medium-font-weight)] relative w-fit mt-[-1.00px] font-body-small-medium text-[#1b4f4a] text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] [font-style:var(--body-small-medium-font-style)]">
                     {heading}{" "}
-                    {name !== "additionalAddress" && t("edit_profile.required")}
+                    {name !== "addl_address" && t("edit_profile.required")}
                   </div>
                 </div>
                 <div
