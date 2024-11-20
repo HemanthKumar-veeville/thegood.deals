@@ -5,9 +5,7 @@ import axios from "axios";
 import PaymentForm from "./PaymentForm";
 import { useTranslation } from "react-i18next"; // Import useTranslation
 
-const stripe = loadStripe(
-  "pk_test_51PplNp04KHQUtznoy8HmY5meaJK4aZgRjwuckLfjquqCSJMvfXEjacj3pADbzg2SDbNuWr0zRhrFymRRstAjzh3S00USzDZqAJ"
-);
+const stripe = loadStripe(STRIPE_PK);
 
 const StripePayment = () => {
   const [clientSecret, setClientSecret] = useState(null);

@@ -1,14 +1,12 @@
 import axios from "axios";
 import i18next from "i18next";
 import { loadStripe } from "@stripe/stripe-js";
-import { BASE_URL } from "../config";
+import { BASE_URL, STRIPE_PK } from "../config";
 
 console.log({ BASE_URL });
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
-const stripePromise = loadStripe(
-  "pk_test_51PplNp04KHQUtznoy8HmY5meaJK4aZgRjwuckLfjquqCSJMvfXEjacj3pADbzg2SDbNuWr0zRhrFymRRstAjzh3S00USzDZqAJ"
-);
+const stripePromise = loadStripe(STRIPE_PK);
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
