@@ -24,6 +24,7 @@ import { SuccessAlert } from "../../components/WarningAlert";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../../components/Line/Line";
+import { getDealProgress } from "../../helpers/helperMethods";
 
 const MyInformation = () => {
   const { t } = useTranslation();
@@ -189,9 +190,13 @@ const MyInformation = () => {
                       divClassNameOverride="!tracking-[0] !text-sm ![font-style:unset] !font-normal ![font-family:'Inter',Helvetica] !leading-[22px]"
                       override={
                         deal.status === "soon_out_stock" ? (
-                          <ProgressBarYellow percentage={deal.progress || 80} />
+                          <ProgressBarYellow
+                            percentage={getDealProgress(deal?.products || [])}
+                          />
                         ) : (
-                          <ProgressBarGreen percentage={deal.progress || 90} />
+                          <ProgressBarGreen
+                            percentage={getDealProgress(deal?.products || [])}
+                          />
                         )
                       }
                       text={deal.title}

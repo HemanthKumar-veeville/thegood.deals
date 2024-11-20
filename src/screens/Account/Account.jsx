@@ -26,6 +26,7 @@ import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { Box44 } from "../../icons/Box44/Box44.jsx";
 import { Line } from "../../components/Line/Line.jsx";
+import { getDealProgress } from "../../helpers/helperMethods.js";
 
 const Account = ({ isRequestSent, dealId }) => {
   const { t } = useTranslation();
@@ -297,14 +298,13 @@ const Account = ({ isRequestSent, dealId }) => {
                 isGuestDeal={activeTab === "invited"}
                 dealImages={deal?.images || [blogImage]}
                 override={
-                  deal?.deal_progress_percentage ===
-                  0 ? null : deal.dealStatus === "soon_out_stock" ? (
+                  deal.dealStatus === "soon_out_stock" ? (
                     <ProgressBarYellow
-                      percentage={deal?.deal_progress_percentage}
+                      percentage={getDealProgress(deal?.products || [])}
                     />
                   ) : (
                     <ProgressBarGreen
-                      percentage={deal?.deal_progress_percentage}
+                      percentage={getDealProgress(deal?.products || [])}
                     />
                   )
                 }

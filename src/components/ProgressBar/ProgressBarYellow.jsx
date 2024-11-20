@@ -8,9 +8,9 @@ const ProgressBarYellow = ({ percentage }) => {
     <div className="w-full bg-gray-200 rounded-full h-4">
       <div
         className="bg-[#FBBF24] h-full rounded-full flex items-center justify-start pl-1"
-        style={{ width: `${percentage}%` }}
+        style={{ width: `${percentage < 50 ? percentage + 15 : percentage}%` }}
       >
-        <span className="text-white text-xs">
+        <span className="text-white text-xs pl-4">
           {t("ProgressBarYellow.sold", { percentage })}
         </span>
       </div>
