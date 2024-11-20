@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import PaymentForm from "./PaymentForm";
 import { useTranslation } from "react-i18next"; // Import useTranslation
+import { STRIPE_PK } from "../config";
 
 const stripe = loadStripe(STRIPE_PK);
 

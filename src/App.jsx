@@ -22,6 +22,7 @@ import InviteParticipants from "./screens/InviteParticipants/InviteParticipants"
 import { NewsLetterScreen } from "./screens/NewsLetterScreen/NewsLetterScreen";
 import UpdateDeal from "./screens/UpdateDeal/UpdateDeal";
 import DealWallet from "./screens/DealWallet/DealWallet";
+import { STRIPE_PK } from "./config";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
