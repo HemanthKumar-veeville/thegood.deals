@@ -17,7 +17,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  console.log({ products });
   const handleQuantityChange = (index, action) => {
     const updatedItems = cartItems?.map((item, idx) => {
       if (idx === index) {
@@ -76,6 +76,20 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
             <p className="relative w-fit mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
               {product.name}
             </p>
+          </div>
+          <div className="flex flex-col items-start justify-center gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
+            <p className="relative w-fit mt-[-1.00px] font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-orange text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+              {t("artisanConfirmThe.min_quantity")}:{" "}
+              {product?.min_quantity_per_order || "-"}
+            </p>
+            <p className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-secondary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+              {t("artisanConfirmThe.max_quantity")}:{" "}
+              {product?.max_quantity_per_order || "-"}
+            </p>
+            <div className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-primary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+              {t("artisanConfirmThe.total_stock")}:{" "}
+              {product?.total_stock || "-"}
+            </div>
           </div>
           <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-orangeorange text-sm tracking-[0] leading-[22px] whitespace-nowrap">
