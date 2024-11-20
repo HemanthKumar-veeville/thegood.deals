@@ -45,9 +45,7 @@ const Wallet = loadable(() => import("./screens/Wallet/Wallet"));
 const Withdrawal = loadable(() => import("./screens/Withdrawal/Withdrawal"));
 const Invitations = loadable(() => import("./screens/Invitations/Invitations"));
 const Orders = loadable(() => import("./screens/Orders/Orders"));
-const ViewGoodDeal = loadable(() =>
-  import("./screens/ViewGoodDeal/ViewGoodDeal")
-);
+
 const ThanksForWithdrawal = loadable(() =>
   import("./screens/ThanksForWithdrawal/ThanksForWithdrawal")
 );
@@ -124,7 +122,7 @@ const AppBar = loadable(() => import("./components/AppBar/AppBar"), {
 // Layout component to include AppBar across all routes
 function Layout({ children }) {
   return (
-    <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen">
+    <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen notranslate">
       <AppBar />
       <Suspense fallback={<CustomLoader />}>{children}</Suspense>
     </div>

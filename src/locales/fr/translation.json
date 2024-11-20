@@ -18,20 +18,20 @@
   },
   "home": {
     "title": "Des produits d’exception à prix d’amis",
-    "description": "Offrez à vos proches l'opportunité de découvrir des produits d'exception,  grâce à nos commandes groupées. Bénéficier de tarifs préférentiels, mais aussi de savourer ensemble la richesse et l'authenticité de nos terroirs.",
+    "description": "Offrez à vos proches l'opportunité de découvrir des produits d'exception,  grâce à nos commandes groupées. Bénéficiez de tarifs préférentiels, mais aussi de savourer ensemble la richesse et l'authenticité de nos terroirs.",
     "login": "Se connecter",
     "create_account": "Créer un compte",
     "layout": {
       "text": "Savourez ensemble les délices de l'artisanat local, en trois étapes simples",
-      "text1": "Créer votre annonce",
+      "text1": "Créez votre annonce",
       "text2": "En créant une annonce attrayante où vous définirez le prix, donnerez des détails sur les produits proposés et présenterez l'artisan. Toutes les informations nécessaires à vos potentiels acheteurs.",
-      "text3": "Inviter vos proches",
-      "text4": "Encouragez-les à explorer l'offre et à passer commande, le tout facilité par une plateforme en ligne. C'est l'occasion de le faire découvrir des produits.",
-      "text5": "Livrer la marchandise",
+      "text3": "Invitez vos proches",
+      "text4": "Encouragez-les à explorer l'offre et à passer commande, le tout facilité par une plateforme en ligne. C'est l'occasion idéale de leur faire découvrir de nouveaux produits.",
+      "text5": "Livrez la marchandise",
       "text6": "Cela inclut la préparation des colis par l'artisan et leur acheminement jusqu'à vous. Assurez-vous que la réception des produits par vos proches se déroule dans les meilleures conditions."
     },
     "header": {
-      "text": "Créez, Partagez et Savourez avec une  commande groupée !",
+      "text": "Créez, Partagez et Savourez avec une commande groupée !",
       "text1": "En quelques clics, créez une commande, invitez vos proches et partagez le plaisir de découvrir ensemble les saveurs uniques de l'artisanat local. Profitez de tarifs avantageux, soutenez les artisans de votre région, et transformez chaque achat en une expérience conviviale et enrichissante.",
       "create_deal": "Créer un good deal",
       "manage_deal": "Gérer mes good deals"
@@ -50,11 +50,11 @@
     "faq": {
       "button_text": "Des questions ? Contactez-nous",
       "text": "Vous trouverez des réponses aux questions les plus courantes concernant notre plateforme de commande groupée de produits artisanaux.",
-      "que1": "How does bulk ordering work on your platform?",
-      "que2": "Who are the partner artisans?",
-      "que3": "How do I invite my friends to join a group order?",
-      "que4": "How is the price of products calculated?",
-      "que5": "How does delivery work?",
+      "que1": "Comment fonctionne la commande groupée sur votre plateforme ?",
+      "que2": "Qui sont les artisans partenaires ?",
+      "que3": "Comment inviter mes proches à rejoindre une commande groupée ?",
+      "que4": "Comment est calculé le prix des produits ?",
+      "que5": "Comment fonctionne la livraison ?",
       "ans1": "This is a detailed answer for the first question.",
       "ans2": "This is a detailed answer for the second question.",
       "ans3": "This is a detailed answer for the third question.",
@@ -83,13 +83,13 @@
   },
   "about_us": {
     "values": "Nos valeurs",
-    "values_description": "By joining our group order community, you benefit from advantageous prices while sharing the pleasure of tasting the best of local crafts. Make each purchase a unique experience, supporting artisans and sharing moments with your friends.",
-    "shared_experience": "Shared consumption experience",
-    "shared_experience_description": "An enriching social experience, strengthening bonds with family and friends while discovering exceptional products together.",
-    "local_support": "Support and promotion of local artisans",
-    "local_support_description": "By favoring products from local crafts, you contribute to maintaining and promoting the unique know-how of our regions.",
+    "values_description": "En rejoignant notre communauté de commandes groupées, bénéficiez de prix avantageux tout en partageant le plaisir de déguster le meilleur de l'artisanat local. Faites de chaque achat une expérience unique, soutenez les artisans et partagez des moments avec vos amis.",
+    "shared_experience": "Expérience de consommation partagée",
+    "shared_experience_description": "Une expérience sociale enrichissante, renforçant les liens avec famille et amis tout en découvrant ensemble des produits exceptionnels.",
+    "local_support": "Soutien et valorisation des artisans locaux",
+    "local_support_description": "En privilégiant les produits issus de l'artisanat local, vous contribuez au maintien et à la valorisation des savoir-faire uniques de nos régions.",
     "how_it_works": "Comment ça marche ?",
-    "about_us": "About Us",
+    "about_us": "À propos de nous",
     "authenticity": "Authenticité",
     "authenticity_description": "Des produits qui racontent une histoire, celle de nos terroirs et de leurs artisans passionnés.",
     "community": "Communauté",
@@ -103,11 +103,11 @@
     "enriching_experience": "Une expérience enrichissante",
     "enriching_experience_description": "Commander sur The Good Deals, c’est bien plus qu’un simple achat. C’est l’occasion de partager des moments précieux avec vos proches tout en soutenant une économie locale et durable.",
     "about_good_deals": "À propos de The Good Deals",
-    "welcome_description": "Nous sommes ravis de vous accueillir dans notre communauté dédiée à la découverte de produits d’exception à des prix d’amis. The Good Deals, est né à Lille avant tout une aventure humaine et gourmande entre Anthony Brabant et Abraham Thomas, où chaque commande groupée devient une fête des saveurs et des savoir-faire locaux.",
+    "welcome_description": "Nous sommes ravis de vous accueillir dans notre communauté dédiée à la découverte de produits d’exception à des prix d’amis. The Good Deals est une aventure humaine et gourmande née à Lille, fondée par Anthony Brabant et Abraham Thomas, où chaque commande groupée devient une fête des saveurs et des savoir-faire locaux.",
     "login": "Se connecter",
     "create_account": "Créer un compte",
     "create_deal": "Créer un good deal !",
-    "manage_deal": "Manage my good deals",
+    "manage_deal": "Gérer mes good deals",
     "our_mission": "Notre mission",
     "mission_description": "Vous permettre de profiter des meilleurs artisans de nos régions et vous permettre de partager leurs trésors avec vos proches. En unissant nos forces, nous rendons les produits d’exception accessibles à tous, tout en soutenant les talents locaux.",
     "join_adventure": "Rejoignez-nous dans cette belle aventure !",
@@ -303,7 +303,7 @@
     "form_title": "Via notre formulaire",
     "name_placeholder": "Votre nom",
     "email_placeholder": "Votre adresse mail",
-    "phone_placeholder": "Mobile number",
+    "phone_placeholder": "Numéro de téléphone",
     "message_placeholder": "Votre message",
     "privacy_accept_text": "J'accepte ",
     "privacy_policy": "la politique de confidentialité",
@@ -324,13 +324,13 @@
   },
   "auth": {
     "login_tab": "Se connecter",
-    "signup_tab": "Créer une compte"
+    "signup_tab": "Créer un compte"
   },
   "otp": {
     "confirm_email": "Confirmer votre email",
     "code_sent": "Nous vous avons envoyé un code à",
     "send_again": "Renvoyé",
-    "send_code_again": "Send Code Again",
+    "send_code_again": "Envoyer à nouveau le code",
     "login": "Se connecter"
   },
   "account": {
@@ -413,7 +413,7 @@
       "invalid_format": "Veuillez entrer une adresse e-mail valide.",
       "invalid_email": "E-mail invalide",
       "missing_deal_id": "Erreur",
-      "deal_id_missing_message": "L'ID du bon plan est manquant dans l'URL.",
+      "deal_id_missing_message": "L'ID du good deal est manquant dans l'URL.",
       "invitation_failed": "Erreur",
       "invitation_failed_message": "Une erreur s'est produite lors de l'invitation de l'artisan. Veuillez réessayer plus tard."
     }
@@ -429,7 +429,7 @@
     "place_order": "Commander",
     "loved_ones_orders_label": "Vos proches commandent",
     "orders_count": "{{count}}",
-    "orders_available": "sur {{available}} dispos",
+    "orders_available": "sur {{available}} disponibles",
     "wallet_label": "Deal wallet",
     "amount_collected_label": "Montant du deal collecté",
     "amount_target": "sur {{target}} €",
@@ -444,11 +444,11 @@
     "deal_ends_in": "Le deal se termine dans",
     "manage_friends": "Gérer mes proches",
     "collect_payment": "Collecter le paiement",
-    "pay_artisan": "Pay to artisan",
-    "endsIn": "{{days}} jours",
-    "danger_alert": "The payment of one of the participants could not be made.",
+    "pay_artisan": "Payer l’artisan",
+    "endsIn": "fin dans {{days}} jours",
+    "danger_alert": "Le paiement d’un des participants n’a pu être réalisé.",
     "error": "Une erreur est survenue. Veuillez réessayer plus tard.",
-    "try_again": "Try Again",
+    "try_again": "Réessayer",
     "deal_completed": "Le deal est payé. L’artisan va préparer vos commandes.",
     "deal_collected": "Le montant a été collecté auprès de tous les participants.",
     "deal_completed_status": "L’artisan va préparer vos commandes."
@@ -599,7 +599,7 @@
     "step3": "Objectif atteint ! 🎉",
     "step4": "Commandes envoyées à l’artisan",
     "step5": "L’organisateur coordonne la livraison avec l'artisan",
-    "step6": "Delivery and Closing of the deal",
+    "step6": "Livraison et fermeture du deal",
     "image_alt": "Image de blog"
   },
   "status": {
@@ -689,8 +689,8 @@
     "ratings": "Évaluations ⭐️",
     "rating_title": "J'adore ce produit!",
     "rating_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac risus a risus elementum vehicula.",
-    "no_reviews": "No reviews available",
-    "no_deals": "No deals available"
+    "no_reviews": "Aucun avis disponible",
+    "no_deals": "Pas de deals disponible"
   },
   "artisanDeniedThe": {
     "not_agree": "Vous n’êtes pas d’accord avec le deal ? 😕",
@@ -712,6 +712,7 @@
     "about_deal": "À propos du deal",
     "deal_description": "J'ai découvert le domaine de Cilagus récemment, et je dois dire que le vin y est exceptionnel. Cette découverte m'a tellement marqué que je souhaite la partager avec vous...",
     "read_more": "Lire plus",
+    "read_less": "Lire moins",
     "what_customers_receive": "Que recevez-vous ?",
     "customers_receive": "Chaque commande groupée inclura une sélection variée de bouteilles provenant du domaine de Cilaguse, couvrant des vins rouges robustes, des blancs délicats...",
     "delivery_info": "Lieu et Date de livraison",
@@ -730,11 +731,11 @@
     "confirmed": "Vous avez confirmé le deal.",
     "organizer_name": "Abraham Thomas",
     "organizer_rating": "four-star",
-    "ignore": "Ignore",
-    "accept": "Accept",
-    "error_title": "Error...",
-    "error_login_required": "You need to login to send a request.",
-    "error_request_failed": "Failed to send request. Please try again.",
+    "ignore": "Ignorer",
+    "accept": "Accepter",
+    "error_title": "Erreur...",
+    "error_login_required": "Vous devez vous connecter pour envoyer une demande.",
+    "error_request_failed": "Échec de l'envoi de la demande. Veuillez réessayer.",
     "success_desc": "Une fois que l’organisateur aura confirmé, vous pourrez commander."
   },
   "guestsSendReviews": {
@@ -787,7 +788,7 @@
     "dearGuest": "Cher invité, donnez-nous votre avis !",
     "satisfactionMessage": "Nous espérons que vous êtes satisfait de notre service.",
     "giveOpinionButton": "Donner mon avis ",
-    "buttonClickAlert": "Button clicked"
+    "buttonClickAlert": "Bouton cliqué"
   },
   "lostPassword": {
     "back": "Retour",
@@ -807,7 +808,7 @@
     "newPassword": "Nouveau mot de passe",
     "passwordInstruction": "Le mot de passe doit être suffisamment long et difficile à deviner pour les autres.",
     "passwordPlaceholder": "Mot de passe",
-    "confirmPasswordPlaceholder": "Confirmer votre mdp",
+    "confirmPasswordPlaceholder": "Confirmer votre mot de passe",
     "passwordCriteria": {
       "8characters": "Au moins 8 caractères",
       "1capitalLetter": "Des lettres majuscules et minuscules",
@@ -848,13 +849,13 @@
     "subtitle": "Vos infos",
     "first_name": "Prénom",
     "last_name": "Nom",
-    "mobile_number": "Mobile number",
+    "mobile_number": "Numéro de téléphone",
     "email": "E-mail",
     "language": "Langue",
     "currency": "Devise",
     "setup_pass": "Votre mot de passe",
     "password": "Mot de passe",
-    "confirm_password": "Confirmer votre mdp",
+    "confirm_password": "Confirmer votre mot de passe",
     "setup_addr": "Votre adresse",
     "address": "Adresse (requis)",
     "additional_address": "Complément d’adresse",
@@ -898,7 +899,7 @@
       "accept_privacy_policy": "Vous devez accepter la politique de confidentialité",
       "currency": "Vous devez entrer la devise",
       "error_title": "Erreur...",
-      "error_desc": "Something went wrong, Please try again later",
+      "error_desc": "Une erreur s'est produite, veuillez réessayer plus tard",
       "error_ack": "OK"
     }
   },
@@ -973,7 +974,7 @@
       "text": "Caisse de vin<br/>Domaine de Cigaluse",
       "text1": "se termine dans 12 jours",
       "participants": "{{count}} participants",
-      "authorName": "Author name",
+      "authorName": "Nom du créateur du deal",
       "badgesText": "Prêt à être publié"
     }
   },
@@ -1014,7 +1015,7 @@
     "buttonText": "Compris !"
   },
   "header": {
-    "mainText": "Créez, Partagez et Savourez avec une  commande groupée !",
+    "mainText": "Créez, Partagez et Savourez avec une commande groupée !",
     "subText": "En quelques clics, créez une commande, invitez vos proches et partagez le plaisir de découvrir ensemble les saveurs uniques de l'artisanat local. Profitez de tarifs avantageux, soutenez les artisans de votre région, et transformez chaque achat en une expérience conviviale et enrichissante.",
     "createDealButton": "Créer un good deal",
     "manageDealsButton": "Gérer mes good deals",
@@ -1049,26 +1050,26 @@
     "maxQuantityLabel": "Quantité maximum",
     "maximumRetailPriceLabel": "Prix de référence",
     "maximumRetailPricePlaceholder": "ex. 29.00 €",
-    "goodDealPriceLabel": "Prix du good deal",
+    "goodDealPriceLabel": "Prix du Good deal",
     "goodDealPricePlaceholder": "ex. 29.00 € ",
     "estimatedDiscountLabel": "Remise estimée",
     "estimatedDiscountText": "par rapport au prix public",
     "addButtonText": "Ajouter"
   },
-  "productTitleLabel": "Product Title",
-  "productTitlePlaceholder": "ex. Case of Rosé - 6 bottles",
-  "totalStockLabel": "Total stock",
-  "byOrderText": "by order",
+  "productTitleLabel": "Titre du produit",
+  "productTitlePlaceholder": "ex. Caisse de Rosé - 6 bouteilles",
+  "totalStockLabel": "Stock total",
+  "byOrderText": "par commande",
   "totalStockPlaceholder": "ex. 32",
-  "minQuantityLabel": "Minimum quantity",
-  "maxQuantityLabel": "Maximum quantity",
-  "maximumRetailPriceLabel": "Maximum retail price",
-  "maximumRetailPricePlaceholder": "ex. €29.00",
-  "goodDealPriceLabel": "Good deal price",
-  "goodDealPricePlaceholder": "ex. €29.00",
-  "estimatedDiscountLabel": "Estimated discount",
-  "estimatedDiscountText": "compared to the public price",
-  "addButtonText": "Add",
+  "minQuantityLabel": "Quantité minimale",
+  "maxQuantityLabel": "Quantité maximale",
+  "maximumRetailPriceLabel": "Prix ​​de vente maximum",
+  "maximumRetailPricePlaceholder": "ex. 29.00 €",
+  "goodDealPriceLabel": "Prix du good deal",
+  "goodDealPricePlaceholder": "ex. 29.00 €",
+  "estimatedDiscountLabel": "Remise estimée",
+  "estimatedDiscountText": "par rapport au prix public",
+  "addButtonText": "Ajouter",
   "ProductList": {
     "productListTitle": "Liste des produits",
     "noProductsMessage": "Aucun produit ajouté pour le moment.",
@@ -1500,7 +1501,7 @@
   },
   "Withdrawal": {
     "line_alt": "Line separator",
-    "back_button": "Back",
+    "back_button": "Retour",
     "validate_payment_button": "Validate payment"
   },
   "TermsOfUse": {
@@ -1516,8 +1517,8 @@
   "legal_notices": {
     "back": "Retour",
     "contact_us": {
-      "create_good_deal": "Créer une Bonne Affaire",
-      "manage_good_deal": "Gérer une Bonne Affaire",
+      "create_good_deal": "Créer un Good Deal",
+      "manage_good_deal": "Gérer un Good Deal",
       "other_questions": "Autres questions ?",
       "other_questions_description": "Si vous avez d'autres questions, n'hésitez pas à nous contacter."
     },

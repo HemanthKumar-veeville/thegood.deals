@@ -39,6 +39,7 @@ import { CheckmarkCircle } from "../../icons/CheckmarkCircle";
 import { Line } from "../../components/Line/Line";
 import axios from "axios";
 import { Send1 } from "../../icons/Send1";
+import { getDealProgress } from "../../helpers/helperMethods";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const ActiveDeal = () => {
   const [isDealPaid, setIsDealPaid] = useState(false);
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const handleMyOrders = () => {
@@ -231,16 +232,15 @@ const ActiveDeal = () => {
             >
               {dealData?.deal_title}
             </div>
-            {dealData?.deal_progress_percentage !== 0 &&
-              (location?.state?.deal?.dealStatus === "soon_out_stock" ? (
-                <ProgressBarYellow
-                  percentage={dealData?.deal_progress_percentage}
-                />
-              ) : (
-                <ProgressBarGreen
-                  percentage={dealData?.deal_progress_percentage}
-                />
-              ))}
+            {location?.state?.deal?.dealStatus === "soon_out_stock" ? (
+              <ProgressBarYellow
+                percentage={getDealProgress(dealData?.products || [])}
+              />
+            ) : (
+              <ProgressBarGreen
+                percentage={getDealProgress(dealData?.products || [])}
+              />
+            )}
             <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
               <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
                 <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />

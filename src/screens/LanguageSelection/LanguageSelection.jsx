@@ -33,7 +33,7 @@ const LanguageSelection = () => {
   }, [language]);
 
   const handleBack = () => {
-    navigate("/settings");
+    navigate(-1);
   };
 
   const toggleDropdown = () => {

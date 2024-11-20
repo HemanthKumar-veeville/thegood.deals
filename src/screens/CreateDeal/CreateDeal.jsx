@@ -118,8 +118,6 @@ const CreateDeal = () => {
       form.append("collection_date", formData.collectionDate);
       form.append("content_description", formData.contentDescription);
       form.append("artisan_information", formData.manufacturerInfo);
-      form.append("banking_info[iban]", formData.iban);
-      form.append("banking_info[bic]", formData.bic);
       form.append("deal_expiration_date", formData.dealExpiration);
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
@@ -183,8 +181,6 @@ const CreateDeal = () => {
                 formatDate(new Date()),
               contentDescription: dealData.content_description,
               manufacturerInfo: dealData.artisan_information,
-              iban: dealData.banking_info?.iban,
-              bic: dealData.banking_info?.bic,
               dealExpiration:
                 dealData.deal_expiration_date?.slice(0, 16) ??
                 formatDate(new Date()),
@@ -207,7 +203,7 @@ const CreateDeal = () => {
   }, [dealId, t]);
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -343,40 +339,6 @@ const CreateDeal = () => {
                 secondLabel="on"
                 secondLabelText="0/250"
                 state="default"
-              />
-            </div>
-            <Line />
-            <p className="relative w-full [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-lg tracking-[0] leading-[26px]">
-              {t("create_deal.banking_info_label")}
-            </p>
-            <div className="w-full h-6">
-              <div className="[font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                IBAN
-              </div>
-            </div>
-            <div className="w-full">
-              <BankingInfo
-                name="iban"
-                type="iban"
-                info={formData.iban}
-                onChange={handleChange}
-                label={t("create_deal.iban_label")}
-                placeholder={t("create_deal.iban_placeholder")}
-              />
-            </div>
-            <div className="w-full h-6">
-              <div className="[font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                BIC
-              </div>
-            </div>
-            <div className="w-full">
-              <BankingInfo
-                name="bic"
-                type="bic"
-                info={formData.bic}
-                onChange={handleChange}
-                label={t("create_deal.bic_label")}
-                placeholder={t("create_deal.bic_placeholder")}
               />
             </div>
             <Line />

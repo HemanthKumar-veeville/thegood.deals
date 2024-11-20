@@ -24,6 +24,7 @@ import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 import { InfoCircle8 } from "../../icons/InfoCircle8/InfoCircle8";
 import { calculateDaysBetweenDates } from "../../helpers/helperMethods";
 import { formatDateReversed, formatDate } from "../../helpers/helperMethods";
+import ReadMore from "../Readmore/Readmore";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -195,14 +196,11 @@ export const ArtisanConfirmThe = ({
         <div className="relative self-stretch font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] [font-style:var(--body-large-bold-font-style)]">
           {t("artisanConfirmThe.about_deal")}
         </div>
-        <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
-          <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {dealState?.deal_description || "-"}
-          </span>
-          <span className="font-bold text-[#1b4f4a] underline">
-            {t("artisanConfirmThe.read_more")}
-          </span>
-        </p>
+        <ReadMore
+          description={dealState?.deal_description || "-"}
+          readMoreText={t("artisanConfirmThe.read_more")}
+          readLessText={t("artisanConfirmThe.read_less")}
+        />
         <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
@@ -210,14 +208,11 @@ export const ArtisanConfirmThe = ({
             {t("artisanConfirmThe.what_customers_receive")}
           </p>
         </div>
-        <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
-          <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {dealState?.content_description || "-"}
-          </span>
-          <span className="font-bold text-[#1b4f4a] underline">
-            {t("artisanConfirmThe.read_more")}
-          </span>
-        </p>
+        <ReadMore
+          description={dealState?.content_description || "-"}
+          readMoreText={t("artisanConfirmThe.read_more")}
+          readLessText={t("artisanConfirmThe.read_less")}
+        />
         <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />

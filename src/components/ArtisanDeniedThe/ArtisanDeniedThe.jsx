@@ -75,7 +75,7 @@ export const ArtisanDeniedThe = ({
                 onChange={handleFeedbackChange}
                 placeholder={t("artisanDeniedThe.placeholder")}
                 className="mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-darkdark-6 text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] relative flex-1 [font-style:var(--body-medium-regular-font-style)] w-full focus:outline-none resize-none"
-                maxLength="250"
+                maxLength="1000"
                 rows="5"
               />
             </div>

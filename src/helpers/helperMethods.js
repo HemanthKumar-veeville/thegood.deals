@@ -263,3 +263,20 @@ export function formatDate(dateStr, language = "en") {
 
   return `${weekday} ${month} ${day}, ${timeString}`;
 }
+
+export const getDealProgress = (products) => {
+  console.log({ products });
+  // Calculate the total deal progress percentage sum
+  const totalDealProgress = products.reduce((sum, product) => {
+    const dealProgress =
+      ((product.total_stock - product.availability) / product.total_stock) *
+      100;
+    return sum + dealProgress;
+  }, 0);
+
+  // Calculate the average deal progress percentage and round to 2 decimal points
+  const averageDealProgress = (totalDealProgress / products.length).toFixed(2);
+  console.log({ averageDealProgress });
+  // Return the value as a number
+  return parseFloat(averageDealProgress) || 0;
+};

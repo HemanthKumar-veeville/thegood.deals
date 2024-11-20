@@ -16,7 +16,7 @@ export const Textarea = ({
   groupClassName,
   onChange,
   type,
-  maxLength = 250, // Adding a prop for maximum length
+  maxLength = 1000, // Adding a prop for maximum length
   description,
 }) => {
   const [value, setValue] = useState(description || "");

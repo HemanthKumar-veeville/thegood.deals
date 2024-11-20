@@ -42,7 +42,7 @@ const SignIn = ({ setIsLoading }) => {
       const errorMsg =
         error.response?.data?.detail || // Server error response
         error.message || // General error message
-        t("login.error"); // Fallback to a default message
+        t("login.error_message"); // Fallback to a default message
 
       dispatch(setErrorMessage(errorMsg)); // Set error message to Redux state
       dispatch(setIsError(true));

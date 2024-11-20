@@ -32,7 +32,7 @@ const DraftDeal = () => {
   }, []);
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   useEffect(() => {

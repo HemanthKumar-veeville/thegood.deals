@@ -22,6 +22,7 @@ import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { RatingStar } from "../../components/RatingStar";
 import { Line } from "../../components/Line/Line";
 import { Send1 } from "../../icons/Send1";
+import { getDealProgress } from "../../helpers/helperMethods";
 
 const GuestDealView = () => {
   const { t } = useTranslation();
@@ -37,7 +38,7 @@ const GuestDealView = () => {
   const is_creator = queryParams.get("is_creator");
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const handleMyOrders = () => {
@@ -113,9 +114,13 @@ const GuestDealView = () => {
             {dealData?.title || t("deal.title")}
           </div>
           {location?.state?.deal?.dealStatus === "soon_out_stock" ? (
-            <ProgressBarYellow percentage={dealData?.progress?.split("%")[0]} />
+            <ProgressBarYellow
+              percentage={getDealProgress(dealData?.products || [])}
+            />
           ) : (
-            <ProgressBarGreen percentage={dealData?.progress?.split("%")[0]} />
+            <ProgressBarGreen
+              percentage={getDealProgress(dealData?.products || [])}
+            />
           )}
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">

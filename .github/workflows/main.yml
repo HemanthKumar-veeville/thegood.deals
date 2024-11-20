@@ -27,8 +27,10 @@ jobs:
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             echo "VITE_BASE_URL=${{ secrets.PRODUCTION_VITE_BASE_URL }}" > .env
+            echo "VITE_STRIPE_PK=${{ secrets.PRODUCTION_VITE_STRIPE_PK }}" >> .env
           else
             echo "VITE_BASE_URL=${{ secrets.DEVELOPMENT_VITE_BASE_URL }}" > .env
+            echo "VITE_STRIPE_PK=${{ secrets.DEVELOPMENT_VITE_STRIPE_PK }}" >> .env
           fi
         shell: bash
 

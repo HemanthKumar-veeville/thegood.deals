@@ -28,6 +28,10 @@ import {
   formatDateReversed,
   formatDate,
 } from "../../helpers/helperMethods";
+import ReadMore from "../../components/Readmore/Readmore";
+import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
+import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
+import { getDealProgress } from "../../helpers/helperMethods";
 
 export const InviteParticipants = ({
   HEADERIcon = (
@@ -130,6 +134,15 @@ export const InviteParticipants = ({
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {dealState?.deal_title || "-"}
         </p>
+        {dealState?.status === "soon_out_stock" ? (
+          <ProgressBarYellow
+            percentage={getDealProgress(dealState?.products || [])}
+          />
+        ) : (
+          <ProgressBarGreen
+            percentage={getDealProgress(dealState?.products || [])}
+          />
+        )}
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
             <ClockAlt11 className="!relative !w-5 !h-5" color="#1B4F4A" />
@@ -173,13 +186,12 @@ export const InviteParticipants = ({
               {t("artisanConfirmThe.organized_by")}
             </div>
             <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-              {dealState?.organiser.name ||
-                t("artisanConfirmThe.organizer_name")}
+              {dealState?.organiser?.name || "-"}
             </div>
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar
                 className="!flex-[0_0_auto]"
-                rating={dealState?.organiser.rating || "four-star"}
+                rating={dealState?.organiser?.rating || "four-star"}
                 size="small"
               />
             </div>
@@ -188,15 +200,11 @@ export const InviteParticipants = ({
         <div className="relative self-stretch font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] [font-style:var(--body-large-bold-font-style)]">
           {t("artisanConfirmThe.about_deal")}
         </div>
-        <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
-          <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {dealState?.deal_description ||
-              t("artisanConfirmThe.deal_description")}
-          </span>
-          <span className="font-bold text-[#1b4f4a] underline">
-            {t("artisanConfirmThe.read_more")}
-          </span>
-        </p>
+        <ReadMore
+          description={dealState?.deal_description || "-"}
+          readMoreText={t("artisanConfirmThe.read_more")}
+          readLessText={t("artisanConfirmThe.read_less")}
+        />
         <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
@@ -204,14 +212,11 @@ export const InviteParticipants = ({
             {t("artisanConfirmThe.what_customers_receive")}
           </p>
         </div>
-        <p className="relative self-stretch [font-family:'Inter',Helvetica] font-normal text-transparent text-base tracking-[0] leading-6">
-          <span className="text-[#637381] font-body-medium-regular [font-style:var(--body-medium-regular-font-style)] font-[number:var(--body-medium-regular-font-weight)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] text-[length:var(--body-medium-regular-font-size)]">
-            {dealState?.content_description || "-"}
-          </span>
-          <span className="font-bold text-[#1b4f4a] underline">
-            {t("artisanConfirmThe.read_more")}
-          </span>
-        </p>
+        <ReadMore
+          description={dealState?.content_description || "-"}
+          readMoreText={t("artisanConfirmThe.read_more")}
+          readLessText={t("artisanConfirmThe.read_less")}
+        />
         <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />

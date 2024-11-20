@@ -62,9 +62,7 @@ const Invitations = () => {
   };
 
   const handleBackToDeal = () => {
-    navigate(
-      "/admin-active-deal?deal_id=" + deal_id + "&is_creator=" + is_creator
-    );
+    navigate(-1);
   };
 
   const handleInviteLovedOnes = () => {
