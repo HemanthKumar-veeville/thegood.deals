@@ -14,6 +14,7 @@ import {
 import ImageSlider from "../ImageSlider/ImageSlider";
 import { UserAlt } from "../../icons/UserAlt";
 import { useTranslation } from "react-i18next"; // Add translation hook
+import DiscountBadge from "../DiscountBadge";
 
 const statusBanner = {
   soon_out_stock: { text: "artisan.cardDeal.soonOutStock", color: "warning" },
@@ -53,6 +54,7 @@ export const CardDeal = ({
   isGuestDeal,
   dealImages,
   organizer,
+  discount,
 }) => {
   const { t } = useTranslation(); // Initialize the translation hook
 
@@ -138,6 +140,7 @@ export const CardDeal = ({
         state="duo-tone"
         imageSrc={FranceFlag}
       />
+      <DiscountBadge discount={discount} />
     </div>
   );
 };

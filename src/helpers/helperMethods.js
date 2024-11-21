@@ -1,7 +1,7 @@
 import axios from "axios";
 import i18next from "i18next";
 import { loadStripe } from "@stripe/stripe-js";
-import { BASE_URL, STRIPE_PK } from "../config";
+import { STRIPE_PK, BASE_URL } from "../config";
 
 // Get current language from i18next
 const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
@@ -276,4 +276,26 @@ export const getDealProgress = (products) => {
   console.log({ averageDealProgress });
   // Return the value as a number
   return parseFloat(averageDealProgress) || 0;
+};
+
+export const getMaxDiscount = (products) => {
+  if (!Array.isArray(products) || products.length === 0) {
+    return 0; // Return 0 if the input is not a valid array or is empty
+  }
+
+  // Calculate the discount percentage for each product and find the maximum
+  const maxDiscount = Math.max(
+    ...products.map((product) => {
+      if (product.market_price > 0) {
+        const discount =
+          ((product.market_price - product.deal_price) / product.market_price) *
+          100;
+        console.log({ discount });
+        return Math.round(discount); // Round to the nearest whole number
+      }
+      return 0; // Default to 0 if market_price is invalid
+    })
+  );
+
+  return maxDiscount;
 };

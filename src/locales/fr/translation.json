@@ -1490,7 +1490,8 @@
   },
   "DeleteAccount": {
     "common": {
-      "back": "Retour"
+      "back": "Retour",
+      "offer": "de réduction"
     },
     "delete_account": {
       "heading": "Supprimer mon compte",

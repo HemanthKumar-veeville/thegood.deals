@@ -24,7 +24,7 @@ import { SuccessAlert } from "../../components/WarningAlert";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../../components/Line/Line";
-import { getDealProgress } from "../../helpers/helperMethods";
+import { getDealProgress, getMaxDiscount } from "../../helpers/helperMethods";
 
 const MyInformation = () => {
   const { t } = useTranslation();
@@ -204,6 +204,7 @@ const MyInformation = () => {
                       participantsCount={deal.participants}
                       dealEndsIn={deal.ends_in}
                       dealImages={[deal.image]}
+                      discount={getMaxDiscount(deal?.products || [])}
                     />
                   </div>
                 ))}

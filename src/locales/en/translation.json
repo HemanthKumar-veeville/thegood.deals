@@ -1483,7 +1483,8 @@
   },
   "DeleteAccount": {
     "common": {
-      "back": "Back"
+      "back": "Back",
+      "offer": "offer"
     },
     "delete_account": {
       "heading": "Delete my account",
