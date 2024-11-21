@@ -23,6 +23,7 @@ import { RatingStar } from "../../components/RatingStar";
 import { Line } from "../../components/Line/Line";
 import { Send1 } from "../../icons/Send1";
 import { getDealProgress } from "../../helpers/helperMethods";
+import { UserAlt } from "../../icons/UserAlt";
 
 const GuestDealView = () => {
   const { t } = useTranslation();
@@ -99,7 +100,10 @@ const GuestDealView = () => {
                   <br />
                 </span>
                 <span className="font-bold">
-                  {t("deal.time_left", { days: dealData?.ends_in, hours: 6 })}
+                  {t("deal.time_left", {
+                    days: dealData?.ends_in || "-",
+                    hours: 6,
+                  })}
                 </span>
               </p>
             </div>
@@ -111,7 +115,7 @@ const GuestDealView = () => {
             onClick={handleOrder}
             className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]"
           >
-            {dealData?.title || t("deal.title")}
+            {dealData?.title || "-"}
           </div>
           {location?.state?.deal?.dealStatus === "soon_out_stock" ? (
             <ProgressBarYellow
@@ -126,35 +130,42 @@ const GuestDealView = () => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("deal.end_in", { days: dealData?.ends_in })}
+                {t("deal.end_in", { days: dealData?.ends_in || "-" })}
               </div>
             </div>
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <Users22 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("deal.participants", { count: dealData?.participants })}
+                {t("deal.participants", {
+                  count: dealData?.participants || "-",
+                })}
               </div>
             </div>
           </div>
           <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
             <Map className="!relative !w-5 !h-5" />
             <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-color text-sm tracking-[0] leading-[22px]">
-              {dealData?.collection_info?.location || t("deal.location")}
+              {dealData?.collection_info?.location || "-"}
             </p>
           </div>
           <Line />
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-            <img
-              className="relative w-[50px] h-[50px] object-cover rounded-md"
-              alt="Organizer"
-              src={dealData?.organizer?.organiser_image || Human}
-            />
+            {dealData?.organizer?.organiser_image ? (
+              <img
+                className="relative w-[50px] h-[50px] object-cover rounded-md"
+                alt="Organizer"
+                src={dealData?.organizer?.organiser_image}
+              />
+            ) : (
+              <UserAlt className="!relative !w-5 !h-5" />
+            )}
+
             <div className="inline-flex flex-col items-start relative flex-[0_0_auto]">
               <div className="relative w-fit mt-[-1.00px] font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
                 {t("artisanConfirmThe.organized_by")}
               </div>
               <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-                {dealData?.organizer?.name || "Abraham Thomas"}
+                {dealData?.organizer?.name || "-"}
               </div>
               <div className="inline-flex h-5 items-center gap-2.5 relative">
                 <RatingStar
