@@ -18,11 +18,19 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   console.log({ products });
-  const handleQuantityChange = (index, action) => {
+  const handleQuantityChange = (
+    index,
+    action,
+    minQuantity,
+    maxQuantity,
+    availableQuantity
+  ) => {
     const updatedItems = cartItems?.map((item, idx) => {
       if (idx === index) {
         if (action === "increment") {
-          return { ...item, quantity: item.quantity + 1 };
+          if (item.quantity < maxQuantity && item.quantity < availableQuantity)
+            return { ...item, quantity: item.quantity + 1 };
+          else return { ...item, quantity: item.quantity };
         } else if (action === "decrement" && item.quantity >= 1) {
           return { ...item, quantity: item.quantity - 1 };
         }
@@ -103,7 +111,15 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
                   <div className="relative w-[79px] h-[25px] bg-whitewhite rounded-[3.47px] border-[0.69px] border-solid border-stroke">
                     <span
                       className="transition-transform transform hover:scale-95 active:scale-90"
-                      onClick={() => handleQuantityChange(index, "decrement")}
+                      onClick={() =>
+                        handleQuantityChange(
+                          index,
+                          "decrement",
+                          product.min_quantity_per_order,
+                          product.max_quantity_per_order,
+                          product.availability
+                        )
+                      }
                     >
                       <Minus1 className="!absolute !w-2 !h-2 !top-2 !left-[7px]" />
                     </span>
@@ -112,7 +128,15 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
                     </div>
                     <span
                       className="transition-transform transform hover:scale-95 active:scale-90"
-                      onClick={() => handleQuantityChange(index, "increment")}
+                      onClick={() =>
+                        handleQuantityChange(
+                          index,
+                          "increment",
+                          product.min_quantity_per_order,
+                          product.max_quantity_per_order,
+                          product.availability
+                        )
+                      }
                     >
                       <Plus1 className="!absolute !w-2 !h-2 !top-2 !left-[62px]" />
                     </span>
