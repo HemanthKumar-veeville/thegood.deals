@@ -38,6 +38,7 @@ const Account = ({ isRequestSent, dealId }) => {
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [loadedDeals, setLoadedDeals] = useState({ created: [], invited: [] });
   const [hasMoreDeals, setHasMoreDeals] = useState(true); // Prevent further calls if no more deals
+  const [isOrdered, setIsOrdered] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -158,6 +159,8 @@ const Account = ({ isRequestSent, dealId }) => {
         ? "/admin-waiting-deal"
         : activeTab === "created"
         ? "/admin-active-deal"
+        : !isOrdered
+        ? "/admin-view-deal"
         : "/guest-deal-view";
 
     navigate(`${route}?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`, {

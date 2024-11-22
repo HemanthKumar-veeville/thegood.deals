@@ -73,22 +73,6 @@ const AdminViewGoodDeal = () => {
             </div>
           </div>
         </div>
-        {is_creator && (
-          <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-            <div className="flex items-center justify-center gap-2 px-6 py-3 relative flex-1 grow bg-whitewhite rounded-md shadow-shadow-1">
-              <Pencil className="!relative !w-5 !h-5 !ml-[-7.25px]" />
-              <button className="all-[unset] box-border relative w-fit mt-[-1.00px] mr-[-7.25px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                {t("admin.modify")}
-              </button>
-            </div>
-            <div className="flex items-center justify-center gap-2 px-6 py-3 relative flex-1 grow bg-whitewhite rounded-md shadow-shadow-1">
-              <Send className="!relative !w-5 !h-5" />
-              <button className="all-[unset] box-border text-primary-color relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                {t("admin.invite")}
-              </button>
-            </div>
-          </div>
-        )}
         <ImageSlider pictures={dealState?.deal_images || [blogImage]} />
         <div className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {dealState?.title || t("admin.wine_crates")}
