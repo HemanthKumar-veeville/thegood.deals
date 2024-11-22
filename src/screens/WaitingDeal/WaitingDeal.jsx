@@ -86,7 +86,10 @@ const WaitingDeal = () => {
           </WaitingBanner>
 
           {/* Deal Image */}
-          <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
+          <ImageSlider
+            pictures={dealData?.deal_images || [blogImage]}
+            products={dealData?.products || []}
+          />
 
           {/* Title */}
           <div className="relative self-stretch font-semibold text-primary-color text-2xl leading-[30px] [font-family:'Inter-SemiBold',Helvetica] tracking-[0]">

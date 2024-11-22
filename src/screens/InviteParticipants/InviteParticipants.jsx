@@ -130,7 +130,10 @@ export const InviteParticipants = ({
         />
       )}
       <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
-        <ImageSlider pictures={dealState?.deal_images || [blogImage]} />
+        <ImageSlider
+          pictures={dealState?.deal_images || [blogImage]}
+          products={dealState?.products}
+        />
         <p className="relative self-stretch font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {dealState?.deal_title || "-"}
         </p>

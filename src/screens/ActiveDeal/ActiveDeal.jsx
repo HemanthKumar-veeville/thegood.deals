@@ -39,7 +39,8 @@ import { CheckmarkCircle } from "../../icons/CheckmarkCircle";
 import { Line } from "../../components/Line/Line";
 import axios from "axios";
 import { Send1 } from "../../icons/Send1";
-import { getDealProgress } from "../../helpers/helperMethods";
+import { getDealProgress, getMaxDiscount } from "../../helpers/helperMethods";
+import DiscountBadge from "../../components/DiscountBadge";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -223,8 +224,11 @@ const ActiveDeal = () => {
                   }
                 />
               )}
-            <div onClick={handleOrder}>
-              <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
+            <div onClick={handleOrder} className="!relative">
+              <ImageSlider
+                pictures={dealData?.deal_images || [blogImage]}
+                products={dealData?.products || []}
+              />
             </div>
             <div
               onClick={handleOrder}

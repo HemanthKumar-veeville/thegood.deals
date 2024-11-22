@@ -109,7 +109,10 @@ const GuestDealView = () => {
             </div>
           </div>
           <div onClick={handleOrder}>
-            <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
+            <ImageSlider
+              pictures={dealData?.deal_images || [blogImage]}
+              products={dealData?.products || []}
+            />
           </div>
           <div
             onClick={handleOrder}

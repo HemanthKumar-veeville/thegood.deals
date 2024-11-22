@@ -12,7 +12,7 @@ import {
 } from "../../redux/app/account/accountSlice";
 import { ChevronDown } from "../../icons/ChevronDown";
 import { UserAlt } from "../../icons/UserAlt";
-import { useTranslation } from "react-i18next"; // Import useTranslation for localization
+import { useTranslation } from "react-i18next";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -24,7 +24,7 @@ const EditProfile = () => {
   const { profile: fetchedProfile, status } = useSelector(
     (state) => state.account
   );
-  const { t } = useTranslation(); // Initialize the translation hook
+  const { t } = useTranslation();
   const [fileUploaded, setFileUploaded] = useState(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -38,7 +38,7 @@ const EditProfile = () => {
     email: "",
     currentPassword: "",
     newPassword: "",
-    language: "English", // Default language state
+    language: "English",
     address: "",
     addl_address: "",
     city: "",
@@ -108,39 +108,45 @@ const EditProfile = () => {
     }));
   };
 
+  const validateProfile = () => {
+    if (!profile.firstname || !profile.lastname || !profile.email) {
+      setServerMessage(t("edit_profile.validation_error"));
+      setShowErrorModal(true);
+      return false;
+    }
+    return true;
+  };
+
   const handleSave = useCallback(async () => {
+    if (!validateProfile()) return;
+
     try {
       setEditField(null);
-
-      // Call updateUserProfile and check response
-      const res = await dispatch(
-        updateUserProfile({ ...profile, profilepicture: fileUploaded })
-      );
-
-      // Check if there's an error in the response
-      if (res?.payload?.detail) {
-        console.log({ error: res.payload.detail });
-        throw new Error(res.payload.detail); // Explicitly throw the error
+      setShowErrorModal(false);
+      setShowSuccessModal(false);
+      setServerMessage("");
+      const profileData = { ...profile };
+      if (fileUploaded) {
+        profileData.profilepicture = fileUploaded;
       } else {
-        const res = await dispatch(fetchUserProfile());
-        if (res?.payload?.detail) {
-          console.log({ error: res.payload.detail });
-          throw new Error(res.payload.detail); // Explicitly throw the error
-        }
+        delete profileData.profilepicture;
       }
 
-      // If no error, show success modal
-      setShowSuccessModal(true);
-      console.log("success");
-    } catch (error) {
-      // Check if error is an object, and convert it to a string if necessary
-      const errorMessage =
-        typeof error === "object" ? t("edit_profile.error") : error;
+      const res = await dispatch(updateUserProfile(profileData));
+      if (res?.payload?.detail) {
+        console.error("Update error:", res.payload.detail);
+        throw new Error(res.payload.detail);
+      }
 
-      // Show error modal when an error is caught
+      const fetchRes = await dispatch(fetchUserProfile());
+      if (fetchRes?.payload?.detail) {
+        console.error("Fetch error:", fetchRes.payload.detail);
+      }
+
+      setShowSuccessModal(true);
+    } catch (error) {
       setShowErrorModal(true);
-      setServerMessage(errorMessage); // Use the stringified or raw error message
-      console.log(errorMessage);
+      setServerMessage(error?.message || t("edit_profile.error"));
     }
   }, [dispatch, profile, fileUploaded]);
 
@@ -172,7 +178,7 @@ const EditProfile = () => {
         name={fieldName}
         type={type}
         value={value || ""}
-        onChange={handleChange} // Update state but no API call here
+        onChange={handleChange}
         autoFocus
         placeholder={placeholder}
         className="relative w-full mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-darkdark-5 text-base tracking-[0] leading-6 focus:outline-none"
@@ -222,14 +228,14 @@ const EditProfile = () => {
               <ShowCustomErrorModal
                 message={serverMessage}
                 buttonText={t("waiting_deal.got_it")}
-                onClose={() => setShowErrorModal(true)} // Reset modal state on close
+                onClose={() => setShowErrorModal(false)}
               />
             )}
             {showSuccessModal && (
               <ShowCustomSuccessModal
                 message={serverMessage}
                 buttonText={t("waiting_deal.got_it")}
-                onClose={() => setShowSuccessModal(false)} // Reset modal state on close
+                onClose={() => setShowSuccessModal(false)}
               />
             )}
             <div className="inline-flex items-center justify-center gap-1.5 px-3 py-[5px] relative flex-[0_0_auto] bg-[#1b4f4a] rounded-[5px]">

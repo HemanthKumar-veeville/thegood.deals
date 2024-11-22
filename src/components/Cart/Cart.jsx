@@ -128,7 +128,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
                 </div>
                 <div className="inline-flex items-center justify-center gap-px px-1.5 py-0 relative flex-[0_0_auto] bg-greengreen-dark rounded">
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-[10px] tracking-[0] leading-5 whitespace-nowrap">
-                    {product?.discount}%
+                    {Math.round(product?.discount)}%
                   </div>
                 </div>
               </div>

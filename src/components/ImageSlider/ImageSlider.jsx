@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ImageLoader from "../ImageLoader/ImageLoader";
 
-const ImageSlider = ({ pictures }) => {
+const ImageSlider = ({ pictures, products }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -62,7 +62,11 @@ const ImageSlider = ({ pictures }) => {
                   key={index}
                   className="!w-full flex-shrink-0 relative !h-full"
                 >
-                  <ImageLoader picture={picture} index={index} />
+                  <ImageLoader
+                    picture={picture}
+                    index={index}
+                    products={products}
+                  />
                 </div>
               ))}
             </div>

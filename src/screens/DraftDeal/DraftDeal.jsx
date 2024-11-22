@@ -32,7 +32,7 @@ const DraftDeal = () => {
   }, []);
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -61,7 +61,10 @@ const DraftDeal = () => {
         {/* Banner */}
         <DraftBanner className="relative w-full bg-blue-100 text-blue-800 rounded-md p-3" />
 
-        <ImageSlider pictures={dealData?.deal_images || [blogImage]} />
+        <ImageSlider
+          pictures={dealData?.deal_images || [blogImage]}
+          products={dealData?.products || []}
+        />
 
         {/* Title */}
         <div className="relative self-stretch font-semibold text-primary-color text-2xl leading-[30px] [font-family:'Inter-SemiBold',Helvetica] tracking-[0]">

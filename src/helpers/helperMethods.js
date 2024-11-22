@@ -287,9 +287,10 @@ export const getMaxDiscount = (products) => {
   const maxDiscount = Math.max(
     ...products.map((product) => {
       if (product.market_price > 0) {
-        const discount =
-          ((product.market_price - product.deal_price) / product.market_price) *
-          100;
+        const mrp = product.market_price || product.max_retail_price;
+        const gdp = product.deal_price || price;
+        console.log({ mrp, gdp });
+        const discount = ((mrp - gdp) / mrp) * 100;
         console.log({ discount });
         return Math.round(discount); // Round to the nearest whole number
       }
