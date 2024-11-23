@@ -51,82 +51,18 @@ const Home = () => {
       <ImageRotator images={IMAGES} direction="right" />
       <div className="w-full items-center gap-[30px] pt-4 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
-          id="how"
-          className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]"
-        >
-          <div className="flex w-[1355px] h-[169px] items-start gap-4 absolute top-0 -left-7">
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-2319.42px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage16}
-            />
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-2097.04px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage16}
-            />
-            <img
-              className="w-[110.55px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage2}
-            />
-            <img
-              className="relative self-stretch w-[206.38px] object-cover"
-              alt="Placeholder image"
-              src={placeHolderImage18}
-            />
-            <img
-              className="w-[11.07px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage19}
-            />
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-1207.53px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-          </div>
-          <div className="flex w-[1355px] items-start gap-4 absolute top-[185px] left-[75px]">
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-2422.61px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-2200.23px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="relative self-stretch w-[206.38px] object-cover"
-              alt="Placeholder image"
-              src={placeHolderImage8}
-            />
-            <img
-              className="w-[130.26px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage9}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-1533.10px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-1310.72px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-          </div>
-        </div>
-        <div
           id="order"
           className="items-center gap-2 flex flex-col relative self-stretch w-full flex-[0_0_auto]"
         >
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
-            <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
-              {t("home.title")}
-            </p>
+            <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
+              <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
+                {t("home.title_p_1")}
+              </p>
+              <p className="relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-[#EA7035] text-[40px] text-center tracking-[0] leading-[48.0px]">
+                {t("home.title_p_2")}
+              </p>
+            </div>
             <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
               {t("home.description")}
             </p>

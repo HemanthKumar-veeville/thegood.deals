@@ -27,11 +27,12 @@ import { IconChevronRight2 } from "../../icons/IconChevronRight2";
 import { Button } from "../../components/RoundedButton";
 import { plus14 } from "../../images";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 function ContactUs() {
   const { t } = useTranslation();
   const IMAGES = [picture1, picture2, picture3, picture4];
-
+  const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -108,10 +109,6 @@ function ContactUs() {
     <div className="flex flex-col w-full items-center relative bg-light-grey mx-auto">
       <div className="w-full items-center gap-[30px] pt-2 pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
-          id="how"
-          className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]"
-        ></div>
-        <div
           id="order"
           className="items-center gap-2 flex flex-col relative self-stretch w-full flex-[0_0_auto]"
         >
@@ -130,7 +127,7 @@ function ContactUs() {
           <div className="inline-flex flex-col items-center gap-4 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
             <button
               className="all-[unset] box-border inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] mt-[-2.00px] bg-green rounded-[100px] border border-solid border-green hover:bg-[#15423b] hover:text-[#d4d4d4] cursor-pointer"
-              onClick={() => navigate("/auth?login")}
+              onClick={() => navigate("/help-me")}
             >
               <span className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-white text-base tracking-[0] leading-6 whitespace-nowrap">
                 {t("contact_us.contact_us_button")}

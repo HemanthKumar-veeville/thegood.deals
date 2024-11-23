@@ -26,6 +26,7 @@ import {
 import { IconChevronRight2 } from "../../icons/IconChevronRight2";
 import { Button } from "../../components/RoundedButton";
 import { useTranslation } from "react-i18next"; // Import for translation
+import { useNavigate } from "react-router-dom";
 
 function AboutUs() {
   const IMAGES = [picture1, picture2, picture3, picture4];
@@ -43,6 +44,8 @@ function AboutUs() {
   const buttonText1 = t("about_us.about_us");
   const buttonIcon = <IconChevronRight2 className="!relative !w-6 !h-6" />;
   const placeholderImage = placeHolderImage14;
+  const navigate = useNavigate();
+
   const values = [
     {
       heading: t("about_us.authenticity"),
@@ -86,9 +89,14 @@ function AboutUs() {
           className="items-center gap-2 flex flex-col relative self-stretch w-full flex-[0_0_auto]"
         >
           <div className="flex flex-col items-start gap-5 relative self-stretch w-full flex-[0_0_auto]">
-            <p className="mx-auto w-[300px] relative self-stretch mt-[12.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
-              {t("about_us.about_good_deals")}
-            </p>
+            <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
+              <p className="mx-auto w-[300px] relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-green text-[40px] text-center tracking-[0] leading-[48.0px]">
+                {t("about_us.about_good_deals_p1")}
+              </p>
+              <p className="mx-auto w-[300px] relative self-stretch mt-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-bold text-[#EA7035] text-[40px] text-center tracking-[0] leading-[48.0px]">
+                {t("about_us.about_good_deals_p2")}
+              </p>
+            </div>
             <p className="relative self-stretch [font-family:'Rethink_Sans',Helvetica] font-normal text-green text-lg text-center tracking-[0] leading-[27px]">
               {t("about_us.welcome_description")}
             </p>
@@ -164,7 +172,10 @@ function AboutUs() {
                   ))}
                 </div>
               </div>
-              <div className="inline-flex flex-col items-start justify-center gap-6 pt-4 pb-0 px-0 relative flex-[0_0_auto]">
+              <div
+                className="inline-flex flex-col items-start justify-center gap-6 pt-4 pb-0 px-0 relative flex-[0_0_auto]"
+                onClick={() => navigate("/how-it-works")}
+              >
                 <Button
                   className="!mr-[-1.00px] !mt-[-1.00px] !ml-[-1.00px] !flex-[0_0_auto]"
                   darkMode={false}

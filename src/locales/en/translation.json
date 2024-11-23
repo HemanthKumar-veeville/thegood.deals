@@ -17,7 +17,9 @@
     "my_account": "My account"
   },
   "home": {
-    "title": "Exceptional products at friendly prices",
+    "title": "",
+    "title_p_1": "Exceptional products at",
+    "title_p_2": "friendly prices",
     "description": "Offer your friends the opportunity to discover exceptional products, thanks to our group orders. Benefit from preferential rates, but also enjoy together the richness and authenticity of our terroirs.",
     "login": "To log in",
     "create_account": "Create an account",
@@ -102,7 +104,8 @@
     "advantageous_prices_description": "Thanks to bulk orders, you benefit from preferential rates. The more the merrier!",
     "enriching_experience": "An enriching experience",
     "enriching_experience_description": "Ordering on The Good Deals is much more than a simple purchase. This is an opportunity to share precious moments with your friends while supporting a local and sustainable economy.",
-    "about_good_deals": "About The Good Deals",
+    "about_good_deals_p1": "About",
+    "about_good_deals_p2": "The Good Deals",
     "welcome_description": "We are delighted to welcome you to our community dedicated to discovering exceptional products at affordable prices.. The Good Deals is above all a human and gourmet adventure, where each group order becomes a celebration of local flavors and know-how.",
     "login": "To log in",
     "create_account": "Create an account",

@@ -79,11 +79,11 @@ export const Layout = ({
         }`}
       >
         {/* Card 1 with Image */}
-        {renderCard(text1, text2, frame14x3, headingClassNameOverride)}
+        {renderCard(text1, text2, frame14x8, headingClassNameOverride)}
         {/* Card 2 with Image */}
-        {renderCard(text3, text4, frame14x4, divClassName)}
+        {renderCard(text3, text4, frame14x3, divClassName)}
         {/* Card 3 with Image */}
-        {renderCard(text5, text6, frame14x8, divClassNameOverride)}
+        {renderCard(text5, text6, frame14x4, divClassNameOverride)}
       </div>
     </div>
   );

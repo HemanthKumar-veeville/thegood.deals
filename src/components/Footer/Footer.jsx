@@ -251,6 +251,7 @@ export const Footer = ({
                 className={`underline ${
                   breakpoint === "mobile" ? "text-[#f5f3ee]" : ""
                 } ${spanClassNameOverride}`}
+                onClick={() => handleNavigation("/privacy-policy")}
               >
                 {text8}
               </span>

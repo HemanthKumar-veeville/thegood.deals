@@ -53,7 +53,7 @@ export const BreakpointDesktopWrapper = ({
         {breakpoint === "desktop" && (
           <>
             <img
-              className="relative flex-1 grow h-[640px] object-cover"
+              className="relative flex-1 grow h-[640px] object-contain"
               alt="Placeholder image"
               src={placeHolderImage14}
             />
@@ -201,7 +201,7 @@ export const BreakpointDesktopWrapper = ({
               </div>
             </div>
             <img
-              className="relative self-stretch w-full h-[348px] object-cover"
+              className="relative self-stretch w-full h-[348px] object-fill"
               alt="Placeholder image"
               src={placeholderImage}
             />

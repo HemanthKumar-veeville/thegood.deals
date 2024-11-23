@@ -27,7 +27,7 @@ export const Header = ({
       "animationend",
       () => {
         button.classList.remove("animate-click-effect");
-        navigate("/auth?login");
+        navigate("/help-me");
       },
       { once: true }
     );
@@ -122,7 +122,7 @@ export const Header = ({
             )}
           {type === "green" && (
             <button
-              className="all-[unset] box-border inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] mt-[-2.00px] bg-whitewhite text-[#2a4e4a] rounded-[100px] border border-solid border-green cursor-pointer w-full"
+              className="all-[unset] mt-3 box-border inline-flex items-center justify-center gap-2 px-6 py-3 relative flex-[0_0_auto] bg-whitewhite text-[#2a4e4a] rounded-[100px] border border-solid border-green cursor-pointer w-full"
               onClick={handleNavigate}
             >
               <button className="all-[unset] box-border relative w-fit mt-[-1.00px] ml-[-1.00px] [font-family:'Rethink_Sans',Helvetica] font-normal text-[#2a4e4a] text-base tracking-[0] leading-6 whitespace-nowrap ">

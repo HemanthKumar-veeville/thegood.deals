@@ -91,75 +91,6 @@ const HowItWorks = () => {
     <div className="flex flex-col w-full items-center relative bg-light-grey mx-auto">
       <div className="w-full items-center gap-[30px] pb-px px-5 flex-[0_0_auto] bg-light-grey flex flex-col relative overflow-hidden">
         <div
-          id="how"
-          className="ml-[-532.81px] mr-[-532.81px] relative flex-[0_0_auto]"
-        >
-          <div className="flex w-[1355px] h-[169px] items-start gap-4 absolute top-0 -left-7">
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-2319.42px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage16}
-            />
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-2097.04px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage16}
-            />
-            <img
-              className="w-[110.55px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage2}
-            />
-            <img
-              className="relative self-stretch w-[206.38px] object-cover"
-              alt="Placeholder image"
-              src={placeHolderImage18}
-            />
-            <img
-              className="w-[11.07px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage19}
-            />
-            <img
-              className="w-[206.38px] mb-[-1388.00px] ml-[-1207.53px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-          </div>
-          <div className="flex w-[1355px] items-start gap-4 absolute top-[185px] left-[75px]">
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-2422.61px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-2200.23px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="relative self-stretch w-[206.38px] object-cover"
-              alt="Placeholder image"
-              src={placeHolderImage8}
-            />
-            <img
-              className="w-[130.26px] object-cover relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage9}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-1533.10px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-            <img
-              className="w-[206.38px] mb-[-1203.33px] ml-[-1310.72px] relative self-stretch"
-              alt="Placeholder image"
-              src={placeHolderImage11}
-            />
-          </div>
-        </div>
-        <div
           id="order"
           className="items-center gap-2 flex flex-col relative self-stretch w-full flex-[0_0_auto]"
         >
@@ -232,7 +163,7 @@ const HowItWorks = () => {
       <BreakpointDesktopWrapper
         breakpoint="mobile"
         buttonIcon={<IconChevronRight2 className="!relative !w-6 !h-6" />}
-        buttonText="About Us"
+        buttonText={t("how_it_works.breakpoint.about_us")}
         buttonText1={t("how_it_works.breakpoint.about_us")}
         className="!flex-[0_0_auto] !w-full"
         divClassName="!tracking-[0] !text-xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[28.0px]"
@@ -246,8 +177,8 @@ const HowItWorks = () => {
         text4={t("how_it_works.breakpoint.text4")}
         text5={t("how_it_works.breakpoint.text5")}
         text6={t("how_it_works.breakpoint.text6")}
-        text7="A friendly experience"
-        text8="Share unique moments with your friends while supporting artisans in your region."
+        text7={t("how_it_works.breakpoint.text7")}
+        text8={t("how_it_works.breakpoint.text8")}
       />
       <div
         id="about"
@@ -257,7 +188,6 @@ const HowItWorks = () => {
           breakpoint="mobile"
           buttonDivClassName="!mt-[-1.00px] !text-green !ml-[-1.00px]"
           buttonStylePrimarySmallClassName="!border-white !mt-[-2.00px] !ml-[-2.00px] !flex-[0_0_auto] !bg-white"
-          buttonText={t("how_it_works.header.ready_to_get_started")}
           buttonText1={t("how_it_works.header.manage_deal")}
           className="!flex-1 !px-5 !py-[25px] !grow !w-[unset]"
           crEzPartagezEtClassName="!tracking-[0] !text-4xl ![font-style:unset] !font-bold ![font-family:'Rethink_Sans',Helvetica] !leading-[43.2px]"
