@@ -26,10 +26,6 @@ const WaitingDeal = () => {
   const deal_id = queryParams.get("deal_id");
   const [showErrorModal, setShowErrorModal] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const handleBack = () => {
     navigate("/");
   };

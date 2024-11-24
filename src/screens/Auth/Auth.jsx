@@ -18,10 +18,6 @@ const Auth = () => {
   const [isLoginTab, setIsLoginTab] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   //check the query string to determine which tab to display
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);

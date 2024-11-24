@@ -18,36 +18,44 @@ const LanguageSelection = () => {
   const { language, status } = useSelector((state) => state.account);
 
   const [selectedLanguage, setSelectedLanguage] = useState(
-    language || "French"
-  ); // Default to French
+    language || "French" // Default to French if no language is set
+  );
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
+    // Fetch current language setting when component mounts
     dispatch(fetchLanguageSetting());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (language) {
       setSelectedLanguage(language);
+      // Change the i18n language immediately
+      i18n.changeLanguage(language.toLowerCase());
     }
-  }, [language]);
+  }, [language, i18n]);
 
   const handleBack = () => {
     navigate(-1);
   };
 
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+    setDropdownOpen((prevState) => !prevState);
   };
 
-  const selectLanguage = (language) => {
-    setSelectedLanguage(language);
-    // i18n.changeLanguage(language === "English" ? "en" : "fr");
+  const selectLanguage = (lang) => {
+    setSelectedLanguage(lang);
     setDropdownOpen(false);
   };
 
-  const confirmLanguage = () => {
-    dispatch(updateLanguageSetting(selectedLanguage));
+  const confirmLanguage = async () => {
+    if (selectedLanguage !== language) {
+      await dispatch(updateLanguageSetting(selectedLanguage));
+      console.log({ selectedLanguage });
+      i18n.changeLanguage(
+        selectedLanguage.toLowerCase() === "english" ? "en" : "fr"
+      );
+    }
   };
 
   return (

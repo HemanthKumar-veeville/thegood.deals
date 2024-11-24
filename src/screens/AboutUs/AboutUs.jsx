@@ -76,10 +76,6 @@ function AboutUs() {
     },
   ];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="flex flex-col w-full items-center relative bg-light-grey mx-auto">
       <ImageRotator images={IMAGES} direction="left" />

@@ -58,10 +58,6 @@ const Orders = ({ dealId, dealType }) => {
     navigate(-1);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   if (orderStatus === "loading") {
     return <CustomLoader />;
   }

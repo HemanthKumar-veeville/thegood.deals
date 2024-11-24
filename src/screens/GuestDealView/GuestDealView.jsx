@@ -55,10 +55,6 @@ const GuestDealView = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchDealDetailsByDealId(deal_id));
   }, []);
 

@@ -10,10 +10,6 @@ export const NewsLetterScreen = ({ heading }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const handleBack = () => {
     navigate("/auth?signup");
   };

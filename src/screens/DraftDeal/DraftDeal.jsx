@@ -27,9 +27,6 @@ const DraftDeal = () => {
   const handleEditDeal = () => {
     navigate("/update-deal?deal_id=" + deal_id);
   };
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const handleBack = () => {
     navigate("/");

@@ -168,10 +168,6 @@ const UpdateDeal = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     const fetchDeal = async () => {
       setLoading(true);
       console.log(t("create_deal.console_fetching"), dealId); // Translated fetching message

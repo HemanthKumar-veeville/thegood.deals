@@ -11,10 +11,6 @@ export const LegalNoticesScreen = ({ heading }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const handleBack = () => {
     navigate(-1);
   };

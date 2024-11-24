@@ -81,10 +81,6 @@ const InformToCraftsMan = () => {
     navigate(`/admin-draft-deal?deal_id=${dealId}`);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background mx-auto">
       {isError && (

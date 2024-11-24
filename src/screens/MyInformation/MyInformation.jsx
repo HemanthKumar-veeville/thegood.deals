@@ -48,7 +48,22 @@ const MyInformation = () => {
   };
 
   const handleCardClick = (deal) => {
-    navigate(`/deal/${deal.deal_id}`);
+    if (!deal || !deal.deal_id) return;
+
+    const route =
+      deal.deal_status === "draft"
+        ? "/admin-draft-deal"
+        : deal.deal_status === "waiting"
+        ? "/admin-waiting-deal"
+        : activeTab === "created"
+        ? "/admin-active-deal"
+        : !isOrdered
+        ? "/admin-view-deal"
+        : "/guest-deal-view";
+
+    navigate(`${route}?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`, {
+      state: { deal },
+    });
   };
 
   const handlePlayPause = () => {
@@ -164,13 +179,6 @@ const MyInformation = () => {
             </div>
           </div>
           <Line />
-          <div className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color">
-            <EnvelopeAlt className="!relative !w-5 !h-5" color="#1B4F4A" />
-            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] text-center tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-              {t("myInformation.contact", { name: profile?.name || "User" })}
-            </button>
-          </div>
-          <Line />
           <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
             {t("myInformation.deals")}
           </div>
@@ -179,7 +187,11 @@ const MyInformation = () => {
               {/* Carousel Slider for Deals */}
               <Slider ref={sliderRef} {...sliderSettings} className="w-full">
                 {userDeals?.map((deal) => (
-                  <div key={deal.deal_id} className="cursor-pointer">
+                  <div
+                    key={deal.deal_id}
+                    className="cursor-pointer"
+                    // onClick={() => handleCardClick(deal)}
+                  >
                     <CardDeal
                       badgesColor="success"
                       badgesDivClassName="!tracking-[0] !text-xs ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5"

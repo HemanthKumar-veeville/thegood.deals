@@ -21,7 +21,7 @@ const ImageLoader = ({ picture, index, products }) => {
   }, [picture, t]);
 
   return (
-    <div className="relative w-full h-full rounded-md overflow-hidden">
+    <div className="relative w-full rounded-md overflow-hidden bg-white">
       {products && (
         <>
           <DiscountBadge

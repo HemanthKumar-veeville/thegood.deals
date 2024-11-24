@@ -40,10 +40,6 @@ const HowItWorks = () => {
   const { t } = useTranslation();
   const IMAGES = [picture1, picture2, picture3, picture4];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const headingClassName = "";
   const text1 = t("how_it_works.text1");
   const text2 = t("how_it_works.text2");

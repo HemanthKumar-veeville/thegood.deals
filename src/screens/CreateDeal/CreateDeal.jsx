@@ -159,10 +159,6 @@ const CreateDeal = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     const fetchDeal = async () => {
       if (dealId) {
         setLoading(true);

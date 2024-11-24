@@ -122,6 +122,10 @@ const AppBar = loadable(() => import("./components/AppBar/AppBar"), {
 
 // Layout component to include AppBar across all routes
 function Layout({ children }) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen notranslate">
       <AppBar />

@@ -63,10 +63,6 @@ const PublicNeedHelp = () => {
     },
   });
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const handleBack = () => {
     navigate("/");
   };
@@ -91,7 +87,7 @@ const PublicNeedHelp = () => {
           </div>
         </div>
         <Line />
-        <div className="text-primary-color text-lg font-medium">
+        <div className="text-primary-color font-inter text-[24px] font-semibold leading-[30px] text-left">
           {t("public_need_help.title")}
         </div>
         <p className="text-primary-text-color">
@@ -146,7 +142,7 @@ const PublicNeedHelp = () => {
               }
               formik={formik}
             />
-            <div className="relative flex items-center gap-3 py-3 bg-white rounded-md border flex-1">
+            <div className="relative flex items-center gap-3 py-3 bg-white rounded-md border flex-grow">
               <input
                 id="phone"
                 name="phone"
@@ -155,7 +151,7 @@ const PublicNeedHelp = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 placeholder={t("signup.mobile_number")}
-                className="flex-1 outline-none bg-transparent px-3"
+                className="flex-1 outline-none bg-transparent px-3 w-full"
                 autoComplete="off"
               />
             </div>
@@ -214,9 +210,9 @@ const PublicNeedHelp = () => {
           </div>
         </form>
         <Line />
-        <p className="text-primary-color text-lg font-medium">
+        <h6 className="text-primary-color font-inter text-[24px] font-semibold leading-[30px] text-left">
           {t("public_need_help.faq_title")}
-        </p>
+        </h6>
         <div
           className="flex items-center justify-center gap-2 py-3 w-full bg-white rounded-md shadow-shadow-1"
           onClick={handleFaq}

@@ -69,10 +69,6 @@ const InviteLovedOnes = () => {
     window.open(url, "_blank");
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       {isError && (

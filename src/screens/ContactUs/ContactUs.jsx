@@ -33,9 +33,6 @@ function ContactUs() {
   const { t } = useTranslation();
   const IMAGES = [picture1, picture2, picture3, picture4];
   const navigate = useNavigate();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const FAQS = [
     {

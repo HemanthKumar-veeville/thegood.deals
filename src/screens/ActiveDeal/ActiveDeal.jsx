@@ -105,10 +105,6 @@ const ActiveDeal = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     fetchDeal();
   }, []);
   console.log({ dealData });
