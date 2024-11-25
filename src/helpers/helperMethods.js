@@ -262,6 +262,14 @@ export function formatDate(dateStr, language = "en") {
 }
 
 export const getDealProgress = (products) => {
+  console.log({ products });
+  // Calculate the total deal progress percentage sum
+  const totalDealProgress = products.reduce((sum, product) => {
+    const dealProgress =
+      ((product.total_stock - product.availability) / product.total_stock) *
+      100;
+    return sum + dealProgress;
+  }, 0);
   // Sum up all total_stock and availability
   const totalStock = products.reduce(
     (sum, product) => sum + product.total_stock,
@@ -273,8 +281,7 @@ export const getDealProgress = (products) => {
   );
 
   // Calculate the average deal progress percentage and round to 2 decimal points
-  const averageDealProgress =
-    100 - (totalStock / totalAvailability).toFixed(2) * 100;
+  const averageDealProgress = (totalDealProgress / products.length).toFixed(2);
   console.log({ averageDealProgress });
   // Return the value as a number
   return parseFloat(averageDealProgress) || 0;
