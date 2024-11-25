@@ -37,6 +37,7 @@ const UpdateDeal = () => {
   const dealTitle = useSelector((state) => state.deals.title);
   const [productUnderEdit, setProductUnderEdit] = useState(null);
   const [isProductUpdated, setIsProductUpdated] = useState(false);
+  const [isDraftDeal, setIsDraftDeal] = useState(false);
 
   // Helper function to generate calendar days
   const formatDate = (date) => {
@@ -157,7 +158,11 @@ const UpdateDeal = () => {
       ).unwrap();
 
       console.log(t("create_deal.console_success"), resultAction); // Success message
-      isProductUpdated ? navigate(`/inform-deal?id=${dealId}`) : navigate(-1);
+      !isDraftDeal
+        ? isProductUpdated
+          ? navigate(`/inform-deal?id=${dealId}`)
+          : navigate(-1)
+        : navigate(`/inform-deal?id=${dealId}`);
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
@@ -196,7 +201,8 @@ const UpdateDeal = () => {
             pictures: dealData?.images || [],
             deliveryCost: 0,
           });
-
+          console.log({ status: dealData?.deal_status });
+          setIsDraftDeal(dealData?.deal_status == 1);
           setProducts(dealData.products ?? []);
         }
       } catch (err) {
