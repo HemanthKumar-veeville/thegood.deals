@@ -281,7 +281,8 @@ export const getDealProgress = (products) => {
   );
 
   // Calculate the average deal progress percentage and round to 2 decimal points
-  const averageDealProgress = (totalDealProgress / products.length).toFixed(2);
+  const averageDealProgress =
+    100 - (totalAvailability / totalStock).toFixed(2) * 100;
   console.log({ averageDealProgress });
   // Return the value as a number
   return parseFloat(averageDealProgress) || 0;
