@@ -3,7 +3,7 @@ import { axiosInstance } from "./helperMethods";
 let isLoggingError = false;
 
 function sendErrorToServer(errorDetails) {
-  const LOGGING_URL = "/api/log-error";
+  const LOGGING_URL = "/log-error";
 
   // Avoid recursive logging
   if (isLoggingError || errorDetails.url?.includes(LOGGING_URL)) {
@@ -35,7 +35,7 @@ function setupAxiosInterceptors() {
   axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-      const LOGGING_URL = "/api/log-error";
+      const LOGGING_URL = "/log-error";
 
       // Skip logging for the logging endpoint
       if (error.config?.url.includes(LOGGING_URL)) {
