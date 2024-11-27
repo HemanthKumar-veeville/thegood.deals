@@ -220,6 +220,7 @@ const UpdateDeal = () => {
 
   useEffect(() => {
     dispatch(updateTitle(title));
+    dispatch(updateImages(existingImages));
     dispatch(updateDealForm(formData));
   }, [formData, title]);
 
