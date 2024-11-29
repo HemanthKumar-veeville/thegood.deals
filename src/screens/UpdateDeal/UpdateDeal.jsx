@@ -128,7 +128,10 @@ const UpdateDeal = () => {
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
       console.log({ pictures: formData?.pictures });
-      form.append("existing_images", existingImages);
+      form.append(
+        "existing_images",
+        existingImages?.filter((img) => img?.includes("blob") === false)
+      );
       // Append image files
       if (formData.pictures && formData.pictures.length > 0) {
         console.log("pictures available");
@@ -171,7 +174,7 @@ const UpdateDeal = () => {
       setLoading(false); // Set loading to false after the API call
     }
   };
-
+  console.log({ isProductUpdated, isDraftDeal });
   useEffect(() => {
     const fetchDeal = async () => {
       setLoading(true);
