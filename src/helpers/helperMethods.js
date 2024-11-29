@@ -4,7 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { STRIPE_PK, BASE_URL } from "../config";
 
 // Get current language from i18next
-const currentLanguage = i18next.language || "fr"; // Default to 'en-US' if no language is set
+
 const stripePromise = loadStripe(STRIPE_PK);
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -13,9 +13,13 @@ export const axiosInstance = axios.create({
     "Access-Control-Allow-Origin": "*",
     "access-control-allow-credentials": true,
     "ngrok-skip-browser-warning": "69420",
-    "Accept-Language": currentLanguage, // Dynamically set Accept-Language header
   },
   withCredentials: true,
+});
+
+axiosInstance.interceptors.request.use((config) => {
+  config.headers["Accept-Language"] = i18next.language;
+  return config;
 });
 
 export const createStripeAccount = async (email, dealId) => {
