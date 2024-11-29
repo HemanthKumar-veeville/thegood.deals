@@ -17,7 +17,6 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  console.log({ products });
   const handleQuantityChange = (
     index,
     action,

@@ -37,7 +37,6 @@ const Invitations = () => {
   }, [dispatch, deal_id]);
 
   const handleAccept = async (requestId) => {
-    console.log({ deal_id });
     await dispatch(
       processRequest({
         dealId: deal_id,

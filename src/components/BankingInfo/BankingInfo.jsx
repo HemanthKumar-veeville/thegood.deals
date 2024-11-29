@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next"; // Import the useTranslation hoo
 const BankingInfo = ({ label, placeholder, onChange, type, info }) => {
   const [value, setValue] = useState(info || "");
   const { t } = useTranslation(); // Initialize the translation hook
-  console.log({ info });
   const handleCopy = () => {
     navigator.clipboard
       .writeText(value)

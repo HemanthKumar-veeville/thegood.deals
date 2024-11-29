@@ -50,7 +50,6 @@ const ActiveDeal = () => {
   const { deal, status, error } = dealState;
   const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
   const { t } = useTranslation();
-  console.log({ deal });
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
@@ -92,9 +91,7 @@ const ActiveDeal = () => {
   const fetchDeal = async () => {
     try {
       const res = await dispatch(getDealByDealId(deal_id));
-      console.log({
-        res: res?.payload?.Deal[0]?.payment_collected_for_all_orders,
-      });
+
       setIsPaymentCollectedForAllOrders(
         res?.payload?.Deal[0]?.payment_collected_for_all_orders
       );
@@ -107,7 +104,6 @@ const ActiveDeal = () => {
   useEffect(() => {
     fetchDeal();
   }, []);
-  console.log({ dealData });
 
   const handleInviteLovedOnes = () => {
     navigate(

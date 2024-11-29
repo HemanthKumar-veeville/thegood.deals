@@ -23,7 +23,6 @@ const Auth = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const signup = urlParams.get("signup");
     const login = urlParams.get("login");
-    console.log({ signup, login });
     if (signup === "") {
       setIsLoginTab(false); // Show signup tab
     } else if (login) {

@@ -14,7 +14,6 @@ const TermsOfUse = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // const { notifications, status } = useSelector((state) => state.account);
-  // console.log({ notifications });
   useEffect(() => {
     dispatch(fetchNotificationSettings());
   }, []);

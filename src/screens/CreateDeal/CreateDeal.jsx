@@ -68,7 +68,6 @@ const CreateDeal = () => {
         acceptConditions: !formData.acceptConditions,
       }));
     } else {
-      console.log(t("create_deal.console_input_change"), e.target.value); // Log translated message
       setFormData((prevState) => ({
         ...prevState,
         [type]: e.target.value,
@@ -107,7 +106,6 @@ const CreateDeal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true at the start
-    console.log(t("create_deal.console_submit"), { formData, products, title }); // Translated console message
 
     try {
       // Create FormData object and append form data
@@ -126,7 +124,6 @@ const CreateDeal = () => {
       if (formData.pictures && formData.pictures.length > 0) {
         formData.pictures.forEach((file, index) => {
           if (file instanceof File) {
-            console.log(t("create_deal.console_append_file"), file.name); // Translated log message
             form.append("images", file); // Append file objects
           } else {
             console.error(t("create_deal.console_invalid_file")); // Translated error message
@@ -147,7 +144,6 @@ const CreateDeal = () => {
       const resultAction = await dispatch(addNewDeal(form)).unwrap();
       const dealId = resultAction.deal_id;
 
-      console.log(t("create_deal.console_success"), resultAction); // Success message
       navigate(`/inform-deal?id=${dealId}`);
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
@@ -162,7 +158,6 @@ const CreateDeal = () => {
     const fetchDeal = async () => {
       if (dealId) {
         setLoading(true);
-        console.log(t("create_deal.console_fetching"), dealId); // Translated fetching message
         try {
           const response = await dispatch(getDealByDealId(dealId)).unwrap();
           const dealData = response?.Deal[0];
@@ -214,8 +209,6 @@ const CreateDeal = () => {
   };
 
   const onDelete = (productId) => {
-    console.log("Delete exc");
-
     setProducts((prevProducts) =>
       prevProducts?.filter((product) => product?.product_id !== productId)
     );

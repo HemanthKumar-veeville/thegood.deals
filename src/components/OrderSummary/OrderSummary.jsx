@@ -27,8 +27,6 @@ export const OrderSummary = ({ orderId }) => {
     dispatch(fetchOrderById({ orderId }));
   }, [dispatch, orderId]);
 
-  console.log({ orderState });
-
   // Function to toggle tooltip visibility
   const handleToggleTooltip = () => {
     setShowTooltip((prev) => !prev);

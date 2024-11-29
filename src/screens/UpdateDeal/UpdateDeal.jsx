@@ -65,7 +65,6 @@ const UpdateDeal = () => {
     setIsProductUpdated(true);
     setProducts([...products, product]);
   };
-  console.log({ products });
   const handleChange = (type, e) => {
     if (type === "acceptConditions") {
       setFormData((prevState) => ({
@@ -73,7 +72,6 @@ const UpdateDeal = () => {
         acceptConditions: !formData.acceptConditions,
       }));
     } else {
-      console.log(t("create_deal.console_input_change"), e.target.value); // Log translated message
       setFormData((prevState) => ({
         ...prevState,
         [type]: e.target.value,
@@ -112,12 +110,10 @@ const UpdateDeal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true at the start
-    console.log(t("create_deal.console_submit"), { formData, products, title }); // Translated console message
 
     try {
       // Create FormData object and append form data
       const form = new FormData();
-      console.log({ formData });
       form.append("title", title);
       form.append("description", formData.description);
       form.append("collection_location", formData.collectionLocation);
@@ -127,17 +123,14 @@ const UpdateDeal = () => {
       form.append("deal_expiration_date", formData.dealExpiration);
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
-      console.log({ pictures: formData?.pictures });
       form.append(
         "existing_images",
         existingImages?.filter((img) => img?.includes("blob") === false)
       );
       // Append image files
       if (formData.pictures && formData.pictures.length > 0) {
-        console.log("pictures available");
         formData.pictures.forEach((file, index) => {
           if (file instanceof File) {
-            console.log(t("create_deal.console_append_file"), file.name); // Translated log message
             form.append("images", file); // Append file objects
           } else {
             console.error(t("create_deal.console_invalid_file")); // Translated error message
@@ -160,7 +153,6 @@ const UpdateDeal = () => {
         updateDealByDealId({ dealId, updatedDeal: form })
       ).unwrap();
 
-      console.log(t("create_deal.console_success"), resultAction); // Success message
       !isDraftDeal
         ? isProductUpdated
           ? navigate(`/inform-deal?id=${dealId}`)
@@ -174,11 +166,9 @@ const UpdateDeal = () => {
       setLoading(false); // Set loading to false after the API call
     }
   };
-  console.log({ isProductUpdated, isDraftDeal });
   useEffect(() => {
     const fetchDeal = async () => {
       setLoading(true);
-      console.log(t("create_deal.console_fetching"), dealId); // Translated fetching message
       try {
         const response = await dispatch(
           getDealByDealIdForEdit(dealId)
@@ -186,9 +176,7 @@ const UpdateDeal = () => {
         const dealData = response;
 
         if (dealData) {
-          console.log({ images: dealData?.images });
           setTitle(dealData.title);
-          console.log({ imgs: dealData?.images });
           setExistingImages(dealData?.images);
           setFormData({
             description: dealData.description,
@@ -204,7 +192,6 @@ const UpdateDeal = () => {
             pictures: dealData?.images || [],
             deliveryCost: 0,
           });
-          console.log({ status: dealData?.deal_status });
           setIsDraftDeal(dealData?.deal_status == 1);
           setProducts(dealData.products ?? []);
         }
@@ -233,7 +220,6 @@ const UpdateDeal = () => {
   };
 
   const onDelete = (productId) => {
-    console.log("Delete exc");
     setIsProductUpdated(true);
     setProducts((prevProducts) =>
       prevProducts?.filter((product) => product?.product_id !== productId)

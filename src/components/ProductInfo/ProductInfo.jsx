@@ -33,7 +33,6 @@ const ProductInfo = ({
   const [discountPercentage, setDiscountPercentage] = useState(
     product?.estimated_discount || 0
   );
-  console.log({ product });
   useEffect(() => {
     if (
       maximumRetailPrice &&
@@ -47,7 +46,6 @@ const ProductInfo = ({
       setDiscountPercentage(0);
     }
   }, [maximumRetailPrice, goodDealPrice]);
-  console.log({ addMode });
   const handleAddClick = () => {
     // onDelete(product?.product_id);
     const newProduct = {

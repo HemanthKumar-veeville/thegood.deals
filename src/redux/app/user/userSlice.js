@@ -81,7 +81,6 @@ export const resetPassword = createAsyncThunk(
           },
         }
       );
-      console.log(response.data);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -146,7 +145,6 @@ const userSlice = createSlice({
       .addCase(
         fetchUserProfileWithDealsAndReviews.fulfilled,
         (state, action) => {
-          console.log(action.payload.data);
           state.status = "succeeded";
           state.profile = action.payload.data.user;
           state.userDeals = action.payload.data.deals;
@@ -169,7 +167,6 @@ const userSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(forgotPassword.rejected, (state, action) => {
-        console.log(action.payload);
         state.status = "failed";
         state.error = action.payload;
       })

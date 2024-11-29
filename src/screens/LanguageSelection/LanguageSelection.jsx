@@ -51,7 +51,6 @@ const LanguageSelection = () => {
   const confirmLanguage = async () => {
     if (selectedLanguage !== language) {
       await dispatch(updateLanguageSetting(selectedLanguage));
-      console.log({ selectedLanguage });
       i18n.changeLanguage(
         selectedLanguage.toLowerCase() === "english" ? "en" : "fr"
       );

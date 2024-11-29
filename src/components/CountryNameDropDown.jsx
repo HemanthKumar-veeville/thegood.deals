@@ -237,7 +237,6 @@ export const NameDropdown = ({
 
   // Handle country selection
   const selectCountryCode = (code) => {
-    console.log("Selected Country Code:", code);
     setSelectedCode(code); // Update local state
     formik.setFieldValue(name, code.value); // Update Formik field value
     setIsOpen(false); // Close the dropdown
@@ -245,7 +244,6 @@ export const NameDropdown = ({
 
   useEffect(() => {
     const defaultCountry = countryCodes.find((c) => c.name === "France");
-    console.log("Default Country:", defaultCountry);
 
     // Set default country if none is selected
     if (!selectedCode && !formik.values[name]) {
@@ -253,8 +251,6 @@ export const NameDropdown = ({
       formik.setFieldValue(name, defaultCountry.value); // Update Formik field value
     }
   }, [selectedCode, formik.values[name]]);
-
-  console.log("Current Selected Code:", selectedCode);
 
   return (
     <div className="inline-flex flex-col h-12 items-start gap-[5px] relative !w-full">

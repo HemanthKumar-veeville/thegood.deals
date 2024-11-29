@@ -42,12 +42,10 @@ const DealWallet = () => {
           currency: availableBalance?.currency,
         })
       ).unwrap();
-      console.log({ res });
       if (res?.status === 200 || res?.status === 201) {
         navigate("/thanks-payment-setup");
       }
     } catch (err) {
-      console.log({ err });
       setErrorMessage(err?.detail);
       setIsError(true);
     } finally {

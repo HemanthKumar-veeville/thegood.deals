@@ -33,7 +33,6 @@ const GuestDealView = () => {
   const dealState = useSelector((state) => state.deals);
   const { deal, status } = dealState;
   const dealData = deal?.Deal?.deal || {};
-  console.log({ dealData });
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");

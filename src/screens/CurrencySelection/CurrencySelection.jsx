@@ -16,7 +16,6 @@ const CurrencySelection = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currency, status } = useSelector((state) => state.account);
-  console.log({ currency, status });
   const [selectedCurrency, setSelectedCurrency] = useState(currency || "USD");
   const [showDropdown, setShowDropdown] = useState(false);
   const currencies = ["USD", "Euro"];

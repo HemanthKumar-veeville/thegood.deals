@@ -71,7 +71,6 @@ export const InviteParticipants = ({
       const resultAction = await dispatch(
         validationByArtisan({ dealId, dealUpdate: formData })
       );
-      console.log("resultAction", resultAction);
       // Check if the thunk was fulfilled
       if (validationByArtisan.fulfilled.match(resultAction)) {
         // Navigate to the confirmation page
@@ -88,7 +87,6 @@ export const InviteParticipants = ({
   const handleAcceptRequest = async () => {
     try {
       const response = await dispatch(createRequest(dealId)).unwrap();
-      console.log({ response });
       if (response?.detail === "Request created successfully") {
         setIsSuccess(true);
         setIsRequestSent(true);

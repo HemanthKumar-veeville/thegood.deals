@@ -30,7 +30,6 @@ const Orders = ({ dealId, dealType }) => {
   const { orders, orderStatus, orderError } = useSelector(
     (state) => state.orders
   );
-  console.log({ orders });
   const ordersState = orders?.Orders?.length > 0 ? orders?.Orders : null;
 
   useEffect(() => {
@@ -54,14 +53,12 @@ const Orders = ({ dealId, dealType }) => {
   };
 
   const handleBackToDeal = () => {
-    console.log(is_creator);
     navigate(-1);
   };
 
   if (orderStatus === "loading") {
     return <CustomLoader />;
   }
-  console.log("ordersState", ordersState);
   return (
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background mx-auto">
       <div className="flex flex-col w-full items-start gap-4 px-8 py-4 relative">

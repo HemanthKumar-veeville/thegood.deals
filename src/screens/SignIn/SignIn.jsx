@@ -38,7 +38,6 @@ const SignIn = ({ setIsLoading }) => {
       }
     } catch (error) {
       // Extract the error message correctly
-      console.log(error);
       const errorMsg =
         error.response?.data?.detail || // Server error response
         error.message || // General error message
@@ -90,7 +89,6 @@ const SignIn = ({ setIsLoading }) => {
       const res = await axiosInstance("/login/google");
 
       // Handle success (store token, navigate, etc.)
-      console.log("Login successful:", res.data);
 
       // You might want to store the received token or handle navigation here
       // For example:

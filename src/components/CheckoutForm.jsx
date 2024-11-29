@@ -67,8 +67,6 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
         console.error("Error during setup confirmation:", error);
       } else {
         // SetupIntent was successfully confirmed
-        console.log("SetupIntent confirmed:", setupIntent);
-
         // Proceed to dispatch payment setup
         setIsConfirmSetupLoading(true);
         try {

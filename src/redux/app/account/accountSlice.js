@@ -31,7 +31,6 @@ export const updateUserProfile = createAsyncThunk(
     try {
       // Create a new FormData object
       const formData = new FormData();
-      console.log({ profileData });
       // Append the profile data to the FormData object
       for (const key in profileData) {
         if (profileData.hasOwnProperty(key)) {
@@ -198,7 +197,6 @@ const accountSlice = createSlice({
       })
       .addCase(fetchCurrencySetting.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log({ response: action.payload });
         state.currency =
           action.payload.user_settings.currency === "Usd" ? "USD" : "Euro";
       })

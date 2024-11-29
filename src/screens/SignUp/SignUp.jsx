@@ -147,7 +147,6 @@ export const SignUp = ({ setIsLoading }) => {
       formik.setValues(JSON.parse(savedValues));
     }
   }, []);
-  console.log({ errorMessage });
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -252,7 +251,6 @@ export const SignUp = ({ setIsLoading }) => {
         }
       } catch (error) {
         setIsError(true);
-        console.log({ error: error });
 
         // Display SweetAlert with error message
         Swal.fire({

@@ -11,7 +11,6 @@ const AddPictures = ({
   existingImages,
 }) => {
   const { t } = useTranslation(); // Initialize translation hook
-  console.log({ existingImages });
   const [pictures, setPictures] = useState(existingImages || []);
   const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
   const [currentIndex, setCurrentIndex] = useState(0);

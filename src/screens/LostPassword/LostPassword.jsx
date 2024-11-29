@@ -65,7 +65,6 @@ const LostPassword = () => {
       setEmail(""); // Clear the email input
       navigate("/check-email"); // Navigate to the check-email page
     } catch (err) {
-      console.log(err);
       const errorMessage = err?.detail || t("lost_password.errors.send_error");
       setErrorMessage(errorMessage);
       setIsError(true);

@@ -23,8 +23,6 @@ function ProtectedRoute({ element }) {
     checkLoginStatus();
   }, [dispatch]);
 
-  console.log({ isUserActivated, email: user?.data?.email });
-
   if (loading) {
     return <CustomLoader />;
   }

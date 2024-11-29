@@ -30,7 +30,6 @@ function Payment({ orderId, heading, btnText, ...props }) {
           `/create_payment_intent`,
           formData
         );
-        console.log(response?.data?.payment_intent[0]);
         setClientSecret(response?.data?.payment_intent[0]);
         setStripeCustomerId(response?.data?.payment_intent[1]);
       } catch (error) {

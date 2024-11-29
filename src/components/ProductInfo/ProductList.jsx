@@ -4,7 +4,6 @@ import { FiEdit, FiTrash2 } from "react-icons/fi"; // Importing edit and delete 
 
 const ProductList = ({ products, onEdit, onDelete }) => {
   const { t } = useTranslation(); // Use the translation hook
-  console.log({ products });
   const editDeal = (product) => {
     onDelete(product?.product_id);
     onEdit(product);

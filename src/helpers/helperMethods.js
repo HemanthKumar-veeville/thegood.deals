@@ -44,7 +44,6 @@ export const createStripeAccount = async (email, dealId) => {
       tos_shown_and_accepted: true,
     });
 
-    console.log({ token });
     if (error) {
       console.error("Error creating account token:", error);
       return;
@@ -61,9 +60,7 @@ export const createStripeAccount = async (email, dealId) => {
 
     // Handling the response
     if (response.status === 200) {
-      console.log("Account created successfully:", response.data);
     } else {
-      console.log("Failed to create account:", response);
     }
   } catch (error) {
     console.error(
@@ -92,14 +89,9 @@ export const onboardStripeAccount = async ({
         },
       }
     );
-    console.log({ response });
     // Handling the success response
     if (response.status === 200) {
       const { onboarding_url } = response.data.onboarding_url;
-
-      console.log("Account onboarding link generated successfully:");
-      console.log("Onboarding Link:", onboarding_url);
-      // console.log("Link Expiration Time:", new Date(expires_at * 1000));
 
       // You can redirect to the onboarding link
       window.location.href = onboarding_url;
@@ -144,12 +136,6 @@ export const payToArtisan = async () => {
     // Handle the response
     if (response.data.success) {
       const transferData = response.data.data;
-      console.log("Funds transferred successfully!");
-      console.log("Transfer ID:", transferData.id);
-      console.log("Amount Transferred:", transferData.amount / 100, "USD");
-      console.log("Destination Account:", transferData.destination);
-      console.log("Transfer Description:", transferData.description);
-      console.log("Transaction ID:", transferData.balance_transaction);
     } else {
       console.error("Failed to transfer funds:", response.data.message);
     }
@@ -262,7 +248,6 @@ export function formatDate(dateStr, language = "en") {
 }
 
 export const getDealProgress = (products) => {
-  console.log({ products });
   // Calculate the total deal progress percentage sum
   const totalDealProgress = products.reduce((sum, product) => {
     const dealProgress =
@@ -283,7 +268,6 @@ export const getDealProgress = (products) => {
   // Calculate the average deal progress percentage and round to 2 decimal points
   const averageDealProgress =
     100 - (totalAvailability / totalStock).toFixed(2) * 100;
-  console.log({ averageDealProgress });
   // Return the value as a number
   return parseFloat(averageDealProgress) || 0;
 };
@@ -299,9 +283,7 @@ export const getMaxDiscount = (products) => {
       if (product.market_price > 0) {
         const mrp = product.market_price || product.max_retail_price;
         const gdp = product.deal_price || price;
-        console.log({ mrp, gdp });
         const discount = ((mrp - gdp) / mrp) * 100;
-        console.log({ discount });
         return Math.round(discount); // Round to the nearest whole number
       }
       return 0; // Default to 0 if market_price is invalid

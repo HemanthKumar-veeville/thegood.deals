@@ -76,7 +76,6 @@ export const fetchOrderById = createAsyncThunk(
 export const setupPaymentForOrder = createAsyncThunk(
   "orders/setupPaymentForOrder",
   async ({ orderId, setupIntent, stripeCustomerId }, { rejectWithValue }) => {
-    console.log("setupIntent", setupIntent);
     try {
       const response = await axiosInstance.post(
         `/store_setup_intent/${orderId}/${stripeCustomerId}`,

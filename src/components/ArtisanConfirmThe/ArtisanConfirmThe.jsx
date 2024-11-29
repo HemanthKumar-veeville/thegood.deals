@@ -51,7 +51,6 @@ export const ArtisanConfirmThe = ({
       const details = await dispatch(
         fetchDealValidationDetails(dealId)
       ).unwrap();
-      console.log({ details });
       setAccountId(details?.Deal?.artisan_acc_id);
     };
     fetchDetails();
@@ -68,7 +67,6 @@ export const ArtisanConfirmThe = ({
       const resultAction = await dispatch(
         validationByArtisan({ dealId, dealUpdate: formData })
       );
-      console.log("resultAction", resultAction);
       if (validationByArtisan.fulfilled.match(resultAction)) {
         const refreshUrl = `https://thegood.deals/artisan-validation?deal_id=${dealId}`;
         const returnUrl = `https://thegood.deals/deal-confirmed`;
@@ -84,7 +82,6 @@ export const ArtisanConfirmThe = ({
   const handleAcceptRequest = async () => {
     try {
       const response = await dispatch(createRequest(dealId));
-      console.log({ response });
       if (response.payload.code === 201) {
         navigate("/request-sent");
       } else {

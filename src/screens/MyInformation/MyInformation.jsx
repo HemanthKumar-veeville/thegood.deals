@@ -35,7 +35,6 @@ const MyInformation = () => {
   const { profile, userDeals, userReviews, status } = useSelector(
     (state) => state.user
   );
-  console.log({ profile, userDeals, userReviews, status });
   const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
