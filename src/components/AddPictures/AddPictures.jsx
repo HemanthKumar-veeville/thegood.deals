@@ -12,7 +12,7 @@ const AddPictures = ({
 }) => {
   const { t } = useTranslation(); // Initialize translation hook
   console.log({ existingImages });
-  const [pictures, setPictures] = useState(images || []);
+  const [pictures, setPictures] = useState(existingImages || []);
   const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,6 +32,14 @@ const AddPictures = ({
 
     const newPictures = files.map((file) => URL.createObjectURL(file));
     setPictures((prevPictures) => {
+      const updatedPictures = [...prevPictures, ...newPictures];
+      // Set the first image as starred by default
+      if (updatedPictures.length === newPictures.length) {
+        setStarredIndex(0);
+      }
+      return updatedPictures;
+    });
+    setExistingImages((prevPictures) => {
       const updatedPictures = [...prevPictures, ...newPictures];
       // Set the first image as starred by default
       if (updatedPictures.length === newPictures.length) {

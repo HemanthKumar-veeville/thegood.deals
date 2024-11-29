@@ -222,7 +222,7 @@ const UpdateDeal = () => {
     dispatch(updateTitle(title));
     dispatch(updateImages(existingImages));
     dispatch(updateDealForm(formData));
-  }, [formData, title]);
+  }, [formData, title, existingImages]);
 
   const onEdit = (productToBeEdited) => {
     setAddMode(true);
