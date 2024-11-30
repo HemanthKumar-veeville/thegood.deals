@@ -265,6 +265,7 @@ const UpdateDeal = () => {
               images={formData?.pictures}
               existingImages={existingImages}
               setExistingImages={setExistingImages}
+              isEditMode={false}
             />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">

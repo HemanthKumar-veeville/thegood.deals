@@ -251,6 +251,7 @@ const CreateDeal = () => {
               onChange={handleAddPictures}
               setForm={setImagesForm}
               images={formData?.pictures}
+              isEditMode={false}
             />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">

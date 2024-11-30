@@ -9,6 +9,7 @@ const AddPictures = ({
   images,
   setExistingImages,
   existingImages,
+  isEditMode,
 }) => {
   const { t } = useTranslation(); // Initialize translation hook
   const [pictures, setPictures] = useState(existingImages || []);
@@ -38,29 +39,31 @@ const AddPictures = ({
       }
       return updatedPictures;
     });
-    setExistingImages((prevPictures) => {
-      const updatedPictures = [...prevPictures, ...newPictures];
-      // Set the first image as starred by default
-      if (updatedPictures.length === newPictures.length) {
-        setStarredIndex(0);
-      }
-      return updatedPictures;
-    });
+    isEditMode &&
+      setExistingImages((prevPictures) => {
+        const updatedPictures = [...prevPictures, ...newPictures];
+        // Set the first image as starred by default
+        if (updatedPictures.length === newPictures.length) {
+          setStarredIndex(0);
+        }
+        return updatedPictures;
+      });
   };
 
   const handleDelete = (index, picture, event) => {
     const fileArray = picture?.split("/");
     const fileIndex = fileArray?.length - 1;
     const fileName = fileArray[fileIndex];
-    setExistingImages((prevImages) =>
-      prevImages?.filter((img) => {
-        const imgArray = img?.split("/");
-        const imgIndex = imgArray?.length - 1;
-        const imgName = imgArray[imgIndex];
+    isEditMode &&
+      setExistingImages((prevImages) =>
+        prevImages?.filter((img) => {
+          const imgArray = img?.split("/");
+          const imgIndex = imgArray?.length - 1;
+          const imgName = imgArray[imgIndex];
 
-        return fileName !== imgName;
-      })
-    );
+          return fileName !== imgName;
+        })
+      );
     event.preventDefault();
     event.stopPropagation();
     const updatedPictures = pictures.filter((_, i) => i !== index);
@@ -155,6 +158,7 @@ const AddPictures = ({
                     className="object-contain w-full h-auto max-h-64 rounded-md" // Updated styling
                   />
                   <button
+                    type="button"
                     onClick={(event) => handleDelete(index, picture, event)}
                     className="absolute top-2 right-2 bg-white rounded-full p-1"
                   >
