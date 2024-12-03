@@ -51,6 +51,9 @@ const InputField = ({
             value={formik.values[name]}
             className="flex-1 bg-transparent outline-none"
             autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            aria-autocomplete="none"
           />
           {toggleVisibility && (
             <button
