@@ -171,7 +171,7 @@ const Account = ({ isRequestSent, dealId }) => {
   const handleSignOut = async () => {
     try {
       await dispatch(logoutUser());
-      navigate("/auth?login");
+      // navigate("/auth?login");
     } catch (error) {
       console.error("Failed to log out: ", error);
     }
