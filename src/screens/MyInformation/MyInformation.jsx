@@ -25,6 +25,13 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../../components/Line/Line";
 import { getDealProgress, getMaxDiscount } from "../../helpers/helperMethods";
+import { UserAlt2 } from "../../icons/UserAlt2";
+import { Box44 } from "../../icons/Box44/Box44";
+import { ClockDollar1 } from "../../icons/ClockDollar1";
+import { Cog2 } from "../../icons/Cog2";
+import { ChatAlt6 } from "../../icons/ChatAlt6";
+import { UserLock1 } from "../../icons/UserLock1";
+import { UserAlt4 } from "../../icons/UserAlt4/UserAlt4";
 
 const MyInformation = () => {
   const { t } = useTranslation();
@@ -109,6 +116,8 @@ const MyInformation = () => {
     arrows: false, // We will use custom arrows instead
   };
 
+  const handleNavigation = (path) => navigate(path);
+
   return (
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen">
       {status === "loading" && <CustomLoader />}
@@ -177,6 +186,62 @@ const MyInformation = () => {
               </div>
             </div>
           </div>
+          <>
+            <Line />
+            {[
+              {
+                icon: <UserAlt4 className="!w-5 !h-5" />,
+                text: t("settings.edit_profile"),
+                action: "/edit-profile",
+              },
+              {
+                icon: <Box44 className="!w-5 !h-5" />,
+                text: t("account.my_orders"),
+                action: "/admin-orders",
+              },
+              {
+                icon: <ClockDollar1 className="!w-5 !h-5" color="#1B4F4A" />,
+                text: t("account.wallet_details"),
+                action: "/admin-wallet",
+              },
+              {
+                icon: <Cog2 className="!w-5 !h-5" color="#1B4F4A" />,
+                text: t("account.settings"),
+                action: "/settings",
+              },
+              {
+                icon: <ChatAlt6 className="!w-5 !h-5" color="#1B4F4A" />,
+                text: t("account.acquire_help"),
+                action: "/help-me",
+              },
+            ].map(({ icon, text, action }) => (
+              <div
+                key={text}
+                className={`inline-flex items-center gap-2.5 ${
+                  action === "/admin-wallet"
+                    ? "cursor-not-allowed opacity-50"
+                    : "hover:text-primary-color-dark cursor-pointer"
+                }`}
+                onClick={
+                  typeof action === "string" && action !== "/admin-wallet"
+                    ? () => handleNavigation(action)
+                    : action === "/admin-orders"
+                    ? null
+                    : action
+                }
+              >
+                {icon}
+                <div className="font-normal text-primary-text-color text-base">
+                  {text}
+                </div>
+                {/* {(action === "/admin-orders" || action === "/admin-wallet") && (
+                  <div className="ml-2 bg-secondary-color text-white rounded-full px-2 py-1 text-xs">
+                    Coming Soon
+                  </div>
+                )} */}
+              </div>
+            ))}
+          </>
           <Line />
           <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
             {t("myInformation.deals")}

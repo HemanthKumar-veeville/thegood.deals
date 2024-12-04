@@ -64,7 +64,7 @@ const PublicNeedHelp = () => {
   });
 
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   const handlePrivacyPolicy = () => {

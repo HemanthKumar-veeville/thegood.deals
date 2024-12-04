@@ -21,7 +21,7 @@ const SettingsPage = () => {
 
   const [disabled, setDisabled] = useState(true);
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
   const handleProfileEdit = () => {
     navigate("/edit-profile");
