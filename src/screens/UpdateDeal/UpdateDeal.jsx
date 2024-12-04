@@ -38,6 +38,7 @@ const UpdateDeal = () => {
   const [productUnderEdit, setProductUnderEdit] = useState(null);
   const [isProductUpdated, setIsProductUpdated] = useState(false);
   const [isDraftDeal, setIsDraftDeal] = useState(false);
+  const [formErrors, setFormErrors] = useState({}); // Track validation errors
 
   // Helper function to generate calendar days
   const formatDate = (date) => {
@@ -107,8 +108,78 @@ const UpdateDeal = () => {
     }));
   };
 
+  const validateForm = () => {
+    const errors = {};
+    setIsError(false);
+    setErrorMessage("");
+    if (!title.trim()) {
+      setIsError(true);
+      errors.title = t("create_deal.error_title_required");
+      setErrorMessage(t("create_deal.error_title_required"));
+    }
+    if (!formData.description?.trim()) {
+      setIsError(true);
+      errors.description = t("create_deal.error_description_required");
+      setErrorMessage(t("create_deal.error_description_required"));
+    }
+    if (!formData.collectionLocation?.trim()) {
+      setIsError(true);
+      errors.collectionLocation = t(
+        "create_deal.error_collection_location_required"
+      );
+      setErrorMessage(t("create_deal.error_collection_location_required"));
+    }
+    if (!formData.collectionDate) {
+      setIsError(true);
+      errors.collectionDate = t("create_deal.error_collection_date_required");
+      setErrorMessage(t("create_deal.error_collection_date_required"));
+    }
+    if (!formData.contentDescription?.trim()) {
+      setIsError(true);
+      errors.contentDescription = t(
+        "create_deal.error_content_description_required"
+      );
+      setErrorMessage(t("create_deal.error_content_description_required"));
+    }
+
+    if (!formData.manufacturerInfo?.trim()) {
+      setIsError(true);
+      errors.manufacturerInfo = t(
+        "create_deal.error_manufacturer_info_required"
+      );
+      setErrorMessage(t("create_deal.error_manufacturer_info_required"));
+    }
+
+    if (!formData.dealExpiration) {
+      setIsError(true);
+      errors.dealExpiration = t("create_deal.error_deal_expiration_required");
+      setErrorMessage(t("create_deal.error_deal_expiration_required"));
+    }
+    if (!formData.acceptConditions) {
+      setIsError(true);
+      errors.acceptConditions = t(
+        "create_deal.error_accept_conditions_required"
+      );
+      setErrorMessage(t("create_deal.error_accept_conditions_required"));
+    }
+
+    if (products.length === 0) {
+      setIsError(true);
+      errors.products = t("create_deal.error_products_required");
+      setErrorMessage(t("create_deal.error_products_required"));
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setLoading(true); // Set loading to true at the start
 
     try {

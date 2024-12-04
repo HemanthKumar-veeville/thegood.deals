@@ -400,7 +400,16 @@
     "created_empty": "You don't have any deals.",
     "created_action": "Create one now!",
     "invited_empty": "You are not in any deals.",
-    "invited_action": "Wait until you are invited!"
+    "invited_action": "Wait until you are invited!",
+    "error_title_required": "Deal Tittle Required!",
+    "error_description_required": "Deal Description Required!",
+    "error_collection_location_required": "Collection Location Required!",
+    "error_collection_date_required": "Collection Date Required!",
+    "error_content_description_required": "Content Description Required!",
+    "error_manufacturer_info_required": "Manufacturer Info Required!",
+    "error_deal_expiration_required": "Deal Expiration Required!",
+    "error_accept_conditions_required": "Accept Conditions Required!",
+    "error_products_required": "Products Required"
   },
   "inform_craftsman": {
     "confirm_deal_title": "Confirm the deal with the artisan",

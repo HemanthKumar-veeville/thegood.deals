@@ -400,7 +400,16 @@
     "created_empty": "Vous n’avez aucun deals. ",
     "created_action": "Créez-en un dès maintenant !",
     "invited_empty": "Vous ne participez à aucun deal.",
-    "invited_action": "Attendez que l’on vous invite !"
+    "invited_action": "Attendez que l’on vous invite !",
+    "error_title_required": "Deal Tittle Required!",
+    "error_description_required": "Deal Description Required!",
+    "error_collection_location_required": "Collection Location Required!",
+    "error_collection_date_required": "Collection Date Required!",
+    "error_content_description_required": "Content Description Required!",
+    "error_manufacturer_info_required": "Manufacturer Info Required!",
+    "error_deal_expiration_required": "Deal Expiration Required!",
+    "error_accept_conditions_required": "Accept Conditions Required!",
+    "error_products_required": "Products Required"
   },
   "inform_craftsman": {
     "confirm_deal_title": "Confirmer le good deal avec l’artisan",
