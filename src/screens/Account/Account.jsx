@@ -30,10 +30,11 @@ import {
   getDealProgress,
   getMaxDiscount,
 } from "../../helpers/helperMethods.js";
+import BoxCreated from "../../icons/BoxCreated/BoxCreated.jsx";
 
 const Account = ({ isRequestSent, dealId }) => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState("created");
+  const [activeTab, setActiveTab] = useState("invited");
   const [page, setPage] = useState(1); // Start from page 1
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [loadedDeals, setLoadedDeals] = useState({ created: [], invited: [] });
@@ -199,7 +200,7 @@ const Account = ({ isRequestSent, dealId }) => {
           {t("account.my_good_deals")}
         </div>
         <div className="flex w-full">
-          {["created", "invited"].map((tab) => (
+          {["invited", "created"].map((tab) => (
             <div
               key={tab}
               className={`flex-1 flex grow cursor-pointer ${
@@ -212,18 +213,18 @@ const Account = ({ isRequestSent, dealId }) => {
               <ButtonGroup
                 buttonClassName="!mt-[-1.00px]"
                 className={`!flex-1 !flex grow ${
-                  tab === "created"
+                  tab === "invited"
                     ? "!rounded-[6px_0_0_6px]"
                     : "!rounded-[0_6px_6px_0]"
                 }`}
                 icon={
                   tab === "created" ? (
-                    <UserAlt5
+                    <BoxCreated
                       className="!w-[18px] !h-[18px]"
                       color={activeTab === "created" ? "white" : "#1B4F4A"}
                     />
                   ) : (
-                    <Users3
+                    <Box44
                       className="!w-[18px] !h-[18px]"
                       color={activeTab === "invited" ? "white" : "#1B4F4A"}
                     />

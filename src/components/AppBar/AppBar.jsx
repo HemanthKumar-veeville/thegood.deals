@@ -109,7 +109,6 @@ function AppBar() {
             </div>
           </div>
           <div className="flex justify-center items-center">
-            <LanguageDropdown handleLanguageOpen={handleLanguageOpen} />
             {/* User icon */}
             {isUser && (
               <div
