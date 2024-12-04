@@ -1033,6 +1033,7 @@
     "orderLabel": "Commande",
     "serviceFeesLabel": "Frais de service",
     "serviceFeesTooltip": "Commission TheGoodDeals de 6 %",
+    "paymentFeesTooltip": "Stripe Fees of 1.5% + 0.25 eur for domestic cards and can vary for international cards",
     "paymentFeesLabel": "Frais de paiement",
     "deliveryFeesLabel": "Frais de livraison",
     "totalTTC": "TOTAL TTC",

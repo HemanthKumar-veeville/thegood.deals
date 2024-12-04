@@ -9,6 +9,9 @@ import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 export const OrderInfo = ({ orderId }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const tooltipRef = useRef(null);
+  const [showPaymentTooltip, setShowPaymentTooltip] = useState(false);
+  const paymentTooltipRef = useRef(null);
+
   const { t } = useTranslation(); // Use translation
 
   const dispatch = useDispatch();
@@ -31,6 +34,11 @@ export const OrderInfo = ({ orderId }) => {
     setShowTooltip((prev) => !prev);
   };
 
+  // Function to toggle tooltip visibility
+  const handlePaymentToggleTooltip = () => {
+    setShowPaymentTooltip((prev) => !prev);
+  };
+
   // Close tooltip on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,6 +51,22 @@ export const OrderInfo = ({ orderId }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [tooltipRef]);
+
+  // Close tooltip on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        paymentTooltipRef.current &&
+        !paymentTooltipRef.current.contains(event.target)
+      ) {
+        setShowPaymentTooltip(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [paymentTooltipRef]);
 
   // Handle loading and error states
   if (orderStatus === "loading") {
@@ -115,6 +139,23 @@ export const OrderInfo = ({ orderId }) => {
           <div className="flex w-[162.5px] items-center gap-[5px] relative">
             <div className="relative w-fit mt-[-1.00px] font-body-extra-small-text-regular text-primary-text-color">
               {t("order.paymentFeesLabel")} {/* Localized 'Payment Fees' */}
+            </div>
+            <div className="relative">
+              <span onClick={handlePaymentToggleTooltip}>
+                <InfoCircle8
+                  className="!relative !w-3.5 !h-3.5 cursor-pointer"
+                  color="#2a4e4a"
+                />
+              </span>
+              {showPaymentTooltip && (
+                <div
+                  ref={paymentTooltipRef}
+                  className="absolute z-10 w-[265px] p-2 bg-white text-gray-800 border border-gray-300 rounded-md shadow-lg bottom-full left-1/2 transform -translate-x-1/2 mb-2"
+                >
+                  {t("order.paymentFeesTooltip")} {/* Localized tooltip text */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white border border-gray-300 -bottom-1 rotate-45"></div>
+                </div>
+              )}
             </div>
           </div>
           <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
