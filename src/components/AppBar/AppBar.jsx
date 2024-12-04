@@ -6,8 +6,6 @@ import { VerticalLine } from "../../icons/VerticalLine";
 import SideBar from "../../screens/SideBar/SideBar";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { LanguageDropdown } from "../LanguageDropdown/LanguageDropdown";
-import LanguageDropdownScreen from "../../screens/LanguageDropdown/LanguageDropdown";
 import { useTranslation } from "react-i18next"; // Importing i18next
 import { Line } from "../Line/Line";
 
@@ -138,7 +136,6 @@ function AppBar() {
       </header>
       {/* Sidebar */}
       {open && <SideBar onClose={handleOpen} />}
-      {languageOpen && <LanguageDropdownScreen onClose={handleLanguageOpen} />}
     </div>
   );
 }
