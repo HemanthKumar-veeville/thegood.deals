@@ -620,6 +620,7 @@
     "language": "Language",
     "currency": "Currency",
     "trash_account": "Delete my account",
+    "sign_out": "Log out",
     "terms": "Terms of use"
   },
   "profile": {

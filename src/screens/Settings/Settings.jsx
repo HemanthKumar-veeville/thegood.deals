@@ -10,10 +10,15 @@ import { useNavigate } from "react-router-dom";
 import { CrossCircle } from "../../icons/CrossCircle";
 import { LockAlt } from "../../icons/LockAltScreen/LockAltScreen";
 import { CreditCard1 } from "../../icons/CreditCard1/CreditCard1";
+import { UserLock1 } from "../../icons/UserLock1";
+import { logoutUser } from "../../redux/app/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const SettingsPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [disabled, setDisabled] = useState(true);
   const handleBack = () => {
     navigate("/");
@@ -35,6 +40,15 @@ const SettingsPage = () => {
   };
   const handleTermsOfUse = () => {
     navigate("/terms-of-use");
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await dispatch(logoutUser());
+      navigate("/auth?login");
+    } catch (error) {
+      console.error("Failed to log out: ", error);
+    }
   };
 
   return (
@@ -59,33 +73,10 @@ const SettingsPage = () => {
         </div>
         <div className="flex flex-col items-start self-stretch w-full relative flex-[0_0_auto]">
           <div
-            className="flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke cursor-pointer"
-            onClick={handleProfileEdit}
-          >
-            <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-              <UserAlt4 className="!relative !w-[18px] !h-[18px]" />
-              <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-primary-color text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-                {t("settings.edit_profile")}
-              </div>
-            </div>
-            <ChevronRight7
-              className="!relative !w-[18px] !h-[18px]"
-              color="#1B4F4A"
-            />
-          </div>
-          <div
             className={`relative w-full ${
               disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
             }`}
           >
-            {/* Conditionally render the Coming Soon badge below the UI when disabled */}
-            {/* {disabled && (
-              <div className={`w-full mt-2`}>
-                <div className="inline-block bg-yellow-500 text-white text-xs font-semibold py-1 px-3 rounded-full text-left">
-                  Coming Soon
-                </div>
-              </div>
-            )} */}
             <div
               className={`flex h-[54px] items-center justify-between px-0 py-[15px] self-stretch w-full border-b [border-bottom-style:solid] border-stroke`}
               onClick={!disabled ? handleProfileEdit : undefined} // Disable click if disabled
@@ -167,15 +158,6 @@ const SettingsPage = () => {
               disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
             }`}
           >
-            {/* Conditionally render the Coming Soon badge below the UI when disabled */}
-            {/* {disabled && (
-              <div className="w-full mt-2">
-                <div className="inline-block bg-yellow-500 text-white text-xs font-semibold py-1 px-3 rounded-full">
-                  Coming Soon
-                </div>
-              </div>
-            )} */}
-
             <div
               className={`flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke`}
               onClick={!disabled ? handleDeleteAccount : undefined} // Disable click if disabled
@@ -189,6 +171,26 @@ const SettingsPage = () => {
               <ChevronRight7
                 className="!relative !w-[18px] !h-[18px]"
                 color="#1B4F4A"
+              />
+            </div>
+          </div>
+          <div className={`relative w-full  ${"cursor-pointer"}`}>
+            <div
+              className={`flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke`}
+              onClick={handleSignOut} // Disable click if disabled
+            >
+              <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
+                <UserLock1
+                  className="!relative !w-[18px] !h-[18px]"
+                  color="#F23030"
+                />
+                <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-[#F23030] text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
+                  {t("account.sign_out")}
+                </div>
+              </div>
+              <ChevronRight7
+                className="!relative !w-[18px] !h-[18px]"
+                color="#F23030"
               />
             </div>
           </div>

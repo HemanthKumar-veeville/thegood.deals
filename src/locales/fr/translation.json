@@ -620,6 +620,7 @@
     "language": "Langue",
     "currency": "Devise",
     "trash_account": "Supprimer mon compte",
+    "sign_out": "Log out",
     "terms": "Conditions d’utilisation"
   },
   "profile": {
