@@ -168,7 +168,7 @@ const Orders = ({ dealId, dealType }) => {
                           key={order.order_id}
                           className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full"
                         >
-                          {order.payment_status === "succeeded" && (
+                          {order.payment_status !== "succeeded" && (
                             <CustomStatus text={t("orders.awaiting_payment")} />
                           )}
                           {/* Products in Each Order */}
@@ -241,7 +241,7 @@ const Orders = ({ dealId, dealType }) => {
                             </div>
                           </div>
                           <Line />
-                          {order.payment_status === "succeeded" && (
+                          {order.payment_status !== "succeeded" && (
                             <>
                               <div
                                 className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"
