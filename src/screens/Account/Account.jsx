@@ -359,12 +359,14 @@ const Account = ({ isRequestSent, dealId }) => {
               <div
                 key={text}
                 className={`inline-flex items-center gap-2.5 ${
-                  action === "/admin-wallet"
+                  action === "/admin-wallet" || action === "/admin-orders"
                     ? "cursor-not-allowed opacity-50"
                     : "hover:text-primary-color-dark cursor-pointer"
                 }`}
                 onClick={
-                  typeof action === "string" && action !== "/admin-wallet"
+                  typeof action === "string" &&
+                  action !== "/admin-wallet" &&
+                  action !== "/admin-orders"
                     ? () => handleNavigation(action)
                     : action === "/admin-orders"
                     ? null
