@@ -1070,7 +1070,16 @@
     "goodDealPricePlaceholder": "ex. 29.00 € ",
     "estimatedDiscountLabel": "Remise estimée",
     "estimatedDiscountText": "par rapport au prix public",
-    "addButtonText": "Ajouter"
+    "addButtonText": "Ajouter",
+    "errors": {
+      "productTitleRequired": "Product title is required.",
+      "totalStockPositive": "Total stock must be a positive number.",
+      "maximumRetailPricePositive": "Maximum retail price must be a positive number.",
+      "goodDealPricePositive": "Good deal price must be a positive number.",
+      "goodDealPriceLower": "Good deal price must be lower than the maximum retail price.",
+      "minQuantityPositive": "Minimum quantity must be a positive number.",
+      "maxQuantityValid": "Maximum quantity must be greater than or equal to the minimum quantity and a positive number."
+    }
   },
   "productTitleLabel": "Titre du produit",
   "productTitlePlaceholder": "ex. Caisse de Rosé - 6 bouteilles",

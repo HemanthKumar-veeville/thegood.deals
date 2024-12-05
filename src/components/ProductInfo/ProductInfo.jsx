@@ -6,6 +6,7 @@ import ProductQuantity from "./ProductQuantity";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdated";
 import { Line_60_1, Polygon_1_1 } from "../../images";
 import { Box4 } from "../../icons/Box4";
+import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
 const ProductInfo = ({
   addProduct,
@@ -15,8 +16,9 @@ const ProductInfo = ({
   setProduct,
   onDelete,
 }) => {
-  const { t } = useTranslation(); // Initialize useTranslation hook
-
+  const { t } = useTranslation();
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [minQuantity, setMinQuantity] = useState(
     product?.minimum_quantity || 2
   );
@@ -29,10 +31,11 @@ const ProductInfo = ({
   );
   const [productTitle, setProductTitle] = useState(product?.name || "");
   const [totalStock, setTotalStock] = useState(product?.total_stock || "");
-
   const [discountPercentage, setDiscountPercentage] = useState(
     product?.estimated_discount || 0
   );
+  const [errors, setErrors] = useState({}); // Validation error state
+
   useEffect(() => {
     if (
       maximumRetailPrice &&
@@ -46,8 +49,57 @@ const ProductInfo = ({
       setDiscountPercentage(0);
     }
   }, [maximumRetailPrice, goodDealPrice]);
+
+  const validateProduct = () => {
+    const newErrors = {};
+    setIsError(false);
+    setErrorMessage("");
+
+    if (!productTitle.trim()) {
+      setIsError(true);
+      newErrors.productTitle = t("productInfo.errors.productTitleRequired");
+      setErrorMessage(t("productInfo.errors.productTitleRequired"));
+    }
+    if (!totalStock || totalStock <= 0) {
+      setIsError(true);
+      setErrorMessage(t("productInfo.errors.totalStockPositive"));
+      newErrors.totalStock = t("productInfo.errors.totalStockPositive");
+    }
+    if (!maximumRetailPrice || maximumRetailPrice <= 0) {
+      setIsError(true);
+      setErrorMessage(t("productInfo.errors.maximumRetailPricePositive"));
+      newErrors.maximumRetailPrice = t(
+        "productInfo.errors.maximumRetailPricePositive"
+      );
+    }
+    if (!goodDealPrice || goodDealPrice <= 0) {
+      setIsError(true);
+      setErrorMessage(t("productInfo.errors.goodDealPricePositive"));
+      newErrors.goodDealPrice = t("productInfo.errors.goodDealPricePositive");
+    }
+    if (Number(goodDealPrice) >= Number(maximumRetailPrice)) {
+      setIsError(true);
+      setErrorMessage(t("productInfo.errors.goodDealPriceLower"));
+      newErrors.goodDealPrice = t("productInfo.errors.goodDealPriceLower");
+    }
+    if (!minQuantity || minQuantity <= 0) {
+      setIsError(true);
+      setErrorMessage(t("productInfo.errors.minQuantityPositive"));
+      newErrors.minQuantity = t("productInfo.errors.minQuantityPositive");
+    }
+    if (!maxQuantity || maxQuantity <= 0 || maxQuantity < minQuantity) {
+      setIsError(true);
+      setErrorMessage(t("productInfo.errors.maxQuantityValid"));
+      newErrors.maxQuantity = t("productInfo.errors.maxQuantityValid");
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleAddClick = () => {
-    // onDelete(product?.product_id);
+    if (!validateProduct()) return;
+
     const newProduct = {
       product_id: product?.product_id || productTitle + Math.random(1, 1000),
       name: productTitle,
@@ -72,6 +124,13 @@ const ProductInfo = ({
 
   return (
     <div className="flex flex-col items-start gap-[15px] p-[15px] relative self-stretch w-full flex-[0_0_auto] bg-white rounded-[5px]">
+      {isError && (
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setIsError(false)} // Reset modal state on close
+        />
+      )}
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
         {t("productInfo.productTitleLabel")}
       </div>
