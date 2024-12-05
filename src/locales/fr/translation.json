@@ -401,15 +401,15 @@
     "created_action": "Créez-en un dès maintenant !",
     "invited_empty": "Vous ne participez à aucun deal.",
     "invited_action": "Attendez que l’on vous invite !",
-    "error_title_required": "Deal Tittle Required!",
-    "error_description_required": "Deal Description Required!",
-    "error_collection_location_required": "Collection Location Required!",
-    "error_collection_date_required": "Collection Date Required!",
-    "error_content_description_required": "Content Description Required!",
-    "error_manufacturer_info_required": "Manufacturer Info Required!",
-    "error_deal_expiration_required": "Deal Expiration Required!",
-    "error_accept_conditions_required": "Accept Conditions Required!",
-    "error_products_required": "Products Required"
+    "error_title_required": "Titre du deal requis !",
+    "error_description_required": "Description du deal requise !",
+    "error_collection_location_required": "Lieu de collecte requis !",
+    "error_collection_date_required": "Date de collecte requise !",
+    "error_content_description_required": "Description du contenu requise !",
+    "error_manufacturer_info_required": "Informations sur l'artisan requises !",
+    "error_deal_expiration_required": "Date d'expiration de l'offre requise !",
+    "error_accept_conditions_required": "Acceptation des conditions requise !",
+    "error_products_required": "Produits requis !"
   },
   "inform_craftsman": {
     "confirm_deal_title": "Confirmer le good deal avec l’artisan",
@@ -1043,9 +1043,11 @@
     "orderLabel": "Commande",
     "serviceFeesLabel": "Frais de service",
     "serviceFeesTooltip": "Commission TheGoodDeals de 6 %",
-    "paymentFeesTooltip": "Stripe Fees of 1.5% + 0.25 eur for domestic cards and can vary for international cards",
+    "paymentFeesTooltip": "Selon votre moyen de paiement, des frais de paiement pourraient varier.",
     "paymentFeesLabel": "Frais de paiement",
+    "paymentFeesValue": "Selon carte",
     "deliveryFeesLabel": "Frais de livraison",
+    "deliveryFeesValue": "Inclus",
     "totalTTC": "TOTAL TTC",
     "saveLabel": "Économisez",
     "priceUnknown": "Prix inconnu",
@@ -1396,7 +1398,9 @@
     "delivery_fees": "Frais de livraison",
     "products": "produits",
     "empty": "Vous n'avez aucune commande pour le moment.",
-    "summary": "Récapitulatif de la commande"
+    "summary": "Récapitulatif de la commande",
+    "edit_payment": "Modifier les informations",
+    "awaiting_payment": "En attente de paiement"
   },
   "App": {
     "Message": {

@@ -16,6 +16,8 @@ import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { OrderInfo } from "../../components/OrderInfo/OrderInfo.jsx";
 import { Line } from "../../components/Line/Line.jsx";
+import { ArrowRight1 } from "../../icons/ArrowRight1/ArrowRight1.jsx";
+import CustomStatus from "../../components/CustomStatus/CustomStatus.jsx";
 
 const Orders = ({ dealId, dealType }) => {
   const navigate = useNavigate();
@@ -50,6 +52,10 @@ const Orders = ({ dealId, dealType }) => {
       ...prevState,
       [name]: !prevState[name],
     }));
+  };
+
+  const handleEditPayment = (orderId) => {
+    navigate(`/payment?orderId=${orderId}&is_edit_mode=${true}`);
   };
 
   const handleBackToDeal = () => {
@@ -162,6 +168,9 @@ const Orders = ({ dealId, dealType }) => {
                           key={order.order_id}
                           className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full"
                         >
+                          {order.payment_status === "succeeded" && (
+                            <CustomStatus text={t("orders.awaiting_payment")} />
+                          )}
                           {/* Products in Each Order */}
                           {order?.products?.map((product, index) => (
                             <div
@@ -204,7 +213,7 @@ const Orders = ({ dealId, dealType }) => {
                                 {t("orders.payment_fees")}
                               </p>
                               <p className="font-semibold text-primary-color text-sm text-right">
-                                {participant.payment_fees} €
+                                {t("order.paymentFeesValue")}
                               </p>
                             </div>
                             {/* Delivery Fees */}
@@ -213,7 +222,7 @@ const Orders = ({ dealId, dealType }) => {
                                 {t("orders.delivery_fees")}
                               </p>
                               <p className="font-semibold text-primary-color text-sm text-right">
-                                {participant.delivery_fees}
+                                {t("order.deliveryFeesValue")}
                               </p>
                             </div>
                           </div>
@@ -232,6 +241,29 @@ const Orders = ({ dealId, dealType }) => {
                             </div>
                           </div>
                           <Line />
+                          {order.payment_status === "succeeded" && (
+                            <>
+                              <div
+                                className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md"
+                                onClick={() =>
+                                  handleEditPayment(order.order_id)
+                                }
+                              >
+                                <button
+                                  type="submit"
+                                  className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap"
+                                >
+                                  {t("orders.edit_payment")}{" "}
+                                  {/* Translated button text */}
+                                </button>
+                                <ArrowRight1
+                                  className="!relative !w-5 !h-5"
+                                  color="white"
+                                />
+                              </div>
+                              <Line />
+                            </>
+                          )}
                         </div>
                       ))}
                     </div>

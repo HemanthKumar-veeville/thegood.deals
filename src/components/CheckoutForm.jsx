@@ -8,7 +8,10 @@ import { useTranslation } from "react-i18next";
 import { ArrowRight1 } from "../icons/ArrowRight1";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setupPaymentForOrder } from "../redux/app/orders/orderSlice";
+import {
+  setupPaymentForOrder,
+  updatePaymentForOrder,
+} from "../redux/app/orders/orderSlice";
 import CustomLoader from "./CustomLoader/CustomLoader";
 import { Line } from "./Line/Line";
 import { ShowCustomErrorModal } from "./ErrorAlert/ErrorAlert";
@@ -34,7 +37,7 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   // Extract orderId from the query parameters
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("orderId");
-
+  const isEditMode = queryParams.get("is_edit_mode");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,9 +73,17 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
         // Proceed to dispatch payment setup
         setIsConfirmSetupLoading(true);
         try {
-          await dispatch(
-            setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId })
-          ).unwrap();
+          isEditMode === true || isEditMode === "true"
+            ? await dispatch(
+                updatePaymentForOrder({
+                  orderId,
+                  setupIntent,
+                  stripeCustomerId,
+                })
+              ).unwrap()
+            : await dispatch(
+                setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId })
+              ).unwrap();
           setMessage(t("checkout.setup_confirmed")); // Translated message
 
           navigate(`/thanks-payment-setup?orderId=${orderId}`); // Navigate to success page

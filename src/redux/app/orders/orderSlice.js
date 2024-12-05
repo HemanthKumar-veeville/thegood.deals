@@ -95,6 +95,28 @@ export const setupPaymentForOrder = createAsyncThunk(
   }
 );
 
+export const updatePaymentForOrder = createAsyncThunk(
+  "orders/updatePaymentForOrder",
+  async ({ orderId, setupIntent, stripeCustomerId }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(
+        `/update_setup_intent/${orderId}/${stripeCustomerId}`,
+        {
+          setupIntent, // Sending setupIntent as part of the payload
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // Setting the Content-Type to JSON
+          },
+        }
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // Order slice
 const orderSlice = createSlice({
   name: "orders",
@@ -173,6 +195,20 @@ const orderSlice = createSlice({
         state.orderError = null;
       })
       .addCase(setupPaymentForOrder.rejected, (state, action) => {
+        state.orderStatus = "failed";
+        state.orderError = action.payload;
+      })
+
+      // update Payment For Order
+      .addCase(updatePaymentForOrder.pending, (state) => {
+        state.orderStatus = "loading";
+        state.orderError = null;
+      })
+      .addCase(updatePaymentForOrder.fulfilled, (state, action) => {
+        state.orderStatus = "succeeded";
+        state.orderError = null;
+      })
+      .addCase(updatePaymentForOrder.rejected, (state, action) => {
         state.orderStatus = "failed";
         state.orderError = action.payload;
       });

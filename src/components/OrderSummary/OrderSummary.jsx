@@ -123,7 +123,7 @@ export const OrderSummary = ({ orderId }) => {
                 {t("orders.payment_fees")}
               </p>
               <p className="font-semibold text-primary-color text-sm text-right">
-                {orderState?.payment_fees} €
+                {t("order.paymentFeesValue")}
               </p>
             </div>
             {/* Delivery Fees */}
@@ -132,7 +132,7 @@ export const OrderSummary = ({ orderId }) => {
                 {t("orders.delivery_fees")}
               </p>
               <p className="font-semibold text-primary-color text-sm text-right">
-                {orderState?.delivery_fees}
+                {t("order.deliveryFeesValue")}
               </p>
             </div>
           </div>

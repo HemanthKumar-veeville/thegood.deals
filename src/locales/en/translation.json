@@ -1043,9 +1043,11 @@
     "orderLabel": "Order",
     "serviceFeesLabel": "Service Fees",
     "serviceFeesTooltip": "TheGoodDeals Commission of 6%",
-    "paymentFeesTooltip": "Stripe Fees of 1.5% + 0.25 eur for domestic cards and can vary for international cards",
+    "paymentFeesTooltip": "Depending on your payment method, payment fees may vary.",
     "paymentFeesLabel": "Payment Fees",
+    "paymentFeesValue": "As per card",
     "deliveryFeesLabel": "Delivery Fees",
+    "deliveryFeesValue": "Included",
     "totalTTC": "TOTAL TTC",
     "saveLabel": "Save",
     "priceUnknown": "Price Unknown",
@@ -1389,7 +1391,9 @@
     "delivery_fees": "Delivery Fees",
     "products": "products",
     "empty": "You don't have any orders now.",
-    "summary": "Order summary"
+    "summary": "Order summary",
+    "edit_payment": "Edit information",
+    "awaiting_payment": "Awaiting payment"
   },
   "App": {
     "Message": {
