@@ -46,7 +46,6 @@ const WaitingDeal = () => {
           message={error?.detail || t("active_deal.error")}
           buttonText={t("active_deal.try_again")}
           shouldCloseOnOverlayClick={false}
-          handleClick={fetchDeal}
         />
       )}
       {status === "succeeded" && (
