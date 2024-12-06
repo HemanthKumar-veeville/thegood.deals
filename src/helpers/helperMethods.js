@@ -284,7 +284,7 @@ export const getMaxDiscount = (products) => {
   // Calculate the discount percentage for each product and find the maximum
   const maxDiscount = Math.max(
     ...products.map((product) => {
-      if (product.market_price > 0) {
+      if (product.market_price > 0 || product.max_retail_price > 0) {
         const mrp = product.market_price || product.max_retail_price;
         const gdp =
           product.deal_price || product.price || product.price_per_unit;
