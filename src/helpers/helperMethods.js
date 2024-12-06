@@ -286,7 +286,7 @@ export const getMaxDiscount = (products) => {
     ...products.map((product) => {
       if (product.market_price > 0) {
         const mrp = product.market_price || product.max_retail_price;
-        const gdp = product.deal_price || price;
+        const gdp = product.deal_price || product.price || price_per_unit;
         const discount = ((mrp - gdp) / mrp) * 100;
         return Math.round(discount); // Round to the nearest whole number
       }
