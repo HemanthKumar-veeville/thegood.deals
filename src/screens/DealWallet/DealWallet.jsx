@@ -124,7 +124,7 @@ const DealWallet = () => {
                 <div className="relative mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
                   {`${
                     availableBalance?.currency === "eur" ? "€" : "USD" || "€"
-                  }${availableBalance?.amount || 0}`}
+                  }${(availableBalance?.amount / 100).toFixed(2) || 0}`}
                 </div>
               </div>
               <div className="w-full flex justify-between items-center">
@@ -133,7 +133,7 @@ const DealWallet = () => {
                 </div>
                 <div className="relative mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[30px] whitespace-nowrap">
                   {`${pendingBalance?.currency === "eur" ? "€" : "USD" || "€"}${
-                    pendingBalance?.amount || 0
+                    (pendingBalance?.amount / 100).toFixed(2) || 0
                   }`}
                 </div>
               </div>
