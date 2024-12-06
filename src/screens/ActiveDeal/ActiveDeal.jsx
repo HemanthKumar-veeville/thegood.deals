@@ -164,7 +164,7 @@ const ActiveDeal = () => {
                 </div>
               </div>
             </div>
-            {isPaymentCollectedForAllOrders && (
+            {isPaymentCollectedForAllOrders && dealData?.orders_count !== 0 && (
               <div className="flex items-start gap-[25px] px-[18px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-greengreen-light-6 rounded-lg">
                 <div className="flex items-center gap-3 relative flex-1 grow">
                   <div className="relative w-5 h-5 bg-greengreen rounded-[10px]">
