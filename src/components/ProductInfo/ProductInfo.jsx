@@ -7,6 +7,7 @@ import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdated";
 import { Line_60_1, Polygon_1_1 } from "../../images";
 import { Box4 } from "../../icons/Box4";
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
+import CheckMark from "../../icons/CheckMark/CheckMark";
 
 const ProductInfo = ({
   addProduct,
@@ -50,47 +51,64 @@ const ProductInfo = ({
     }
   }, [maximumRetailPrice, goodDealPrice]);
 
-  const validateProduct = () => {
+  const productValidations = [
+    {
+      condition: !productTitle.trim(),
+      field: "productTitle",
+      message: t("productInfo.errors.productTitleRequired"),
+    },
+    {
+      condition: !totalStock || totalStock <= 0,
+      field: "totalStock",
+      message: t("productInfo.errors.totalStockPositive"),
+    },
+    {
+      condition: !maximumRetailPrice || maximumRetailPrice <= 0,
+      field: "maximumRetailPrice",
+      message: t("productInfo.errors.maximumRetailPricePositive"),
+    },
+    {
+      condition: !goodDealPrice || goodDealPrice <= 0,
+      field: "goodDealPrice",
+      message: t("productInfo.errors.goodDealPricePositive"),
+    },
+    {
+      condition: Number(goodDealPrice) >= Number(maximumRetailPrice),
+      field: "goodDealPrice",
+      message: t("productInfo.errors.goodDealPriceLower"),
+    },
+    {
+      condition: !minQuantity || minQuantity <= 0,
+      field: "minQuantity",
+      message: t("productInfo.errors.minQuantityPositive"),
+    },
+    {
+      condition: !maxQuantity || maxQuantity <= 0 || maxQuantity < minQuantity,
+      field: "maxQuantity",
+      message: t("productInfo.errors.maxQuantityValid"),
+    },
+  ];
+
+  const validateProduct = (validations) => {
     const newErrors = {};
+
+    // Reset initial states
     setIsError(false);
     setErrorMessage("");
 
-    if (!productTitle.trim()) {
-      setIsError(true);
-      newErrors.productTitle = t("productInfo.errors.productTitleRequired");
-      setErrorMessage(t("productInfo.errors.productTitleRequired"));
-    }
-    if (!totalStock || totalStock <= 0) {
-      setIsError(true);
-      setErrorMessage(t("productInfo.errors.totalStockPositive"));
-      newErrors.totalStock = t("productInfo.errors.totalStockPositive");
-    }
-    if (!maximumRetailPrice || maximumRetailPrice <= 0) {
-      setIsError(true);
-      setErrorMessage(t("productInfo.errors.maximumRetailPricePositive"));
-      newErrors.maximumRetailPrice = t(
-        "productInfo.errors.maximumRetailPricePositive"
-      );
-    }
-    if (!goodDealPrice || goodDealPrice <= 0) {
-      setIsError(true);
-      setErrorMessage(t("productInfo.errors.goodDealPricePositive"));
-      newErrors.goodDealPrice = t("productInfo.errors.goodDealPricePositive");
-    }
-    if (Number(goodDealPrice) >= Number(maximumRetailPrice)) {
-      setIsError(true);
-      setErrorMessage(t("productInfo.errors.goodDealPriceLower"));
-      newErrors.goodDealPrice = t("productInfo.errors.goodDealPriceLower");
-    }
-    if (!minQuantity || minQuantity <= 0) {
-      setIsError(true);
-      setErrorMessage(t("productInfo.errors.minQuantityPositive"));
-      newErrors.minQuantity = t("productInfo.errors.minQuantityPositive");
-    }
-    if (!maxQuantity || maxQuantity <= 0 || maxQuantity < minQuantity) {
-      setIsError(true);
-      setErrorMessage(t("productInfo.errors.maxQuantityValid"));
-      newErrors.maxQuantity = t("productInfo.errors.maxQuantityValid");
+    // Validate and populate errors
+    validations.forEach(({ condition, field, message }) => {
+      if (condition) {
+        setIsError(true);
+        if (!newErrors[field]) {
+          newErrors[field] = message;
+        }
+      }
+    });
+
+    // Set the first error message
+    if (Object.keys(newErrors).length > 0) {
+      setErrorMessage(Object.values(newErrors)[0]);
     }
 
     setErrors(newErrors);
@@ -98,7 +116,11 @@ const ProductInfo = ({
   };
 
   const handleAddClick = () => {
-    if (!validateProduct()) return;
+    if (!validateProduct(productValidations)) return;
+
+    // Reset initial states
+    setIsError(false);
+    setErrorMessage("");
 
     const newProduct = {
       product_id: product?.product_id || productTitle + Math.random(1, 1000),
@@ -222,11 +244,14 @@ const ProductInfo = ({
         progressPercentage={discountPercentage}
       />
       <div
-        className="gap-2 border border-solid border-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
+        className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
         onClick={handleAddClick}
       >
-        <Plus3 className="!relative !w-5 !h-5" />
-        <button className="all-[unset] box-border relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+        <CheckMark className="!relative !w-5 !h-5" />
+        <button
+          type="button"
+          className="all-[unset] box-border relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap"
+        >
           {t("productInfo.addButtonText")}
         </button>
       </div>

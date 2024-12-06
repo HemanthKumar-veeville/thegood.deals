@@ -1094,7 +1094,7 @@
   "goodDealPricePlaceholder": "ex. €29.00",
   "estimatedDiscountLabel": "Estimated discount",
   "estimatedDiscountText": "compared to the public price",
-  "addButtonText": "Add",
+  "addButtonText": "Validate this product",
   "ProductList": {
     "productListTitle": "Product List",
     "noProductsMessage": "No products added yet.",
