@@ -164,7 +164,7 @@ const Invitations = () => {
                 />
               }
               style="three"
-              text={"No new requests"}
+              text={t("invitations.no_requests")}
             />
           </div>
         )}
@@ -226,7 +226,7 @@ const Invitations = () => {
                     />
                   }
                   style="three"
-                  text={"You have not invited your friends yet"}
+                  text={t("invitations.not_invited")}
                 />
               </div>
             )}

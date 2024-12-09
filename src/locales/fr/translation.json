@@ -537,7 +537,9 @@
     "list_of_relatives": "Liste des proches",
     "order_on_deal_singular": "commande sur le deal",
     "order_on_deal_plural": "commandes sur le deal",
-    "line_alt": "Ligne"
+    "line_alt": "Ligne",
+    "no_requests": "Aucune nouvelle demande",
+    "not_invited": "Vous n'avez pas encore invité vos amis"
   },
   "view_good_deal": {
     "back": "Retour",

@@ -12,6 +12,7 @@ import {
 } from "../../redux/app/payments/paymentSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 
 const DealWallet = () => {
   const { t } = useTranslation();
@@ -22,6 +23,8 @@ const DealWallet = () => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [serverMessage, setServerMessage] = useState("");
 
   // Get balance and loading status from Redux store
   const { balance, status, error } = useSelector((state) => state.payments);
@@ -38,13 +41,19 @@ const DealWallet = () => {
       const res = await dispatch(
         payoutArtisan({
           dealId,
-          amount: availableBalance?.amount + 12.5,
+          amount: (availableBalance?.amount / 100).toFixed(2),
           currency: availableBalance?.currency,
         })
       ).unwrap();
-      if (res?.status === 200 || res?.status === 201) {
-        navigate("/thanks-payment-setup");
-      }
+      await dispatch(fetchStripeBalance({ dealId }));
+      setShowSuccessModal(true);
+      setServerMessage(
+        `${res?.message?.status} for ${
+          availableBalance?.amount / 100
+        } ${(availableBalance?.currency).toUpperCase()} with payment ID ${
+          res?.message?.Payout_ID
+        }.`
+      );
     } catch (err) {
       setErrorMessage(err?.detail);
       setIsError(true);
@@ -73,6 +82,13 @@ const DealWallet = () => {
           message={errorMessage}
           buttonText={t("waiting_deal.got_it")}
           onClose={() => setIsError(false)} // Reset modal state on close
+        />
+      )}
+      {showSuccessModal && (
+        <ShowCustomSuccessModal
+          message={serverMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => setShowSuccessModal(false)}
         />
       )}
       {!loading && (
