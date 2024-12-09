@@ -248,7 +248,7 @@ export function formatDate(dateStr, language = "en") {
   const timeString =
     language === "en" ? "between 10 a.m. and 3 p.m." : "entre 10 h et 15 h";
 
-  return `${weekday} ${month} ${day}, ${timeString}`;
+  return `${weekday} ${day} ${month}, ${timeString}`;
 }
 
 export const getDealProgress = (products) => {
