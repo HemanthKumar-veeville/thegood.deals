@@ -68,9 +68,11 @@ const DealWallet = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setLoading(true);
     // Dispatch fetchStripeBalance when the component mounts
     if (dealId) {
       dispatch(fetchStripeBalance({ dealId }));
+      setLoading(false);
     }
   }, [dealId, dispatch]);
 
