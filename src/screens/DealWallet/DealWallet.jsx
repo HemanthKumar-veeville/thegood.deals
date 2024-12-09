@@ -70,8 +70,13 @@ const DealWallet = () => {
     window.scrollTo(0, 0);
     setLoading(true);
     // Dispatch fetchStripeBalance when the component mounts
-    if (dealId) {
-      dispatch(fetchStripeBalance({ dealId }));
+    try {
+      if (dealId) {
+        dispatch(fetchStripeBalance({ dealId }));
+      }
+    } catch (error) {
+      console.error("Error fetching stripe balance:", error);
+    } finally {
       setLoading(false);
     }
   }, [dealId, dispatch]);
@@ -114,7 +119,7 @@ const DealWallet = () => {
           </div>
 
           <div className="flex flex-col items-start gap-6 p-5 self-stretch w-full bg-whitewhite rounded-[5px] shadow-shadow-1 relative flex-[0_0_auto]">
-            <div className="inline-flex flex-col items-start gap-5 relative flex-[0_0_auto]">
+            <div className="flex flex-col items-start gap-5 relative flex-[0_0_auto] w-full">
               <div className="inline-flex items-center gap-3.5 relative flex-[0_0_auto]">
                 <div className="relative w-[50px] h-[50px]">
                   <div className="relative h-[50px] rounded-[3px]">
