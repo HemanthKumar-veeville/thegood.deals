@@ -53,9 +53,8 @@ const Account = ({ isRequestSent, dealId }) => {
       navigate(
         `/deal_details_invite?deal_id=${dealId}&&is_request_sent=${isRequestSent}`
       );
-  }, []);
+  }, [isRequestSent, dealId, navigate]);
 
-  // Handle tab switching
   useEffect(() => {
     const activeTabFromLocation = location?.state?.activeTab || activeTab;
     handleTabSwitch(activeTabFromLocation);
@@ -72,7 +71,6 @@ const Account = ({ isRequestSent, dealId }) => {
     loadDeals(tab, 1); // Load the first page of deals
   };
 
-  // Fetch deals for the active tab
   const loadDeals = async (tab, pageNumber) => {
     if (status === "loading" || isFetchingMore || !hasMoreDeals) return; // Prevent multiple calls
 
@@ -87,7 +85,6 @@ const Account = ({ isRequestSent, dealId }) => {
       if (newDeals.length === 0) {
         setHasMoreDeals(false); // Stop further API calls if no new deals
       } else {
-        // Append new deals to existing ones
         setLoadedDeals((prevState) => ({
           ...prevState,
           [tab]: [...prevState[tab], ...newDeals],
@@ -104,37 +101,41 @@ const Account = ({ isRequestSent, dealId }) => {
     const { scrollTop, scrollHeight, clientHeight } =
       scrollableContainerRef.current;
 
-    // Trigger loadMoreDeals when user scrolls to the bottom
     if (
       scrollTop + clientHeight >= scrollHeight - 50 &&
       hasMoreDeals &&
       !isFetchingMore
     ) {
-      // Increment page before API call to prevent duplicate calls for the same page
       setPage((prevPage) => {
         const nextPage = prevPage + 1;
-        loadDeals(activeTab, nextPage); // Call loadDeals with the updated page number
+        loadDeals(activeTab, nextPage);
         return nextPage;
       });
     }
   };
 
   useEffect(() => {
+    const debounce = (func, delay) => {
+      let timer;
+      return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => func(...args), delay);
+      };
+    };
+
+    const debouncedScroll = debounce(handleContainerScroll, 200);
+
     const scrollableContainer = scrollableContainerRef.current;
     if (scrollableContainer) {
-      scrollableContainer.addEventListener("scroll", handleContainerScroll);
+      scrollableContainer.addEventListener("scroll", debouncedScroll);
     }
     return () => {
       if (scrollableContainer) {
-        scrollableContainer.removeEventListener(
-          "scroll",
-          handleContainerScroll
-        );
+        scrollableContainer.removeEventListener("scroll", debouncedScroll);
       }
     };
-  }, [page, activeTab]); // Watch for page and tab changes
+  }, [hasMoreDeals, isFetchingMore]);
 
-  // Fetch user profile and deals on initial load
   useEffect(() => {
     const fetchUserProfileData = async () => {
       try {
@@ -171,7 +172,6 @@ const Account = ({ isRequestSent, dealId }) => {
   const handleSignOut = async () => {
     try {
       await dispatch(logoutUser());
-      // navigate("/auth?login");
     } catch (error) {
       console.error("Failed to log out: ", error);
     }
@@ -179,7 +179,7 @@ const Account = ({ isRequestSent, dealId }) => {
 
   return (
     <div
-      className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-[600px] overflow-y-auto custom-scrollbar"
+      className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-[800px] overflow-y-auto custom-scrollbar"
       ref={scrollableContainerRef}
     >
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
@@ -377,11 +377,6 @@ const Account = ({ isRequestSent, dealId }) => {
                 <div className="font-normal text-primary-text-color text-base">
                   {text}
                 </div>
-                {/* {(action === "/admin-orders" || action === "/admin-wallet") && (
-                  <div className="ml-2 bg-secondary-color text-white rounded-full px-2 py-1 text-xs">
-                    Coming Soon
-                  </div>
-                )} */}
               </div>
             ))}
           </>

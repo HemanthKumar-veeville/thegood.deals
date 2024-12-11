@@ -268,24 +268,14 @@ const ActiveDeal = () => {
                 {dealData?.collection_location || "-"}
               </p>
             </div>
-            {!isCollectionInProgress && !isDealPaid && (
+            {!isPaymentCollectedForAllOrders && (
               <div
                 className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
-                onClick={
-                  !isPaymentCollectedForAllOrders
-                    ? chargeDeal
-                    : !isDealPaid
-                    ? payToArtisan
-                    : null
-                }
+                onClick={!isPaymentCollectedForAllOrders ? chargeDeal : null}
               >
                 <EuroCoin className="!relative !w-5 !h-5" />
                 <button className="box-border font-medium text-white text-base text-center">
-                  {!isPaymentCollectedForAllOrders
-                    ? t("active_deal.collect_payment")
-                    : !isDealPaid
-                    ? t("active_deal.pay_artisan")
-                    : t("active_deal.deal_completed_status")}
+                  {t("active_deal.collect_payment")}
                 </button>
               </div>
             )}
