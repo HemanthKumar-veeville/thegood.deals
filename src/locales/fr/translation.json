@@ -465,7 +465,8 @@
     "try_again": "Réessayer",
     "deal_completed": "Le deal est payé. L’artisan va préparer vos commandes.",
     "deal_collected": "Le montant a été collecté auprès de tous les participants.",
-    "deal_completed_status": "L’artisan va préparer vos commandes."
+    "deal_completed_status": "L’artisan va préparer vos commandes.",
+    "not_fullfilled": "Objectif 100 % non atteint !"
   },
   "draft_deal": {
     "back_button": "Retour",

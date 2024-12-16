@@ -121,7 +121,7 @@ const ActiveDeal = () => {
     const progress = await getDealProgress(dealData?.products || []);
     if (progress !== 100) {
       setIsError(true);
-      setErrorMessage("Still 100% goal not reached");
+      setErrorMessage(t("active_deal.not_fullfilled"));
       return false; // Validation failed
     }
     return true; // Validation succeeded
