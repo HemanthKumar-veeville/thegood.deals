@@ -200,7 +200,7 @@ const Invitations = () => {
                   <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
                     {participant.participant_name}
                   </div>
-                  <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
+                  {/* <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
                     <Box43 className="!relative !w-5 !h-5" />
                     <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
                       {participant.orders_count}{" "}
@@ -208,7 +208,7 @@ const Invitations = () => {
                         ? t("invitations.order_on_deal_plural")
                         : t("invitations.order_on_deal_singular")}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}
