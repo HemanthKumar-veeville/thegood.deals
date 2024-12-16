@@ -193,6 +193,7 @@ const UpdateDeal = () => {
       form.append("artisan_information", formData.manufacturerInfo);
       form.append("deal_expiration_date", formData.dealExpiration);
       form.append("terms_accepted", formData.acceptConditions);
+      form.append("deal_status", isProductUpdated ? 1 : 4);
       form.append("delivery_cost", formData.deliveryCost);
       form.append(
         "existing_images",
