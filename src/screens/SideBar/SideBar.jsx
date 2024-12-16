@@ -1,10 +1,12 @@
 // src/screens/SideBar/SideBar.jsx
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { FranceFlag, UK_Flag_Icon } from "../../images";
 import { useLanguage } from "../../context/LanguageContext";
+import LanguageDropdown from "../LanguageDropdown/LanguageDropdown";
+import { logoutUser } from "../../redux/app/user/userSlice";
 
 /**
  * SideBar component
@@ -22,6 +24,25 @@ const SideBar = React.memo(({ onClose }) => {
   const { selectedLanguage, setSelectedLanguage } = useLanguage();
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
+
+  // Show the sidebar when the component is mounted
+  useEffect(() => {
+    setIsVisible(true);
+
+    // Block scroll
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      // Restore scroll
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  const handleLanguageOpen = () => {
+    setOpen(false);
+    setLanguageOpen(!languageOpen);
+  };
 
   // Show the sidebar when the component is mounted
   useEffect(() => {
@@ -52,6 +73,11 @@ const SideBar = React.memo(({ onClose }) => {
     },
     [navigate, handleClose]
   );
+
+  const signoutHandle = () => {
+    handleClose();
+    handleSignOut();
+  };
 
   // Memoize menu items to avoid unnecessary re-renders
   const menuItems = useMemo(
@@ -108,14 +134,24 @@ const SideBar = React.memo(({ onClose }) => {
    */
   const renderButton = (label, path, additionalClasses = "") => (
     <button
-      className={`w-full text-green inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-green cursor-pointer ${additionalClasses}`}
-      onClick={() => handleNavigation(path)}
+      className={`w-full text-green inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full cursor-pointer ${additionalClasses}`}
+      onClick={
+        path !== "/signout" ? () => handleNavigation(path) : signoutHandle
+      }
     >
       <span className="font-normal text-base leading-6 whitespace-nowrap">
         {label}
       </span>
     </button>
   );
+
+  const handleSignOut = async () => {
+    try {
+      await dispatch(logoutUser());
+    } catch (error) {
+      console.error("Failed to log out: ", error);
+    }
+  };
 
   return (
     <div
@@ -128,16 +164,25 @@ const SideBar = React.memo(({ onClose }) => {
           <div className="items-start flex flex-col relative self-stretch w-full flex-[0_0_auto]">
             {renderMenuItems()}
           </div>
+
           <div className="inline-flex flex-col items-center gap-4 pt-4 pb-0 px-0 relative flex-[0_0_auto] w-full">
             {renderButton(
-              t("side_bar.create_deal"),
-              isUserLoggedIn ? "/create-deal" : "/auth?login",
-              "bg-green text-white hover:bg-[#15423b] hover:text-[#d4d4d4]"
+              t("side_bar.view_deal"),
+              isUserLoggedIn ? "/" : "/auth?login",
+              " border border-green bg-green text-white hover:bg-[#15423b] hover:text-[#d4d4d4]"
             )}
             {renderButton(
               t("side_bar.my_account"),
-              isUserLoggedIn ? "/" : "/auth?login"
+              isUserLoggedIn ? "/my-information" : "/auth?login",
+              " border border-green "
             )}
+            <LanguageDropdown handleLanguageOpen={handleLanguageOpen} />
+            {isUserLoggedIn &&
+              renderButton(
+                t("side_bar.logout"),
+                "/signout",
+                "bg-[#F23030] text-white hover:bg-[#F23030] hover:text-[#d4d4d4]"
+              )}
           </div>
         </div>
       </div>

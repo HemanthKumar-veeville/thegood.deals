@@ -5,7 +5,7 @@ const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const initialLanguage = "french";
-  i18next.changeLanguage("fr");
+  // i18next.changeLanguage("fr");
   const [selectedLanguage, setSelectedLanguage] = useState(initialLanguage);
 
   return (

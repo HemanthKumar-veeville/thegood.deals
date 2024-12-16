@@ -33,6 +33,11 @@ function AppBar() {
     setOpen(!open);
   };
 
+  const handleProfileClick = () => {
+    setOpen(false);
+    !isUserLoggedIn ? navigate("/auth?login") : navigate("/my-information");
+  };
+
   const handleLanguageOpen = () => {
     setOpen(false);
     setLanguageOpen(!languageOpen);
@@ -111,11 +116,7 @@ function AppBar() {
             {isUser && (
               <div
                 className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
-                onClick={() =>
-                  !isUserLoggedIn
-                    ? navigate("/auth?login")
-                    : navigate("/my-information")
-                }
+                onClick={handleProfileClick}
               >
                 {profile?.profile_image &&
                 profile?.profile_image !==

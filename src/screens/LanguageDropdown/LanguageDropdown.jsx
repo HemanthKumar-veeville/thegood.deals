@@ -98,17 +98,9 @@ const LanguageDropDown = React.memo(({ onClose }) => {
     ));
 
   return (
-    <div
-      className={`sticky top-16 left-0 w-full max-w-[400px] mx-auto h-screen bg-primary-background shadow-lg z-40 transition-transform duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      }`}
-    >
-      <div className="flex flex-col w-full h-full items-start gap-2.5 pt-4 pb-40 px-5 relative text-center">
-        <div className="items-center justify-center gap-6 flex flex-col relative self-stretch w-full flex-[0_0_auto]">
-          <div className="items-start flex flex-col relative self-stretch w-full flex-[0_0_auto]">
-            {renderMenuItems()}
-          </div>
-        </div>
+    <div className="items-center justify-center gap-6 flex flex-col relative self-stretch w-full flex-[0_0_auto]">
+      <div className="items-start flex flex-col relative self-stretch w-full flex-[0_0_auto]">
+        {renderMenuItems()}
       </div>
     </div>
   );

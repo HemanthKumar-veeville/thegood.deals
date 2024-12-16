@@ -14,7 +14,9 @@
     "faq": "FAQ",
     "contact_us": "Contactez-nous",
     "create_deal": "Créer un good deal",
-    "my_account": "Mon compte"
+    "view_deal": "Voir les deals",
+    "my_account": "Mon compte",
+    "logout": "Se déconnecter"
   },
   "home": {
     "title": " ",
