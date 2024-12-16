@@ -58,6 +58,8 @@ const ActiveDeal = () => {
   const [isPaymentCollectedForAllOrders, setIsPaymentCollectedForAllOrders] =
     useState(false);
   const [isDealPaid, setIsDealPaid] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleBack = () => {
     navigate(-1);
@@ -115,24 +117,40 @@ const ActiveDeal = () => {
     navigate(`/deal-wallet?deal_id=${deal_id}`);
   };
 
+  const validateCollection = async () => {
+    const progress = await getDealProgress(dealData?.products || []);
+    if (progress !== 100) {
+      setIsError(true);
+      setErrorMessage("Still 100% goal not reached");
+      return false; // Validation failed
+    }
+    return true; // Validation succeeded
+  };
+
   const chargeDeal = async () => {
+    const isValid = await validateCollection(); // Await the validation
+    if (!isValid) {
+      return; // Exit if validation fails
+    }
+
     setIsCollectionInProgress(true);
     try {
       // Attempt the API call
       const res = await dispatch(chargeGroupPayment({ dealId: deal_id }));
 
+      // Update states based on API response
       setChargeStats(res?.payload?.deal_payment_stats);
       setIsPaymentCollectedForAllOrders(
         res?.payload?.payment_collected_for_all_orders
       );
-      // Handle success (you can process the response here if needed)
     } catch (error) {
       // Handle any errors that occur during the API call
       console.error("Error charging deal:", error);
+      setIsError(true);
+      setErrorMessage("An error occurred while processing the payment.");
     } finally {
       // This block will always run, regardless of success or failure
       setIsCollectionInProgress(false);
-      // You can add any cleanup logic or final steps here if needed
     }
   };
 
@@ -164,6 +182,13 @@ const ActiveDeal = () => {
                 </div>
               </div>
             </div>
+            {isError && (
+              <ShowCustomErrorModal
+                message={errorMessage}
+                buttonText={t("waiting_deal.got_it")}
+                onClose={() => setIsError(false)} // Reset modal state on close
+              />
+            )}
             {isPaymentCollectedForAllOrders && dealData?.orders_count !== 0 && (
               <div className="flex items-start gap-[25px] px-[18px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-greengreen-light-6 rounded-lg">
                 <div className="flex items-center gap-3 relative flex-1 grow">
