@@ -215,6 +215,13 @@ const UpdateDeal = () => {
       // Append product details
       products.forEach((product, index) => {
         Object.keys(product).forEach((key) => {
+          if (
+            product["product_id"]?.split(" ")?.length <= 1 &&
+            key == "product_id"
+          ) {
+            form.append(`products[${index}][${key}]`, product[key]);
+          }
+
           if (key !== "product_id")
             form.append(`products[${index}][${key}]`, product[key]);
         });
