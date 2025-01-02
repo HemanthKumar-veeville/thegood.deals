@@ -458,6 +458,7 @@
     "deal_ends_in": "Le deal se termine dans",
     "manage_friends": "Gérer mes proches",
     "collect_payment": "Collecter le paiement",
+    "retry_payment": "Réessayer le paiement",
     "pay_artisan": "Payer l’artisan",
     "endsIn": "fin dans {{days}} jours",
     "danger_alert": "Le paiement d’un des participants n’a pu être réalisé.",
@@ -982,6 +983,8 @@
   "artisan": {
     "cardDeal": {
       "soonOutStock": "Bientôt en rupture",
+      "expired": "Expiré",
+      "payment_pending": "Paiement en attente",
       "finished": "Terminé",
       "inStock": "En stock",
       "waiting": "En attente de l’artisan",

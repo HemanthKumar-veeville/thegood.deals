@@ -14,7 +14,7 @@ import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 
 const InviteLovedOnes = () => {
-  const { t } = useTranslation(); // Using the translation hook
+  const { t } = useTranslation();
   const [emails, setEmails] = useState([]);
   const [newEmail, setNewEmail] = useState("");
   const queryParams = new URLSearchParams(location.search);
@@ -28,10 +28,14 @@ const InviteLovedOnes = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleAddEmail = () => {
-    if (newEmail) {
+    if (newEmail && !emails.includes(newEmail)) {
       setEmails([...emails, newEmail]);
       setNewEmail("");
     }
+  };
+
+  const handleDeleteEmail = (email) => {
+    setEmails(emails.filter((e) => e !== email));
   };
 
   const handleSendInvitations = () => {
@@ -141,6 +145,22 @@ const InviteLovedOnes = () => {
           <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
             {t("inviteLovedOnes.add_loved_one")}
           </button>
+        </div>
+        <div className="flex flex-wrap gap-2 mt-4">
+          {emails.map((email, index) => (
+            <div
+              key={index}
+              className="flex items-center bg-primary-color text-white rounded-full px-4 py-2 cursor-pointer shadow-md"
+            >
+              <span className="mr-2">{email}</span>
+              <button
+                onClick={() => handleDeleteEmail(email)}
+                className="text-sm font-bold text-white hover:text-gray-300"
+              >
+                &times;
+              </button>
+            </div>
+          ))}
         </div>
         <div
           className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"

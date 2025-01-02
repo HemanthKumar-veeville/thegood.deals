@@ -458,6 +458,7 @@
     "deal_ends_in": "Deal ends in",
     "manage_friends": "Managing my friends",
     "collect_payment": "Collect payment",
+    "retry_payment": "Retry Collect payment",
     "pay_artisan": "Pay to artisan",
     "endsIn": "{{days}} days",
     "danger_alert": "The payment of one of the participants could not be made.",
@@ -982,6 +983,8 @@
   "artisan": {
     "cardDeal": {
       "soonOutStock": "Soon to be out of stock",
+      "payment_pending": "Payment Pending",
+      "expired": "Expired",
       "finished": "Finished",
       "inStock": "In stock",
       "waiting": "Waiting for the artisan",

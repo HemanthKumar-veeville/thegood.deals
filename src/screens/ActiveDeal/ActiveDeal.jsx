@@ -58,8 +58,11 @@ const ActiveDeal = () => {
   const [isPaymentCollectedForAllOrders, setIsPaymentCollectedForAllOrders] =
     useState(false);
   const [isDealPaid, setIsDealPaid] = useState(false);
+  const [isEmailSent, setIsEmailSent] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [autoRetry, setAutoRetry] = useState(false);
+  const [paymentAttempts, setPaymentAttempts] = useState(0);
 
   const handleBack = () => {
     navigate(-1);
@@ -98,6 +101,7 @@ const ActiveDeal = () => {
         res?.payload?.Deal[0]?.payment_collected_for_all_orders
       );
       setIsDealPaid(res?.payload?.Deal[0]?.is_artisan_paid);
+      setIsEmailSent(!!res?.payload?.Deal[0]?.is_email_sent);
     } catch (err) {
       console.error(err);
     }
@@ -143,6 +147,8 @@ const ActiveDeal = () => {
       setIsPaymentCollectedForAllOrders(
         res?.payload?.payment_collected_for_all_orders
       );
+      setAutoRetry(res?.payload?.Auto_retry);
+      setPaymentAttempts(res?.payload?.payment_attempts);
     } catch (error) {
       // Handle any errors that occur during the API call
       console.error("Error charging deal:", error);
@@ -293,14 +299,16 @@ const ActiveDeal = () => {
                 {dealData?.collection_location || "-"}
               </p>
             </div>
-            {!isPaymentCollectedForAllOrders && (
+            {!isPaymentCollectedForAllOrders && !autoRetry && (
               <div
                 className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
                 onClick={!isPaymentCollectedForAllOrders ? chargeDeal : null}
               >
                 <EuroCoin className="!relative !w-5 !h-5" />
                 <button className="box-border font-medium text-white text-base text-center">
-                  {t("active_deal.collect_payment")}
+                  {!isEmailSent
+                    ? t("active_deal.collect_payment")
+                    : t("active_deal.retry_payment")}
                 </button>
               </div>
             )}

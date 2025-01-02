@@ -18,6 +18,14 @@ import DiscountBadge from "../DiscountBadge";
 
 const statusBanner = {
   soon_out_stock: { text: "artisan.cardDeal.soonOutStock", color: "warning" },
+  payment_pending: {
+    text: "artisan.cardDeal.payment_pending",
+    color: "warning",
+  },
+  expired: {
+    text: "artisan.cardDeal.expired",
+    color: "warning",
+  },
   finished: { text: "artisan.cardDeal.finished", color: "success" },
   in_stock: { text: "artisan.cardDeal.inStock", color: "success" },
   waiting: { text: "artisan.cardDeal.waiting", color: "warning" },
@@ -69,6 +77,8 @@ export const CardDeal = ({
   const statusCaption = {
     soon_out_stock: t("artisan.cardDeal.endsIn", { days: daysLeft }),
     finished: t("artisan.cardDeal.dealFinished"),
+    expired: t("artisan.cardDeal.dealFinished"),
+    payment_pending: t("artisan.cardDeal.dealFinished"),
     in_stock: t("artisan.cardDeal.endsIn", { days: daysLeft }),
   };
 
