@@ -32,6 +32,7 @@ import ReadMore from "../../components/Readmore/Readmore";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import { getDealProgress } from "../../helpers/helperMethods";
+import { Helmet } from "react-helmet";
 
 export const InviteParticipants = ({
   HEADERIcon = (
@@ -113,6 +114,23 @@ export const InviteParticipants = ({
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
+      <Helmet>
+        <meta property="og:title" content={dealState?.deal_title || "Deal"} />
+        <meta
+          property="og:description"
+          content={dealState?.deal_description || "Check out this deal!"}
+        />
+        <meta
+          property="og:image"
+          content={dealState?.deal_images?.[0] || blogImage}
+        />
+        <meta property="og:url" content={window.location.href} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:image"
+          content={dealState?.deal_images?.[0] || blogImage}
+        />
+      </Helmet>
       {isError && (
         <ShowCustomErrorModal
           message={errorMessage}
