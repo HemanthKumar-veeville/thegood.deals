@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { Line } from "../../components/Line/Line";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
+import { useSelector, useDispatch } from "react-redux";
+import { getDealByDealId } from "../../redux/app/deals/dealSlice";
 
 const InviteLovedOnes = () => {
   const { t } = useTranslation();
@@ -20,12 +22,22 @@ const InviteLovedOnes = () => {
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
-  const shareLink = `https://thegood.deals/deal_details_invite?deal_id=${dealId}`;
+  const link = `https://thegood.deals/deal_details_invite?deal_id=${dealId}`;
+  const deal = useSelector((state) => state.deals.deal?.Deal[0]);
+
+  const shareLink = `
+📦 *${deal?.deal_title}*
+
+👉 *Explore the Deal Now*: 
+🔗 ${link}
+`;
+
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const dispatch = useDispatch();
 
   const handleAddEmail = () => {
     if (newEmail && !emails.includes(newEmail)) {
@@ -73,6 +85,9 @@ const InviteLovedOnes = () => {
     window.open(url, "_blank");
   };
 
+  useEffect(() => {
+    dispatch(getDealByDealId(dealId));
+  }, []);
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       {isError && (
@@ -179,7 +194,7 @@ const InviteLovedOnes = () => {
           {t("inviteLovedOnes.share_link_description")}
         </p>
         <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
-          {shareLink.slice(0, 50).split("//")[1].split("deal_id").join("")}
+          {link.slice(0, 50).split("//")[1].split("deal_id").join("")}
         </div>
         <div
           className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
