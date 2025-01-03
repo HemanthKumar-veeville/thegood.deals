@@ -1608,7 +1608,8 @@
     "copied_to_clipboard": {
       "title": "Copié...",
       "message": "Lien copié dans le presse-papier !"
-    }
+    },
+    "invite_head": "Vous êtes invités à ce good deal"
   },
   "customSuccessModal": {
     "defaultMessage": "Informations enregistrées avec succès",

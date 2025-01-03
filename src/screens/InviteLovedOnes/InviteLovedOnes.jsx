@@ -28,7 +28,7 @@ const InviteLovedOnes = () => {
   const shareLink = `
 📦 *${deal?.deal_title}*
 
-👉 *Explore the Deal Now*: 
+👉 *${t("inviteLovedOnes.invite_head")}*: 
 🔗 ${link}
 `;
 

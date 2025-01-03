@@ -1601,7 +1601,8 @@
     "copied_to_clipboard": {
       "title": "Copied...",
       "message": "Link copied to clipboard!"
-    }
+    },
+    "invite_head": "Participate in this deal"
   },
   "customSuccessModal": {
     "defaultMessage": "Information Saved Succesfully",
