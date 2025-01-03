@@ -28,13 +28,18 @@ const SignIn = ({ setIsLoading }) => {
   const errorMessage = signInForm.errorMessage; // Get the error message from Redux
   const isError = signInForm.isError;
 
-  const login = async (formData) => {
+  const login = async (formData, email) => {
     try {
       const response = await axiosInstance.post("login", formData);
       if (response?.status === 200) {
         dispatch(checkUserLoginStatus());
         dispatch(resetSignInForm()); // Clear form values after successful login
-        navigate("/");
+        console.log({ response });
+        if (response?.data?.activation !== false) {
+          navigate("/");
+        } else {
+          navigate(`/verify?email=${email}`);
+        }
       }
     } catch (error) {
       // Extract the error message correctly
@@ -62,7 +67,7 @@ const SignIn = ({ setIsLoading }) => {
       const formData = new FormData();
       formData.append("email", values.email);
       formData.append("password", values.password);
-      await login(formData);
+      await login(formData, values.email);
     },
     enableReinitialize: true, // Ensures values are persisted on re-render
   });

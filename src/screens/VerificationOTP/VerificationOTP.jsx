@@ -107,7 +107,10 @@ export const VerificationOTP = () => {
 
   const handleResendOTP = async () => {
     try {
-      const response = await axiosInstance.post("resend_code");
+      const formData = new FormData();
+      formData.append("email", email);
+
+      const response = await axiosInstance.post("resend_code", formData);
 
       if (response?.status === 200) {
         setIsSuccess(true);
