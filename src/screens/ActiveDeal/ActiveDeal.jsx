@@ -63,7 +63,14 @@ const ActiveDeal = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [autoRetry, setAutoRetry] = useState(false);
   const [paymentAttempts, setPaymentAttempts] = useState(0);
-
+  const [currentStep, setCurrentStep] = useState(2);
+  const [steps, setSteps] = useState([
+    { step: 1, bgColor: "", textColor: "" },
+    { step: 2, bgColor: "", textColor: "" },
+    { step: 3, bgColor: "", textColor: "" },
+    { step: 4, bgColor: "", textColor: "" },
+    { step: 5, bgColor: "", textColor: "" },
+  ]);
   const handleBack = () => {
     navigate(-1);
   };
@@ -102,6 +109,7 @@ const ActiveDeal = () => {
       );
       setIsDealPaid(res?.payload?.Deal[0]?.is_artisan_paid);
       setIsEmailSent(!!res?.payload?.Deal[0]?.is_email_sent);
+      setSteps(updateSteps(steps, currentStep));
     } catch (err) {
       console.error(err);
     }
@@ -110,6 +118,22 @@ const ActiveDeal = () => {
   useEffect(() => {
     fetchDeal();
   }, []);
+
+  useEffect(() => {
+    getDealProgress(dealData?.products || []) >= 100 ? setCurrentStep(3) : null;
+  }, [dealData?.products]);
+
+  useEffect(() => {
+    isPaymentCollectedForAllOrders && setCurrentStep(4);
+  }, [isPaymentCollectedForAllOrders]);
+
+  useEffect(() => {
+    dealData?.deal_status === "finished" ? setCurrentStep(5) : null;
+  }, [dealData?.deal_status]);
+
+  useEffect(() => {
+    setSteps(updateSteps(steps, currentStep));
+  }, [currentStep]);
 
   const handleInviteLovedOnes = () => {
     navigate(
@@ -123,7 +147,7 @@ const ActiveDeal = () => {
 
   const validateCollection = async () => {
     const progress = await getDealProgress(dealData?.products || []);
-    if (progress !== 100) {
+    if (progress < 100) {
       setIsError(true);
       setErrorMessage(t("active_deal.not_fullfilled"));
       return false; // Validation failed
@@ -159,6 +183,30 @@ const ActiveDeal = () => {
       setIsCollectionInProgress(false);
     }
   };
+
+  function updateSteps(steps, currentStep) {
+    return steps.map((step) => {
+      if (step.step < currentStep) {
+        return {
+          ...step,
+          bgColor: "bg-primary-color",
+          textColor: "text-whitewhite",
+        };
+      } else if (step.step === currentStep) {
+        return {
+          ...step,
+          bgColor: "bg-whitewhite border-2 border-solid border-primary-color",
+          textColor: "text-primary-color",
+        };
+      } else {
+        return {
+          ...step,
+          bgColor: "bg-graygray border-2 border-solid border-stroke",
+          textColor: "text-primary-color",
+        };
+      }
+    });
+  }
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
@@ -492,34 +540,7 @@ const ActiveDeal = () => {
           </div>
           <Line />
           <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-            {[
-              {
-                step: 1,
-                bgColor: "bg-primary-color",
-                textColor: "text-whitewhite",
-              },
-              {
-                step: 2,
-                bgColor:
-                  "bg-whitewhite border-2 border-solid border-primary-color",
-                textColor: "text-primary-color",
-              },
-              {
-                step: 3,
-                bgColor: "bg-graygray border-2 border-solid border-stroke",
-                textColor: "text-primary-color",
-              },
-              {
-                step: 4,
-                bgColor: "bg-graygray border-2 border-solid border-stroke",
-                textColor: "text-primary-color",
-              },
-              {
-                step: 5,
-                bgColor: "bg-graygray border-2 border-solid border-stroke",
-                textColor: "text-primary-color",
-              },
-            ].map(({ step, bgColor, textColor }) => (
+            {steps.map(({ step, bgColor, textColor }) => (
               <div
                 className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto] mr-[-24.00px]"
                 key={step}

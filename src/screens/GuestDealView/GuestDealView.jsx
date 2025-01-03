@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
@@ -36,6 +36,14 @@ const GuestDealView = () => {
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
+  const [currentStep, setCurrentStep] = useState(2);
+  const [steps, setSteps] = useState([
+    { step: 1, bgColor: "", textColor: "" },
+    { step: 2, bgColor: "", textColor: "" },
+    { step: 3, bgColor: "", textColor: "" },
+    { step: 4, bgColor: "", textColor: "" },
+    { step: 5, bgColor: "", textColor: "" },
+  ]);
 
   const handleBack = () => {
     navigate(-1);
@@ -53,8 +61,33 @@ const GuestDealView = () => {
     draft: { text: t("status.draft"), color: "info" },
   };
 
+  function updateSteps(steps, currentStep) {
+    return steps.map((step) => {
+      if (step.step < currentStep) {
+        return {
+          ...step,
+          bgColor: "bg-primary-color",
+          textColor: "text-whitewhite",
+        };
+      } else if (step.step === currentStep) {
+        return {
+          ...step,
+          bgColor: "bg-whitewhite border-2 border-solid border-primary-color",
+          textColor: "text-primary-color",
+        };
+      } else {
+        return {
+          ...step,
+          bgColor: "bg-graygray border-2 border-solid border-stroke",
+          textColor: "text-primary-color",
+        };
+      }
+    });
+  }
+
   useEffect(() => {
     dispatch(fetchDealDetailsByDealId(deal_id));
+    setSteps(updateSteps(steps, currentStep));
   }, []);
 
   const handleOrder = () => {
@@ -62,6 +95,18 @@ const GuestDealView = () => {
       "/admin-view-deal?deal_id=" + deal_id + "&deal_type=" + is_creator
     );
   };
+
+  useEffect(() => {
+    getDealProgress(dealData?.products || []) >= 100 ? setCurrentStep(3) : null;
+  }, [dealData?.products]);
+
+  useEffect(() => {
+    dealData?.status === "finished" ? setCurrentStep(5) : null;
+  }, [dealData?.status]);
+
+  useEffect(() => {
+    setSteps(updateSteps(steps, currentStep));
+  }, [currentStep]);
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
@@ -200,34 +245,7 @@ const GuestDealView = () => {
           src={Line69}
         />
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-          {[
-            {
-              step: 1,
-              bgColor: "bg-primary-color",
-              textColor: "text-whitewhite",
-            },
-            {
-              step: 2,
-              bgColor:
-                "bg-whitewhite border-2 border-solid border-primary-color",
-              textColor: "text-primary-color",
-            },
-            {
-              step: 3,
-              bgColor: "bg-graygray border-2 border-solid border-stroke",
-              textColor: "text-primary-color",
-            },
-            {
-              step: 4,
-              bgColor: "bg-graygray border-2 border-solid border-stroke",
-              textColor: "text-primary-color",
-            },
-            {
-              step: 5,
-              bgColor: "bg-graygray border-2 border-solid border-stroke",
-              textColor: "text-primary-color",
-            },
-          ].map(({ step, bgColor, textColor }) => (
+          {steps.map(({ step, bgColor, textColor }) => (
             <div
               className="inline-flex items-center justify-center gap-2.5 relative flex-[0_0_auto] mr-[-24.00px]"
               key={step}
