@@ -155,12 +155,12 @@ const SettingsPage = () => {
           </div>
           <div
             className={`relative w-full  ${
-              disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+              !disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
             }`}
           >
             <div
               className={`flex h-[54px] items-center justify-between px-0 py-[15px] relative self-stretch w-full border-b [border-bottom-style:solid] border-stroke`}
-              onClick={!disabled ? handleDeleteAccount : undefined} // Disable click if disabled
+              onClick={handleDeleteAccount}
             >
               <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
                 <CrossCircle className="!relative !w-[18px] !h-[18px]" />

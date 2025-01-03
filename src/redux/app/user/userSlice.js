@@ -60,6 +60,19 @@ export const forgotPassword = createAsyncThunk(
   }
 );
 
+// Async thunk for requesting a password reset link
+export const deleteAccount = createAsyncThunk(
+  "user/deleteAccount",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/deactivate");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // Async thunk for requesting a password recovery link (duplicate functionality, so combining with forgotPassword)
 export const requestPasswordRecoveryLink = forgotPassword;
 
@@ -167,6 +180,18 @@ const userSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(forgotPassword.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle delete account
+      .addCase(deleteAccount.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(deleteAccount.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(deleteAccount.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })

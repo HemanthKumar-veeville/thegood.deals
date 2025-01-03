@@ -3,17 +3,25 @@ import { ArrowLeft } from "../icons/ArrowLeft/ArrowLeft";
 import { Button } from "../components/Button/Button";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteAccount } from "../redux/app/user/userSlice";
 
 function DeleteAccount() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleBack = () => {
     navigate(-1);
   };
 
-  const handleDelete = () => {
-    navigate("/delete-account-message");
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteAccount()).unwrap();
+      navigate("/delete-account-message");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
