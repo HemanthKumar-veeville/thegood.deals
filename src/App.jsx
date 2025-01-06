@@ -23,6 +23,7 @@ import { NewsLetterScreen } from "./screens/NewsLetterScreen/NewsLetterScreen";
 import UpdateDeal from "./screens/UpdateDeal/UpdateDeal";
 import DealWallet from "./screens/DealWallet/DealWallet";
 import { STRIPE_PK } from "./config";
+import RequestPendingDeal from "./screens/RequestPendingDeal/RequestPendingDeal";
 
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
@@ -260,6 +261,14 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<WaitingDeal />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/request-pending-deal",
+      element: (
+        <Layout>
+          <ProtectedRoute element={<RequestPendingDeal />} />
         </Layout>
       ),
     },

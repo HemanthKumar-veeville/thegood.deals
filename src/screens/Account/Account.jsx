@@ -160,9 +160,11 @@ const Account = ({ isRequestSent, dealId }) => {
         ? "/admin-waiting-deal"
         : activeTab === "created"
         ? "/admin-active-deal"
-        : !deal?.is_order_placed
-        ? "/admin-view-deal"
-        : "/guest-deal-view";
+        : deal?.invite_accepted
+        ? !deal?.is_order_placed
+          ? "/admin-view-deal"
+          : "/guest-deal-view"
+        : "/request-pending-deal";
 
     navigate(`${route}?deal_id=${deal.deal_id}&is_creator=${deal.is_creator}`, {
       state: { deal },
@@ -296,7 +298,11 @@ const Account = ({ isRequestSent, dealId }) => {
             >
               <CardDeal
                 badgesColor="success"
-                badgesText1={deal.deal_status || "No Status"}
+                badgesText1={
+                  deal.invite_accepted === false
+                    ? "Request Pending"
+                    : deal.deal_status || "No Status"
+                }
                 text={deal.deal_title || "No Title"}
                 text1={deal.deal_status || "No Status"}
                 participantsCount={deal.deal_participants_count || 0}

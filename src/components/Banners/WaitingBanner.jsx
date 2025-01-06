@@ -3,7 +3,7 @@ import { SuccessAlert } from "../../components/WarningAlert";
 import { Warning1 } from "../../icons/Warning1";
 import { useTranslation } from "react-i18next"; // Import useTranslation hook
 
-export const WaitingBanner = () => {
+export const WaitingBanner = ({ text }) => {
   const { t } = useTranslation(); // Initialize translation hook
 
   return (
@@ -19,7 +19,7 @@ export const WaitingBanner = () => {
         />
       }
       style="three"
-      text={t("waitingBanner.waitingMessage")}
+      text={text || t("waitingBanner.waitingMessage")}
     />
   );
 };
