@@ -299,8 +299,8 @@ const Account = ({ isRequestSent, dealId }) => {
               <CardDeal
                 badgesColor="success"
                 badgesText1={
-                  deal.invite_accepted === false
-                    ? "Request Pending"
+                  deal?.invite_accepted === false
+                    ? t("create_deal.invite_pending")
                     : deal.deal_status || "No Status"
                 }
                 text={deal.deal_title || "No Title"}
@@ -322,6 +322,9 @@ const Account = ({ isRequestSent, dealId }) => {
                 }
                 organizer={deal?.organiser_name || "No Organizer"}
                 discount={getMaxDiscount(deal?.products || [])}
+                isInvitePending={
+                  "invite_accepted" in deal ? !deal?.invite_accepted : false
+                }
               />
             </div>
           ))}

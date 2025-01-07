@@ -88,10 +88,29 @@ export const InviteParticipants = ({
   const handleAcceptRequest = async () => {
     try {
       const response = await dispatch(createRequest(dealId)).unwrap();
-      if (response?.detail === "Request created successfully") {
-        setIsSuccess(true);
-        setIsRequestSent(true);
-      } else if (response?.is_user_logged_in === false) {
+
+      switch (response?.invite_status) {
+        case "creator":
+          navigate(`/admin-active-deal?deal_id=${dealId}&is_creator=${true}`, {
+            state: { deal },
+          });
+          break;
+        case "pending":
+          navigate(`/`, {
+            state: { deal },
+          });
+          break;
+        case "accept":
+          navigate(`/guest-deal-view?deal_id=${dealId}&is_creator=${false}`, {
+            state: { deal },
+          });
+          break;
+        case "sent":
+          setIsSuccess(true);
+          setIsRequestSent(true);
+      }
+
+      if (response?.is_user_logged_in === false) {
         navigate("/auth?signin");
       }
     } catch (error) {

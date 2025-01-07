@@ -411,7 +411,8 @@
     "error_manufacturer_info_required": "Manufacturer Info Required!",
     "error_deal_expiration_required": "Deal Expiration Required!",
     "error_accept_conditions_required": "Accept Conditions Required!",
-    "error_products_required": "Products Required"
+    "error_products_required": "Products Required",
+    "invite_pending": "Request Pending"
   },
   "inform_craftsman": {
     "confirm_deal_title": "Confirm the deal with the artisan",

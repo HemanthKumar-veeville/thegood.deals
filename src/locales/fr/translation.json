@@ -411,7 +411,8 @@
     "error_manufacturer_info_required": "Informations sur l'artisan requises !",
     "error_deal_expiration_required": "Date d'expiration de l'offre requise !",
     "error_accept_conditions_required": "Acceptation des conditions requise !",
-    "error_products_required": "Produits requis !"
+    "error_products_required": "Produits requis !",
+    "invite_pending": "Demande en attente"
   },
   "inform_craftsman": {
     "confirm_deal_title": "Confirmer le good deal avec l’artisan",

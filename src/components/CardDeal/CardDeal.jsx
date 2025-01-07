@@ -45,6 +45,7 @@ export const CardDeal = ({
   badgesText = statusBanner[text1]?.text,
   badgesDivClassName,
   participantsCount,
+  isInvitePending,
   override = (
     <StyleTypePrimary
       className="!self-stretch !w-full !relative"
@@ -131,11 +132,13 @@ export const CardDeal = ({
       </div>
       <Badges
         className="!left-[15px] !absolute !top-[15px] !font-semibold"
-        color={statusBanner[text1]?.color}
+        color={isInvitePending ? "warning" : statusBanner[text1]?.color}
         divClassName={badgesDivClassName}
         round="semi-round"
         state="duo-tone"
-        text1={t(badgesText)}
+        text1={
+          isInvitePending ? t("create_deal.invite_pending") : t(badgesText)
+        }
         text2={
           badgesText1 === "in_stock" || badgesText1 === "finished"
             ? t(statusBanner[badgesText1]?.text)
