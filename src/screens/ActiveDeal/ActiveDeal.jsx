@@ -434,14 +434,14 @@ const ActiveDeal = () => {
               <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] font-bold text-darkdark text-2xl leading-[22px] [font-family:'Inter',Helvetica] tracking-[0] whitespace-nowrap">
                   {t("active_deal.orders_count", {
-                    count: dealData?.orders_count,
+                    count: dealData?.ordered_count,
                   })}
                 </div>
                 <div className="relative w-[124px] h-[22px]">
                   <div className="inline-flex items-center gap-1 relative">
                     <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-greengreen text-sm tracking-[0] leading-[22px] whitespace-nowrap">
                       {t("active_deal.orders_available", {
-                        available: dealData?.participants_count,
+                        available: dealData?.total_product_count,
                       })}
                     </div>
                   </div>
@@ -453,7 +453,13 @@ const ActiveDeal = () => {
             <div className="relative w-full h-[7px] mt-4 bg-gray-300 rounded-full">
               <div
                 className="absolute h-[7px] bg-greengreen rounded-full"
-                style={{ width: `${(0 / 20) * 100}%` }}
+                style={{
+                  width: `${
+                    (dealData?.ordered_count / dealData?.total_product_count) *
+                    100
+                  }%`,
+                  maxWidth: "100%",
+                }}
               ></div>
             </div>
           </div>
@@ -480,13 +486,13 @@ const ActiveDeal = () => {
               </div>
               <div className="inline-flex items-end gap-[5px] relative flex-[0_0_auto]">
                 <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-darkdark text-2xl tracking-[0] leading-[22px] whitespace-nowrap">
-                  {`${dealData?.current_amount || 0} €`}
+                  {`${dealData?.ordered_cost || 0} €`}
                 </div>
                 <div className="w-[67px] relative h-[22px]">
                   <div className="inline-flex items-center gap-1 relative">
                     <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-purplepurple text-sm tracking-[0] leading-[22px] whitespace-nowrap">
                       {t("active_deal.amount_target", {
-                        target: dealData?.orders_count * dealData?.deal_price,
+                        target: dealData?.overall_cost,
                       })}
                     </div>
                   </div>
@@ -500,9 +506,9 @@ const ActiveDeal = () => {
                 className="absolute h-[7px] bg-purplepurple rounded-full"
                 style={{
                   width: `${
-                    (dealData?.current_amount ||
-                      0 / (dealData?.orders_count * dealData?.deal_price)) * 100
+                    (dealData?.ordered_cost / dealData?.overall_cost) * 100
                   }%`,
+                  maxWidth: "100%",
                 }}
               ></div>
             </div>
