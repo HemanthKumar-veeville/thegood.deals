@@ -168,6 +168,20 @@ export const updateDealByDealId = createAsyncThunk(
   }
 );
 
+export const updateOrderConfirmation = createAsyncThunk(
+  "deals/updateOrderConfirmation",
+  async (dealId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(
+        `/deals/${dealId}/confirm_order`
+      );
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const dealSlice = createSlice({
   name: "deals",
   initialState,
@@ -252,6 +266,16 @@ const dealSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(addNewDeal.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(updateOrderConfirmation.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateOrderConfirmation.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(updateOrderConfirmation.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })

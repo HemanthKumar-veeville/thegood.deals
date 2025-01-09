@@ -39,6 +39,9 @@ const InformToCraftsMan = loadable(() =>
 const ThanksToAdmin = loadable(() =>
   import("./screens/ThanksToAdmin/ThanksToAdmin")
 );
+const ThanksToArtisan = loadable(() =>
+  import("./screens/ThanksToArtisan/ThanksToArtisan")
+);
 const Message = loadable(() => import("./screens/Message/Message"));
 const ActiveDeal = loadable(() => import("./screens/ActiveDeal/ActiveDeal"));
 const DraftDeal = loadable(() => import("./screens/DraftDeal/DraftDeal"));
@@ -229,6 +232,14 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<ThanksToAdmin />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/thanks-order-confirmed",
+      element: (
+        <Layout>
+          <ProtectedRoute element={<ThanksToArtisan />} />
         </Layout>
       ),
     },
