@@ -22,7 +22,6 @@ import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { RatingStar } from "../../components/RatingStar";
 import { Line } from "../../components/Line/Line";
 import { Send1 } from "../../icons/Send1";
-import { getDealProgress } from "../../helpers/helperMethods";
 import { UserAlt } from "../../icons/UserAlt";
 
 const GuestDealView = () => {
@@ -97,12 +96,16 @@ const GuestDealView = () => {
   };
 
   useEffect(() => {
-    getDealProgress(dealData?.products || []) >= 100 ? setCurrentStep(3) : null;
-  }, [dealData?.products]);
+    dealData?.progress >= 100 ? setCurrentStep(4) : null;
+  }, [dealData?.progress]);
 
   useEffect(() => {
-    dealData?.status === "finished" ? setCurrentStep(5) : null;
-  }, [dealData?.status]);
+    dealData?.is_email_sent == true ? setCurrentStep(5) : null;
+  }, [dealData?.is_email_sent]);
+
+  useEffect(() => {
+    dealData?.order_confirmed === true ? setCurrentStep(6) : null;
+  }, [dealData?.order_confirmed]);
 
   useEffect(() => {
     setSteps(updateSteps(steps, currentStep));
@@ -161,13 +164,9 @@ const GuestDealView = () => {
             {dealData?.title || "-"}
           </div>
           {location?.state?.deal?.dealStatus === "soon_out_stock" ? (
-            <ProgressBarYellow
-              percentage={getDealProgress(dealData?.products || [])}
-            />
+            <ProgressBarYellow percentage={dealData?.progress} />
           ) : (
-            <ProgressBarGreen
-              percentage={getDealProgress(dealData?.products || [])}
-            />
+            <ProgressBarGreen percentage={dealData?.progress} />
           )}
           <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">

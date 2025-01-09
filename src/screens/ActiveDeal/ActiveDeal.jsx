@@ -39,7 +39,6 @@ import { CheckmarkCircle } from "../../icons/CheckmarkCircle";
 import { Line } from "../../components/Line/Line";
 import axios from "axios";
 import { Send1 } from "../../icons/Send1";
-import { getDealProgress, getMaxDiscount } from "../../helpers/helperMethods";
 import DiscountBadge from "../../components/DiscountBadge";
 
 const ActiveDeal = () => {
@@ -120,16 +119,16 @@ const ActiveDeal = () => {
   }, []);
 
   useEffect(() => {
-    getDealProgress(dealData?.products || []) >= 100 ? setCurrentStep(3) : null;
-  }, [dealData?.products]);
+    dealData?.deal_progress_percentage >= 100 ? setCurrentStep(4) : null;
+  }, [dealData?.deal_progress_percentage]);
 
   useEffect(() => {
-    isPaymentCollectedForAllOrders && setCurrentStep(4);
-  }, [isPaymentCollectedForAllOrders]);
+    dealData?.is_email_sent === true ? setCurrentStep(5) : null;
+  }, [dealData?.is_email_sent]);
 
   useEffect(() => {
-    dealData?.deal_status === "finished" ? setCurrentStep(5) : null;
-  }, [dealData?.deal_status]);
+    dealData?.order_confirmed === true ? setCurrentStep(6) : null;
+  }, [dealData?.order_confirmed]);
 
   useEffect(() => {
     setSteps(updateSteps(steps, currentStep));
@@ -146,7 +145,7 @@ const ActiveDeal = () => {
   };
 
   const validateCollection = async () => {
-    const progress = await getDealProgress(dealData?.products || []);
+    const progress = dealData?.deal_progress_percentage;
     if (progress < 100) {
       setIsError(true);
       setErrorMessage(t("active_deal.not_fullfilled"));
@@ -309,11 +308,11 @@ const ActiveDeal = () => {
             </div>
             {location?.state?.deal?.dealStatus === "soon_out_stock" ? (
               <ProgressBarYellow
-                percentage={getDealProgress(dealData?.products || [])}
+                percentage={dealData?.deal_progress_percentage}
               />
             ) : (
               <ProgressBarGreen
-                percentage={getDealProgress(dealData?.products || [])}
+                percentage={dealData?.deal_progress_percentage}
               />
             )}
             <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
