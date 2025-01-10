@@ -9,6 +9,7 @@ import { Google } from "../../icons/Google/Google.jsx";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../helpers/helperMethods.js";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   checkUserLoginStatus,
   updateSignInForm,
@@ -23,7 +24,7 @@ const SignIn = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const signInForm = useSelector((state) => state.user.signInForm);
   const errorMessage = signInForm.errorMessage; // Get the error message from Redux
   const isError = signInForm.isError;
@@ -44,6 +45,7 @@ const SignIn = ({ setIsLoading }) => {
     } catch (error) {
       // Extract the error message correctly
       const errorMsg =
+        error.response?.data?.[i18n.language] ||
         error.response?.data?.detail || // Server error response
         error.message || // General error message
         t("login.error_message"); // Fallback to a default message
