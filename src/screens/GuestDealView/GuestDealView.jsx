@@ -151,14 +151,24 @@ const GuestDealView = () => {
               </p>
             </div>
           </div>
-          <div onClick={handleOrder}>
+          <div
+            onClick={
+              dealData?.status !== "expired" && dealData?.status !== "finished"
+                ? handleOrder
+                : null
+            }
+          >
             <ImageSlider
               pictures={dealData?.deal_images || [blogImage]}
               products={dealData?.products || []}
             />
           </div>
           <div
-            onClick={handleOrder}
+            onClick={
+              dealData?.status !== "expired" && dealData?.status !== "finished"
+                ? handleOrder
+                : null
+            }
             className="relative self-stretch [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]"
           >
             {dealData?.title || "-"}
@@ -218,16 +228,19 @@ const GuestDealView = () => {
               </div>
             </div>
           </div>
-          <div
-            className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
-            onClick={handleOrder}
-          >
-            <Send1 className="!relative !w-5 !h-5" color="white" />
+          {dealData?.status !== "expired" &&
+            dealData?.status !== "finished" && (
+              <div
+                className="gap-2.5 bg-primary-color flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
+                onClick={handleOrder}
+              >
+                <Send1 className="!relative !w-5 !h-5" color="white" />
 
-            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-              {t("active_deal.place_order")}
-            </button>
-          </div>
+                <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                  {t("active_deal.place_order")}
+                </button>
+              </div>
+            )}
           <div
             className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer"
             onClick={handleMyOrders}

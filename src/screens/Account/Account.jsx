@@ -162,7 +162,9 @@ const Account = ({ isRequestSent, dealId }) => {
         ? "/admin-active-deal"
         : deal?.invite_accepted
         ? !deal?.is_order_placed
-          ? "/admin-view-deal"
+          ? deal?.deal_status !== "expired" && deal?.deal_status !== "finished"
+            ? "/admin-view-deal"
+            : "/guest-deal-view"
           : "/guest-deal-view"
         : "/request-pending-deal";
 
