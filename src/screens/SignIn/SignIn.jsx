@@ -94,7 +94,7 @@ const SignIn = ({ setIsLoading }) => {
     try {
       // Directly call the backend API route
       const res = await axiosInstance("/login/google");
-
+      console.log({ res });
       // Handle success (store token, navigate, etc.)
 
       // You might want to store the received token or handle navigation here
