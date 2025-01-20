@@ -14,7 +14,7 @@ const LostPassword = () => {
   const [loading, setLoading] = useState(false); // State to manage loading
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isWarning, setIsWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [isError, setIsError] = useState(false);
@@ -65,7 +65,10 @@ const LostPassword = () => {
       setEmail(""); // Clear the email input
       navigate("/check-email"); // Navigate to the check-email page
     } catch (err) {
-      const errorMessage = err?.detail || t("lost_password.errors.send_error");
+      const errorMessage =
+        err?.[i18n.language] ||
+        err?.detail ||
+        t("lost_password.errors.send_error");
       setErrorMessage(errorMessage);
       setIsError(true);
     } finally {

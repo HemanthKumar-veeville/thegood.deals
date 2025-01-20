@@ -254,11 +254,14 @@ export const SignUp = ({ setIsLoading }) => {
         }
       } catch (error) {
         setIsError(true);
-
+        console.log({ error });
         // Display SweetAlert with error message
         Swal.fire({
           title: "Error!",
-          text: error?.response?.data?.detail || t("signup.errors.error_desc"),
+          text:
+            error?.response?.data?.[i18n.language] ||
+            error?.response?.data?.detail ||
+            t("signup.errors.error_desc"),
           icon: "error",
           confirmButtonText: "OK",
         });
