@@ -6,10 +6,6 @@ import { Provider } from "react-redux";
 import store from "./redux/app/store.js";
 import "./i18n";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
-import { initializeErrorLogging } from "./helpers/errorLogger.js";
-
-// Initialize error logging
-initializeErrorLogging();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>

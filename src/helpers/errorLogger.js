@@ -83,8 +83,3 @@ function setupGlobalErrorHandlers() {
     });
   });
 }
-
-export function initializeErrorLogging() {
-  setupGlobalErrorHandlers();
-  setupAxiosInterceptors();
-}
