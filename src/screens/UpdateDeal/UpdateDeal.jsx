@@ -193,7 +193,6 @@ const UpdateDeal = () => {
       form.append("artisan_information", formData.manufacturerInfo);
       form.append("deal_expiration_date", formData.dealExpiration);
       form.append("terms_accepted", formData.acceptConditions);
-      form.append("deal_status", isProductUpdated ? 1 : 4);
       form.append("delivery_cost", formData.deliveryCost);
       form.append(
         "existing_images",
@@ -232,11 +231,7 @@ const UpdateDeal = () => {
         updateDealByDealId({ dealId, updatedDeal: form })
       ).unwrap();
 
-      !isDraftDeal
-        ? isProductUpdated
-          ? navigate(`/inform-deal?id=${dealId}`)
-          : navigate(-1)
-        : navigate(`/inform-deal?id=${dealId}`);
+      navigate(-1);
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);

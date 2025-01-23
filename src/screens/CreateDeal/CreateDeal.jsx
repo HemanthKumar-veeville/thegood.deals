@@ -213,9 +213,7 @@ const CreateDeal = () => {
 
       // Dispatch action to add a new deal
       const resultAction = await dispatch(addNewDeal(form)).unwrap();
-      const dealId = resultAction.deal_id;
-
-      navigate(`/inform-deal?id=${dealId}`);
+      navigate("/thanks-admin");
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
