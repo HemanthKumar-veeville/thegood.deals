@@ -17,10 +17,10 @@ const BankingInfo = ({ label, placeholder, onChange, type, info }) => {
   };
 
   const handleChange = (e) => {
-    onChange(type, e);
+    onChange(e.target.value);
     setValue(e.target.value);
   };
-
+  console.log({ info });
   return (
     <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke">
       <div>

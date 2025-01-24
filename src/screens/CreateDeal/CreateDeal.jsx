@@ -21,6 +21,7 @@ import {
   getDealByDealId,
   updateDealForm,
   updateTitle,
+  updateIban,
   updateImages,
 } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
@@ -35,6 +36,7 @@ const CreateDeal = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const dealForm = useSelector((state) => state.deals.dealForm);
   const dealTitle = useSelector((state) => state.deals.title);
+  const dealIban = useSelector((state) => state.deals.iban);
   const [productUnderEdit, setProductUnderEdit] = useState(null);
   const [formErrors, setFormErrors] = useState({}); // Track validation errors
 
@@ -53,6 +55,7 @@ const CreateDeal = () => {
   const [products, setProducts] = useState([]);
   const [addMode, setAddMode] = useState(true);
   const [title, setTitle] = useState(dealTitle);
+  const [iban, setIban] = useState(dealIban || "");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(location.search);
@@ -112,6 +115,11 @@ const CreateDeal = () => {
       setIsError(true);
       errors.title = t("create_deal.error_title_required");
       setErrorMessage(t("create_deal.error_title_required"));
+    }
+    if (!iban.trim()) {
+      setIsError(true);
+      errors.iban = t("create_deal.error_iban_required");
+      setErrorMessage(t("create_deal.error_iban_required"));
     }
     if (!formData.description?.trim()) {
       setIsError(true);
@@ -182,6 +190,7 @@ const CreateDeal = () => {
       // Create FormData object and append form data
       const form = new FormData();
       form.append("title", title);
+      form.append("iban", iban);
       form.append("description", formData.description);
       form.append("collection_location", formData.collectionLocation);
       form.append("collection_date", formData.collectionDate);
@@ -233,7 +242,7 @@ const CreateDeal = () => {
 
           if (dealData) {
             setTitle(dealData.deal_title);
-
+            setIban(dealData.iban);
             setFormData({
               description: dealData.description,
               collectionDate:
@@ -268,8 +277,9 @@ const CreateDeal = () => {
 
   useEffect(() => {
     dispatch(updateTitle(title));
+    dispatch(updateIban(iban));
     dispatch(updateDealForm(formData));
-  }, [formData, title]);
+  }, [formData, title, iban]);
 
   const onEdit = (productToBeEdited) => {
     setAddMode(true);
@@ -400,6 +410,15 @@ const CreateDeal = () => {
                 state="default"
               />
             </div>
+            <Line />
+            <div className="relative w-fit [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
+              {t("create_deal.iban_label")}
+            </div>
+            <BankingInfo
+              placeholder={t("create_deal.iban_placeholder")}
+              onChange={setIban}
+              info={iban}
+            />
             <Line />
             <DealExpiration />
             <div className="w-full">

@@ -20,7 +20,9 @@ const ThanksToAdmin = () => {
           {t("thanks_to_admin.thanks_message")} {/* THANKS ! . 🎉 */}
         </div>
         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
-          {t("thanks_to_admin.confirmation_message")}
+          {/* {t("thanks_to_admin.confirmation_message")} */}
+          Your deal is created, don't forget to inform the artisan with the
+          email you received
           {/* Once the deal is confirmed by the artisan, we will notify you by email. */}
         </p>
         <Line />

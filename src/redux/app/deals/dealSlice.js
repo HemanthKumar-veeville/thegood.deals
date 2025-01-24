@@ -192,6 +192,9 @@ const dealSlice = createSlice({
     updateTitle: (state, action) => {
       state.title = action.payload;
     },
+    updateIban: (state, action) => {
+      state.iban = action.payload;
+    },
     updateImages: (state, action) => {
       state.images = action.payload;
     },
@@ -317,5 +320,6 @@ const dealSlice = createSlice({
   },
 });
 
-export const { updateDealForm, updateTitle, updateImages } = dealSlice.actions;
+export const { updateDealForm, updateTitle, updateImages, updateIban } =
+  dealSlice.actions;
 export default dealSlice.reducer;
