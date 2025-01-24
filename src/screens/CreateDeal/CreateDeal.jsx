@@ -190,7 +190,7 @@ const CreateDeal = () => {
       // Create FormData object and append form data
       const form = new FormData();
       form.append("title", title);
-      form.append("organizer_iban", iban);
+      form.append("organiser_iban", iban);
       form.append("description", formData.description);
       form.append("collection_location", formData.collectionLocation);
       form.append("collection_date", formData.collectionDate);
