@@ -31,7 +31,7 @@ import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { Line } from "../../components/Line/Line";
 
 const CreateDeal = () => {
-  const { t } = useTranslation(); // Initialize translation hook
+  const { t, i18n } = useTranslation(); // Initialize translation hook
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const dealForm = useSelector((state) => state.deals.dealForm);
@@ -226,7 +226,10 @@ const CreateDeal = () => {
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
-      setErrorMessage(err?.detail || t("create_deal.error_message"));
+      console.log({ deal_err: err });
+      setErrorMessage(
+        err?.[i18n.language] || err?.detail || t("create_deal.error_message")
+      );
     } finally {
       setLoading(false); // Set loading to false after the API call
     }
