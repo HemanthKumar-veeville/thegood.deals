@@ -20,10 +20,9 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
     };
 
     ws.current.onmessage = (event) => {
-      const newMessage = event.data;
-      console.log({ newMessage });
-      console.log({ newMessage: JSON.parse(newMessage) });
-      setMessages((prevMessages) => [...prevMessages, { content: newMessage }]);
+      const newMessage = JSON.parse(event.data);
+
+      setMessages((prevMessages) => [...prevMessages, ...newMessage]);
     };
 
     ws.current.onerror = (error) => {
@@ -64,7 +63,7 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
       setNewMessage("");
     }
   };
-
+  console.log({ messages });
   return (
     <div className="flex flex-col w-full bg-white rounded-lg shadow-sm">
       {/* Header */}
@@ -122,22 +121,22 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
             <div
               key={index}
               className={`flex items-start gap-2 mb-4 ${
-                message.senderId === currentUserId
+                message?.sender?.role === "You"
                   ? "flex-row-reverse"
                   : "flex-row"
               }`}
             >
               {/* Profile Picture */}
               <div className="w-8 h-8 rounded-full bg-primary-background flex-shrink-0 overflow-hidden">
-                {message.profilePic ? (
+                {message?.sender?.profile_image ? (
                   <img
-                    src={message.profilePic}
-                    alt={message.senderName}
+                    src={message?.sender?.profile_image}
+                    alt={message?.sender?.name}
                     className="w-full h-full object-cover"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-[#E7E7E7] text-[#637381] text-sm font-medium">
-                    {message.senderName?.charAt(0)}
+                    {message?.sender?.name?.charAt(0)}
                   </div>
                 )}
               </div>
@@ -145,26 +144,33 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
               {/* Message Content */}
               <div
                 className={`relative max-w-[70%] px-4 py-3 ${
-                  message.senderId === currentUserId
+                  message?.sender?.role === "You"
                     ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
                     : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
                 }`}
               >
                 <div
                   className={`text-sm font-medium mb-1 ${
-                    message.senderId === currentUserId
+                    message?.sender?.role === "You"
                       ? "text-white"
                       : "text-[#1B4F4A]"
                   }`}
                 >
-                  {message.senderName} • {message.role || "Participant"}
+                  {message?.sender?.role !== "You" && message?.sender?.name && (
+                    <>
+                      {message?.sender?.name}
+                      {message?.sender?.role !== "You"
+                        ? `• ${message?.sender?.role}`
+                        : ""}
+                    </>
+                  )}
                 </div>
                 <div className="text-[15px] break-words leading-[22px]">
-                  {message.content}
+                  {message.message}
                 </div>
                 <div
                   className={`text-[13px] mt-1 ${
-                    message.senderId === currentUserId
+                    message?.sender?.role === "You"
                       ? "text-white/70"
                       : "text-[#637381]"
                   }`}

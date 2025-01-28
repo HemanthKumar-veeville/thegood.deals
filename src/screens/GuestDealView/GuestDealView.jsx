@@ -287,7 +287,7 @@ const GuestDealView = () => {
         {/* Add Chat component */}
 
         <Chat
-          messages={dummyMessages}
+          messages={[]}
           currentUserId={currentUserId} // Replace with actual user ID from your auth system
           dealId={deal_id}
         />

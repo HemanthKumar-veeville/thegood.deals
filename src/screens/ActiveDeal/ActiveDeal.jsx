@@ -588,11 +588,7 @@ const ActiveDeal = () => {
             </div>
           </div>
           <Line />
-          <Chat
-            messages={dummyMessages}
-            currentUserId={currentUserId}
-            dealId={deal_id}
-          />
+          <Chat messages={[]} currentUserId={currentUserId} dealId={deal_id} />
           <Line />
           <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
             {steps.map(({ step, bgColor, textColor }) => (
