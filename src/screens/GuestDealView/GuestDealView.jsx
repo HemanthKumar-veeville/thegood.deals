@@ -23,6 +23,7 @@ import { RatingStar } from "../../components/RatingStar";
 import { Line } from "../../components/Line/Line";
 import { Send1 } from "../../icons/Send1";
 import { UserAlt } from "../../icons/UserAlt";
+import { Chat } from "../../components/Chat";
 
 const GuestDealView = () => {
   const { t } = useTranslation();
@@ -110,6 +111,33 @@ const GuestDealView = () => {
   useEffect(() => {
     setSteps(updateSteps(steps, currentStep));
   }, [currentStep]);
+
+  // Update the dummy messages to match the image exactly
+  const dummyMessages = [
+    {
+      id: 1,
+      content:
+        "Wild salmon is naturally high in omega-3s and contains less overall fat.",
+      senderId: "user2",
+      senderName: "Vous",
+      role: "Participant",
+      timestamp: "2024-03-20T13:31:00Z",
+      profilePic: null, // Will show first letter "V" if no image
+    },
+    {
+      id: 2,
+      content:
+        "Do wild and farmed salmon have differences in taste, nutrition and environmental impact?",
+      senderId: "user1",
+      senderName: "Abraham Thomas",
+      role: "Organisateur",
+      timestamp: "2024-03-20T10:14:00Z",
+      profilePic: null, // Will show first letter "A" if no image
+    },
+  ];
+
+  // Set currentUserId to match "Vous" messages
+  const currentUserId = "user2";
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
@@ -256,6 +284,14 @@ const GuestDealView = () => {
           alt="Line"
           src={Line69}
         />
+        {/* Add Chat component */}
+
+        <Chat
+          messages={dummyMessages}
+          currentUserId={currentUserId} // Replace with actual user ID from your auth system
+        />
+
+        <Line />
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           {steps.map(({ step, bgColor, textColor }) => (
             <div
