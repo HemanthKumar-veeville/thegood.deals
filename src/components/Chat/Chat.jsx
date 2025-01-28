@@ -11,28 +11,52 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    const wsUrl = `wss://gooddealstest.ddns.net/api/ws/chat/${dealId}`;
+    let reconnectAttempt = 0;
+    const maxReconnectAttempts = 5;
+    const reconnectDelay = 3000; // 3 seconds
 
-    ws.current = new WebSocket(wsUrl);
+    const connectWebSocket = () => {
+      const wsUrl = `wss://gooddealstest.ddns.net/api/ws/chat/${dealId}`;
+      ws.current = new WebSocket(wsUrl);
 
-    ws.current.onopen = () => {
-      console.log("WebSocket connected");
+      ws.current.onopen = () => {
+        console.log("WebSocket connected");
+        reconnectAttempt = 0; // Reset reconnect attempts on successful connection
+      };
+
+      ws.current.onmessage = (event) => {
+        const newMessage = JSON.parse(event.data);
+        setMessages((prevMessages) => {
+          const messagesToAdd = Array.isArray(newMessage)
+            ? newMessage
+            : [newMessage];
+          return [...prevMessages, ...messagesToAdd];
+        });
+      };
+
+      ws.current.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+
+      ws.current.onclose = (event) => {
+        console.log("WebSocket connection closed", event.code);
+
+        // Attempt to reconnect if the connection was closed unexpectedly
+        if (!event.wasClean && reconnectAttempt < maxReconnectAttempts) {
+          console.log(
+            `Attempting to reconnect... (${
+              reconnectAttempt + 1
+            }/${maxReconnectAttempts})`
+          );
+          setTimeout(() => {
+            reconnectAttempt++;
+            connectWebSocket();
+          }, reconnectDelay);
+        }
+      };
     };
 
-    ws.current.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
-
-      setMessages((prevMessages) => [...prevMessages, ...newMessage]);
-    };
-
-    ws.current.onerror = (error) => {
-      console.error("WebSocket error:", error);
-      console.log(error);
-    };
-
-    ws.current.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
+    connectWebSocket();
 
     return () => {
       if (ws.current) {
@@ -56,13 +80,29 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (newMessage.trim() && ws.current) {
-      const messageData = newMessage.trim();
-
-      ws.current.send(messageData);
-      setNewMessage("");
+    if (
+      newMessage.trim() &&
+      ws.current &&
+      ws.current.readyState === WebSocket.OPEN
+    ) {
+      try {
+        const messageData = newMessage.trim();
+        ws.current.send(messageData);
+        setNewMessage("");
+      } catch (error) {
+        console.error("Error sending message:", error);
+        // Optionally show an error to the user
+      }
     }
   };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage(e);
+    }
+  };
+
   console.log({ messages });
   return (
     <div className="flex flex-col w-full bg-white rounded-lg shadow-sm">
@@ -194,6 +234,7 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
               placeholder="Message ..."
               className="w-full px-4 py-3 text-[15px] outline-none placeholder-[#637381] bg-[#F4F6F8] rounded-[10px]"
             />
