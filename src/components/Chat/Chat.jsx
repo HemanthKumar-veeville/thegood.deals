@@ -3,10 +3,38 @@ import { useTranslation } from "react-i18next";
 import { ChatAlt1 } from "../../icons/ChatAlt1";
 import { Send2 } from "../../icons/Send2";
 
-export const Chat = ({ messages, currentUserId }) => {
+export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
   const { t } = useTranslation();
   const messagesEndRef = useRef(null);
   const [newMessage, setNewMessage] = useState("");
+  const [messages, setMessages] = useState(initialMessages);
+  const ws = useRef(null);
+
+  useEffect(() => {
+    const wsUrl = `ws://gooddealstest.ddns.net/api/ws/chat/${dealId}`;
+
+    ws.current = new WebSocket(wsUrl);
+
+    ws.current.onmessage = (event) => {
+      const newMessage = JSON.parse(event.data);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    };
+
+    ws.current.onerror = (error) => {
+      console.error("WebSocket error:", error);
+      console.log(error);
+    };
+
+    ws.current.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+      }
+    };
+  }, [dealId]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -23,8 +51,14 @@ export const Chat = ({ messages, currentUserId }) => {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (newMessage.trim()) {
-      console.log("Sending message:", newMessage);
+    if (newMessage.trim() && ws.current) {
+      const messageData = {
+        senderId: currentUserId,
+        content: newMessage.trim(),
+        timestamp: new Date().toISOString(),
+      };
+
+      ws.current.send(JSON.stringify(messageData));
       setNewMessage("");
     }
   };

@@ -289,6 +289,7 @@ const GuestDealView = () => {
         <Chat
           messages={dummyMessages}
           currentUserId={currentUserId} // Replace with actual user ID from your auth system
+          dealId={deal_id}
         />
 
         <Line />
