@@ -11,7 +11,7 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
   const ws = useRef(null);
 
   useEffect(() => {
-    const wsUrl = `ws://gooddealstest.ddns.net/api/ws/chat/${dealId}`;
+    const wsUrl = `wss://gooddealstest.ddns.net/api/ws/chat/${dealId}`;
 
     ws.current = new WebSocket(wsUrl);
 
