@@ -15,6 +15,10 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
 
     ws.current = new WebSocket(wsUrl);
 
+    ws.current.onopen = () => {
+      console.log("WebSocket connected");
+    };
+
     ws.current.onmessage = (event) => {
       const newMessage = JSON.parse(event.data);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
