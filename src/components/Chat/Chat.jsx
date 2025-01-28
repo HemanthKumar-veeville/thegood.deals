@@ -20,8 +20,10 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
     };
 
     ws.current.onmessage = (event) => {
-      const newMessage = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      const newMessage = event.data;
+      console.log({ newMessage });
+      console.log({ newMessage: JSON.parse(newMessage) });
+      setMessages((prevMessages) => [...prevMessages, { content: newMessage }]);
     };
 
     ws.current.onerror = (error) => {
@@ -56,13 +58,9 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (newMessage.trim() && ws.current) {
-      const messageData = {
-        senderId: currentUserId,
-        content: newMessage.trim(),
-        timestamp: new Date().toISOString(),
-      };
+      const messageData = newMessage.trim();
 
-      ws.current.send(JSON.stringify(messageData));
+      ws.current.send(messageData);
       setNewMessage("");
     }
   };
