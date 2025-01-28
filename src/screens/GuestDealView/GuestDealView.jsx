@@ -286,11 +286,7 @@ const GuestDealView = () => {
         />
         {/* Add Chat component */}
 
-        <Chat
-          messages={[]}
-          currentUserId={currentUserId} // Replace with actual user ID from your auth system
-          dealId={deal_id}
-        />
+        <Chat messages={[]} dealId={deal_id} />
 
         <Line />
         <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ChatAlt1 } from "../../icons/ChatAlt1";
 import { Send2 } from "../../icons/Send2";
 
-export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
+export const Chat = ({ messages: initialMessages, dealId }) => {
   const { t } = useTranslation();
   const messagesEndRef = useRef(null);
   const [newMessage, setNewMessage] = useState("");
@@ -25,13 +25,22 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
       };
 
       ws.current.onmessage = (event) => {
-        const newMessage = JSON.parse(event.data);
-        setMessages((prevMessages) => {
-          const messagesToAdd = Array.isArray(newMessage)
-            ? newMessage
-            : [newMessage];
-          return [...prevMessages, ...messagesToAdd];
-        });
+        try {
+          console.log("Received WebSocket message:", event.data); // Add this for debugging
+          const newMessage = JSON.parse(event.data);
+          console.log("Received WebSocket message:", newMessage); // Add this for debugging
+
+          setMessages((prevMessages) => {
+            // If we receive an array of messages
+            if (Array.isArray(newMessage)) {
+              return [...prevMessages, ...newMessage];
+            }
+            // If we receive a single message
+            return [...prevMessages, newMessage];
+          });
+        } catch (error) {
+          console.error("Error parsing message:", error);
+        }
       };
 
       ws.current.onerror = (error) => {
@@ -87,11 +96,11 @@ export const Chat = ({ messages: initialMessages, currentUserId, dealId }) => {
     ) {
       try {
         const messageData = newMessage.trim();
+        // Just send the message and wait for the server's response via WebSocket
         ws.current.send(messageData);
         setNewMessage("");
       } catch (error) {
         console.error("Error sending message:", error);
-        // Optionally show an error to the user
       }
     }
   };
