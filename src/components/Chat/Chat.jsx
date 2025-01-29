@@ -30,13 +30,11 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           setMessages((prevMessages) => {
             // If we receive an array of messages
             if (Array.isArray(newMessage)) {
-              return [...prevMessages, ...newMessage];
+              return newMessage;
             }
             // If we receive a single message
             return [...prevMessages, newMessage];
           });
-
-          setMessages(newMessage);
         } catch (error) {
           console.error("Error parsing message:", error);
         }
@@ -47,8 +45,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       };
 
       ws.current.onclose = (event) => {
-        console.log("WebSocket connection closed", event.code);
-
         // Attempt to reconnect if the connection was closed unexpectedly
         if (!event.wasClean && reconnectAttempt < maxReconnectAttempts) {
           console.log(
@@ -71,7 +67,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         ws.current.close();
       }
     };
-  }, [dealId]);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -95,7 +91,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     ) {
       try {
         const messageData = newMessage.trim();
-        console.log("Sending message:", messageData);
+
         // Just send the message and wait for the server's response via WebSocket
         ws.current.send(messageData);
         setNewMessage("");
