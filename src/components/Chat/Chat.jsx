@@ -18,6 +18,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
     const connectWebSocket = () => {
       const wsUrl = `${WS_URL}${dealId}`;
+      console.log({ wsUrl });
       ws.current = new WebSocket(wsUrl);
 
       ws.current.onopen = () => {
