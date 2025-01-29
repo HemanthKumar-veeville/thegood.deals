@@ -17,7 +17,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     const reconnectDelay = 3000; // 3 seconds
 
     const connectWebSocket = () => {
-      const wsUrl = `${WS_URL}${dealId}`;
+      const wsUrl = `/${dealId}`;
       console.log({ wsUrl });
       ws.current = new WebSocket(wsUrl);
 
