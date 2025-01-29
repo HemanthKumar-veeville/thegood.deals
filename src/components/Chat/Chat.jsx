@@ -17,9 +17,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     const reconnectDelay = 3000; // 3 seconds
 
     const connectWebSocket = () => {
-      const wsUrl = `wss://${
-        WS_URL || "gooddealstest.ddns.net"
-      }/api/ws/chat/${dealId}`;
+      const wsUrl = `wss://${WS_URL || "thegood.deals"}/api/ws/chat/${dealId}`;
       console.log({ wsUrl });
       ws.current = new WebSocket(wsUrl);
 
