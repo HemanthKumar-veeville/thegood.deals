@@ -27,7 +27,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       ws.current.onmessage = (event) => {
         try {
           const newMessage = JSON.parse(event.data);
-
+          console.log({ newMessage });
           setMessages((prevMessages) => {
             // If we receive an array of messages
             if (Array.isArray(newMessage)) {
