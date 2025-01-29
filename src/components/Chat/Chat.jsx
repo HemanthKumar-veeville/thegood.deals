@@ -110,23 +110,23 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full bg-white rounded-lg shadow-sm">
-      {/* Header */}
-      <div className="flex justify-between items-center px-4 py-3 border-b border-[#E7E7E7]">
+    <div className="flex flex-col w-full bg-white rounded-lg shadow-sm">
+      {/* Make entire header clickable */}
+      <div
+        className="flex justify-between items-center px-4 py-3 border-b border-[#E7E7E7] cursor-pointer hover:bg-gray-50 transition-colors"
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
         <h2 className="text-[20px] font-medium text-[#1B4F4A]">
           Deal discussion
         </h2>
-        <button
-          className="p-1 transition-transform duration-200"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-        >
+        <div className="p-1">
           <svg
             width="24"
             height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            className={`text-[#1B4F4A] transform ${
+            className={`text-[#1B4F4A] transform transition-transform duration-300 ${
               isCollapsed ? "rotate-180" : ""
             }`}
           >
@@ -137,13 +137,15 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
               strokeLinejoin="round"
             />
           </svg>
-        </button>
+        </div>
       </div>
 
-      {/* Main container with flex layout - Add conditional height */}
+      {/* Main container with animated collapse */}
       <div
-        className={`flex flex-col transition-all duration-300 ease-in-out ${
-          isCollapsed ? "h-0 overflow-hidden" : "h-full"
+        className={`flex flex-col transition-all duration-300 ease-in-out origin-top ${
+          isCollapsed
+            ? "max-h-0 opacity-0 scale-y-0"
+            : "max-h-[600px] opacity-100 scale-y-100"
         }`}
       >
         {/* Messages Container - will scroll */}
