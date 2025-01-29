@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ChatAlt1 } from "../../icons/ChatAlt1";
 import { Send2 } from "../../icons/Send2";
-
+import { WS_URL } from "../../config";
 export const Chat = ({ messages: initialMessages, dealId }) => {
   const { t } = useTranslation();
   const messagesEndRef = useRef(null);
@@ -17,7 +17,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     const reconnectDelay = 3000; // 3 seconds
 
     const connectWebSocket = () => {
-      const wsUrl = `wss://gooddealstest.ddns.net/api/ws/chat/${dealId}`;
+      const wsUrl = `${WS_URL}${dealId}`;
       ws.current = new WebSocket(wsUrl);
 
       ws.current.onopen = () => {
