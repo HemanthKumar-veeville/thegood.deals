@@ -9,6 +9,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState(initialMessages);
   const ws = useRef(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
     let reconnectAttempt = 0;
@@ -115,14 +116,19 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         <h2 className="text-[20px] font-medium text-[#1B4F4A]">
           Deal discussion
         </h2>
-        <button className="p-1">
+        <button
+          className="p-1 transition-transform duration-200"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
           <svg
             width="24"
             height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            className="text-[#1B4F4A]"
+            className={`text-[#1B4F4A] transform ${
+              isCollapsed ? "rotate-180" : ""
+            }`}
           >
             <path
               d="M7 14l5-5 5 5"
@@ -134,8 +140,12 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         </button>
       </div>
 
-      {/* Main container with flex layout */}
-      <div className="flex flex-col h-full">
+      {/* Main container with flex layout - Add conditional height */}
+      <div
+        className={`flex flex-col transition-all duration-300 ease-in-out ${
+          isCollapsed ? "h-0 overflow-hidden" : "h-full"
+        }`}
+      >
         {/* Messages Container - will scroll */}
         <div className="flex-1 overflow-y-auto p-4 min-h-[300px] max-h-[400px] scrollbar-thin">
           <style jsx>{`
