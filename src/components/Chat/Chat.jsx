@@ -234,7 +234,8 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                         : "text-[#637381]"
                     }`}
                   >
-                    {formatTime(message.timestamp)}
+                    {formatTime(message.timestamp)} •{" "}
+                    {new Date(message.timestamp).toLocaleDateString()}
                   </div>
                 </div>
               </div>
