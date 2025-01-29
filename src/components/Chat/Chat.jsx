@@ -83,6 +83,36 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return "Yesterday";
+    }
+    return date.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
+  const groupMessagesByDate = (messages) => {
+    const groups = {};
+    messages.forEach((message) => {
+      const date = new Date(message.timestamp).toDateString();
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(message);
+    });
+    return groups;
+  };
+
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (
@@ -175,71 +205,81 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           `}</style>
 
           {messages.length > 0 ? (
-            messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex items-start gap-2 mb-4 ${
-                  message?.sender?.role === "You"
-                    ? "flex-row-reverse"
-                    : "flex-row"
-                }`}
-              >
-                {/* Profile Picture */}
-                <div className="w-8 h-8 rounded-full bg-primary-background flex-shrink-0 overflow-hidden">
-                  {message?.sender?.profile_image ? (
-                    <img
-                      src={message?.sender?.profile_image}
-                      alt={message?.sender?.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-[#E7E7E7] text-[#637381] text-sm font-medium">
-                      {message?.sender?.name?.charAt(0)}
+            Object.entries(groupMessagesByDate(messages)).map(
+              ([date, dateMessages]) => (
+                <div key={date}>
+                  <div className="flex justify-center my-4">
+                    <div className="bg-[#F4F6F8] px-3 py-1 rounded-full text-sm text-[#637381]">
+                      {formatDate(dateMessages[0].timestamp)}
                     </div>
-                  )}
-                </div>
+                  </div>
+                  {dateMessages.map((message, index) => (
+                    <div
+                      key={index}
+                      className={`flex items-start gap-2 mb-4 ${
+                        message?.sender?.role === "You"
+                          ? "flex-row-reverse"
+                          : "flex-row"
+                      }`}
+                    >
+                      {/* Profile Picture */}
+                      <div className="w-8 h-8 rounded-full bg-primary-background flex-shrink-0 overflow-hidden">
+                        {message?.sender?.profile_image ? (
+                          <img
+                            src={message?.sender?.profile_image}
+                            alt={message?.sender?.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-[#E7E7E7] text-[#637381] text-sm font-medium">
+                            {message?.sender?.name?.charAt(0)}
+                          </div>
+                        )}
+                      </div>
 
-                {/* Message Content */}
-                <div
-                  className={`relative max-w-[70%] px-4 py-3 ${
-                    message?.sender?.role === "You"
-                      ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
-                      : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-                  }`}
-                >
-                  <div
-                    className={`text-sm font-medium mb-1 ${
-                      message?.sender?.role === "You"
-                        ? "text-white"
-                        : "text-[#1B4F4A]"
-                    }`}
-                  >
-                    {message?.sender?.role !== "You" &&
-                      message?.sender?.name && (
-                        <>
-                          {message?.sender?.name}
-                          {message?.sender?.role !== "You"
-                            ? `• ${message?.sender?.role}`
-                            : ""}
-                        </>
-                      )}
-                  </div>
-                  <div className="text-[15px] break-words leading-[22px]">
-                    {message.message}
-                  </div>
-                  <div
-                    className={`text-[13px] mt-1 ${
-                      message?.sender?.role === "You"
-                        ? "text-white/70"
-                        : "text-[#637381]"
-                    }`}
-                  >
-                    {formatTime(message.timestamp)} •{" "}
-                    {new Date(message.timestamp).toLocaleDateString()}
-                  </div>
+                      {/* Message Content */}
+                      <div
+                        className={`relative max-w-[70%] px-4 py-3 ${
+                          message?.sender?.role === "You"
+                            ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
+                            : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
+                        }`}
+                      >
+                        <div
+                          className={`text-sm font-medium mb-1 ${
+                            message?.sender?.role === "You"
+                              ? "text-white"
+                              : "text-[#1B4F4A]"
+                          }`}
+                        >
+                          {message?.sender?.role !== "You" &&
+                            message?.sender?.name && (
+                              <>
+                                {message?.sender?.name}
+                                {message?.sender?.role !== "You"
+                                  ? `• ${message?.sender?.role}`
+                                  : ""}
+                              </>
+                            )}
+                        </div>
+                        <div className="text-[15px] break-words leading-[22px]">
+                          {message.message}
+                        </div>
+                        <div
+                          className={`text-[13px] mt-1 ${
+                            message?.sender?.role === "You"
+                              ? "text-white/70"
+                              : "text-[#637381]"
+                          }`}
+                        >
+                          {formatTime(message.timestamp)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ))
+              )
+            )
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-gray-500">
               <ChatAlt1 className="w-12 h-12 mb-4" color="#637381" />
