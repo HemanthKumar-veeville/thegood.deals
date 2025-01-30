@@ -4,7 +4,7 @@ import { ChatAlt1 } from "../../icons/ChatAlt1";
 import { Send2 } from "../../icons/Send2";
 import { WS_URL } from "../../config";
 export const Chat = ({ messages: initialMessages, dealId }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const messagesEndRef = useRef(null);
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState(initialMessages);
@@ -91,11 +91,11 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     yesterday.setDate(yesterday.getDate() - 1);
 
     if (date.toDateString() === today.toDateString()) {
-      return "Today";
+      return t("chat.today");
     } else if (date.toDateString() === yesterday.toDateString()) {
-      return "Yesterday";
+      return t("chat.yesterday");
     }
-    return date.toLocaleDateString(undefined, {
+    return date.toLocaleDateString(i18n.language === "fr" ? "fr-FR" : "en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -147,8 +147,8 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         className="flex justify-between items-center px-4 py-3 border-b border-[#E7E7E7] cursor-pointer hover:bg-gray-50 transition-colors"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
-        <h2 className="text-[20px] font-medium text-[#1B4F4A]">
-          Deal discussion
+        <h2 className="text-[20px] font-semibold text-[#1B4F4A]">
+          {t("chat.deal_discussion")}
         </h2>
         <div className="p-1">
           <svg

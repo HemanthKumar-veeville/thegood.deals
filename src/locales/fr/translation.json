@@ -415,6 +415,11 @@
     "error_products_required": "Produits requis !",
     "invite_pending": "Demande en attente"
   },
+  "chat": {
+    "deal_discussion": "Discussion du deal",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier"
+  },
   "inform_craftsman": {
     "confirm_deal_title": "Confirmer le good deal avec l’artisan",
     "confirm_deal_message": "Nous allons envoyer un mail à l’artisan pour confirmer avec lui le deal.",
