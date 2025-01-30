@@ -14,6 +14,7 @@ import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 import { useSelector, useDispatch } from "react-redux";
 import { getDealByDealId } from "../../redux/app/deals/dealSlice";
+import { WS_URL } from "../../config";
 
 const InviteLovedOnes = () => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ const InviteLovedOnes = () => {
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
-  const link = `https://thegood.deals/deal_details_invite?deal_id=${dealId}`;
+  const link = `https://${WS_URL}/deal_details_invite?deal_id=${dealId}`;
   const deal = useSelector((state) => state.deals.deal?.Deal[0]);
 
   const shareLink = `
