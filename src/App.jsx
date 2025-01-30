@@ -577,7 +577,7 @@ function App() {
       ),
     },
     {
-      path: "/guest-send-review",
+      path: "/participant-send-review",
       element: (
         <Layout>
           <ProtectedRoute element={<GuestsSendReviewsScreen />} />
@@ -585,7 +585,7 @@ function App() {
       ),
     },
     {
-      path: "/artisan-send-review",
+      path: "/organizer-send-review",
       element: (
         <Layout>
           <GuestsSendReviewsScreen />

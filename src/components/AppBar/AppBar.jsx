@@ -59,6 +59,8 @@ function AppBar() {
       "/deal-refused",
       "/deal-refused-message",
       "/artisan-send-review",
+      "/participant-send-review",
+      "/organizer-send-review",
       "/deal_details",
     ];
 
