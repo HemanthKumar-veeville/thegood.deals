@@ -8,28 +8,12 @@ const initialState = {
 };
 
 // Async thunk for submitting a participant review
-export const submitParticipantReview = createAsyncThunk(
-  "reviews/submitParticipantReview",
-  async (reviewData, { rejectWithValue }) => {
+export const submitReview = createAsyncThunk(
+  "reviews/submitReview",
+  async ({ reviewData, deal_id, user_email }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(
-        "/participant/review",
-        reviewData
-      );
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-// Async thunk for submitting an organizer review
-export const submitOrganizerReview = createAsyncThunk(
-  "reviews/submitOrganizerReview",
-  async (reviewData, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.post(
-        "/organiser/review",
+        `/review/${deal_id}/${user_email}`,
         reviewData
       );
       return response.data;
@@ -46,29 +30,15 @@ const reviewSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Submit participant review
-      .addCase(submitParticipantReview.pending, (state) => {
+      .addCase(submitReview.pending, (state) => {
         state.reviewStatus = "loading";
         state.reviewError = null; // Add error reset
       })
-      .addCase(submitParticipantReview.fulfilled, (state) => {
+      .addCase(submitReview.fulfilled, (state) => {
         state.reviewStatus = "succeeded";
         state.reviewError = null;
       })
-      .addCase(submitParticipantReview.rejected, (state, action) => {
-        state.reviewStatus = "failed";
-        state.reviewError = action.payload;
-      })
-      // Submit organizer review
-      .addCase(submitOrganizerReview.pending, (state) => {
-        state.reviewStatus = "loading";
-        state.reviewError = null; // Add error reset
-      })
-      .addCase(submitOrganizerReview.fulfilled, (state) => {
-        state.reviewStatus = "succeeded";
-        state.reviewError = null;
-      })
-      .addCase(submitOrganizerReview.rejected, (state, action) => {
+      .addCase(submitReview.rejected, (state, action) => {
         state.reviewStatus = "failed";
         state.reviewError = action.payload;
       });

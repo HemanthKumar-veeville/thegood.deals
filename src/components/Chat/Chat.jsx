@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { ChatAlt1 } from "../../icons/ChatAlt1";
 import { Send2 } from "../../icons/Send2";
@@ -10,32 +10,44 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const [messages, setMessages] = useState(initialMessages);
   const ws = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [replyTo, setReplyTo] = useState(null);
+  const [slideStartX, setSlideStartX] = useState(null);
+  const [pressTimer, setPressTimer] = useState(null);
+  const longPressThreshold = 500; // 500ms for long press
+  const messagesContainerRef = useRef(null);
 
   useEffect(() => {
     let reconnectAttempt = 0;
     const maxReconnectAttempts = 5;
-    const reconnectDelay = 3000; // 3 seconds
+    const reconnectDelay = 3000;
+    let reconnectTimeout = null;
 
     const connectWebSocket = () => {
+      if (ws.current?.readyState === WebSocket.OPEN) {
+        ws.current.close();
+      }
+
       const wsUrl = `wss://${WS_URL}/api/ws/chat/${dealId}`;
-      console.log({ wsUrl });
       ws.current = new WebSocket(wsUrl);
 
       ws.current.onopen = () => {
-        reconnectAttempt = 0; // Reset reconnect attempts on successful connection
+        console.log("WebSocket connected");
+        reconnectAttempt = 0;
       };
 
       ws.current.onmessage = (event) => {
         try {
           const newMessage = JSON.parse(event.data);
-
+          console.log({ newMessage });
           setMessages((prevMessages) => {
-            // If we receive an array of messages
             if (Array.isArray(newMessage)) {
-              return newMessage;
+              return [...newMessage].sort(
+                (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+              );
             }
-            // If we receive a single message
-            return [...prevMessages, newMessage];
+            return [...prevMessages, newMessage].sort(
+              (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+            );
           });
         } catch (error) {
           console.error("Error parsing message:", error);
@@ -44,17 +56,23 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
       ws.current.onerror = (error) => {
         console.error("WebSocket error:", error);
+        // Trigger reconnect on error
+        if (reconnectAttempt < maxReconnectAttempts) {
+          reconnectTimeout = setTimeout(() => {
+            reconnectAttempt++;
+            connectWebSocket();
+          }, reconnectDelay);
+        }
       };
 
       ws.current.onclose = (event) => {
-        // Attempt to reconnect if the connection was closed unexpectedly
         if (!event.wasClean && reconnectAttempt < maxReconnectAttempts) {
           console.log(
             `Attempting to reconnect... (${
               reconnectAttempt + 1
             }/${maxReconnectAttempts})`
           );
-          setTimeout(() => {
+          reconnectTimeout = setTimeout(() => {
             reconnectAttempt++;
             connectWebSocket();
           }, reconnectDelay);
@@ -65,11 +83,14 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     connectWebSocket();
 
     return () => {
+      if (reconnectTimeout) {
+        clearTimeout(reconnectTimeout);
+      }
       if (ws.current) {
         ws.current.close();
       }
     };
-  }, []);
+  }, [dealId]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -114,24 +135,39 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     return groups;
   };
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-    if (
-      newMessage.trim() &&
-      ws.current &&
-      ws.current.readyState === WebSocket.OPEN
-    ) {
-      try {
-        const messageData = newMessage.trim();
+  const handleReply = (message) => {
+    setReplyTo(message);
+    // Focus the textarea
+    document.querySelector("textarea").focus();
+  };
 
-        // Just send the message and wait for the server's response via WebSocket
-        ws.current.send(messageData);
+  const handleSendMessage = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (
+        !newMessage.trim() ||
+        !ws.current ||
+        ws.current.readyState !== WebSocket.OPEN
+      ) {
+        return;
+      }
+
+      try {
+        const messageData = {
+          message: newMessage.trim(),
+          tag_message: replyTo?.id || null,
+          tag_participant: null,
+        };
+
+        ws.current.send(JSON.stringify(messageData));
         setNewMessage("");
+        setReplyTo(null);
       } catch (error) {
         console.error("Error sending message:", error);
       }
-    }
-  };
+    },
+    [newMessage, replyTo]
+  );
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -139,6 +175,242 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       handleSendMessage(e);
     }
   };
+
+  const handleTouchStart = useCallback((e, message) => {
+    if (e.touches.length !== 1) return; // Handle single touch only
+
+    const touch = e.touches[0];
+    setSlideStartX(touch.clientX);
+
+    const timer = setTimeout(() => {
+      handleReply(message);
+    }, longPressThreshold);
+
+    setPressTimer(timer);
+  }, []);
+
+  const handleTouchMove = useCallback(
+    (e) => {
+      if (!slideStartX || e.touches.length !== 1) return;
+
+      const touch = e.touches[0];
+      const diff = slideStartX - touch.clientX;
+
+      if (pressTimer) {
+        clearTimeout(pressTimer);
+        setPressTimer(null);
+      }
+
+      if (Math.abs(diff) > 50) {
+        const message = e.currentTarget.dataset.message;
+        if (message) {
+          try {
+            handleReply(JSON.parse(message));
+          } catch (error) {
+            console.error("Error parsing message data:", error);
+          }
+          setSlideStartX(null);
+        }
+      }
+    },
+    [slideStartX, pressTimer]
+  );
+
+  const handleTouchEnd = useCallback(() => {
+    setSlideStartX(null);
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      setPressTimer(null);
+    }
+  }, [pressTimer]);
+
+  const handleDoubleClick = useCallback((message) => {
+    handleReply(message);
+  }, []);
+
+  const scrollToMessage = useCallback((messageId) => {
+    if (!messageId) return;
+
+    const messageElement = document.querySelector(
+      `[data-message-id="${messageId}"]`
+    );
+    if (messageElement && messagesContainerRef.current) {
+      messageElement.classList.add("highlight-message");
+      messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // Remove highlight after animation
+      setTimeout(() => {
+        messageElement.classList.remove("highlight-message");
+      }, 2000);
+    }
+  }, []);
+
+  const MessageContent = useCallback(
+    ({ message, index }) => {
+      const [lastClick, setLastClick] = useState(0);
+
+      const handleClick = useCallback(() => {
+        const currentTime = new Date().getTime();
+        const timeDiff = currentTime - lastClick;
+
+        if (timeDiff < 300) {
+          handleDoubleClick(message);
+        }
+
+        setLastClick(currentTime);
+      }, [lastClick, message]);
+
+      const parseMessage = useCallback((msg) => {
+        if (!msg) return null;
+        try {
+          return JSON.parse(msg);
+        } catch {
+          return null;
+        }
+      }, []);
+
+      const findTaggedMessage = useCallback(
+        (taggedMessageId) => {
+          return messages.find((msg) => msg.id === taggedMessageId);
+        },
+        [messages]
+      );
+
+      const actualMessage = message.message;
+      const messageJSON = parseMessage(actualMessage);
+      const taggedMessage = message.taged_message
+        ? findTaggedMessage(message.taged_message)
+        : null;
+
+      const handleTaggedMessageClick = useCallback(() => {
+        if (taggedMessage) {
+          scrollToMessage(message.taged_message);
+        }
+      }, [taggedMessage, message.taged_message]);
+
+      return (
+        <div
+          className={`relative max-w-[70%] px-4 py-3 ${
+            message?.sender?.role === "You"
+              ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
+              : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
+          }`}
+          onClick={handleClick}
+          onTouchStart={(e) =>
+            handleTouchStart(
+              e,
+              messageJSON ? messageJSON.message : actualMessage
+            )
+          }
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          data-message={JSON.stringify(messageJSON ? messageJSON : message)}
+          data-message-id={message.id}
+        >
+          <div
+            className={`text-sm font-medium mb-1 ${
+              message?.sender?.role === "You" ? "text-white" : "text-[#1B4F4A]"
+            }`}
+          >
+            {message?.sender?.role !== "You" && message?.sender?.name && (
+              <>
+                {message?.sender?.name}
+                {message?.sender?.role !== "You"
+                  ? ` • ${message?.sender?.role}`
+                  : ""}
+              </>
+            )}
+          </div>
+
+          {taggedMessage && (
+            <div
+              className={`relative mb-2 pl-2 ${
+                message?.sender?.role === "You"
+                  ? "border-l-2 border-white/40"
+                  : "border-l-2 border-[#1B4F4A]"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTaggedMessageClick();
+              }}
+            >
+              <div
+                className={`text-sm rounded-sm p-2 cursor-pointer hover:opacity-90 transition-opacity ${
+                  message?.sender?.role === "You"
+                    ? "bg-[#E7E7E7] text-[#1B4F4A]"
+                    : "bg-[#163f3a] text-[#E7E7E7]"
+                }`}
+              >
+                <div className="flex flex-col gap-1">
+                  <div className="font-medium text-[13px] flex items-center gap-1">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      className={
+                        message?.sender?.role === "You"
+                          ? "text-white/70"
+                          : "text-[#637381]"
+                      }
+                    >
+                      <path
+                        d="M9 14l-4-4 4-4"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M5 10h11a4 4 0 014 4v0"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    {taggedMessage.sender.name}
+                  </div>
+                  <div
+                    className={`text-[13px] truncate ${
+                      message?.sender?.role === "You"
+                        ? "text-white/70"
+                        : "text-[#E7E7E7]"
+                    }`}
+                  >
+                    {taggedMessage.message}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="text-[15px] break-words leading-[22px]">
+            {messageJSON ? messageJSON.message : message.message}
+          </div>
+
+          <div className="text-[13px] mt-1">
+            <span
+              className={
+                message?.sender?.role === "You"
+                  ? "text-white/70"
+                  : "text-[#637381]"
+              }
+            >
+              {formatTime(message.timestamp)}
+            </span>
+          </div>
+        </div>
+      );
+    },
+    [
+      handleTouchStart,
+      handleTouchMove,
+      handleTouchEnd,
+      handleDoubleClick,
+      messages,
+      scrollToMessage,
+    ]
+  );
 
   return (
     <div className="flex flex-col w-full bg-white rounded-lg shadow-sm">
@@ -180,7 +452,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         }`}
       >
         {/* Messages Container - will scroll */}
-        <div className="flex-1 overflow-y-auto p-4 min-h-[300px] max-h-[400px] scrollbar-thin">
+        <div
+          ref={messagesContainerRef}
+          className="flex-1 overflow-y-auto p-4 min-h-[300px] max-h-[400px] scrollbar-thin"
+        >
           <style jsx>{`
             .scrollbar-thin {
               scrollbar-width: thin;
@@ -202,6 +477,19 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
             .scrollbar-thin::-webkit-scrollbar-thumb:hover {
               background-color: #d1d1d1;
+            }
+
+            @keyframes highlight {
+              0% {
+                background-color: rgba(27, 79, 74, 0.2);
+              }
+              100% {
+                background-color: #163f3a;
+              }
+            }
+
+            .highlight-message {
+              animation: highlight 2s ease-out;
             }
           `}</style>
 
@@ -239,43 +527,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                       </div>
 
                       {/* Message Content */}
-                      <div
-                        className={`relative max-w-[70%] px-4 py-3 ${
-                          message?.sender?.role === "You"
-                            ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
-                            : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-                        }`}
-                      >
-                        <div
-                          className={`text-sm font-medium mb-1 ${
-                            message?.sender?.role === "You"
-                              ? "text-white"
-                              : "text-[#1B4F4A]"
-                          }`}
-                        >
-                          {message?.sender?.role !== "You" &&
-                            message?.sender?.name && (
-                              <>
-                                {message?.sender?.name}
-                                {message?.sender?.role !== "You"
-                                  ? `• ${message?.sender?.role}`
-                                  : ""}
-                              </>
-                            )}
-                        </div>
-                        <div className="text-[15px] break-words leading-[22px]">
-                          {message.message}
-                        </div>
-                        <div
-                          className={`text-[13px] mt-1 ${
-                            message?.sender?.role === "You"
-                              ? "text-white/70"
-                              : "text-[#637381]"
-                          }`}
-                        >
-                          {formatTime(message.timestamp)}
-                        </div>
-                      </div>
+                      <MessageContent message={message} index={index} />
                     </div>
                   ))}
                 </div>
@@ -292,6 +544,37 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
         {/* Input Container - fixed at bottom */}
         <div className="p-4 border-t border-[#E7E7E7] bg-white">
+          {replyTo && (
+            <div className="flex items-center justify-between mb-2 p-2 bg-[#F4F6F8] rounded-[10px]">
+              <div className="flex-1">
+                <div className="text-sm font-medium text-[#1B4F4A]">
+                  {replyTo.sender.name}
+                </div>
+                <div className="text-sm text-[#637381] truncate">
+                  {replyTo.message}
+                </div>
+              </div>
+              <button
+                onClick={() => setReplyTo(null)}
+                className="ml-2 text-[#637381] hover:text-[#1B4F4A]"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M18 6L6 18M6 6l12 12"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          )}
           <div className="flex items-center gap-3">
             <div className="flex-1 bg-[#F4F6F8] rounded-[10px]">
               <textarea

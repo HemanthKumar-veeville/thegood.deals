@@ -24,7 +24,7 @@ import UpdateDeal from "./screens/UpdateDeal/UpdateDeal";
 import DealWallet from "./screens/DealWallet/DealWallet";
 import { STRIPE_PK } from "./config";
 import RequestPendingDeal from "./screens/RequestPendingDeal/RequestPendingDeal";
-
+import ThanksForReview from "./screens/ThanksForReview/ThanksForReview";
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
 const Auth = loadable(() => import("./screens/Auth/Auth"));
@@ -75,6 +75,7 @@ const EditProfile = loadable(() => import("./screens/EditProfile/EditProfile"));
 const Notifications = loadable(() =>
   import("./screens/Notifications/Notifications")
 );
+
 const LanguageSelection = loadable(() =>
   import("./screens/LanguageSelection/LanguageSelection")
 );
@@ -232,6 +233,14 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<ThanksToAdmin />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/thanks-review",
+      element: (
+        <Layout>
+          <ProtectedRoute element={<ThanksForReview />} />
         </Layout>
       ),
     },

@@ -6,7 +6,10 @@ import { StarFill1 } from "../../icons/StarFill1";
 import { VerticalLine } from "../../icons/VerticalLine";
 import { Line63 } from "../../images";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { submitReview } from "../../redux/app/review/reviewSlice";
+import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
 export const GuestsSendReviews = ({
   HEADERHeaderOpenClassName,
@@ -15,17 +18,22 @@ export const GuestsSendReviews = ({
   const { t } = useTranslation(); // Initialize the translation hook
   const location = useLocation();
   const path = location.pathname;
-  console.log({ path });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   // Extract orderId from the query parameters
   const queryParams = new URLSearchParams(location.search);
-  const email = queryParams.get("email");
+  const user_email = queryParams.get("email");
+  const deal_id = queryParams.get("deal_id");
 
-  const [organizerRating, setOrganizerRating] = useState(0);
-  const [productRating, setProductRating] = useState(0);
-  const [platformRating, setPlatformRating] = useState(0);
-  const [organizerRemarks, setOrganizerRemarks] = useState("");
-  const [productRemarks, setProductRemarks] = useState("");
-  const [platformRemarks, setPlatformRemarks] = useState("");
+  const [organizerRating, setOrganizerRating] = useState(null);
+  const [productRating, setProductRating] = useState(null);
+  const [platformRating, setPlatformRating] = useState(null);
+  const [organizerRemarks, setOrganizerRemarks] = useState(null);
+  const [productRemarks, setProductRemarks] = useState(null);
+  const [platformRemarks, setPlatformRemarks] = useState(null);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleStarClick = (setRating, ratingValue) => {
     setRating(ratingValue);
@@ -35,7 +43,37 @@ export const GuestsSendReviews = ({
     setRemarks(event.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    if (organizerRating) {
+      formData.append("organiser_rating", organizerRating);
+    }
+    if (organizerRemarks) {
+      formData.append("organiser_review", organizerRemarks);
+    }
+    if (productRating) {
+      formData.append("deal_rating", productRating);
+    }
+    if (productRemarks) {
+      formData.append("deal_review", productRemarks);
+    }
+    if (platformRating) {
+      formData.append("platform_rating", platformRating);
+    }
+    if (platformRemarks) {
+      formData.append("platform_review", platformRemarks);
+    }
+    try {
+      const response = await dispatch(
+        submitReview({ reviewData: formData, deal_id, user_email })
+      ).unwrap();
+
+      navigate("/thanks-review");
+    } catch (error) {
+      setIsError(true);
+      setErrorMessage(error?.detail || error?.message);
+    }
+  };
 
   const renderStars = (currentRating, setRating) => {
     return [1, 2, 3, 4, 5].map((ratingValue) => (
@@ -58,6 +96,13 @@ export const GuestsSendReviews = ({
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+        {isError && (
+          <ShowCustomErrorModal
+            message={errorMessage}
+            buttonText={t("waiting_deal.got_it")}
+            onClose={() => setIsError(false)} // Reset modal state on close
+          />
+        )}
         <div className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {t("guestsSendReviews.giveYourOpinion")}
         </div>
@@ -97,7 +142,7 @@ export const GuestsSendReviews = ({
               <div className="flex items-end justify-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
                 <div className="relative w-[42px] h-[22px] mr-[-2.00px]">
                   <div className="absolute top-0 left-0 font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-right tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                    {organizerRemarks.length}/250
+                    {organizerRemarks?.length || 0}/250
                   </div>
                 </div>
               </div>
@@ -126,7 +171,7 @@ export const GuestsSendReviews = ({
           <div className="flex flex-col h-[120px] items-start relative self-stretch w-full">
             <textarea
               className="flex-1 grow flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke focus:outline-none focus:ring-2 focus:ring-[#2a4e4a] placeholder:text-[#637381] text-[#637381]"
-              value={productRemarks}
+              value={productRemarks || ""}
               onChange={(e) => handleTextAreaChange(setProductRemarks, e)}
               maxLength={1000}
               placeholder={t("guestsSendReviews.remarks")}
@@ -135,7 +180,7 @@ export const GuestsSendReviews = ({
           <div className="flex items-end justify-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="relative w-[42px] h-[22px] mr-[-2.00px]">
               <div className="absolute top-0 left-0 font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-right tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                {productRemarks.length}/250
+                {productRemarks?.length || 0}/250
               </div>
             </div>
           </div>
@@ -162,7 +207,7 @@ export const GuestsSendReviews = ({
           <div className="flex flex-col h-[120px] items-start relative self-stretch w-full">
             <textarea
               className="h-[120px] flex items-start gap-2.5 p-5 relative self-stretch w-full bg-whitewhite rounded-md border border-solid border-stroke focus:outline-none focus:ring-2 focus:ring-[#2a4e4a] placeholder:text-[#637381] text-[#637381]"
-              value={platformRemarks}
+              value={platformRemarks || ""}
               onChange={(e) => handleTextAreaChange(setPlatformRemarks, e)}
               maxLength={1000}
               placeholder={t("guestsSendReviews.remarks")}
@@ -171,7 +216,7 @@ export const GuestsSendReviews = ({
           <div className="flex items-end justify-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
             <div className="relative w-[42px] h-[22px] mr-[-2.00px]">
               <div className="absolute top-0 left-0 font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] text-right tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                {platformRemarks.length}/250
+                {platformRemarks?.length || 0}/250
               </div>
             </div>
           </div>

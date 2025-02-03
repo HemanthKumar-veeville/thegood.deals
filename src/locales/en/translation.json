@@ -418,7 +418,8 @@
   "chat": {
     "deal_discussion": "Deal discussion",
     "today": "Today",
-    "yesterday": "Yesterday"
+    "yesterday": "Yesterday",
+    "chat.replying_to": "Replying to"
   },
   "inform_craftsman": {
     "confirm_deal_title": "Confirm the deal with the artisan",
