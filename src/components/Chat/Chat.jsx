@@ -201,19 +201,16 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         setPressTimer(null);
       }
 
-      // Only handle slide if difference is significant
       if (Math.abs(diff) > 50) {
-        const messageElement = e.currentTarget;
-        const messageData = messageElement.getAttribute("data-message");
-        if (messageData) {
+        const message = e.currentTarget.dataset.message;
+        if (message) {
           try {
-            const parsedMessage = JSON.parse(messageData);
-            handleReply(parsedMessage);
+            handleReply(JSON.parse(message));
           } catch (error) {
             console.error("Error parsing message data:", error);
           }
+          setSlideStartX(null);
         }
-        setSlideStartX(null);
       }
     },
     [slideStartX, pressTimer]
@@ -299,10 +296,15 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
           }`}
           onClick={handleClick}
-          onTouchStart={(e) => handleTouchStart(e, message)}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          data-message={JSON.stringify(message)}
+          // onTouchStart={(e) =>
+          //   handleTouchStart(
+          //     e,
+          //     messageJSON ? messageJSON.message : actualMessage
+          //   )
+          // }
+          // onTouchMove={handleTouchMove}
+          // onTouchEnd={handleTouchEnd}
+          data-message={JSON.stringify(messageJSON ? messageJSON : message)}
           data-message-id={message.id}
         >
           <div
