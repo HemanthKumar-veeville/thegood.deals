@@ -27,12 +27,12 @@ function ProtectedRoute({ element }) {
     return <CustomLoader />;
   }
 
-  if (!isUserActivated)
-    return <Navigate to={`/verify?email=${user?.data?.email}`} />;
-
   if (!isUserLoggedIn) {
     return <Navigate to="/auth?login" />;
   }
+
+  if (!isUserActivated)
+    return <Navigate to={`/verify?email=${user?.data?.email}`} />;
 
   return element;
 }
