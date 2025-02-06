@@ -296,14 +296,14 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
           }`}
           onClick={handleClick}
-          // onTouchStart={(e) =>
-          //   handleTouchStart(
-          //     e,
-          //     messageJSON ? messageJSON.message : actualMessage
-          //   )
-          // }
-          // onTouchMove={handleTouchMove}
-          // onTouchEnd={handleTouchEnd}
+          onTouchStart={(e) =>
+            handleTouchStart(
+              e,
+              messageJSON ? messageJSON.message : actualMessage
+            )
+          }
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           data-message={JSON.stringify(messageJSON ? messageJSON : message)}
           data-message-id={message.id}
         >
