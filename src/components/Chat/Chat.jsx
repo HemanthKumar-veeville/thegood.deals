@@ -135,7 +135,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       day: "numeric",
     });
   };
-  console.log({ mentions, participants });
+
   const groupMessagesByDate = (messages) => {
     const groups = {};
     messages.forEach((message) => {
@@ -165,7 +165,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         return;
       }
       const tag_participants = [...new Set(mentions)];
-      console.log({ tag_participants });
+
       try {
         const messageData = {
           message: newMessage.trim(),
@@ -174,7 +174,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             (participant) => participant.participant_id
           ),
         };
-        console.log({ messageData });
+
         ws.current.send(JSON.stringify(messageData));
         setNewMessage("");
         setReplyTo(null);
