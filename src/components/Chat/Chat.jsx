@@ -183,6 +183,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     setSlideStartX(touch.clientX);
 
     const timer = setTimeout(() => {
+      // Pass the full message object for long press
       handleReply(message);
     }, longPressThreshold);
 
@@ -202,10 +203,12 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       }
 
       if (Math.abs(diff) > 50) {
-        const message = e.currentTarget.dataset.message;
-        if (message) {
+        // Get the full message data from the dataset
+        const messageData = e.currentTarget.dataset.message;
+        if (messageData) {
           try {
-            handleReply(JSON.parse(message));
+            const parsedMessage = JSON.parse(messageData);
+            handleReply(parsedMessage);
           } catch (error) {
             console.error("Error parsing message data:", error);
           }
@@ -296,15 +299,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
           }`}
           onClick={handleClick}
-          onTouchStart={(e) =>
-            handleTouchStart(
-              e,
-              messageJSON ? messageJSON.message : actualMessage
-            )
-          }
+          onTouchStart={(e) => handleTouchStart(e, message)}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          data-message={JSON.stringify(messageJSON ? messageJSON : message)}
+          data-message={JSON.stringify(message)}
           data-message-id={message.id}
         >
           <div
