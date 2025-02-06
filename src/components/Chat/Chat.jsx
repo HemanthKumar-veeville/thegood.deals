@@ -3,6 +3,9 @@ import { useTranslation } from "react-i18next";
 import { ChatAlt1 } from "../../icons/ChatAlt1";
 import { Send2 } from "../../icons/Send2";
 import { WS_URL } from "../../config";
+import { fetchParticipantsByDeal } from "../../redux/app/participants/participantSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 export const Chat = ({ messages: initialMessages, dealId }) => {
   const { t, i18n } = useTranslation();
   const messagesEndRef = useRef(null);
@@ -16,13 +19,22 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const longPressThreshold = 500; // 500ms for long press
   const messagesContainerRef = useRef(null);
   const [slideOffset, setSlideOffset] = useState(0);
+  const dispatch = useDispatch();
+  const { participants, participantStatus } = useSelector(
+    (state) => state.participants
+  );
+  const [showMentions, setShowMentions] = useState(false);
+  const [mentionFilter, setMentionFilter] = useState("");
+  const [cursorPosition, setCursorPosition] = useState(0);
+  const textareaRef = useRef(null);
+  const [mentions, setMentions] = useState([]);
 
   useEffect(() => {
     let reconnectAttempt = 0;
     const maxReconnectAttempts = 5;
     const reconnectDelay = 3000;
     let reconnectTimeout = null;
-
+    dispatch(fetchParticipantsByDeal(dealId));
     const connectWebSocket = () => {
       if (ws.current?.readyState === WebSocket.OPEN) {
         ws.current.close();
@@ -123,7 +135,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       day: "numeric",
     });
   };
-
+  console.log({ mentions, participants });
   const groupMessagesByDate = (messages) => {
     const groups = {};
     messages.forEach((message) => {
@@ -152,22 +164,26 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       ) {
         return;
       }
-
+      const tag_participants = [...new Set(mentions)];
+      console.log({ tag_participants });
       try {
         const messageData = {
           message: newMessage.trim(),
           tag_message: replyTo?.id || null,
-          tag_participant: null,
+          tag_participant: tag_participants.map(
+            (participant) => participant.participant_id
+          ),
         };
-
+        console.log({ messageData });
         ws.current.send(JSON.stringify(messageData));
         setNewMessage("");
         setReplyTo(null);
+        setMentions([]);
       } catch (error) {
         console.error("Error sending message:", error);
       }
     },
-    [newMessage, replyTo]
+    [newMessage, replyTo, mentions]
   );
 
   const handleKeyPress = (e) => {
@@ -423,6 +439,57 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     ]
   );
 
+  const handleInput = (e) => {
+    const textarea = e.target;
+    const text = textarea.value;
+    const position = textarea.selectionStart;
+    setCursorPosition(position);
+
+    // Auto-resize textarea (existing functionality)
+    textarea.style.height = "auto";
+    textarea.style.height = Math.min(textarea.scrollHeight, 120) + "px";
+
+    // Check if we should show mentions
+    const lastAtSymbol = text.lastIndexOf("@", position);
+    if (lastAtSymbol !== -1) {
+      const nextSpace = text.indexOf(" ", lastAtSymbol);
+      const isCurrentlyTypingMention =
+        nextSpace === -1 || position <= nextSpace;
+
+      if (isCurrentlyTypingMention) {
+        const filterText = text.slice(lastAtSymbol + 1, position);
+        setMentionFilter(filterText);
+        setShowMentions(true);
+        return;
+      }
+    }
+
+    setShowMentions(false);
+  };
+
+  const handleMentionClick = (participant) => {
+    const textarea = textareaRef.current;
+    const text = textarea.value;
+    const lastAtSymbol = text.lastIndexOf("@", cursorPosition);
+
+    const beforeMention = text.slice(0, lastAtSymbol);
+    const afterMention = text.slice(cursorPosition);
+    const newText = `${beforeMention}@${participant.participant_name} ${afterMention}`;
+
+    setMentions([...mentions, participant]);
+
+    setNewMessage(newText);
+    setShowMentions(false);
+    textarea.focus();
+  };
+
+  // Filter participants based on mention input
+  const filteredParticipants = participants.filter((participant) =>
+    participant?.participant_name
+      ?.toLowerCase()
+      .includes(mentionFilter.toLowerCase())
+  );
+
   return (
     <div className="flex flex-col w-full bg-white rounded-lg shadow-sm">
       <style jsx>{`
@@ -606,22 +673,38 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             </div>
           )}
           <div className="flex items-center gap-3">
-            <div className="flex-1 bg-[#F4F6F8] rounded-[10px]">
+            <div className="flex-1 bg-[#F4F6F8] rounded-[10px] relative">
               <textarea
+                ref={textareaRef}
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
+                onInput={handleInput}
                 placeholder="Message ..."
                 rows="1"
                 style={{ resize: "none" }}
                 className="w-full px-4 py-3 text-[15px] outline-none placeholder-[#637381] bg-[#F4F6F8] rounded-[10px] min-h-[46px] max-h-[120px] overflow-y-auto scrollbar-thin"
-                onInput={(e) => {
-                  // Auto-resize textarea
-                  e.target.style.height = "auto";
-                  e.target.style.height =
-                    Math.min(e.target.scrollHeight, 120) + "px";
-                }}
               />
+
+              {/* Mentions dropdown */}
+              {showMentions && filteredParticipants.length > 0 && (
+                <div className="absolute bottom-full left-0 w-full mb-2 bg-white rounded-lg shadow-lg border border-[#E7E7E7] max-h-[200px] overflow-y-auto">
+                  {filteredParticipants.map((participant) => (
+                    <div
+                      key={participant.id}
+                      onClick={() => handleMentionClick(participant)}
+                      className="px-4 py-2 hover:bg-[#F4F6F8] cursor-pointer flex items-center gap-2"
+                    >
+                      <div className="w-6 h-6 rounded-full bg-[#E7E7E7] flex items-center justify-center text-sm">
+                        {participant?.participant_name?.charAt(0)}
+                      </div>
+                      <span className="text-[#212B36]">
+                        {participant?.participant_name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <button
               type="button"
