@@ -15,6 +15,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const [pressTimer, setPressTimer] = useState(null);
   const longPressThreshold = 500; // 500ms for long press
   const messagesContainerRef = useRef(null);
+  const [slideOffset, setSlideOffset] = useState(0);
 
   useEffect(() => {
     let reconnectAttempt = 0;
@@ -202,8 +203,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         setPressTimer(null);
       }
 
+      // Update slide offset for animation
+      setSlideOffset(Math.min(Math.max(-diff, 0), 50));
+
       if (Math.abs(diff) > 50) {
-        // Get the full message data from the dataset
         const messageData = e.currentTarget.dataset.message;
         if (messageData) {
           try {
@@ -213,6 +216,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             console.error("Error parsing message data:", error);
           }
           setSlideStartX(null);
+          setSlideOffset(0); // Reset offset after reply
         }
       }
     },
@@ -221,15 +225,12 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
   const handleTouchEnd = useCallback(() => {
     setSlideStartX(null);
+    setSlideOffset(0); // Reset offset
     if (pressTimer) {
       clearTimeout(pressTimer);
       setPressTimer(null);
     }
   }, [pressTimer]);
-
-  const handleDoubleClick = useCallback((message) => {
-    handleReply(message);
-  }, []);
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
@@ -250,19 +251,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
   const MessageContent = useCallback(
     ({ message, index }) => {
-      const [lastClick, setLastClick] = useState(0);
-
-      const handleClick = useCallback(() => {
-        const currentTime = new Date().getTime();
-        const timeDiff = currentTime - lastClick;
-
-        if (timeDiff < 300) {
-          handleDoubleClick(message);
-        }
-
-        setLastClick(currentTime);
-      }, [lastClick, message]);
-
       const parseMessage = useCallback((msg) => {
         if (!msg) return null;
         try {
@@ -293,18 +281,44 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
       return (
         <div
-          className={`relative max-w-[70%] px-4 py-3 ${
+          className={`message-container relative max-w-[70%] px-4 py-3 ${
             message?.sender?.role === "You"
               ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-          }`}
-          onClick={handleClick}
+          } ${slideOffset > 0 ? "sliding" : ""}`}
           onTouchStart={(e) => handleTouchStart(e, message)}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           data-message={JSON.stringify(message)}
           data-message-id={message.id}
+          style={{
+            transform: `translateX(${slideOffset}px)`,
+          }}
         >
+          {/* Add slide indicator */}
+          <div className="slide-indicator">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M10 9l-6 6 6 6"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M4 15h11a4 4 0 004-4v0"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
           <div
             className={`text-sm font-medium mb-1 ${
               message?.sender?.role === "You" ? "text-white" : "text-[#1B4F4A]"
@@ -404,7 +418,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       handleTouchStart,
       handleTouchMove,
       handleTouchEnd,
-      handleDoubleClick,
       messages,
       scrollToMessage,
     ]
@@ -412,6 +425,62 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
   return (
     <div className="flex flex-col w-full bg-white rounded-lg shadow-sm">
+      <style jsx>{`
+        .scrollbar-thin {
+          scrollbar-width: thin;
+          scrollbar-color: #e7e7e7 transparent;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+          background-color: #e7e7e7;
+          border-radius: 20px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+          background-color: #d1d1d1;
+        }
+
+        @keyframes highlight {
+          0% {
+            background-color: rgba(27, 79, 74, 0.2);
+          }
+          100% {
+            background-color: #163f3a;
+          }
+        }
+
+        .highlight-message {
+          animation: highlight 2s ease-out;
+        }
+
+        .message-container {
+          position: relative;
+          transition: transform 0.2s ease-out;
+        }
+
+        .slide-indicator {
+          position: absolute;
+          left: -40px;
+          top: 50%;
+          transform: translateY(-50%);
+          opacity: 0;
+          transition: opacity 0.2s ease-out;
+          color: #1b4f4a;
+        }
+
+        .sliding .slide-indicator {
+          opacity: 1;
+        }
+      `}</style>
+
       {/* Make entire header clickable */}
       <div
         className="flex justify-between items-center px-4 py-3 border-b border-[#E7E7E7] cursor-pointer hover:bg-gray-50 transition-colors"
@@ -454,43 +523,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           ref={messagesContainerRef}
           className="flex-1 overflow-y-auto p-4 min-h-[300px] max-h-[400px] scrollbar-thin"
         >
-          <style jsx>{`
-            .scrollbar-thin {
-              scrollbar-width: thin;
-              scrollbar-color: #e7e7e7 transparent;
-            }
-
-            .scrollbar-thin::-webkit-scrollbar {
-              width: 4px;
-            }
-
-            .scrollbar-thin::-webkit-scrollbar-track {
-              background: transparent;
-            }
-
-            .scrollbar-thin::-webkit-scrollbar-thumb {
-              background-color: #e7e7e7;
-              border-radius: 20px;
-            }
-
-            .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-              background-color: #d1d1d1;
-            }
-
-            @keyframes highlight {
-              0% {
-                background-color: rgba(27, 79, 74, 0.2);
-              }
-              100% {
-                background-color: #163f3a;
-              }
-            }
-
-            .highlight-message {
-              animation: highlight 2s ease-out;
-            }
-          `}</style>
-
           {messages.length > 0 ? (
             Object.entries(groupMessagesByDate(messages)).map(
               ([date, dateMessages]) => (
