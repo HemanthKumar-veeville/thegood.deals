@@ -183,7 +183,7 @@ const Account = ({ isRequestSent, dealId }) => {
 
   return (
     <div
-      className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-[800px] overflow-y-auto custom-scrollbar"
+      className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-[800px] overflow-y-auto scrollbar-hide"
       ref={scrollableContainerRef}
     >
       <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto] z-0">
