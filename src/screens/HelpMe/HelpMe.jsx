@@ -77,7 +77,7 @@ const PublicNeedHelp = () => {
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
-      <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex flex-auto relative">
+      <div className="flex-col w-full items-start gap-[15px] px-[15px] py-[15px] flex flex-auto relative">
         <div className="flex items-center gap-3 w-full border-b border-stroke">
           <div className="inline-flex items-center gap-2" onClick={handleBack}>
             <ArrowLeft1 className="w-[18px] h-[18px]" color="#637381" />

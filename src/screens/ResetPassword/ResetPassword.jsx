@@ -151,7 +151,7 @@ const ResetPassword = () => {
         />
       )}
       {!loading && (
-        <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
+        <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] absolute left-0">
           <div className="relative w-fit font-heading-6 font-semibold text-primary-color text-[length:var(--heading-6-font-size)] text-center">
             {t("resetPassword.newPassword")}
           </div>

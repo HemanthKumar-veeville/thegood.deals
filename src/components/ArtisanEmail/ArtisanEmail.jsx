@@ -29,7 +29,7 @@ export const ArtisanEmail = ({ HEADERClassName }) => {
           <div className="relative w-12 h-12" />
         </div>
       </div>
-      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-[360px] items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto]">
         {/* Dear Craftsman */}
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] [font-style:var(--heading-6-font-style)]">
           {t("artisanEmail.dearCraftsman")}

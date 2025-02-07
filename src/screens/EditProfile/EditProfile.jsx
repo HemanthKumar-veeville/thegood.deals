@@ -196,7 +196,7 @@ const EditProfile = () => {
     <div className="flex flex-col w-full items-start relative bg-primary-background">
       {status === "loading" && <CustomLoader />}
       {status !== "loading" && (
-        <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+        <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto]">
           <div
             className="flex w-full items-center gap-3 pt-0 pb-5 px-0 relative flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke cursor-pointer"
             onClick={handleBack}

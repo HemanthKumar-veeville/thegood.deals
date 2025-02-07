@@ -111,7 +111,7 @@ export const ArtisanEmailList = ({ HEADERClassName }) => {
           </div>
         </div>
       </div>
-      <div className="flex-col w-[360px] items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
+      <div className="flex-col w-[360px] items-start gap-[15px] px-[15px] py-[15px] flex relative flex-[0_0_auto]">
         <p className="relative self-stretch mt-[-1.00px] font-heading-6 text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)]">
           {t("artisanEmailList.dearCraftsman")}
         </p>

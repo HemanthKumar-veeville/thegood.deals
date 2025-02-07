@@ -39,7 +39,7 @@ const TermsOfUse = () => {
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background">
-      <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto]">
         <div
           className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke"
           onClick={handleBack}

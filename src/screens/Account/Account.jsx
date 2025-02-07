@@ -186,7 +186,7 @@ const Account = ({ isRequestSent, dealId }) => {
       className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-[800px] overflow-y-auto custom-scrollbar"
       ref={scrollableContainerRef}
     >
-      <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
+      <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto] z-0">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap capitalize">
           {`Hey, ${profile?.name || ""} 👋🏻`}
         </div>

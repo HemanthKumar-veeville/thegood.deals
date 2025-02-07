@@ -18,7 +18,7 @@ const ThanksPayment = () => {
 
   return (
     <div className="flex flex-col w-full h-screen items-start relative bg-primary-background mx-auto">
-      <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto]">
         <div className="relative self-stretch mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {t("thanks_withdrawal.thanks")}
         </div>

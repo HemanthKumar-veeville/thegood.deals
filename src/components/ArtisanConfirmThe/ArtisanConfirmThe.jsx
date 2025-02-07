@@ -111,7 +111,7 @@ export const ArtisanConfirmThe = ({
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background">
-      <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
+      <div className="flex-col w-full items-start gap-[15px] px-[15px] py-[15px] flex relative flex-[0_0_auto]">
         {isError && (
           <ShowCustomErrorModal
             message={errorMessage}

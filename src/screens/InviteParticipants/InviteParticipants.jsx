@@ -164,7 +164,7 @@ export const InviteParticipants = ({
           onClose={() => setIsSuccess(false)} // Reset modal state on close
         />
       )}
-      <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex relative flex-[0_0_auto]">
+      <div className="flex-col w-full items-start gap-[15px] px-[15px] py-[15px] flex relative flex-[0_0_auto]">
         <ImageSlider
           pictures={dealState?.deal_images || [blogImage]}
           products={dealState?.products}

@@ -105,7 +105,7 @@ const InviteLovedOnes = () => {
           onClose={() => setIsSuccess(false)} // Reset modal state on close
         />
       )}
-      <div className="flex-col w-full items-start gap-[15px] px-[35px] py-[15px] flex-[0_0_auto] flex relative">
+      <div className="flex-col w-full items-start gap-[15px] px-[15px] py-[15px] flex-[0_0_auto] flex relative">
         <p className="relative self-stretch mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl tracking-[0] leading-[30px]">
           {t("inviteLovedOnes.title")}
         </p>

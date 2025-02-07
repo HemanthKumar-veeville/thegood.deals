@@ -113,7 +113,7 @@ const SignIn = ({ setIsLoading }) => {
   };
 
   return (
-    <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute top-[118px] left-0">
+    <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] absolute top-[118px] left-0">
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
         {t("login.title")}
       </div>

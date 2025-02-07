@@ -184,7 +184,7 @@ export const VerificationOTP = () => {
         />
       )}
       {!loading && (
-        <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] absolute left-0">
+        <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] absolute left-0">
           <div className="relative w-fit mt-[-1.00px] font-semibold text-[#1b4f4a] text-2xl text-center leading-[30px] whitespace-nowrap">
             {t("otp.confirm_email")} {/* Confirm your email */}
           </div>
