@@ -174,7 +174,8 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             (participant) => participant.participant_id
           ),
         };
-
+        
+        console.log({messageData})
         ws.current.send(JSON.stringify(messageData));
         setNewMessage("");
         setReplyTo(null);
