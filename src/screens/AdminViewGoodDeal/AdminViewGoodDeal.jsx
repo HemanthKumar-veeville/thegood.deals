@@ -27,6 +27,7 @@ import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../../components/Line/Line";
 import { formatDate, getDealProgress } from "../../helpers/helperMethods";
 import ReadMore from "../../components/Readmore/Readmore";
+import { Chat } from "../../components/Chat/Chat";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -175,6 +176,8 @@ const AdminViewGoodDeal = () => {
             {dealState?.collection_info?.location}
           </p>
         </div>
+        <Line />
+        <Chat messages={[]} dealId={deal_id} />
         <Line />
         <Cart
           products={dealState?.products}
