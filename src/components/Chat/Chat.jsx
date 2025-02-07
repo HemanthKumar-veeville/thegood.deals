@@ -174,8 +174,8 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             (participant) => participant.participant_id
           ),
         };
-        
-        console.log({messageData})
+
+        console.log({ messageData });
         ws.current.send(JSON.stringify(messageData));
         setNewMessage("");
         setReplyTo(null);
@@ -583,7 +583,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         className={`flex flex-col transition-all duration-300 ease-in-out origin-top ${
           isCollapsed
             ? "max-h-0 opacity-0 scale-y-0"
-            : "max-h-[600px] opacity-100 scale-y-100"
+            : "max-h-96 opacity-100 scale-y-100"
         }`}
       >
         {/* Messages Container - will scroll */}
