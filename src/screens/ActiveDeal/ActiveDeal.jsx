@@ -74,7 +74,7 @@ const ActiveDeal = () => {
   const handleBack = () => {
     navigate(-1);
   };
-
+  console.log({ isError, errorMessage });
   const handleMyOrders = () => {
     navigate("/admin-orders?deal_id=" + deal_id + "&is_creator=" + is_creator);
   };
@@ -101,6 +101,8 @@ const ActiveDeal = () => {
     draft: { text: t("active_deal.draft"), color: "info" },
   };
   const fetchDeal = async () => {
+    setIsError(false);
+    setErrorMessage("");
     try {
       const res = await dispatch(getDealByDealId(deal_id));
 
@@ -112,6 +114,8 @@ const ActiveDeal = () => {
       setSteps(updateSteps(steps, currentStep));
     } catch (err) {
       console.error(err);
+      setIsError(true);
+      setErrorMessage("An error occurred while fetching the deal.");
     }
   };
 
@@ -208,44 +212,10 @@ const ActiveDeal = () => {
     });
   }
 
-  // Update the dummy messages to match the image exactly
-  const dummyMessages = [
-    {
-      id: 1,
-      content:
-        "Wild salmon is naturally high in omega-3s and contains less overall fat.",
-      senderId: "user2",
-      senderName: "Vous",
-      role: "Participant",
-      timestamp: "2024-03-20T13:31:00Z",
-      profilePic: null, // Will show first letter "V" if no image
-    },
-    {
-      id: 2,
-      content:
-        "Do wild and farmed salmon have differences in taste, nutrition and environmental impact?",
-      senderId: "user1",
-      senderName: "Abraham Thomas",
-      role: "Organisateur",
-      timestamp: "2024-03-20T10:14:00Z",
-      profilePic: null, // Will show first letter "A" if no image
-    },
-  ];
-
-  // Set currentUserId to match "Vous" messages
-  const currentUserId = "user2";
-
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">
       {status === "loading" && <CustomLoader />}
-      {status === "failed" && (
-        <ShowCustomErrorModal
-          message={error?.detail || t("active_deal.error")}
-          buttonText={t("active_deal.try_again")}
-          shouldCloseOnOverlayClick={false}
-          handleClick={fetchDeal}
-        />
-      )}
+
       {status === "succeeded" && (
         <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
           <div className="flex-col flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
