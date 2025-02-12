@@ -1428,7 +1428,8 @@
     "empty": "Vous n'avez aucune commande pour le moment.",
     "summary": "Récapitulatif de la commande",
     "edit_payment": "Modifier les informations",
-    "awaiting_payment": "En attente de paiement"
+    "awaiting_payment": "En attente de paiement",
+    "cancel_order": "Annuler ma commande"
   },
   "App": {
     "Message": {

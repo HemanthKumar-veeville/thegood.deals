@@ -1421,7 +1421,8 @@
     "empty": "You don't have any orders now.",
     "summary": "Order summary",
     "edit_payment": "Edit information",
-    "awaiting_payment": "Awaiting payment"
+    "awaiting_payment": "Awaiting payment",
+    "cancel_order": "Cancel my order"
   },
   "App": {
     "Message": {
