@@ -65,6 +65,8 @@ const UpdateDeal = () => {
   const [imagesForm, setImagesForm] = useState(new FormData());
   const [existingImages, setExistingImages] = useState([]);
 
+  console.log({ errorMessage, isError });
+
   const addProduct = (product) => {
     setIsProductUpdated(true);
     setProducts([...products, product]);
@@ -239,7 +241,7 @@ const UpdateDeal = () => {
       const resultAction = await dispatch(
         updateDealByDealId({ dealId, updatedDeal: form })
       ).unwrap();
-
+      console.log({ resultAction });
       navigate(-1);
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
@@ -251,46 +253,48 @@ const UpdateDeal = () => {
       setLoading(false); // Set loading to false after the API call
     }
   };
-  useEffect(() => {
-    const fetchDeal = async () => {
-      setLoading(true);
-      try {
-        const response = await dispatch(
-          getDealByDealIdForEdit(dealId)
-        ).unwrap();
-        const dealData = response;
 
-        if (dealData) {
-          setTitle(dealData.title);
-          setIban(dealData.organiser_iban);
-          setExistingImages(dealData?.images);
-          setFormData({
-            description: dealData.description,
-            collectionDate:
-              dealData.collection_date?.slice(0, 16) ?? formatDate(new Date()),
-            contentDescription: dealData.content_description,
-            manufacturerInfo: dealData.artisan_information,
-            dealExpiration:
-              dealData.deal_expiration_date?.slice(0, 16) ??
-              formatDate(new Date()),
-            acceptConditions: dealData.terms_accepted ?? false,
-            collectionLocation: dealData.collection_location,
-            pictures: dealData?.images || [],
-            deliveryCost: 0,
-          });
-          setIsDraftDeal(dealData?.deal_status == 1);
-          setProducts(dealData.products ?? []);
-        }
-      } catch (err) {
-        console.error(t("create_deal.console_fetching_error"), err); // Fetch error message
+  const fetchDeal = async () => {
+    setLoading(true);
+    try {
+      const response = await dispatch(getDealByDealIdForEdit(dealId)).unwrap();
+      const dealData = response;
+
+      if (dealData) {
+        setTitle(dealData.title);
+        setIban(dealData.organiser_iban);
+        setExistingImages(dealData?.images);
+        setFormData({
+          description: dealData.description,
+          collectionDate:
+            dealData.collection_date?.slice(0, 16) ?? formatDate(new Date()),
+          contentDescription: dealData.content_description,
+          manufacturerInfo: dealData.artisan_information,
+          dealExpiration:
+            dealData.deal_expiration_date?.slice(0, 16) ??
+            formatDate(new Date()),
+          acceptConditions: dealData.terms_accepted ?? false,
+          collectionLocation: dealData.collection_location,
+          pictures: dealData?.images || [],
+          deliveryCost: 0,
+        });
+        setIsDraftDeal(dealData?.deal_status == 1);
+        setProducts(dealData.products ?? []);
       }
-      setLoading(false);
-    };
+    } catch (err) {
+      console.error(t("create_deal.console_fetching_error"), err); // Fetch error message
+    }
+    setLoading(false);
+  };
 
+  useEffect(() => {
     fetchDeal();
   }, []);
 
   const handleBack = () => {
+    console.log("handleBack");
+    setIsError(false);
+    setErrorMessage("");
     navigate(-1);
   };
 
@@ -313,6 +317,12 @@ const UpdateDeal = () => {
     );
   };
 
+  const handleClose = () => {
+    setIsError(false);
+    setErrorMessage("");
+    fetchDeal();
+  };
+
   return (
     <>
       {loading && <CustomLoader />}
@@ -320,7 +330,8 @@ const UpdateDeal = () => {
         <ShowCustomErrorModal
           message={errorMessage}
           buttonText={t("waiting_deal.got_it")}
-          onClose={() => setIsError(false)} // Reset modal state on close
+          shouldCloseOnOverlayClick={true}
+          onClose={handleClose}
         />
       )}
       {!loading && (

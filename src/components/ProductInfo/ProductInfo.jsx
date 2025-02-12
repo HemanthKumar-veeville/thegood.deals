@@ -24,7 +24,7 @@ const ProductInfo = ({
     product?.minimum_quantity || 2
   );
   const [maxQuantity, setMaxQuantity] = useState(
-    product?.maximum_quantity || 13
+    product?.maximum_quantity || 10
   );
   const [goodDealPrice, setGoodDealPrice] = useState(product?.deal_price || "");
   const [maximumRetailPrice, setMaximumRetailPrice] = useState(
