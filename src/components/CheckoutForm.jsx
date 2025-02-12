@@ -40,14 +40,13 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const isEditMode = queryParams.get("is_edit_mode");
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded
       setMessage(t("checkout.stripe_not_loaded")); // Translated message
       return;
     }
 
-    setIsLoading(true);
     setMessage(""); // Reset message before processing
 
     try {

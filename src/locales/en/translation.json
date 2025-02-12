@@ -1422,7 +1422,8 @@
     "summary": "Order summary",
     "edit_payment": "Edit information",
     "awaiting_payment": "Awaiting payment",
-    "cancel_order": "Cancel my order"
+    "cancel_order": "Cancel my order",
+    "order_cancelled": "Your order has been cancelled successfully."
   },
   "App": {
     "Message": {

@@ -1429,7 +1429,8 @@
     "summary": "Récapitulatif de la commande",
     "edit_payment": "Modifier les informations",
     "awaiting_payment": "En attente de paiement",
-    "cancel_order": "Annuler ma commande"
+    "cancel_order": "Annuler ma commande",
+    "order_cancelled": "Votre commande a été annulée avec succès."
   },
   "App": {
     "Message": {

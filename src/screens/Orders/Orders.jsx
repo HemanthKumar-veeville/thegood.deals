@@ -20,6 +20,7 @@ import { ArrowRight1 } from "../../icons/ArrowRight1/ArrowRight1.jsx";
 import CustomStatus from "../../components/CustomStatus/CustomStatus.jsx";
 import { cancelOrderByOrderId } from "../../redux/app/orders/orderSlice";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert.jsx";
+import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal.jsx";
 
 const Orders = ({ dealId, dealType }) => {
   const navigate = useNavigate();
@@ -31,11 +32,28 @@ const Orders = ({ dealId, dealType }) => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const { orders, orderStatus, orderError } = useSelector(
     (state) => state.orders
   );
   const ordersState = orders?.Orders?.length > 0 ? orders?.Orders : null;
+
+  const handleCloseSuccessModal = () => {
+    setIsSuccess(false);
+    setSuccessMessage("");
+    if (deal_id) {
+      dispatch(
+        fetchOrdersByDeal({
+          dealId: deal_id,
+          dealType: is_creator === "true" ? "created" : "invited",
+        })
+      );
+    } else {
+      dispatch(fetchOrders());
+    }
+  };
 
   useEffect(() => {
     if (deal_id) {
@@ -64,6 +82,8 @@ const Orders = ({ dealId, dealType }) => {
   const handleCancelOrder = async (orderId) => {
     try {
       await dispatch(cancelOrderByOrderId(orderId)).unwrap();
+      setIsSuccess(true);
+      setSuccessMessage(t("orders.order_cancelled"));
     } catch (error) {
       console.error("Failed to cancel order:", error);
       setIsError(true);
@@ -103,7 +123,13 @@ const Orders = ({ dealId, dealType }) => {
             onClose={() => setIsError(false)} // Reset modal state on close
           />
         )}
-
+        {isSuccess && (
+          <ShowCustomSuccessModal
+            message={successMessage}
+            buttonText={t("waiting_deal.got_it")}
+            onClose={handleCloseSuccessModal} // Reset modal state on close
+          />
+        )}
         <>
           {orders?.message && (
             <div className="w-full">
