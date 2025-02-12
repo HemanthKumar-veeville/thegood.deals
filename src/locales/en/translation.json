@@ -613,7 +613,10 @@
   "common": {
     "back": "Back",
     "confirm": "Confirm",
-    "read_more": "Read more"
+    "read_more": "Read more",
+    "cancel": "Cancel",
+    "accept": "Accept",
+    "cancel_header": "Are you sure you want to cancel your order?"
   },
   "deal": {
     "title": "Wine crates Domaine de Cigaluse",

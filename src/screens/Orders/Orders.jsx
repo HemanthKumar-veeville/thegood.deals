@@ -21,6 +21,7 @@ import CustomStatus from "../../components/CustomStatus/CustomStatus.jsx";
 import { cancelOrderByOrderId } from "../../redux/app/orders/orderSlice";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert.jsx";
 import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal.jsx";
+import { ShowCustomWarningModal } from "../../components/WarningAlert/WarningAlert.jsx";
 
 const Orders = ({ dealId, dealType }) => {
   const navigate = useNavigate();
@@ -34,12 +35,12 @@ const Orders = ({ dealId, dealType }) => {
   const [isOrderDetailsVisible, setIsOrderDetailsVisible] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-
+  const [isWarning, setIsWarning] = useState(false);
   const { orders, orderStatus, orderError } = useSelector(
     (state) => state.orders
   );
   const ordersState = orders?.Orders?.length > 0 ? orders?.Orders : null;
-
+  const [orderId, setOrderId] = useState(null);
   const handleCloseSuccessModal = () => {
     setIsSuccess(false);
     setSuccessMessage("");
@@ -79,7 +80,13 @@ const Orders = ({ dealId, dealType }) => {
     navigate(`/payment?orderId=${orderId}&is_edit_mode=${true}`);
   };
 
-  const handleCancelOrder = async (orderId) => {
+  const handleCancelOrder = (orderId) => {
+    setIsWarning(true);
+    setOrderId(orderId);
+  };
+
+  const handleConfirm = async (orderId) => {
+    console.log("confirm clicked");
     try {
       await dispatch(cancelOrderByOrderId(orderId)).unwrap();
       setIsSuccess(true);
@@ -88,7 +95,13 @@ const Orders = ({ dealId, dealType }) => {
       console.error("Failed to cancel order:", error);
       setIsError(true);
       setErrorMessage(error?.detail);
+    } finally {
+      setIsWarning(false);
     }
+  };
+
+  const handleRefuse = () => {
+    setIsWarning(false);
   };
 
   const handleBackToDeal = () => {
@@ -121,6 +134,17 @@ const Orders = ({ dealId, dealType }) => {
             message={errorMessage}
             buttonText={t("waiting_deal.got_it")}
             onClose={() => setIsError(false)} // Reset modal state on close
+          />
+        )}
+        {isWarning && (
+          <ShowCustomWarningModal
+            message={t("common.cancel_header")}
+            acceptButtonText={t("common.accept")}
+            cancelButtonText={t("common.cancel")}
+            handleConfirm={handleConfirm}
+            handleRefuse={handleRefuse}
+            onClose={() => setIsWarning(false)} // Reset modal state on close
+            orderId={orderId}
           />
         )}
         {isSuccess && (

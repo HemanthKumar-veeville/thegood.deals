@@ -613,7 +613,10 @@
   "common": {
     "back": "Retour",
     "confirm": "Confirmer",
-    "read_more": "Lire plus"
+    "read_more": "Lire plus",
+    "cancel": "Annuler",
+    "accept": "Accepter",
+    "cancel_header": "Êtes-vous sûr de vouloir annuler votre commande ?"
   },
   "deal": {
     "title": "Huîtres de Saint-Malo",
