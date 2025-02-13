@@ -1417,15 +1417,16 @@
     "my_orders": "My Orders",
     "order_on_deal": "order on deal",
     "total": "Total",
+    "total_product_cost": "Total product cost",
     "service_fees": "Service Fees",
     "payment_fees": "Payment Fees",
     "delivery_fees": "Delivery Fees",
     "products": "products",
     "empty": "You don't have any orders now.",
     "summary": "Order summary",
-    "edit_payment": "Edit information",
+    "edit_payment": "Modify payment",
     "awaiting_payment": "Awaiting payment",
-    "cancel_order": "Cancel my order",
+    "cancel_order": "Cancel order",
     "order_cancelled": "Your order has been cancelled successfully."
   },
   "App": {

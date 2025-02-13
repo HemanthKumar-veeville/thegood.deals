@@ -238,6 +238,11 @@ const Orders = ({ dealId, dealType }) => {
                         key={order.order_id}
                         className="flex flex-col items-start gap-4 pt-0 pb-4 px-4 bg-whitewhite mt-3 w-full"
                       >
+                        <div className="flex items-center justify-between w-full">
+                          <p className="font-semibold text-primary-color text-sm text-right">
+                            {`#${order.order_id.split("-")[0]}`}
+                          </p>
+                        </div>
                         {order.payment_status !== "succeeded" && (
                           <CustomStatus text={t("orders.awaiting_payment")} />
                         )}
@@ -259,8 +264,7 @@ const Orders = ({ dealId, dealType }) => {
                                 <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                                   € {product.product_price} x{" "}
                                   {product.product_quantity} = €{" "}
-                                  {product.product_price *
-                                    product.product_quantity}
+                                  {product.product_cost}
                                 </p>
                               </div>
                             </div>
@@ -268,13 +272,22 @@ const Orders = ({ dealId, dealType }) => {
                         ))}
                         {/* Fees Section */}
                         <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
+                          {/* Total Product Cost */}
+                          <div className="flex items-center justify-between w-full">
+                            <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
+                              {t("orders.total_product_cost")}
+                            </p>
+                            <p className="font-semibold text-primary-color text-sm text-right">
+                              {order.order_cost} €
+                            </p>
+                          </div>
                           {/* Service Fees */}
                           <div className="flex items-center justify-between w-full">
                             <p className="font-body-extra-small-text-regular font-[number:var(--body-extra-small-text-regular-font-weight)] text-primary-text-color text-[length:var(--body-extra-small-text-regular-font-size)] text-center tracking-[var(--body-extra-small-text-regular-letter-spacing)] leading-[var(--body-extra-small-text-regular-line-height)] whitespace-nowrap [font-style:var(--body-extra-small-text-regular-font-style)]">
                               {t("orders.service_fees")}
                             </p>
                             <p className="font-semibold text-primary-color text-sm text-right">
-                              {participant.service_fees} €
+                              {order.order_service_fees} €
                             </p>
                           </div>
                           {/* Payment Fees */}
@@ -306,7 +319,7 @@ const Orders = ({ dealId, dealType }) => {
                           </div>
                           <div className="inline-flex flex-col items-end">
                             <div className="font-semibold text-primary-color text-lg text-right">
-                              € {participant?.total_ttc}
+                              € {order?.total_order_cost}
                             </div>
                           </div>
                         </div>
@@ -341,7 +354,9 @@ const Orders = ({ dealId, dealType }) => {
                                 </button>
                               </button>
                             )}
-                            <Line />
+                            <div className="h-[2px] w-full bg-stroke">
+                              <Line />
+                            </div>
                           </>
                         )}
                       </div>

@@ -1424,15 +1424,16 @@
     "my_orders": "Mes commandes",
     "order_on_deal": "commande sur le deal",
     "total": "Total",
+    "total_product_cost": "Frais de produits",
     "service_fees": "Frais de service",
     "payment_fees": "Frais de paiement",
     "delivery_fees": "Frais de livraison",
     "products": "produits",
     "empty": "Vous n'avez aucune commande pour le moment.",
     "summary": "Récapitulatif de la commande",
-    "edit_payment": "Modifier les informations",
+    "edit_payment": "Modifier le paiement",
     "awaiting_payment": "En attente de paiement",
-    "cancel_order": "Annuler ma commande",
+    "cancel_order": "Annuler commande",
     "order_cancelled": "Votre commande a été annulée avec succès."
   },
   "App": {
