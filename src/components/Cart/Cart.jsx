@@ -49,8 +49,13 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
       const response = await dispatch(
         createOrder({ dealId, products: cartItems })
       ).unwrap();
+
       const orderId = response?.order_id;
-      navigate("/payment?orderId=" + orderId + "&dealId=" + dealId);
+      if (!response?.exist) {
+        navigate("/payment?orderId=" + orderId + "&dealId=" + dealId);
+      } else {
+        navigate(`/thanks-payment-setup?orderId=${orderId}`);
+      }
     } catch (error) {
       // Handle error with SweetAlert
       setIsError(true);
