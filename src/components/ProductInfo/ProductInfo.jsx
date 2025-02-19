@@ -58,7 +58,7 @@ const ProductInfo = ({
       message: t("productInfo.errors.productTitleRequired"),
     },
     {
-      condition: !totalStock || totalStock <= 0,
+      condition: !totalStock || totalStock < 0,
       field: "totalStock",
       message: t("productInfo.errors.totalStockPositive"),
     },
@@ -116,6 +116,14 @@ const ProductInfo = ({
   };
 
   const handleAddClick = () => {
+    // Check if total stock is zero and product exists
+    if (product && totalStock == 0) {
+      onDelete(product.product_id);
+      setAddMode(!addMode);
+      setProduct(null);
+      return;
+    }
+
     if (!validateProduct(productValidations)) return;
 
     // Reset initial states

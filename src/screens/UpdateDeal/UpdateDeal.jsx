@@ -29,6 +29,7 @@ import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import AcceptConditions from "../../components/AcceptConditions";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { Line } from "../../components/Line/Line";
+import { validate as uuidValidate } from "uuid";
 
 const UpdateDeal = () => {
   const { t, i18n } = useTranslation(); // Initialize translation hook
@@ -225,15 +226,14 @@ const UpdateDeal = () => {
       // Append product details
       products.forEach((product, index) => {
         Object.keys(product).forEach((key) => {
-          if (
-            product["product_id"]?.split(" ")?.length <= 1 &&
-            key == "product_id"
-          ) {
+          if (key !== "product_id") {
             form.append(`products[${index}][${key}]`, product[key]);
+          } else {
+            //check the product_id is a valid uuid or not, if not, dont append it
+            if (uuidValidate(product[key])) {
+              form.append(`products[${index}][${key}]`, product[key]);
+            }
           }
-
-          if (key !== "product_id")
-            form.append(`products[${index}][${key}]`, product[key]);
         });
       });
 
