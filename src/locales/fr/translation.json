@@ -613,7 +613,10 @@
   "common": {
     "back": "Retour",
     "confirm": "Confirmer",
-    "read_more": "Lire plus"
+    "read_more": "Lire plus",
+    "cancel": "Annuler",
+    "accept": "Accepter",
+    "cancel_header": "Êtes-vous sûr de vouloir annuler votre commande ?"
   },
   "deal": {
     "title": "Huîtres de Saint-Malo",
@@ -1421,14 +1424,17 @@
     "my_orders": "Mes commandes",
     "order_on_deal": "commande sur le deal",
     "total": "Total",
+    "total_product_cost": "Frais de produits",
     "service_fees": "Frais de service",
     "payment_fees": "Frais de paiement",
     "delivery_fees": "Frais de livraison",
     "products": "produits",
     "empty": "Vous n'avez aucune commande pour le moment.",
     "summary": "Récapitulatif de la commande",
-    "edit_payment": "Modifier les informations",
-    "awaiting_payment": "En attente de paiement"
+    "edit_payment": "Modifier le paiement",
+    "awaiting_payment": "En attente de paiement",
+    "cancel_order": "Annuler commande",
+    "order_cancelled": "Votre commande a été annulée avec succès."
   },
   "App": {
     "Message": {
@@ -1848,5 +1854,9 @@
     "YEMEN": "Yémen",
     "ZAMBIA": "Zambie",
     "ZIMBABWE": "Zimbabwe"
+  },
+  "payment_verification_info": {
+    "title": "Vous allez être débité de 0€, ce qui est tout à fait normal.",
+    "description": "Cette opération permet simplement de vérifier votre moyen de paiement et ne génère aucun frais."
   }
 }

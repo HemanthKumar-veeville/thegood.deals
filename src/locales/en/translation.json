@@ -613,7 +613,10 @@
   "common": {
     "back": "Back",
     "confirm": "Confirm",
-    "read_more": "Read more"
+    "read_more": "Read more",
+    "cancel": "Cancel",
+    "accept": "Accept",
+    "cancel_header": "Are you sure you want to cancel your order?"
   },
   "deal": {
     "title": "Wine crates Domaine de Cigaluse",
@@ -1414,14 +1417,17 @@
     "my_orders": "My Orders",
     "order_on_deal": "order on deal",
     "total": "Total",
+    "total_product_cost": "Total product cost",
     "service_fees": "Service Fees",
     "payment_fees": "Payment Fees",
     "delivery_fees": "Delivery Fees",
     "products": "products",
     "empty": "You don't have any orders now.",
     "summary": "Order summary",
-    "edit_payment": "Edit information",
-    "awaiting_payment": "Awaiting payment"
+    "edit_payment": "Modify payment",
+    "awaiting_payment": "Awaiting payment",
+    "cancel_order": "Cancel order",
+    "order_cancelled": "Your order has been cancelled successfully."
   },
   "App": {
     "Message": {
@@ -1841,5 +1847,9 @@
     "YEMEN": "Yemen",
     "ZAMBIA": "Zambia",
     "ZIMBABWE": "Zimbabwe"
+  },
+  "payment_verification_info": {
+    "title": "You will be charged 0€, which is perfectly normal.",
+    "description": "This operation simply serves to verify your payment method and incurs no fees."
   }
 }

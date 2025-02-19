@@ -4,7 +4,7 @@ import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { useNavigate } from "react-router-dom";
 import { Line } from "../../components/Line/Line";
 import { OrderSummary } from "../../components/OrderSummary/OrderSummary";
-
+import { PaymentVerificationInfo } from "../../components/PaymentVerificationInfo/PaymentVerificationInfo";
 const ThanksPayment = () => {
   const { t } = useTranslation(); // Initialize the translation hook
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ const ThanksPayment = () => {
         <p className="relative self-stretch [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color text-base tracking-[0] leading-6">
           {t("thanks_withdrawal.debit_info")}
         </p>
+        <PaymentVerificationInfo />
         <Line />
         <OrderSummary orderId={orderId} />
         <Line />

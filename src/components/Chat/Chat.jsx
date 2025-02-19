@@ -400,7 +400,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                     {taggedMessage.sender.name}
                   </div>
                   <div
-                    className={`text-[13px] truncate ${
+                    className={`text-[13px] truncate whitespace-pre-line ${
                       message?.sender?.role === "You"
                         ? "text-white/70"
                         : "text-[#E7E7E7]"
@@ -413,7 +413,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             </div>
           )}
 
-          <div className="text-[15px] break-words leading-[22px]">
+          <div className="text-[15px] break-words leading-[22px]  truncate whitespace-pre-line ">
             {messageJSON ? messageJSON.message : message.message}
           </div>
 
