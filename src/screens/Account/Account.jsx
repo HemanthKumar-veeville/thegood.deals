@@ -314,11 +314,11 @@ const Account = ({ isRequestSent, dealId }) => {
                 override={
                   deal.dealStatus === "soon_out_stock" ? (
                     <ProgressBarYellow
-                      percentage={getDealProgress(deal?.products || [])}
+                      percentage={deal?.deal_progress_percentage}
                     />
                   ) : (
                     <ProgressBarGreen
-                      percentage={getDealProgress(deal?.products || [])}
+                      percentage={deal?.deal_progress_percentage}
                     />
                   )
                 }
