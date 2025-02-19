@@ -1847,5 +1847,9 @@
     "YEMEN": "Yemen",
     "ZAMBIA": "Zambia",
     "ZIMBABWE": "Zimbabwe"
+  },
+  "payment_verification_info": {
+    "title": "You will be charged 0€, which is perfectly normal.",
+    "description": "This operation simply serves to verify your payment method and incurs no fees."
   }
 }
