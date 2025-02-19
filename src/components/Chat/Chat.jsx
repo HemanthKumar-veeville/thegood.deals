@@ -303,7 +303,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           // Check if the part starts with @ and is a mention
           if (part.startsWith("@")) {
             return (
-              <strong key={index} className="text-[#ead28d]">
+              <strong key={index} className="text-[#ffb130]">
                 {part}
               </strong>
             );
