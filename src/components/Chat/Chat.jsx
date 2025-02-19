@@ -296,6 +296,23 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         }
       }, [taggedMessage, message.taged_message]);
 
+      const formatMessageWithMentions = (text) => {
+        if (!text) return "";
+        // Updated regex to match mentions without spaces
+        const parts = text.split(/(@[\w]+)/g);
+        return parts.map((part, index) => {
+          // Check if the part starts with @ and is a mention
+          if (part.startsWith("@")) {
+            return (
+              <strong key={index} className="text-[#ffb130]">
+                {part}
+              </strong>
+            );
+          }
+          return part;
+        });
+      };
+
       return (
         <div
           className={`message-container relative max-w-[70%] px-4 py-3 ${
@@ -406,7 +423,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                         : "text-[#E7E7E7]"
                     }`}
                   >
-                    {taggedMessage.message}
+                    {formatMessageWithMentions(taggedMessage.message)}
                   </div>
                 </div>
               </div>
@@ -414,7 +431,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           )}
 
           <div className="text-[15px] break-words leading-[22px]  truncate whitespace-pre-line ">
-            {messageJSON ? messageJSON.message : message.message}
+            {messageJSON
+              ? formatMessageWithMentions(messageJSON.message)
+              : formatMessageWithMentions(message.message)}
           </div>
 
           <div className="text-[13px] mt-1">
@@ -475,9 +494,23 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
     const beforeMention = text.slice(0, lastAtSymbol);
     const afterMention = text.slice(cursorPosition);
-    const newText = `${beforeMention}@${participant.participant_name} ${afterMention}`;
 
-    setMentions([...mentions, participant]);
+    // Capitalize first letter of each word, then remove spaces
+    const mentionName = participant.participant_name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join("")
+      .trim();
+
+    const newText = `${beforeMention}@${mentionName} ${afterMention}`;
+
+    setMentions([
+      ...mentions,
+      {
+        ...participant,
+        mention_name: mentionName,
+      },
+    ]);
 
     setNewMessage(newText);
     setShowMentions(false);
@@ -648,7 +681,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                 <div className="text-sm font-medium text-[#1B4F4A]">
                   {replyTo.sender.name}
                 </div>
-                <div className="text-sm text-[#637381] truncate">
+                <div className="text-sm text-[#637381] truncate text-wrap">
                   {replyTo.message}
                 </div>
               </div>
@@ -701,6 +734,15 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                       </div>
                       <span className="text-[#212B36]">
                         {participant?.participant_name}
+                      </span>
+                      <span
+                        className={`px-2 py-1 text-xs rounded-full ${
+                          participant?.role?.toLowerCase() === "organiser"
+                            ? "bg-[#E8F3F2] text-[#1B4F4A]"
+                            : "bg-[#F4F6F8] text-[#637381]"
+                        }`}
+                      >
+                        {participant?.role}
                       </span>
                     </div>
                   ))}
