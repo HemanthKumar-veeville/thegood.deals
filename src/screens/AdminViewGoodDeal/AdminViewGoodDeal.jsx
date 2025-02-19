@@ -78,13 +78,9 @@ const AdminViewGoodDeal = () => {
           {dealState?.title || t("admin.wine_crates")}
         </div>
         {dealState?.status === "soon_out_stock" ? (
-          <ProgressBarYellow
-            percentage={getDealProgress(dealState?.products || [])}
-          />
+          <ProgressBarYellow percentage={dealState?.progress} />
         ) : (
-          <ProgressBarGreen
-            percentage={getDealProgress(dealState?.products || [])}
-          />
+          <ProgressBarGreen percentage={dealState?.progress} />
         )}
         <div className="flex items-start gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
           <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
