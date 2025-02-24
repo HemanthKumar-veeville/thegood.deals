@@ -58,6 +58,11 @@ const ProductInfo = ({
       message: t("productInfo.errors.productTitleRequired"),
     },
     {
+      condition: productTitle.length > 250,
+      field: "productTitle",
+      message: t("productInfo.errors.productTitleTooLong"),
+    },
+    {
       condition: !totalStock || totalStock < 0,
       field: "totalStock",
       message: t("productInfo.errors.totalStockPositive"),
@@ -164,13 +169,19 @@ const ProductInfo = ({
       <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
         {t("productInfo.productTitleLabel")}
       </div>
-      <input
-        type="text"
-        placeholder={t("productInfo.productTitlePlaceholder")}
-        value={productTitle}
-        onChange={(e) => setProductTitle(e.target.value)}
-        className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke"
-      />
+      <div className="relative w-full">
+        <input
+          type="text"
+          placeholder={t("productInfo.productTitlePlaceholder")}
+          value={productTitle}
+          onChange={(e) => setProductTitle(e.target.value)}
+          maxLength={250}
+          className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke"
+        />
+        <div className="absolute right-2 bottom-[-20px] text-xs text-gray-500  [font-family:'Inter',Helvetica]">
+          {productTitle.length}/250
+        </div>
+      </div>
       <div className="flex-col items-start flex w-[260px]">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
           {t("productInfo.totalStockLabel")}
