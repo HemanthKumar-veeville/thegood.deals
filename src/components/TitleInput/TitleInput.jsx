@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next"; // Import translation hook
 
-const TitleInput = ({ dealTitle, setDealTitle, typeHelperText }) => {
+const TitleInput = ({ dealTitle, setDealTitle }) => {
   const [title, setTitle] = useState(dealTitle);
   const handleTitleChange = (e) => {
     const newValue = e.target.value;
     // Only update if length is within limit
-    if (newValue.length <= 250) {
+    if (newValue.length <= 75) {
       setTitle(newValue);
       setDealTitle(newValue);
     }
@@ -26,7 +26,7 @@ const TitleInput = ({ dealTitle, setDealTitle, typeHelperText }) => {
           <textarea
             value={title}
             onChange={handleTitleChange}
-            maxLength={250}
+            maxLength={75}
             placeholder={t("TitleInput.placeholder")}
             className="flex-1 bg-transparent border-none focus:outline-none text-darkdark-6 text-base leading-6 w-full resize-none"
             rows={2}
@@ -36,7 +36,7 @@ const TitleInput = ({ dealTitle, setDealTitle, typeHelperText }) => {
       <div className="flex w-full justify-end items-center">
         <div className="w-[34px] mr-[-2.00px] h-[22px] relative">
           <div className="[font-family:'Inter',Helvetica] left-0 tracking-[0] text-sm top-0 text-primary-text-color font-normal text-right whitespace-nowrap leading-[22px] absolute">
-            {`${title.length}/${250}`} {/* Dynamic count */}
+            {`${title.length}/${75}`} {/* Dynamic count */}
           </div>
         </div>
       </div>

@@ -58,7 +58,7 @@ const ProductInfo = ({
       message: t("productInfo.errors.productTitleRequired"),
     },
     {
-      condition: productTitle.length > 250,
+      condition: productTitle.length > 75,
       field: "productTitle",
       message: t("productInfo.errors.productTitleTooLong"),
     },
@@ -175,11 +175,11 @@ const ProductInfo = ({
           placeholder={t("productInfo.productTitlePlaceholder")}
           value={productTitle}
           onChange={(e) => setProductTitle(e.target.value)}
-          maxLength={250}
+          maxLength={75}
           className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke"
         />
         <div className="absolute right-2 bottom-[-20px] text-xs text-gray-500  [font-family:'Inter',Helvetica]">
-          {productTitle.length}/250
+          {productTitle.length}/75
         </div>
       </div>
       <div className="flex-col items-start flex w-[260px]">

@@ -85,7 +85,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
           className="items-start flex flex-col gap-[5px] relative self-stretch w-full flex-[0_0_auto]"
         >
           <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
-            <p className="relative w-fit mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6 whitespace-nowrap">
+            <p className="relative w-full [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
               {product.name}
             </p>
           </div>
