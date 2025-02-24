@@ -25,10 +25,10 @@ const ProductList = ({ products, onEdit, onDelete }) => {
             className="flex flex-col items-start gap-[5px] p-[10px] bg-gray-100 rounded-[5px] w-full"
           >
             <div className="flex justify-between w-full">
-              <h3 className="font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6">
+              <h3 className="font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 break-words max-w-[80%]">
                 {product.name}
               </h3>
-              <div className="flex gap-2">
+              <div className="flex gap-2 shrink-0">
                 <FiEdit
                   className="text-[#4a90e2] cursor-pointer"
                   onClick={() => editDeal(product)}
@@ -39,22 +39,22 @@ const ProductList = ({ products, onEdit, onDelete }) => {
                 />
               </div>
             </div>
-            <p className="text-darkdark-6 text-sm">
+            <p className="text-darkdark-6 text-sm break-words w-full">
               {t("ProductList.totalStock")}: {product.total_stock}
             </p>
-            <p className="text-darkdark-6 text-sm">
+            <p className="text-darkdark-6 text-sm break-words w-full">
               {t("ProductList.minQuantity")}: {product.minimum_quantity}
             </p>
-            <p className="text-darkdark-6 text-sm">
+            <p className="text-darkdark-6 text-sm break-words w-full">
               {t("ProductList.maxQuantity")}: {product.maximum_quantity}
             </p>
-            <p className="text-darkdark-6 text-sm">
+            <p className="text-darkdark-6 text-sm break-words w-full">
               {t("ProductList.marketPrice")}: {product.market_price}
             </p>
-            <p className="text-darkdark-6 text-sm">
+            <p className="text-darkdark-6 text-sm break-words w-full">
               {t("ProductList.goodDealPrice")}: {product.deal_price}
             </p>
-            <p className="text-darkdark-6 text-sm">
+            <p className="text-darkdark-6 text-sm break-words w-full">
               {t("ProductList.estimatedDiscount")}: {product.estimated_discount}
             </p>
           </div>
