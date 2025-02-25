@@ -412,15 +412,17 @@ const ActiveDeal = () => {
                 {t("invitations.invite_loved_ones")}
               </button>
             </div>
-            <div
-              className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
-              onClick={handleEditDeal}
-            >
-              <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
-              <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
-                {t("active_deal.edit_deal_button")}
-              </button>
-            </div>
+            {dealData?.payment_collected_for_all_orders === false && (
+              <div
+                className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
+                onClick={handleEditDeal}
+              >
+                <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
+                <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                  {t("active_deal.edit_deal_button")}
+                </button>
+              </div>
+            )}
           </div>
           <Line />
           <div className="flex flex-col items-start p-5 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-[5px] shadow-shadow-1">
