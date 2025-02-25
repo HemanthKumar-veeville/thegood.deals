@@ -168,6 +168,19 @@ export const updateDealByDealId = createAsyncThunk(
   }
 );
 
+// Async thunk for reposting a deal by deal_id
+export const repostDeal = createAsyncThunk(
+  "deals/repostDeal",
+  async (repostedDeal, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post(`/repost-deal`, repostedDeal);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const updateOrderConfirmation = createAsyncThunk(
   "deals/updateOrderConfirmation",
   async (dealId, { rejectWithValue }) => {
@@ -303,6 +316,18 @@ const dealSlice = createSlice({
         state.deal = action.payload; // Update the specific deal if needed
       })
       .addCase(updateDealByDealId.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle repostDeal cases
+      .addCase(repostDeal.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(repostDeal.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.deal = action.payload;
+      })
+      .addCase(repostDeal.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })

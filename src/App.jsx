@@ -21,6 +21,7 @@ import { LegalNoticesScreen } from "./screens/LegalNoticesScreen";
 import InviteParticipants from "./screens/InviteParticipants/InviteParticipants";
 import { NewsLetterScreen } from "./screens/NewsLetterScreen/NewsLetterScreen";
 import UpdateDeal from "./screens/UpdateDeal/UpdateDeal";
+import RepostDeal from "./screens/RepostDeal/RepostDeal";
 import DealWallet from "./screens/DealWallet/DealWallet";
 import { STRIPE_PK } from "./config";
 import RequestPendingDeal from "./screens/RequestPendingDeal/RequestPendingDeal";
@@ -217,6 +218,14 @@ function App() {
       element: (
         <Layout>
           <ProtectedRoute element={<UpdateDeal />} />
+        </Layout>
+      ),
+    },
+    {
+      path: "/repost-deal",
+      element: (
+        <Layout>
+          <ProtectedRoute element={<RepostDeal />} />
         </Layout>
       ),
     },

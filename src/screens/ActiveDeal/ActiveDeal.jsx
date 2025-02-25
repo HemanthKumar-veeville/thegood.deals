@@ -87,6 +87,10 @@ const ActiveDeal = () => {
     navigate("/update-deal?deal_id=" + deal_id);
   };
 
+  const handleRepostDeal = () => {
+    navigate("/repost-deal?deal_id=" + deal_id);
+  };
+
   const handleOrder = () => {
     navigate(
       "/admin-view-deal?deal_id=" + deal_id + "&deal_type=" + is_creator
@@ -420,6 +424,17 @@ const ActiveDeal = () => {
                 <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
                 <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                   {t("active_deal.edit_deal_button")}
+                </button>
+              </div>
+            )}
+            {dealData?.payment_collected_for_all_orders === true && (
+              <div
+                className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
+                onClick={handleRepostDeal}
+              >
+                <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
+                <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                  {t("active_deal.repost_deal_button")}
                 </button>
               </div>
             )}
