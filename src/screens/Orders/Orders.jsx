@@ -296,7 +296,7 @@ const Orders = ({ dealId, dealType }) => {
                               {t("orders.payment_fees")}
                             </p>
                             <p className="font-semibold text-primary-color text-sm text-right">
-                              {t("order.paymentFeesValue")}
+                              {order.order_payment_fees} €
                             </p>
                           </div>
                           {/* Delivery Fees */}
