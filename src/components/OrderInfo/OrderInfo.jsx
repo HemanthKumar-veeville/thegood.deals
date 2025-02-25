@@ -160,7 +160,7 @@ export const OrderInfo = ({ orderId }) => {
           </div>
           <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
             <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-sm text-right">
-              {t("order.paymentFeesValue")}
+              {orderState?.payment_fees} €
             </div>
           </div>
         </div>
