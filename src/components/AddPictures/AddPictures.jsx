@@ -19,9 +19,12 @@ const AddPictures = ({
   const [files, setFiles] = useState([]);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [fileNames, setFileNames] = useState([]);
+  console.log({ files, fileNames, pictures });
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
+    const names = files.map((file) => file.name);
+    setFileNames(names);
     setFiles(files);
     const totalFiles = pictures.length + files.length;
     if (totalFiles > 10) {
@@ -30,7 +33,9 @@ const AddPictures = ({
       return;
     }
 
-    const newPictures = files.map((file) => URL.createObjectURL(file));
+    const newPictures = files.map((file) => {
+      return { url: URL.createObjectURL(file), name: file.name };
+    });
     setPictures((prevPictures) => {
       const updatedPictures = [...prevPictures, ...newPictures];
       // Set the first image as starred by default
@@ -51,23 +56,19 @@ const AddPictures = ({
   };
 
   const handleDelete = (index, picture, event) => {
+    const name = picture?.name || null;
+    picture = picture?.url || picture;
     const fileArray = picture?.split("/");
     const fileIndex = fileArray?.length - 1;
     const fileName = fileArray[fileIndex];
-    isEditMode &&
-      setExistingImages((prevImages) =>
-        prevImages?.filter((img) => {
-          const imgArray = img?.split("/");
-          const imgIndex = imgArray?.length - 1;
-          const imgName = imgArray[imgIndex];
 
-          return fileName !== imgName;
-        })
-      );
     event.preventDefault();
     event.stopPropagation();
     const updatedPictures = pictures.filter((_, i) => i !== index);
     setPictures(updatedPictures);
+    const existing_images = updatedPictures.filter((pic) => !pic?.url);
+    setExistingImages(existing_images);
+    setFiles(files.filter((file) => file.name !== name));
     if (starredIndex === index) {
       setStarredIndex(null); // Clear star if the starred image is deleted
     } else if (starredIndex > index) {
@@ -153,7 +154,7 @@ const AddPictures = ({
               {pictures.map((picture, index) => (
                 <div key={index} className="w-full flex-shrink-0 relative">
                   <img
-                    src={picture}
+                    src={picture?.url || picture}
                     alt={t("add_pictures.image_alt_text", { index })} // Use translation for image alt text
                     className="object-contain w-full h-auto max-h-64 rounded-md" // Updated styling
                   />
