@@ -41,6 +41,7 @@ import axios from "axios";
 import { Send1 } from "../../icons/Send1";
 import DiscountBadge from "../../components/DiscountBadge";
 import { Chat } from "../../components/Chat";
+import { BiRepost } from "react-icons/bi";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -432,7 +433,7 @@ const ActiveDeal = () => {
                 className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md border border-solid border-primary-color cursor-pointer"
                 onClick={handleRepostDeal}
               >
-                <Pencil1 className="!relative !w-5 !h-5" color="#1B4F4A" />
+                <BiRepost className="!relative !w-6 !h-6" color="#1B4F4A" />
                 <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                   {t("active_deal.repost_deal_button")}
                 </button>

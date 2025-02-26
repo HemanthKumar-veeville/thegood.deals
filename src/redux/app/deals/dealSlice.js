@@ -173,7 +173,7 @@ export const repostDeal = createAsyncThunk(
   "deals/repostDeal",
   async (repostedDeal, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/repost-deal`, repostedDeal);
+      const response = await axiosInstance.post(`/repost-deal/`, repostedDeal);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

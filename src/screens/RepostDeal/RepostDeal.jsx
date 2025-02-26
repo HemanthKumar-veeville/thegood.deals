@@ -32,6 +32,7 @@ import { Line } from "../../components/Line/Line";
 import { validate as uuidValidate } from "uuid";
 import { fetchParticipantsByDeal } from "../../redux/app/participants/participantSlice";
 import ParticipantsList from "../../components/ParticipantsList/ParticipantsList";
+
 const RepostDeal = () => {
   const { t, i18n } = useTranslation(); // Initialize translation hook
   const [isError, setIsError] = useState(false);
@@ -244,8 +245,13 @@ const RepostDeal = () => {
 
       // Dispatch action to add a new deal
       const resultAction = await dispatch(repostDeal(form)).unwrap();
-      console.log({ resultAction });
-      navigate(-1);
+      if (resultAction?.deal_id) {
+        navigate(
+          `/admin-active-deal?deal_id=${resultAction?.deal_id}&is_creator=true`
+        );
+      } else {
+        navigate(-1);
+      }
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
