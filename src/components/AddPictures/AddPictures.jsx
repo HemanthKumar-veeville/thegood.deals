@@ -6,6 +6,7 @@ import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
 const AddPictures = ({
   onChange,
+  onDelete,
   images,
   setExistingImages,
   existingImages,
@@ -16,16 +17,12 @@ const AddPictures = ({
   const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [files, setFiles] = useState([]);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [fileNames, setFileNames] = useState([]);
-  console.log({ files, fileNames, pictures });
+  console.log({ pictures, images });
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
-    const names = files.map((file) => file.name);
-    setFileNames(names);
-    setFiles(files);
+    onChange(files);
     const totalFiles = pictures.length + files.length;
     if (totalFiles > 10) {
       setIsError(true);
@@ -67,8 +64,9 @@ const AddPictures = ({
     const updatedPictures = pictures.filter((_, i) => i !== index);
     setPictures(updatedPictures);
     const existing_images = updatedPictures.filter((pic) => !pic?.url);
-    setExistingImages(existing_images);
-    setFiles(files.filter((file) => file.name !== name));
+    setExistingImages && setExistingImages(existing_images);
+
+    onDelete(name);
     if (starredIndex === index) {
       setStarredIndex(null); // Clear star if the starred image is deleted
     } else if (starredIndex > index) {
@@ -130,10 +128,6 @@ const AddPictures = ({
       return () => clearInterval(interval);
     }
   }, [isPlaying, currentIndex]);
-
-  useEffect(() => {
-    onChange(files);
-  }, [files]);
 
   return (
     <div className="flex flex-col h-fit items-start gap-2.5 relative self-stretch w-full">
