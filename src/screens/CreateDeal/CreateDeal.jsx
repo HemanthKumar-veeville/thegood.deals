@@ -82,7 +82,14 @@ const CreateDeal = () => {
   const handleAddPictures = (pictures) => {
     setFormData((prevState) => ({
       ...prevState,
-      pictures,
+      pictures: [...prevState.pictures, ...pictures],
+    }));
+  };
+
+  const handleDeletePictures = (name) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      pictures: prevState.pictures.filter((pic) => pic.name !== name),
     }));
   };
 
@@ -331,6 +338,7 @@ const CreateDeal = () => {
             </div>
             <AddPictures
               onChange={handleAddPictures}
+              onDelete={handleDeletePictures}
               setForm={setImagesForm}
               images={formData?.pictures}
               isEditMode={false}
