@@ -6,9 +6,7 @@ import { CirclePlus92 } from "../../icons/CirclePlus92";
 import { ClockDollar1 } from "../../icons/ClockDollar1";
 import { Cog2 } from "../../icons/Cog2";
 import { UserAlt2 } from "../../icons/UserAlt2";
-import { UserAlt5 } from "../../icons/UserAlt5";
 import { UserLock1 } from "../../icons/UserLock1";
-import { Users3 } from "../../icons/Users3";
 import { ChatAlt6 } from "../../icons/ChatAlt6";
 import { blogImage } from "../../images";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -17,19 +15,12 @@ import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import { fetchDeals } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader.jsx";
-import {
-  checkUserLoginStatus,
-  logoutUser,
-  fetchUserProfileWithDealsAndReviews,
-} from "../../redux/app/user/userSlice";
+import { logoutUser } from "../../redux/app/user/userSlice";
 import { SuccessAlert } from "../../components/SuccessAlert/SuccessAlert.jsx";
 import { Warning1 } from "../../icons/Warning1/Warning1.jsx";
 import { Box44 } from "../../icons/Box44/Box44.jsx";
 import { Line } from "../../components/Line/Line.jsx";
-import {
-  getDealProgress,
-  getMaxDiscount,
-} from "../../helpers/helperMethods.js";
+import { getMaxDiscount } from "../../helpers/helperMethods.js";
 import BoxCreated from "../../icons/BoxCreated/BoxCreated.jsx";
 
 const Account = ({ isRequestSent, dealId }) => {
@@ -45,7 +36,7 @@ const Account = ({ isRequestSent, dealId }) => {
   const dispatch = useDispatch();
   const dealsState = useSelector((state) => state.deals);
   const { status } = dealsState;
-  const { profile } = useSelector((state) => state.user);
+  const { profile } = useSelector((state) => state.account);
   const scrollableContainerRef = useRef(null);
 
   useEffect(() => {
@@ -136,18 +127,6 @@ const Account = ({ isRequestSent, dealId }) => {
     };
   }, [hasMoreDeals, isFetchingMore]);
 
-  useEffect(() => {
-    const fetchUserProfileData = async () => {
-      try {
-        await dispatch(fetchUserProfileWithDealsAndReviews());
-        await dispatch(checkUserLoginStatus());
-      } catch (error) {
-        console.error("Failed to fetch user profile or login status: ", error);
-      }
-    };
-    fetchUserProfileData();
-  }, [dispatch]);
-
   const handleNavigation = (path) => navigate(path);
 
   const handleCardClick = (deal) => {
@@ -188,7 +167,9 @@ const Account = ({ isRequestSent, dealId }) => {
     >
       <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto] z-0">
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap capitalize">
-          {`Hey, ${profile?.name || ""} 👋🏻`}
+          {`Hey, ${
+            profile?.data?.first_name + " " + profile?.data?.last_name || ""
+          } 👋🏻`}
         </div>
         <div
           className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { checkUserLoginStatus } from "../../redux/app/user/userSlice";
 import CustomLoader from "../CustomLoader/CustomLoader";
 import { fetchUserProfile } from "../../redux/app/account/accountSlice";
 
@@ -15,7 +14,6 @@ function ProtectedRoute({ element }) {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      await dispatch(checkUserLoginStatus());
       await dispatch(fetchUserProfile());
 
       setLoading(false);

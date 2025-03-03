@@ -11,7 +11,6 @@ import { axiosInstance } from "../../helpers/helperMethods.js";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  checkUserLoginStatus,
   updateSignInForm,
   resetSignInForm,
   setErrorMessage,
@@ -33,7 +32,6 @@ const SignIn = ({ setIsLoading }) => {
     try {
       const response = await axiosInstance.post("login", formData);
       if (response?.status === 200) {
-        dispatch(checkUserLoginStatus());
         dispatch(resetSignInForm()); // Clear form values after successful login
         console.log({ response });
         if (response?.data?.activation !== false) {
