@@ -18,7 +18,7 @@ import {
 } from "../../redux/app/user/userSlice.js";
 import { useTranslation } from "react-i18next";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert.jsx";
-
+import { checkUserLoginStatus } from "../../redux/app/user/userSlice";
 const SignIn = ({ setIsLoading }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ const SignIn = ({ setIsLoading }) => {
         dispatch(resetSignInForm()); // Clear form values after successful login
         console.log({ response });
         if (response?.data?.activation !== false) {
+          dispatch(checkUserLoginStatus());
           navigate("/");
         } else {
           navigate(`/verify?email=${email}`);
