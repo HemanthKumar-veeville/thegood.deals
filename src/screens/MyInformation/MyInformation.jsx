@@ -37,12 +37,14 @@ const MyInformation = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const sliderRef = useRef(null);
+  const dealsSliderRef = useRef(null);
+  const reviewsSliderRef = useRef(null);
 
   const { profile, userDeals, userReviews, status } = useSelector(
     (state) => state.user
   );
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isDealsPlaying, setIsDealsPlaying] = useState(true);
+  const [isReviewsPlaying, setIsReviewsPlaying] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,24 +74,41 @@ const MyInformation = () => {
     });
   };
 
-  const handlePlayPause = () => {
-    setIsPlaying((prev) => !prev);
-    if (isPlaying) {
-      sliderRef.current.slickPause();
+  const handleDealsPlayPause = () => {
+    setIsDealsPlaying((prev) => !prev);
+    if (isDealsPlaying) {
+      dealsSliderRef.current.slickPause();
     } else {
-      sliderRef.current.slickPlay();
+      dealsSliderRef.current.slickPlay();
     }
   };
 
-  const NextArrow = ({ onClick }) => {
+  const handleReviewsPlayPause = () => {
+    setIsReviewsPlaying((prev) => !prev);
+    if (isReviewsPlaying) {
+      reviewsSliderRef.current.slickPause();
+    } else {
+      reviewsSliderRef.current.slickPlay();
+    }
+  };
+
+  const DealsPlayPauseButton = () => {
     return (
-      <button className="text-primary-color" onClick={onClick}>
-        <FaArrowRight size={18} />
+      <button className="text-primary-color" onClick={handleDealsPlayPause}>
+        {isDealsPlaying ? <FaPause size={18} /> : <FaPlay size={18} />}
       </button>
     );
   };
 
-  const PrevArrow = ({ onClick }) => {
+  const ReviewsPlayPauseButton = () => {
+    return (
+      <button className="text-primary-color" onClick={handleReviewsPlayPause}>
+        {isReviewsPlaying ? <FaPause size={18} /> : <FaPlay size={18} />}
+      </button>
+    );
+  };
+
+  const DealsPrevArrow = ({ onClick }) => {
     return (
       <button className="text-primary-color" onClick={onClick}>
         <FaArrowLeft size={18} />
@@ -97,23 +116,50 @@ const MyInformation = () => {
     );
   };
 
-  const PlayPauseButton = () => {
+  const DealsNextArrow = ({ onClick }) => {
     return (
-      <button className="text-primary-color" onClick={handlePlayPause}>
-        {isPlaying ? <FaPause size={18} /> : <FaPlay size={18} />}
+      <button className="text-primary-color" onClick={onClick}>
+        <FaArrowRight size={18} />
       </button>
     );
   };
 
-  const sliderSettings = {
+  const ReviewsPrevArrow = ({ onClick }) => {
+    return (
+      <button className="text-primary-color" onClick={onClick}>
+        <FaArrowLeft size={18} />
+      </button>
+    );
+  };
+
+  const ReviewsNextArrow = ({ onClick }) => {
+    return (
+      <button className="text-primary-color" onClick={onClick}>
+        <FaArrowRight size={18} />
+      </button>
+    );
+  };
+
+  const dealsSliderSettings = {
     dots: false,
-    infinite: userDeals?.length > 1, // Disable infinite scroll if there's only one deal
+    infinite: userDeals?.length > 1,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: isPlaying,
+    autoplay: isDealsPlaying,
     autoplaySpeed: 3000,
-    arrows: false, // We will use custom arrows instead
+    arrows: false,
+  };
+
+  const reviewsSliderSettings = {
+    dots: false,
+    infinite: userReviews?.length > 1,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: isReviewsPlaying,
+    autoplaySpeed: 3000,
+    arrows: false,
   };
 
   const handleNavigation = (path) => navigate(path);
@@ -248,8 +294,11 @@ const MyInformation = () => {
           </div>
           {status === "succeeded" && userDeals?.length > 0 && (
             <>
-              {/* Carousel Slider for Deals */}
-              <Slider ref={sliderRef} {...sliderSettings} className="w-full">
+              <Slider
+                ref={dealsSliderRef}
+                {...dealsSliderSettings}
+                className="w-full"
+              >
                 {userDeals?.map((deal) => (
                   <div
                     key={deal.deal_id}
@@ -286,10 +335,14 @@ const MyInformation = () => {
                 ))}
               </Slider>
               {userDeals?.length > 1 && (
-                <div className="flex justify-around items-between mt-1   w-full">
-                  <PrevArrow onClick={() => sliderRef.current.slickPrev()} />
-                  <PlayPauseButton />
-                  <NextArrow onClick={() => sliderRef.current.slickNext()} />
+                <div className="flex justify-around items-between mt-1 w-full">
+                  <DealsPrevArrow
+                    onClick={() => dealsSliderRef.current.slickPrev()}
+                  />
+                  <DealsPlayPauseButton />
+                  <DealsNextArrow
+                    onClick={() => dealsSliderRef.current.slickNext()}
+                  />
                 </div>
               )}
             </>
@@ -314,55 +367,75 @@ const MyInformation = () => {
           <div className="font-heading-6 font-[number:var(--heading-6-font-weight)] text-primary-color text-[length:var(--heading-6-font-size)] tracking-[var(--heading-6-letter-spacing)] leading-[var(--heading-6-line-height)] relative self-stretch [font-style:var(--heading-6-font-style)]">
             {t("myInformation.ratings")}
           </div>
-          {userReviews?.length > 0 &&
-            userReviews?.map((review) => (
-              <div
-                key={review.id}
-                className="flex flex-col items-start gap-5 pt-5 pb-[30px] px-[30px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-xl shadow-shadow-1"
+          {userReviews?.length > 0 && (
+            <>
+              <Slider
+                ref={reviewsSliderRef}
+                {...reviewsSliderSettings}
+                className="w-full"
               >
-                <div className="flex flex-col items-start justify-center gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
-                  <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
-                    <img
-                      className="relative w-14 h-14 object-cover"
-                      alt="Ellipse"
-                      src={Ellipse} // Replace with user's avatar if available
-                    />
-                    <div className="inline-flex flex-col items-start gap-px relative flex-[0_0_auto]">
-                      <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-darkdark text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
-                        {review.reviewerName}
+                {userReviews?.map((review) => (
+                  <div key={review.review_id}>
+                    <div className="flex flex-col items-start gap-5 pt-5 pb-[30px] px-[30px] relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-xl shadow-shadow-1">
+                      <div className="flex flex-col items-start justify-center gap-[15px] relative self-stretch w-full flex-[0_0_auto]">
+                        <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
+                          <img
+                            className="relative w-14 h-14 object-cover rounded-full"
+                            alt="Author"
+                            src={review.author_image || Ellipse}
+                          />
+                          <div className="inline-flex flex-col items-start gap-px relative flex-[0_0_auto]">
+                            <div className="relative w-fit mt-[-1.00px] font-body-medium-medium font-[number:var(--body-medium-medium-font-weight)] text-darkdark text-[length:var(--body-medium-medium-font-size)] tracking-[var(--body-medium-medium-letter-spacing)] leading-[var(--body-medium-medium-line-height)] whitespace-nowrap [font-style:var(--body-medium-medium-font-style)]">
+                              {review.author_name}
+                            </div>
+                            <div className="relative w-fit font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
+                              {new Date(review.date).toLocaleDateString()}
+                            </div>
+                            <div className="inline-flex items-start gap-1 relative flex-[0_0_auto]">
+                              {Array.from({ length: 5 }).map((_, index) =>
+                                index < review.rating ? (
+                                  <StarFill1
+                                    key={index}
+                                    className="!relative !w-4 !h-4"
+                                  />
+                                ) : (
+                                  <Star7
+                                    key={index}
+                                    className="!relative !w-4 !h-4"
+                                    color="#F59E0B"
+                                  />
+                                )
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div className="relative w-fit font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] whitespace-nowrap [font-style:var(--body-small-regular-font-style)]">
-                        {new Date(review.date).toLocaleDateString()}
-                      </div>
-                      <div className="inline-flex items-start gap-1 relative flex-[0_0_auto]">
-                        {Array.from({ length: 5 }).map((_, index) =>
-                          index < review.rating ? (
-                            <StarFill1
-                              key={index}
-                              className="!relative !w-4 !h-4"
-                            />
-                          ) : (
-                            <Star7
-                              key={index}
-                              className="!relative !w-4 !h-4"
-                              color="#F59E0B"
-                            />
-                          )
-                        )}
+                      <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
+                        <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-darkdark text-base tracking-[0] leading-[26px] whitespace-nowrap">
+                          {review.title}
+                        </p>
+
+                        <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
+                          {review.content}
+                        </p>
                       </div>
                     </div>
                   </div>
+                ))}
+              </Slider>
+              {userReviews?.length > 1 && (
+                <div className="flex justify-around items-between mt-1 w-full">
+                  <ReviewsPrevArrow
+                    onClick={() => reviewsSliderRef.current.slickPrev()}
+                  />
+                  <ReviewsPlayPauseButton />
+                  <ReviewsNextArrow
+                    onClick={() => reviewsSliderRef.current.slickNext()}
+                  />
                 </div>
-                <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
-                  <p className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-darkdark text-base tracking-[0] leading-[26px] whitespace-nowrap">
-                    {review.title}
-                  </p>
-                  <p className="relative self-stretch font-body-small-regular font-[number:var(--body-small-regular-font-weight)] text-primary-text-color text-[length:var(--body-small-regular-font-size)] tracking-[var(--body-small-regular-letter-spacing)] leading-[var(--body-small-regular-line-height)] [font-style:var(--body-small-regular-font-style)]">
-                    {review.comment}
-                  </p>
-                </div>
-              </div>
-            ))}
+              )}
+            </>
+          )}
           {userReviews?.length === 0 && (
             <div className="w-full">
               <SuccessAlert
