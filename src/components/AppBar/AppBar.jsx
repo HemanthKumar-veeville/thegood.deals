@@ -23,7 +23,7 @@ function AppBar() {
   const [isUser, setIsUser] = useState(true);
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
 
-  const { profile } = useSelector((state) => state.user);
+  const { profile } = useSelector((state) => state.account);
 
   /**
    * Toggles the sidebar open state.
@@ -120,13 +120,13 @@ function AppBar() {
                 className="flex w-12 h-12 items-center justify-center gap-2.5 relative hover:bg-gray-200 rounded-full cursor-pointer"
                 onClick={handleProfileClick}
               >
-                {profile?.profile_image &&
-                profile?.profile_image !==
+                {profile?.data?.profile_picture &&
+                profile?.data?.profile_picture !==
                   t("app.default_profile_image_url") ? ( // Use translation for default image URL
                   <img
                     className="w-[90%] h-[90%] rounded-full object-cover"
                     alt={t("app.alt_profile_photo")} // Use translation for alt text
-                    src={profile?.profile_image}
+                    src={profile?.data?.profile_picture}
                   />
                 ) : (
                   <UserAlt className="!relative !w-6 !h-6" />
