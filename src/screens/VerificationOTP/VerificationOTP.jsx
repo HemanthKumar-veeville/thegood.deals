@@ -125,6 +125,7 @@ export const VerificationOTP = () => {
 
   useEffect(() => {
     handleResendOTP();
+    dispatch(checkUserLoginStatus());
   }, []);
 
   const handleChange = (value, index) => {
