@@ -46,6 +46,7 @@ export const InviteParticipants = ({
   const { deal, status, error } = useSelector((state) => state.deals);
   const queryParams = new URLSearchParams(location.search);
   const dealId = queryParams.get("deal_id");
+  const is_repostable = queryParams.get("is_repostable");
   const is_request_sent = queryParams.get("is_request_sent");
   const dealState = deal?.Deal;
   const pathLocation = useLocation();
@@ -87,31 +88,39 @@ export const InviteParticipants = ({
 
   const handleAcceptRequest = async () => {
     try {
-      const response = await dispatch(createRequest(dealId)).unwrap();
+      if (is_repostable == "true") {
+        isUserLoggedIn
+          ? navigate(`/update-deal?deal_id=${dealId}&&is_repostable=true`)
+          : navigate("/auth?signin");
+      } else {
+        const response = await dispatch(createRequest(dealId)).unwrap();
 
-      switch (response?.invite_status) {
-        case "creator":
-          navigate(`/admin-active-deal?deal_id=${dealId}&is_creator=${true}`, {
-            state: { deal },
-          });
-          break;
-        case "pending":
-          navigate(`/`, {
-            state: { deal },
-          });
-          break;
-        case "accept":
-          navigate(`/guest-deal-view?deal_id=${dealId}&is_creator=${false}`, {
-            state: { deal },
-          });
-          break;
-        case "sent":
-          setIsSuccess(true);
-          setIsRequestSent(true);
-      }
-
-      if (response?.is_user_logged_in === false) {
-        navigate("/auth?signin");
+        switch (response?.invite_status) {
+          case "creator":
+            navigate(
+              `/admin-active-deal?deal_id=${dealId}&is_creator=${true}`,
+              {
+                state: { deal },
+              }
+            );
+            break;
+          case "pending":
+            navigate(`/`, {
+              state: { deal },
+            });
+            break;
+          case "accept":
+            navigate(`/guest-deal-view?deal_id=${dealId}&is_creator=${false}`, {
+              state: { deal },
+            });
+            break;
+          case "sent":
+            setIsSuccess(true);
+            setIsRequestSent(true);
+        }
+        if (response?.is_user_logged_in === false) {
+          navigate("/auth?signin");
+        }
       }
     } catch (error) {
       setErrorMessage(error?.detail || t("errors.request_failed"));

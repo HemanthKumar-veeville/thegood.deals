@@ -1631,7 +1631,11 @@
       "title": "Copié...",
       "message": "Lien copié dans le presse-papier !"
     },
-    "invite_head": "Vous êtes invités à ce good deal"
+    "invite_tab": "Inviter",
+    "share_tab": "Partager",
+    "coming_soon": "Bientôt disponible",
+    "share_title": "Partager votre deal 🍎",
+    "share_description": "Partager votre deal avec vos amis et votre famille pour obtenir plus de commandes."
   },
   "customSuccessModal": {
     "defaultMessage": "Informations enregistrées avec succès",

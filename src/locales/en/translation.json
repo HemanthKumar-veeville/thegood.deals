@@ -1624,7 +1624,12 @@
       "title": "Copied...",
       "message": "Link copied to clipboard!"
     },
-    "invite_head": "Participate in this deal"
+    "invite_head": "Participate in this deal",
+    "invite_tab": "Invite",
+    "share_tab": "Share",
+    "coming_soon": "Coming soon",
+    "share_title": "Share your deal",
+    "share_description": "Share your deal with your friends and family to get more orders."
   },
   "customSuccessModal": {
     "defaultMessage": "Information Saved Succesfully",
