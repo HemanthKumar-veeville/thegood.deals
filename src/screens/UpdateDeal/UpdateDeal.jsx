@@ -268,6 +268,12 @@ const UpdateDeal = () => {
     }
   };
 
+  const getDefaultDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 7); // Add 7 days
+    return formatDate(date);
+  };
+
   const fetchDeal = async () => {
     setLoading(true);
     try {
@@ -276,18 +282,24 @@ const UpdateDeal = () => {
 
       if (dealData) {
         setTitle(dealData.title);
-        setIban(dealData.organiser_iban);
+        is_repostable != "true" && setIban(dealData.organiser_iban);
         setExistingImages(dealData?.images);
         setFormData({
           description: dealData.description,
           collectionDate:
-            dealData.collection_date?.slice(0, 16) ?? formatDate(new Date()),
+            is_repostable == "true"
+              ? getDefaultDate()
+              : dealData.collection_date?.slice(0, 16) ??
+                formatDate(new Date()),
           contentDescription: dealData.content_description,
           manufacturerInfo: dealData.artisan_information,
           dealExpiration:
-            dealData.deal_expiration_date?.slice(0, 16) ??
-            formatDate(new Date()),
-          acceptConditions: dealData.terms_accepted ?? false,
+            is_repostable == "true"
+              ? getDefaultDate()
+              : dealData.deal_expiration_date?.slice(0, 16) ??
+                formatDate(new Date()),
+          acceptConditions:
+            is_repostable == "true" ? false : dealData.terms_accepted ?? false,
           collectionLocation: dealData.collection_location,
           pictures: dealData?.images || [],
           deliveryCost: 0,

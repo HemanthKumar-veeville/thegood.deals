@@ -391,9 +391,9 @@
     "artisan_info_placeholder": "ex. Domaine de Cigalus 11200 Bizanet",
     "banking_info_label": "Infos bancaires de l'artisan",
     "iban_label": "Votre IBAN",
-    "iban_placeholder": "FR89370400440532013002",
+    "iban_placeholder": "ex. FR89370400440532013002",
     "bic_label": "Votre BIC",
-    "bic_placeholder": "XXXXXXXXXXX",
+    "bic_placeholder": "ex. XXXXXXXXXXX",
     "deal_expiration_label": "Date d'expiration du deal",
     "add_products_label": "Ajouter les produits",
     "add_another_product_label": "Ajouter un autre produit",
@@ -413,7 +413,9 @@
     "error_deal_expiration_required": "Date d'expiration de l'offre requise !",
     "error_accept_conditions_required": "Acceptation des conditions requise !",
     "error_products_required": "Produits requis !",
-    "invite_pending": "Demande en attente"
+    "invite_pending": "Demande en attente",
+    "share_head": "Partager le deal",
+    "invite_head": "Participer à ce deal"
   },
   "chat": {
     "deal_discussion": "Discussion du deal",
