@@ -31,7 +31,11 @@ const InviteLovedOnes = () => {
   const shareLink = `
 📦 *${deal?.deal_title}*
 
-👉 *${t("inviteLovedOnes.share_head")}*: 
+👉 *${
+    activeTab === "invite"
+      ? t("inviteLovedOnes.invite_head")
+      : t("inviteLovedOnes.share_head")
+  }*: 
 🔗 ${activeTab === "invite" ? inviteLink : repostLink}
 `;
 

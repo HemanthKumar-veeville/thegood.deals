@@ -958,8 +958,10 @@
   },
   "access": {
     "participate_in_deal": "To participate in the deal, the organizer must give you access",
+    "recreate_deal_desc": "You can create the deal by using this template",
     "must_be_logged_in": "You must be logged in to order",
     "request_access": "I request access",
+    "request_recreate_access": "Use this template",
     "login_create_account": "Log in / Create an account",
     "in_process_desc": "Your request has been sent to the organizer",
     "in_process": "Request in progress",
@@ -1625,7 +1627,7 @@
       "message": "Link copied to clipboard!"
     },
     "invite_head": "Participate in this deal",
-    "share_head": "Share this deal",
+    "share_head": "Use this template",
     "invite_tab": "Invite",
     "share_tab": "Share",
     "coming_soon": "Coming soon",

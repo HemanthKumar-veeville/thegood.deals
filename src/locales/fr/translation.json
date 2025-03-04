@@ -413,9 +413,7 @@
     "error_deal_expiration_required": "Date d'expiration de l'offre requise !",
     "error_accept_conditions_required": "Acceptation des conditions requise !",
     "error_products_required": "Produits requis !",
-    "invite_pending": "Demande en attente",
-    "share_head": "Partager le deal",
-    "invite_head": "Participer à ce deal"
+    "invite_pending": "Demande en attente"
   },
   "chat": {
     "deal_discussion": "Discussion du deal",
@@ -605,7 +603,9 @@
     "copy_link": "Copier le lien",
     "back": "Retour",
     "link_copied": "Lien copié dans le presse-papiers",
-    "line_alt": "Ligne"
+    "line_alt": "Ligne",
+    "invite_head": "Participer à ce deal",
+    "share_head": "Partager le deal"
   },
   "invitation_sent": {
     "title": "C’est envoyé ! 🎉",
@@ -956,8 +956,10 @@
   },
   "access": {
     "participate_in_deal": "Pour participer au deal, l’organisateur doit vous donner l’accès",
+    "recreate_deal_desc": "Vous pouvez créer le deal en utilisant ce template",
     "must_be_logged_in": "Vous devez être connecté pour commander",
     "request_access": "Je demande l’accès",
+    "request_recreate_access": "Utiliser ce template",
     "login_create_account": "Se connecter / Créer un compte",
     "in_process_desc": "Votre demande a été envoyée à l’organisateur",
     "in_process": "Demande en cours",
@@ -1633,6 +1635,8 @@
       "title": "Copié...",
       "message": "Lien copié dans le presse-papier !"
     },
+    "invite_head": "Participer à ce deal",
+    "share_head": "Utiliser ce template",
     "invite_tab": "Inviter",
     "share_tab": "Partager",
     "coming_soon": "Bientôt disponible",
