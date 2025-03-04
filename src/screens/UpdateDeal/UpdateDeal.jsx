@@ -23,6 +23,7 @@ import {
   updateTitle,
   updateImages,
   updateIban,
+  repostDeal,
 } from "../../redux/app/deals/dealSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
@@ -62,6 +63,7 @@ const UpdateDeal = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(location.search);
+  const is_repostable = queryParams.get("is_repostable");
   const dealId = queryParams.get("deal_id");
   const [imagesForm, setImagesForm] = useState(new FormData());
   const [existingImages, setExistingImages] = useState([]);
@@ -245,11 +247,16 @@ const UpdateDeal = () => {
       });
 
       // Dispatch action to add a new deal
-      const resultAction = await dispatch(
-        updateDealByDealId({ dealId, updatedDeal: form })
-      ).unwrap();
-      console.log({ resultAction });
-      navigate(-1);
+      if (is_repostable == "true") {
+        const resultAction = await dispatch(repostDeal(form)).unwrap();
+        const dealId = resultAction?.deal_id;
+        navigate(`/admin-active-deal?deal_id=${dealId}&is_creator=true`);
+      } else {
+        await dispatch(
+          updateDealByDealId({ dealId, updatedDeal: form })
+        ).unwrap();
+        navigate(-1);
+      }
     } catch (err) {
       console.error(t("create_deal.console_failure"), err); // Failure message
       setIsError(true);
@@ -362,7 +369,9 @@ const UpdateDeal = () => {
               </div>
             </div>
             <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-[#1b4f4a] text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap">
-              {t("create_deal.update_title")}
+              {is_repostable == "true"
+                ? t("create_deal.title")
+                : t("create_deal.update_title")}
             </div>
             <AddPictures
               onChange={handleAddPictures}
