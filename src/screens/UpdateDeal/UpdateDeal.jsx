@@ -300,7 +300,8 @@ const UpdateDeal = () => {
                 formatDate(new Date()),
           acceptConditions:
             is_repostable == "true" ? false : dealData.terms_accepted ?? false,
-          collectionLocation: dealData.collection_location,
+          collectionLocation:
+            is_repostable == "true" ? "" : dealData.collection_location,
           pictures: dealData?.images || [],
           deliveryCost: 0,
         });

@@ -290,6 +290,7 @@ export const InviteParticipants = ({
           isUserLoggedIn={isUserLoggedIn}
           handleAccept={handleAccept}
           isRequestSent={isRequestSent}
+          is_repostable={is_repostable == "true"}
         />
       </div>
     </div>

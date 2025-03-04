@@ -3,7 +3,12 @@ import { LockAlt } from "../../icons/LockAltScreen/LockAltScreen";
 import { useTranslation } from "react-i18next";
 import { Line } from "../Line/Line";
 
-export const Access = ({ isUserLoggedIn, handleAccept, isRequestSent }) => {
+export const Access = ({
+  isUserLoggedIn,
+  handleAccept,
+  isRequestSent,
+  is_repostable,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -16,7 +21,9 @@ export const Access = ({ isUserLoggedIn, handleAccept, isRequestSent }) => {
         {!isRequestSent && (
           <p className="relative flex-1 mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] [font-style:var(--body-large-bold-font-style)]">
             {isUserLoggedIn
-              ? t("access.participate_in_deal")
+              ? is_repostable
+                ? t("access.recreate_deal_desc")
+                : t("access.participate_in_deal")
               : t("access.must_be_logged_in")}
           </p>
         )}
@@ -42,7 +49,9 @@ export const Access = ({ isUserLoggedIn, handleAccept, isRequestSent }) => {
           {!isRequestSent && (
             <span>
               {isUserLoggedIn
-                ? t("access.request_access")
+                ? is_repostable
+                  ? t("access.request_recreate_access")
+                  : t("access.request_access")
                 : t("access.login_create_account")}
             </span>
           )}
