@@ -232,7 +232,11 @@ const ProductInfo = ({
           {t("productInfo.goodDealPriceLabel")}
         </div>
       </div>
-      <div className="flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke">
+      <div
+        className={`flex h-[46px] items-center gap-2.5 pl-5 pr-4 py-3 relative self-stretch w-full bg-white rounded-md border border-solid border-stroke ${
+          product?.product_id ? "opacity-50" : ""
+        } `}
+      >
         <WebsiteMoney className="!relative !w-4 !h-4" color="#6B7280" />
         <input
           type="number"
@@ -240,6 +244,7 @@ const ProductInfo = ({
           value={goodDealPrice}
           onChange={(e) => setGoodDealPrice(e.target.value)}
           className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
+          disabled={product?.product_id}
         />
       </div>
       <div className="flex flex-col w-[260px] items-start relative flex-[0_0_auto]">
