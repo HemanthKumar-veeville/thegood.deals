@@ -124,7 +124,7 @@ const AdminViewGoodDeal = () => {
             <div className="inline-flex h-5 items-center gap-2.5 relative">
               <RatingStar
                 className="!flex-[0_0_auto]"
-                rating="four-star"
+                rating="five-star"
                 size="small"
               />
             </div>

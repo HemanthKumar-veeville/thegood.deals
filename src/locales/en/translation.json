@@ -768,7 +768,7 @@
     "refused": "You have refused the deal.",
     "confirmed": "You have confirmed the deal.",
     "organizer_name": "Abraham Thomas",
-    "organizer_rating": "four-star",
+    "organizer_rating": "five-star",
     "ignore": "Ignore",
     "accept": "Accept",
     "error_title": "Error...",
@@ -807,7 +807,7 @@
     "blogImageAlt": "Blog image",
     "rectangleAlt": "Rectangle image",
     "organizerName": "Abraham Thomas",
-    "rating": "four-star"
+    "rating": "five-star"
   },
   "artisanEmailList": {
     "dearCraftsman": "Dear craftsman, please confirm the order form 🧾",

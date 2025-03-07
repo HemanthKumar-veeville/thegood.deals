@@ -250,7 +250,7 @@ const GuestDealView = () => {
               <div className="inline-flex h-5 items-center gap-2.5 relative">
                 <RatingStar
                   className="!flex-[0_0_auto]"
-                  rating={dealData?.organiser?.rating || "four-star"}
+                  rating={dealData?.organiser?.rating || "five-star"}
                   size="small"
                 />
               </div>
