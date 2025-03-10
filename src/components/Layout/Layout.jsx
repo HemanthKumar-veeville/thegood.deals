@@ -7,6 +7,7 @@ import {
   frame14x7,
   frame14x8,
 } from "../../images";
+import PWAInstallPrompt from "../PWAInstallPrompt/PWAInstallPrompt";
 
 export const Layout = ({
   breakpoint = "desktop",
@@ -56,36 +57,36 @@ export const Layout = ({
   );
 
   return (
-    <div
-      className={`flex flex-col items-center bg-light-grey relative ${
-        isMobile
-          ? "w-[375px] gap-12 px-5 py-16"
-          : "w-[1440px] gap-20 px-16 py-[60px]"
-      } ${className}`}
-    >
-      <p
-        className={`text-center font-heading-h3 text-green mb-8 ${
-          isMobile
-            ? "text-[length:var(--heading-h3-mobile-font-size)] leading-[var(--heading-h3-mobile-line-height)]"
-            : "text-[length:var(--heading-h3-font-size)] leading-[var(--heading-h3-line-height)]"
-        } ${headingClassName}`}
-      >
-        {text}
-      </p>
-
+    <>
       <div
-        className={`flex items-center justify-center gap-12 w-full ${
-          isMobile ? "flex-col gap-[90px]" : "flex-row pt-[60px]"
-        }`}
+        className={`flex flex-col items-center bg-light-grey relative ${
+          isMobile
+            ? "w-[375px] gap-12 px-5 py-16"
+            : "w-[1440px] gap-20 px-16 py-[60px]"
+        } ${className}`}
       >
-        {/* Card 1 with Image */}
-        {renderCard(text1, text2, frame14x8, headingClassNameOverride)}
-        {/* Card 2 with Image */}
-        {renderCard(text3, text4, frame14x3, divClassName)}
-        {/* Card 3 with Image */}
-        {renderCard(text5, text6, frame14x4, divClassNameOverride)}
+        <p
+          className={`text-center font-heading-h3 text-green mb-8 ${
+            isMobile
+              ? "text-[length:var(--heading-h3-mobile-font-size)] leading-[var(--heading-h3-mobile-line-height)]"
+              : "text-[length:var(--heading-h3-font-size)] leading-[var(--heading-h3-line-height)]"
+          } ${headingClassName}`}
+        >
+          {text}
+        </p>
+
+        <div
+          className={`flex items-center justify-center gap-12 w-full ${
+            isMobile ? "flex-col gap-[90px]" : "flex-row pt-[60px]"
+          }`}
+        >
+          {renderCard(text1, text2, frame14x8, headingClassNameOverride)}
+          {renderCard(text3, text4, frame14x3, divClassName)}
+          {renderCard(text5, text6, frame14x4, divClassNameOverride)}
+        </div>
       </div>
-    </div>
+      <PWAInstallPrompt />
+    </>
   );
 };
 
