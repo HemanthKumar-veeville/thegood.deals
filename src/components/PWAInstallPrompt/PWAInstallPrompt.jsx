@@ -59,26 +59,15 @@ const PWAInstallPrompt = () => {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 bg-[#2a4e4a]">
-      <Popover
-        trigger="hover"
-        content={
-          <div className="p-3">
-            <p className="text-sm text-gray-700">
-              Install this app on your device for quick access
-            </p>
-          </div>
-        }
+      <div
+        onClick={handleInstallClick}
+        className="flex items-center gap-2 bg-[#2a4e4a] hover:bg-primary-700 text-white px-4 py-2 rounded-lg shadow-lg transition-colors duration-200"
+        aria-label="Install application"
+        tabIndex={0}
       >
-        <button
-          onClick={handleInstallClick}
-          className="flex items-center gap-2 bg-[#2a4e4a] hover:bg-primary-700 text-white px-4 py-2 rounded-lg shadow-lg transition-colors duration-200"
-          aria-label="Install application"
-          tabIndex={0}
-        >
-          <HiDownload className="w-5 h-5" />
-          <span>Install App</span>
-        </button>
-      </Popover>
+        <HiDownload className="w-5 h-5" />
+        <span>Install App</span>
+      </div>
     </div>
   );
 };
