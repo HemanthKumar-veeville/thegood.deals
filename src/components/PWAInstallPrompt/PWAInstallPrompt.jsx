@@ -58,16 +58,12 @@ const PWAInstallPrompt = () => {
   if (!isInstallable) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 bg-[#2a4e4a]">
-      <div
-        onClick={handleInstallClick}
-        className="flex items-center gap-2 bg-[#2a4e4a] hover:bg-primary-700 text-white px-4 py-2 rounded-lg shadow-lg transition-colors duration-200"
-        aria-label="Install application"
-        tabIndex={0}
-      >
-        <HiDownload className="w-5 h-5" />
-        <span>Install App</span>
-      </div>
+    <div
+      onClick={handleInstallClick}
+      className="fixed bottom-4 right-4 z-50 bg-[#2a4e4a] flex items-center gap-2 text-white px-4 py-2 rounded-lg shadow-lg transition-colors duration-200 hover:bg-[#2a4e4a] hover:scale-105"
+    >
+      <HiDownload className="w-5 h-5" />
+      <span>Install App</span>
     </div>
   );
 };
