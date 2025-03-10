@@ -5,6 +5,14 @@
     <title>The Good Deals</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="google" content="notranslate" />
+    <meta
+      name="description"
+      content="Discover and share amazing artisanal products with your loved ones"
+    />
+    <meta name="theme-color" content="#4F7942" />
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.json" />
 
     <!-- Favicon for browsers -->
     <link
@@ -61,5 +69,21 @@
     <div id="root"></div>
 
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("ServiceWorker registration successful");
+            })
+            .catch((err) => {
+              console.log("ServiceWorker registration failed: ", err);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

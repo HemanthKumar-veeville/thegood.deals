@@ -13,14 +13,16 @@ const PWAInstallPrompt = () => {
       // Stash the event so it can be triggered later
       setDeferredPrompt(e);
       setIsInstallable(true);
+      console.log("👋 PWA is installable!");
     };
 
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-    // Check if app is already installed
+    // Debug: Log if already in standalone mode
     if (window.matchMedia("(display-mode: standalone)").matches) {
+      console.log("🎉 App is already installed and running in standalone mode");
       setIsInstallable(false);
     }
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
     return () => {
       window.removeEventListener(
@@ -31,16 +33,22 @@ const PWAInstallPrompt = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      console.log("❌ No deferred prompt available");
+      return;
+    }
 
+    console.log("🚀 Showing install prompt...");
     // Show the install prompt
     deferredPrompt.prompt();
 
     // Wait for the user to respond to the prompt
     const { outcome } = await deferredPrompt.userChoice;
+    console.log(`👥 User response to install prompt: ${outcome}`);
 
     if (outcome === "accepted") {
       setIsInstallable(false);
+      console.log("✅ PWA installation accepted!");
     }
 
     // Clear the deferredPrompt for the next time
