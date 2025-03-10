@@ -71,7 +71,7 @@ const PWAInstallPrompt = () => {
       >
         <button
           onClick={handleInstallClick}
-          className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg shadow-lg transition-colors duration-200"
+          className="flex items-center gap-2 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white px-6 py-2.5 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl font-medium"
           aria-label="Install application"
           tabIndex={0}
         >
