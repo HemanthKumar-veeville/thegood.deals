@@ -715,6 +715,10 @@ function App() {
         </Layout>
       ),
     },
+    {
+      path: "/index.html",
+      element: <Navigate to="/" replace />,
+    },
   ]);
 
   return <RouterProvider router={router} fallbackElement={<CustomLoader />} />;
