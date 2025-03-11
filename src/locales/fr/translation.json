@@ -1873,5 +1873,10 @@
   "payment_verification_info": {
     "title": "Vous allez être débité de 0€, ce qui est tout à fait normal.",
     "description": "Cette opération permet simplement de vérifier votre moyen de paiement et ne génère aucun frais."
+  },
+  "notFound": {
+    "heading": "Oops! Page non trouvée",
+    "description": "La page que vous cherchez peut avoir été supprimée, renommée ou temporairement indisponible.",
+    "goHome": "Retour à l'accueil"
   }
 }

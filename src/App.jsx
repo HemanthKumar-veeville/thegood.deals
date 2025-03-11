@@ -26,6 +26,7 @@ import DealWallet from "./screens/DealWallet/DealWallet";
 import { STRIPE_PK } from "./config";
 import RequestPendingDeal from "./screens/RequestPendingDeal/RequestPendingDeal";
 import ThanksForReview from "./screens/ThanksForReview/ThanksForReview";
+import NotFound from "./screens/NotFound/NotFound";
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
 const Auth = loadable(() => import("./screens/Auth/Auth"));
@@ -703,6 +704,14 @@ function App() {
             description={t("App.Message.resetPassword.resetDesc")}
             action={t("App.Message.resetPassword.resetAction")}
           />
+        </Layout>
+      ),
+    },
+    {
+      path: "*",
+      element: (
+        <Layout>
+          <NotFound />
         </Layout>
       ),
     },

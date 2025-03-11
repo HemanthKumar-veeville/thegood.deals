@@ -1864,5 +1864,10 @@
   "payment_verification_info": {
     "title": "You will be charged 0€, which is perfectly normal.",
     "description": "This operation simply serves to verify your payment method and incurs no fees."
+  },
+  "notFound": {
+    "heading": "Oops! Page not found",
+    "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    "goHome": "Go to home"
   }
 }
