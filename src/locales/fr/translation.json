@@ -1878,5 +1878,17 @@
     "heading": "Oops! Page non trouvée",
     "description": "La page que vous cherchez peut avoir été supprimée, renommée ou temporairement indisponible.",
     "goHome": "Retour à l'accueil"
+  },
+  "pwa": {
+    "install_app": "Installer l'application",
+    "install_app_menu": "Installer l'application",
+    "add_to_home": "Ajouter à l'écran d'accueil",
+    "already_installed": "L'application est déjà installée et en cours d'exécution en mode autonome",
+    "installable": "PWA est installable !",
+    "install_prompt": "Afficher le prompt d'installation",
+    "user_response": "Réponse de l'utilisateur au prompt d'installation : {{outcome}}",
+    "installation_accepted": "Installation acceptée !",
+    "ios_instructions": "Pour installer cette application sur iOS :\n\n1. Tap le bouton Partager dans Safari\n2. Faites défiler vers le bas et tapez sur \"Ajouter à l'écran d'accueil\"\n3. Tapez sur \"Ajouter\" pour confirmer\n4. L'application sera apparue sur votre écran d'accueil",
+    "firefox_instructions": "Pour installer cette application sur Firefox :\n\n1. Tap le bouton Menu (⋮)\n2. Tapez sur \"Ajouter à l'écran d'accueil\"\n3. Tapez à nouveau sur \"Ajouter à l'écran d'accueil\" pour confirmer\n4. L'application sera apparue sur votre écran d'accueil"
   }
 }

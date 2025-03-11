@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { HiDownload } from "react-icons/hi";
-
+import { useTranslation } from "react-i18next";
 const PWAInstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
+  const { t } = useTranslation();
   const [browserInfo, setBrowserInfo] = useState({
     isIOS: false,
     isFirefox: false,
@@ -28,7 +29,7 @@ const PWAInstallPrompt = () => {
 
     // Already installed check
     if (window.matchMedia("(display-mode: standalone)").matches) {
-      console.log("🎉 App is already installed and running in standalone mode");
+      console.log(t("pwa.already_installed"));
       setIsInstallable(false);
       return;
     }
@@ -38,7 +39,7 @@ const PWAInstallPrompt = () => {
       e.preventDefault();
       setDeferredPrompt(e);
       setIsInstallable(true);
-      console.log("👋 PWA is installable!");
+      console.log(t("pwa.installable"));
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -67,15 +68,15 @@ const PWAInstallPrompt = () => {
   const handleInstallClick = async () => {
     // For Chromium-based browsers and Samsung Internet
     if (deferredPrompt) {
-      console.log("🚀 Showing install prompt...");
+      console.log(t("pwa.install_prompt"));
       deferredPrompt.prompt();
 
       const { outcome } = await deferredPrompt.userChoice;
-      console.log(`👥 User response to install prompt: ${outcome}`);
+      console.log(t("pwa.user_response", { outcome }));
 
       if (outcome === "accepted") {
         setIsInstallable(false);
-        console.log("✅ PWA installation accepted!");
+        console.log(t("pwa.installation_accepted"));
       }
 
       setDeferredPrompt(null);
@@ -88,19 +89,9 @@ const PWAInstallPrompt = () => {
 
   const showBrowserSpecificInstructions = () => {
     if (browserInfo.isIOS) {
-      alert(
-        "To install this app on iOS:\n\n" +
-          "1. Tap the Share button in Safari\n" +
-          '2. Scroll down and tap "Add to Home Screen"\n' +
-          '3. Tap "Add" to confirm'
-      );
+      alert(t("pwa.ios_instructions"));
     } else if (browserInfo.isFirefox) {
-      alert(
-        "To install this app on Firefox:\n\n" +
-          "1. Tap the menu button (⋮)\n" +
-          '2. Tap "Install"\n' +
-          '3. Tap "Install" again to confirm'
-      );
+      alert(t("pwa.firefox_instructions"));
     }
   };
 
@@ -118,10 +109,10 @@ const PWAInstallPrompt = () => {
       <HiDownload className="w-5 h-5" aria-hidden="true" />
       <span>
         {browserInfo.isIOS
-          ? "Add to Home Screen"
+          ? t("pwa.add_to_home")
           : browserInfo.isFirefox
-          ? "Install App (Tap Menu)"
-          : "Install App"}
+          ? t("pwa.install_app_menu")
+          : t("pwa.install_app")}
       </span>
     </div>
   );
