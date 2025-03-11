@@ -1869,5 +1869,17 @@
     "heading": "Oops! Page not found",
     "description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
     "goHome": "Go to home"
+  },
+  "pwa": {
+    "install_app": "Install App",
+    "install_app_menu": "Install App",
+    "add_to_home": "Add to Home Screen",
+    "already_installed": "App is already installed and running in standalone mode",
+    "installable": "PWA is installable!",
+    "install_prompt": "Show install prompt",
+    "user_response": "User response to install prompt: {{outcome}}",
+    "installation_accepted": "Installation accepted!",
+    "ios_instructions": "To install this app on iOS:\n\n1. Tap the Share button in Safari\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add' to confirm \n4. The app will be appeared on your home screen",
+    "firefox_instructions": "To install this app on Firefox:\n\n1. Tap the menu button (⋮)\n2. Tap 'Add to Home Screen'\n3. Tap 'Add' again to confirm \n4. The app will be appeared on your home screen"
   }
 }
