@@ -126,7 +126,12 @@ const ProtectedRoute = loadable(
 const AppBar = loadable(() => import("./components/AppBar/AppBar"), {
   fallback: <CustomLoader />,
 });
-
+const PWAInstallPrompt = loadable(
+  () => import("./components/PWAInstallPrompt/PWAInstallPrompt"),
+  {
+    fallback: <CustomLoader />,
+  }
+);
 // Layout component to include AppBar across all routes
 function Layout({ children }) {
   useEffect(() => {
@@ -136,6 +141,7 @@ function Layout({ children }) {
   return (
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen notranslate">
       <AppBar />
+      <PWAInstallPrompt divClassName="fixed bottom-4 right-4 z-50 flex items-center gap-2 bg-[#2a4e4a] text-white px-6 py-2.5 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl font-medium cursor-pointer" />
       <Suspense fallback={<CustomLoader />}>{children}</Suspense>
     </div>
   );

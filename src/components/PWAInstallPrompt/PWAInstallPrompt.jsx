@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { HiDownload } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 
-const PWAInstallPrompt = () => {
+const PWAInstallPrompt = ({ divClassName }) => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const { t } = useTranslation();
@@ -107,7 +107,7 @@ const PWAInstallPrompt = () => {
       tabIndex={0}
       onClick={handleInstallClick}
       onKeyDown={(e) => e.key === "Enter" && handleInstallClick()}
-      className="fixed bottom-4 right-4 z-50 flex items-center gap-2 bg-[#2a4e4a] text-white px-6 py-2.5 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl font-medium cursor-pointer"
+      className={divClassName}
       aria-label="Install application"
     >
       <HiDownload className="w-5 h-5" aria-hidden="true" />

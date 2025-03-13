@@ -7,7 +7,6 @@ import {
   frame14x7,
   frame14x8,
 } from "../../images";
-import PWAInstallPrompt from "../PWAInstallPrompt/PWAInstallPrompt";
 
 export const Layout = ({
   breakpoint = "desktop",
@@ -85,7 +84,6 @@ export const Layout = ({
           {renderCard(text5, text6, frame14x4, divClassNameOverride)}
         </div>
       </div>
-      <PWAInstallPrompt />
     </>
   );
 };
