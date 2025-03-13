@@ -14,6 +14,13 @@ const PWAInstallPrompt = ({ divClassName }) => {
   });
 
   useEffect(() => {
+    // Check if user has already dismissed or installed the PWA
+    const hasInteractedWithPWA = localStorage.getItem("pwaInteraction");
+    if (hasInteractedWithPWA === "installed") {
+      setIsInstallable(false);
+      return;
+    }
+
     // Detect browser types
     const ua = window.navigator.userAgent.toLowerCase();
     const isIOS = /iphone|ipad|ipod/.test(ua);
@@ -37,6 +44,7 @@ const PWAInstallPrompt = ({ divClassName }) => {
     if (isStandalone) {
       console.log(t("pwa.already_installed"));
       setIsInstallable(false);
+      localStorage.setItem("pwaInteraction", "installed");
       return;
     }
 
@@ -51,14 +59,11 @@ const PWAInstallPrompt = ({ divClassName }) => {
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
-    // Set installable for iOS
-    if (isIOS && !window.navigator.standalone) {
-      setIsInstallable(true);
-    }
-
-    // Set installable for Firefox
-    if (isFirefox) {
-      setIsInstallable(true);
+    // Set installable for iOS and Firefox if not already installed
+    if ((isIOS && !window.navigator.standalone) || isFirefox) {
+      const shouldShowPrompt =
+        localStorage.getItem("pwaInteraction") !== "dismissed";
+      setIsInstallable(shouldShowPrompt);
     }
 
     return () => {
@@ -80,6 +85,7 @@ const PWAInstallPrompt = ({ divClassName }) => {
 
       if (outcome === "accepted") {
         setIsInstallable(false);
+        localStorage.setItem("pwaInteraction", "installed");
         console.log(t("pwa.installation_accepted"));
       }
 
@@ -97,6 +103,10 @@ const PWAInstallPrompt = ({ divClassName }) => {
     } else if (browserInfo.isFirefox) {
       alert(t("pwa.firefox_instructions"));
     }
+    // After showing instructions, we can optionally hide the button
+    // Uncomment the following lines if you want to hide the button after showing instructions
+    // setIsInstallable(false);
+    // localStorage.setItem('pwaInteraction', 'dismissed');
   };
 
   if (!isInstallable) return null;
@@ -108,7 +118,7 @@ const PWAInstallPrompt = ({ divClassName }) => {
       onClick={handleInstallClick}
       onKeyDown={(e) => e.key === "Enter" && handleInstallClick()}
       className={divClassName}
-      aria-label="Install application"
+      aria-label={t("pwa.install_aria_label")}
     >
       <HiDownload className="w-5 h-5" aria-hidden="true" />
       <span>
