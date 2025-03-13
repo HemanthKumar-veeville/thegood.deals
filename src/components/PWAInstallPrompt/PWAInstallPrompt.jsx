@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { HiDownload } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import "sweetalert2/src/sweetalert2.scss";
+
+const MySwal = withReactContent(Swal);
 
 const PWAInstallPrompt = ({ divClassName }) => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -14,14 +19,9 @@ const PWAInstallPrompt = ({ divClassName }) => {
   });
 
   useEffect(() => {
-    // Check only if PWA is already installed in standalone mode
-    const isStandalone =
-      window.matchMedia("(display-mode: standalone)").matches ||
-      window.navigator.standalone ||
-      document.referrer.includes("android-app://");
-
-    if (isStandalone) {
-      console.log(t("pwa.already_installed"));
+    // Check if user has already dismissed or installed the PWA
+    const hasInteractedWithPWA = localStorage.getItem("pwaInteraction");
+    if (hasInteractedWithPWA === "installed") {
       setIsInstallable(false);
       return;
     }
@@ -40,6 +40,19 @@ const PWAInstallPrompt = ({ divClassName }) => {
       isSamsung,
     });
 
+    // Already installed check
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone ||
+      document.referrer.includes("android-app://");
+
+    if (isStandalone) {
+      console.log(t("pwa.already_installed"));
+      setIsInstallable(false);
+      localStorage.setItem("pwaInteraction", "installed");
+      return;
+    }
+
     const handleBeforeInstallPrompt = (e) => {
       // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
@@ -51,9 +64,11 @@ const PWAInstallPrompt = ({ divClassName }) => {
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
-    // Set installable for iOS and Firefox
+    // Set installable for iOS and Firefox if not already installed
     if ((isIOS && !window.navigator.standalone) || isFirefox) {
-      setIsInstallable(true);
+      const shouldShowPrompt =
+        localStorage.getItem("pwaInteraction") !== "dismissed";
+      setIsInstallable(shouldShowPrompt);
     }
 
     return () => {
@@ -75,6 +90,7 @@ const PWAInstallPrompt = ({ divClassName }) => {
 
       if (outcome === "accepted") {
         setIsInstallable(false);
+        localStorage.setItem("pwaInteraction", "installed");
         console.log(t("pwa.installation_accepted"));
       }
 
@@ -87,15 +103,86 @@ const PWAInstallPrompt = ({ divClassName }) => {
   };
 
   const showBrowserSpecificInstructions = () => {
-    if (browserInfo.isIOS) {
-      alert(t("pwa.ios_instructions"));
-    } else if (browserInfo.isFirefox) {
-      alert(t("pwa.firefox_instructions"));
-    }
-    // After showing instructions, we can optionally hide the button
-    // Uncomment the following lines if you want to hide the button after showing instructions
-    // setIsInstallable(false);
-    // localStorage.setItem('pwaInteraction', 'dismissed');
+    const getInstructions = () => {
+      if (browserInfo.isIOS) {
+        return `
+          <div class="space-y-4">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">${t(
+              "pwa.ios_install_title"
+            )}</h3>
+            <ol class="space-y-3">
+              <li class="flex items-start">
+                <span class="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#2a4e4a] text-white text-sm mr-3">1</span>
+                <p class="text-gray-600">${t("pwa.ios_step_1")}</p>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#2a4e4a] text-white text-sm mr-3">2</span>
+                <p class="text-gray-600">${t("pwa.ios_step_2")}</p>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#2a4e4a] text-white text-sm mr-3">3</span>
+                <p class="text-gray-600">${t("pwa.ios_step_3")}</p>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#2a4e4a] text-white text-sm mr-3">4</span>
+                <p class="text-gray-600">${t("pwa.ios_step_4")}</p>
+              </li>
+            </ol>
+          </div>
+        `;
+      } else if (browserInfo.isFirefox) {
+        return `
+          <div class="space-y-4">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">${t(
+              "pwa.firefox_install_title"
+            )}</h3>
+            <ol class="space-y-3">
+              <li class="flex items-start">
+                <span class="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#2a4e4a] text-white text-sm mr-3">1</span>
+                <p class="text-gray-600">${t("pwa.firefox_step_1")}</p>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#2a4e4a] text-white text-sm mr-3">2</span>
+                <p class="text-gray-600">${t("pwa.firefox_step_2")}</p>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#2a4e4a] text-white text-sm mr-3">3</span>
+                <p class="text-gray-600">${t("pwa.firefox_step_3")}</p>
+              </li>
+              <li class="flex items-start">
+                <span class="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#2a4e4a] text-white text-sm mr-3">4</span>
+                <p class="text-gray-600">${t("pwa.firefox_step_4")}</p>
+              </li>
+            </ol>
+          </div>
+        `;
+      }
+      return "";
+    };
+
+    MySwal.fire({
+      html: getInstructions(),
+      icon: "none",
+      showCloseButton: true,
+      showConfirmButton: true,
+      confirmButtonText: t("pwa.understand"),
+      confirmButtonColor: "#2a4e4a",
+      customClass: {
+        container: "pwa-install-modal",
+        popup: "rounded-xl p-6",
+        title: "!border-b !border-gray-200 !pb-4",
+        htmlContainer: "!mt-6 !text-left",
+        closeButton: "focus:!outline-none hover:!opacity-75",
+        confirmButton:
+          "!px-6 !py-2.5 !text-sm !font-medium !rounded-lg !shadow-sm",
+        actions: "!mt-6",
+      },
+      didClose: () => {
+        // Optionally hide the install button after showing instructions
+        // setIsInstallable(false);
+        // localStorage.setItem('pwaInteraction', 'dismissed');
+      },
+    });
   };
 
   if (!isInstallable) return null;
