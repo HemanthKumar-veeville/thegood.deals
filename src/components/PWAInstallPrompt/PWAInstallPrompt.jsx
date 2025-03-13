@@ -14,14 +14,9 @@ const PWAInstallPrompt = ({ divClassName }) => {
   });
 
   useEffect(() => {
-    // Check only if PWA is already installed in standalone mode
-    const isStandalone =
-      window.matchMedia("(display-mode: standalone)").matches ||
-      window.navigator.standalone ||
-      document.referrer.includes("android-app://");
-
-    if (isStandalone) {
-      console.log(t("pwa.already_installed"));
+    // Check if user has already dismissed or installed the PWA
+    const hasInteractedWithPWA = localStorage.getItem("pwaInteraction");
+    if (hasInteractedWithPWA === "installed") {
       setIsInstallable(false);
       return;
     }
@@ -40,6 +35,19 @@ const PWAInstallPrompt = ({ divClassName }) => {
       isSamsung,
     });
 
+    // Already installed check
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone ||
+      document.referrer.includes("android-app://");
+
+    if (isStandalone) {
+      console.log(t("pwa.already_installed"));
+      setIsInstallable(false);
+      localStorage.setItem("pwaInteraction", "installed");
+      return;
+    }
+
     const handleBeforeInstallPrompt = (e) => {
       // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
@@ -51,9 +59,11 @@ const PWAInstallPrompt = ({ divClassName }) => {
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
-    // Set installable for iOS and Firefox
+    // Set installable for iOS and Firefox if not already installed
     if ((isIOS && !window.navigator.standalone) || isFirefox) {
-      setIsInstallable(true);
+      const shouldShowPrompt =
+        localStorage.getItem("pwaInteraction") !== "dismissed";
+      setIsInstallable(shouldShowPrompt);
     }
 
     return () => {
@@ -75,6 +85,7 @@ const PWAInstallPrompt = ({ divClassName }) => {
 
       if (outcome === "accepted") {
         setIsInstallable(false);
+        localStorage.setItem("pwaInteraction", "installed");
         console.log(t("pwa.installation_accepted"));
       }
 
