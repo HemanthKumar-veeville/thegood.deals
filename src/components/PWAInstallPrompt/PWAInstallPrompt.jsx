@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { HiDownload } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
+
 const PWAInstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
@@ -16,9 +17,9 @@ const PWAInstallPrompt = () => {
     // Detect browser types
     const ua = window.navigator.userAgent.toLowerCase();
     const isIOS = /iphone|ipad|ipod/.test(ua);
-    const isFirefox = ua.includes("firefox") && ua.includes("android");
+    const isFirefox = ua.includes("firefox");
     const isSamsung = ua.includes("samsungbrowser");
-    const isChromium = /chrome|edge|opera/.test(ua) && !isSamsung;
+    const isChromium = !isIOS && !isFirefox && !isSamsung;
 
     setBrowserInfo({
       isIOS,
@@ -28,15 +29,21 @@ const PWAInstallPrompt = () => {
     });
 
     // Already installed check
-    if (window.matchMedia("(display-mode: standalone)").matches) {
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone ||
+      document.referrer.includes("android-app://");
+
+    if (isStandalone) {
       console.log(t("pwa.already_installed"));
       setIsInstallable(false);
       return;
     }
 
-    // Handle Chromium-based browsers (Chrome, Edge, Opera) and Samsung Internet
     const handleBeforeInstallPrompt = (e) => {
+      // Prevent the mini-infobar from appearing on mobile
       e.preventDefault();
+      console.log("Before install prompt event triggered");
       setDeferredPrompt(e);
       setIsInstallable(true);
       console.log(t("pwa.installable"));
@@ -45,14 +52,11 @@ const PWAInstallPrompt = () => {
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
     // Set installable for iOS
-    if (isIOS) {
-      // Check if the app is not already installed
-      if (!window.navigator.standalone) {
-        setIsInstallable(true);
-      }
+    if (isIOS && !window.navigator.standalone) {
+      setIsInstallable(true);
     }
 
-    // Set installable for Firefox Android
+    // Set installable for Firefox
     if (isFirefox) {
       setIsInstallable(true);
     }
@@ -63,7 +67,7 @@ const PWAInstallPrompt = () => {
         handleBeforeInstallPrompt
       );
     };
-  }, []);
+  }, [t]);
 
   const handleInstallClick = async () => {
     // For Chromium-based browsers and Samsung Internet
