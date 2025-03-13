@@ -141,7 +141,7 @@ function Layout({ children }) {
   return (
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen notranslate">
       <AppBar />
-      <PWAInstallPrompt divClassName="fixed bottom-4 right-4 z-50 flex items-center gap-2 bg-[#2a4e4a] text-white px-6 py-2.5 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl font-medium cursor-pointer" />
+      <PWAInstallPrompt divClassName="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-3 bg-[#2a4e4a]/95 backdrop-blur-sm text-white px-6 py-3.5 shadow-lg transition-all duration-300 ease-in-out font-medium cursor-pointer w-full border-t border-white/10" />
       <Suspense fallback={<CustomLoader />}>{children}</Suspense>
     </div>
   );

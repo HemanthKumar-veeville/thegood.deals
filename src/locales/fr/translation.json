@@ -1889,6 +1889,20 @@
     "user_response": "Réponse de l'utilisateur au prompt d'installation : {{outcome}}",
     "installation_accepted": "Installation acceptée !",
     "ios_instructions": "Pour installer cette application sur iOS :\n\n1. Tap le bouton Partager dans Safari\n2. Faites défiler vers le bas et tapez sur \"Ajouter à l'écran d'accueil\"\n3. Tapez sur \"Ajouter\" pour confirmer\n4. L'application sera apparue sur votre écran d'accueil",
-    "firefox_instructions": "Pour installer cette application sur Firefox :\n\n1. Tap le bouton Menu (⋮)\n2. Tapez sur \"Ajouter à l'écran d'accueil\"\n3. Tapez à nouveau sur \"Ajouter à l'écran d'accueil\" pour confirmer\n4. L'application sera apparue sur votre écran d'accueil"
+    "firefox_instructions": "Pour installer cette application sur Firefox :\n\n1. Tap le bouton Menu (⋮)\n2. Tapez sur \"Ajouter à l'écran d'accueil\"\n3. Tapez à nouveau sur \"Ajouter à l'écran d'accueil\" pour confirmer\n4. L'application sera apparue sur votre écran d'accueil",
+    "install_aria_label": "Installer l'application",
+    "ios_install_title": "Installer sur iOS",
+    "ios_step_1": "Tap le bouton Partager dans Safari",
+    "ios_step_2": "Faites défiler vers le bas et tapez sur \"Ajouter à l'écran d'accueil\"",
+    "ios_step_3": "Tapez sur \"Ajouter\" pour confirmer",
+    "ios_step_4": "L'application sera apparue sur votre écran d'accueil",
+    "firefox_install_title": "Installer sur Firefox",
+    "firefox_step_1": "Tap le bouton Menu (⋮)",
+    "firefox_step_2": "Tapez sur \"Ajouter à l'écran d'accueil\"",
+    "firefox_step_3": "Tapez à nouveau sur \"Ajouter à l'écran d'accueil\" pour confirmer",
+    "firefox_step_4": "L'application sera apparue sur votre écran d'accueil",
+    "install_guide": "Guide d'installation",
+    "understand": "Compris",
+    "install_button": "Installer"
   }
 }
