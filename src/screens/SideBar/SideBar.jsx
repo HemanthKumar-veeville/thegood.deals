@@ -7,6 +7,7 @@ import { FranceFlag, UK_Flag_Icon } from "../../images";
 import { useLanguage } from "../../context/LanguageContext";
 import LanguageDropdown from "../LanguageDropdown/LanguageDropdown";
 import { logoutUser } from "../../redux/app/user/userSlice";
+import { usePWA } from "../../hooks/usePWA";
 
 /**
  * SideBar component
@@ -25,6 +26,20 @@ const SideBar = React.memo(({ onClose }) => {
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const { isInstallable, handleInstallClick } = usePWA();
+  const [showInstallInstructions, setShowInstallInstructions] = useState(false);
+
+  const isIOS = useMemo(() => /iPad|iPhone|iPod/.test(navigator.userAgent), []);
+  const isFirefox = useMemo(() => /Firefox/.test(navigator.userAgent), []);
+
+  const handlePWAInstall = useCallback(() => {
+    if (isIOS || isFirefox) {
+      setShowInstallInstructions(true);
+    } else {
+      handleInstallClick();
+    }
+  }, [isIOS, isFirefox, handleInstallClick]);
 
   // Show the sidebar when the component is mounted
   useEffect(() => {
@@ -39,15 +54,33 @@ const SideBar = React.memo(({ onClose }) => {
     };
   }, []);
 
-  const handleLanguageOpen = () => {
-    setOpen(false);
-    setLanguageOpen(!languageOpen);
-  };
+  const handleLanguageSelect = useCallback(
+    (language) => {
+      setSelectedLanguage(language);
+      i18n.changeLanguage(language === "english" ? "en" : "fr");
+      setIsLanguageDropdownOpen(false);
+    },
+    [setSelectedLanguage, i18n]
+  );
 
-  // Show the sidebar when the component is mounted
-  useEffect(() => {
-    setIsVisible(true);
+  const toggleLanguageDropdown = useCallback(() => {
+    setIsLanguageDropdownOpen((prev) => !prev);
   }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isLanguageDropdownOpen &&
+        !event.target.closest(".language-selector")
+      ) {
+        setIsLanguageDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isLanguageDropdownOpen]);
 
   /**
    * Handle closing the sidebar
@@ -176,7 +209,137 @@ const SideBar = React.memo(({ onClose }) => {
               isUserLoggedIn ? "/my-information" : "/auth?login",
               " border border-green "
             )}
-            <LanguageDropdown handleLanguageOpen={handleLanguageOpen} />
+            {isInstallable && (
+              <button
+                className="w-full text-green inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full cursor-pointer border border-green bg-white hover:bg-gray-50"
+                onClick={handlePWAInstall}
+                aria-label={t("pwa.install_app")}
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                <span className="font-normal text-base leading-6 whitespace-nowrap">
+                  {t("pwa.install_app")}
+                </span>
+              </button>
+            )}
+            {showInstallInstructions && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+                  <h3 className="text-lg font-semibold mb-4">
+                    {t("pwa.add_to_home")}
+                  </h3>
+                  <p className="text-sm text-gray-600 whitespace-pre-line mb-6">
+                    {isIOS
+                      ? t("pwa.ios_instructions")
+                      : t("pwa.firefox_instructions")}
+                  </p>
+                  <button
+                    onClick={() => setShowInstallInstructions(false)}
+                    className="w-full bg-green text-white py-2 rounded-full hover:bg-[#15423b]"
+                  >
+                    OK
+                  </button>
+                </div>
+              </div>
+            )}
+            <div className="relative w-full language-selector">
+              <button
+                className="w-full text-green inline-flex items-center justify-center gap-3 px-6 py-3 rounded-full cursor-pointer border border-green hover:bg-gray-50"
+                onClick={toggleLanguageDropdown}
+                aria-expanded={isLanguageDropdownOpen}
+                aria-haspopup="listbox"
+                aria-controls="language-dropdown"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-normal text-base leading-6 whitespace-nowrap">
+                    {selectedLanguage === "english" ? "English" : "Français"}
+                  </span>
+                  <img
+                    src={
+                      selectedLanguage === "english" ? UK_Flag_Icon : FranceFlag
+                    }
+                    style={{
+                      width: "20px",
+                      height: selectedLanguage === "english" ? "17px" : "20px",
+                    }}
+                    alt={
+                      selectedLanguage === "english" ? "UK Flag" : "French Flag"
+                    }
+                  />
+                  <svg
+                    className={`w-4 h-4 transition-transform duration-200 ${
+                      isLanguageDropdownOpen ? "transform rotate-180" : ""
+                    }`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              {isLanguageDropdownOpen && (
+                <div
+                  id="language-dropdown"
+                  role="listbox"
+                  className="absolute z-50 w-full mt-2 bg-white rounded-md shadow-lg border border-stroke"
+                  aria-label="Select language"
+                >
+                  <button
+                    role="option"
+                    aria-selected={selectedLanguage === "english"}
+                    className={`w-full flex items-center justify-center gap-2 px-6 py-3 text-center hover:bg-gray-50 ${
+                      selectedLanguage === "english" ? "bg-gray-50" : ""
+                    }`}
+                    onClick={() => handleLanguageSelect("english")}
+                  >
+                    <span className="font-normal text-base leading-6">
+                      English
+                    </span>
+                    <img
+                      src={UK_Flag_Icon}
+                      style={{ width: "20px", height: "17px" }}
+                      alt="UK Flag"
+                    />
+                  </button>
+                  <button
+                    role="option"
+                    aria-selected={selectedLanguage === "french"}
+                    className={`w-full flex items-center justify-center gap-2 px-6 py-3 text-center hover:bg-gray-50 ${
+                      selectedLanguage === "french" ? "bg-gray-50" : ""
+                    }`}
+                    onClick={() => handleLanguageSelect("french")}
+                  >
+                    <span className="font-normal text-base leading-6">
+                      Français
+                    </span>
+                    <img
+                      src={FranceFlag}
+                      style={{ width: "20px", height: "20px" }}
+                      alt="French Flag"
+                    />
+                  </button>
+                </div>
+              )}
+            </div>
             {isUserLoggedIn &&
               renderButton(
                 t("side_bar.logout"),
