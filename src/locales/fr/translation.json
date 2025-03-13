@@ -20,8 +20,8 @@
   },
   "home": {
     "title": " ",
-    "title_p_1": "Des produits d'exception",
-    "title_p_2": "à prix d'amis",
+    "title_p_1": "Des produits d’exception",
+    "title_p_2": "à prix d’amis",
     "description": "Offrez à vos proches l'opportunité de découvrir des produits d'exception,  grâce à nos commandes groupées. Bénéficiez de tarifs préférentiels, mais aussi de savourer ensemble la richesse et l'authenticité de nos terroirs.",
     "login": "Se connecter",
     "create_account": "Créer un compte",
@@ -66,7 +66,7 @@
       "ans5": "This is a detailed answer for the fifth question."
     },
     "footer": {
-      "subscribe": "S'abonner",
+      "subscribe": "S’abonner",
       "sitemap": "Plan du site",
       "about": "À propos",
       "how_it_works": "Comment ça marche ?",
@@ -76,7 +76,7 @@
       "information": "Informations",
       "legal_notice": "Mentions légales",
       "privacy_policy": "Politique de confidentialité",
-      "general_conditions": "Conditions Générales de Ventes et d'Utilisation",
+      "general_conditions": "Conditions Générales de Ventes et d’Utilisation",
       "newsletter_title": "Notre newsletter engagée",
       "newsletter_description": "Restez informé (une seule fois par mois) de nos actualités",
       "subscribe_agreement": "En vous abonnant, vous acceptez notre ",
@@ -97,27 +97,27 @@
     "authenticity": "Authenticité",
     "authenticity_description": "Des produits qui racontent une histoire, celle de nos terroirs et de leurs artisans passionnés.",
     "community": "Communauté",
-    "community_description": "Nous croyons au pouvoir du partage et des expériences conviviales. Chaque commande groupée est l'occasion de renforcer les liens avec vos amis et votre famille.",
+    "community_description": "Nous croyons au pouvoir du partage et des expériences conviviales. Chaque commande groupée est l’occasion de renforcer les liens avec vos amis et votre famille.",
     "local_support_heading": "Soutien local",
     "local_support_heading_description": "Vous participez à la valorisation et au maintien des savoir-faire uniques de nos régions. Chaque achat est un geste de soutien envers nos artisans.",
     "unique_products": "Des produits uniques",
-    "unique_products_description": "Chaque artisan est sélectionné pour la qualité et l'authenticité de ses produits. Vous découvrirez des saveurs et des créations que vous ne trouverez nulle part ailleurs.",
+    "unique_products_description": "Chaque artisan est sélectionné pour la qualité et l’authenticité de ses produits. Vous découvrirez des saveurs et des créations que vous ne trouverez nulle part ailleurs.",
     "advantageous_prices": "Des prix avantageux",
     "advantageous_prices_description": "Grâce aux commandes groupées, vous bénéficiez de tarifs préférentiels. Plus on est de fous, plus on savoure !",
     "enriching_experience": "Une expérience enrichissante",
-    "enriching_experience_description": "Commander sur The Good Deals, c'est bien plus qu'un simple achat. C'est l'occasion de partager des moments précieux avec vos proches tout en soutenant une économie locale et durable.",
+    "enriching_experience_description": "Commander sur The Good Deals, c’est bien plus qu’un simple achat. C’est l’occasion de partager des moments précieux avec vos proches tout en soutenant une économie locale et durable.",
     "about_good_deals_p1": "À propos de",
     "about_good_deals_p2": "The Good Deals",
-    "welcome_description": "Nous sommes ravis de vous accueillir dans notre communauté dédiée à la découverte de produits d'exception à des prix d'amis. The Good Deals est une aventure humaine et gourmande née à Lille, fondée par Anthony Brabant et Abraham Thomas, où chaque commande groupée devient une fête des saveurs et des savoir-faire locaux.",
+    "welcome_description": "Nous sommes ravis de vous accueillir dans notre communauté dédiée à la découverte de produits d’exception à des prix d’amis. The Good Deals est une aventure humaine et gourmande née à Lille, fondée par Anthony Brabant et Abraham Thomas, où chaque commande groupée devient une fête des saveurs et des savoir-faire locaux.",
     "login": "Se connecter",
     "create_account": "Créer un compte",
     "create_deal": "Créer un good deal !",
     "manage_deal": "Gérer mes good deals",
     "our_mission": "Notre mission",
-    "mission_description": "Vous permettre de profiter des meilleurs artisans de nos régions et vous permettre de partager leurs trésors avec vos proches. En unissant nos forces, nous rendons les produits d'exception accessibles à tous, tout en soutenant les talents locaux.",
+    "mission_description": "Vous permettre de profiter des meilleurs artisans de nos régions et vous permettre de partager leurs trésors avec vos proches. En unissant nos forces, nous rendons les produits d’exception accessibles à tous, tout en soutenant les talents locaux.",
     "join_adventure": "Rejoignez-nous dans cette belle aventure !",
-    "join_adventure_description": "Créer une commande, c'est aussi simple que convivial. En quelques clics, lancez une annonce, invitez vos amis et savourez ensemble les délices de l'artisanat local.",
-    "subscribe": "S'abonner",
+    "join_adventure_description": "Créer une commande, c’est aussi simple que convivial. En quelques clics, lancez une annonce, invitez vos amis et savourez ensemble les délices de l’artisanat local.",
+    "subscribe": "S’abonner",
     "sitemap": "Plan du site",
     "about": "À propos",
     "newsletter_title": "Notre newsletter engagée",
@@ -131,36 +131,36 @@
     "information": "Informations",
     "legal_notice": "Mentions légales",
     "privacy_policy": "Politique de confidentialité",
-    "general_conditions": "Conditions Générales de Ventes et d'Utilisation",
+    "general_conditions": "Conditions Générales de Ventes et d’Utilisation",
     "enter_email": "Entrer votre email",
     "why_choose_us": "Pourquoi nous choisir ?"
   },
   "how_it_works": {
     "title": "Comment ça marche ?",
-    "description": "Nous savons que vous avez hâte de découvrir et de partager des produits d'exception avec vos proches. C'est pourquoi nous avons rendu le processus aussi simple et agréable que possible.",
+    "description": "Nous savons que vous avez hâte de découvrir et de partager des produits d’exception avec vos proches. C’est pourquoi nous avons rendu le processus aussi simple et agréable que possible.",
     "login": "Se connecter",
     "create_account": "Créer un compte",
     "layout": {
       "text": "Savourez ensemble les délices de l'artisanat local, en trois étapes simples",
       "text1": "Définissez votre offre avec soin",
-      "text2": "Commencez par créer une annonce attrayante en quelques clics. Définissez le prix, décrivez les produits proposés et présentez l'artisan derrière ces merveilles. Assurez-vous d'inclure toutes les informations essentielles pour captiver vos futurs acheteurs.",
-      "text3": "Partagez l'enthousiasme",
-      "text4": "Une fois votre annonce prête, il est temps d'inviter vos amis et votre famille à découvrir l'offre. Utilisez notre plateforme en ligne pour envoyer des invitations et partagez l'annonce via les réseaux sociaux ou par email. Plus vous serez nombreux, plus vous pourrez profiter de tarifs avantageux !",
+      "text2": "Commencez par créer une annonce attrayante en quelques clics. Définissez le prix, décrivez les produits proposés et présentez l’artisan derrière ces merveilles. Assurez-vous d’inclure toutes les informations essentielles pour captiver vos futurs acheteurs.",
+      "text3": "Partagez l’enthousiasme",
+      "text4": "Une fois votre annonce prête, il est temps d’inviter vos amis et votre famille à découvrir l’offre. Utilisez notre plateforme en ligne pour envoyer des invitations et partagez l’annonce via les réseaux sociaux ou par email. Plus vous serez nombreux, plus vous pourrez profiter de tarifs avantageux !",
       "text5": "Assurez une réception parfaite",
-      "text6": "Après avoir rassemblé toutes les commandes, l'artisan prépare les colis et les expédie directement chez vous. Nous nous assurons que la livraison se déroule dans les meilleures conditions afin que vos proches reçoivent leurs produits en parfait état, prêts à être savourés."
+      "text6": "Après avoir rassemblé toutes les commandes, l’artisan prépare les colis et les expédie directement chez vous. Nous nous assurons que la livraison se déroule dans les meilleures conditions afin que vos proches reçoivent leurs produits en parfait état, prêts à être savourés."
     },
     "header": {
       "create_deal": "Créer un good deal",
       "manage_deal": "Gérer mes good deals",
-      "text": "C'est aussi simple que ça !",
-      "text1": "En quelques étapes, vous pouvez transformer un achat en une expérience conviviale et enrichissante. Créez une annonce, invitez vos proches et savourez ensemble les délices de l'artisanat local.",
+      "text": "C’est aussi simple que ça !",
+      "text1": "En quelques étapes, vous pouvez transformer un achat en une expérience conviviale et enrichissante. Créez une annonce, invitez vos proches et savourez ensemble les délices de l’artisanat local.",
       "ready_to_get_started": "Prêt à commencer ?",
-      "ready_to_get_started_description": "Rejoignez notre communauté et lancez votre première commande groupée dès aujourd'hui. Si vous avez des questions ou besoin d'assistance, notre équipe est là pour vous accompagner à chaque étape."
+      "ready_to_get_started_description": "Rejoignez notre communauté et lancez votre première commande groupée dès aujourd’hui. Si vous avez des questions ou besoin d’assistance, notre équipe est là pour vous accompagner à chaque étape."
     },
     "breakpoint": {
       "how_it_works": "Comment ça marche ?",
       "about_us": "À propos de nous",
-      "text": "Rejoindre l'aventure",
+      "text": "Rejoindre l’aventure",
       "text1": "Pourquoi choisir The Good Deals ?",
       "text2": "",
       "text3": "Des produits de qualité",
@@ -171,7 +171,7 @@
       "text8": "Partagez des moments uniques avec vos proches tout en soutenant les artisans de votre région."
     },
     "footer": {
-      "subscribe": "S'abonner",
+      "subscribe": "S’abonner",
       "sitemap": "Plan du site",
       "about": "À propos",
       "newsletter_title": "Notre newsletter engagée",
@@ -186,7 +186,7 @@
       "information": "Informations",
       "legal_notice": "Mentions légales",
       "privacy_policy": "Politique de confidentialité",
-      "general_conditions": "Conditions Générales de Ventes et d'Utilisation",
+      "general_conditions": "Conditions Générales de Ventes et d’Utilisation",
       "enter_email": "Entrer votre email"
     }
   },
@@ -263,14 +263,14 @@
     "information": "Informations",
     "legal_notice": "Mentions légales",
     "privacy_policy": "Politique de confidentialité",
-    "general_conditions": "Conditions Générales de Ventes et d'Utilisation",
+    "general_conditions": "Conditions Générales de Ventes et d’Utilisation",
     "committed_newsletter": "Notre newsletter engagée",
     "newsletter_info": "Restez informé (une seule fois par mois) de nos actualités",
     "subscribe_agreement": "En vous abonnant, vous acceptez notre ",
     "consent": " et consentez à recevoir des mises à jour de notre société.",
     "copyright": "© 2024 The Good Deals. Tous droits réservés.",
     "enter_email": "Entrer votre email",
-    "subscribe": "S'abonner"
+    "subscribe": "S’abonner"
   },
   "edit_profile": {
     "title": "Mon compte ✏️",
@@ -293,7 +293,7 @@
     },
     "your_address": "Votre adresse",
     "address": "Adresse",
-    "additional_address": "Complément d'adresse",
+    "additional_address": "Complément d’adresse",
     "city": "Ville",
     "postal_code": "Code postal",
     "country": "Pays",
@@ -303,7 +303,7 @@
   },
   "public_need_help": {
     "back": "Retour",
-    "title": "Besoins d'aide ? 🛟",
+    "title": "Besoins d’aide ? 🛟",
     "description": "Notre équipe est là pour répondre à vos questions.",
     "form_title": "Via notre formulaire",
     "name_placeholder": "Votre nom",
@@ -348,7 +348,7 @@
     "my_information": "Mes informations",
     "wallet_details": "Détails du wallet",
     "settings": "Paramètres",
-    "acquire_help": "Obtenir de l'aide",
+    "acquire_help": "Obtenir de l’aide",
     "sign_out": "Se déconnecter",
     "error_loading_deals": "Erreur lors de la récupération des deals",
     "no_created_deals": "Vous n'avez pas de deals. Créez-en un maintenant!",
@@ -356,7 +356,7 @@
     "no_orders": "Aucune commande disponible",
     "no_title": "Pas de titre",
     "no_status": "Pas de statut",
-    "no_organizer": "Pas d'organisateur",
+    "no_organizer": "Pas d’organisateur",
     "console_failed_load_deals": "Échec du chargement de plus de deals :",
     "console_failed_profile_status": "Échec de la récupération du profil ou du statut de connexion de l'utilisateur :",
     "console_failed_logout": "Échec de la déconnexion :"
@@ -383,7 +383,7 @@
     "title": "Créer un good deal",
     "update_title": "Modifier un good deal",
     "description_label": "Déscription du deal",
-    "description_placeholder": "ex. J'ai découvert ce domaine viticole incroyable...",
+    "description_placeholder": "ex. J’ai découvert ce domaine viticole incroyable...",
     "collection_date_label": "Date approximative de collecte",
     "content_description_label": "Décrivez le contenu",
     "content_description_placeholder": "ex. Chaque commande inclura une sélection variée de bouteilles...",
@@ -398,11 +398,11 @@
     "add_products_label": "Ajouter les produits",
     "add_another_product_label": "Ajouter un autre produit",
     "next_step_button": "Étape suivante",
-    "accept_conditions_label": "J'accepte les Conditions Générales de Ventes",
-    "created_empty": "Vous n'avez aucun deals. ",
-    "created_action": "Créez-en un dès maintenant !",
+    "accept_conditions_label": "J’accepte les Conditions Générales de Ventes",
+    "created_empty": "Vous n’avez aucun deals. ",
+    "created_action": "Créez-en un dès maintenant !",
     "invited_empty": "Vous ne participez à aucun deal.",
-    "invited_action": "Attendez que l'on vous invite !",
+    "invited_action": "Attendez que l’on vous invite !",
     "error_title_required": "Titre du deal requis !",
     "error_iban_required": "IBAN requis !",
     "error_description_required": "Description du deal requise !",
@@ -412,7 +412,7 @@
     "error_manufacturer_info_required": "Informations sur l'artisan requises !",
     "error_deal_expiration_required": "Date d'expiration de l'offre requise !",
     "error_accept_conditions_required": "Acceptation des conditions requise !",
-    "error_products_required": "Produits requis !",
+    "error_products_required": "Produits requis !",
     "invite_pending": "Demande en attente"
   },
   "chat": {
@@ -422,11 +422,11 @@
     "chat.replying_to": "Répondant à"
   },
   "inform_craftsman": {
-    "confirm_deal_title": "Confirmer le good deal avec l'artisan",
-    "confirm_deal_message": "Nous allons envoyer un mail à l'artisan pour confirmer avec lui le deal.",
-    "indicate_email": "Indiquer l'email de l'artisan",
+    "confirm_deal_title": "Confirmer le good deal avec l’artisan",
+    "confirm_deal_message": "Nous allons envoyer un mail à l’artisan pour confirmer avec lui le deal.",
+    "indicate_email": "Indiquer l’email de l’artisan",
     "email_placeholder": "ex. contact@gmail.com",
-    "send_to_artisan": "Envoyer à l'artisan",
+    "send_to_artisan": "Envoyer à l’artisan",
     "finish_later": "Terminer plus tard",
     "errors": {
       "email_empty": "Veuillez entrer votre adresse e-mail.",
@@ -442,11 +442,11 @@
   },
   "thanks_to_admin": {
     "thanks_message": "Merci ! 🎉",
-    "confirmation_message": "Une fois le deal confirmé par l'artisan, nous vous préviendrons par mail.",
-    "back_to_home": "Retour à l'accueil"
+    "confirmation_message": "Une fois le deal confirmé par l’artisan, nous vous préviendrons par mail.",
+    "back_to_home": "Retour à l’accueil"
   },
   "thanks_to_artisan": {
-    "confirmation_message": "Merci d'avoir confirmer le bon de commande."
+    "confirmation_message": "Merci d’avoir confirmer le bon de commande."
   },
   "active_deal": {
     "edit_deal_button": "Modifier le deal",
@@ -462,39 +462,39 @@
     "relatives_label": "Mes proches",
     "participants_label": "Invités sur le deal",
     "participants_count": "{{count}} participants",
-    "step_1": "L'artisan a accepté le deal",
+    "step_1": "L’artisan a accepté le deal",
     "step_2": "Le good deal est en cours",
     "step_3": "Objectif atteint ! 🎉",
-    "step_4": "Commandes envoyées à l'artisan",
+    "step_4": "Commandes envoyées à l’artisan",
     "step_5": "L'organisateur coordonne la livraison avec l'artisan",
     "deal_ends_in": "Le deal se termine dans",
     "manage_friends": "Gérer mes proches",
-    "collect_payment": "Collecter le paiement",
+    "collect_payment": "Collecter le paiement",
     "retry_payment": "Réessayer le paiement",
-    "pay_artisan": "Payer l'artisan",
+    "pay_artisan": "Payer l’artisan",
     "endsIn": "fin dans {{days}} jours",
-    "danger_alert": "Le paiement d'un des participants n'a pu être réalisé.",
+    "danger_alert": "Le paiement d’un des participants n’a pu être réalisé.",
     "error": "Une erreur est survenue. Veuillez réessayer plus tard.",
     "try_again": "Réessayer",
-    "deal_completed": "Le deal est payé. L'artisan va préparer vos commandes.",
+    "deal_completed": "Le deal est payé. L’artisan va préparer vos commandes.",
     "deal_collected": "Le montant a été collecté auprès de tous les participants.",
-    "deal_completed_status": "L'artisan va préparer vos commandes.",
-    "not_fullfilled": "Objectif 100 % non atteint !"
+    "deal_completed_status": "L’artisan va préparer vos commandes.",
+    "not_fullfilled": "Objectif 100 % non atteint !"
   },
   "draft_deal": {
     "back_button": "Retour",
     "title": "Caisses de vins Domaine de Cigaluse",
     "edit_button": "Modifier le deal",
-    "step_1": "L'artisan a accepté le deal",
+    "step_1": "L’artisan a accepté le deal",
     "step_2": "Le good deal est en cours",
     "step_3": "Objectif atteint ! 🎉",
-    "step_4": "Commandes envoyées à l'artisan",
+    "step_4": "Commandes envoyées à l’artisan",
     "step_5": "L'organisateur coordonne la livraison avec l'artisan",
     "badges": {
       "soon_out_stock": "Bientôt en rupture de stock",
       "finished": "Terminé",
       "in_stock": "En stock",
-      "waiting": "En attente de l'artisan",
+      "waiting": "En attente de l’artisan",
       "draft": "Brouillon"
     }
   },
@@ -509,13 +509,13 @@
       "soon_out_stock": "Bientôt en rupture de stock",
       "finished": "Terminé",
       "in_stock": "En stock",
-      "waiting": "En attente de l'artisan",
+      "waiting": "En attente de l’artisan",
       "draft": "Brouillon"
     },
-    "step_1": "L'artisan a accepté le deal",
+    "step_1": "L’artisan a accepté le deal",
     "step_2": "Le good deal est en cours",
     "step_3": "Objectif atteint ! 🎉",
-    "step_4": "Commandes envoyées à l'artisan",
+    "step_4": "Commandes envoyées à l’artisan",
     "step_5": "L'organisateur coordonne la livraison avec l'artisan",
     "alert_editing": "Modification du deal !",
     "error_message": "Vous ne pouvez pas modifier l'offre si le statut de l'offre est en attente.",
@@ -555,7 +555,7 @@
     "order_on_deal_plural": "commandes sur le deal",
     "line_alt": "Ligne",
     "no_requests": "Aucune nouvelle demande",
-    "not_invited": "Vous n'avez pas encore invité vos amis"
+    "not_invited": "Vous n'avez pas encore invité vos amis"
   },
   "view_good_deal": {
     "back": "Retour",
@@ -585,8 +585,8 @@
   "thanks_withdrawal": {
     "thanks": "Merci ! 🎉",
     "transfer_complete": "Le virement est effectué !",
-    "receive_funds": "L'artisan devrait recevoir les fonds sur son compte d'ici 3 à 4 jours.",
-    "back_to_home": "Retour à l'accueil",
+    "receive_funds": "L’artisan devrait recevoir les fonds sur son compte d’ici 3 à 4 jours.",
+    "back_to_home": "Retour à l’accueil",
     "line_alt": "Ligne",
     "debit_info": "Le prélèvement sera effectué une fois que l'objectif est atteint."
   },
@@ -597,9 +597,9 @@
     "via_email_invitations": "Via invitations e-mails",
     "placeholder_email": "ex. contact@gmail.com",
     "add_loved_one": "Ajouter un proche",
-    "send_invitation": "Envoyer l'invitation",
+    "send_invitation": "Envoyer l’invitation",
     "copy_paste_link_title": "Copier-coller ce lien de partage 🔗",
-    "copy_paste_link_description": "Ce lien est à partager entre vous afin de conserver l'exclusivité du deal 😉",
+    "copy_paste_link_description": "Ce lien est à partager entre vous afin de conserver l’exclusivité du deal 😉",
     "copy_link": "Copier le lien",
     "back": "Retour",
     "link_copied": "Lien copié dans le presse-papiers",
@@ -608,9 +608,9 @@
     "share_head": "Partager le deal"
   },
   "invitation_sent": {
-    "title": "C'est envoyé ! 🎉",
+    "title": "C’est envoyé ! 🎉",
     "description": "Vos proches peuvent désormais commander et profiter du deal !",
-    "back_to_home": "Retour à l'accueil",
+    "back_to_home": "Retour à l’accueil",
     "line_alt": "Ligne"
   },
   "common": {
@@ -629,11 +629,11 @@
     "participants": "{{count}} participants",
     "location": "35000 Saint-Malo",
     "my_orders": "Commander",
-    "step1": "L'artisan a accepté le deal",
+    "step1": "L’artisan a accepté le deal",
     "step2": "Le good deal est en cours",
     "step3": "Objectif atteint ! 🎉",
-    "step4": "Commandes envoyées à l'artisan",
-    "step5": "L'organisateur coordonne la livraison avec l'artisan",
+    "step4": "Commandes envoyées à l’artisan",
+    "step5": "L’organisateur coordonne la livraison avec l'artisan",
     "step6": "Livraison et fermeture du deal",
     "image_alt": "Image de blog"
   },
@@ -641,7 +641,7 @@
     "soon_out_stock": "Bientôt en rupture",
     "finished": "Terminé",
     "in_stock": "En stock",
-    "waiting": "En attente de l'artisan",
+    "waiting": "En attente de l’artisan",
     "draft": "Brouillon"
   },
   "settings": {
@@ -653,7 +653,7 @@
     "currency": "Devise",
     "trash_account": "Supprimer mon compte",
     "sign_out": "Log out",
-    "terms": "Conditions d'utilisation"
+    "terms": "Conditions d’utilisation"
   },
   "profile": {
     "my_account": "Mon compte",
@@ -729,10 +729,10 @@
     "no_deals": "Pas de deals disponible"
   },
   "artisanDeniedThe": {
-    "not_agree": "Vous n'êtes pas d'accord avec le deal ? 😕",
-    "send_info": "Nous allons transmettre vos infos à l'organisateur afin qu'il puisse corriger.",
+    "not_agree": "Vous n’êtes pas d’accord avec le deal ? 😕",
+    "send_info": "Nous allons transmettre vos infos à l’organisateur afin qu’il puisse corriger.",
     "indicate_info": "Indiquer vos infos à corriger",
-    "placeholder": "ex. Changer l'adresse, augmenter le prix…",
+    "placeholder": "ex. Changer l’adresse, augmenter le prix…",
     "send_for_proofreading": "Envoyer pour relecture",
     "cancel_and_return": "Annuler et revenir au deal",
     "feedback_submitted": "Commentaires envoyés",
@@ -760,7 +760,7 @@
     "min_quantity": "Quantité min. par commande",
     "max_quantity": "Quantité max. par commande",
     "total_stock": "Stock total",
-    "per_unit": "à l'unité",
+    "per_unit": "à l’unité",
     "refuse": "Refuser",
     "confirm": "Confirmer",
     "refused": "Vous avez refusé le deal.",
@@ -772,7 +772,7 @@
     "error_title": "Erreur...",
     "error_login_required": "Vous devez vous connecter pour envoyer une demande.",
     "error_request_failed": "Échec de l'envoi de la demande. Veuillez réessayer.",
-    "success_desc": "Une fois que l'organisateur aura confirmé, vous pourrez commander."
+    "success_desc": "Une fois que l’organisateur aura confirmé, vous pourrez commander."
   },
   "guestsSendReviews": {
     "giveYourOpinion": "Donnez-vous votre avis !",
@@ -873,12 +873,12 @@
   "artisanApproved": {
     "heading": "Merci ! 🎉",
     "description": "Le deal va désormais être publié ! Les invités vont pouvoir commander.",
-    "action": "Retour à l'accueil"
+    "action": "Retour à l’accueil"
   },
   "artisanRefused": {
     "heading": "Merci ! 👍🏻",
-    "description": "Une fois le deal corrigé par l'organisateur, vous recevrez un mail pour confirmer à nouveau les infos.",
-    "action": "Retour à l'accueil"
+    "description": "Une fois le deal corrigé par l’organisateur, vous recevrez un mail pour confirmer à nouveau les infos.",
+    "action": "Retour à l’accueil"
   },
   "signup": {
     "title": "Créer un compte",
@@ -894,7 +894,7 @@
     "confirm_password": "Confirmer votre mot de passe",
     "setup_addr": "Votre adresse",
     "address": "Adresse (requis)",
-    "additional_address": "Complément d'adresse",
+    "additional_address": "Complément d’adresse",
     "city": "Ville (requis)",
     "postal_code": "Code postal (requis)",
     "country": "Pays (requis)",
@@ -955,15 +955,15 @@
     "hide_password": "Masquer le mot de passe"
   },
   "access": {
-    "participate_in_deal": "Pour participer au deal, l'organisateur doit vous donner l'accès",
+    "participate_in_deal": "Pour participer au deal, l’organisateur doit vous donner l’accès",
     "recreate_deal_desc": "Vous pouvez créer le deal en utilisant ce template",
     "must_be_logged_in": "Vous devez être connecté pour commander",
-    "request_access": "Je demande l'accès",
+    "request_access": "Je demande l’accès",
     "request_recreate_access": "Utiliser ce template",
     "login_create_account": "Se connecter / Créer un compte",
-    "in_process_desc": "Votre demande a été envoyée à l'organisateur",
+    "in_process_desc": "Votre demande a été envoyée à l’organisateur",
     "in_process": "Demande en cours",
-    "req_confirm": "Une fois que l'organisateur aura confirmé, vous pourrez commander."
+    "req_confirm": "Une fois que l’organisateur aura confirmé, vous pourrez commander."
   },
   "add_pictures": {
     "error_title": "Erreur...",
@@ -989,7 +989,7 @@
     "completePrompt": "Veuillez le compléter"
   },
   "waitingBanner": {
-    "waitingMessage": "En attente de la confirmation du deal par l'artisan"
+    "waitingMessage": "En attente de la confirmation du deal par l’artisan"
   },
   "successAlert": {
     "defaultText": "Votre article a été ajouté avec succès.",
@@ -997,7 +997,7 @@
     "loremIpsumLong": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when",
     "viewStatus": "Voir le statut",
     "dismiss": "Ignorer",
-    "loremIpsumShort": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    "loremIpsumShort": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
   },
   "artisan": {
     "cardDeal": {
@@ -1006,7 +1006,7 @@
       "payment_pending": "Paiement en attente",
       "finished": "Terminé",
       "inStock": "En stock",
-      "waiting": "En attente de l'artisan",
+      "waiting": "En attente de l’artisan",
       "draft": "Brouillon",
       "endsIn": "fin dans {{days}} jours",
       "dealFinished": "Deal terminé",
@@ -1034,12 +1034,12 @@
     "atMyHome": "Chez moi",
     "deliveryIncluded": "La livraison est incluse",
     "provideAnotherLocation": "Je renseigne un autre lieu",
-    "addShippingCosts": "J'ajoute les frais de livraison",
+    "addShippingCosts": "J’ajoute les frais de livraison",
     "placeholderLocation": "ex. Chez Abraham 24 rue des Vignobles, 33000 Bordeaux",
     "placeholderCost": "ex. 29.00 € "
   },
   "dealExpiration": {
-    "expirationDateTitle": "Date d'expiration du deal",
+    "expirationDateTitle": "Date d’expiration du deal",
     "expirationDateDescription": "Maximum 30 jours à compter de ce jour"
   },
   "placeholder": {
@@ -1070,7 +1070,7 @@
     "orderLabel": "Commande",
     "serviceFeesLabel": "Frais de service",
     "serviceFeesTooltip": "Commission TheGoodDeals de 6 %",
-    "paymentFeesTooltip": "Selon votre moyen de paiement, des frais de paiement pourraient varier.",
+    "paymentFeesTooltip": "Selon votre moyen de paiement, des frais de paiement pourraient varier.",
     "paymentFeesLabel": "Frais de paiement",
     "paymentFeesValue": "Selon carte",
     "deliveryFeesLabel": "Frais de livraison",
@@ -1080,7 +1080,7 @@
     "priceUnknown": "Prix inconnu",
     "totalUnknown": "Total inconnu",
     "discountUnknown": "Remise inconnue",
-    "error": "Erreur : {{error}}"
+    "error": "Erreur : {{error}}"
   },
   "productInfo": {
     "productTitleLabel": "Titre du produit",
@@ -1105,7 +1105,7 @@
       "goodDealPricePositive": "Le prix du good deal doit être un nombre positif.",
       "goodDealPriceLower": "Le prix du good deal doit être inférieur au prix de référence.",
       "minQuantityPositive": "La quantité minimale doit être un nombre positif.",
-      "maxQuantityValid": "La quantité maximale doit être supérieure ou égale à la quantité minimale et être un nombre positif."
+      "maxQuantityValid": "La quantité maximale doit être supérieure ou égale à la quantité minimale et être un nombre positif."
     }
   },
   "productTitleLabel": "Titre du produit",
@@ -1130,7 +1130,7 @@
     "maxQuantity": "Quantité maximum",
     "marketPrice": "Prix de référence",
     "goodDealPrice": "Prix du Good Deal",
-    "estimatedDiscount": "Remise estimée"
+    "estimatedDiscount": "Remise estimée"
   },
   "ProductQuantity": {
     "byOrder": "par commande",
@@ -1173,14 +1173,13 @@
     "show_list": "Voir la liste"
   },
   "GeneralConditions": {
-    "heading": "Conditions Générales de Vente et d'utilisation de TheGood.Deals",
+    "heading": "Conditions Générales de Vente et d’utilisation de TheGood.Deals",
     "introduction": "Bienvenue sur TheGood.Deals, une plateforme de marketplace dédiée aux transactions entre vendeurs professionnels et consommateurs particuliers (B2C). Ces Conditions Générales de Vente (ci-après 'CGV') régissent les droits et obligations des utilisateurs de notre marketplace. En accédant et en utilisant notre site, vous acceptez l'intégralité des présentes CGV.",
     "section_1": {
       "title": "1. Définitions",
       "content": {
-        "thegoodDeals": "TheGood.Deals : Le site internet et la plateforme de marketplace opérée par thegood.deals SAS accessible à l'adresse www.thegood.deals.",
+        "thegoodDeals": "TheGood.Deals : Le site internet et la plateforme de marketplace opérée par thegood.deals SAS accessible à l’adresse www.thegood.deals.",
         "user": "Utilisateur : Toute personne accédant à la marketplace, qu'il s'agisse de simples visiteurs, de vendeurs ou d'acheteurs.",
-        "seller": "Vendeur : Toute personne physique inscrit sur la marketplace proposant des produits à la vente. Le vendeur agissant en tant qu'organisateur",
         "seller": "Vendeur : Toute personne physique inscrit sur la marketplace proposant des produits à la vente. Le vendeur agissant en tant qu’organisateur",
         "buyer": "Acheteur : Toute personne physique agissant en tant que consommateur et passant commande sur le site.",
         "product": "Produit : Tout bien ou service mis en vente par les vendeurs sur la marketplace."
