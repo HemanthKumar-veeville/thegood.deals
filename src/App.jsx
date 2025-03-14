@@ -158,6 +158,36 @@ function App() {
   const [stripePromise, setStripePromise] = useState(null);
 
   useEffect(() => {
+    const clearCacheAndHardRefresh = () => {
+      // Check if cache has already been cleared
+      const isCacheCleared = sessionStorage.getItem("cache_cleared");
+
+      if (!isCacheCleared) {
+        if ("caches" in window) {
+          // Clear all caches
+          caches.keys().then((names) => {
+            names.forEach((name) => {
+              caches.delete(name);
+            });
+          });
+        }
+
+        // Clear local storage
+        localStorage.clear();
+
+        // Set the flag in sessionStorage
+        sessionStorage.setItem("cache_cleared", "true");
+
+        // Reload the page without cache
+        window.location.reload(true);
+      }
+    };
+
+    // Run the cache clearing function once when the app loads
+    clearCacheAndHardRefresh();
+  }, []); // Empty dependency array means this runs once on mount
+
+  useEffect(() => {
     setStripePromise(loadStripe(STRIPE_PK));
   }, []);
 
