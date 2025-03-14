@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { HiDownload } from "react-icons/hi";
+import { IoMdClose } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -185,6 +186,12 @@ const PWAInstallPrompt = ({ divClassName }) => {
     });
   };
 
+  const handleDismiss = (e) => {
+    e.stopPropagation(); // Prevent triggering the parent's onClick
+    setIsInstallable(false);
+    localStorage.setItem("pwaInteraction", "dismissed");
+  };
+
   if (!isInstallable) return null;
 
   return (
@@ -204,6 +211,15 @@ const PWAInstallPrompt = ({ divClassName }) => {
           ? t("pwa.install_app_menu")
           : t("pwa.install_app")}
       </span>
+      <button
+        type="button"
+        onClick={handleDismiss}
+        onKeyDown={(e) => e.key === "Enter" && handleDismiss(e)}
+        className="absolute top-1 right-1 p-1.5 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2a4e4a] transition-all shadow-sm z-50"
+        aria-label="Dismiss PWA installation prompt"
+      >
+        <IoMdClose className="w-3.5 h-3.5" />
+      </button>
     </div>
   );
 };
