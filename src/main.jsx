@@ -9,13 +9,13 @@ import { LanguageProvider } from "./context/LanguageContext.jsx";
 import {
   clearServiceWorkersAndCache,
   setupCacheCleanupListeners,
-} from "./utils/serviceWorkerCleanup";
+  setupImmediateCacheClearing,
+} from "./utils/serviceWorkerManager";
 
-// Initial cleanup
+// Initial cleanup and setup
 clearServiceWorkersAndCache();
-
-// Setup ongoing cleanup listeners
 setupCacheCleanupListeners();
+setupImmediateCacheClearing(); // New immediate cache clearing setup
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
