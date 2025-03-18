@@ -27,6 +27,7 @@ import { STRIPE_PK } from "./config";
 import RequestPendingDeal from "./screens/RequestPendingDeal/RequestPendingDeal";
 import ThanksForReview from "./screens/ThanksForReview/ThanksForReview";
 import NotFound from "./screens/NotFound/NotFound";
+import { UpdatePrompt } from "./components/UpdatePrompt";
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
 const Auth = loadable(() => import("./screens/Auth/Auth"));
@@ -154,38 +155,8 @@ function App() {
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const isRequestSent = useSelector((state) => state.user.isRequestSent);
   const dealId = useSelector((state) => state.user.dealId);
-  const { t } = useTranslation(); // Initialize the translation hook
+  const { t } = useTranslation();
   const [stripePromise, setStripePromise] = useState(null);
-
-  useEffect(() => {
-    const clearCacheAndHardRefresh = () => {
-      // Check if cache has already been cleared
-      const isCacheCleared = sessionStorage.getItem("cache_cleared");
-
-      if (!isCacheCleared) {
-        if ("caches" in window) {
-          // Clear all caches
-          caches.keys().then((names) => {
-            names.forEach((name) => {
-              caches.delete(name);
-            });
-          });
-        }
-
-        // Clear local storage
-        localStorage.clear();
-
-        // Set the flag in sessionStorage
-        sessionStorage.setItem("cache_cleared", "true");
-
-        // Reload the page without cache
-        window.location.reload(true);
-      }
-    };
-
-    // Run the cache clearing function once when the app loads
-    clearCacheAndHardRefresh();
-  }, []); // Empty dependency array means this runs once on mount
 
   useEffect(() => {
     setStripePromise(loadStripe(STRIPE_PK));
@@ -757,7 +728,12 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} fallbackElement={<CustomLoader />} />;
+  return (
+    <>
+      <RouterProvider router={router} fallbackElement={<CustomLoader />} />
+      <UpdatePrompt />
+    </>
+  );
 }
 
 export default App;
