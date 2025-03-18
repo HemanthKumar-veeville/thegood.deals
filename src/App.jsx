@@ -27,7 +27,6 @@ import { STRIPE_PK } from "./config";
 import RequestPendingDeal from "./screens/RequestPendingDeal/RequestPendingDeal";
 import ThanksForReview from "./screens/ThanksForReview/ThanksForReview";
 import NotFound from "./screens/NotFound/NotFound";
-import { UpdatePrompt } from "./components/UpdatePrompt";
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
 const Auth = loadable(() => import("./screens/Auth/Auth"));
@@ -127,12 +126,7 @@ const ProtectedRoute = loadable(
 const AppBar = loadable(() => import("./components/AppBar/AppBar"), {
   fallback: <CustomLoader />,
 });
-const PWAInstallPrompt = loadable(
-  () => import("./components/PWAInstallPrompt/PWAInstallPrompt"),
-  {
-    fallback: <CustomLoader />,
-  }
-);
+
 // Layout component to include AppBar across all routes
 function Layout({ children }) {
   useEffect(() => {
@@ -142,7 +136,6 @@ function Layout({ children }) {
   return (
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen notranslate">
       <AppBar />
-      <PWAInstallPrompt divClassName="mx-auto max-w-[400px] fixed bottom-0 left-0 right-0 z-50 flex items-center justify-center gap-3 bg-[#2a4e4a]/95 backdrop-blur-sm text-white px-6 py-3.5 shadow-lg transition-all duration-300 ease-in-out font-medium cursor-pointer w-full border-t border-white/10" />
       <Suspense fallback={<CustomLoader />}>{children}</Suspense>
     </div>
   );
@@ -731,7 +724,6 @@ function App() {
   return (
     <>
       <RouterProvider router={router} fallbackElement={<CustomLoader />} />
-      <UpdatePrompt />
     </>
   );
 }
