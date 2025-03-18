@@ -10,7 +10,7 @@ import {
   clearServiceWorkersAndCache,
   setupCacheCleanupListeners,
   setupImmediateCacheClearing,
-} from "./utils/serviceWorkerManager";
+} from "../app/utils/serviceWorkerManager";
 
 // Initial cleanup and setup
 clearServiceWorkersAndCache();
