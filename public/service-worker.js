@@ -40,6 +40,12 @@ self.addEventListener("activate", (event) => {
       }),
       // Take control of all clients
       clients.claim(),
+      // Notify all clients about the update
+      clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
+          client.postMessage({ type: "UPDATE_AVAILABLE" });
+        });
+      }),
     ])
   );
 });
@@ -113,22 +119,38 @@ self.addEventListener("fetch", (event) => {
         });
       })
   );
+
+  // Check for updates on navigation requests
+  if (event.request.mode === "navigate") {
+    event.waitUntil(
+      Promise.all([
+        // Regular fetch handling
+        event.respondWith(
+          fetch(event.request)
+            .then((response) => {
+              // Cache successful responses
+              if (response.ok) {
+                const clone = response.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                  cache.put(event.request, clone);
+                });
+              }
+              return response;
+            })
+            .catch(() => {
+              return caches.match(event.request);
+            })
+        ),
+        // Check for updates
+        registration.update(),
+      ])
+    );
+  }
 });
 
-// Handle messages from clients
+// Listen for skipWaiting message
 self.addEventListener("message", (event) => {
   if (event.data === "skipWaiting") {
     self.skipWaiting();
   }
-});
-
-// Notify clients when a new version is available
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    clients.matchAll().then((clients) => {
-      clients.forEach((client) => {
-        client.postMessage({ type: "UPDATE_AVAILABLE" });
-      });
-    })
-  );
 });
