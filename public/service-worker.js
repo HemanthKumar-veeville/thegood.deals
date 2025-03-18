@@ -55,6 +55,7 @@ self.addEventListener("fetch", (event) => {
         cache: "no-store",
         headers: {
           "Cache-Control": "no-cache",
+          Pragma: "no-cache",
         },
       })
         .then((response) => {
@@ -111,51 +112,20 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
-// Check for content hash changes
-async function checkForUpdates() {
-  try {
-    const mainJsResponse = await fetch("/assets/index.js", {
-      cache: "no-store",
-    });
-    const mainCssResponse = await fetch("/assets/index.css", {
-      cache: "no-store",
-    });
-
-    if (!mainJsResponse.ok || !mainCssResponse.ok) return;
-
-    const [currentJs, currentCss] = await Promise.all([
-      caches.match("/assets/index.js"),
-      caches.match("/assets/index.css"),
-    ]);
-
-    if (!currentJs || !currentCss) return;
-
-    const newJsText = await mainJsResponse.text();
-    const newCssText = await mainCssResponse.text();
-    const currentJsText = await currentJs.text();
-    const currentCssText = await currentCss.text();
-
-    if (newJsText !== currentJsText || newCssText !== currentCssText) {
-      // Notify all clients about the update
-      const clients = await self.clients.matchAll();
-      clients.forEach((client) => {
-        client.postMessage({ type: "UPDATE_AVAILABLE" });
-      });
-    }
-  } catch (error) {
-    console.error("Error checking for updates:", error);
-  }
-}
-
-// Handle skip waiting
+// Handle messages from clients
 self.addEventListener("message", (event) => {
   if (event.data === "skipWaiting") {
     self.skipWaiting();
   }
 });
 
-// Check for updates every hour
-const CHECK_INTERVAL = 60 * 60 * 1000; // 1 hour
-setInterval(() => {
-  checkForUpdates();
-}, CHECK_INTERVAL);
+// Notify clients when a new version is available
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    clients.matchAll().then((clients) => {
+      clients.forEach((client) => {
+        client.postMessage({ type: "UPDATE_AVAILABLE" });
+      });
+    })
+  );
+});

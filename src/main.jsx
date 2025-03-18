@@ -10,30 +10,32 @@ import { LanguageProvider } from "./context/LanguageContext.jsx";
 // Custom hook for service worker registration
 export const useServiceWorkerUpdate = (onUpdateAvailable) => {
   React.useEffect(() => {
-    const handleServiceWorkerUpdate = () => {
-      if (typeof onUpdateAvailable === "function") {
-        onUpdateAvailable();
-      }
-    };
+    if (!navigator.serviceWorker) return;
 
-    // Listen for update messages from service worker
     const handleMessage = (event) => {
-      if (event.data && event.data.type === "UPDATE_AVAILABLE") {
-        handleServiceWorkerUpdate();
+      if (event.data?.type === "UPDATE_AVAILABLE") {
+        onUpdateAvailable?.();
       }
     };
 
-    navigator.serviceWorker?.addEventListener("message", handleMessage);
-    window.addEventListener("serviceWorkerUpdate", handleServiceWorkerUpdate);
+    // Listen for service worker updates
+    navigator.serviceWorker.addEventListener("message", handleMessage);
 
     return () => {
-      navigator.serviceWorker?.removeEventListener("message", handleMessage);
-      window.removeEventListener(
-        "serviceWorkerUpdate",
-        handleServiceWorkerUpdate
-      );
+      navigator.serviceWorker.removeEventListener("message", handleMessage);
     };
   }, [onUpdateAvailable]);
+
+  // Function to trigger update
+  const triggerUpdate = React.useCallback(() => {
+    if (!navigator.serviceWorker?.controller) return;
+
+    // When user confirms update, trigger skipWaiting and reload once
+    navigator.serviceWorker.controller.postMessage("skipWaiting");
+    window.location.reload();
+  }, []);
+
+  return { triggerUpdate };
 };
 
 // Register service worker
@@ -44,26 +46,23 @@ if ("serviceWorker" in navigator) {
       .then((registration) => {
         console.log("Service Worker registered successfully");
 
-        // Handle updates
+        // Watch for new service workers
         registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
 
           newWorker.addEventListener("statechange", () => {
-            // Only show update prompt if there are actual changes
+            // When the new service worker is installed
             if (
               newWorker.state === "installed" &&
               navigator.serviceWorker.controller
             ) {
-              // The actual update check is now handled by the service worker
-              // It will send a message when real updates are detected
+              // New content is available
+              window.dispatchEvent(new CustomEvent("serviceWorkerUpdate"));
             }
           });
         });
 
-        // Initial update check
-        registration.update().catch(console.error);
-
-        // Check for updates every hour
+        // Check for updates periodically (every hour)
         setInterval(() => {
           registration.update().catch(console.error);
         }, 60 * 60 * 1000);
