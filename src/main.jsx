@@ -8,9 +8,10 @@ import "./i18n";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
 import {
   clearServiceWorkersAndCache,
-  setupCacheCleanupListeners,
   setupImmediateCacheClearing,
 } from "../app/utils/serviceWorkerManager";
+
+import { setupCacheCleanupListeners } from "./utils/serviceWorkerCleanup.js";
 
 // Initial cleanup and setup
 clearServiceWorkersAndCache();
