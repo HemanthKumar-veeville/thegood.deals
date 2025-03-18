@@ -1,3 +1,6 @@
+// Precache manifest will be injected by workbox
+self.__WB_MANIFEST;
+
 // Service Worker Version - update this when deploying new version
 const CACHE_VERSION = "v1";
 const CACHE_NAME = `app-cache-${CACHE_VERSION}`;
