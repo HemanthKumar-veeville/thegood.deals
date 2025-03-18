@@ -1,4 +1,4 @@
-// Precache manifest will be injected by workbox
+// This will be replaced by the injected manifest
 self.__WB_MANIFEST;
 
 // Service Worker Version - update this when deploying new version
@@ -19,7 +19,7 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then((cache) => cache.addAll([...STATIC_ASSETS, ...self.__WB_MANIFEST]))
       .catch((error) => console.error("Cache installation failed:", error))
   );
 });

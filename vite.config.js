@@ -10,8 +10,14 @@ export default defineConfig({
       strategies: "injectManifest",
       srcDir: "public",
       filename: "service-worker.js",
+      injectRegister: "auto",
       registerType: "prompt",
-      injectRegister: "script",
+      injectManifest: {
+        swSrc: "./public/service-worker.js",
+        swDest: "./dist/service-worker.js",
+        globDirectory: "dist",
+        injectionPoint: "self.__WB_MANIFEST",
+      },
       manifest: {
         name: "The Good Deals",
         short_name: "Good Deals",
