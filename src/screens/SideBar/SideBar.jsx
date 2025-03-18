@@ -7,7 +7,6 @@ import { FranceFlag, UK_Flag_Icon } from "../../images";
 import { useLanguage } from "../../context/LanguageContext";
 import LanguageDropdown from "../LanguageDropdown/LanguageDropdown";
 import { logoutUser } from "../../redux/app/user/userSlice";
-import PWAInstallPrompt from "../../components/PWAInstallPrompt/PWAInstallPrompt";
 
 /**
  * SideBar component
@@ -288,7 +287,6 @@ const SideBar = React.memo(({ onClose }) => {
                 "/signout",
                 "bg-[#F23030] text-white hover:bg-[#F23030] hover:text-[#d4d4d4]"
               )}
-            <PWAInstallPrompt divClassName="w-full text-white inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full cursor-pointer border border-green bg-green hover:bg-[#15423b] hover:text-[#d4d4d4]" />
           </div>
         </div>
       </div>

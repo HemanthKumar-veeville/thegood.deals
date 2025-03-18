@@ -11,9 +11,6 @@
     />
     <meta name="theme-color" content="#f5f3ee" />
 
-    <!-- PWA manifest -->
-    <link rel="manifest" href="/manifest.json" />
-
     <!-- Favicon for browsers -->
     <link
       rel="icon"
@@ -22,16 +19,6 @@
       class="favicon-img"
     />
 
-    <!-- Apple Touch Icon for iPhone using the same image -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./favicon.jpg" />
-
-    <!-- Meta Tags for Apple Devices -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
     <link href="/dist/styles.css" rel="stylesheet" />
 
     <style>
@@ -67,23 +54,6 @@
   </head>
   <body>
     <div id="root"></div>
-
     <script type="module" src="/src/main.jsx"></script>
-
-    <!-- Service Worker Registration -->
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then((registration) => {
-              console.log("ServiceWorker registration successful");
-            })
-            .catch((err) => {
-              console.log("ServiceWorker registration failed: ", err);
-            });
-        });
-      }
-    </script>
   </body>
 </html>
