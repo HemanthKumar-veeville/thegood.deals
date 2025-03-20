@@ -479,7 +479,8 @@
     "deal_completed": "Le deal est payé. L’artisan va préparer vos commandes.",
     "deal_collected": "Le montant a été collecté auprès de tous les participants.",
     "deal_completed_status": "L’artisan va préparer vos commandes.",
-    "not_fullfilled": "Objectif 100 % non atteint !"
+    "not_fullfilled": "Le deal n’a pas de commandes à collecter.",
+    "partially_fullfilled": "L’objectif n’est pas atteint ! Êtes-vous sûr de vouloir continuer ?"
   },
   "draft_deal": {
     "back_button": "Retour",

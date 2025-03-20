@@ -479,7 +479,8 @@
     "deal_completed": "The deal is paid. The artisan will prepare your orders.",
     "deal_collected": "The amount has been collected from all the participants.",
     "deal_completed_status": "Artisan Preparing Orders",
-    "not_fullfilled": "100% objective not reached !"
+    "not_fullfilled": "The deal doesn't have orders to collect payment",
+    "partially_fullfilled": "100% objective not reached ! Are you sure you want to proceed ?"
   },
   "draft_deal": {
     "back_button": "Back",

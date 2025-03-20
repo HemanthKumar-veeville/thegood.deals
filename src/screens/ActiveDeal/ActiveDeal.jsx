@@ -37,11 +37,10 @@ import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { CheckmarkCircle } from "../../icons/CheckmarkCircle";
 import { Line } from "../../components/Line/Line";
-import axios from "axios";
 import { Send1 } from "../../icons/Send1";
-import DiscountBadge from "../../components/DiscountBadge";
 import { Chat } from "../../components/Chat";
 import { BiRepost } from "react-icons/bi";
+import { ShowCustomWarningModal } from "../../components/WarningAlert/WarningAlert";
 
 const ActiveDeal = () => {
   const navigate = useNavigate();
@@ -61,6 +60,8 @@ const ActiveDeal = () => {
   const [isDealPaid, setIsDealPaid] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isWarning, setIsWarning] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [autoRetry, setAutoRetry] = useState(false);
   const [paymentAttempts, setPaymentAttempts] = useState(0);
@@ -156,20 +157,21 @@ const ActiveDeal = () => {
 
   const validateCollection = async () => {
     const progress = dealData?.deal_progress_percentage;
-    if (progress < 100) {
+    if (progress == 0) {
       setIsError(true);
       setErrorMessage(t("active_deal.not_fullfilled"));
+      return false; // Validation failed
+    }
+    if (progress < 100) {
+      setIsWarning(true);
+      setWarningMessage(t("active_deal.partially_fullfilled"));
       return false; // Validation failed
     }
     return true; // Validation succeeded
   };
 
-  const chargeDeal = async () => {
-    const isValid = await validateCollection(); // Await the validation
-    if (!isValid) {
-      return; // Exit if validation fails
-    }
-
+  const handleConfirm = async () => {
+    setIsWarning(false); // Close the warning modal
     setIsCollectionInProgress(true);
     try {
       // Attempt the API call
@@ -182,13 +184,41 @@ const ActiveDeal = () => {
       );
       setAutoRetry(res?.payload?.Auto_retry);
       setPaymentAttempts(res?.payload?.payment_attempts);
+      fetchDeal();
     } catch (error) {
-      // Handle any errors that occur during the API call
       console.error("Error charging deal:", error);
       setIsError(true);
       setErrorMessage("An error occurred while processing the payment.");
     } finally {
-      // This block will always run, regardless of success or failure
+      setIsCollectionInProgress(false);
+    }
+  };
+
+  const handleRefuse = () => {
+    setIsWarning(false); // Simply close the warning modal
+  };
+
+  const chargeDeal = async () => {
+    const isValid = await validateCollection(); // Await the validation
+    if (!isValid) {
+      return; // Exit if validation fails
+    }
+
+    // If we get here, validation passed, proceed with payment collection
+    setIsCollectionInProgress(true);
+    try {
+      const res = await dispatch(chargeGroupPayment({ dealId: deal_id }));
+      setChargeStats(res?.payload?.deal_payment_stats);
+      setIsPaymentCollectedForAllOrders(
+        res?.payload?.payment_collected_for_all_orders
+      );
+      setAutoRetry(res?.payload?.Auto_retry);
+      setPaymentAttempts(res?.payload?.payment_attempts);
+    } catch (error) {
+      console.error("Error charging deal:", error);
+      setIsError(true);
+      setErrorMessage("An error occurred while processing the payment.");
+    } finally {
       setIsCollectionInProgress(false);
     }
   };
@@ -243,6 +273,15 @@ const ActiveDeal = () => {
                 message={errorMessage}
                 buttonText={t("waiting_deal.got_it")}
                 onClose={() => setIsError(false)} // Reset modal state on close
+              />
+            )}
+            {isWarning && (
+              <ShowCustomWarningModal
+                message={warningMessage}
+                buttonText={t("waiting_deal.got_it")}
+                onClose={() => setIsWarning(false)} // Reset modal state on close
+                handleConfirm={handleConfirm}
+                handleRefuse={handleRefuse}
               />
             )}
             {isPaymentCollectedForAllOrders && dealData?.orders_count !== 0 && (
