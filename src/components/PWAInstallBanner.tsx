@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiDownload, FiX } from "react-icons/fi";
 import InstallGuideModal from "./InstallGuideModal";
+import { useTranslation } from "react-i18next";
 
 const PWAInstallBanner: React.FC = () => {
   const [showBanner, setShowBanner] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const { t } = useTranslation();
 
   const handleInstallClick = () => {
     setShowModal(true);
@@ -38,9 +40,9 @@ const PWAInstallBanner: React.FC = () => {
                   <div
                     tabIndex={0}
                     className="inline-flex items-center text-sm font-body-medium-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-color transition-all duration-200 cursor-pointer"
-                    aria-label="Add to Home Screen"
+                    aria-label={t("pwa.install_aria_label")}
                   >
-                    Add to Home Screen
+                    {t("pwa.add_to_home")}
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
