@@ -25,6 +25,7 @@ import { InfoCircle8 } from "../../icons/InfoCircle8/InfoCircle8";
 import { calculateDaysBetweenDates } from "../../helpers/helperMethods";
 import { formatDateReversed, formatDate } from "../../helpers/helperMethods";
 import ReadMore from "../Readmore/Readmore";
+import { getVisitorId } from "../../utils/fingerprint";
 
 export const ArtisanConfirmThe = ({
   HEADERIcon = (
@@ -45,16 +46,21 @@ export const ArtisanConfirmThe = ({
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [accountId, setAccountId] = useState(null);
-
+  const [visitorId, setVisitorId] = useState("");
   useEffect(() => {
+    const fetchVisitorId = async () => {
+      const visitorId = await getVisitorId();
+      setVisitorId(visitorId);
+    };
+    fetchVisitorId();
     const fetchDetails = async () => {
       const details = await dispatch(
-        fetchDealValidationDetails(dealId)
+        fetchDealValidationDetails({ dealId, visitorId })
       ).unwrap();
       setAccountId(details?.Deal?.artisan_acc_id);
     };
     fetchDetails();
-  }, [dispatch, dealId]);
+  }, [dispatch, dealId, visitorId]);
 
   const handleRefuse = () => {
     navigate(`/deal-refused?deal_id=${dealId}`);

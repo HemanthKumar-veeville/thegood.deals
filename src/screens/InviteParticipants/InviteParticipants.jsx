@@ -33,7 +33,7 @@ import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
 import { getDealProgress } from "../../helpers/helperMethods";
 import { Helmet } from "react-helmet";
-
+import { getVisitorId } from "../../utils/fingerprint";
 export const InviteParticipants = ({
   HEADERIcon = (
     <VerticalLine2 className="!relative !w-6 !h-6" color="#1B4F4A" />
@@ -56,10 +56,15 @@ export const InviteParticipants = ({
   const [errorMessage, setErrorMessage] = useState("");
   const [isRequestSent, setIsRequestSent] = useState(is_request_sent || false);
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const [visitorId, setVisitorId] = useState("");
   useEffect(() => {
-    dispatch(fetchDealValidationDetails(dealId));
-  }, [dispatch, dealId]);
+    const fetchVisitorId = async () => {
+      const visitorId = await getVisitorId();
+      setVisitorId(visitorId);
+    };
+    fetchVisitorId();
+    dispatch(fetchDealValidationDetails({ dealId, visitorId }));
+  }, [dispatch, dealId, visitorId]);
 
   const handleRefuse = () => {
     navigate(`/deal-refused?deal_id=${dealId}`);
