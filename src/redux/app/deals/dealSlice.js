@@ -91,9 +91,11 @@ export const fetchDealDetailsByDealId = createAsyncThunk(
 export const fetchDealValidationDetails = createAsyncThunk(
   "deals/fetchDealValidationDetails",
   async ({ dealId, visitorId }, { rejectWithValue }) => {
-    axiosInstance.defaults.headers.common["visitor_id"] = visitorId;
+    axiosInstance.defaults.headers.common["Visitor-Id"] = visitorId;
     try {
-      const response = await axiosInstance.get(`/deals/${dealId}/validation`);
+      const response = await axiosInstance.get(
+        `/deals/${dealId}/validation/${visitorId}`
+      );
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
