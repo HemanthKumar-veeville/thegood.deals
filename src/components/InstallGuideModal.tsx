@@ -2,6 +2,7 @@ import React from "react";
 import { FaChrome, FaSafari, FaFirefox, FaEdge } from "react-icons/fa";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { useTranslation } from "react-i18next";
 
 const MySwal = withReactContent(Swal);
 
@@ -14,6 +15,8 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { t } = useTranslation();
+
   // Add scroll lock effect
   React.useEffect(() => {
     if (isOpen) {
@@ -46,9 +49,9 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
       return {
         icon: <FaChrome className="w-8 h-8 text-[#fc661a]" />,
         steps: [
-          "Click the three dots menu (⋮) in the top-right corner",
-          'Click "Install The Good Deals"',
-          'Click "Install" in the popup that appears',
+          t("pwa.chrome_step_1"),
+          t("pwa.chrome_step_2"),
+          t("pwa.chrome_step_3"),
         ],
       };
     }
@@ -56,11 +59,7 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
     if (isSafari) {
       return {
         icon: <FaSafari className="w-8 h-8 text-[#fc661a]" />,
-        steps: [
-          "Click the share button (square with up arrow)",
-          'Scroll down and tap "Add to Home Screen"',
-          'Tap "Add" to confirm',
-        ],
+        steps: [t("pwa.ios_step_1"), t("pwa.ios_step_2"), t("pwa.ios_step_3")],
       };
     }
 
@@ -68,9 +67,9 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
       return {
         icon: <FaFirefox className="w-8 h-8 text-[#fc661a]" />,
         steps: [
-          "Click the menu button (three lines) in the top-right corner",
-          'Click "Install The Good Deals"',
-          'Click "Install" in the popup that appears',
+          t("pwa.firefox_step_1"),
+          t("pwa.firefox_step_2"),
+          t("pwa.firefox_step_3"),
         ],
       };
     }
@@ -79,9 +78,9 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
       return {
         icon: <FaEdge className="w-8 h-8 text-[#fc661a]" />,
         steps: [
-          "Click the three dots menu (⋯) in the top-right corner",
-          'Click "Install The Good Deals"',
-          'Click "Install" in the popup that appears',
+          t("pwa.chrome_step_1"),
+          t("pwa.chrome_step_2"),
+          t("pwa.chrome_step_3"),
         ],
       };
     }
@@ -89,9 +88,9 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
     return {
       icon: <FaChrome className="w-8 h-8 text-[#fc661a]" />,
       steps: [
-        "Click the menu button in your browser",
-        'Look for "Install" or "Add to Home Screen"',
-        "Follow the prompts to complete installation",
+        t("pwa.chrome_step_1"),
+        t("pwa.chrome_step_2"),
+        t("pwa.chrome_step_3"),
       ],
     };
   };
@@ -106,11 +105,11 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
             <div className="flex items-center gap-3 mb-2">
               {instructions.icon}
               <h2 className="text-xl font-semibold text-[#1b4f4a]">
-                Install The Good Deals
+                {t("pwa.install_guide")}
               </h2>
             </div>
             <p className="text-[#1b4f4a] text-center">
-              Follow these steps to install The Good Deals on your device:
+              {t("pwa.install_prompt")}
             </p>
             <ol className="list-decimal list-inside space-y-2 text-left w-full">
               {instructions.steps.map((step, index) => (
@@ -122,7 +121,7 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
           </div>
         ),
         showConfirmButton: true,
-        confirmButtonText: "Got it",
+        confirmButtonText: t("pwa.understand"),
         confirmButtonColor: "#1b4f4a",
         customClass: {
           popup: "rounded-lg shadow-shadow-2 bg-[#f5f3ee]",
@@ -135,7 +134,7 @@ const InstallGuideModal: React.FC<InstallGuideModalProps> = ({
         willClose: onClose,
       });
     }
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, t]);
 
   return null;
 };

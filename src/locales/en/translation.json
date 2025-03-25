@@ -1872,29 +1872,19 @@
     "goHome": "Go to home"
   },
   "pwa": {
-    "install_app": "Install App",
-    "install_app_menu": "Install App",
-    "add_to_home": "Add to Home Screen",
-    "already_installed": "App is already installed and running in standalone mode",
-    "installable": "PWA is installable!",
-    "install_prompt": "Show install prompt",
-    "user_response": "User response to install prompt: {{outcome}}",
-    "installation_accepted": "Installation accepted!",
-    "ios_instructions": "To install this app on iOS:\n\n1. Tap the Share button in Safari\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add' to confirm \n4. The app will be appeared on your home screen",
-    "firefox_instructions": "To install this app on Firefox:\n\n1. Tap the menu button (⋮)\n2. Tap 'Add to Home Screen'\n3. Tap 'Add' again to confirm \n4. The app will be appeared on your home screen",
-    "install_aria_label": "Install application",
-    "ios_install_title": "Install on iOS",
+    "install_aria_label": "Add to home screen",
+    "add_to_home": "Add to home screen",
+    "chrome_step_1": "Click the three dots menu (⋮) in the top-right corner",
+    "chrome_step_2": "Click 'Install The Good Deals'",
+    "chrome_step_3": "Click 'Install' in the popup that appears",
     "ios_step_1": "Tap the Share button in Safari",
     "ios_step_2": "Scroll down and tap 'Add to Home Screen'",
     "ios_step_3": "Tap 'Add' to confirm",
-    "ios_step_4": "The app will be appeared on your home screen",
-    "firefox_install_title": "Install on Firefox",
     "firefox_step_1": "Tap the menu button (⋮)",
     "firefox_step_2": "Tap 'Add to Home Screen'",
     "firefox_step_3": "Tap 'Add' again to confirm",
-    "firefox_step_4": "The app will be appeared on your home screen",
-    "install_guide": "Install Guide",
+    "install_guide": "Install The Good Deals",
     "understand": "Got it",
-    "install_button": "Install"
+    "install_prompt": "Follow these steps to install The Good Deals on your device:"
   }
 }
