@@ -145,7 +145,7 @@
       "text1": "Define your offer carefully",
       "text2": "Start by creating an attractive ad in just a few clicks. Define the price, describe the products offered and present the craftsman behind these wonders. Make sure to include all the essential information to captivate your future buyers.",
       "text3": "Share the enthusiasm",
-      "text4": "Once your ad is ready, it’s time to invite your friends and family to check out the offer. Use our online platform to send invitations and share the announcement via social media or email. The more of you there are, the more advantageous rates you will be able to benefit from!",
+      "text4": "Once your ad is ready, it's time to invite your friends and family to check out the offer. Use our online platform to send invitations and share the announcement via social media or email. The more of you there are, the more advantageous rates you will be able to benefit from!",
       "text5": "Ensure perfect reception",
       "text6": "After collecting all the orders, the craftsman prepares the packages and ships them directly to your home. We ensure that delivery takes place in the best conditions so that your friends receive their products in perfect condition, ready to be enjoyed."
     },
@@ -611,7 +611,7 @@
     "line_alt": "Line"
   },
   "invitation_sent": {
-    "title": "It’s sent! . 🎉",
+    "title": "It's sent! . 🎉",
     "description": "Your friends can now order and take advantage of the deal!",
     "back_to_home": "Back to Home",
     "line_alt": "Line"
@@ -1320,7 +1320,7 @@
     "trademarks": {
       "title": "Trademarks",
       "description1": "thegood.deals® is a registered trademark of thegood.deals. In addition, the graphics, logos, page headers, button icons, scripts, and service names that are included in or available through the thegood.deals website are trademarks or trade dress of thegood.deals.",
-      "description2": "The trademarks and trade dress of thegood.deals may not be used to represent any product or service that is not thegood.deals’s, or in any manner that is likely to cause confusion among users or disparage or discredit thegood.deals. All other trademarks not owned by thegood.deals and that are included in or available through the thegood.deals website are the property of their respective owners, who may or may not be affiliated with, connected in any way to, or sponsored by thegood.deals."
+      "description2": "The trademarks and trade dress of thegood.deals may not be used to represent any product or service that is not thegood.deals's, or in any manner that is likely to cause confusion among users or disparage or discredit thegood.deals. All other trademarks not owned by thegood.deals and that are included in or available through the thegood.deals website are the property of their respective owners, who may or may not be affiliated with, connected in any way to, or sponsored by thegood.deals."
     }
   },
   "Payment": {
@@ -1440,7 +1440,7 @@
   "App": {
     "Message": {
       "requestSent": {
-        "heading": "It’s sent! 🎉",
+        "heading": "It's sent! 🎉",
         "description": "Your request has been sent to the organiser. You will be notified when the organiser accepts or refuses your request."
       },
       "artisanApproved": {
@@ -1875,14 +1875,20 @@
     "install_aria_label": "Add to home screen",
     "add_to_home": "Add to home screen",
     "chrome_step_1": "Click the three dots menu (⋮) in the top-right corner",
-    "chrome_step_2": "Click 'Install The Good Deals'",
-    "chrome_step_3": "Click 'Install' in the popup that appears",
-    "ios_step_1": "Tap the Share button in Safari",
+    "chrome_step_2": "Click 'Add to Home screen'",
+    "chrome_step_3": "Click 'Add' to confirm",
+    "ios_step_1": "Tap the Share button (square with up arrow) in Safari",
     "ios_step_2": "Scroll down and tap 'Add to Home Screen'",
     "ios_step_3": "Tap 'Add' to confirm",
-    "firefox_step_1": "Tap the menu button (⋮)",
-    "firefox_step_2": "Tap 'Add to Home Screen'",
-    "firefox_step_3": "Tap 'Add' again to confirm",
+    "firefox_step_1": "Click the menu button (⋮) in the top-right corner",
+    "firefox_step_2": "Click 'Add to Home screen'",
+    "firefox_step_3": "Click 'Add' to confirm",
+    "safari_step_1": "Click the Share button in the Safari toolbar",
+    "safari_step_2": "Click 'Add to Home Screen'",
+    "safari_step_3": "Click 'Add' to confirm",
+    "edge_step_1": "Click the three dots menu (⋮) in the top-right corner",
+    "edge_step_2": "Click 'Add to Home screen'",
+    "edge_step_3": "Click 'Add' to confirm",
     "install_guide": "Install The Good Deals",
     "understand": "Got it",
     "install_prompt": "Follow these steps to install The Good Deals on your device:"
