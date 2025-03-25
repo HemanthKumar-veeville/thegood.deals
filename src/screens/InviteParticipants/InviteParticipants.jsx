@@ -63,7 +63,7 @@ export const InviteParticipants = ({
       setVisitorId(visitorId);
     };
     fetchVisitorId();
-    dispatch(fetchDealValidationDetails({ dealId, visitorId }));
+    visitorId && dispatch(fetchDealValidationDetails({ dealId, visitorId }));
   }, [dispatch, dealId, visitorId]);
 
   const handleRefuse = () => {
