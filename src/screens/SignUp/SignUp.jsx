@@ -210,7 +210,7 @@ export const SignUp = ({ setIsLoading }) => {
         .matches(/^[a-zA-ZÀ-ÿ\u00C0-\u017F\s'-’]+$/, t("signup.errors.city"))
         .required(t("signup.errors.city")),
       postalCode: Yup.string()
-        .matches(/^[A-Za-z0-9- ]{3,10}$/, t("signup.errors.postal_code"))
+        .matches(/^[0-9]{3,10}$/, t("signup.errors.postal_code"))
         .required(t("signup.errors.postal_code")),
       country: Yup.string().required(t("signup.errors.country")),
       currency: Yup.string().oneOf(
