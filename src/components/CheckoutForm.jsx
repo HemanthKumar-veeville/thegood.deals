@@ -17,32 +17,46 @@ import CustomLoader from "./CustomLoader/CustomLoader";
 import { Line } from "./Line/Line";
 import { ShowCustomErrorModal } from "./ErrorAlert/ErrorAlert";
 
-// Constants for localStorage keys
+// Constants for storing setup and order state in localStorage during payment processing
 const SETUP_STATE_KEY = "stripe_setup_state";
 const ORDER_STATE_KEY = "stripe_order_state";
 
+/**
+ * CheckoutForm Component
+ * Handles the payment setup process using Stripe Elements
+ * Supports both new payment setup and editing existing payment methods
+ *
+ * @param {string} stripeCustomerId - The Stripe customer ID for the current user
+ */
 const CheckoutForm = ({ stripeCustomerId }) => {
+  // Initialize Stripe hooks and state
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Get user profile and order state from Redux store
   const user = useSelector((state) => state.account.profile);
   const orderError = useSelector((state) => state.orders.orderError);
   const orderStatus = useSelector((state) => state.orders.orderStatus);
   const [email, setEmail] = useState(user?.data?.email);
+
+  // Initialize hooks for routing, translations, and Redux
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+
+  // State for tracking setup process
   const [isConfirmSetUpLoading, setIsConfirmSetupLoading] = useState(false);
   const [setupAttemptInProgress, setSetupAttemptInProgress] = useState(false);
 
-  // Extract orderId from the query parameters
+  // Extract order ID and edit mode from URL query parameters
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("orderId");
   const isEditMode = queryParams.get("is_edit_mode") === "true";
 
-  // Handle the redirect back from 3D Secure authentication
+  // Effect to handle 3D Secure authentication redirect and setup completion
   useEffect(() => {
     if (!stripe) {
       return;
@@ -53,7 +67,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     );
 
     if (!clientSecret) {
-      // Only clear storage if we're not in the middle of setup
+      // Clear storage if not in setup process
       if (!setupAttemptInProgress) {
         localStorage.removeItem(SETUP_STATE_KEY);
         localStorage.removeItem(ORDER_STATE_KEY);
@@ -61,13 +75,19 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       return;
     }
 
+    /**
+     * Handles the completion of the setup process after successful authentication
+     * Updates the order with the new payment method details
+     */
     const handleSetupCompletion = async (setupIntent) => {
       try {
+        // Retrieve stored order state and determine target order
         const storedOrderState = JSON.parse(
           localStorage.getItem(ORDER_STATE_KEY) || "{}"
         );
         const targetOrderId = storedOrderState.orderId || orderId;
 
+        // Dispatch appropriate action based on edit mode
         const action = isEditMode
           ? updatePaymentForOrder({
               orderId: targetOrderId,
@@ -82,12 +102,12 @@ const CheckoutForm = ({ stripeCustomerId }) => {
 
         const storeSetupResponse = await dispatch(action).unwrap();
 
+        // Navigate to success page if setup is stored successfully
         if (
           storeSetupResponse?.detail ===
             "SetupIntent stored and order status updated successfully" ||
           storeSetupResponse?.detail === "SetupIntent updated successfully"
         ) {
-          // Clear stored state after successful completion
           localStorage.removeItem(SETUP_STATE_KEY);
           localStorage.removeItem(ORDER_STATE_KEY);
           navigate(`/thanks-payment-setup?orderId=${targetOrderId}`);
@@ -98,6 +118,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       }
     };
 
+    // Process the setup intent status
     setIsConfirmSetupLoading(true);
     stripe
       .retrieveSetupIntent(clientSecret)
@@ -109,7 +130,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
 
           case "processing":
             setMessage(t("checkout.processing_payment"));
-            // Implement retry mechanism for processing state
+            // Retry mechanism for processing state
             setTimeout(() => {
               stripe
                 .retrieveSetupIntent(clientSecret)
@@ -149,7 +170,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     setupAttemptInProgress,
   ]);
 
-  // Show error modal if order status is failed
+  // Effect to show error modal when order processing fails
   useEffect(() => {
     if (orderStatus === "failed" && orderError) {
       ShowCustomErrorModal({
@@ -159,6 +180,11 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     }
   }, [orderStatus, orderError, t]);
 
+  /**
+   * Handles the form submission to set up or update payment method
+   * Stores essential data in localStorage before redirect
+   * Initiates Stripe setup confirmation process
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -176,7 +202,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     setSetupAttemptInProgress(true);
 
     try {
-      // Store essential data before redirect
+      // Store current setup state and order details before redirect
       const setupState = {
         timestamp: Date.now(),
         email: email,
@@ -190,10 +216,11 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       localStorage.setItem(SETUP_STATE_KEY, JSON.stringify(setupState));
       localStorage.setItem(ORDER_STATE_KEY, JSON.stringify(orderState));
 
-      // Get the current origin for the return URL
+      // Configure return URL for post-payment redirect
       const origin = window.location.origin;
       const returnUrl = `${origin}/payment?orderId=${orderId}&is_edit_mode=${isEditMode}`;
 
+      // Confirm setup with Stripe
       const { error, setupIntent } = await stripe.confirmSetup({
         elements,
         confirmParams: {
@@ -222,7 +249,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     }
   };
 
-  // Payment element options
+  // Configuration for Stripe Payment Element appearance and behavior
   const paymentElementOptions = {
     layout: {
       type: "accordion",
@@ -253,6 +280,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     },
   };
 
+  // Configuration for Link Authentication Element appearance
   const linkAuthenticationOptions = {
     defaultValues: { email },
     appearance: {
@@ -289,6 +317,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     },
   };
 
+  // Disable form when payment processing is in progress
   const isFormDisabled =
     isLoading || !stripe || !elements || setupAttemptInProgress;
 
@@ -298,13 +327,16 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       onSubmit={handleSubmit}
       className="mx-auto w-full max-w-lg space-y-4"
     >
+      {/* Render payment form or loading state */}
       {!isConfirmSetUpLoading ? (
         <div className="space-y-3">
+          {/* Email authentication element */}
           <LinkAuthenticationElement
             id="link-authentication-element"
             onChange={(event) => setEmail(event.value.email)}
             options={linkAuthenticationOptions}
           />
+          {/* Stripe payment element */}
           <PaymentElement
             id="payment-element"
             options={paymentElementOptions}
@@ -312,12 +344,14 @@ const CheckoutForm = ({ stripeCustomerId }) => {
           />
         </div>
       ) : (
+        // Loading state during payment processing
         <div className="flex flex-col items-center space-y-4">
           <CustomLoader />
           <p className="text-gray-600">{t("checkout.processing_payment")}</p>
         </div>
       )}
 
+      {/* Error message display */}
       {message && (
         <div
           id="payment-message"
@@ -329,6 +363,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
 
       <Line />
 
+      {/* Submit button with loading state */}
       <div className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
         <button
           type="submit"
