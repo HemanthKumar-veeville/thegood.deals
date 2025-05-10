@@ -1165,7 +1165,17 @@
     "processing_error": "An error occurred while processing the payment setup.",
     "unexpected_error_setup": "An unexpected error occurred during setup confirmation.",
     "line_alt": "Line divider for payment sections",
-    "submit_button": "Submit Payment"
+    "submit_button": "Submit Payment",
+    "processing": "Processing...",
+    "processing_payment": "Processing your payment...",
+    "payment_verification": "Payment Method Verification",
+    "payment_verification_info": "This step is to verify your payment method. No charges will be made until the deal is completed.",
+    "payment_method_setup": "Payment Method Setup",
+    "payment_method_setup_info": "Please set up your payment method for future transactions.",
+    "email_verification": "Email Verification",
+    "email_verification_info": "Please verify your email to continue with the payment setup.",
+    "setup_future_payments": "Setup for Future Payments",
+    "setup_future_payments_info": "Your payment method will be securely saved for future transactions."
   },
   "DangerAlert": {
     "alert_message": "A new request has been sent automatically.",

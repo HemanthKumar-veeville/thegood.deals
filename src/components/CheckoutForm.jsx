@@ -5,6 +5,7 @@ import {
 import { useEffect, useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useTranslation } from "react-i18next";
+import PropTypes from "prop-types";
 import { ArrowRight1 } from "../icons/ArrowRight1";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +17,7 @@ import CustomLoader from "./CustomLoader/CustomLoader";
 import { Line } from "./Line/Line";
 import { ShowCustomErrorModal } from "./ErrorAlert/ErrorAlert";
 
-export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
+const CheckoutForm = ({ stripeCustomerId }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState(null);
@@ -24,81 +25,81 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
   const user = useSelector((state) => state.account.profile);
   const orderError = useSelector((state) => state.orders.orderError);
   const orderStatus = useSelector((state) => state.orders.orderStatus);
-  const [email, setEmail] = useState(user?.data?.email); // Allow dynamic email entry
-  const { t } = useTranslation(); // Use translation hook
+  const [email, setEmail] = useState(user?.data?.email);
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation(); // Use location to access query params
+  const location = useLocation();
   const [isConfirmSetUpLoading, setIsConfirmSetupLoading] = useState(false);
-  const [isError, setIsError] = useState(
-    orderStatus === "failed" ? true : false
-  );
 
   // Extract orderId from the query parameters
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("orderId");
-  const isEditMode = queryParams.get("is_edit_mode");
+  const isEditMode = queryParams.get("is_edit_mode") === "true";
+
+  // Show error modal if order status is failed
+  useEffect(() => {
+    if (orderStatus === "failed" && orderError) {
+      ShowCustomErrorModal({
+        title: t("checkout.error"),
+        message: orderError,
+      });
+    }
+  }, [orderStatus, orderError, t]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded
-      setMessage(t("checkout.stripe_not_loaded")); // Translated message
+      setMessage(t("checkout.stripe_not_loaded"));
       return;
     }
 
-    setMessage(""); // Reset message before processing
+    setIsLoading(true);
+    setMessage("");
 
     try {
-      // Confirm the SetupIntent and handle the response
       const { setupIntent, error } = await stripe.confirmSetup({
         elements,
-        confirmParams: {
-          // Optional: add additional metadata or params here
-        },
-        redirect: "if_required", // Avoids unnecessary redirects
+        confirmParams: {},
+        redirect: "if_required",
       });
 
       if (error) {
-        // Handle errors from Stripe
-        if (error.type === "card_error" || error.type === "validation_error") {
-          setMessage(error.message);
-        } else {
-          setMessage(t("checkout.unexpected_error")); // Translated message
-        }
+        const errorMessage =
+          error.type === "card_error" || error.type === "validation_error"
+            ? error.message
+            : t("checkout.unexpected_error");
+        setMessage(errorMessage);
         console.error("Error during setup confirmation:", error);
-      } else {
-        // SetupIntent was successfully confirmed
-        // Proceed to dispatch payment setup
-        setIsConfirmSetupLoading(true);
-        try {
-          isEditMode === true || isEditMode === "true"
-            ? await dispatch(
-                updatePaymentForOrder({
-                  orderId,
-                  setupIntent,
-                  stripeCustomerId,
-                })
-              ).unwrap()
-            : await dispatch(
-                setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId })
-              ).unwrap();
-          setMessage(t("checkout.setup_confirmed")); // Translated message
+        return;
+      }
 
-          navigate(`/thanks-payment-setup?orderId=${orderId}`); // Navigate to success page
-        } catch (dispatchError) {
-          console.error("Error during dispatch:", dispatchError);
-          setMessage(t("checkout.processing_error")); // Translated message
-        } finally {
-          setIsConfirmSetupLoading(false);
+      setIsConfirmSetupLoading(true);
+      try {
+        const action = isEditMode
+          ? updatePaymentForOrder({ orderId, setupIntent, stripeCustomerId })
+          : setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId });
+
+        const storeSetupResponse = await dispatch(action).unwrap();
+
+        if (
+          storeSetupResponse?.detail ===
+            "SetupIntent stored and order status updated successfully" ||
+          storeSetupResponse?.detail === "SetupIntent updated successfully"
+        ) {
+          navigate(`/thanks-payment-setup?orderId=${orderId}`);
         }
+      } catch (dispatchError) {
+        console.error("Error during dispatch:", dispatchError);
+        setMessage(t("checkout.processing_error"));
       }
     } catch (err) {
-      // Handle unexpected errors
       console.error("Unexpected error in setup confirmation:", err);
-      setMessage(t("checkout.unexpected_error_setup")); // Translated message
+      setMessage(t("checkout.unexpected_error_setup"));
     } finally {
-      setIsLoading(false); // Stop loading spinner
+      setIsLoading(false);
+      setIsConfirmSetupLoading(false);
     }
   };
 
@@ -122,19 +123,17 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
         spacingUnit: "2px",
         borderRadius: "4px",
       },
-      // Hide labels and other visual adjustments
       rules: {
         ".Label": {
-          display: "none", // Hide label
+          display: "none",
         },
         ".Input": {
-          minHeight: "48px", // Adjust height for input fields
+          minHeight: "48px",
         },
       },
     },
   };
 
-  // Add appearance option for LinkAuthenticationElement
   const linkAuthenticationOptions = {
     defaultValues: { email },
     appearance: {
@@ -147,30 +146,31 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
         colorDanger: "#df1b41",
         fontFamily: "Ideal Sans, system-ui, sans-serif",
       },
-      // Add rule to hide the label and adjust the input size
       rules: {
         ".Label": {
-          display: "none", // Hide the label
+          display: "none",
         },
         ".Input": {
-          height: "76px", // Adjust height
+          height: "76px",
         },
         ".p-LinkInputWrapper": {
-          height: "96px !important" /* Set the desired height */,
+          height: "96px !important",
           display: "flex",
           "align-items": "center",
         },
         ".p-LinkInputWrapper input": {
-          height: "78px !important" /* Adjust input height */,
-          padding: "12px !important" /* Adjust padding for input */,
-          border: "1px solid #ccc !important" /* Custom border */,
-          "border-radius": "4px !important" /* Rounded corners */,
-          "font-size": "36px !important" /* Font size */,
-          width: "100% !important" /* Ensure it takes the full width */,
+          height: "78px !important",
+          padding: "12px !important",
+          border: "1px solid #ccc !important",
+          "border-radius": "4px !important",
+          "font-size": "36px !important",
+          width: "100% !important",
         },
       },
     },
   };
+
+  const isFormDisabled = isLoading || !stripe || !elements;
 
   return (
     <form
@@ -178,14 +178,12 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
       onSubmit={handleSubmit}
       className="mx-auto w-full max-w-lg space-y-4"
     >
-      {!isConfirmSetUpLoading && (
+      {!isConfirmSetUpLoading ? (
         <div className="space-y-3">
           <LinkAuthenticationElement
             id="link-authentication-element"
-            onChange={(event) => {
-              setEmail(event.value.email); // Dynamically set the email when changed
-            }}
-            options={linkAuthenticationOptions} // Pass appearance customization for LinkAuthenticationElement
+            onChange={(event) => setEmail(event.value.email)}
+            options={linkAuthenticationOptions}
           />
           <PaymentElement
             id="payment-element"
@@ -193,8 +191,13 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
             className="pt-3"
           />
         </div>
+      ) : (
+        <div className="flex flex-col items-center space-y-4">
+          <CustomLoader />
+          <p className="text-gray-600">{t("checkout.processing_payment")}</p>
+        </div>
       )}
-      {isConfirmSetUpLoading && <CustomLoader />}
+
       {message && (
         <div
           id="payment-message"
@@ -203,17 +206,27 @@ export default function CheckoutForm({ heading, btnText, stripeCustomerId }) {
           {message}
         </div>
       )}
+
       <Line />
+
       <div className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
         <button
           type="submit"
-          disabled={isLoading || !stripe || !elements}
-          className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap"
+          disabled={isFormDisabled}
+          className={`all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap ${
+            isFormDisabled ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          {t("checkout.submit_button")} {/* Translated button text */}
+          {isLoading ? t("checkout.processing") : t("checkout.submit_button")}
         </button>
         <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
       </div>
     </form>
   );
-}
+};
+
+CheckoutForm.propTypes = {
+  stripeCustomerId: PropTypes.string.isRequired,
+};
+
+export default CheckoutForm;
