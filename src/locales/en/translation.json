@@ -1183,7 +1183,12 @@
     "processing_timeout": "Payment processing is taking longer than expected.",
     "payment_method_verified": "Payment method verified successfully.",
     "setup_required": "Payment setup is required to continue.",
-    "payment_setup_error": "An error occurred during payment setup. Please try again."
+    "payment_setup_error": "An error occurred during payment setup. Please try again.",
+    "error": "Payment Error",
+    "return_processing": "Processing your return from bank...",
+    "bank_verification": "Bank verification in progress",
+    "verification_complete": "Verification completed successfully",
+    "setup_interrupted": "Payment setup was interrupted. Please try again."
   },
   "DangerAlert": {
     "alert_message": "A new request has been sent automatically.",

@@ -20,6 +20,7 @@ import { ShowCustomErrorModal } from "./ErrorAlert/ErrorAlert";
 // Constants for localStorage keys
 const SETUP_STATE_KEY = "stripe_setup_state";
 const ORDER_STATE_KEY = "stripe_order_state";
+const SETUP_RETURN_KEY = "stripe_setup_return";
 
 const CheckoutForm = ({ stripeCustomerId }) => {
   const stripe = useStripe();
@@ -41,123 +42,93 @@ const CheckoutForm = ({ stripeCustomerId }) => {
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("orderId");
   const isEditMode = queryParams.get("is_edit_mode") === "true";
+  const clientSecret = queryParams.get("setup_intent_client_secret");
 
-  // Handle the redirect back from 3D Secure authentication
+  // Handle return from bank app
   useEffect(() => {
-    if (!stripe) {
-      return;
-    }
+    const handleReturn = async () => {
+      if (!stripe || !clientSecret) return;
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "setup_intent_client_secret"
-    );
-
-    if (!clientSecret) {
-      // Only clear storage if we're not in the middle of setup
-      if (!setupAttemptInProgress) {
-        localStorage.removeItem(SETUP_STATE_KEY);
-        localStorage.removeItem(ORDER_STATE_KEY);
-      }
-      return;
-    }
-
-    const handleSetupCompletion = async (setupIntent) => {
       try {
+        // Mark that we're handling the return
+        sessionStorage.setItem(SETUP_RETURN_KEY, "true");
+        setIsConfirmSetupLoading(true);
+
+        const { setupIntent } = await stripe.retrieveSetupIntent(clientSecret);
+        const storedState = JSON.parse(
+          localStorage.getItem(SETUP_STATE_KEY) || "{}"
+        );
         const storedOrderState = JSON.parse(
           localStorage.getItem(ORDER_STATE_KEY) || "{}"
         );
+
+        // Use stored data or URL params as fallback
         const targetOrderId = storedOrderState.orderId || orderId;
+        const targetEditMode = storedState.isEditMode || isEditMode;
 
-        const action = isEditMode
-          ? updatePaymentForOrder({
-              orderId: targetOrderId,
-              setupIntent,
-              stripeCustomerId,
-            })
-          : setupPaymentForOrder({
-              orderId: targetOrderId,
-              setupIntent,
-              stripeCustomerId,
-            });
+        if (!targetOrderId) {
+          setMessage(t("checkout.payment_setup_error"));
+          return;
+        }
 
-        const storeSetupResponse = await dispatch(action).unwrap();
+        if (setupIntent.status === "succeeded") {
+          const action = targetEditMode
+            ? updatePaymentForOrder({
+                orderId: targetOrderId,
+                setupIntent,
+                stripeCustomerId,
+              })
+            : setupPaymentForOrder({
+                orderId: targetOrderId,
+                setupIntent,
+                stripeCustomerId,
+              });
 
-        if (
-          storeSetupResponse?.detail ===
-            "SetupIntent stored and order status updated successfully" ||
-          storeSetupResponse?.detail === "SetupIntent updated successfully"
-        ) {
-          // Clear stored state after successful completion
-          localStorage.removeItem(SETUP_STATE_KEY);
-          localStorage.removeItem(ORDER_STATE_KEY);
-          navigate(`/thanks-payment-setup?orderId=${targetOrderId}`);
+          const response = await dispatch(action).unwrap();
+
+          if (
+            response?.detail ===
+              "SetupIntent stored and order status updated successfully" ||
+            response?.detail === "SetupIntent updated successfully"
+          ) {
+            // Clear all stored states
+            localStorage.removeItem(SETUP_STATE_KEY);
+            localStorage.removeItem(ORDER_STATE_KEY);
+            sessionStorage.removeItem(SETUP_RETURN_KEY);
+            navigate(`/thanks-payment-setup?orderId=${targetOrderId}`);
+          }
+        } else if (setupIntent.status === "processing") {
+          setMessage(t("checkout.processing_payment"));
+        } else if (setupIntent.status === "requires_payment_method") {
+          setMessage(t("checkout.payment_failed"));
+          setSetupAttemptInProgress(false);
+        } else {
+          setMessage(t("checkout.unexpected_error"));
+          setSetupAttemptInProgress(false);
         }
       } catch (error) {
-        console.error("Error storing setup intent:", error);
-        setMessage(t("checkout.processing_error"));
+        console.error("Error handling return:", error);
+        setMessage(t("checkout.payment_setup_error"));
+        setSetupAttemptInProgress(false);
+      } finally {
+        setIsConfirmSetupLoading(false);
       }
     };
 
-    setIsConfirmSetupLoading(true);
-    stripe
-      .retrieveSetupIntent(clientSecret)
-      .then(({ setupIntent }) => {
-        switch (setupIntent.status) {
-          case "succeeded":
-            handleSetupCompletion(setupIntent);
-            break;
-
-          case "processing":
-            setMessage(t("checkout.processing_payment"));
-            // Implement retry mechanism for processing state
-            setTimeout(() => {
-              stripe
-                .retrieveSetupIntent(clientSecret)
-                .then(({ setupIntent: updatedIntent }) => {
-                  if (updatedIntent.status === "succeeded") {
-                    handleSetupCompletion(updatedIntent);
-                  }
-                });
-            }, 5000);
-            break;
-
-          case "requires_payment_method":
-            setMessage(t("checkout.payment_failed"));
-            setSetupAttemptInProgress(false);
-            break;
-
-          default:
-            setSetupAttemptInProgress(false);
-            break;
-        }
-      })
-      .catch((error) => {
-        console.error("Error retrieving setup intent:", error);
-        setSetupAttemptInProgress(false);
-      })
-      .finally(() => {
-        setIsConfirmSetupLoading(false);
-      });
+    // Check if we're returning from bank app
+    if (clientSecret && !sessionStorage.getItem(SETUP_RETURN_KEY)) {
+      handleReturn();
+    }
   }, [
     stripe,
+    clientSecret,
     navigate,
     dispatch,
     orderId,
     isEditMode,
     stripeCustomerId,
     t,
-    setupAttemptInProgress,
   ]);
-
-  // Show error modal if order status is failed
-  useEffect(() => {
-    if (orderStatus === "failed" && orderError) {
-      ShowCustomErrorModal({
-        title: t("checkout.error"),
-        message: orderError,
-      });
-    }
-  }, [orderStatus, orderError, t]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -176,10 +147,16 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     setSetupAttemptInProgress(true);
 
     try {
+      // Clear any previous return handling state
+      sessionStorage.removeItem(SETUP_RETURN_KEY);
+
       // Store essential data before redirect
       const setupState = {
         timestamp: Date.now(),
         email: email,
+        setupStarted: true,
+        orderId: orderId,
+        isEditMode: isEditMode,
       };
 
       const orderState = {
@@ -187,6 +164,7 @@ const CheckoutForm = ({ stripeCustomerId }) => {
         isEditMode: isEditMode,
       };
 
+      // Store state before initiating setup
       localStorage.setItem(SETUP_STATE_KEY, JSON.stringify(setupState));
       localStorage.setItem(ORDER_STATE_KEY, JSON.stringify(orderState));
 
@@ -208,6 +186,10 @@ const CheckoutForm = ({ stripeCustomerId }) => {
             : t("checkout.unexpected_error");
         setMessage(errorMessage);
         setSetupAttemptInProgress(false);
+
+        // Clear stored state on error
+        localStorage.removeItem(SETUP_STATE_KEY);
+        localStorage.removeItem(ORDER_STATE_KEY);
       } else if (setupIntent) {
         // Update stored state with setupIntent ID
         setupState.setupIntentId = setupIntent.id;
@@ -217,12 +199,25 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       console.error("Unexpected error in setup confirmation:", err);
       setMessage(t("checkout.unexpected_error_setup"));
       setSetupAttemptInProgress(false);
+
+      // Clear stored state on error
+      localStorage.removeItem(SETUP_STATE_KEY);
+      localStorage.removeItem(ORDER_STATE_KEY);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Payment element options
+  // Show error modal if order status is failed
+  useEffect(() => {
+    if (orderStatus === "failed" && orderError) {
+      ShowCustomErrorModal({
+        title: t("checkout.error"),
+        message: orderError,
+      });
+    }
+  }, [orderStatus, orderError, t]);
+
   const paymentElementOptions = {
     layout: {
       type: "accordion",
