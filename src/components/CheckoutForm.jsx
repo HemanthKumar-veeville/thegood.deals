@@ -37,6 +37,68 @@ const CheckoutForm = ({ stripeCustomerId }) => {
   const orderId = queryParams.get("orderId");
   const isEditMode = queryParams.get("is_edit_mode") === "true";
 
+  // Handle the redirect back from 3D Secure authentication
+  useEffect(() => {
+    if (!stripe) {
+      return;
+    }
+
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      "setup_intent_client_secret"
+    );
+
+    if (!clientSecret) {
+      return;
+    }
+
+    setIsConfirmSetupLoading(true);
+    stripe.retrieveSetupIntent(clientSecret).then(async ({ setupIntent }) => {
+      switch (setupIntent.status) {
+        case "succeeded":
+          try {
+            const action = isEditMode
+              ? updatePaymentForOrder({
+                  orderId,
+                  setupIntent,
+                  stripeCustomerId,
+                })
+              : setupPaymentForOrder({
+                  orderId,
+                  setupIntent,
+                  stripeCustomerId,
+                });
+
+            const storeSetupResponse = await dispatch(action).unwrap();
+
+            if (
+              storeSetupResponse?.detail ===
+                "SetupIntent stored and order status updated successfully" ||
+              storeSetupResponse?.detail === "SetupIntent updated successfully"
+            ) {
+              navigate(`/thanks-payment-setup?orderId=${orderId}`);
+            }
+          } catch (error) {
+            console.error("Error storing setup intent:", error);
+            setMessage(t("checkout.processing_error"));
+          }
+          break;
+
+        case "processing":
+          setMessage(t("checkout.processing_payment"));
+          break;
+
+        case "requires_payment_method":
+          setMessage(t("checkout.payment_failed"));
+          break;
+
+        default:
+          setMessage(t("checkout.unexpected_error"));
+          break;
+      }
+      setIsConfirmSetupLoading(false);
+    });
+  }, [stripe, navigate, dispatch, orderId, isEditMode, stripeCustomerId, t]);
+
   // Show error modal if order status is failed
   useEffect(() => {
     if (orderStatus === "failed" && orderError) {
@@ -59,10 +121,15 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     setMessage("");
 
     try {
-      const { setupIntent, error } = await stripe.confirmSetup({
+      // Get the current origin for the return URL
+      const origin = window.location.origin;
+      const returnUrl = `${origin}/payment?orderId=${orderId}&is_edit_mode=${isEditMode}`;
+
+      const { error } = await stripe.confirmSetup({
         elements,
-        confirmParams: {},
-        redirect: "if_required",
+        confirmParams: {
+          return_url: returnUrl,
+        },
       });
 
       if (error) {
@@ -72,34 +139,13 @@ const CheckoutForm = ({ stripeCustomerId }) => {
             : t("checkout.unexpected_error");
         setMessage(errorMessage);
         console.error("Error during setup confirmation:", error);
-        return;
       }
-
-      setIsConfirmSetupLoading(true);
-      try {
-        const action = isEditMode
-          ? updatePaymentForOrder({ orderId, setupIntent, stripeCustomerId })
-          : setupPaymentForOrder({ orderId, setupIntent, stripeCustomerId });
-
-        const storeSetupResponse = await dispatch(action).unwrap();
-
-        if (
-          storeSetupResponse?.detail ===
-            "SetupIntent stored and order status updated successfully" ||
-          storeSetupResponse?.detail === "SetupIntent updated successfully"
-        ) {
-          navigate(`/thanks-payment-setup?orderId=${orderId}`);
-        }
-      } catch (dispatchError) {
-        console.error("Error during dispatch:", dispatchError);
-        setMessage(t("checkout.processing_error"));
-      }
+      // Don't navigate here - the confirmSetup will handle the redirect
     } catch (err) {
       console.error("Unexpected error in setup confirmation:", err);
       setMessage(t("checkout.unexpected_error_setup"));
     } finally {
       setIsLoading(false);
-      setIsConfirmSetupLoading(false);
     }
   };
 

@@ -1175,7 +1175,8 @@
     "email_verification": "Email Verification",
     "email_verification_info": "Please verify your email to continue with the payment setup.",
     "setup_future_payments": "Setup for Future Payments",
-    "setup_future_payments_info": "Your payment method will be securely saved for future transactions."
+    "setup_future_payments_info": "Your payment method will be securely saved for future transactions.",
+    "payment_failed": "Your payment setup failed. Please try again with a different payment method."
   },
   "DangerAlert": {
     "alert_message": "A new request has been sent automatically.",
