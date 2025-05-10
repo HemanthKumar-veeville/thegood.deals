@@ -42,18 +42,6 @@ const CheckoutForm = ({ stripeCustomerId }) => {
   const orderId = queryParams.get("orderId");
   const isEditMode = queryParams.get("is_edit_mode") === "true";
 
-  // Clear stored state on component mount if no setup is in progress
-  useEffect(() => {
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "setup_intent_client_secret"
-    );
-
-    if (!clientSecret) {
-      localStorage.removeItem(SETUP_STATE_KEY);
-      localStorage.removeItem(ORDER_STATE_KEY);
-    }
-  }, []);
-
   // Handle the redirect back from 3D Secure authentication
   useEffect(() => {
     if (!stripe) {
@@ -65,32 +53,29 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     );
 
     if (!clientSecret) {
-      return;
-    }
-
-    // Retrieve stored state
-    const storedState = JSON.parse(
-      localStorage.getItem(SETUP_STATE_KEY) || "{}"
-    );
-    const storedOrderState = JSON.parse(
-      localStorage.getItem(ORDER_STATE_KEY) || "{}"
-    );
-
-    if (!storedState.setupIntentId || !storedOrderState.orderId) {
-      setMessage(t("checkout.session_expired"));
+      // Only clear storage if we're not in the middle of setup
+      if (!setupAttemptInProgress) {
+        localStorage.removeItem(SETUP_STATE_KEY);
+        localStorage.removeItem(ORDER_STATE_KEY);
+      }
       return;
     }
 
     const handleSetupCompletion = async (setupIntent) => {
       try {
+        const storedOrderState = JSON.parse(
+          localStorage.getItem(ORDER_STATE_KEY) || "{}"
+        );
+        const targetOrderId = storedOrderState.orderId || orderId;
+
         const action = isEditMode
           ? updatePaymentForOrder({
-              orderId: storedOrderState.orderId,
+              orderId: targetOrderId,
               setupIntent,
               stripeCustomerId,
             })
           : setupPaymentForOrder({
-              orderId: storedOrderState.orderId,
+              orderId: targetOrderId,
               setupIntent,
               stripeCustomerId,
             });
@@ -105,15 +90,11 @@ const CheckoutForm = ({ stripeCustomerId }) => {
           // Clear stored state after successful completion
           localStorage.removeItem(SETUP_STATE_KEY);
           localStorage.removeItem(ORDER_STATE_KEY);
-          navigate(`/thanks-payment-setup?orderId=${storedOrderState.orderId}`);
+          navigate(`/thanks-payment-setup?orderId=${targetOrderId}`);
         }
       } catch (error) {
         console.error("Error storing setup intent:", error);
         setMessage(t("checkout.processing_error"));
-        ShowCustomErrorModal({
-          title: t("checkout.error"),
-          message: error.message || t("checkout.processing_error"),
-        });
       }
     };
 
@@ -135,8 +116,6 @@ const CheckoutForm = ({ stripeCustomerId }) => {
                 .then(({ setupIntent: updatedIntent }) => {
                   if (updatedIntent.status === "succeeded") {
                     handleSetupCompletion(updatedIntent);
-                  } else {
-                    setMessage(t("checkout.processing_timeout"));
                   }
                 });
             }, 5000);
@@ -148,23 +127,27 @@ const CheckoutForm = ({ stripeCustomerId }) => {
             break;
 
           default:
-            setMessage(t("checkout.unexpected_error"));
             setSetupAttemptInProgress(false);
             break;
         }
       })
       .catch((error) => {
         console.error("Error retrieving setup intent:", error);
-        setMessage(t("checkout.retrieval_error"));
-        ShowCustomErrorModal({
-          title: t("checkout.error"),
-          message: error.message || t("checkout.retrieval_error"),
-        });
+        setSetupAttemptInProgress(false);
       })
       .finally(() => {
         setIsConfirmSetupLoading(false);
       });
-  }, [stripe, navigate, dispatch, isEditMode, stripeCustomerId, t]);
+  }, [
+    stripe,
+    navigate,
+    dispatch,
+    orderId,
+    isEditMode,
+    stripeCustomerId,
+    t,
+    setupAttemptInProgress,
+  ]);
 
   // Show error modal if order status is failed
   useEffect(() => {
@@ -185,7 +168,6 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     }
 
     if (setupAttemptInProgress) {
-      setMessage(t("checkout.setup_in_progress"));
       return;
     }
 
@@ -226,12 +208,6 @@ const CheckoutForm = ({ stripeCustomerId }) => {
             : t("checkout.unexpected_error");
         setMessage(errorMessage);
         setSetupAttemptInProgress(false);
-        console.error("Error during setup confirmation:", error);
-
-        ShowCustomErrorModal({
-          title: t("checkout.error"),
-          message: errorMessage,
-        });
       } else if (setupIntent) {
         // Update stored state with setupIntent ID
         setupState.setupIntentId = setupIntent.id;
@@ -241,11 +217,6 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       console.error("Unexpected error in setup confirmation:", err);
       setMessage(t("checkout.unexpected_error_setup"));
       setSetupAttemptInProgress(false);
-
-      ShowCustomErrorModal({
-        title: t("checkout.error"),
-        message: err.message || t("checkout.unexpected_error_setup"),
-      });
     } finally {
       setIsLoading(false);
     }

@@ -1177,7 +1177,15 @@
     "email_verification": "Vérification de l'email",
     "email_verification_info": "Veuillez vérifier votre email pour continuer la configuration du paiement.",
     "setup_future_payments": "Configuration pour les futures transactions",
-    "setup_future_payments_info": "Votre moyen de paiement sera enregistré de manière sécurisée pour les futures transactions."
+    "setup_future_payments_info": "Votre moyen de paiement sera enregistré de manière sécurisée pour les futures transactions.",
+    "session_expired": "La session a expiré. Veuillez réessayer.",
+    "processing_timeout": "Le traitement a expiré. Veuillez réessayer.",
+    "payment_setup_error": "Une erreur est survenue lors de la configuration du paiement. Veuillez réessayer.",
+    "payment_failed": "Votre configuration du paiement a échoué. Veuillez réessayer avec un autre moyen de paiement.",
+    "setup_in_progress": "La configuration du paiement est déjà en cours.",
+    "retrieval_error": "Erreur lors de la récupération des informations de paiement.",
+    "payment_method_verified": "Le moyen de paiement a été vérifié avec succès.",
+    "setup_required": "La configuration du paiement est requise pour continuer."
   },
   "DangerAlert": {
     "alert_message": "Une nouvelle demande à été envoyé automatiquement.",

@@ -1176,7 +1176,14 @@
     "email_verification_info": "Please verify your email to continue with the payment setup.",
     "setup_future_payments": "Setup for Future Payments",
     "setup_future_payments_info": "Your payment method will be securely saved for future transactions.",
-    "payment_failed": "Your payment setup failed. Please try again with a different payment method."
+    "payment_failed": "Your payment setup failed. Please try again with a different payment method.",
+    "session_expired": "Your session has expired. Please try again.",
+    "setup_in_progress": "Payment setup is already in progress.",
+    "retrieval_error": "Error retrieving payment information.",
+    "processing_timeout": "Payment processing is taking longer than expected.",
+    "payment_method_verified": "Payment method verified successfully.",
+    "setup_required": "Payment setup is required to continue.",
+    "payment_setup_error": "An error occurred during payment setup. Please try again."
   },
   "DangerAlert": {
     "alert_message": "A new request has been sent automatically.",
