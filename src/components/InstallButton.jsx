@@ -44,18 +44,22 @@ export const InstallButton = ({
   const baseStyles =
     "flex items-center justify-center transition-all duration-200 font-medium";
   const variants = {
-    primary: "bg-black text-white hover:bg-gray-800 active:bg-gray-900",
-    secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300 active:bg-gray-400",
+    primary:
+      "bg-primary-color text-white hover:bg-primary-color/90 active:bg-primary-color/80",
+    secondary:
+      "bg-graygray text-primary-color hover:bg-graygray-2 active:bg-graygray-3",
     outline:
-      "border-2 border-black text-black hover:bg-gray-100 active:bg-gray-200",
-    minimal: "text-black hover:text-gray-600 active:text-gray-800",
+      "border-2 border-primary-color text-primary-color hover:bg-primary-background active:bg-primary-background/80",
+    minimal:
+      "text-primary-color hover:text-primary-color/80 active:text-primary-color/60",
   };
 
   const positions = {
     inline: "px-4 py-2 rounded-lg",
     floating:
-      "fixed bottom-4 right-4 px-6 py-3 rounded-full shadow-lg hover:shadow-xl",
-    banner: "fixed bottom-0 left-0 right-0 px-4 py-3 bg-white shadow-lg",
+      "fixed bottom-4 right-4 px-6 py-3 rounded-full shadow-lg hover:shadow-xl bg-primary-color text-white",
+    banner:
+      "fixed bottom-0 left-0 right-0 px-4 py-3 bg-primary-background shadow-lg",
   };
 
   const getButtonContent = () => (
