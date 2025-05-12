@@ -15,18 +15,18 @@ export const InstallModal = ({ isOpen, onClose }) => {
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+        className="fixed inset-0 bg-darkdark bg-opacity-50 transition-opacity"
         aria-hidden="true"
         onClick={onClose}
       />
 
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative transform overflow-hidden rounded-xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+        <div className="relative transform overflow-hidden rounded-xl bg-whitewhite text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 text-gray-400 hover:text-gray-500"
+            className="absolute right-4 top-4 text-darkdark-5 hover:text-darkdark-3"
             aria-label="Close"
           >
             <svg
@@ -45,11 +45,11 @@ export const InstallModal = ({ isOpen, onClose }) => {
           </button>
 
           {/* Header */}
-          <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+          <div className="bg-whitewhite px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
-              <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+              <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blueblue-light-4 sm:mx-0 sm:h-10 sm:w-10">
                 <svg
-                  className="h-6 w-6 text-blue-600"
+                  className="h-6 w-6 text-blueblue"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
@@ -63,11 +63,11 @@ export const InstallModal = ({ isOpen, onClose }) => {
                 </svg>
               </div>
               <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                <h3 className="text-lg font-semibold leading-6 text-gray-900">
+                <h3 className="text-lg font-semibold leading-6 text-primary-color">
                   {title}
                 </h3>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-primary-text-color">
                     Follow these steps to install The Good Deals on your{" "}
                     {deviceInfo.isIOS
                       ? "iPhone/iPad"
@@ -82,14 +82,16 @@ export const InstallModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Steps */}
-          <div className="bg-gray-50 px-4 py-4 sm:px-6">
+          <div className="bg-primary-background px-4 py-4 sm:px-6">
             <ol className="space-y-4">
               {steps.map((step, index) => (
                 <li key={index} className="flex items-start">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white text-sm">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blueblue text-white text-sm">
                     {index + 1}
                   </span>
-                  <span className="ml-3 text-sm text-gray-600">{step}</span>
+                  <span className="ml-3 text-sm text-primary-text-color">
+                    {step}
+                  </span>
                 </li>
               ))}
             </ol>
@@ -100,14 +102,14 @@ export const InstallModal = ({ isOpen, onClose }) => {
                 {Object.entries(images).map(([key, src]) => (
                   <div
                     key={key}
-                    className="relative rounded-lg overflow-hidden bg-gray-100"
+                    className="relative rounded-lg overflow-hidden bg-graygray-2"
                   >
                     <img
                       src={src}
                       alt={`${key} screenshot`}
                       className="w-full h-auto object-contain"
                     />
-                    <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-10 transition-opacity" />
+                    <div className="absolute inset-0 bg-darkdark bg-opacity-0 hover:bg-opacity-10 transition-opacity" />
                   </div>
                 ))}
               </div>
@@ -115,10 +117,10 @@ export const InstallModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Footer */}
-          <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 border-t border-gray-200">
+          <div className="bg-primary-background px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 border-t border-graygray-3">
             <button
               type="button"
-              className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+              className="inline-flex w-full justify-center rounded-md bg-blueblue px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blueblue-dark sm:ml-3 sm:w-auto"
               onClick={onClose}
             >
               Got it
@@ -128,7 +130,7 @@ export const InstallModal = ({ isOpen, onClose }) => {
                 href="https://play.google.com/store/apps/details?id=com.android.chrome"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                className="mt-3 inline-flex w-full justify-center rounded-md bg-whitewhite px-3 py-2 text-sm font-semibold text-primary-color shadow-sm ring-1 ring-inset ring-graygray-4 hover:bg-primary-background sm:mt-0 sm:w-auto"
               >
                 Get Chrome
               </a>
