@@ -20,11 +20,30 @@ import { ShowCustomErrorModal } from "./ErrorAlert/ErrorAlert";
 // Constants for storing setup and order state in localStorage during payment processing
 const SETUP_STATE_KEY = "stripe_setup_state";
 const ORDER_STATE_KEY = "stripe_order_state";
+const MOBILE_REDIRECT_KEY = "stripe_mobile_redirect";
+
+// 3DS Authentication status constants
+const AUTH_STATUSES = {
+  REQUIRES_ACTION: "requires_action",
+  REQUIRES_PAYMENT_METHOD: "requires_payment_method",
+  REQUIRES_CONFIRMATION: "requires_confirmation",
+  SUCCEEDED: "succeeded",
+  PROCESSING: "processing",
+  CANCELED: "canceled",
+};
+
+// Detect if running on mobile browser
+const isMobileBrowser = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+};
 
 /**
  * CheckoutForm Component
  * Handles the payment setup process using Stripe Elements
  * Supports both new payment setup and editing existing payment methods
+ * Includes full 3DS and 3DS2 support for both desktop and mobile
  *
  * @param {string} stripeCustomerId - The Stripe customer ID for the current user
  */
@@ -51,10 +70,49 @@ const CheckoutForm = ({ stripeCustomerId }) => {
   const [isConfirmSetUpLoading, setIsConfirmSetupLoading] = useState(false);
   const [setupAttemptInProgress, setSetupAttemptInProgress] = useState(false);
 
+  // New state for 3DS status
+  const [authenticationStatus, setAuthenticationStatus] = useState(null);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  // New state for mobile flow
+  const [isMobileFlow, setIsMobileFlow] = useState(false);
+  const [mobileRedirectUrl, setMobileRedirectUrl] = useState(null);
+
   // Extract order ID and edit mode from URL query parameters
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("orderId");
   const isEditMode = queryParams.get("is_edit_mode") === "true";
+
+  useEffect(() => {
+    setIsMobileFlow(isMobileBrowser());
+  }, []);
+
+  // Effect to handle mobile return from 3DS authentication
+  useEffect(() => {
+    const handleMobileReturn = async () => {
+      const redirectData = localStorage.getItem(MOBILE_REDIRECT_KEY);
+      if (redirectData) {
+        try {
+          const { clientSecret } = JSON.parse(redirectData);
+          if (clientSecret && stripe) {
+            setIsConfirmSetupLoading(true);
+            const { setupIntent } = await stripe.retrieveSetupIntent(
+              clientSecret
+            );
+            await handle3DSAuthentication(setupIntent);
+            localStorage.removeItem(MOBILE_REDIRECT_KEY);
+          }
+        } catch (error) {
+          console.error("Error handling mobile return:", error);
+          setMessage(t("checkout.mobile_return_error"));
+        }
+      }
+    };
+
+    if (isMobileFlow) {
+      handleMobileReturn();
+    }
+  }, [stripe, isMobileFlow]);
 
   // Effect to handle 3D Secure authentication redirect and setup completion
   useEffect(() => {
@@ -67,7 +125,6 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     );
 
     if (!clientSecret) {
-      // Clear storage if not in setup process
       if (!setupAttemptInProgress) {
         localStorage.removeItem(SETUP_STATE_KEY);
         localStorage.removeItem(ORDER_STATE_KEY);
@@ -75,85 +132,185 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       return;
     }
 
-    /**
-     * Handles the completion of the setup process after successful authentication
-     * Updates the order with the new payment method details
-     */
-    const handleSetupCompletion = async (setupIntent) => {
+    const handle3DSAuthentication = async (setupIntent, retryCount = 0) => {
+      const MAX_RETRIES = 2;
+      setIsAuthenticating(true);
+      setAuthenticationStatus(setupIntent.status);
+
       try {
-        // Retrieve stored order state and determine target order
-        const storedOrderState = JSON.parse(
-          localStorage.getItem(ORDER_STATE_KEY) || "{}"
-        );
-        const targetOrderId = storedOrderState.orderId || orderId;
+        switch (setupIntent.status) {
+          case AUTH_STATUSES.SUCCEEDED:
+            await handleSetupCompletion(setupIntent);
+            break;
 
-        // Dispatch appropriate action based on edit mode
-        const action = isEditMode
-          ? updatePaymentForOrder({
-              orderId: targetOrderId,
-              setupIntent,
-              stripeCustomerId,
-            })
-          : setupPaymentForOrder({
-              orderId: targetOrderId,
-              setupIntent,
-              stripeCustomerId,
-            });
+          case AUTH_STATUSES.REQUIRES_ACTION:
+            if (isMobileFlow) {
+              // Handle mobile 3DS flow with retry logic
+              try {
+                const { error, paymentIntent: updatedIntent } =
+                  await stripe.handleNextAction({
+                    clientSecret: setupIntent.client_secret,
+                    returnUrl: window.location.href,
+                  });
 
-        const storeSetupResponse = await dispatch(action).unwrap();
+                if (error) {
+                  if (retryCount < MAX_RETRIES) {
+                    console.log(
+                      `Retrying 3DS authentication (${
+                        retryCount + 1
+                      }/${MAX_RETRIES})`
+                    );
+                    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait 2 seconds before retry
+                    return handle3DSAuthentication(setupIntent, retryCount + 1);
+                  }
+                  throw new Error(error.message);
+                }
 
-        // Navigate to success page if setup is stored successfully
-        if (
-          storeSetupResponse?.detail ===
-            "SetupIntent stored and order status updated successfully" ||
-          storeSetupResponse?.detail === "SetupIntent updated successfully"
-        ) {
-          localStorage.removeItem(SETUP_STATE_KEY);
-          localStorage.removeItem(ORDER_STATE_KEY);
-          navigate(`/thanks-payment-setup?orderId=${targetOrderId}`);
+                // Store redirect data for mobile return
+                try {
+                  localStorage.setItem(
+                    MOBILE_REDIRECT_KEY,
+                    JSON.stringify({
+                      clientSecret: setupIntent.client_secret,
+                      timestamp: Date.now(),
+                    })
+                  );
+                } catch (storageError) {
+                  console.error("Storage error:", storageError);
+                  // Continue without storage - not critical
+                }
+
+                // Handle mobile redirect with error checking
+                if (updatedIntent?.next_action?.redirect_to_url?.url) {
+                  window.location.href =
+                    updatedIntent.next_action.redirect_to_url.url;
+                } else {
+                  throw new Error(t("checkout.mobile_redirect_error"));
+                }
+              } catch (mobileError) {
+                if (retryCount < MAX_RETRIES) {
+                  console.log(
+                    `Retrying mobile flow (${retryCount + 1}/${MAX_RETRIES})`
+                  );
+                  await new Promise((resolve) => setTimeout(resolve, 2000));
+                  return handle3DSAuthentication(setupIntent, retryCount + 1);
+                }
+                throw mobileError;
+              }
+            } else {
+              // Desktop 3DS flow with improved error handling
+              try {
+                const { error, setupIntent: updatedIntent } =
+                  await stripe.handleNextAction({
+                    clientSecret: setupIntent.client_secret,
+                  });
+
+                if (error) {
+                  if (retryCount < MAX_RETRIES) {
+                    console.log(
+                      `Retrying desktop flow (${retryCount + 1}/${MAX_RETRIES})`
+                    );
+                    await new Promise((resolve) => setTimeout(resolve, 2000));
+                    return handle3DSAuthentication(setupIntent, retryCount + 1);
+                  }
+                  throw new Error(error.message);
+                }
+
+                if (!updatedIntent) {
+                  throw new Error(t("checkout.authentication_failed"));
+                }
+
+                await handle3DSAuthentication(updatedIntent);
+              } catch (desktopError) {
+                if (retryCount < MAX_RETRIES) {
+                  console.log(
+                    `Retrying after error (${retryCount + 1}/${MAX_RETRIES})`
+                  );
+                  await new Promise((resolve) => setTimeout(resolve, 2000));
+                  return handle3DSAuthentication(setupIntent, retryCount + 1);
+                }
+                throw desktopError;
+              }
+            }
+            break;
+
+          case AUTH_STATUSES.PROCESSING:
+            setMessage(t("checkout.processing_payment"));
+            const timeout = setTimeout(() => {
+              setMessage(t("checkout.processing_timeout"));
+              cleanup();
+            }, 30000); // 30 second timeout
+
+            try {
+              await new Promise((resolve) => setTimeout(resolve, 5000));
+              const { setupIntent: polledIntent } =
+                await stripe.retrieveSetupIntent(setupIntent.client_secret);
+              clearTimeout(timeout);
+
+              if (
+                polledIntent.status === AUTH_STATUSES.PROCESSING &&
+                retryCount < MAX_RETRIES
+              ) {
+                console.log(
+                  `Retrying processing status check (${
+                    retryCount + 1
+                  }/${MAX_RETRIES})`
+                );
+                await new Promise((resolve) => setTimeout(resolve, 5000));
+                return handle3DSAuthentication(setupIntent, retryCount + 1);
+              }
+
+              await handle3DSAuthentication(polledIntent);
+            } catch (error) {
+              clearTimeout(timeout);
+              if (retryCount < MAX_RETRIES) {
+                console.log(
+                  `Retrying after processing error (${
+                    retryCount + 1
+                  }/${MAX_RETRIES})`
+                );
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+                return handle3DSAuthentication(setupIntent, retryCount + 1);
+              }
+              throw error;
+            }
+            break;
+
+          case AUTH_STATUSES.REQUIRES_PAYMENT_METHOD:
+            setMessage(t("checkout.payment_failed"));
+            cleanup();
+            break;
+
+          case AUTH_STATUSES.CANCELED:
+            setMessage(t("checkout.authentication_canceled"));
+            cleanup();
+            break;
+
+          default:
+            setMessage(t("checkout.unexpected_error"));
+            cleanup();
+            break;
         }
       } catch (error) {
-        console.error("Error storing setup intent:", error);
-        setMessage(t("checkout.processing_error"));
+        console.error("3DS Authentication error:", error);
+        setMessage(error.message || t("checkout.authentication_failed"));
+        setAuthenticationStatus(AUTH_STATUSES.REQUIRES_PAYMENT_METHOD);
+        cleanup();
+      } finally {
+        setIsAuthenticating(false);
       }
     };
 
-    // Process the setup intent status
+    // Start processing the setup intent status
     setIsConfirmSetupLoading(true);
     stripe
       .retrieveSetupIntent(clientSecret)
       .then(({ setupIntent }) => {
-        switch (setupIntent.status) {
-          case "succeeded":
-            handleSetupCompletion(setupIntent);
-            break;
-
-          case "processing":
-            setMessage(t("checkout.processing_payment"));
-            // Retry mechanism for processing state
-            setTimeout(() => {
-              stripe
-                .retrieveSetupIntent(clientSecret)
-                .then(({ setupIntent: updatedIntent }) => {
-                  if (updatedIntent.status === "succeeded") {
-                    handleSetupCompletion(updatedIntent);
-                  }
-                });
-            }, 5000);
-            break;
-
-          case "requires_payment_method":
-            setMessage(t("checkout.payment_failed"));
-            setSetupAttemptInProgress(false);
-            break;
-
-          default:
-            setSetupAttemptInProgress(false);
-            break;
-        }
+        handle3DSAuthentication(setupIntent);
       })
       .catch((error) => {
         console.error("Error retrieving setup intent:", error);
+        setMessage(error.message || t("checkout.retrieval_error"));
         setSetupAttemptInProgress(false);
       })
       .finally(() => {
@@ -180,6 +337,50 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     }
   }, [orderStatus, orderError, t]);
 
+  // Utility function for consistent cleanup
+  const cleanup = () => {
+    localStorage.removeItem(SETUP_STATE_KEY);
+    localStorage.removeItem(ORDER_STATE_KEY);
+    localStorage.removeItem(MOBILE_REDIRECT_KEY);
+    setSetupAttemptInProgress(false);
+    setIsLoading(false);
+    setIsConfirmSetupLoading(false);
+    setIsAuthenticating(false);
+  };
+
+  // Handle successful setup completion
+  const handleSetupCompletion = async (setupIntent) => {
+    try {
+      const orderState = JSON.parse(localStorage.getItem(ORDER_STATE_KEY));
+      if (orderState?.orderId) {
+        if (orderState.isEditMode) {
+          await dispatch(
+            updatePaymentForOrder({
+              orderId: orderState.orderId,
+              setupIntent: setupIntent.id,
+              stripeCustomerId,
+            })
+          );
+        } else {
+          await dispatch(
+            setupPaymentForOrder({
+              orderId: orderState.orderId,
+              setupIntent: setupIntent.id,
+              stripeCustomerId,
+            })
+          );
+        }
+        navigate("/thanks-payment-setup");
+      }
+    } catch (error) {
+      console.error("Setup completion error:", error);
+      setMessage(t("checkout.setup_completion_error"));
+      setAuthenticationStatus(AUTH_STATUSES.REQUIRES_PAYMENT_METHOD);
+    } finally {
+      cleanup();
+    }
+  };
+
   /**
    * Handles the form submission to set up or update payment method
    * Stores essential data in localStorage before redirect
@@ -200,8 +401,14 @@ const CheckoutForm = ({ stripeCustomerId }) => {
     setIsLoading(true);
     setMessage("");
     setSetupAttemptInProgress(true);
+    setAuthenticationStatus(null);
 
     try {
+      // Validate email
+      if (!email) {
+        throw new Error(t("checkout.email_required"));
+      }
+
       // Store current setup state and order details before redirect
       const setupState = {
         timestamp: Date.now(),
@@ -220,30 +427,65 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       const origin = window.location.origin;
       const returnUrl = `${origin}/payment?orderId=${orderId}&is_edit_mode=${isEditMode}`;
 
-      // Confirm setup with Stripe
+      // Confirm setup with Stripe with enhanced 3DS options
       const { error, setupIntent } = await stripe.confirmSetup({
         elements,
         confirmParams: {
           return_url: returnUrl,
+          payment_method_options: {
+            card: {
+              request_three_d_secure: "any", // Force 3DS for all transactions
+              three_d_secure: {
+                timeout: 10000, // 10 second timeout for 3DS2 authentication
+                supported: true, // Explicitly enable 3DS2 support
+              },
+            },
+          },
+          // Add mobile-specific parameters
+          ...(isMobileFlow && {
+            payment_method_options: {
+              card: {
+                setup_future_usage: "off_session",
+                mandate_options: {
+                  interval: "one_time",
+                },
+              },
+            },
+          }),
         },
       });
 
       if (error) {
-        const errorMessage =
-          error.type === "card_error" || error.type === "validation_error"
-            ? error.message
-            : t("checkout.unexpected_error");
-        setMessage(errorMessage);
-        setSetupAttemptInProgress(false);
-      } else if (setupIntent) {
-        // Update stored state with setupIntent ID
-        setupState.setupIntentId = setupIntent.id;
-        localStorage.setItem(SETUP_STATE_KEY, JSON.stringify(setupState));
+        if (error.type === "card_error" || error.type === "validation_error") {
+          throw new Error(error.message);
+        } else if (error.type === "authentication_error") {
+          throw new Error(t("checkout.authentication_failed"));
+        } else {
+          throw new Error(t("checkout.unexpected_error"));
+        }
+      }
+
+      if (!setupIntent) {
+        throw new Error(t("checkout.setup_failed"));
+      }
+
+      // Update stored state with setupIntent ID
+      setupState.setupIntentId = setupIntent.id;
+      localStorage.setItem(SETUP_STATE_KEY, JSON.stringify(setupState));
+
+      // Handle immediate 3DS action if required
+      if (setupIntent.status === AUTH_STATUSES.REQUIRES_ACTION) {
+        await handle3DSAuthentication(setupIntent);
+      } else if (setupIntent.status === AUTH_STATUSES.SUCCEEDED) {
+        await handleSetupCompletion(setupIntent);
+      } else {
+        throw new Error(t("checkout.unexpected_setup_status"));
       }
     } catch (err) {
       console.error("Unexpected error in setup confirmation:", err);
-      setMessage(t("checkout.unexpected_error_setup"));
-      setSetupAttemptInProgress(false);
+      setMessage(err.message || t("checkout.unexpected_error_setup"));
+      setAuthenticationStatus(AUTH_STATUSES.REQUIRES_PAYMENT_METHOD);
+      cleanup();
     } finally {
       setIsLoading(false);
     }
@@ -327,27 +569,73 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       onSubmit={handleSubmit}
       className="mx-auto w-full max-w-lg space-y-4"
     >
-      {/* Render payment form or loading state */}
-      {!isConfirmSetUpLoading ? (
+      {/* Show mobile redirect warning if applicable */}
+      {isMobileFlow && (
+        <div className="bg-blue-50 p-4 rounded-md mb-4">
+          <p className="text-sm text-blue-700">
+            {t("checkout.mobile_redirect_notice")}
+          </p>
+        </div>
+      )}
+
+      {/* Render payment form or loading/authentication state */}
+      {!isConfirmSetUpLoading && !isAuthenticating ? (
         <div className="space-y-3">
-          {/* Email authentication element */}
           <LinkAuthenticationElement
             id="link-authentication-element"
             onChange={(event) => setEmail(event.value.email)}
-            options={linkAuthenticationOptions}
+            options={{
+              ...linkAuthenticationOptions,
+              // Add mobile-specific styling
+              ...(isMobileFlow && {
+                style: {
+                  base: {
+                    fontSize: "16px", // Prevent zoom on mobile
+                    "::placeholder": {
+                      color: "#aab7c4",
+                    },
+                  },
+                },
+              }),
+            }}
           />
-          {/* Stripe payment element */}
           <PaymentElement
             id="payment-element"
-            options={paymentElementOptions}
+            options={{
+              ...paymentElementOptions,
+              paymentMethodConfiguration: {
+                three_d_secure: {
+                  timeout: 10000,
+                },
+              },
+              // Add mobile-specific styling
+              ...(isMobileFlow && {
+                style: {
+                  base: {
+                    fontSize: "16px", // Prevent zoom on mobile
+                    "::placeholder": {
+                      color: "#aab7c4",
+                    },
+                  },
+                },
+              }),
+            }}
             className="pt-3"
           />
         </div>
       ) : (
-        // Loading state during payment processing
         <div className="flex flex-col items-center space-y-4">
           <CustomLoader />
-          <p className="text-gray-600">{t("checkout.processing_payment")}</p>
+          <p className="text-gray-600">
+            {isAuthenticating
+              ? t("checkout.authenticating")
+              : t("checkout.processing_payment")}
+          </p>
+          {authenticationStatus && (
+            <p className="text-sm text-gray-500">
+              {t(`checkout.auth_status.${authenticationStatus}`)}
+            </p>
+          )}
         </div>
       )}
 
@@ -355,7 +643,11 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       {message && (
         <div
           id="payment-message"
-          className="mt-3 p-3 text-red-600 bg-red-100 border border-red-400 rounded"
+          className={`mt-3 p-3 ${
+            message.includes("success")
+              ? "text-green-600 bg-green-100 border-green-400"
+              : "text-red-600 bg-red-100 border-red-400"
+          } border rounded`}
         >
           {message}
         </div>
@@ -367,12 +659,16 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       <div className="mt-3 flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md">
         <button
           type="submit"
-          disabled={isFormDisabled}
+          disabled={isFormDisabled || isAuthenticating}
           className={`all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap ${
-            isFormDisabled ? "opacity-50 cursor-not-allowed" : ""
+            isFormDisabled || isAuthenticating
+              ? "opacity-50 cursor-not-allowed"
+              : ""
           }`}
         >
-          {isLoading ? t("checkout.processing") : t("checkout.submit_button")}
+          {isLoading || isAuthenticating
+            ? t("checkout.processing")
+            : t("checkout.submit_button")}
         </button>
         <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
       </div>
