@@ -1,23 +1,60 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getDeviceInfo } from "../utils/deviceDetector";
 
 export const usePWAInstall = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [installError, setInstallError] = useState(null);
   const deviceInfo = getDeviceInfo();
+
+  // Track installation analytics
+  const trackInstallAttempt = useCallback(
+    (success, method, error = null) => {
+      // You can implement your analytics here
+      console.log("Installation attempt:", {
+        success,
+        method,
+        error,
+        deviceInfo,
+      });
+    },
+    [deviceInfo]
+  );
 
   useEffect(() => {
     // Check if app is already installed
-    if (window.matchMedia("(display-mode: standalone)").matches) {
-      setIsInstalled(true);
-    }
+    const checkInstallation = () => {
+      const isStandalone =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone ||
+        document.referrer.includes("android-app://");
+
+      setIsInstalled(isStandalone);
+      if (isStandalone) {
+        trackInstallAttempt(true, "already_installed");
+      }
+    };
+
+    checkInstallation();
+
+    // Listen for display mode changes
+    const mediaQuery = window.matchMedia("(display-mode: standalone)");
+    const handleDisplayModeChange = (e) => {
+      setIsInstalled(e.matches);
+      if (e.matches) {
+        trackInstallAttempt(true, "display_mode_change");
+      }
+    };
+
+    mediaQuery.addListener(handleDisplayModeChange);
 
     // Listen for the beforeinstallprompt event
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
       setIsInstallable(true);
+      setInstallError(null);
     };
 
     // Listen for successful installation
@@ -25,22 +62,29 @@ export const usePWAInstall = () => {
       setIsInstalled(true);
       setIsInstallable(false);
       setDeferredPrompt(null);
+      setInstallError(null);
+      trackInstallAttempt(true, "native_install");
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
     window.addEventListener("appinstalled", handleAppInstalled);
 
     return () => {
+      mediaQuery.removeListener(handleDisplayModeChange);
       window.removeEventListener(
         "beforeinstallprompt",
         handleBeforeInstallPrompt
       );
       window.removeEventListener("appinstalled", handleAppInstalled);
     };
-  }, []);
+  }, [trackInstallAttempt]);
 
   const promptInstall = async () => {
-    if (!deferredPrompt) return false;
+    if (!deferredPrompt) {
+      setInstallError("Installation prompt not available");
+      trackInstallAttempt(false, "prompt_unavailable");
+      return false;
+    }
 
     try {
       // Show the install prompt
@@ -50,14 +94,17 @@ export const usePWAInstall = () => {
       const choiceResult = await result;
 
       if (choiceResult.outcome === "accepted") {
-        console.log("User accepted the install prompt");
+        trackInstallAttempt(true, "user_accepted");
         return true;
       } else {
-        console.log("User dismissed the install prompt");
+        setInstallError("User declined installation");
+        trackInstallAttempt(false, "user_declined");
         return false;
       }
     } catch (error) {
-      console.error("Error installing PWA:", error);
+      const errorMessage = "Failed to install: " + error.message;
+      setInstallError(errorMessage);
+      trackInstallAttempt(false, "installation_error", errorMessage);
       return false;
     } finally {
       setDeferredPrompt(null);
@@ -70,20 +117,38 @@ export const usePWAInstall = () => {
       return {
         title: "Install on iOS",
         steps: [
-          "Tap the Share button in Safari",
+          "Open this website in Safari",
+          "Tap the Share button at the bottom of the screen",
           'Scroll down and tap "Add to Home Screen"',
-          'Tap "Add" to confirm',
+          'Customize the name if you want, then tap "Add"',
         ],
+        images: {
+          share: "/images/ios-share.png",
+          addToHome: "/images/ios-add-to-home.png",
+        },
       };
     }
 
-    if (deviceInfo.isAndroid && deviceInfo.browser === "chrome") {
+    if (deviceInfo.isAndroid) {
+      if (deviceInfo.browser === "chrome") {
+        return {
+          title: "Install on Android",
+          steps: [
+            "Tap the menu button (⋮) at the top right",
+            'Tap "Install app" or "Add to Home screen"',
+            'Tap "Install" in the prompt that appears',
+          ],
+          images: {
+            menu: "/images/android-menu.png",
+            installPrompt: "/images/android-install-prompt.png",
+          },
+        };
+      }
       return {
         title: "Install on Android",
         steps: [
-          "Tap the menu button (⋮)",
-          'Tap "Install app" or "Add to Home screen"',
-          "Follow the installation prompts",
+          "Open this website in Chrome for the best experience",
+          'Then tap the menu button and select "Install app"',
         ],
       };
     }
@@ -91,16 +156,21 @@ export const usePWAInstall = () => {
     return {
       title: "Install on Desktop",
       steps: [
-        "Click the install icon in your browser's address bar",
+        "Look for the install icon in your browser's address bar",
         'Click "Install" in the prompt that appears',
-        "The app will install and create a desktop shortcut",
+        "Find the app in your Start menu or Applications folder",
       ],
+      images: {
+        browserIcon: "/images/desktop-install-icon.png",
+        installPrompt: "/images/desktop-install-prompt.png",
+      },
     };
   };
 
   return {
     isInstallable,
     isInstalled,
+    installError,
     promptInstall,
     getInstallInstructions,
     deviceInfo,
