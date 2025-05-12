@@ -47,9 +47,9 @@ export const InstallModal = ({ isOpen, onClose }) => {
           {/* Header */}
           <div className="bg-whitewhite px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
-              <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blueblue-light-4 sm:mx-0 sm:h-10 sm:w-10">
+              <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary-color sm:mx-0 sm:h-10 sm:w-10">
                 <svg
-                  className="h-6 w-6 text-blueblue"
+                  className="h-6 w-6 text-whitewhite"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
@@ -86,7 +86,7 @@ export const InstallModal = ({ isOpen, onClose }) => {
             <ol className="space-y-4">
               {steps.map((step, index) => (
                 <li key={index} className="flex items-start">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blueblue text-white text-sm">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-color text-whitewhite text-sm">
                     {index + 1}
                   </span>
                   <span className="ml-3 text-sm text-primary-text-color">
@@ -95,32 +95,13 @@ export const InstallModal = ({ isOpen, onClose }) => {
                 </li>
               ))}
             </ol>
-
-            {/* Installation Images */}
-            {images && (
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                {Object.entries(images).map(([key, src]) => (
-                  <div
-                    key={key}
-                    className="relative rounded-lg overflow-hidden bg-graygray-2"
-                  >
-                    <img
-                      src={src}
-                      alt={`${key} screenshot`}
-                      className="w-full h-auto object-contain"
-                    />
-                    <div className="absolute inset-0 bg-darkdark bg-opacity-0 hover:bg-opacity-10 transition-opacity" />
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Footer */}
           <div className="bg-primary-background px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 border-t border-graygray-3">
             <button
               type="button"
-              className="inline-flex w-full justify-center rounded-md bg-blueblue px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blueblue-dark sm:ml-3 sm:w-auto"
+              className="inline-flex w-full justify-center rounded-md bg-primary-color px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1b4f4a] sm:ml-3 sm:w-auto"
               onClick={onClose}
             >
               Got it
