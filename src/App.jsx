@@ -27,7 +27,7 @@ import { STRIPE_PK } from "./config";
 import RequestPendingDeal from "./screens/RequestPendingDeal/RequestPendingDeal";
 import ThanksForReview from "./screens/ThanksForReview/ThanksForReview";
 import NotFound from "./screens/NotFound/NotFound";
-import PWAInstallBanner from "./components/PWAInstallBanner";
+
 // loadable load your components
 const Home = loadable(() => import("./screens/Home/Home"));
 const Auth = loadable(() => import("./screens/Auth/Auth"));
@@ -138,7 +138,6 @@ function Layout({ children }) {
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen notranslate">
       <AppBar />
       <Suspense fallback={<CustomLoader />}>{children}</Suspense>
-      <PWAInstallBanner />
     </div>
   );
 }
