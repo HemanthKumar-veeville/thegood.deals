@@ -427,35 +427,21 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       const origin = window.location.origin;
       const returnUrl = `${origin}/payment?orderId=${orderId}&is_edit_mode=${isEditMode}`;
 
-      // Confirm setup with Stripe with enhanced 3DS options
+      // Confirm setup with Stripe with correct parameters
       const { error, setupIntent } = await stripe.confirmSetup({
         elements,
         confirmParams: {
           return_url: returnUrl,
-          payment_method_options: {
-            card: {
-              request_three_d_secure: "any", // Force 3DS for all transactions
-              three_d_secure: {
-                timeout: 10000, // 10 second timeout for 3DS2 authentication
-                supported: true, // Explicitly enable 3DS2 support
-              },
+          payment_method_data: {
+            billing_details: {
+              email: email,
             },
           },
-          // Add mobile-specific parameters
-          ...(isMobileFlow && {
-            payment_method_options: {
-              card: {
-                setup_future_usage: "off_session",
-                mandate_options: {
-                  interval: "one_time",
-                },
-              },
-            },
-          }),
         },
       });
 
       if (error) {
+        console.error("Setup confirmation error:", error);
         if (error.type === "card_error" || error.type === "validation_error") {
           throw new Error(error.message);
         } else if (error.type === "authentication_error") {
@@ -494,68 +480,32 @@ const CheckoutForm = ({ stripeCustomerId }) => {
   // Configuration for Stripe Payment Element appearance and behavior
   const paymentElementOptions = {
     layout: {
-      type: "accordion",
+      type: "tabs",
       defaultCollapsed: false,
       radios: false,
-      spacedAccordionItems: true,
+      spacedAccordionItems: false,
     },
     appearance: {
-      theme: "flat",
+      theme: "stripe",
       variables: {
-        colorPrimaryText: "#262626",
         colorPrimary: "#0570de",
         colorBackground: "#ffffff",
         colorText: "#30313d",
         colorDanger: "#df1b41",
-        fontFamily: "Ideal Sans, system-ui, sans-serif",
-        spacingUnit: "2px",
+        fontFamily: "system-ui, sans-serif",
+        spacingUnit: "4px",
         borderRadius: "4px",
       },
-      rules: {
-        ".Label": {
-          display: "none",
-        },
-        ".Input": {
-          minHeight: "48px",
+    },
+    fields: {
+      billingDetails: {
+        email: {
+          prefill: email,
         },
       },
     },
-  };
-
-  // Configuration for Link Authentication Element appearance
-  const linkAuthenticationOptions = {
-    defaultValues: { email },
-    appearance: {
-      theme: "flat",
-      variables: {
-        colorPrimaryText: "#262626",
-        colorPrimary: "#0570de",
-        colorBackground: "#ffffff",
-        colorText: "#30313d",
-        colorDanger: "#df1b41",
-        fontFamily: "Ideal Sans, system-ui, sans-serif",
-      },
-      rules: {
-        ".Label": {
-          display: "none",
-        },
-        ".Input": {
-          height: "76px",
-        },
-        ".p-LinkInputWrapper": {
-          height: "96px !important",
-          display: "flex",
-          "align-items": "center",
-        },
-        ".p-LinkInputWrapper input": {
-          height: "78px !important",
-          padding: "12px !important",
-          border: "1px solid #ccc !important",
-          "border-radius": "4px !important",
-          "font-size": "36px !important",
-          width: "100% !important",
-        },
-      },
+    business: {
+      name: "thegood.deals",
     },
   };
 
@@ -581,45 +531,9 @@ const CheckoutForm = ({ stripeCustomerId }) => {
       {/* Render payment form or loading/authentication state */}
       {!isConfirmSetUpLoading && !isAuthenticating ? (
         <div className="space-y-3">
-          <LinkAuthenticationElement
-            id="link-authentication-element"
-            onChange={(event) => setEmail(event.value.email)}
-            options={{
-              ...linkAuthenticationOptions,
-              // Add mobile-specific styling
-              ...(isMobileFlow && {
-                style: {
-                  base: {
-                    fontSize: "16px", // Prevent zoom on mobile
-                    "::placeholder": {
-                      color: "#aab7c4",
-                    },
-                  },
-                },
-              }),
-            }}
-          />
           <PaymentElement
             id="payment-element"
-            options={{
-              ...paymentElementOptions,
-              paymentMethodConfiguration: {
-                three_d_secure: {
-                  timeout: 10000,
-                },
-              },
-              // Add mobile-specific styling
-              ...(isMobileFlow && {
-                style: {
-                  base: {
-                    fontSize: "16px", // Prevent zoom on mobile
-                    "::placeholder": {
-                      color: "#aab7c4",
-                    },
-                  },
-                },
-              }),
-            }}
+            options={paymentElementOptions}
             className="pt-3"
           />
         </div>
