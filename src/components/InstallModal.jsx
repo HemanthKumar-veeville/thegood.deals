@@ -17,7 +17,7 @@ export const InstallModal = ({ isOpen, onClose }) => {
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-darkdark bg-opacity-50 transition-opacity"
+        className="fixed inset-0 bg-darkdark bg-opacity-30 transition-opacity"
         aria-hidden="true"
         onClick={onClose}
       />
