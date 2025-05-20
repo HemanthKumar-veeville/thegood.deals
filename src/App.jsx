@@ -139,7 +139,7 @@ function Layout({ children }) {
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen notranslate">
       <AppBar />
       <Suspense fallback={<CustomLoader />}>{children}</Suspense>
-      <InstallButton position="floating" variant="primary" />
+      <InstallButton position="banner" variant="primary" />
     </div>
   );
 }
