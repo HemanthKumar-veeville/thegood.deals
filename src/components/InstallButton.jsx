@@ -49,7 +49,7 @@ export const InstallButton = ({
     "flex items-center justify-center transition-all duration-200 font-medium";
   const variants = {
     primary:
-      "bg-primary-color text-white hover:bg-primary-color/90 active:bg-primary-color/80 max-w-[400px] mx-auto",
+      "bg-primary-color text-white hover:bg-primary-color/90 active:bg-primary-color/80 max-w-[400px] mx-auto z-50",
     secondary:
       "bg-graygray text-primary-color hover:bg-graygray-2 active:bg-graygray-3",
     outline:
