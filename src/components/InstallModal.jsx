@@ -7,12 +7,6 @@ export const InstallModal = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
   const { title, steps, images } = getInstallInstructions();
 
-  const getDeviceType = () => {
-    if (deviceInfo.isIOS) return t("pwa.install.device_types.ios");
-    if (deviceInfo.isAndroid) return t("pwa.install.device_types.android");
-    return t("pwa.install.device_types.desktop");
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -76,9 +70,7 @@ export const InstallModal = ({ isOpen, onClose }) => {
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm text-primary-text-color">
-                    {t("pwa.install.modal_description", {
-                      deviceType: getDeviceType(),
-                    })}
+                    {t("pwa.install.modal_description")}
                   </p>
                 </div>
               </div>
@@ -110,16 +102,6 @@ export const InstallModal = ({ isOpen, onClose }) => {
             >
               {t("pwa.install.got_it")}
             </button>
-            {deviceInfo.isAndroid && deviceInfo.browser !== "chrome" && (
-              <a
-                href="https://play.google.com/store/apps/details?id=com.android.chrome"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-whitewhite px-3 py-2 text-sm font-semibold text-primary-color shadow-sm ring-1 ring-inset ring-graygray-4 hover:bg-primary-background sm:mt-0 sm:w-auto"
-              >
-                {t("pwa.install.get_chrome")}
-              </a>
-            )}
           </div>
         </div>
       </div>
