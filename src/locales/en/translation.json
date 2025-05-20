@@ -1939,6 +1939,18 @@
     "edge_step_3": "Click 'Add' to confirm",
     "install_guide": "Install The Good Deals",
     "understand": "Got it",
-    "install_prompt": "Follow these steps to install The Good Deals on your device:"
+    "install_prompt": "Follow these steps to install The Good Deals on your device:",
+    "install": {
+      "button_text": "Add to Homescreen",
+      "modal_title": "Install The Good Deals",
+      "modal_description": "Follow these steps to install The Good Deals on your {deviceType}:",
+      "device_types": {
+        "ios": "iPhone/iPad",
+        "android": "Android device",
+        "desktop": "computer"
+      },
+      "got_it": "Got it",
+      "get_chrome": "Get Chrome"
+    }
   }
 }
