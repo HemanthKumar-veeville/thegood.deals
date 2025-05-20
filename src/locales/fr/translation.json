@@ -1923,6 +1923,18 @@
     "edge_step_3": "Cliquer sur 'Ajouter' pour confirmer",
     "install_guide": "Installer The Good Deals",
     "understand": "Compris",
-    "install_prompt": "Suivez ces étapes pour installer The Good Deals sur votre appareil :"
+    "install_prompt": "Suivez ces étapes pour installer The Good Deals sur votre appareil :",
+    "install": {
+      "button_text": "Ajouter à l'écran d'accueil",
+      "modal_title": "Installer The Good Deals",
+      "modal_description": "Suivez ces étapes pour installer The Good Deals sur votre {deviceType} :",
+      "device_types": {
+        "ios": "iPhone/iPad",
+        "android": "Android device",
+        "desktop": "computer"
+      },
+      "got_it": "Compris",
+      "get_chrome": "Obtenir Chrome"
+    }
   }
 }

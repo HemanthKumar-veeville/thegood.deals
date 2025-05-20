@@ -1,9 +1,17 @@
 import React from "react";
 import { usePWAInstall } from "../hooks/usePWAInstall";
+import { useTranslation } from "react-i18next";
 
 export const InstallModal = ({ isOpen, onClose }) => {
   const { getInstallInstructions, deviceInfo } = usePWAInstall();
+  const { t } = useTranslation();
   const { title, steps, images } = getInstallInstructions();
+
+  const getDeviceType = () => {
+    if (deviceInfo.isIOS) return t("pwa.install.device_types.ios");
+    if (deviceInfo.isAndroid) return t("pwa.install.device_types.android");
+    return t("pwa.install.device_types.desktop");
+  };
 
   if (!isOpen) return null;
 
@@ -64,17 +72,13 @@ export const InstallModal = ({ isOpen, onClose }) => {
               </div>
               <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                 <h3 className="text-lg font-semibold leading-6 text-primary-color">
-                  {title}
+                  {t("pwa.install.modal_title")}
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm text-primary-text-color">
-                    Follow these steps to install The Good Deals on your{" "}
-                    {deviceInfo.isIOS
-                      ? "iPhone/iPad"
-                      : deviceInfo.isAndroid
-                      ? "Android device"
-                      : "computer"}
-                    :
+                    {t("pwa.install.modal_description", {
+                      deviceType: getDeviceType(),
+                    })}
                   </p>
                 </div>
               </div>
@@ -104,7 +108,7 @@ export const InstallModal = ({ isOpen, onClose }) => {
               className="inline-flex w-full justify-center rounded-md bg-primary-color px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1b4f4a] sm:ml-3 sm:w-auto"
               onClick={onClose}
             >
-              Got it
+              {t("pwa.install.got_it")}
             </button>
             {deviceInfo.isAndroid && deviceInfo.browser !== "chrome" && (
               <a
@@ -113,7 +117,7 @@ export const InstallModal = ({ isOpen, onClose }) => {
                 rel="noopener noreferrer"
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-whitewhite px-3 py-2 text-sm font-semibold text-primary-color shadow-sm ring-1 ring-inset ring-graygray-4 hover:bg-primary-background sm:mt-0 sm:w-auto"
               >
-                Get Chrome
+                {t("pwa.install.get_chrome")}
               </a>
             )}
           </div>
