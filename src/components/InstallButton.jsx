@@ -7,7 +7,7 @@ export const InstallButton = ({
   className = "",
   variant = "primary",
   showIcon = true,
-  text = t("pwa.install.button_text"),
+  text,
   position = "inline", // inline, floating, banner
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -19,6 +19,8 @@ export const InstallButton = ({
     promptInstall,
     deviceInfo,
   } = usePWAInstall();
+
+  text = text || t("pwa.install.button_text");
 
   // Don't render if already installed
   if (isInstalled) return null;
