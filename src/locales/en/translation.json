@@ -1942,7 +1942,7 @@
     "install_prompt": "Follow these steps to install The Good Deals on your device:",
     "install": {
       "button_text": "Add to Homescreen",
-      "modal_title": "Install The Good Deals",
+      "modal_title": "Add to Homescreen",
       "modal_description": "Follow these steps to install The Good Deals on your device",
       "device_types": {
         "ios": "iPhone/iPad",

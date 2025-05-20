@@ -1926,7 +1926,7 @@
     "install_prompt": "Suivez ces étapes pour installer The Good Deals sur votre appareil :",
     "install": {
       "button_text": "Ajouter à l'écran d'accueil",
-      "modal_title": "Installer The Good Deals",
+      "modal_title": "Ajouter à l'écran d'accueil",
       "modal_description": "Suivez ces étapes pour installer The Good Deals sur votre appareil",
       "device_types": {
         "ios": "iPhone/iPad",
