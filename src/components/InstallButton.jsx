@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePWAInstall } from "../hooks/usePWAInstall";
 import { InstallModal } from "./InstallModal";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,13 @@ export const InstallButton = ({
   position = "inline", // inline, floating, banner
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const { t } = useTranslation();
+
+  // Reset isHidden state on component mount
+  useEffect(() => {
+    setIsHidden(false);
+  }, []);
   const {
     isInstallable,
     isInstalled,
@@ -22,8 +28,12 @@ export const InstallButton = ({
 
   text = text || t("pwa.install.button_text");
 
-  // Don't render if already installed
-  if (isInstalled) return null;
+  // Don't render if already installed or hidden
+  if (isInstalled || isHidden) return null;
+
+  const handleClose = () => {
+    setIsHidden(true);
+  };
 
   const handleInstallClick = async () => {
     // For iOS, always show the modal with instructions
@@ -66,6 +76,9 @@ export const InstallButton = ({
       "fixed bottom-0 left-0 right-0 px-4 py-3 bg-primary-background shadow-lg",
   };
 
+  // Default to banner position for better visibility
+  position = "banner";
+
   const getButtonContent = () => (
     <>
       {showIcon && (
@@ -90,13 +103,37 @@ export const InstallButton = ({
 
   return (
     <>
-      <button
-        onClick={handleInstallClick}
-        className={`${baseStyles} ${variants[variant]} ${positions[position]} ${className}`}
-        aria-label={t("pwa.install.button_text")}
-      >
-        {getButtonContent()}
-      </button>
+      <div className="fixed bottom-0 left-0 right-0 w-full">
+        <div className="relative max-w-[400px] mx-auto">
+          <button
+            onClick={handleInstallClick}
+            className={`${baseStyles} ${variants[variant]} ${positions[position]} ${className} relative w-full`}
+            aria-label={t("pwa.install.button_text")}
+          >
+            {getButtonContent()}
+          </button>
+
+          <button
+            onClick={handleClose}
+            className="absolute top-1 right-1 bg-transparent rounded-full p-1.5 shadow-lg hover:bg-red-600 transition-colors z-50"
+            aria-label={t("pwa.install.close_button_aria")}
+          >
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
 
       <InstallModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>

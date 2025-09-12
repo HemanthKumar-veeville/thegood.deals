@@ -1950,7 +1950,9 @@
         "desktop": "computer"
       },
       "got_it": "Got it",
-      "get_chrome": "Get Chrome"
+      "get_chrome": "Get Chrome",
+      "close_button": "Close PWA button",
+      "close_button_aria": "Close PWA installation button"
     }
   }
 }

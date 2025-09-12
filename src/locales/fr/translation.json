@@ -1934,7 +1934,9 @@
         "desktop": "computer"
       },
       "got_it": "Compris",
-      "get_chrome": "Obtenir Chrome"
+      "get_chrome": "Obtenir Chrome",
+      "close_button": "Fermer le bouton PWA",
+      "close_button_aria": "Fermer le bouton d'installation PWA"
     }
   }
 }
