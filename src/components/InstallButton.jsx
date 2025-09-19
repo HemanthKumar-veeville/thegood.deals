@@ -103,7 +103,7 @@ export const InstallButton = ({
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 w-full">
+      <div className="fixed bottom-0 left-0 right-0 w-full z-50">
         <div className="relative max-w-[400px] mx-auto">
           <button
             onClick={handleInstallClick}
