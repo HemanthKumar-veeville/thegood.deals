@@ -60,7 +60,7 @@ export const OrderSummary = ({ orderId }) => {
   }
 
   return (
-    <div>
+    <div className="w-full">
       <div
         className="inline-flex items-center justify-between w-full gap-4 cursor-pointer mt-3"
         onClick={handleToggleOrderDetails} // Toggling order details
