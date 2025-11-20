@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePWAInstall } from "../hooks/usePWAInstall";
 import { InstallModal } from "./InstallModal";
+import { useTranslation } from "react-i18next";
 
 export const InstallButton = ({
   className = "",
   variant = "primary",
   showIcon = true,
-  text = "Install App",
+  text,
   position = "inline", // inline, floating, banner
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  const { t } = useTranslation();
+
+  // Reset isHidden state on component mount
+  useEffect(() => {
+    setIsHidden(false);
+  }, []);
   const {
     isInstallable,
     isInstalled,
@@ -18,8 +26,14 @@ export const InstallButton = ({
     deviceInfo,
   } = usePWAInstall();
 
-  // Don't render if already installed
-  if (isInstalled) return null;
+  text = text || t("pwa.install.button_text");
+
+  // Don't render if already installed or hidden
+  if (isInstalled || isHidden) return null;
+
+  const handleClose = () => {
+    setIsHidden(true);
+  };
 
   const handleInstallClick = async () => {
     // For iOS, always show the modal with instructions
@@ -45,7 +59,7 @@ export const InstallButton = ({
     "flex items-center justify-center transition-all duration-200 font-medium";
   const variants = {
     primary:
-      "bg-primary-color text-white hover:bg-primary-color/90 active:bg-primary-color/80",
+      "bg-primary-color text-white hover:bg-primary-color/90 active:bg-primary-color/80 max-w-[400px] mx-auto z-50",
     secondary:
       "bg-graygray text-primary-color hover:bg-graygray-2 active:bg-graygray-3",
     outline:
@@ -62,6 +76,9 @@ export const InstallButton = ({
       "fixed bottom-0 left-0 right-0 px-4 py-3 bg-primary-background shadow-lg",
   };
 
+  // Default to banner position for better visibility
+  position = "banner";
+
   const getButtonContent = () => (
     <>
       {showIcon && (
@@ -77,7 +94,7 @@ export const InstallButton = ({
           <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
         </svg>
       )}
-      {text && <span>{text}</span>}
+      {text && <span>{text || t("pwa.install.button_text")}</span>}
       {installError && position === "banner" && (
         <span className="ml-2 text-sm text-red-600">{installError}</span>
       )}
@@ -86,13 +103,37 @@ export const InstallButton = ({
 
   return (
     <>
-      <button
-        onClick={handleInstallClick}
-        className={`${baseStyles} ${variants[variant]} ${positions[position]} ${className}`}
-        aria-label="Install application"
-      >
-        {getButtonContent()}
-      </button>
+      <div className="fixed bottom-0 left-0 right-0 w-full z-50">
+        <div className="relative max-w-[400px] mx-auto">
+          <button
+            onClick={handleInstallClick}
+            className={`${baseStyles} ${variants[variant]} ${positions[position]} ${className} relative w-full`}
+            aria-label={t("pwa.install.button_text")}
+          >
+            {getButtonContent()}
+          </button>
+
+          <button
+            onClick={handleClose}
+            className="absolute top-1 right-1 bg-transparent rounded-full p-1.5 shadow-lg hover:bg-red-600 transition-colors z-50"
+            aria-label={t("pwa.install.close_button_aria")}
+          >
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
 
       <InstallModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>

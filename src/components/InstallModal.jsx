@@ -1,8 +1,10 @@
 import React from "react";
 import { usePWAInstall } from "../hooks/usePWAInstall";
+import { useTranslation } from "react-i18next";
 
 export const InstallModal = ({ isOpen, onClose }) => {
   const { getInstallInstructions, deviceInfo } = usePWAInstall();
+  const { t } = useTranslation();
   const { title, steps, images } = getInstallInstructions();
 
   if (!isOpen) return null;
@@ -15,7 +17,7 @@ export const InstallModal = ({ isOpen, onClose }) => {
     >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-darkdark bg-opacity-50 transition-opacity"
+        className="fixed inset-0 bg-[#2a4e4a] bg-opacity-50 transition-opacity"
         aria-hidden="true"
         onClick={onClose}
       />
@@ -64,17 +66,11 @@ export const InstallModal = ({ isOpen, onClose }) => {
               </div>
               <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                 <h3 className="text-lg font-semibold leading-6 text-primary-color">
-                  {title}
+                  {t("pwa.install.modal_title")}
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm text-primary-text-color">
-                    Follow these steps to install The Good Deals on your{" "}
-                    {deviceInfo.isIOS
-                      ? "iPhone/iPad"
-                      : deviceInfo.isAndroid
-                      ? "Android device"
-                      : "computer"}
-                    :
+                    {t("pwa.install.modal_description")}
                   </p>
                 </div>
               </div>
@@ -104,18 +100,8 @@ export const InstallModal = ({ isOpen, onClose }) => {
               className="inline-flex w-full justify-center rounded-md bg-primary-color px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#1b4f4a] sm:ml-3 sm:w-auto"
               onClick={onClose}
             >
-              Got it
+              {t("pwa.install.got_it")}
             </button>
-            {deviceInfo.isAndroid && deviceInfo.browser !== "chrome" && (
-              <a
-                href="https://play.google.com/store/apps/details?id=com.android.chrome"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-whitewhite px-3 py-2 text-sm font-semibold text-primary-color shadow-sm ring-1 ring-inset ring-graygray-4 hover:bg-primary-background sm:mt-0 sm:w-auto"
-              >
-                Get Chrome
-              </a>
-            )}
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { getDeviceInfo } from "../utils/deviceDetector";
+import { useTranslation } from "react-i18next";
 
 export const usePWAInstall = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -7,6 +8,7 @@ export const usePWAInstall = () => {
   const [isInstalled, setIsInstalled] = useState(false);
   const [installError, setInstallError] = useState(null);
   const deviceInfo = getDeviceInfo();
+  const { t } = useTranslation();
 
   // Track installation analytics
   const trackInstallAttempt = useCallback(
@@ -115,13 +117,8 @@ export const usePWAInstall = () => {
   const getInstallInstructions = () => {
     if (deviceInfo.isIOS) {
       return {
-        title: "Install on iOS",
-        steps: [
-          "Open this website in Safari",
-          "Tap the Share button at the bottom of the screen",
-          'Scroll down and tap "Add to Home Screen"',
-          'Customize the name if you want, then tap "Add"',
-        ],
+        title: t("pwa.install.modal_title"),
+        steps: [t("pwa.ios_step_1"), t("pwa.ios_step_2"), t("pwa.ios_step_3")],
         images: {
           share: "/images/ios-share.png",
           addToHome: "/images/ios-add-to-home.png",
@@ -132,11 +129,11 @@ export const usePWAInstall = () => {
     if (deviceInfo.isAndroid) {
       if (deviceInfo.browser === "chrome") {
         return {
-          title: "Install on Android",
+          title: t("pwa.install.modal_title"),
           steps: [
-            "Tap the menu button (⋮) at the top right",
-            'Tap "Install app" or "Add to Home screen"',
-            'Tap "Install" in the prompt that appears',
+            t("pwa.chrome_step_1"),
+            t("pwa.chrome_step_2"),
+            t("pwa.chrome_step_3"),
           ],
           images: {
             menu: "/images/android-menu.png",
@@ -145,21 +142,18 @@ export const usePWAInstall = () => {
         };
       }
       return {
-        title: "Install on Android",
+        title: t("pwa.install.modal_title"),
         steps: [
-          "Open this website in Chrome for the best experience",
-          'Then tap the menu button and select "Install app"',
+          t("pwa.firefox_step_1"),
+          t("pwa.firefox_step_2"),
+          t("pwa.firefox_step_3"),
         ],
       };
     }
 
     return {
-      title: "Install on Desktop",
-      steps: [
-        "Look for the install icon in your browser's address bar",
-        'Click "Install" in the prompt that appears',
-        "Find the app in your Start menu or Applications folder",
-      ],
+      title: t("pwa.install.modal_title"),
+      steps: [t("pwa.edge_step_1"), t("pwa.edge_step_2"), t("pwa.edge_step_3")],
       images: {
         browserIcon: "/images/desktop-install-icon.png",
         installPrompt: "/images/desktop-install-prompt.png",

@@ -40,7 +40,7 @@ export const Footer = ({
   spanClassNameOverride,
   spanClassName1,
   text13 = " et consentez à recevoir des mises à jour de notre société.",
-  text14 = "© 2024 The Good Deals. Tous droits réservés.",
+  text14 = "© 2025 The Good Deals. Tous droits réservés.",
   columnClassName,
 }) => {
   const navigate = useNavigate();

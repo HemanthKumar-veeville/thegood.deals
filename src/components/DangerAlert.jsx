@@ -52,22 +52,31 @@ export const DangerAlert = ({ alertMessage, participants }) => {
           {participants.map((participant, index) => (
             <div
               key={participant?.order_id}
-              className="flex items-center px-4 py-2 gap-2.5"
+              className="flex flex-col w-full border-b last:border-b-0 border-gray-200"
             >
-              {participant?.payment_status !== "succeeded" ? (
-                <CrossCircle3 className="w-5 h-5" color="#F23030" />
-              ) : (
-                <CheckmarkCircle1 className="w-5 h-5" color="#13C296" />
-              )}
-              <p
-                className={`${
-                  participant?.payment_status !== "succeeded"
-                    ? "font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-redred text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]"
-                    : "text-[#13C296] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]"
-                }`}
-              >
-                {participant?.username}
-              </p>
+              <div className="flex items-center px-4 py-3 gap-2.5">
+                {participant?.payment_status !== "succeeded" ? (
+                  <CrossCircle3 className="w-5 h-5" color="#F23030" />
+                ) : (
+                  <CheckmarkCircle1 className="w-5 h-5" color="#13C296" />
+                )}
+                <p
+                  className={`${
+                    participant?.payment_status !== "succeeded"
+                      ? "font-body-medium-regular text-redred"
+                      : "text-[#13C296] font-body-medium-regular"
+                  } text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)]`}
+                >
+                  {participant?.username}
+                </p>
+              </div>
+              {participant?.payment_status !== "succeeded" &&
+                participant?.error && (
+                  <p className="px-11 pb-3 text-sm text-redred">
+                    {participant.error.split(":")[1]?.trim() ||
+                      participant.error}
+                  </p>
+                )}
             </div>
           ))}
         </motion.div>

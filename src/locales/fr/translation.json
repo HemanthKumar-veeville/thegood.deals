@@ -81,7 +81,7 @@
       "newsletter_description": "Restez informé (une seule fois par mois) de nos actualités",
       "subscribe_agreement": "En vous abonnant, vous acceptez notre ",
       "agree": " et consentez à recevoir des mises à jour de notre société.",
-      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "copyright": "© 2025 The Good Deals. Tous droits réservés.",
       "enter_email": "Entrer votre email"
     }
   },
@@ -124,7 +124,7 @@
     "newsletter_description": "Restez informé (une seule fois par mois) de nos actualités",
     "subscribe_agreement": "En vous abonnant, vous acceptez notre ",
     "agree": " et consentez à recevoir des mises à jour de notre société.",
-    "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+    "copyright": "© 2025 The Good Deals. Tous droits réservés.",
     "bulk_order": "Commande groupée",
     "support_contact": "Assistance / Contact",
     "faq": "FAQ",
@@ -178,7 +178,7 @@
       "newsletter_description": "Restez informé (une seule fois par mois) de nos actualités",
       "subscribe_agreement": "En vous abonnant, vous acceptez notre ",
       "agree": " et consentez à recevoir des mises à jour de notre société.",
-      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "copyright": "© 2025 The Good Deals. Tous droits réservés.",
       "how_it_works": "Comment ça marche ?",
       "bulk_order": "Commande groupée",
       "support_contact": "Assistance / Contact",
@@ -268,7 +268,7 @@
     "newsletter_info": "Restez informé (une seule fois par mois) de nos actualités",
     "subscribe_agreement": "En vous abonnant, vous acceptez notre ",
     "consent": " et consentez à recevoir des mises à jour de notre société.",
-    "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+    "copyright": "© 2025 The Good Deals. Tous droits réservés.",
     "enter_email": "Entrer votre email",
     "subscribe": "S’abonner"
   },
@@ -1533,7 +1533,7 @@
       "stay_informed": "Restez informé (une fois par mois seulement) de nos actualités",
       "consent_agreement": "En vous abonnant, vous acceptez notre ",
       "receive_updates": "et consentez à recevoir des mises à jour de notre part.",
-      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "copyright": "© 2025 The Good Deals. Tous droits réservés.",
       "how_it_works": "Comment ça marche ?",
       "bulk_order": "Commande groupée",
       "support_contact": "Support / Contact",
@@ -1561,7 +1561,7 @@
       "stay_informed": "Restez informé (une fois par mois seulement) de nos actualités",
       "consent_agreement": "En vous abonnant, vous acceptez notre ",
       "receive_updates": "et consentez à recevoir des mises à jour de notre part.",
-      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "copyright": "© 2025 The Good Deals. Tous droits réservés.",
       "how_it_works": "Comment ça marche ?",
       "bulk_order": "Commande groupée",
       "support_contact": "Support / Contact",
@@ -1616,7 +1616,7 @@
       "stay_informed": "Restez informé (une fois par mois seulement) de nos actualités",
       "consent_agreement": "En vous abonnant, vous acceptez notre ",
       "receive_updates": "et consentez à recevoir des mises à jour de notre part.",
-      "copyright": "© 2024 The Good Deals. Tous droits réservés.",
+      "copyright": "© 2025 The Good Deals. Tous droits réservés.",
       "how_it_works": "Comment ça marche ?",
       "bulk_order": "Commande groupée",
       "support_contact": "Support / Contact",
@@ -1923,6 +1923,20 @@
     "edge_step_3": "Cliquer sur 'Ajouter' pour confirmer",
     "install_guide": "Installer The Good Deals",
     "understand": "Compris",
-    "install_prompt": "Suivez ces étapes pour installer The Good Deals sur votre appareil :"
+    "install_prompt": "Suivez ces étapes pour installer The Good Deals sur votre appareil :",
+    "install": {
+      "button_text": "Ajouter à l'écran d'accueil",
+      "modal_title": "Ajouter à l'écran d'accueil",
+      "modal_description": "Suivez ces étapes pour installer The Good Deals sur votre appareil",
+      "device_types": {
+        "ios": "iPhone/iPad",
+        "android": "Android device",
+        "desktop": "computer"
+      },
+      "got_it": "Compris",
+      "get_chrome": "Obtenir Chrome",
+      "close_button": "Fermer le bouton PWA",
+      "close_button_aria": "Fermer le bouton d'installation PWA"
+    }
   }
 }
