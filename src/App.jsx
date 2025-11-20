@@ -129,8 +129,8 @@ const AppBar = loadable(() => import("./components/AppBar/AppBar"), {
   fallback: <CustomLoader />,
 });
 
-// Layout component to include AppBar across all routes
-function Layout({ children }) {
+// Base layout component shared by all routes
+function BaseLayout({ children, footerContent = null }) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -139,8 +139,17 @@ function Layout({ children }) {
     <div className="flex flex-col w-full h-full items-start relative bg-primary-background min-h-screen notranslate">
       <AppBar />
       <Suspense fallback={<CustomLoader />}>{children}</Suspense>
-      <InstallButton position="banner" variant="primary" />
+      {footerContent}
     </div>
+  );
+}
+
+// Root layout for pages that should display the PWA install button
+function RootLayout({ children }) {
+  return (
+    <BaseLayout footerContent={<InstallButton position="banner" variant="primary" />}>
+      {children}
+    </BaseLayout>
   );
 }
 
@@ -180,7 +189,7 @@ function App() {
     {
       path: "/",
       element: (
-        <Layout>
+        <RootLayout>
           {!isUserLoggedIn ? (
             <Home />
           ) : (
@@ -190,85 +199,85 @@ function App() {
               }
             />
           )}
-        </Layout>
+        </RootLayout>
       ),
     },
     {
       path: "/auth",
       element: (
-        <Layout>
+        <BaseLayout>
           <Auth />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/verify",
       element: (
-        <Layout>
+        <BaseLayout>
           <VerificationOTP />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/create-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<CreateDeal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/update-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<UpdateDeal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/repost-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<RepostDeal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/inform-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<InformToCraftsMan />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/thanks-admin",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<ThanksToAdmin />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/thanks-review",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<ThanksForReview />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/thanks-order-confirmed",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<ThanksToArtisan />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/request-sent",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute
             element={
               <Message
@@ -278,61 +287,61 @@ function App() {
               />
             }
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-active-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<ActiveDeal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-waiting-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<WaitingDeal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/request-pending-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<RequestPendingDeal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-draft-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<DraftDeal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-wallet",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<Wallet />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/deal-wallet",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<DealWallet />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-withdrawal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute
             element={
               <Withdrawal
@@ -341,13 +350,13 @@ function App() {
               />
             }
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/payment",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute
             element={
               <Withdrawal
@@ -357,365 +366,365 @@ function App() {
               />
             }
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/thanks-withdrawal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<ThanksForWithdrawal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/thanks-payment-setup",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<ThanksPayment />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-invitations",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<Invitations />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-orders",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<Orders />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-view-deal",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<AdminViewGoodDeal />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/invite-loved-ones",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<InviteLovedOnes />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/help-request-sent",
       element: (
-        <Layout>
+        <BaseLayout>
           <InvitationSent
             description={t("App.InvitationSent.helpRequest.sentDescription")}
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/admin-invitations-sent",
       element: (
-        <Layout>
+        <BaseLayout>
           <InvitationSent />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/guest-deal-view",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<GuestDealView />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/about-us",
       element: (
-        <Layout>
+        <BaseLayout>
           <AboutUs />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/how-it-works",
       element: (
-        <Layout>
+        <BaseLayout>
           <HowItWorks />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/contact-us",
       element: (
-        <Layout>
+        <BaseLayout>
           <ContactUs />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/help-me",
       element: (
-        <Layout>
+        <BaseLayout>
           <PublicNeedHelp />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/settings",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<SettingsPage />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/edit-profile",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<EditProfile />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/notifications",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<Notifications />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/terms-of-use",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<TermsOfUse />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/select-language",
       element: (
-        <Layout>
+        <BaseLayout>
           <LanguageSelection />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/select-currency",
       element: (
-        <Layout>
+        <BaseLayout>
           <CurrencySelection />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/my-information",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<MyInformation />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/artisan-validation",
       element: (
-        <Layout>
+        <BaseLayout>
           <ArtisanConfirmTheScreen />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/deal_details",
       element: (
-        <Layout>
+        <BaseLayout>
           <ArtisanConfirmTheScreen />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/deal_details_invite",
       element: (
-        <Layout>
+        <BaseLayout>
           <InviteParticipants />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/deal-confirmed",
       element: (
-        <Layout>
+        <BaseLayout>
           <Message
             heading={t("App.Message.artisanApproved.heading")}
             description={t("App.Message.artisanApproved.description")}
             action={t("App.Message.artisanApproved.action")}
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/delete-account",
       element: (
-        <Layout>
+        <BaseLayout>
           <DeleteAccount />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/delete-account-message",
       element: (
-        <Layout>
+        <BaseLayout>
           <Message
             heading={t("App.Message.deleteAccount.heading")}
             description={t("App.Message.deleteAccount.description")}
             action={t("App.Message.deleteAccount.action")}
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/deal-refused",
       element: (
-        <Layout>
+        <BaseLayout>
           <ArtisanDeniedTheScreen />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/deal-refused-message",
       element: (
-        <Layout>
+        <BaseLayout>
           <Message
             heading={t("App.Message.artisanRefused.heading")}
             description={t("App.Message.artisanRefused.description")}
             action={t("App.Message.artisanRefused.action")}
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/participant-send-review",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<GuestsSendReviewsScreen />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/organizer-send-review",
       element: (
-        <Layout>
+        <BaseLayout>
           <GuestsSendReviewsScreen />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/artisan-email",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<ArtisanEmailScreen />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/artisan-email-list",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<ArtisanEmailList />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/ask-guest-review",
       element: (
-        <Layout>
+        <BaseLayout>
           <ProtectedRoute element={<GuestEmailAskForScreen />} />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/general-conditions",
       element: (
-        <Layout>
+        <BaseLayout>
           <GeneralConditionsScreen />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/privacy-policy",
       element: (
-        <Layout>
+        <BaseLayout>
           <PrivacyCookiePolicyScreen />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/newsletter-indication",
       element: (
-        <Layout>
+        <BaseLayout>
           <NewsLetterScreen />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/legal-notices",
       element: (
-        <Layout>
+        <BaseLayout>
           <LegalNoticesScreen />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/lost-password",
       element: (
-        <Layout>
+        <BaseLayout>
           <LostPassword />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/check-email",
       element: (
-        <Layout>
+        <BaseLayout>
           <Message
             heading={t("App.Message.lostPassword.checkEmailHead")}
             description={t("App.Message.lostPassword.checkEmailDesc")}
             action={t("App.Message.lostPassword.checkEmailAction")}
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/reset-password",
       element: (
-        <Layout>
+        <BaseLayout>
           <ResetPassword />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "/reset-password-success",
       element: (
-        <Layout>
+        <BaseLayout>
           <Message
             heading={t("App.Message.resetPassword.resetHead")}
             description={t("App.Message.resetPassword.resetDesc")}
             action={t("App.Message.resetPassword.resetAction")}
           />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
       path: "*",
       element: (
-        <Layout>
+        <BaseLayout>
           <NotFound />
-        </Layout>
+        </BaseLayout>
       ),
     },
     {
