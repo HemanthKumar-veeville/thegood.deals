@@ -8,7 +8,6 @@ import { createOrder } from "../../redux/app/orders/orderSlice";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next"; // Import the translation hook
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
-import { Line } from "../Line/Line";
 
 export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const { t } = useTranslation(); // Initialize the translation hook
@@ -39,6 +38,26 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
     setCartItems(updatedItems);
   };
 
+  const handleKeyDown = (
+    event,
+    index,
+    action,
+    minQuantity,
+    maxQuantity,
+    availableQuantity
+  ) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleQuantityChange(
+        index,
+        action,
+        minQuantity,
+        maxQuantity,
+        availableQuantity
+      );
+    }
+  };
+
   const totalSavings = cartItems?.reduce((acc, item) => {
     return acc + (item.max_retail_price - item.price) * item.quantity;
   }, 0);
@@ -64,14 +83,14 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   };
 
   return (
-    <div className="flex flex-col items-start gap-[15px] p-[15px] relative bg-whitewhite rounded-[5px]">
+    <div className="flex flex-col items-start gap-[15px] p-[15px] relative bg-whitewhite rounded-[0.25rem] w-full">
       <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
         <ShoppingCart111 className="!relative !w-5 !h-5" />
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Bold',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
           {t("cart.myBasket")}
         </div>
       </div>
-      <Line />
+      <div className="w-full h-px bg-stroke" />
       {isError && (
         <ShowCustomErrorModal
           message={errorMessage}
@@ -103,66 +122,129 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
               {product?.total_stock || "-"}
             </div>
           </div>
-          <div className="flex items-center gap-2.5 self-stretch w-full relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-orangeorange text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-              {t("cart.available", { count: product.availability })}
+          <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
+            <div className="relative flex items-center bg-whitewhite rounded-[0.25rem] border border-solid border-stroke h-11 w-[140px] sm:w-[160px] shadow-sm overflow-hidden">
+              <button
+                type="button"
+                aria-label={t("cart.decreaseQuantity") || "Decrease quantity"}
+                tabIndex={0}
+                disabled={
+                  product.quantity <= 1 ||
+                  product.quantity <= product.min_quantity_per_order
+                }
+                className={`
+                      flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px]
+                      rounded-l-[0.25rem] border-r border-solid border-stroke
+                      transition-all duration-150 ease-in-out
+                      outline-none
+                      focus-visible:ring-2 focus-visible:ring-primary-color focus-visible:ring-offset-1
+                      disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50
+                      ${
+                        product.quantity <= 1 ||
+                        product.quantity <= product.min_quantity_per_order
+                          ? ""
+                          : "cursor-pointer hover:bg-primary-color/5 active:bg-primary-color/10 active:scale-[0.97]"
+                      }
+                    `}
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  handleQuantityChange(
+                    index,
+                    "decrement",
+                    product.min_quantity_per_order,
+                    product.max_quantity_per_order,
+                    product.availability
+                  );
+                }}
+                onKeyDown={(e) =>
+                  handleKeyDown(
+                    e,
+                    index,
+                    "decrement",
+                    product.min_quantity_per_order,
+                    product.max_quantity_per_order,
+                    product.availability
+                  )
+                }
+              >
+                <Minus1 className="!relative !w-4 !h-4 text-primary-color" />
+              </button>
+              <div className="flex-1 flex items-center justify-center min-w-[48px] px-2 py-1.5">
+                <span className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-primary-color text-base tracking-[0] leading-normal whitespace-nowrap select-none">
+                  {product.quantity}
+                </span>
+              </div>
+              <button
+                type="button"
+                aria-label={t("cart.increaseQuantity") || "Increase quantity"}
+                tabIndex={0}
+                disabled={
+                  product.quantity >= product.max_quantity_per_order ||
+                  product.quantity >= product.availability
+                }
+                className={`
+                      flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px]
+                      rounded-r-[0.25rem] border-l border-solid border-stroke
+                      transition-all duration-150 ease-in-out
+                      outline-none
+                      focus-visible:ring-2 focus-visible:ring-primary-color focus-visible:ring-offset-1
+                      disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50
+                      ${
+                        product.quantity >= product.max_quantity_per_order ||
+                        product.quantity >= product.availability
+                          ? ""
+                          : "cursor-pointer hover:bg-primary-color/5 active:bg-primary-color/10 active:scale-[0.97]"
+                      }
+                    `}
+                onClick={(e) => {
+                  e.currentTarget.blur();
+                  handleQuantityChange(
+                    index,
+                    "increment",
+                    product.min_quantity_per_order,
+                    product.max_quantity_per_order,
+                    product.availability
+                  );
+                }}
+                onKeyDown={(e) =>
+                  handleKeyDown(
+                    e,
+                    index,
+                    "increment",
+                    product.min_quantity_per_order,
+                    product.max_quantity_per_order,
+                    product.availability
+                  )
+                }
+              >
+                <Plus1 className="!relative !w-4 !h-4 text-primary-color" />
+              </button>
             </div>
           </div>
-          <div className="flex items-end justify-between self-stretch w-full relative flex-[0_0_auto]">
-            <div className="flex w-full items-end justify-between relative self-stretch">
-              <div className="inline-flex flex-col items-start gap-2.5 relative flex-[0_0_auto]">
-                <div className="relative w-[81.17px] h-[25px] mr-[-2.00px]">
-                  <div className="relative w-[79px] h-[25px] bg-whitewhite rounded-[3.47px] border-[0.69px] border-solid border-stroke">
-                    <span
-                      className="transition-transform transform hover:scale-95 active:scale-90"
-                      onClick={() =>
-                        handleQuantityChange(
-                          index,
-                          "decrement",
-                          product.min_quantity_per_order,
-                          product.max_quantity_per_order,
-                          product.availability
-                        )
-                      }
-                    >
-                      <Minus1 className="!absolute !w-2 !h-2 !top-2 !left-[7px]" />
-                    </span>
-                    <div className="absolute top-[3px] left-9 [font-family:'Inter-Medium',Helvetica] font-medium text-primary-color text-[11.1px] tracking-[0] leading-[16.7px] whitespace-nowrap">
-                      {product.quantity}
-                    </div>
-                    <span
-                      className="transition-transform transform hover:scale-95 active:scale-90"
-                      onClick={() =>
-                        handleQuantityChange(
-                          index,
-                          "increment",
-                          product.min_quantity_per_order,
-                          product.max_quantity_per_order,
-                          product.availability
-                        )
-                      }
-                    >
-                      <Plus1 className="!absolute !w-2 !h-2 !top-2 !left-[62px]" />
-                    </span>
-                  </div>
+
+          <div className="flex items-end justify-between self-stretch w-full relative flex-[0_0_auto] overflow-x-auto">
+            <div className="flex w-full items-end justify-between relative self-stretch flex-wrap">
+              <div className="flex items-center gap-2.5 self-stretch w-auto max-w-[50%] flex-1 min-w-0">
+                <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-orangeorange text-sm tracking-[0] leading-[22px] whitespace-nowrap overflow-hidden text-ellipsis">
+                  {t("cart.available", { count: product.availability })}
                 </div>
               </div>
-              <div className="inline-flex items-center justify-center gap-2 relative flex-[0_0_auto]">
-                <div className="mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color leading-6 line-through relative w-fit text-sm text-right tracking-[0] whitespace-nowrap">
+              <div className="flex items-center justify-end gap-2 flex-1">
+                <div className="mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color leading-6 line-through relative text-sm text-right tracking-[0] whitespace-nowrap">
                   {product.max_retail_price} €
                 </div>
-                <div className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-secondary-color leading-[22px] relative w-fit text-sm text-right tracking-[0] whitespace-nowrap">
+                <div className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-secondary-color leading-[22px] relative text-sm text-right tracking-[0] whitespace-nowrap">
                   {product.price} €
                 </div>
-                <div className="inline-flex items-center justify-center gap-px px-1.5 py-0 relative flex-[0_0_auto] bg-greengreen-dark rounded">
-                  <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-[10px] tracking-[0] leading-5 whitespace-nowrap">
+                <div className="flex items-center justify-center gap-px px-1.5 py-0 bg-greengreen-dark rounded min-w-[28px] max-w-[44px] h-5">
+                  <div className="relative mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-[10px] tracking-[0] leading-5 whitespace-nowrap">
                     {Math.round(product?.discount)}%
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <Line />
+          <div className="w-full h-px bg-stroke" />
         </div>
       ))}
 
@@ -206,7 +288,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
             product?.quantity >= product.min_quantity_per_order
         )?.length === cartItems?.length && (
           <div
-            className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-md transition-transform transform hover:scale-95 active:scale-90"
+            className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-[0.25rem] transition-transform transform hover:scale-95 active:scale-90"
             onClick={handlePayment}
           >
             <Send1 className="!relative !w-5 !h-5" />
