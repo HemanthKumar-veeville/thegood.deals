@@ -258,6 +258,15 @@ export const InviteParticipants = ({
           readLessText={t("artisanConfirmThe.read_less")}
         />
         <Line />
+        <div className="relative self-stretch font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] [font-style:var(--body-large-bold-font-style)]">
+          {t("artisanConfirmThe.about_the_artisan")}
+        </div>
+        <ReadMore
+          description={dealState?.artisan_information || "-"}
+          readMoreText={t("artisanConfirmThe.read_more")}
+          readLessText={t("artisanConfirmThe.read_less")}
+        />
+        <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">

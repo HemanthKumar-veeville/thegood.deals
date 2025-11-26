@@ -139,6 +139,15 @@ const AdminViewGoodDeal = () => {
           readLessText={t("artisanConfirmThe.read_less")}
         />
         <Line />
+        <div className="relative self-stretch [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px]">
+          {t("admin.about_the_artisan")}
+        </div>
+        <ReadMore
+          description={dealState?.artisan_information || "-"}
+          readMoreText={t("artisanConfirmThe.read_more")}
+          readLessText={t("artisanConfirmThe.read_less")}
+        />
+        <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box43 className="!relative !w-5 !h-5" />
           <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px] whitespace-nowrap">
