@@ -24,7 +24,7 @@ import { Line } from "../../components/Line/Line";
 import { Send1 } from "../../icons/Send1";
 import { UserAlt } from "../../icons/UserAlt";
 import { Chat } from "../../components/Chat";
-
+import ReadMore from "../../components/Readmore/Readmore";
 const GuestDealView = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -228,6 +228,15 @@ const GuestDealView = () => {
               {dealData?.collection_info?.location || "-"}
             </p>
           </div>
+          <Line />
+          <div className="relative self-stretch [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px]">
+            {t("admin.about_the_artisan")}
+          </div>
+          <ReadMore
+            description={dealData?.artisan_information || "-"}
+            readMoreText={t("artisanConfirmThe.read_more")}
+            readLessText={t("artisanConfirmThe.read_less")}
+          />
           <Line />
           <div className="inline-flex items-center gap-[15px] relative flex-[0_0_auto]">
             {dealData?.organizer?.organiser_image ? (

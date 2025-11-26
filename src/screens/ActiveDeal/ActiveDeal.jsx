@@ -41,7 +41,7 @@ import { Send1 } from "../../icons/Send1";
 import { Chat } from "../../components/Chat";
 import { BiRepost } from "react-icons/bi";
 import { ShowCustomWarningModal } from "../../components/WarningAlert/WarningAlert";
-
+import ReadMore from "../../components/Readmore/Readmore";
 const ActiveDeal = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -401,6 +401,15 @@ const ActiveDeal = () => {
                 {dealData?.collection_location || "-"}
               </p>
             </div>
+            <div className="relative self-stretch [font-family:'Inter',Helvetica] font-bold text-primary-color text-lg tracking-[0] leading-[26px]">
+              {t("admin.about_the_artisan")}
+            </div>
+            <ReadMore
+              description={dealData?.artisan_information || "-"}
+              readMoreText={t("artisanConfirmThe.read_more")}
+              readLessText={t("artisanConfirmThe.read_less")}
+            />
+            <Line />
             {!isPaymentCollectedForAllOrders && !autoRetry && (
               <div
                 className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full bg-primary-color rounded-md hover:bg-primary-dark-color cursor-pointer"
