@@ -259,7 +259,7 @@ export const InviteParticipants = ({
         />
         <Line />
         <div className="relative self-stretch font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] [font-style:var(--body-large-bold-font-style)]">
-          {t("artisanConfirmThe.about_the_artisan")}
+          {t("admin.about_the_artisan")}
         </div>
         <ReadMore
           description={dealState?.artisan_information || "-"}
