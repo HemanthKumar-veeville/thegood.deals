@@ -44,12 +44,12 @@ export const InviteParticipants = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { deal, status, error } = useSelector((state) => state.deals);
-  const queryParams = new URLSearchParams(location.search);
+  const pathLocation = useLocation();
+  const queryParams = new URLSearchParams(pathLocation.search);
   const dealId = queryParams.get("deal_id");
   const is_repostable = queryParams.get("is_repostable");
   const is_request_sent = queryParams.get("is_request_sent");
   const dealState = deal?.Deal;
-  const pathLocation = useLocation();
   const pathname = pathLocation?.pathname;
   const isUserLoggedIn = useSelector((state) => state.user.isUserLoggedIn);
   const [isError, setIsError] = useState(false);
@@ -103,7 +103,7 @@ export const InviteParticipants = ({
         switch (response?.invite_status) {
           case "creator":
             navigate(
-              `/admin-active-deal?deal_id=${dealId}&is_creator=${true}`,
+              `/admin-view-deal?deal_id=${dealId}&is_creator=true`,
               {
                 state: { deal },
               }
@@ -115,7 +115,7 @@ export const InviteParticipants = ({
             });
             break;
           case "accept":
-            navigate(`/guest-deal-view?deal_id=${dealId}&is_creator=${false}`, {
+            navigate(`/admin-view-deal?deal_id=${dealId}&is_creator=false`, {
               state: { deal },
             });
             break;
@@ -279,6 +279,74 @@ export const InviteParticipants = ({
           readLessText={t("artisanConfirmThe.read_less")}
         />
         <Line />
+        {dealState?.products && dealState?.products.length > 0 && (
+          <div className="flex-col items-start gap-[15px] p-[15px] self-stretch w-full bg-white rounded-[5px] flex relative flex-[0_0_auto]">
+            <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+              <Box44 className="!relative !w-5 !h-5" />
+              <div className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
+                {t("artisanConfirmThe.good_deal")}
+              </div>
+            </div>
+            <Line />
+            {dealState.products.map((product, index) => {
+              // Calculate discount if not present in product data
+              const maxRetailPrice = product.max_retail_price || product.market_price || 0;
+              const currentPrice = product.price_per_unit || product.price || product.deal_price || 0;
+              const calculatedDiscount = maxRetailPrice > 0 && currentPrice > 0 && maxRetailPrice > currentPrice
+                ? Math.round(((maxRetailPrice - currentPrice) / maxRetailPrice) * 100)
+                : product.discount || 0;
+              const hasDiscount = calculatedDiscount > 0;
+
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]"
+                >
+                  <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
+                    <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
+                      {product.product_name || product.name || "-"}
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-start justify-center gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
+                    <p className="relative w-fit mt-[-1.00px] font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-orange text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                      {t("artisanConfirmThe.min_quantity")}:{" "}
+                      {product.min_quantity_per_order || "-"}
+                    </p>
+                    <p className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-secondary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                      {t("artisanConfirmThe.max_quantity")}:{" "}
+                      {product.max_quantity_per_order || "-"}
+                    </p>
+                    <div className="relative w-fit font-body-small-medium font-[number:var(--body-small-medium-font-weight)] text-primary-color text-[length:var(--body-small-medium-font-size)] tracking-[var(--body-small-medium-letter-spacing)] leading-[var(--body-small-medium-line-height)] whitespace-nowrap [font-style:var(--body-small-medium-font-style)]">
+                      {t("artisanConfirmThe.total_stock")}:{" "}
+                      {product.total_stock || "-"}
+                    </div>
+                  </div>
+                  <div className="items-end justify-end self-stretch w-full flex relative flex-[0_0_auto]">
+                    <div className="flex items-center justify-end gap-2 flex-1">
+                      {hasDiscount && maxRetailPrice > 0 && (
+                        <div className="mt-[-1.00px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color leading-6 line-through relative text-sm text-right tracking-[0] whitespace-nowrap">
+                          {maxRetailPrice} €
+                        </div>
+                      )}
+                      <div className="[font-family:'Inter-SemiBold',Helvetica] font-semibold text-secondary-color leading-[22px] relative text-sm text-right tracking-[0] whitespace-nowrap">
+                        {currentPrice || "-"} €
+                      </div>
+                      {hasDiscount && (
+                        <div className="flex items-center justify-center gap-px px-1.5 py-0 bg-greengreen-dark rounded min-w-[28px] max-w-[44px] h-5">
+                          <div className="relative mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-[10px] tracking-[0] leading-5 whitespace-nowrap">
+                            {calculatedDiscount}%
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <Line />
+                </div>
+              );
+            })}
+          </div>
+        )}
+        <Line />
         <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
           <Box44 className="!relative !w-5 !h-5" />
           <p className="relative w-fit mt-[-1.00px] font-body-large-bold font-[number:var(--body-large-bold-font-weight)] text-primary-color text-[length:var(--body-large-bold-font-size)] tracking-[var(--body-large-bold-letter-spacing)] leading-[var(--body-large-bold-line-height)] whitespace-nowrap [font-style:var(--body-large-bold-font-style)]">
@@ -305,6 +373,7 @@ export const InviteParticipants = ({
           handleAccept={handleAccept}
           isRequestSent={isRequestSent}
           is_repostable={is_repostable == "true"}
+          approval_needed={dealState?.approval_needed}
         />
       </div>
     </div>

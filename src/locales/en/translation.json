@@ -398,6 +398,7 @@
     "add_products_label": "Add products",
     "add_another_product_label": "Add another product",
     "next_step_button": "Next step",
+    "approval_needed_label": "Participants need approval to join the deal",
     "accept_conditions_label": "I accept the General Conditions of Sale",
     "created_empty": "You don't have any deals.",
     "created_action": "Create one now!",
@@ -960,6 +961,7 @@
   },
   "access": {
     "participate_in_deal": "To participate in the deal, the organizer must give you access",
+    "join_deal": "Join the deal",
     "recreate_deal_desc": "You can create the deal by using this template",
     "must_be_logged_in": "You must be logged in to order",
     "request_access": "I request access",

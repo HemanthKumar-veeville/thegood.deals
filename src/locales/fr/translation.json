@@ -398,7 +398,8 @@
     "add_products_label": "Ajouter les produits",
     "add_another_product_label": "Ajouter un autre produit",
     "next_step_button": "Étape suivante",
-    "accept_conditions_label": "J’accepte les Conditions Générales de Ventes",
+    "approval_needed_label": "Les participants ont besoin d'approbation pour rejoindre le deal",
+    "accept_conditions_label": "J'accepte les Conditions Générales de Ventes",
     "created_empty": "Vous n’avez aucun deals. ",
     "created_action": "Créez-en un dès maintenant !",
     "invited_empty": "Vous ne participez à aucun deal.",
@@ -957,15 +958,16 @@
     "hide_password": "Masquer le mot de passe"
   },
   "access": {
-    "participate_in_deal": "Pour participer au deal, l’organisateur doit vous donner l’accès",
+    "participate_in_deal": "Pour participer au deal, l'organisateur doit vous donner l'accès",
+    "join_deal": "Rejoindre le deal",
     "recreate_deal_desc": "Vous pouvez créer le deal en utilisant ce template",
     "must_be_logged_in": "Vous devez être connecté pour commander",
-    "request_access": "Je demande l’accès",
+    "request_access": "Je demande l'accès",
     "request_recreate_access": "Utiliser ce template",
     "login_create_account": "Se connecter / Créer un compte",
-    "in_process_desc": "Votre demande a été envoyée à l’organisateur",
+    "in_process_desc": "Votre demande a été envoyée à l'organisateur",
     "in_process": "Demande en cours",
-    "req_confirm": "Une fois que l’organisateur aura confirmé, vous pourrez commander."
+    "req_confirm": "Une fois que l'organisateur aura confirmé, vous pourrez commander."
   },
   "add_pictures": {
     "error_title": "Erreur...",
