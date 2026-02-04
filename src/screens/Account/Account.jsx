@@ -38,13 +38,13 @@ const Account = ({ isRequestSent, dealId }) => {
   const { status } = dealsState;
   const { profile } = useSelector((state) => state.account);
   const scrollableContainerRef = useRef(null);
-
+  
   useEffect(() => {
-    if (isRequestSent)
+    if (dealId)
       navigate(
-        `/deal_details_invite?deal_id=${dealId}&&is_request_sent=${isRequestSent}`
+        `/admin-view-deal?deal_id=${dealId}&is_creator=${false}`
       );
-  }, [isRequestSent, dealId, navigate]);
+  }, [dealId, navigate]);
 
   useEffect(() => {
     const activeTabFromLocation = location?.state?.activeTab || activeTab;
