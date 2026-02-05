@@ -97,9 +97,14 @@ export const setupPaymentForOrder = createAsyncThunk(
 
 export const cancelOrderByOrderId = createAsyncThunk(
   "orders/cancelOrderByOrderId",
-  async (orderId, { rejectWithValue }) => {
+  async ({ orderId, reason }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/cancel_order/${orderId}`);
+      // Reason is mandatory - encode it as a query parameter
+      if (!reason || reason.trim().length === 0) {
+        return rejectWithValue({ detail: "Cancellation reason is required" });
+      }
+      const encodedReason = encodeURIComponent(reason.trim());
+      const response = await axiosInstance.post(`/cancel_order/${orderId}?reason=${encodedReason}`);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

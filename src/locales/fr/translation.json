@@ -627,7 +627,14 @@
     "read_more": "Lire plus",
     "cancel": "Annuler",
     "accept": "Accepter",
-    "cancel_header": "Êtes-vous sûr de vouloir annuler votre commande ?"
+    "cancel_header": "Êtes-vous sûr de vouloir annuler votre commande ?",
+    "required": "requis",
+    "cancellation_reason_label": "Raison de l'annulation",
+    "cancellation_reason_placeholder": "Veuillez fournir une raison pour annuler cette commande...",
+    "cancellation_reason_helper": "Minimum {{min}} et maximum {{max}} caractères requis",
+    "cancellation_reason_required": "La raison de l'annulation est requise",
+    "cancellation_reason_too_short": "La raison de l'annulation doit contenir au moins {{min}} caractères",
+    "cancellation_reason_too_long": "La raison de l'annulation ne doit pas dépasser {{max}} caractères"
   },
   "deal": {
     "title": "Huîtres de Saint-Malo",
@@ -1476,6 +1483,7 @@
     "edit_payment": "Modifier le paiement",
     "awaiting_payment": "En attente de paiement",
     "cancel_order": "Annuler commande",
+    "cancel_order_error": "Échec de l'annulation de la commande. Veuillez réessayer.",
     "order_cancelled": "Votre commande a été annulée avec succès."
   },
   "App": {

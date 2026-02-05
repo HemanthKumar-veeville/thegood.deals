@@ -629,7 +629,14 @@
     "read_more": "Read more",
     "cancel": "Cancel",
     "accept": "Accept",
-    "cancel_header": "Are you sure you want to cancel your order?"
+    "cancel_header": "Are you sure you want to cancel your order?",
+    "required": "required",
+    "cancellation_reason_label": "Reason for cancellation",
+    "cancellation_reason_placeholder": "Please provide a reason for cancelling this order...",
+    "cancellation_reason_helper": "Minimum {{min}} and maximum {{max}} characters required",
+    "cancellation_reason_required": "Cancellation reason is required",
+    "cancellation_reason_too_short": "Cancellation reason must be at least {{min}} characters",
+    "cancellation_reason_too_long": "Cancellation reason must not exceed {{max}} characters"
   },
   "deal": {
     "title": "Wine crates Domaine de Cigaluse",
@@ -1492,7 +1499,8 @@
     "edit_payment": "Modify payment",
     "awaiting_payment": "Awaiting payment",
     "cancel_order": "Cancel order",
-    "order_cancelled": "Your order has been cancelled successfully."
+    "order_cancelled": "Your order has been cancelled successfully.",
+    "cancel_order_error": "Failed to cancel order. Please try again."
   },
   "App": {
     "Message": {

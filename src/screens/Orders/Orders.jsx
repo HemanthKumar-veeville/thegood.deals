@@ -85,16 +85,23 @@ const Orders = ({ dealId, dealType }) => {
     setOrderId(orderId);
   };
 
-  const handleConfirm = async (orderId) => {
+  const handleConfirm = async (orderId, reason) => {
     console.log("confirm clicked");
     try {
-      await dispatch(cancelOrderByOrderId(orderId)).unwrap();
+      // Reason is mandatory - validation is handled in the modal
+      if (!reason || reason.trim().length === 0) {
+        setIsError(true);
+        setErrorMessage(t("common.cancellation_reason_required"));
+        setIsWarning(false);
+        return;
+      }
+      await dispatch(cancelOrderByOrderId({ orderId, reason: reason.trim() })).unwrap();
       setIsSuccess(true);
       setSuccessMessage(t("orders.order_cancelled"));
     } catch (error) {
       console.error("Failed to cancel order:", error);
       setIsError(true);
-      setErrorMessage(error?.detail);
+      setErrorMessage(error?.detail || t("orders.cancel_order_error"));
     } finally {
       setIsWarning(false);
     }
@@ -145,6 +152,7 @@ const Orders = ({ dealId, dealType }) => {
             handleRefuse={handleRefuse}
             onClose={() => setIsWarning(false)} // Reset modal state on close
             orderId={orderId}
+            showReasonInput={true}
           />
         )}
         {isSuccess && (
