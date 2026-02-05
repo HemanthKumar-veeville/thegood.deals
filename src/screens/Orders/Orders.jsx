@@ -259,6 +259,7 @@ const Orders = ({ dealId, dealType }) => {
                           // Calculate discount and MRP for each product
                           const productMRP = product.product_max_retail_price || product.product_mrp || 0;
                           const productPrice = product.product_price || 0;
+                          const productAmount = product.product_amount || 0;
                           const productQuantity = product.product_quantity || 0;
                           const totalMRP = productMRP * productQuantity;
                           const discountPercentage = productMRP > 0 && productPrice > 0 && productMRP > productPrice
@@ -287,9 +288,8 @@ const Orders = ({ dealId, dealType }) => {
                                       </p>
                                     )}
                                     <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
-                                      € {product.product_price} x{" "}
-                                      {product.product_quantity} = €{" "}
-                                      {product.product_cost}
+                                      € {product.product_price} x {product.product_quantity} = €{" "}
+                                      {product.product_amount}
                                     </p>
                                     {hasDiscount && (
                                       <div className="flex items-center justify-center gap-px px-1.5 py-0 bg-greengreen-dark rounded min-w-[28px] max-w-[44px] h-5">

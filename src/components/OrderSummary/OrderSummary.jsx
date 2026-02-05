@@ -185,10 +185,10 @@ export const OrderSummary = ({ orderId }) => {
           {/* Save */}
           {orderState?.discount && orderState?.discount > 0 && (
             <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-              <div className="relative w-fit font-body-extra-small-text-regular text-secondary-color">
+              <div className="relative w-fit font-body-extra-small-text-regular font-semibold text-secondary-color">
                 {t("order.saveLabel")}
               </div>
-              <div className="font-small-medium text-secondary-color leading-small relative w-fit mt-[-1.00px] text-right">
+              <div className="font-semibold text-secondary-color leading-small relative w-fit mt-[-1.00px] text-right text-base">
                 {orderState?.discount} €
               </div>
             </div>
