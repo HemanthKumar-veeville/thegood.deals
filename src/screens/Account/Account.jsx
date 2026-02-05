@@ -25,14 +25,10 @@ import BoxCreated from "../../icons/BoxCreated/BoxCreated.jsx";
 
 const Account = ({ isRequestSent, dealId }) => {
   const { t } = useTranslation();
-  const [filterType, setFilterType] = useState("active"); // "active" | "archived"
   const [activeTab, setActiveTab] = useState("invited");
   const [page, setPage] = useState(1); // Start from page 1
   const [isFetchingMore, setIsFetchingMore] = useState(false);
-  const [loadedDeals, setLoadedDeals] = useState({
-    active: { created: [], invited: [] },
-    archived: { created: [], invited: [] },
-  });
+  const [loadedDeals, setLoadedDeals] = useState({ created: [], invited: [] });
   const [hasMoreDeals, setHasMoreDeals] = useState(true); // Prevent further calls if no more deals
 
   const navigate = useNavigate();
@@ -42,77 +38,31 @@ const Account = ({ isRequestSent, dealId }) => {
   const { status } = dealsState;
   const { profile } = useSelector((state) => state.account);
   const scrollableContainerRef = useRef(null);
-  
+
   useEffect(() => {
-    if (dealId)
+    if (isRequestSent)
       navigate(
-        `/admin-view-deal?deal_id=${dealId}&is_creator=${false}`
+        `/deal_details_invite?deal_id=${dealId}&&is_request_sent=${isRequestSent}`
       );
-  }, [dealId, navigate]);
+  }, [isRequestSent, dealId, navigate]);
 
-  // Initial load on mount
   useEffect(() => {
-    const initialTab = location?.state?.activeTab || activeTab;
-    // Load initial deals for default filter + tab
-    if (loadedDeals[filterType][initialTab].length === 0 && !isFetchingMore && status !== "loading") {
-      setPage(1);
-      setHasMoreDeals(true);
-      loadDeals(initialTab, 1, filterType);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run on mount
-
-  // Handle location state changes
-  useEffect(() => {
-    const activeTabFromLocation = location?.state?.activeTab;
-    if (activeTabFromLocation && activeTabFromLocation !== activeTab) {
-      handleTabSwitch(activeTabFromLocation);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
-
-  // Helper functions to filter deals by status
-  const isActiveDeal = (deal) => {
-    const activeStatuses = ['in_stock', 'soon_out_stock', 'waiting', 'draft', 'payment_pending'];
-    return activeStatuses.includes(deal.deal_status);
-  };
-
-  const isArchivedDeal = (deal) => {
-    const archivedStatuses = ['finished', 'expired'];
-    return archivedStatuses.includes(deal.deal_status);
-  };
-
-  const handleFilterSwitch = (filter) => {
-    setFilterType(filter);
-    setPage(1); // Reset to first page on filter switch
-    setHasMoreDeals(true); // Reset hasMoreDeals flag
-    // Clear deals for current filter + tab combination
-    setLoadedDeals((prevState) => ({
-      ...prevState,
-      [filter]: {
-        ...prevState[filter],
-        [activeTab]: [], // Clear the deals for the current tab
-      },
-    }));
-    loadDeals(activeTab, 1, filter); // Load the first page with new filter
-  };
+    const activeTabFromLocation = location?.state?.activeTab || activeTab;
+    handleTabSwitch(activeTabFromLocation);
+  }, [location, activeTab]);
 
   const handleTabSwitch = async (tab) => {
     setActiveTab(tab);
     setPage(1); // Reset to first page on tab switch
     setHasMoreDeals(true); // Reset hasMoreDeals flag
-    // Clear deals for current filter + new tab combination
     setLoadedDeals((prevState) => ({
       ...prevState,
-      [filterType]: {
-        ...prevState[filterType],
-        [tab]: [], // Clear the deals for the new tab
-      },
+      [tab]: [], // Clear the deals for the new tab
     }));
-    loadDeals(tab, 1, filterType); // Load the first page with current filter
+    loadDeals(tab, 1); // Load the first page of deals
   };
 
-  const loadDeals = async (tab, pageNumber, filter = filterType, retryCount = 0) => {
+  const loadDeals = async (tab, pageNumber) => {
     if (status === "loading" || isFetchingMore || !hasMoreDeals) return; // Prevent multiple calls
 
     setIsFetchingMore(true); // Lock API call
@@ -121,48 +71,39 @@ const Account = ({ isRequestSent, dealId }) => {
       const response = await dispatch(
         fetchDeals({ deal_type: tab, page: pageNumber, limit: 3 }) // Fetch deals
       ).unwrap();
-      const allDeals = response.Deals || [];
+      const newDeals = response.Deals || [];
 
-      // Filter deals based on filter type (active/archived)
-      const filteredDeals = allDeals.filter((deal) =>
-        filter === "active" ? isActiveDeal(deal) : isArchivedDeal(deal)
-      );
-
-      if (allDeals.length === 0) {
-        // No more deals from API
-        setHasMoreDeals(false);
-      } else if (filteredDeals.length === 0) {
-        // All deals on this page were filtered out
-        if (allDeals.length < 3) {
-          // Got less than a full page - no more deals
-          setHasMoreDeals(false);
-        } else if (retryCount < 5) {
-          // Got a full page but all filtered - try next page (max 5 retries to prevent infinite loop)
-          setIsFetchingMore(false); // Unlock before recursive call
-          loadDeals(tab, pageNumber + 1, filter, retryCount + 1);
-          return;
-        } else {
-          // Too many retries - stop to prevent infinite loop
-          setHasMoreDeals(false);
-        }
+      if (newDeals.length === 0) {
+        setHasMoreDeals(false); // Stop further API calls if no new deals
       } else {
-        // We have filtered deals to add
         setLoadedDeals((prevState) => ({
           ...prevState,
-          [filter]: {
-            ...prevState[filter],
-            [tab]: [...prevState[filter][tab], ...filteredDeals],
-          },
+          [tab]: [...prevState[tab], ...newDeals],
         }));
       }
     } catch (error) {
       console.error("Failed to load more deals: ", error);
-      setHasMoreDeals(false); // Stop on error
     } finally {
       setIsFetchingMore(false); // Unlock API call
     }
   };
 
+  const handleContainerScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } =
+      scrollableContainerRef.current;
+
+    if (
+      scrollTop + clientHeight >= scrollHeight - 50 &&
+      hasMoreDeals &&
+      !isFetchingMore
+    ) {
+      setPage((prevPage) => {
+        const nextPage = prevPage + 1;
+        loadDeals(activeTab, nextPage);
+        return nextPage;
+      });
+    }
+  };
 
   useEffect(() => {
     const debounce = (func, delay) => {
@@ -173,24 +114,7 @@ const Account = ({ isRequestSent, dealId }) => {
       };
     };
 
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } =
-        scrollableContainerRef.current || {};
-
-      if (
-        scrollTop + clientHeight >= scrollHeight - 50 &&
-        hasMoreDeals &&
-        !isFetchingMore
-      ) {
-        setPage((prevPage) => {
-          const nextPage = prevPage + 1;
-          loadDeals(activeTab, nextPage, filterType);
-          return nextPage;
-        });
-      }
-    };
-
-    const debouncedScroll = debounce(handleScroll, 200);
+    const debouncedScroll = debounce(handleContainerScroll, 200);
 
     const scrollableContainer = scrollableContainerRef.current;
     if (scrollableContainer) {
@@ -201,7 +125,7 @@ const Account = ({ isRequestSent, dealId }) => {
         scrollableContainer.removeEventListener("scroll", debouncedScroll);
       }
     };
-  }, [hasMoreDeals, isFetchingMore, filterType, activeTab]);
+  }, [hasMoreDeals, isFetchingMore]);
 
   const handleNavigation = (path) => navigate(path);
 
@@ -260,32 +184,6 @@ const Account = ({ isRequestSent, dealId }) => {
         <div className="relative w-fit font-semibold text-primary-color text-2xl text-center">
           {t("account.my_good_deals")}
         </div>
-        {/* Filter Toggle: Active / Archived */}
-        <div className="flex w-full mb-3">
-          {["active", "archived"].map((filter) => (
-            <div
-              key={filter}
-              className={`flex-1 flex grow cursor-pointer ${
-                filterType === filter
-                  ? "bg-primary-dark-color text-white"
-                  : "text-primary-color hover:bg-gray-200"
-              }`}
-              onClick={() => handleFilterSwitch(filter)}
-            >
-              <ButtonGroup
-                buttonClassName="!mt-[-1.00px]"
-                className={`!flex-1 !flex grow ${
-                  filter === "active"
-                    ? "!rounded-[6px_0_0_6px]"
-                    : "!rounded-[0_6px_6px_0]"
-                }`}
-                state={filterType === filter ? "active" : "default"}
-                text={t(`account.${filter}`)}
-              />
-            </div>
-          ))}
-        </div>
-        {/* Tab Navigation: Invited / Created */}
         <div className="flex w-full">
           {["invited", "created"].map((tab) => (
             <div
@@ -343,28 +241,41 @@ const Account = ({ isRequestSent, dealId }) => {
               />
             </div>
           )}
-          {status === "succeeded" &&
-            loadedDeals[filterType][activeTab].length === 0 && (
-              <div className="w-full">
-                <SuccessAlert
-                  className="!flex !bg-cyancyan-light-3 w-[100%]"
-                  divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
-                  frameClassName="!flex-1 !flex !grow"
-                  groupClassName="!bg-cyancyan"
-                  icon={
-                    <Warning1
-                      className="!absolute !w-3 !h-3 !top-1 !left-1"
-                      color="white"
-                    />
-                  }
-                  style="three"
-                  text={t(`account.no_${filterType}_${activeTab}_deals`)}
-                />
-              </div>
-            )}
-          {loadedDeals[filterType][activeTab]?.map((deal, index) => (
+          {status === "succeeded" && loadedDeals[activeTab].length === 0 && (
+            <div className="w-full">
+              <SuccessAlert
+                className="!flex !bg-cyancyan-light-3 w-[100%]"
+                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
+                frameClassName="!flex-1 !flex !grow"
+                groupClassName="!bg-cyancyan"
+                icon={
+                  <Warning1
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                }
+                style="three"
+                text={
+                  activeTab === "created" ? (
+                    <>
+                      {t("create_deal.created_empty")}
+                      <br />
+                      {t("create_deal.created_action")}
+                    </>
+                  ) : (
+                    <>
+                      {t("create_deal.invited_empty")}
+                      <br />
+                      {t("create_deal.invited_action")}
+                    </>
+                  )
+                }
+              />
+            </div>
+          )}
+          {loadedDeals[activeTab]?.map((deal) => (
             <div
-              key={deal.deal_id || deal.id || `deal-${index}`}
+              key={deal.id}
               onClick={() => handleCardClick(deal)}
               className="cursor-pointer mb-5 w-full"
             >
@@ -382,7 +293,7 @@ const Account = ({ isRequestSent, dealId }) => {
                 isGuestDeal={activeTab === "invited"}
                 dealImages={deal?.images || [blogImage]}
                 override={
-                  deal.deal_status === "soon_out_stock" ? (
+                  deal.dealStatus === "soon_out_stock" ? (
                     <ProgressBarYellow
                       percentage={deal?.deal_progress_percentage}
                     />
