@@ -247,29 +247,55 @@ const Orders = ({ dealId, dealType }) => {
                           <CustomStatus text={t("orders.awaiting_payment")} />
                         )}
                         {/* Products in Each Order */}
-                        {order?.products?.map((product, index) => (
-                          <div
-                            key={index}
-                            className="flex flex-col items-start gap-1.5 self-stretch"
-                          >
-                            <p className="mt-[-1px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
-                              {product.product_title}
-                            </p>
-                            <div className="flex items-center justify-between gap-2.5 self-stretch">
-                              <div className="flex items-center justify-between w-full">
-                                <p className="mt-[-1px] font-semibold text-secondary-color text-base">
-                                  {product.product_quantity}{" "}
-                                  {t("orders.products")}
-                                </p>
-                                <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
-                                  € {product.product_price} x{" "}
-                                  {product.product_quantity} = €{" "}
-                                  {product.product_cost}
-                                </p>
+                        {order?.products?.map((product, index) => {
+                          // Calculate discount and MRP for each product
+                          const productMRP = product.product_max_retail_price || product.product_mrp || 0;
+                          const productPrice = product.product_price || 0;
+                          const productQuantity = product.product_quantity || 0;
+                          const totalMRP = productMRP * productQuantity;
+                          const discountPercentage = productMRP > 0 && productPrice > 0 && productMRP > productPrice
+                            ? Math.round(((productMRP - productPrice) / productMRP) * 100)
+                            : product.product_discount || 0;
+                          const hasDiscount = discountPercentage > 0 && totalMRP > 0;
+
+                          return (
+                            <div
+                              key={index}
+                              className="flex flex-col items-start gap-1.5 self-stretch"
+                            >
+                              <p className="mt-[-1px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-color text-base tracking-[0] leading-6">
+                                {product.product_title}
+                              </p>
+                              <div className="flex items-center justify-between gap-2.5 self-stretch">
+                                <div className="flex items-center justify-between w-full">
+                                  <p className="mt-[-1px] font-semibold text-secondary-color text-base">
+                                    {product.product_quantity}{" "}
+                                    {t("orders.products")}
+                                  </p>
+                                  <div className="flex items-center justify-end gap-2">
+                                    {hasDiscount && (
+                                      <p className="mt-[-1px] [font-family:'Inter-Regular',Helvetica] font-normal text-primary-text-color leading-6 line-through relative text-sm text-right tracking-[0] whitespace-nowrap">
+                                        € {totalMRP.toFixed(2)}
+                                      </p>
+                                    )}
+                                    <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
+                                      € {product.product_price} x{" "}
+                                      {product.product_quantity} = €{" "}
+                                      {product.product_cost}
+                                    </p>
+                                    {hasDiscount && (
+                                      <div className="flex items-center justify-center gap-px px-1.5 py-0 bg-greengreen-dark rounded min-w-[28px] max-w-[44px] h-5">
+                                        <div className="relative mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-[10px] tracking-[0] leading-5 whitespace-nowrap">
+                                          {discountPercentage}%
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                         {/* Fees Section */}
                         <div className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
                           {/* Total Product Cost */}
@@ -311,18 +337,34 @@ const Orders = ({ dealId, dealType }) => {
                         </div>
                         <Line />
                         {/* Total Per Order */}
-                        <div className="flex items-end justify-between self-stretch">
-                          <div className="flex items-center gap-2.5 grow">
-                            <div className="font-semibold text-primary-color text-lg">
-                              {t("orders.total")}
+                        <div className="flex flex-col items-end gap-[5px] relative self-stretch w-full flex-[0_0_auto]">
+                          <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
+                            <div className="relative w-fit font-body-extra-small-text-regular text-primary-text-color">
+                              {t("order.totalTTC")}
                             </div>
-                          </div>
-                          <div className="inline-flex flex-col items-end">
-                            <div className="font-semibold text-primary-color text-lg text-right">
-                              € {order?.total_order_cost}
+                            <div className="inline-flex items-start justify-end gap-2.5 relative flex-[0_0_auto]">
+                              {order?.order_mrp && order?.order_mrp > 0 && (
+                                <div className="font-normal text-primary-text-color leading-6 line-through relative w-fit mt-[-1.00px] text-sm text-right">
+                                  {order?.order_mrp} €
+                                </div>
+                              )}
+                              <div className="relative w-fit mt-[-1.00px] font-semibold text-primary-color text-lg text-right">
+                                € {order?.total_order_cost}
+                              </div>
                             </div>
                           </div>
                         </div>
+                        {/* Save */}
+                        {order?.order_discount && order?.order_discount > 0 && (
+                          <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
+                            <div className="relative w-fit font-body-extra-small-text-regular text-secondary-color">
+                              {t("order.saveLabel")}
+                            </div>
+                            <div className="font-small-medium text-secondary-color leading-small relative w-fit mt-[-1.00px] text-right">
+                              {order?.order_discount} €
+                            </div>
+                          </div>
+                        )}
                         <Line />
                         {order.payment_status !== "succeeded" && (
                           <>
