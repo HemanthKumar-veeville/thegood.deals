@@ -259,7 +259,7 @@ const Orders = ({ dealId, dealType }) => {
                           // Calculate discount and MRP for each product
                           const productMRP = product.product_max_retail_price || product.product_mrp || 0;
                           const productPrice = product.product_price || 0;
-                          const productAmount = product.product_amount || 0;
+                          const productAmount = product.product_amount || product.product_cost || 0;
                           const productQuantity = product.product_quantity || 0;
                           const totalMRP = productMRP * productQuantity;
                           const discountPercentage = productMRP > 0 && productPrice > 0 && productMRP > productPrice
@@ -289,7 +289,7 @@ const Orders = ({ dealId, dealType }) => {
                                     )}
                                     <p className="mt-[-1px] font-semibold text-secondary-color text-base text-right">
                                       € {product.product_price} x {product.product_quantity} = €{" "}
-                                      {product.product_amount}
+                                      {productAmount}
                                     </p>
                                     {hasDiscount && (
                                       <div className="flex items-center justify-center gap-px px-1.5 py-0 bg-greengreen-dark rounded min-w-[28px] max-w-[44px] h-5">
@@ -365,10 +365,10 @@ const Orders = ({ dealId, dealType }) => {
                         {/* Save */}
                         {order?.order_discount && order?.order_discount > 0 && (
                           <div className="flex items-end justify-between relative self-stretch w-full flex-[0_0_auto]">
-                            <div className="relative w-fit font-body-extra-small-text-regular text-secondary-color">
+                            <div className="relative w-fit font-body-extra-small-text-regular font-semibold text-secondary-color">
                               {t("order.saveLabel")}
                             </div>
-                            <div className="font-small-medium text-secondary-color leading-small relative w-fit mt-[-1.00px] text-right">
+                            <div className="font-semibold text-secondary-color leading-small relative w-fit mt-[-1.00px] text-right text-base">
                               {order?.order_discount} €
                             </div>
                           </div>
