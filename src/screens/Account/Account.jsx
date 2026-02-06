@@ -400,12 +400,19 @@ const Account = ({ isRequestSent, dealId }) => {
     }
   };
 
+  // Check if we're showing an empty message (either complete empty or no active deals)
+  const isShowingEmptyMessage = 
+    tabLoadStatus[activeTab] === "succeeded" && 
+    loadedDeals[activeTab].length === 0 && 
+    !isFetchingMore && 
+    (!showArchivedButton[activeTab] || (showArchivedButton[activeTab] && !showArchivedDeals[activeTab]));
+
   return (
     <div
       className="flex flex-col w-full items-start relative bg-primary-background mx-auto h-[800px] overflow-y-auto scrollbar-hide"
       ref={scrollableContainerRef}
     >
-      <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto] z-0">
+      <div className={`flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative ${isShowingEmptyMessage ? 'flex-1 min-h-full' : 'flex-[0_0_auto]'} z-0`}>
         <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-semibold text-primary-color text-2xl text-center tracking-[0] leading-[30px] whitespace-nowrap capitalize">
           {`Hey, ${
             profile?.data?.first_name + " " + profile?.data?.last_name || ""
@@ -511,6 +518,34 @@ const Account = ({ isRequestSent, dealId }) => {
                       <br />
                       {t("create_deal.invited_action")}
                     </>
+                  )
+                }
+              />
+            </div>
+          )}
+          {tabLoadStatus[activeTab] === "succeeded" && 
+           loadedDeals[activeTab].length === 0 && 
+           !isFetchingMore && 
+           showArchivedButton[activeTab] && 
+           !showArchivedDeals[activeTab] && (
+            <div className="w-full">
+              <SuccessAlert
+                className="!flex !bg-cyancyan-light-3 w-[100%]"
+                divClassName="!tracking-[0] !text-sm !flex-1 ![white-space:unset] ![font-style:unset] !font-medium ![font-family:'Inter',Helvetica] !leading-5 !w-[unset]"
+                frameClassName="!flex-1 !flex !grow"
+                groupClassName="!bg-cyancyan"
+                icon={
+                  <Warning1
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                }
+                style="three"
+                text={
+                  activeTab === "created" ? (
+                    t("account.no_active_created_deals")
+                  ) : (
+                    t("account.no_active_invited_deals")
                   )
                 }
               />
@@ -623,64 +658,66 @@ const Account = ({ isRequestSent, dealId }) => {
           </div>
         )}
         {status !== "loading" && (
-          <>
+          <div className={`w-full px-[15px] pb-[15px] ${isShowingEmptyMessage ? 'mt-auto border-t border-gray-200 pt-[15px]' : ''}`}>
             <Line />
-            {[
-              {
-                icon: <UserAlt2 className="!w-5 !h-5" />,
-                text: t("account.my_information"),
-                action: "/my-information",
-              },
-              {
-                icon: <Box44 className="!w-5 !h-5" />,
-                text: t("account.my_orders"),
-                action: "/admin-orders",
-              },
-              {
-                icon: <ClockDollar1 className="!w-5 !h-5" color="#1B4F4A" />,
-                text: t("account.wallet_details"),
-                action: "/admin-wallet",
-              },
-              {
-                icon: <Cog2 className="!w-5 !h-5" color="#1B4F4A" />,
-                text: t("account.settings"),
-                action: "/settings",
-              },
-              {
-                icon: <ChatAlt6 className="!w-5 !h-5" color="#1B4F4A" />,
-                text: t("account.acquire_help"),
-                action: "/help-me",
-              },
-              {
-                icon: <UserLock1 className="!w-5 !h-5" color="#1B4F4A" />,
-                text: t("account.sign_out"),
-                action: handleSignOut,
-              },
-            ].map(({ icon, text, action }) => (
-              <div
-                key={text}
-                className={`inline-flex items-center gap-2.5 ${
-                  action === "/admin-wallet" || action === "/admin-orders"
-                    ? "cursor-not-allowed opacity-50"
-                    : "hover:text-primary-color-dark cursor-pointer"
-                }`}
-                onClick={
-                  typeof action === "string" &&
-                  action !== "/admin-wallet" &&
-                  action !== "/admin-orders"
-                    ? () => handleNavigation(action)
-                    : action === "/admin-orders"
-                    ? null
-                    : action
-                }
-              >
-                {icon}
-                <div className="font-normal text-primary-text-color text-base">
-                  {text}
+            <div className="flex flex-col gap-2.5">
+              {[
+                {
+                  icon: <UserAlt2 className="!w-5 !h-5" />,
+                  text: t("account.my_information"),
+                  action: "/my-information",
+                },
+                {
+                  icon: <Box44 className="!w-5 !h-5" />,
+                  text: t("account.my_orders"),
+                  action: "/admin-orders",
+                },
+                {
+                  icon: <ClockDollar1 className="!w-5 !h-5" color="#1B4F4A" />,
+                  text: t("account.wallet_details"),
+                  action: "/admin-wallet",
+                },
+                {
+                  icon: <Cog2 className="!w-5 !h-5" color="#1B4F4A" />,
+                  text: t("account.settings"),
+                  action: "/settings",
+                },
+                {
+                  icon: <ChatAlt6 className="!w-5 !h-5" color="#1B4F4A" />,
+                  text: t("account.acquire_help"),
+                  action: "/help-me",
+                },
+                {
+                  icon: <UserLock1 className="!w-5 !h-5" color="#1B4F4A" />,
+                  text: t("account.sign_out"),
+                  action: handleSignOut,
+                },
+              ].map(({ icon, text, action }) => (
+                <div
+                  key={text}
+                  className={`inline-flex items-center gap-2.5 ${
+                    action === "/admin-wallet" || action === "/admin-orders"
+                      ? "cursor-not-allowed opacity-50"
+                      : "hover:text-primary-color-dark cursor-pointer"
+                  }`}
+                  onClick={
+                    typeof action === "string" &&
+                    action !== "/admin-wallet" &&
+                    action !== "/admin-orders"
+                      ? () => handleNavigation(action)
+                      : action === "/admin-orders"
+                      ? null
+                      : action
+                  }
+                >
+                  {icon}
+                  <div className="font-normal text-primary-text-color text-base">
+                    {text}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </>
+              ))}
+            </div>
+          </div>
         )}
       </div>
     </div>

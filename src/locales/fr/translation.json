@@ -1,4 +1,4 @@
-{
+﻿{
   "side_bar": {
     "language": {
       "english": "English",
@@ -355,8 +355,8 @@
     "error_loading_deals": "Erreur lors de la récupération des deals",
     "no_created_deals": "Vous n'avez pas de deals. Créez-en un maintenant!",
     "no_invited_deals": "Vous n'êtes dans aucun deal. Attendez d'être invité!",
-    "no_active_invited_deals": "Vous n'avez pas de deals invités actifs.",
-    "no_active_created_deals": "Vous n'avez pas de deals créés actifs.",
+    "no_active_invited_deals": "Vous n'avez pas de deals invités actifs pour le moment.",
+    "no_active_created_deals": "Vous n'avez pas de deals créés actifs pour le moment.",
     "no_archived_invited_deals": "Vous n'avez pas de deals invités archivés.",
     "no_archived_created_deals": "Vous n'avez pas de deals créés archivés.",
     "no_orders": "Aucune commande disponible",
@@ -407,10 +407,10 @@
     "next_step_button": "Étape suivante",
     "approval_needed_label": "Les participants ont besoin d'approbation pour rejoindre le deal",
     "accept_conditions_label": "J'accepte les Conditions Générales de Ventes",
-    "created_empty": "Vous n’avez aucun deals. ",
-    "created_action": "Créez-en un dès maintenant !",
-    "invited_empty": "Vous ne participez à aucun deal.",
-    "invited_action": "Attendez que l’on vous invite !",
+    "created_empty": "Vous n'avez encore aucun deal.",
+    "created_action": "Créez votre premier deal maintenant !",
+    "invited_empty": "Vous n'avez pas encore été invité à un deal.",
+    "invited_action": "Attendez qu'on vous invite !",
     "error_title_required": "Titre du deal requis !",
     "error_iban_required": "IBAN requis !",
     "error_description_required": "Description du deal requise !",
