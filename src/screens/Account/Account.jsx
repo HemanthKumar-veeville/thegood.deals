@@ -314,13 +314,13 @@ const Account = ({ isRequestSent, dealId }) => {
 
     // Load more if:
     // - Near bottom
-    // - Has more deals OR showing archived deals
+    // - Has more deals (must be true - empty response sets this to false)
     // - Not currently fetching
     // - Not loading
     // - Either archived deals are shown OR archived button is not shown
     if (
       isNearBottom &&
-      (hasMoreDeals[activeTab] || showArchivedDeals[activeTab]) &&
+      hasMoreDeals[activeTab] &&
       !isFetchingMore &&
       status !== "loading" &&
       (showArchivedDeals[activeTab] || !showArchivedButton[activeTab])
