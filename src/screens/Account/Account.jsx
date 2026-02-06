@@ -34,6 +34,7 @@ const Account = ({ isRequestSent, dealId }) => {
   const [showArchivedButton, setShowArchivedButton] = useState({ created: false, invited: false }); // Per-tab archived button visibility
   const [archivedStartPage, setArchivedStartPage] = useState({ created: null, invited: null }); // Page number where archived deals start
   const [showArchivedDeals, setShowArchivedDeals] = useState({ created: false, invited: false }); // Track if archived deals are being shown (after button click)
+  const [storedArchivedDeals, setStoredArchivedDeals] = useState({ created: [], invited: [] }); // Store archived deals that were filtered out from initial API response
   const [tabLoadStatus, setTabLoadStatus] = useState({ created: "idle", invited: "idle" }); // Per-tab load status: "idle" | "loading" | "succeeded" | "failed"
 
   const navigate = useNavigate();
@@ -96,7 +97,8 @@ const Account = ({ isRequestSent, dealId }) => {
       // Track if deals were actually added (for setting tabLoadStatus)
       let dealsWereAdded = false;
 
-      // If archived deals are being shown, add all deals without filtering
+      // If archived deals are being shown, add all deals without filtering by status
+      // This includes both in_stock and non-in_stock (archived) deals
       // Use ref to always get the latest value (avoids stale closure after tab switch)
       if (showArchivedDealsRef.current[tab]) {
         if (newDeals.length === 0) {
@@ -107,6 +109,8 @@ const Account = ({ isRequestSent, dealId }) => {
           // No deals from API - this is a valid empty state
           dealsWereAdded = true; // Mark as processed (even though empty)
         } else {
+          // When showing archived deals, include ALL deals from the API response
+          // This ensures we don't miss any deals that were previously filtered out
           // Prevent duplicates: filter out deals that already exist
           // Use functional update to get latest state
           let hasNewDeals = false;
@@ -115,6 +119,7 @@ const Account = ({ isRequestSent, dealId }) => {
             const existingDealIds = new Set(
               existingDeals.map((deal) => deal.id || deal.deal_id).filter(Boolean)
             );
+            // Include all deals (both in_stock and archived) - no status filtering
             const uniqueNewDeals = newDeals.filter((deal) => {
               const dealId = deal.id || deal.deal_id;
               return dealId && !existingDealIds.has(dealId);
@@ -144,23 +149,29 @@ const Account = ({ isRequestSent, dealId }) => {
         // Before showing archived deals, filter and check for archived deals
         // Filter deals: only show deals with deal_status === "in_stock"
         const inStockDeals = [];
+        const archivedDeals = []; // Store archived deals from this API response
         let foundArchivedDeal = false;
 
         for (const deal of newDeals) {
           if (deal?.deal_status === "in_stock") {
             inStockDeals.push(deal);
           } else {
-            // Found first archived deal - stop here
+            // Found archived deal - store it and continue collecting archived deals
             foundArchivedDeal = true;
-            break;
+            archivedDeals.push(deal);
           }
         }
 
-        // If we found archived deals, save the page number and show button
+        // If we found archived deals, save the page number, store the archived deals, and show button
         if (foundArchivedDeal) {
           setArchivedStartPage((prevState) => ({
             ...prevState,
             [tab]: pageNumber,
+          }));
+          // Store the archived deals from this API response so we can add them when button is clicked
+          setStoredArchivedDeals((prevState) => ({
+            ...prevState,
+            [tab]: archivedDeals,
           }));
           setShowArchivedButton((prevState) => ({
             ...prevState,
@@ -265,6 +276,10 @@ const Account = ({ isRequestSent, dealId }) => {
       showArchivedDealsRef.current = newState;
       return newState;
     });
+    setStoredArchivedDeals((prevState) => ({
+      ...prevState,
+      [tab]: [], // Clear stored archived deals for this tab
+    }));
     setTabLoadStatus((prevState) => ({
       ...prevState,
       [tab]: "idle", // Reset load status for this tab
@@ -546,7 +561,36 @@ const Account = ({ isRequestSent, dealId }) => {
             <div
               className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer hover:bg-graygray-2"
               onClick={() => {
-                // Start showing archived deals from the saved page number
+                // First, add the stored archived deals that were filtered out from the initial API response
+                const storedArchived = storedArchivedDeals[activeTab] || [];
+                if (storedArchived.length > 0) {
+                  setLoadedDeals((prevState) => {
+                    const existingDeals = prevState[activeTab] || [];
+                    const existingDealIds = new Set(
+                      existingDeals.map((deal) => deal.id || deal.deal_id).filter(Boolean)
+                    );
+                    // Add only unique archived deals (prevent duplicates)
+                    const uniqueArchivedDeals = storedArchived.filter((deal) => {
+                      const dealId = deal.id || deal.deal_id;
+                      return dealId && !existingDealIds.has(dealId);
+                    });
+                    
+                    if (uniqueArchivedDeals.length > 0) {
+                      return {
+                        ...prevState,
+                        [activeTab]: [...existingDeals, ...uniqueArchivedDeals],
+                      };
+                    }
+                    return prevState;
+                  });
+                  // Clear stored archived deals after adding them
+                  setStoredArchivedDeals((prevState) => ({
+                    ...prevState,
+                    [activeTab]: [],
+                  }));
+                }
+                
+                // Now enable showing archived deals and continue with pagination
                 const startPage = archivedStartPage[activeTab];
                 if (startPage) {
                   setShowArchivedDeals((prevState) => {
@@ -566,8 +610,8 @@ const Account = ({ isRequestSent, dealId }) => {
                     ...prevState,
                     [activeTab]: startPage, // Set page to archived start page
                   }));
-                  // Load deals from the archived start page
-                  loadDeals(activeTab, startPage);
+                  // Continue loading from the next page (startPage + 1) since we already added deals from startPage
+                  loadDeals(activeTab, startPage + 1);
                 }
               }}
             >
