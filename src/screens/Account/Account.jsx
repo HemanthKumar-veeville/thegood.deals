@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { ButtonGroup } from "../../components/ButtonGroup";
 import { CardDeal } from "../../components/CardDeal";
@@ -26,10 +26,14 @@ import BoxCreated from "../../icons/BoxCreated/BoxCreated.jsx";
 const Account = ({ isRequestSent, dealId }) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("invited");
-  const [page, setPage] = useState(1); // Start from page 1
+  const [page, setPage] = useState({ created: 1, invited: 1 }); // Per-tab pagination
   const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [loadedDeals, setLoadedDeals] = useState({ created: [], invited: [] });
-  const [hasMoreDeals, setHasMoreDeals] = useState(true); // Prevent further calls if no more deals
+  const [hasMoreDeals, setHasMoreDeals] = useState({ created: true, invited: true }); // Per-tab tracking
+  const [showArchivedButton, setShowArchivedButton] = useState({ created: false, invited: false }); // Per-tab archived button visibility
+  const [archivedStartPage, setArchivedStartPage] = useState({ created: null, invited: null }); // Page number where archived deals start
+  const [showArchivedDeals, setShowArchivedDeals] = useState({ created: false, invited: false }); // Track if archived deals are being shown (after button click)
+  const [tabLoadStatus, setTabLoadStatus] = useState({ created: "idle", invited: "idle" }); // Per-tab load status: "idle" | "loading" | "succeeded" | "failed"
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,6 +42,9 @@ const Account = ({ isRequestSent, dealId }) => {
   const { status } = dealsState;
   const { profile } = useSelector((state) => state.account);
   const scrollableContainerRef = useRef(null);
+  const debounceTimerRef = useRef(null);
+  const hasInitialLoadRef = useRef(false);
+  const showArchivedDealsRef = useRef({ created: false, invited: false }); // Ref to track latest showArchivedDeals value
 
   useEffect(() => {
     if (isRequestSent)
@@ -46,86 +53,322 @@ const Account = ({ isRequestSent, dealId }) => {
       );
   }, [isRequestSent, dealId, navigate]);
 
-  useEffect(() => {
-    const activeTabFromLocation = location?.state?.activeTab || activeTab;
-    handleTabSwitch(activeTabFromLocation);
-  }, [location, activeTab]);
-
-  const handleTabSwitch = async (tab) => {
-    setActiveTab(tab);
-    setPage(1); // Reset to first page on tab switch
-    setHasMoreDeals(true); // Reset hasMoreDeals flag
-    setLoadedDeals((prevState) => ({
-      ...prevState,
-      [tab]: [], // Clear the deals for the new tab
-    }));
-    loadDeals(tab, 1); // Load the first page of deals
-  };
-
-  const loadDeals = async (tab, pageNumber) => {
-    if (status === "loading" || isFetchingMore || !hasMoreDeals) return; // Prevent multiple calls
+  const loadDeals = useCallback(async (tab, pageNumber) => {
+    // For page 1 (initial load), always allow the call (mandatory on tab switch)
+    // For subsequent pages, apply guards to prevent unnecessary calls
+    const isInitialLoad = pageNumber === 1;
+    
+    if (isInitialLoad) {
+      // Only prevent if already loading for THIS specific tab
+      // Allow if fetching for a different tab (tab switch scenario)
+      if (isFetchingMore && tabLoadStatus[tab] === "loading") {
+        return; // Already loading for this tab, skip
+      }
+      // If isFetchingMore is true but not for this tab, allow the call (tab switch)
+    } else {
+      // For subsequent pages, apply all guards
+      if (
+        status === "loading" ||
+        isFetchingMore ||
+        (!hasMoreDeals[tab] && !showArchivedDeals[tab]) ||
+        (showArchivedButton[tab] && !showArchivedDeals[tab])
+      ) {
+        return;
+      }
+    }
 
     setIsFetchingMore(true); // Lock API call
 
+    // Set loading status for first page load
+    if (pageNumber === 1) {
+      setTabLoadStatus((prevState) => ({
+        ...prevState,
+        [tab]: "loading",
+      }));
+    }
+
     try {
       const response = await dispatch(
-        fetchDeals({ deal_type: tab, page: pageNumber, limit: 3 }) // Fetch deals
+        fetchDeals({ deal_type: tab, page: pageNumber, limit: 3 })
       ).unwrap();
       const newDeals = response.Deals || [];
 
-      if (newDeals.length === 0) {
-        setHasMoreDeals(false); // Stop further API calls if no new deals
+      // Track if deals were actually added (for setting tabLoadStatus)
+      let dealsWereAdded = false;
+
+      // If archived deals are being shown, add all deals without filtering
+      // Use ref to always get the latest value (avoids stale closure after tab switch)
+      if (showArchivedDealsRef.current[tab]) {
+        if (newDeals.length === 0) {
+          setHasMoreDeals((prevState) => ({
+            ...prevState,
+            [tab]: false,
+          }));
+          // No deals from API - this is a valid empty state
+          dealsWereAdded = true; // Mark as processed (even though empty)
+        } else {
+          // Prevent duplicates: filter out deals that already exist
+          // Use functional update to get latest state
+          let hasNewDeals = false;
+          setLoadedDeals((prevState) => {
+            const existingDeals = prevState[tab] || [];
+            const existingDealIds = new Set(
+              existingDeals.map((deal) => deal.id || deal.deal_id).filter(Boolean)
+            );
+            const uniqueNewDeals = newDeals.filter((deal) => {
+              const dealId = deal.id || deal.deal_id;
+              return dealId && !existingDealIds.has(dealId);
+            });
+
+            if (uniqueNewDeals.length > 0) {
+              hasNewDeals = true;
+              return {
+                ...prevState,
+                [tab]: [...existingDeals, ...uniqueNewDeals],
+              };
+            }
+
+            // If all deals were duplicates, stop loading
+            if (uniqueNewDeals.length === 0 && newDeals.length > 0) {
+              setHasMoreDeals((prevState) => ({
+                ...prevState,
+                [tab]: false,
+              }));
+            }
+
+            return prevState; // No changes if all duplicates
+          });
+          dealsWereAdded = hasNewDeals || (newDeals.length > 0); // True if we had deals (even if duplicates)
+        }
       } else {
-        setLoadedDeals((prevState) => ({
+        // Before showing archived deals, filter and check for archived deals
+        // Filter deals: only show deals with deal_status === "in_stock"
+        const inStockDeals = [];
+        let foundArchivedDeal = false;
+
+        for (const deal of newDeals) {
+          if (deal?.deal_status === "in_stock") {
+            inStockDeals.push(deal);
+          } else {
+            // Found first archived deal - stop here
+            foundArchivedDeal = true;
+            break;
+          }
+        }
+
+        // If we found archived deals, save the page number and show button
+        if (foundArchivedDeal) {
+          setArchivedStartPage((prevState) => ({
+            ...prevState,
+            [tab]: pageNumber,
+          }));
+          setShowArchivedButton((prevState) => ({
+            ...prevState,
+            [tab]: true,
+          }));
+          setHasMoreDeals((prevState) => ({
+            ...prevState,
+            [tab]: false, // Stop further API calls until button is clicked
+          }));
+        }
+
+        // Only add in-stock deals to the list (prevent duplicates)
+        if (inStockDeals.length > 0) {
+          // Use functional update to get latest state and prevent stale closure
+          setLoadedDeals((prevState) => {
+            const existingDeals = prevState[tab] || [];
+            const existingDealIds = new Set(
+              existingDeals.map((deal) => deal.id || deal.deal_id).filter(Boolean)
+            );
+            const uniqueInStockDeals = inStockDeals.filter((deal) => {
+              const dealId = deal.id || deal.deal_id;
+              return dealId && !existingDealIds.has(dealId);
+            });
+
+            if (uniqueInStockDeals.length > 0) {
+              return {
+                ...prevState,
+                [tab]: [...existingDeals, ...uniqueInStockDeals],
+              };
+            }
+
+            return prevState; // No changes if all duplicates
+          });
+        }
+
+        // If no deals or all deals were archived, stop loading
+        if (newDeals.length === 0 || (inStockDeals.length === 0 && !foundArchivedDeal)) {
+          setHasMoreDeals((prevState) => ({
+            ...prevState,
+            [tab]: false,
+          }));
+        }
+      }
+
+      // Set succeeded status for first page load AFTER processing
+      // React batches state updates, so this will be applied together with setLoadedDeals
+      if (pageNumber === 1) {
+        setTabLoadStatus((prevState) => ({
           ...prevState,
-          [tab]: [...prevState[tab], ...newDeals],
+          [tab]: "succeeded",
         }));
       }
     } catch (error) {
       console.error("Failed to load more deals: ", error);
+      // On error, stop trying to load more to prevent infinite retries
+      setHasMoreDeals((prevState) => ({
+        ...prevState,
+        [tab]: false,
+      }));
+      // Set failed status for first page load
+      if (pageNumber === 1) {
+        setTabLoadStatus((prevState) => ({
+          ...prevState,
+          [tab]: "failed",
+        }));
+      }
     } finally {
       setIsFetchingMore(false); // Unlock API call
     }
-  };
+  }, [status, isFetchingMore, hasMoreDeals, showArchivedButton, showArchivedDeals, tabLoadStatus, dispatch]);
 
-  const handleContainerScroll = () => {
-    const { scrollTop, scrollHeight, clientHeight } =
-      scrollableContainerRef.current;
-
-    if (
-      scrollTop + clientHeight >= scrollHeight - 50 &&
-      hasMoreDeals &&
-      !isFetchingMore
-    ) {
-      setPage((prevPage) => {
-        const nextPage = prevPage + 1;
-        loadDeals(activeTab, nextPage);
-        return nextPage;
-      });
+  const handleTabSwitch = useCallback(async (tab) => {
+    // Reset ALL state for the new tab BEFORE making API call
+    // This ensures clean state on every tab switch
+    setActiveTab(tab);
+    setPage((prevPage) => ({
+      ...prevPage,
+      [tab]: 1, // Reset to first page on tab switch
+    }));
+    setHasMoreDeals((prevState) => ({
+      ...prevState,
+      [tab]: true, // Reset hasMoreDeals flag for this tab
+    }));
+    setLoadedDeals((prevState) => ({
+      ...prevState,
+      [tab]: [], // Clear the deals for the new tab
+    }));
+    setShowArchivedButton((prevState) => ({
+      ...prevState,
+      [tab]: false, // Reset archived button visibility for this tab
+    }));
+    setArchivedStartPage((prevState) => ({
+      ...prevState,
+      [tab]: null, // Reset archived start page for this tab
+    }));
+    setShowArchivedDeals((prevState) => {
+      const newState = {
+        ...prevState,
+        [tab]: false, // Reset archived deals visibility for this tab
+      };
+      // Update ref immediately to ensure loadDeals reads the correct value
+      showArchivedDealsRef.current = newState;
+      return newState;
+    });
+    setTabLoadStatus((prevState) => ({
+      ...prevState,
+      [tab]: "idle", // Reset load status for this tab
+    }));
+    
+    // Reset scroll position when switching tabs
+    if (scrollableContainerRef.current) {
+      scrollableContainerRef.current.scrollTop = 0;
     }
-  };
+    
+    // Use setTimeout to ensure state updates are applied before API call
+    // This guarantees state is reset before loadDeals executes
+    setTimeout(() => {
+      loadDeals(tab, 1); // Load the first page of deals
+    }, 0);
+  }, [loadDeals]);
+
+  // Keep ref in sync with state (safety measure)
+  useEffect(() => {
+    showArchivedDealsRef.current = showArchivedDeals;
+  }, [showArchivedDeals]);
+
+  // Handle tab switch from location state and initial load
+  useEffect(() => {
+    const activeTabFromLocation = location?.state?.activeTab;
+    const tabToUse = activeTabFromLocation || activeTab;
+    
+    // If location has a different tab, switch to it (this will also load deals)
+    if (activeTabFromLocation && activeTabFromLocation !== activeTab) {
+      handleTabSwitch(activeTabFromLocation);
+      hasInitialLoadRef.current = true;
+    } 
+    // Otherwise, do initial load if not already done
+    else if (!hasInitialLoadRef.current) {
+      loadDeals(tabToUse, 1);
+      hasInitialLoadRef.current = true;
+    }
+  }, [location?.state?.activeTab, activeTab, handleTabSwitch, loadDeals]);
+
+  const handleContainerScroll = useCallback(() => {
+    const container = scrollableContainerRef.current;
+    if (!container) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    const threshold = 50; // pixels from bottom
+    const isNearBottom = scrollTop + clientHeight >= scrollHeight - threshold;
+
+    // Load more if:
+    // - Near bottom
+    // - Has more deals OR showing archived deals
+    // - Not currently fetching
+    // - Not loading
+    // - Either archived deals are shown OR archived button is not shown
+    if (
+      isNearBottom &&
+      (hasMoreDeals[activeTab] || showArchivedDeals[activeTab]) &&
+      !isFetchingMore &&
+      status !== "loading" &&
+      (showArchivedDeals[activeTab] || !showArchivedButton[activeTab])
+    ) {
+      // Update page state first, then load deals
+      const currentPage = page[activeTab] || 1;
+      const nextPage = currentPage + 1;
+      
+      setPage((prevPage) => ({
+        ...prevPage,
+        [activeTab]: nextPage,
+      }));
+      
+      // Load deals after state update
+      loadDeals(activeTab, nextPage);
+    }
+  }, [activeTab, hasMoreDeals, isFetchingMore, status, showArchivedButton, showArchivedDeals, page, loadDeals]);
 
   useEffect(() => {
-    const debounce = (func, delay) => {
-      let timer;
-      return (...args) => {
-        clearTimeout(timer);
-        timer = setTimeout(() => func(...args), delay);
-      };
+    const container = scrollableContainerRef.current;
+    if (!container) return;
+
+    // Clear any existing timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    const handleScroll = () => {
+      // Clear previous timer
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+      // Set new timer
+      debounceTimerRef.current = setTimeout(() => {
+        handleContainerScroll();
+      }, 200);
     };
 
-    const debouncedScroll = debounce(handleContainerScroll, 200);
+    container.addEventListener("scroll", handleScroll, { passive: true });
 
-    const scrollableContainer = scrollableContainerRef.current;
-    if (scrollableContainer) {
-      scrollableContainer.addEventListener("scroll", debouncedScroll);
-    }
     return () => {
-      if (scrollableContainer) {
-        scrollableContainer.removeEventListener("scroll", debouncedScroll);
+      container.removeEventListener("scroll", handleScroll);
+      // Clear timer on cleanup
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [hasMoreDeals, isFetchingMore]);
+  }, [handleContainerScroll]);
 
   const handleNavigation = (path) => navigate(path);
 
@@ -222,8 +465,8 @@ const Account = ({ isRequestSent, dealId }) => {
           ))}
         </div>
         <div className="w-full">
-          {status === "loading" && <CustomLoader />}
-          {status === "failed" && (
+          {(status === "loading" || tabLoadStatus[activeTab] === "loading") && <CustomLoader />}
+          {tabLoadStatus[activeTab] === "failed" && (
             <div className="w-[18rem]">
               <SuccessAlert
                 className="!flex !bg-cyancyan-light-3 w-[100%]"
@@ -237,11 +480,14 @@ const Account = ({ isRequestSent, dealId }) => {
                   />
                 }
                 style="three"
-                text="Error Fetching the Deals"
+                text={t("account.error_loading_deals")}
               />
             </div>
           )}
-          {status === "succeeded" && loadedDeals[activeTab].length === 0 && (
+          {tabLoadStatus[activeTab] === "succeeded" && 
+           loadedDeals[activeTab].length === 0 && 
+           !isFetchingMore && 
+           !showArchivedButton[activeTab] && (
             <div className="w-full">
               <SuccessAlert
                 className="!flex !bg-cyancyan-light-3 w-[100%]"
@@ -273,9 +519,9 @@ const Account = ({ isRequestSent, dealId }) => {
               />
             </div>
           )}
-          {loadedDeals[activeTab]?.map((deal) => (
+          {loadedDeals[activeTab]?.map((deal, index) => (
             <div
-              key={deal.id}
+              key={deal.id || deal.deal_id || `deal-${activeTab}-${index}`}
               onClick={() => handleCardClick(deal)}
               className="cursor-pointer mb-5 w-full"
             >
@@ -313,6 +559,41 @@ const Account = ({ isRequestSent, dealId }) => {
           ))}
         </div>
         {isFetchingMore && <CustomLoader />}
+        {showArchivedButton[activeTab] && !showArchivedDeals[activeTab] && (
+          <div className="w-full flex justify-center my-5">
+            <button
+              className="flex items-center justify-center gap-2.5 px-6 py-3 bg-primary-color text-white rounded-md hover:bg-primary-dark-color cursor-pointer font-medium text-base"
+              onClick={() => {
+                // Start showing archived deals from the saved page number
+                const startPage = archivedStartPage[activeTab];
+                if (startPage) {
+                  setShowArchivedDeals((prevState) => {
+                    const newState = {
+                      ...prevState,
+                      [activeTab]: true,
+                    };
+                    // Update ref immediately to ensure loadDeals reads the correct value
+                    showArchivedDealsRef.current = newState;
+                    return newState;
+                  });
+                  setHasMoreDeals((prevState) => ({
+                    ...prevState,
+                    [activeTab]: true, // Re-enable loading for archived deals
+                  }));
+                  setPage((prevState) => ({
+                    ...prevState,
+                    [activeTab]: startPage, // Set page to archived start page
+                  }));
+                  // Load deals from the archived start page
+                  loadDeals(activeTab, startPage);
+                }
+              }}
+            >
+              <Box44 className="!w-[18px] !h-[18px]" color="white" />
+              {t("account.show_archived_deals")}
+            </button>
+          </div>
+        )}
         {status !== "loading" && (
           <>
             <Line />

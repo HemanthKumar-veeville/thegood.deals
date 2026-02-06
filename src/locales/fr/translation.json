@@ -363,6 +363,7 @@
     "no_title": "Pas de titre",
     "no_status": "Pas de statut",
     "no_organizer": "Pas d'organisateur",
+    "show_archived_deals": "Afficher les deals archivés",
     "console_failed_load_deals": "Échec du chargement de plus de deals :",
     "console_failed_profile_status": "Échec de la récupération du profil ou du statut de connexion de l'utilisateur :",
     "console_failed_logout": "Échec de la déconnexion :"

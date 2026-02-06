@@ -363,6 +363,7 @@
     "no_title": "No Title",
     "no_status": "No Status",
     "no_organizer": "No Organizer",
+    "show_archived_deals": "Show Archived Deals",
     "console_failed_load_deals": "Failed to load more deals:",
     "console_failed_profile_status": "Failed to fetch user profile or login status:",
     "console_failed_logout": "Failed to log out:"
