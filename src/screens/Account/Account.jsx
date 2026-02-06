@@ -43,7 +43,6 @@ const Account = ({ isRequestSent, dealId }) => {
   const { status } = dealsState;
   const { profile } = useSelector((state) => state.account);
   const scrollableContainerRef = useRef(null);
-  const debounceTimerRef = useRef(null);
   const hasInitialLoadRef = useRef(false);
   const showArchivedDealsRef = useRef({ created: false, invited: false }); // Ref to track latest showArchivedDeals value
 
@@ -310,7 +309,7 @@ const Account = ({ isRequestSent, dealId }) => {
     if (!container) return;
 
     const { scrollTop, scrollHeight, clientHeight } = container;
-    const threshold = 50; // pixels from bottom
+    const threshold = 200; // pixels from bottom
     const isNearBottom = scrollTop + clientHeight >= scrollHeight - threshold;
 
     // Load more if:
@@ -344,30 +343,10 @@ const Account = ({ isRequestSent, dealId }) => {
     const container = scrollableContainerRef.current;
     if (!container) return;
 
-    // Clear any existing timer
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-
-    const handleScroll = () => {
-      // Clear previous timer
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-      // Set new timer
-      debounceTimerRef.current = setTimeout(() => {
-        handleContainerScroll();
-      }, 200);
-    };
-
-    container.addEventListener("scroll", handleScroll, { passive: true });
+    container.addEventListener("scroll", handleContainerScroll, { passive: true });
 
     return () => {
-      container.removeEventListener("scroll", handleScroll);
-      // Clear timer on cleanup
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
+      container.removeEventListener("scroll", handleContainerScroll);
     };
   }, [handleContainerScroll]);
 
