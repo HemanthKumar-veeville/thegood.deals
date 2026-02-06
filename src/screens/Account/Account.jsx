@@ -562,8 +562,8 @@ const Account = ({ isRequestSent, dealId }) => {
         {isFetchingMore && <CustomLoader />}
         {showArchivedButton[activeTab] && !showArchivedDeals[activeTab] && (
           <div className="w-full flex my-0">
-            <button
-              className="flex items-center justify-center gap-2 px-6 py-3 w-full bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer font-medium text-base text-primary-color hover:bg-graygray-2"
+            <div
+              className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer hover:bg-graygray-2"
               onClick={() => {
                 // Start showing archived deals from the saved page number
                 const startPage = archivedStartPage[activeTab];
@@ -590,10 +590,11 @@ const Account = ({ isRequestSent, dealId }) => {
                 }
               }}
             >
-              <span className="hidden sm:inline">---</span>
-              <MdOutlineArchive className="!w-[18px] !h-[18px] text-primary-color" />
-              <span>  {t("account.show_archived_deals")} <span className="hidden sm:inline">---</span></span>
-            </button>
+              <MdOutlineArchive className="!relative !w-5 !h-5 text-primary-color" />
+              <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-primary-color text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+                {t("account.show_archived_deals")}
+              </button>
+            </div>
           </div>
         )}
         {status !== "loading" && (
