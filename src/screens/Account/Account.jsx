@@ -561,7 +561,7 @@ const Account = ({ isRequestSent, dealId }) => {
         </div>
         {isFetchingMore && <CustomLoader />}
         {showArchivedButton[activeTab] && !showArchivedDeals[activeTab] && (
-          <div className="w-full flex justify-center my-5">
+          <div className="w-full flex justify-center my-0">
             <button
               className="flex items-center justify-center gap-2 px-6 py-3 bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer font-medium text-base text-primary-color hover:bg-graygray-2"
               onClick={() => {
