@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { MdOutlineArchive } from "react-icons/md";
 import { ButtonGroup } from "../../components/ButtonGroup";
 import { CardDeal } from "../../components/CardDeal";
 import { CirclePlus92 } from "../../icons/CirclePlus92";
@@ -465,7 +466,7 @@ const Account = ({ isRequestSent, dealId }) => {
           ))}
         </div>
         <div className="w-full">
-          {(status === "loading" || tabLoadStatus[activeTab] === "loading") && <CustomLoader />}
+          {(status === "loading" || tabLoadStatus[activeTab] === "loading" || (isFetchingMore && loadedDeals[activeTab]?.length === 0)) && <CustomLoader />}
           {tabLoadStatus[activeTab] === "failed" && (
             <div className="w-[18rem]">
               <SuccessAlert
@@ -562,7 +563,7 @@ const Account = ({ isRequestSent, dealId }) => {
         {showArchivedButton[activeTab] && !showArchivedDeals[activeTab] && (
           <div className="w-full flex justify-center my-5">
             <button
-              className="flex items-center justify-center gap-2.5 px-6 py-3 bg-primary-color text-white rounded-md hover:bg-primary-dark-color cursor-pointer font-medium text-base"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer font-medium text-base text-primary-color hover:bg-graygray-2"
               onClick={() => {
                 // Start showing archived deals from the saved page number
                 const startPage = archivedStartPage[activeTab];
@@ -589,8 +590,9 @@ const Account = ({ isRequestSent, dealId }) => {
                 }
               }}
             >
-              <Box44 className="!w-[18px] !h-[18px]" color="white" />
-              {t("account.show_archived_deals")}
+              <span className="hidden sm:inline">---</span>
+              <MdOutlineArchive className="!w-[18px] !h-[18px] text-primary-color" />
+              <span>  {t("account.show_archived_deals")} <span className="hidden sm:inline">---</span></span>
             </button>
           </div>
         )}
