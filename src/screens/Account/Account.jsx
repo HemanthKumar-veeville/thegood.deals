@@ -309,7 +309,9 @@ const Account = ({ isRequestSent, dealId }) => {
     if (!container) return;
 
     const { scrollTop, scrollHeight, clientHeight } = container;
-    const threshold = 200; // pixels from bottom
+    // Use dynamic viewport height (dvh) - accounts for mobile browser UI
+    const dvh = window.visualViewport?.height || window.innerHeight;
+    const threshold = dvh * 0.40; // 40dvh from bottom (responsive)
     const isNearBottom = scrollTop + clientHeight >= scrollHeight - threshold;
 
     // Load more if:
