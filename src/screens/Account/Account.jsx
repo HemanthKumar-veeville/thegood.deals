@@ -168,11 +168,46 @@ const Account = ({ isRequestSent, dealId }) => {
             ...prevState,
             [tab]: pageNumber,
           }));
-          // Store the archived deals from this API response so we can add them when button is clicked
-          setStoredArchivedDeals((prevState) => ({
-            ...prevState,
-            [tab]: archivedDeals,
-          }));
+          
+          // If there are no in-stock deals, automatically show the first archived deal
+          // Store the remaining archived deals (from index 1 onwards) for the "Show Archived Deals" button
+          if (inStockDeals.length === 0) {
+            const firstArchivedDeal = archivedDeals[0];
+            const remainingArchivedDeals = archivedDeals.slice(1);
+            
+            // Add the first archived deal to loadedDeals
+            if (firstArchivedDeal) {
+              setLoadedDeals((prevState) => {
+                const existingDeals = prevState[tab] || [];
+                const existingDealIds = new Set(
+                  existingDeals.map((deal) => deal.id || deal.deal_id).filter(Boolean)
+                );
+                const dealId = firstArchivedDeal.id || firstArchivedDeal.deal_id;
+                
+                // Only add if not already present
+                if (dealId && !existingDealIds.has(dealId)) {
+                  return {
+                    ...prevState,
+                    [tab]: [...existingDeals, firstArchivedDeal],
+                  };
+                }
+                return prevState;
+              });
+            }
+            
+            // Store the remaining archived deals for the "Show Archived Deals" button
+            setStoredArchivedDeals((prevState) => ({
+              ...prevState,
+              [tab]: remainingArchivedDeals,
+            }));
+          } else {
+            // If there are in-stock deals, store all archived deals for later
+            setStoredArchivedDeals((prevState) => ({
+              ...prevState,
+              [tab]: archivedDeals,
+            }));
+          }
+          
           setShowArchivedButton((prevState) => ({
             ...prevState,
             [tab]: true,
@@ -516,11 +551,14 @@ const Account = ({ isRequestSent, dealId }) => {
               />
             </div>
           )}
+          {/* Empty state for no active deals with archived deals - now hidden since we show first archived deal automatically */}
+          {/* This condition is kept for edge cases but should rarely trigger since first archived deal is auto-shown */}
           {tabLoadStatus[activeTab] === "succeeded" && 
            loadedDeals[activeTab].length === 0 && 
            !isFetchingMore && 
            showArchivedButton[activeTab] && 
-           !showArchivedDeals[activeTab] && (
+           !showArchivedDeals[activeTab] && 
+           storedArchivedDeals[activeTab]?.length === 0 && (
             <div className="w-full">
               <SuccessAlert
                 className="!flex !bg-cyancyan-light-3 w-[100%]"
@@ -584,12 +622,14 @@ const Account = ({ isRequestSent, dealId }) => {
           ))}
         </div>
         {isFetchingMore && <CustomLoader />}
-        {showArchivedButton[activeTab] && !showArchivedDeals[activeTab] && (
+        {showArchivedButton[activeTab] && 
+         !showArchivedDeals[activeTab] && 
+         storedArchivedDeals[activeTab]?.length > 0 && (
           <div className="w-full flex my-0">
             <div
               className="flex items-center justify-center gap-2 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-whitewhite rounded-md shadow-shadow-1 cursor-pointer hover:bg-graygray-2"
               onClick={() => {
-                // First, add the stored archived deals that were filtered out from the initial API response
+                // Add the remaining stored archived deals (excluding the first one which was already shown)
                 const storedArchived = storedArchivedDeals[activeTab] || [];
                 if (storedArchived.length > 0) {
                   setLoadedDeals((prevState) => {
