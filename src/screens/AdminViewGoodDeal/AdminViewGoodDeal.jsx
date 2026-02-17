@@ -3,31 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDealDetailsByDealId } from "../../redux/app/deals/dealSlice";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Badges } from "../../components/Badges";
 import { RatingStar } from "../../components/RatingStar";
 import { Box43 } from "../../icons/Box43";
 import { ClockAlt11 } from "../../icons/ClockAlt11";
 import { DeliveryTruck4 } from "../../icons/DeliveryTruck4";
 import { Map } from "../../icons/Map";
-import { Minus1 } from "../../icons/Minus1";
-import { Pencil } from "../../icons/Pencil";
-import { Plus3 } from "../../icons/Plus3";
-import { Send } from "../../icons/Send";
-import { Send2 } from "../../icons/Send2";
-import { ShoppingCart111 } from "../../icons/ShoppingCart111";
 import { Users2 } from "../../icons/Users2";
 import ProgressBarGreen from "../../components/ProgressBar/ProgressBarGreen";
 import ProgressBarYellow from "../../components/ProgressBar/ProgressBarYellow";
-import { blogImage, Human } from "../../images";
+import { blogImage } from "../../images";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import ImageSlider from "../../components/ImageSlider/ImageSlider";
 import { Cart } from "../../components/Cart/Cart";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { UserAlt } from "../../icons/UserAlt";
 import { Line } from "../../components/Line/Line";
-import { formatDate, getDealProgress } from "../../helpers/helperMethods";
+import { formatDate } from "../../helpers/helperMethods";
 import ReadMore from "../../components/Readmore/Readmore";
 import { Chat } from "../../components/Chat/Chat";
+import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 
 const AdminViewGoodDeal = () => {
   const { t } = useTranslation();
@@ -39,17 +33,66 @@ const AdminViewGoodDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
-
   const { deal, status, error } = useSelector((state) => state.deals);
 
   const dealState = (deal?.Deal?.deal && deal?.Deal?.deal) || {};
 
+  // Helper function to extract exact error message from various error formats
+  const extractErrorMessage = (errorObj) => {
+    if (!errorObj) return t("errors.request_failed");
+    
+    // Check for localized error messages (e.g., error.en, error.fr)
+    const currentLang = localStorage.getItem("i18nextLng") || "en";
+    if (errorObj[currentLang] && typeof errorObj[currentLang] === "string") {
+      return errorObj[currentLang];
+    }
+    
+    // Check common error message fields
+    if (errorObj.detail && typeof errorObj.detail === "string") return errorObj.detail;
+    if (errorObj.message && typeof errorObj.message === "string") return errorObj.message;
+    if (errorObj.error && typeof errorObj.error === "string") return errorObj.error;
+    
+    // Check nested response data
+    if (errorObj.response?.data) {
+      const responseData = errorObj.response.data;
+      if (responseData.detail && typeof responseData.detail === "string") return responseData.detail;
+      if (responseData.message && typeof responseData.message === "string") return responseData.message;
+      if (responseData.error && typeof responseData.error === "string") return responseData.error;
+      if (typeof responseData === "string") return responseData;
+    }
+    
+    // Check if error is a string
+    if (typeof errorObj === "string") return errorObj;
+    
+    // Fallback to default message
+    return t("errors.request_failed");
+  };
+  
   useEffect(() => {
-    dispatch(fetchDealDetailsByDealId(deal_id));
-  }, []);
+    if (deal_id) {
+      dispatch(fetchDealDetailsByDealId(deal_id));
+    }
+  }, [deal_id, dispatch]);
+
+  if (!deal_id) {
+    return <CustomLoader />;
+  }
 
   if (status === "loading") {
     return <CustomLoader />;
+  }
+
+  if (status === "failed") {
+    const errorMessage = extractErrorMessage(error);
+    return (
+      <div className="flex flex-col w-full items-start relative bg-primary-background">
+        <ShowCustomErrorModal
+          message={errorMessage}
+          buttonText={t("waiting_deal.got_it")}
+          onClose={() => navigate(-1)}
+        />
+      </div>
+    );
   }
 
   const handleBack = () => {

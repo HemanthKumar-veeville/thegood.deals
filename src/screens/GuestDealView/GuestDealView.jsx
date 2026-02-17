@@ -36,6 +36,7 @@ const GuestDealView = () => {
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
+  const isGuestMode = useSelector((state) => state.participants.isGuestMode);
   const [currentStep, setCurrentStep] = useState(2);
   const [steps, setSteps] = useState([
     { step: 1, bgColor: "", textColor: "" },
@@ -86,9 +87,17 @@ const GuestDealView = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchDealDetailsByDealId(deal_id));
+    if (deal_id) {
+      dispatch(fetchDealDetailsByDealId(deal_id));
+    }
     setSteps(updateSteps(steps, currentStep));
-  }, []);
+  }, [deal_id, dispatch]);
+
+  useEffect(() => {
+    if (isGuestMode && deal_id) {
+      navigate(`/deal_details_invite?deal_id=${deal_id}&is_repostable=false`, { replace: true });
+    }
+  }, [isGuestMode, deal_id, navigate]);
 
   const handleOrder = () => {
     navigate(
@@ -138,6 +147,10 @@ const GuestDealView = () => {
 
   // Set currentUserId to match "Vous" messages
   const currentUserId = "user2";
+
+  if (!deal_id) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col w-full items-start relative bg-primary-background mx-auto">

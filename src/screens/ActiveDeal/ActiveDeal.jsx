@@ -53,6 +53,7 @@ const ActiveDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
+  const isGuestMode = useSelector((state) => state.participants.isGuestMode);
   const [isCollectionInProgress, setIsCollectionInProgress] = useState(false);
   const [chargeStats, setChargeStats] = useState([]);
   const [isPaymentCollectedForAllOrders, setIsPaymentCollectedForAllOrders] =
@@ -122,12 +123,27 @@ const ActiveDeal = () => {
       console.error(err);
       setIsError(true);
       setErrorMessage("An error occurred while fetching the deal.");
+      navigate(`/deal_details_invite?deal_id=${deal_id}&is_repostable=false`);
     }
   };
 
   useEffect(() => {
-    fetchDeal();
-  }, []);
+    if (deal_id) {
+      fetchDeal();
+    }
+  }, [deal_id]);
+
+  useEffect(() => {
+    if (status === "failed" || error) {
+      navigate(`/deal_details_invite?deal_id=${deal_id}&is_repostable=false`);
+    }
+  }, [status, error, deal_id, navigate]);
+
+  useEffect(() => {
+    if (isGuestMode && deal_id) {
+      navigate(`/deal_details_invite?deal_id=${deal_id}&is_repostable=false`, { replace: true });
+    }
+  }, [isGuestMode, deal_id, navigate]);
 
   useEffect(() => {
     dealData?.deal_progress_percentage >= 100 ? setCurrentStep(4) : null;
@@ -245,6 +261,10 @@ const ActiveDeal = () => {
         };
       }
     });
+  }
+
+  if (!deal_id) {
+    return <CustomLoader />;
   }
 
   return (

@@ -6,6 +6,7 @@ const initialState = {
   participants: [],
   participantStatus: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
   participantError: null,
+  isGuestMode: false,
 };
 
 // Async thunk for fetching participants for a specific deal
@@ -15,7 +16,7 @@ export const fetchParticipantsByDeal = createAsyncThunk(
     try {
       const response = await axiosInstance.get(`/participants/${dealId}`);
 
-      return response.data.Participants;
+      return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
@@ -36,7 +37,8 @@ const participantSlice = createSlice({
       })
       .addCase(fetchParticipantsByDeal.fulfilled, (state, action) => {
         state.participantStatus = "succeeded";
-        state.participants = action.payload;
+        state.participants = action.payload.Participants;
+        state.isGuestMode = action.payload.Guest;
         state.participantError = null;
       })
       .addCase(fetchParticipantsByDeal.rejected, (state, action) => {

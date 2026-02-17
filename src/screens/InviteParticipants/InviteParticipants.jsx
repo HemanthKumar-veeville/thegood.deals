@@ -57,6 +57,59 @@ export const InviteParticipants = ({
   const [isRequestSent, setIsRequestSent] = useState(is_request_sent || false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [visitorId, setVisitorId] = useState("");
+
+  // Helper function to extract exact error message from various error formats
+  const extractErrorMessage = (errorObj) => {
+    if (!errorObj) return t("errors.request_failed");
+    
+    // Check for localized error messages (e.g., error.en, error.fr)
+    const currentLang = localStorage.getItem("i18nextLng") || "en";
+    if (errorObj[currentLang] && typeof errorObj[currentLang] === "string") {
+      return errorObj[currentLang];
+    }
+    
+    // Check common error message fields
+    if (errorObj.detail && typeof errorObj.detail === "string") return errorObj.detail;
+    if (errorObj.message && typeof errorObj.message === "string") return errorObj.message;
+    if (errorObj.error && typeof errorObj.error === "string") return errorObj.error;
+    
+    // Check nested response data
+    if (errorObj.response?.data) {
+      const responseData = errorObj.response.data;
+      if (responseData.detail && typeof responseData.detail === "string") return responseData.detail;
+      if (responseData.message && typeof responseData.message === "string") return responseData.message;
+      if (responseData.error && typeof responseData.error === "string") return responseData.error;
+      if (typeof responseData === "string") return responseData;
+      // If responseData is an object, try to extract meaningful message
+      if (typeof responseData === "object") {
+        const errorString = JSON.stringify(responseData);
+        if (errorString !== "{}") return errorString;
+      }
+    }
+    
+    // Check if error is a string
+    if (typeof errorObj === "string") return errorObj;
+    
+    // Try to stringify if it's an object
+    if (typeof errorObj === "object") {
+      try {
+        const stringified = JSON.stringify(errorObj);
+        if (stringified !== "{}" && stringified !== "null") return stringified;
+      } catch (e) {
+        // If stringification fails, try toString
+      }
+    }
+    
+    // Fallback to toString or default message
+    try {
+      const errorString = errorObj.toString();
+      if (errorString && errorString !== "[object Object]") return errorString;
+    } catch (e) {
+      // toString failed
+    }
+    
+    return t("errors.request_failed");
+  };
   useEffect(() => {
     const fetchVisitorId = async () => {
       const visitorId = await getVisitorId();
@@ -65,6 +118,15 @@ export const InviteParticipants = ({
     fetchVisitorId();
     visitorId && dispatch(fetchDealValidationDetails({ dealId, visitorId }));
   }, [dispatch, dealId, visitorId]);
+
+  // Handle Redux error state from fetchDealValidationDetails
+  useEffect(() => {
+    if (status === "failed" && error) {
+      const extractedError = extractErrorMessage(error);
+      setErrorMessage(extractedError);
+      setIsError(true);
+    }
+  }, [status, error]);
 
   const handleRefuse = () => {
     navigate(`/deal-refused?deal_id=${dealId}`);
@@ -84,10 +146,14 @@ export const InviteParticipants = ({
         navigate("/deal-confirmed");
       } else {
         // Handle any validation errors here
-        console.error("Validation failed:", resultAction.payload);
+        const extractedError = extractErrorMessage(resultAction.payload);
+        setErrorMessage(extractedError);
+        setIsError(true);
       }
     } catch (error) {
-      console.error("An error occurred:", error);
+      const extractedError = extractErrorMessage(error);
+      setErrorMessage(extractedError);
+      setIsError(true);
     }
   };
 
@@ -128,7 +194,8 @@ export const InviteParticipants = ({
         }
       }
     } catch (error) {
-      setErrorMessage(error?.detail || t("errors.request_failed"));
+      const extractedError = extractErrorMessage(error);
+      setErrorMessage(extractedError);
       setIsError(true);
     }
   };
