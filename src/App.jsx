@@ -611,7 +611,7 @@ function App() {
       path: "/participant-send-review",
       element: (
         <BaseLayout>
-          <ProtectedRoute element={<GuestsSendReviewsScreen />} />
+          <GuestsSendReviewsScreen />
         </BaseLayout>
       ),
     },
