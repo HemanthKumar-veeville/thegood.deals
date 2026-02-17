@@ -262,7 +262,7 @@ function App() {
       path: "/thanks-review",
       element: (
         <BaseLayout>
-          <ProtectedRoute element={<ThanksForReview />} />
+          <ThanksForReview />
         </BaseLayout>
       ),
     },
