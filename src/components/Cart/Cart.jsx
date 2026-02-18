@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ShoppingCart111 } from "../../icons/ShoppingCart111";
 import { Minus1 } from "../../icons/Minus1";
 import { Plus1 } from "../../icons/Plus1";
@@ -16,6 +16,13 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Sync cartItems when products prop changes
+  useEffect(() => {
+    if (products) {
+      setCartItems(products);
+    }
+  }, [products]);
   const handleQuantityChange = (
     index,
     action,
@@ -26,11 +33,34 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
     const updatedItems = cartItems?.map((item, idx) => {
       if (idx === index) {
         if (action === "increment") {
-          if (item.quantity < maxQuantity && item.quantity < availableQuantity)
+          // If quantity is 0, jump directly to minimum quantity (respecting max and availability limits)
+          if (item.quantity === 0) {
+            const newQuantity = Math.min(
+              minQuantity || 0,
+              maxQuantity || Infinity,
+              availableQuantity || Infinity
+            );
+            return { ...item, quantity: newQuantity };
+          }
+          // After minimum, increment by 1
+          if (
+            item.quantity < (maxQuantity || Infinity) &&
+            item.quantity < (availableQuantity || Infinity)
+          ) {
             return { ...item, quantity: item.quantity + 1 };
-          else return { ...item, quantity: item.quantity };
-        } else if (action === "decrement" && item.quantity >= 1) {
-          return { ...item, quantity: item.quantity - 1 };
+          }
+          return { ...item, quantity: item.quantity };
+        } else if (action === "decrement") {
+          // If at minimum quantity, go to 0 (remove item)
+          if (item.quantity === minQuantity) {
+            return { ...item, quantity: 0 };
+          }
+          // If above minimum, decrement by 1
+          if (item.quantity > minQuantity) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
+          // If already at 0, do nothing
+          return { ...item, quantity: item.quantity };
         }
       }
       return item;
@@ -61,6 +91,23 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
   const totalSavings = cartItems?.reduce((acc, item) => {
     return acc + (item.max_retail_price - item.price) * item.quantity;
   }, 0);
+
+  // Helper function to check if payment button should be enabled
+  const isPaymentButtonEnabled = () => {
+    if (!cartItems || cartItems.length === 0) return false;
+    
+    // Check if all items have quantity 0 OR quantity >= min_quantity_per_order
+    const hasItemsWithQuantity = cartItems.some((product) => product?.quantity > 0);
+    if (!hasItemsWithQuantity) return false;
+    
+    const allItemsValid = cartItems.every(
+      (product) =>
+        product?.quantity === 0 ||
+        product?.quantity >= (product?.min_quantity_per_order || 0)
+    );
+    
+    return allItemsValid;
+  };
 
   const handlePayment = async () => {
     try {
@@ -128,10 +175,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
                 type="button"
                 aria-label={t("cart.decreaseQuantity") || "Decrease quantity"}
                 tabIndex={0}
-                disabled={
-                  product.quantity <= 1 ||
-                  product.quantity <= product.min_quantity_per_order
-                }
+                disabled={product.quantity <= 0}
                 className={`
                       flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px]
                       rounded-l-[0.25rem] border-r border-solid border-stroke
@@ -140,8 +184,7 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
                       focus-visible:ring-2 focus-visible:ring-primary-color focus-visible:ring-offset-1
                       disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50
                       ${
-                        product.quantity <= 1 ||
-                        product.quantity <= product.min_quantity_per_order
+                        product.quantity <= 0
                           ? ""
                           : "cursor-pointer hover:bg-primary-color/5 active:bg-primary-color/10 active:scale-[0.97]"
                       }
@@ -280,23 +323,21 @@ export const Cart = ({ products, dealId, fetchDealDetailsByDealId }) => {
           </div>
         </div>
       </div>
-      {cartItems?.length !==
-        cartItems?.filter((product) => product?.quantity === 0)?.length &&
-        cartItems?.filter(
-          (product) =>
-            product?.quantity == 0 ||
-            product?.quantity >= product.min_quantity_per_order
-        )?.length === cartItems?.length && (
-          <div
-            className="flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-[0.25rem] transition-transform transform hover:scale-95 active:scale-90"
+          <button
+            className={`flex items-center justify-center gap-2.5 px-6 py-3 relative self-stretch w-full flex-[0_0_auto] bg-primary-color rounded-[0.25rem] transition-transform transform ${
+              !isPaymentButtonEnabled()
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
             onClick={handlePayment}
+            disabled={!isPaymentButtonEnabled()}
+            aria-disabled={!isPaymentButtonEnabled()}
           >
             <Send1 className="!relative !w-5 !h-5" />
-            <button className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
+            <span className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter-Medium',Helvetica] font-medium text-whitewhite text-base text-center tracking-[0] leading-6 whitespace-nowrap">
               {t("cart.payment")}
-            </button>
-          </div>
-        )}
+            </span>
+          </button>
     </div>
   );
 };
