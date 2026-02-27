@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Box43 } from "../../icons/Box43";
@@ -35,6 +35,7 @@ import { DangerAlert } from "../../components/DangerAlert";
 import { chargeGroupPayment } from "../../redux/app/payments/paymentSlice";
 import CustomLoader from "../../components/CustomLoader/CustomLoader";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
+import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
 import { CheckmarkCircle } from "../../icons/CheckmarkCircle";
 import { Line } from "../../components/Line/Line";
 import { Send1 } from "../../icons/Send1";
@@ -42,6 +43,8 @@ import { Chat } from "../../components/Chat";
 import { BiRepost } from "react-icons/bi";
 import { ShowCustomWarningModal } from "../../components/WarningAlert/WarningAlert";
 import ReadMore from "../../components/Readmore/Readmore";
+import { MdMoreHoriz, MdOutlineDeleteForever } from "react-icons/md";
+import { deleteDealByDealId } from "../../redux/app/deals/dealSlice";
 const ActiveDeal = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,6 +56,7 @@ const ActiveDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
+  const isCreator = is_creator === "true";
   const isGuestMode = useSelector((state) => state.participants.isGuestMode);
   const [isCollectionInProgress, setIsCollectionInProgress] = useState(false);
   const [chargeStats, setChargeStats] = useState([]);
@@ -64,9 +68,14 @@ const ActiveDeal = () => {
   const [isWarning, setIsWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isDeleteWarning, setIsDeleteWarning] = useState(false);
+  const [isDeleteSuccess, setIsDeleteSuccess] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDeleteInProgress, setIsDeleteInProgress] = useState(false);
   const [autoRetry, setAutoRetry] = useState(false);
   const [paymentAttempts, setPaymentAttempts] = useState(0);
   const [currentStep, setCurrentStep] = useState(2);
+  const menuRef = useRef(null);
   const [steps, setSteps] = useState([
     { step: 1, bgColor: "", textColor: "" },
     { step: 2, bgColor: "", textColor: "" },
@@ -74,6 +83,26 @@ const ActiveDeal = () => {
     { step: 4, bgColor: "", textColor: "" },
     { step: 5, bgColor: "", textColor: "" },
   ]);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   const handleBack = () => {
     navigate(-1);
   };
@@ -92,6 +121,44 @@ const ActiveDeal = () => {
 
   const handleRepostDeal = () => {
     navigate("/repost-deal?deal_id=" + deal_id);
+  };
+
+  const handleDeleteRequest = () => {
+    setIsMenuOpen(false);
+    setIsDeleteWarning(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deal_id || isDeleteInProgress) {
+      return;
+    }
+    setIsDeleteInProgress(true);
+    setIsDeleteWarning(false);
+    try {
+      await dispatch(deleteDealByDealId(deal_id)).unwrap();
+      // Set success modal and navigate immediately to prevent API calls on deleted deal
+      setIsDeleteSuccess(true);
+      // Use setTimeout to show the modal briefly before navigation
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 100);
+    } catch (err) {
+      setIsError(true);
+      setErrorMessage(
+        err?.message || t("active_deal.delete_failed", { defaultValue: "Failed to delete the deal." })
+      );
+    } finally {
+      setIsDeleteInProgress(false);
+    }
+  };
+
+  const handleDeleteSuccess = () => {
+    setIsDeleteSuccess(false);
+    window.location.href = "/";
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteWarning(false);
   };
 
   const handleOrder = () => {
@@ -287,6 +354,36 @@ const ActiveDeal = () => {
                   {t("common.back")}
                 </div>
               </div>
+              {isCreator && !isPaymentCollectedForAllOrders && (
+                <div className="ml-auto relative" ref={menuRef}>
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center w-8 h-8 rounded-md hover:bg-graygray"
+                    onClick={() => setIsMenuOpen((prev) => !prev)}
+                    aria-haspopup="menu"
+                    aria-expanded={isMenuOpen}
+                    aria-label={t("common.more", { defaultValue: "More" })}
+                  >
+                    <MdMoreHoriz className="w-7 h-7 text-primary-text-color" />
+                  </button>
+                  {isMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-[220px] bg-whitewhite rounded-md shadow-shadow-1 border border-stroke z-10">
+                      <button
+                        type="button"
+                        className="w-full text-left px-4 py-3 text-redred text-base font-medium hover:bg-redred-light-5 whitespace-nowrap"
+                        onClick={handleDeleteRequest}
+                      >
+                        <span className="flex items-center gap-2">
+                          <MdOutlineDeleteForever className="w-6 h-6" />
+                          <span className="[font-family:'Inter',Helvetica] leading-6">
+                            {t("active_deal.delete_deal", { defaultValue: "Delete deal" })}
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             {isError && (
               <ShowCustomErrorModal
@@ -302,6 +399,28 @@ const ActiveDeal = () => {
                 onClose={() => setIsWarning(false)} // Reset modal state on close
                 handleConfirm={handleConfirm}
                 handleRefuse={handleRefuse}
+              />
+            )}
+            {isDeleteWarning && (
+              <ShowCustomWarningModal
+                message={t("active_deal.delete_confirm", {
+                  defaultValue: "Are you sure you want to delete this deal?",
+                })}
+                acceptButtonText={t("common.delete", { defaultValue: "Delete" })}
+                cancelButtonText={t("common.cancel", { defaultValue: "Cancel" })}
+                onClose={handleDeleteCancel}
+                handleConfirm={handleDeleteConfirm}
+                handleRefuse={handleDeleteCancel}
+              />
+            )}
+            {isDeleteSuccess && (
+              <ShowCustomSuccessModal
+                message={t("active_deal.delete_success", {
+                  defaultValue: "Deal deleted successfully!",
+                })}
+                buttonText={t("common.confirm", { defaultValue: "OK" })}
+                handleClick={handleDeleteSuccess}
+                onClose={handleDeleteSuccess}
               />
             )}
             {isPaymentCollectedForAllOrders && dealData?.orders_count !== 0 && (

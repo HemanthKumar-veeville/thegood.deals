@@ -169,6 +169,19 @@ export const updateDealByDealId = createAsyncThunk(
   }
 );
 
+// Async thunk for deleting a deal by deal_id
+export const deleteDealByDealId = createAsyncThunk(
+  "deals/deleteDealByDealId",
+  async (dealId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`/deals/${dealId}`);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
 // Async thunk for reposting a deal by deal_id
 export const repostDeal = createAsyncThunk(
   "deals/repostDeal",
@@ -317,6 +330,18 @@ const dealSlice = createSlice({
         state.deal = action.payload; // Update the specific deal if needed
       })
       .addCase(updateDealByDealId.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Handle deleteDealByDealId cases
+      .addCase(deleteDealByDealId.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteDealByDealId.fulfilled, (state) => {
+        state.status = "succeeded";
+        state.deal = null;
+      })
+      .addCase(deleteDealByDealId.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
