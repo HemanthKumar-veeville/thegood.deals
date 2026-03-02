@@ -128,14 +128,27 @@ const ActiveDeal = () => {
     setIsDeleteWarning(true);
   };
 
-  const handleDeleteConfirm = async () => {
-    if (!deal_id || isDeleteInProgress) {
+  const handleDeleteConfirm = async (dealId, reason) => {
+    if (!dealId || isDeleteInProgress) {
       return;
+    }
+    // Reason is mandatory only if deal progress > 0
+    const dealProgress = dealData?.deal_progress_percentage || 0;
+    if (dealProgress > 0) {
+      // Validation is handled in the modal, but double-check here
+      if (!reason || reason.trim().length === 0) {
+        setIsError(true);
+        setErrorMessage(t("common.deletion_reason_required", { defaultValue: "Deletion reason is required" }));
+        setIsDeleteWarning(false);
+        return;
+      }
     }
     setIsDeleteInProgress(true);
     setIsDeleteWarning(false);
     try {
-      await dispatch(deleteDealByDealId(deal_id)).unwrap();
+      // Pass reason only if deal progress > 0, otherwise pass empty string
+      const reasonToSend = dealProgress > 0 ? reason.trim() : "";
+      await dispatch(deleteDealByDealId({ dealId, reason: reasonToSend })).unwrap();
       // Set success modal and navigate immediately to prevent API calls on deleted deal
       setIsDeleteSuccess(true);
       // Use setTimeout to show the modal briefly before navigation
@@ -145,7 +158,7 @@ const ActiveDeal = () => {
     } catch (err) {
       setIsError(true);
       setErrorMessage(
-        err?.message || t("active_deal.delete_failed", { defaultValue: "Failed to delete the deal." })
+        err?.message || err?.detail || t("active_deal.delete_failed", { defaultValue: "Failed to delete the deal." })
       );
     } finally {
       setIsDeleteInProgress(false);
@@ -411,6 +424,9 @@ const ActiveDeal = () => {
                 onClose={handleDeleteCancel}
                 handleConfirm={handleDeleteConfirm}
                 handleRefuse={handleDeleteCancel}
+                orderId={deal_id}
+                showReasonInput={(dealData?.deal_progress_percentage || 0) > 0}
+                reasonType="deletion"
               />
             )}
             {isDeleteSuccess && (

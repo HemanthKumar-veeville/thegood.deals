@@ -172,9 +172,15 @@ export const updateDealByDealId = createAsyncThunk(
 // Async thunk for deleting a deal by deal_id
 export const deleteDealByDealId = createAsyncThunk(
   "deals/deleteDealByDealId",
-  async (dealId, { rejectWithValue }) => {
+  async ({ dealId, reason }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.delete(`/deals/${dealId}`);
+      // Reason is optional - only include in query if provided
+      let url = `/deals/${dealId}`;
+      if (reason && reason.trim().length > 0) {
+        const encodedReason = encodeURIComponent(reason.trim());
+        url += `?reason=${encodedReason}`;
+      }
+      const response = await axiosInstance.delete(url);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);

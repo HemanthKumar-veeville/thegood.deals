@@ -643,7 +643,13 @@
     "cancellation_reason_helper": "Minimum {{min}} and maximum {{max}} characters required",
     "cancellation_reason_required": "Cancellation reason is required",
     "cancellation_reason_too_short": "Cancellation reason must be at least {{min}} characters",
-    "cancellation_reason_too_long": "Cancellation reason must not exceed {{max}} characters"
+    "cancellation_reason_too_long": "Cancellation reason must not exceed {{max}} characters",
+    "deletion_reason_label": "Reason for deletion",
+    "deletion_reason_placeholder": "Please provide a reason for deleting this deal...",
+    "deletion_reason_helper": "Minimum {{min}} and maximum {{max}} characters required",
+    "deletion_reason_required": "Deletion reason is required",
+    "deletion_reason_too_short": "Deletion reason must be at least {{min}} characters",
+    "deletion_reason_too_long": "Deletion reason must not exceed {{max}} characters"
   },
   "deal": {
     "title": "Wine crates Domaine de Cigaluse",

@@ -15,6 +15,7 @@ const WarningModalContent = ({
   handleRefuse,
   orderId,
   showReasonInput = false,
+  reasonType = "cancellation", // "cancellation" or "deletion"
 }) => {
   const { t } = useTranslation();
   const [cancellationReason, setCancellationReason] = useState("");
@@ -24,18 +25,21 @@ const WarningModalContent = ({
   const MIN_LENGTH = 5;
   const MAX_LENGTH = 250;
 
+  // Dynamic translation key prefix based on reasonType
+  const reasonKeyPrefix = reasonType === "deletion" ? "deletion_reason" : "cancellation_reason";
+
   const validateReason = (value) => {
     const trimmedValue = value.trimEnd();
     const trimmedLength = trimmedValue.length;
 
     if (trimmedLength === 0) {
-      return t("common.cancellation_reason_required");
+      return t(`common.${reasonKeyPrefix}_required`);
     }
     if (trimmedLength < MIN_LENGTH) {
-      return t("common.cancellation_reason_too_short", { min: MIN_LENGTH });
+      return t(`common.${reasonKeyPrefix}_too_short`, { min: MIN_LENGTH });
     }
     if (trimmedLength > MAX_LENGTH) {
-      return t("common.cancellation_reason_too_long", { max: MAX_LENGTH });
+      return t(`common.${reasonKeyPrefix}_too_long`, { max: MAX_LENGTH });
     }
     return "";
   };
@@ -109,10 +113,10 @@ const WarningModalContent = ({
       {showReasonInput && (
         <div className="flex flex-col items-start gap-2.5 self-stretch w-full">
           <label
-            htmlFor="cancellation-reason"
+            htmlFor={`${reasonKeyPrefix}-reason`}
             className="[font-family:'Inter',Helvetica] w-fit mt-[-1.00px] tracking-[0] text-base font-medium leading-6 whitespace-nowrap relative text-darkdark"
           >
-            {t("common.cancellation_reason_label")}{" "}
+            {t(`common.${reasonKeyPrefix}_label`)}{" "}
             <span className="text-redred font-bold ml-0.5" aria-label={t("common.required")} title={t("common.required")}>*</span>
           </label>
           <div className="w-full flex self-stretch flex-col items-start grow flex-1 relative">
@@ -126,16 +130,16 @@ const WarningModalContent = ({
               } bg-white`}
             >
               <textarea
-                id="cancellation-reason"
+                id={`${reasonKeyPrefix}-reason`}
                 value={cancellationReason}
                 onChange={handleReasonChange}
                 onBlur={handleReasonBlur}
-                placeholder={t("common.cancellation_reason_placeholder")}
+                placeholder={t(`common.${reasonKeyPrefix}_placeholder`)}
                 maxLength={MAX_LENGTH}
                 className="w-full h-full bg-transparent border-none focus:outline-none text-darkdark-6 text-base leading-6 resize-y min-h-[100px]"
-                aria-label={t("common.cancellation_reason_label")}
+                aria-label={t(`common.${reasonKeyPrefix}_label`)}
                 aria-invalid={errorMessage && hasBlurred ? "true" : "false"}
-                aria-describedby={errorMessage && hasBlurred ? "cancellation-reason-error" : "cancellation-reason-help"}
+                aria-describedby={errorMessage && hasBlurred ? `${reasonKeyPrefix}-reason-error` : `${reasonKeyPrefix}-reason-help`}
                 tabIndex={0}
               />
             </div>
@@ -143,15 +147,15 @@ const WarningModalContent = ({
           <div className="flex items-center justify-between w-full">
             {errorMessage && hasBlurred ? (
               <p
-                id="cancellation-reason-error"
+                id={`${reasonKeyPrefix}-reason-error`}
                 className="text-sm text-redred font-body-small-regular flex-1"
                 role="alert"
               >
                 {errorMessage}
               </p>
             ) : (
-              <div id="cancellation-reason-help" className="text-sm text-primary-text-color font-body-small-regular">
-                {t("common.cancellation_reason_helper", { min: MIN_LENGTH, max: MAX_LENGTH })}
+              <div id={`${reasonKeyPrefix}-reason-help`} className="text-sm text-primary-text-color font-body-small-regular">
+                {t(`common.${reasonKeyPrefix}_helper`, { min: MIN_LENGTH, max: MAX_LENGTH })}
               </div>
             )}
             <div className="text-sm text-primary-text-color font-body-small-regular text-right ml-2 whitespace-nowrap">
@@ -225,6 +229,7 @@ export const ShowCustomWarningModal = ({
   onClose,
   orderId,
   showReasonInput = false,
+  reasonType = "cancellation", // "cancellation" or "deletion"
 }) => {
   MySwal.fire({
     html: (
@@ -236,6 +241,7 @@ export const ShowCustomWarningModal = ({
         handleRefuse={handleRefuse}
         orderId={orderId}
         showReasonInput={showReasonInput}
+        reasonType={reasonType}
       />
     ),
     showConfirmButton: false,

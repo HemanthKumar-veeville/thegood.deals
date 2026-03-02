@@ -641,7 +641,13 @@
     "cancellation_reason_helper": "Minimum {{min}} et maximum {{max}} caractères requis",
     "cancellation_reason_required": "La raison de l'annulation est requise",
     "cancellation_reason_too_short": "La raison de l'annulation doit contenir au moins {{min}} caractères",
-    "cancellation_reason_too_long": "La raison de l'annulation ne doit pas dépasser {{max}} caractères"
+    "cancellation_reason_too_long": "La raison de l'annulation ne doit pas dépasser {{max}} caractères",
+    "deletion_reason_label": "Raison de la suppression",
+    "deletion_reason_placeholder": "Veuillez fournir une raison pour supprimer ce deal...",
+    "deletion_reason_helper": "Minimum {{min}} et maximum {{max}} caractères requis",
+    "deletion_reason_required": "La raison de la suppression est requise",
+    "deletion_reason_too_short": "La raison de la suppression doit contenir au moins {{min}} caractères",
+    "deletion_reason_too_long": "La raison de la suppression ne doit pas dépasser {{max}} caractères"
   },
   "deal": {
     "title": "Huîtres de Saint-Malo",
