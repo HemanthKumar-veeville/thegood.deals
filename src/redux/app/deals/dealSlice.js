@@ -241,6 +241,7 @@ const dealSlice = createSlice({
       .addCase(fetchDeals.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.deals = action.payload;
+        state.error = null;
       })
       .addCase(fetchDeals.rejected, (state, action) => {
         state.status = "failed";
@@ -253,6 +254,7 @@ const dealSlice = createSlice({
       .addCase(getDealByDealId.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.deal = action.payload;
+        state.error = null;
       })
       .addCase(getDealByDealId.rejected, (state, action) => {
         state.status = "failed";
@@ -265,6 +267,7 @@ const dealSlice = createSlice({
       .addCase(getDealByDealIdForEdit.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.deal = action.payload;
+        state.error = null;
       })
       .addCase(getDealByDealIdForEdit.rejected, (state, action) => {
         state.status = "failed";
@@ -277,6 +280,7 @@ const dealSlice = createSlice({
       .addCase(fetchDealDetailsByDealId.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.deal = action.payload;
+        state.error = null;
       })
       .addCase(fetchDealDetailsByDealId.rejected, (state, action) => {
         state.status = "failed";
@@ -289,6 +293,7 @@ const dealSlice = createSlice({
       .addCase(fetchDealValidationDetails.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.deal = action.payload;
+        state.error = null;
       })
       .addCase(fetchDealValidationDetails.rejected, (state, action) => {
         state.status = "failed";
@@ -300,6 +305,7 @@ const dealSlice = createSlice({
       })
       .addCase(addNewDeal.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.error = null;
       })
       .addCase(addNewDeal.rejected, (state, action) => {
         state.status = "failed";
@@ -310,6 +316,7 @@ const dealSlice = createSlice({
       })
       .addCase(updateOrderConfirmation.fulfilled, (state) => {
         state.status = "succeeded";
+        state.error = null;
       })
       .addCase(updateOrderConfirmation.rejected, (state, action) => {
         state.status = "failed";
@@ -321,6 +328,7 @@ const dealSlice = createSlice({
       })
       .addCase(inviteArtisan.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.error = null;
         // You can add logic here if you need to update the state based on the response.
       })
       .addCase(inviteArtisan.rejected, (state, action) => {
@@ -334,6 +342,7 @@ const dealSlice = createSlice({
       .addCase(updateDealByDealId.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.deal = action.payload; // Update the specific deal if needed
+        state.error = null;
       })
       .addCase(updateDealByDealId.rejected, (state, action) => {
         state.status = "failed";
@@ -346,6 +355,7 @@ const dealSlice = createSlice({
       .addCase(deleteDealByDealId.fulfilled, (state) => {
         state.status = "succeeded";
         state.deal = null;
+        state.error = null;
       })
       .addCase(deleteDealByDealId.rejected, (state, action) => {
         state.status = "failed";
@@ -358,6 +368,7 @@ const dealSlice = createSlice({
       .addCase(repostDeal.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.deal = action.payload;
+        state.error = null;
       })
       .addCase(repostDeal.rejected, (state, action) => {
         state.status = "failed";
@@ -369,6 +380,7 @@ const dealSlice = createSlice({
       })
       .addCase(validationByArtisan.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.error = null;
       })
       .addCase(validationByArtisan.rejected, (state, action) => {
         state.status = "failed";
