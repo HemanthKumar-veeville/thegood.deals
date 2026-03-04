@@ -80,51 +80,17 @@ const CreateDeal = () => {
   };
 
   const handleAddPictures = (pictures) => {
-    setFormData((prevState) => {
-      // Create a Set to track existing file identifiers (name + size)
-      const existingFiles = new Set(
-        prevState.pictures
-          .filter((pic) => pic instanceof File)
-          .map((pic) => `${pic.name}-${pic.size}`)
-      );
-
-      // Filter out duplicates from new pictures
-      // First, check against existing files, then check for duplicates within new pictures array
-      const uniqueNewPictures = pictures.filter((pic) => {
-        if (pic instanceof File) {
-          const fileId = `${pic.name}-${pic.size}`;
-          if (existingFiles.has(fileId)) {
-            return false; // Skip duplicate against existing files
-          }
-          existingFiles.add(fileId); // Track this file to prevent duplicates within new array
-          return true;
-        }
-        return true; // Keep non-File objects (e.g., URLs from edit mode)
-      });
-
-      return {
-        ...prevState,
-        pictures: [...prevState.pictures, ...uniqueNewPictures],
-      };
-    });
+    setFormData((prevState) => ({
+      ...prevState,
+      pictures: [...prevState.pictures, ...pictures],
+    }));
   };
 
   const handleDeletePictures = (name) => {
-    setFormData((prevState) => {
-      // Filter out the picture with matching name
-      // For File objects, compare by name property
-      // For non-File objects (URLs in edit mode), compare by name if it exists
-      return {
-        ...prevState,
-        pictures: prevState.pictures.filter((pic) => {
-          if (pic instanceof File) {
-            return pic.name !== name;
-          }
-          // Handle non-File objects (shouldn't happen in create mode, but safe guard)
-          return pic?.name !== name;
-        }),
-      };
-    });
+    setFormData((prevState) => ({
+      ...prevState,
+      pictures: prevState.pictures.filter((pic) => pic.name !== name),
+    }));
   };
 
   const handleLocationChange = (collectionLocation, e) => {
@@ -241,25 +207,14 @@ const CreateDeal = () => {
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
 
-      // Append image files (with duplicate prevention)
+      // Append image files
       if (formData.pictures && formData.pictures.length > 0) {
-        // Deduplicate files by name and size before sending
-        const seenFiles = new Set();
-        const uniqueFiles = formData.pictures.filter((file) => {
+        formData.pictures.forEach((file, index) => {
           if (file instanceof File) {
-            const fileId = `${file.name}-${file.size}`;
-            if (seenFiles.has(fileId)) {
-              return false; // Skip duplicate
-            }
-            seenFiles.add(fileId);
-            return true;
+            form.append("images", file); // Append file objects
+          } else {
+            console.error(t("create_deal.console_invalid_file")); // Translated error message
           }
-          return false; // Skip non-File objects (URLs are handled separately in edit mode)
-        });
-
-        // Append unique file objects
-        uniqueFiles.forEach((file) => {
-          form.append("images", file);
         });
       } else {
         console.error(t("create_deal.console_no_pictures")); // Translated error message
