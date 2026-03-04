@@ -129,6 +129,20 @@ const AddPictures = ({
     }
   }, [isPlaying, currentIndex]);
 
+  // Sync internal pictures state when existingImages changes (for edit mode and error recovery)
+  useEffect(() => {
+    if (existingImages !== undefined) {
+      setPictures((prevPictures) => {
+        // When existingImages changes (e.g., after error clears File objects),
+        // update internal state to reflect only existing images (URL strings)
+        const urlStrings = existingImages.filter((img) => typeof img === 'string' && !img.includes('blob'));
+        // Keep any File preview objects that are currently in state (new uploads with blob URLs)
+        const filePreviews = prevPictures.filter((pic) => pic?.url && pic?.name && typeof pic !== 'string' && pic.url.includes('blob'));
+        return [...urlStrings, ...filePreviews];
+      });
+    }
+  }, [existingImages]);
+
   return (
     <div className="flex flex-col h-fit items-start gap-2.5 relative self-stretch w-full">
       <div className="flex flex-col items-center relative flex-1 self-stretch w-full grow">

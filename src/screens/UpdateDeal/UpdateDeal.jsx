@@ -219,17 +219,12 @@ const UpdateDeal = () => {
         "existing_images",
         existingImages?.filter((img) => img?.includes("blob") === false)
       );
-      // Append image files
-      if (formData.pictures && formData.pictures.length > 0) {
-        formData.pictures.forEach((file, index) => {
-          if (file instanceof File) {
-            form.append("images", file); // Append file objects
-          } else {
-            console.error(t("create_deal.console_invalid_file")); // Translated error message
-          }
+      // Filter and append only File objects (exclude URL strings or invalid objects)
+      const fileObjects = formData.pictures?.filter((file) => file instanceof File) || [];
+      if (fileObjects.length > 0) {
+        fileObjects.forEach((file) => {
+          form.append("images", file); // Append file objects
         });
-      } else {
-        console.error(t("create_deal.console_no_pictures")); // Translated error message
       }
 
       // Append product details
@@ -263,6 +258,13 @@ const UpdateDeal = () => {
       setErrorMessage(
         err?.[i18n.language] || err?.detail || t("create_deal.error_message")
       );
+      
+      // Clear invalid File objects after error, but keep URL strings (existing images)
+      // This prevents old invalid images from being sent on retry
+      setFormData((prevState) => ({
+        ...prevState,
+        pictures: prevState.pictures?.filter((pic) => !(pic instanceof File)) || [],
+      }));
     } finally {
       setLoading(false); // Set loading to false after the API call
     }
