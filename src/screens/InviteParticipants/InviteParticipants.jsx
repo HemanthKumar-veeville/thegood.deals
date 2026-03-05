@@ -23,6 +23,7 @@ import { Line } from "../../components/Line/Line";
 import { UserAlt } from "../../icons/UserAlt";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { ShowCustomSuccessModal } from "../../components/ShowCustomSuccessModal/ShowCustomSuccessModal";
+import Swal from "sweetalert2";
 import {
   calculateDaysBetweenDates,
   formatDateReversed,
@@ -57,6 +58,7 @@ export const InviteParticipants = ({
   const [isRequestSent, setIsRequestSent] = useState(is_request_sent || false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [visitorId, setVisitorId] = useState("");
+  const [errorStatusCode, setErrorStatusCode] = useState(null);
 
   // Helper function to extract exact error message from various error formats
   const extractErrorMessage = (errorObj) => {
@@ -133,9 +135,7 @@ export const InviteParticipants = ({
       const statusCode = error?.status;
       if (statusCode) {
         console.log("Error status code:", statusCode);
-        if (statusCode >= 400) {
-          navigate("/");
-        }
+        setErrorStatusCode(statusCode);
         // You can handle different status codes here
         // Example: if (statusCode === 404) { /* handle not found */ }
         // Example: if (statusCode === 403) { /* handle forbidden */ }
@@ -251,7 +251,19 @@ export const InviteParticipants = ({
         <ShowCustomErrorModal
           message={errorMessage}
           buttonText={t("waiting_deal.got_it")}
-          onClose={() => setIsError(false)}
+          shouldCloseOnOverlayClick={false}
+          handleClick={() => {
+            setIsError(false);
+            if (errorStatusCode !== null && errorStatusCode >= 400) {
+              navigate("/");
+            }
+            setErrorStatusCode(null);
+            Swal.close();
+          }}
+          onClose={() => {
+            setIsError(false);
+            setErrorStatusCode(null);
+          }}
         />
       )}
       {isSuccess && (
