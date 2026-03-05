@@ -62,20 +62,23 @@ export const InviteParticipants = ({
   const extractErrorMessage = (errorObj) => {
     if (!errorObj) return t("errors.request_failed");
     
+    // Handle new error structure with data, status, statusText
+    const errorData = errorObj?.data || errorObj;
+    
     // Check for localized error messages (e.g., error.en, error.fr)
     const currentLang = localStorage.getItem("i18nextLng") || "en";
-    if (errorObj[currentLang] && typeof errorObj[currentLang] === "string") {
-      return errorObj[currentLang];
+    if (errorData[currentLang] && typeof errorData[currentLang] === "string") {
+      return errorData[currentLang];
     }
     
     // Check common error message fields
-    if (errorObj.detail && typeof errorObj.detail === "string") return errorObj.detail;
-    if (errorObj.message && typeof errorObj.message === "string") return errorObj.message;
-    if (errorObj.error && typeof errorObj.error === "string") return errorObj.error;
+    if (errorData.detail && typeof errorData.detail === "string") return errorData.detail;
+    if (errorData.message && typeof errorData.message === "string") return errorData.message;
+    if (errorData.error && typeof errorData.error === "string") return errorData.error;
     
     // Check nested response data
-    if (errorObj.response?.data) {
-      const responseData = errorObj.response.data;
+    if (errorData.response?.data) {
+      const responseData = errorData.response.data;
       if (responseData.detail && typeof responseData.detail === "string") return responseData.detail;
       if (responseData.message && typeof responseData.message === "string") return responseData.message;
       if (responseData.error && typeof responseData.error === "string") return responseData.error;
@@ -88,12 +91,12 @@ export const InviteParticipants = ({
     }
     
     // Check if error is a string
-    if (typeof errorObj === "string") return errorObj;
+    if (typeof errorData === "string") return errorData;
     
     // Try to stringify if it's an object
-    if (typeof errorObj === "object") {
+    if (typeof errorData === "object") {
       try {
-        const stringified = JSON.stringify(errorObj);
+        const stringified = JSON.stringify(errorData);
         if (stringified !== "{}" && stringified !== "null") return stringified;
       } catch (e) {
         // If stringification fails, try toString
@@ -102,7 +105,7 @@ export const InviteParticipants = ({
     
     // Fallback to toString or default message
     try {
-      const errorString = errorObj.toString();
+      const errorString = errorData.toString();
       if (errorString && errorString !== "[object Object]") return errorString;
     } catch (e) {
       // toString failed
@@ -122,9 +125,22 @@ export const InviteParticipants = ({
   // Handle Redux error state from fetchDealValidationDetails
   useEffect(() => {
     if (status === "failed" && error) {
-      const extractedError = extractErrorMessage(error);
+      const extractedError = extractErrorMessage(error?.data || error);
       setErrorMessage(extractedError);
       setIsError(true);
+      
+      // Access status code if needed
+      const statusCode = error?.status;
+      if (statusCode) {
+        console.log("Error status code:", statusCode);
+        if (statusCode >= 400) {
+          navigate("/");
+        }
+        // You can handle different status codes here
+        // Example: if (statusCode === 404) { /* handle not found */ }
+        // Example: if (statusCode === 403) { /* handle forbidden */ }
+        // Example: if (statusCode === 500) { /* handle server error */ }
+      }
     }
   }, [status, error]);
 

@@ -96,7 +96,11 @@ export const fetchDealValidationDetails = createAsyncThunk(
       const response = await axiosInstance.get(`/deals/${dealId}/validation`);
       return response.data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue({
+        data: err.response?.data,
+        status: err.response?.status,
+        statusText: err.response?.statusText,
+      });
     }
   }
 );
