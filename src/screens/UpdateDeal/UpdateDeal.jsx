@@ -258,13 +258,6 @@ const UpdateDeal = () => {
       setErrorMessage(
         err?.[i18n.language] || err?.detail || t("create_deal.error_message")
       );
-      
-      // Clear invalid File objects after error, but keep URL strings (existing images)
-      // This prevents old invalid images from being sent on retry
-      setFormData((prevState) => ({
-        ...prevState,
-        pictures: prevState.pictures?.filter((pic) => !(pic instanceof File)) || [],
-      }));
     } finally {
       setLoading(false); // Set loading to false after the API call
     }
@@ -349,7 +342,6 @@ const UpdateDeal = () => {
   const handleClose = () => {
     setIsError(false);
     setErrorMessage("");
-    fetchDeal();
   };
 
   return (
