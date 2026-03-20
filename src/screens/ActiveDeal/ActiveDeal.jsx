@@ -104,7 +104,7 @@ const ActiveDeal = () => {
   }, [isMenuOpen]);
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/");
   };
   console.log({ isError, errorMessage });
   const handleMyOrders = () => {

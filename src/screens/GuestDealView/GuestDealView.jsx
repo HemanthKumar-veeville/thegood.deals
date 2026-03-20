@@ -47,7 +47,7 @@ const GuestDealView = () => {
   ]);
 
   const handleBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   const handleMyOrders = () => {
