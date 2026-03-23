@@ -301,8 +301,7 @@ const CreateDeal = () => {
   };
 
   return (
-    <>
-      {loading && <CustomLoader />}
+    <div className="relative">
       {isError && (
         <ShowCustomErrorModal
           message={errorMessage}
@@ -310,12 +309,12 @@ const CreateDeal = () => {
           onClose={() => setIsError(false)} // Reset modal state on close
         />
       )}
-      {!loading && (
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col w-full items-start relative bg-primary-background mx-auto"
-        >
-          <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto]">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col w-full items-start relative bg-primary-background mx-auto"
+        aria-busy={loading}
+      >
+        <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto]">
             <div
               className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke"
               onClick={handleBack}
@@ -476,17 +475,18 @@ const CreateDeal = () => {
             <AcceptConditions formData={formData} handleChange={handleChange} />
             <button
               type="submit"
-              className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
+              disabled={loading}
+              className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
             >
               <div className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                 {t("create_deal.next_step_button")}
               </div>
               <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
             </button>
-          </div>
-        </form>
-      )}
-    </>
+        </div>
+      </form>
+      {loading && <CustomLoader isOverlay />}
+    </div>
   );
 };
 
