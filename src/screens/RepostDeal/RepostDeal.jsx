@@ -60,6 +60,7 @@ const RepostDeal = () => {
   };
   const [formData, setFormData] = useState(dealForm);
   const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [products, setProducts] = useState([]);
   const [addMode, setAddMode] = useState(false);
   const [title, setTitle] = useState(dealTitle);
@@ -94,7 +95,14 @@ const RepostDeal = () => {
   const handleAddPictures = (pictures) => {
     setFormData((prevState) => ({
       ...prevState,
-      pictures,
+      pictures: [...prevState.pictures, ...pictures],
+    }));
+  };
+
+  const handleDeletePictures = (name) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      pictures: prevState.pictures.filter((pic) => pic.name !== name),
     }));
   };
 
@@ -196,7 +204,7 @@ const RepostDeal = () => {
       return;
     }
 
-    setLoading(true); // Set loading to true at the start
+    setIsSubmitting(true); // Set submit loading to true at the start
 
     try {
       // Create FormData object and append form data
@@ -254,7 +262,7 @@ const RepostDeal = () => {
         err?.[i18n.language] || err?.detail || t("create_deal.error_message")
       );
     } finally {
-      setLoading(false); // Set loading to false after the API call
+      setIsSubmitting(false); // Set submit loading to false after the API call
     }
   };
 
@@ -345,12 +353,14 @@ const RepostDeal = () => {
           onClose={handleClose}
         />
       )}
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col w-full items-start relative bg-primary-background mx-auto"
-        aria-busy={loading}
-      >
-        <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
+      {loading && <CustomLoader />}
+      {!loading && (
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col w-full items-start relative bg-primary-background mx-auto"
+          aria-busy={isSubmitting}
+        >
+          <div className="flex flex-col w-full items-start gap-[15px] px-[35px] py-[15px] relative flex-[0_0_auto]">
             <div
               className="flex items-center gap-3 pt-0 pb-5 px-0 relative self-stretch w-full flex-[0_0_auto] border-b [border-bottom-style:solid] border-stroke"
               onClick={handleBack}
@@ -370,6 +380,7 @@ const RepostDeal = () => {
             </div>
             <AddPictures
               onChange={handleAddPictures}
+              onDelete={handleDeletePictures}
               setForm={setImagesForm}
               images={formData?.pictures}
               existingImages={existingImages}
@@ -525,7 +536,7 @@ const RepostDeal = () => {
             <AcceptConditions formData={formData} handleChange={handleChange} />
             <button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
             >
               <div className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
@@ -533,9 +544,10 @@ const RepostDeal = () => {
               </div>
               <ArrowRight1 className="!relative !w-5 !h-5" color="white" />
             </button>
-        </div>
-      </form>
-      {loading && <CustomLoader isOverlay />}
+          </div>
+        </form>
+      )}
+      {isSubmitting && <CustomLoader isOverlay />}
     </div>
   );
 };
