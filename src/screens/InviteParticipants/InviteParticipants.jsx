@@ -397,8 +397,8 @@ export const InviteParticipants = ({
                   key={index}
                   className="flex flex-col items-start gap-[5px] relative self-stretch w-full flex-[0_0_auto]"
                 >
-                  <div className="flex items-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-                    <p className="relative w-fit mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] whitespace-nowrap [font-style:var(--body-medium-regular-font-style)]">
+                  <div className="flex items-start gap-2.5 relative self-stretch w-full min-w-0 flex-[0_0_auto]">
+                    <p className="relative min-w-0 flex-1 mt-[-1.00px] font-body-medium-regular font-[number:var(--body-medium-regular-font-weight)] text-primary-color text-[length:var(--body-medium-regular-font-size)] tracking-[var(--body-medium-regular-letter-spacing)] leading-[var(--body-medium-regular-line-height)] break-words [font-style:var(--body-medium-regular-font-style)]">
                       {product.product_name || product.name || "-"}
                     </p>
                   </div>
