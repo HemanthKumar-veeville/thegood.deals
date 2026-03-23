@@ -1,4 +1,4 @@
-﻿{
+{
   "side_bar": {
     "language": {
       "english": "English",
@@ -1001,7 +1001,9 @@
     "file_input_label": "Ajouter des photos",
     "play_icon": "▶",
     "pause_icon": "❚❚",
-    "image_alt_text": "image-{index}"
+    "image_alt_text": "image-{index}",
+    "delete_aria": "Supprimer l'image {{index}}",
+    "star_aria": "Définir l'image {{index}} comme principale"
   },
   "app": {
     "logo_part1": "thegood",

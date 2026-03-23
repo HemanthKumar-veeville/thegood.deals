@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 import { useNavigate } from "react-router-dom";
 import AppBar from "../../components/AppBar/AppBar";
@@ -102,6 +102,30 @@ const UpdateDeal = () => {
       pictures: prevState.pictures.filter((pic) => pic.name !== name),
     }));
   };
+
+  const handlePicturesOrderChange = useCallback(
+    (orderedPictures, orderedExistingImages) => {
+      setFormData((prevState) => {
+        const hasSameOrder =
+          prevState.pictures.length === orderedPictures.length &&
+          prevState.pictures.every(
+            (picture, index) => picture === orderedPictures[index]
+          );
+        if (hasSameOrder) {
+          return prevState;
+        }
+        return { ...prevState, pictures: orderedPictures };
+      });
+
+      setExistingImages((prevImages) => {
+        const hasSameOrder =
+          prevImages.length === orderedExistingImages.length &&
+          prevImages.every((image, index) => image === orderedExistingImages[index]);
+        return hasSameOrder ? prevImages : orderedExistingImages;
+      });
+    },
+    []
+  );
 
   const handleLocationChange = (collectionLocation, e) => {
     setFormData((prevState) => ({
@@ -220,6 +244,12 @@ const UpdateDeal = () => {
         "existing_images",
         existingImages?.filter((img) => img?.includes("blob") === false)
       );
+      const highlightedImage =
+        formData.pictures?.length > 0 &&
+        formData.pictures[0] instanceof File
+          ? "new"
+          : "old";
+      form.append("highlighted_image", highlightedImage);
       // Filter and append only File objects (exclude URL strings or invalid objects)
       const fileObjects = formData.pictures?.filter((file) => file instanceof File) || [];
       if (fileObjects.length > 0) {
@@ -390,6 +420,7 @@ const UpdateDeal = () => {
               existingImages={existingImages}
               setExistingImages={setExistingImages}
               isEditMode={false}
+              onPicturesOrderChange={handlePicturesOrderChange}
             />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">

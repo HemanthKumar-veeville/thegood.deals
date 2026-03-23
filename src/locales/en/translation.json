@@ -1003,7 +1003,9 @@
     "file_input_label": "Add pictures",
     "play_icon": "▶",
     "pause_icon": "❚❚",
-    "image_alt_text": "picture-{index}"
+    "image_alt_text": "picture-{index}",
+    "delete_aria": "Delete picture {{index}}",
+    "star_aria": "Set picture {{index}} as main"
   },
   "app": {
     "logo_part1": "thegood",

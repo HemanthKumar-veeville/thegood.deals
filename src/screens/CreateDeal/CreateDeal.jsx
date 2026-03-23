@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 import { useNavigate } from "react-router-dom";
 import AppBar from "../../components/AppBar/AppBar";
@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addNewDeal,
   getDealByDealId,
+  resetCreateDealDraft,
   updateDealForm,
   updateTitle,
   updateIban,
@@ -34,9 +35,6 @@ const CreateDeal = () => {
   const { t, i18n } = useTranslation(); // Initialize translation hook
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const dealForm = useSelector((state) => state.deals.dealForm);
-  const dealTitle = useSelector((state) => state.deals.title);
-  const dealIban = useSelector((state) => state.deals.iban);
   const [productUnderEdit, setProductUnderEdit] = useState(null);
   const [formErrors, setFormErrors] = useState({}); // Track validation errors
 
@@ -50,13 +48,23 @@ const CreateDeal = () => {
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };
-  const [formData, setFormData] = useState(dealForm);
+  const [formData, setFormData] = useState({
+    description: "",
+    collectionDate: formatDate(new Date()),
+    contentDescription: "",
+    manufacturerInfo: "",
+    dealExpiration: formatDate(new Date()),
+    acceptConditions: false,
+    collectionLocation: "",
+    pictures: [],
+    deliveryCost: 0,
+  });
   const [loading, setLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [products, setProducts] = useState([]);
   const [addMode, setAddMode] = useState(true);
-  const [title, setTitle] = useState(dealTitle);
-  const [iban, setIban] = useState(dealIban || "");
+  const [title, setTitle] = useState("");
+  const [iban, setIban] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(location.search);
@@ -93,6 +101,20 @@ const CreateDeal = () => {
       pictures: prevState.pictures.filter((pic) => pic.name !== name),
     }));
   };
+
+  const handlePicturesOrderChange = useCallback((orderedPictures) => {
+    setFormData((prevState) => {
+      const hasSameOrder =
+        prevState.pictures.length === orderedPictures.length &&
+        prevState.pictures.every(
+          (picture, index) => picture === orderedPictures[index]
+        );
+      if (hasSameOrder) {
+        return prevState;
+      }
+      return { ...prevState, pictures: orderedPictures };
+    });
+  }, []);
 
   const handleLocationChange = (collectionLocation, e) => {
     setFormData((prevState) => ({
@@ -241,6 +263,24 @@ const CreateDeal = () => {
   };
 
   useEffect(() => {
+    if (!dealId) {
+      dispatch(resetCreateDealDraft());
+      setTitle("");
+      setIban("");
+      setProducts([]);
+      setFormData({
+        description: "",
+        collectionDate: formatDate(new Date()),
+        contentDescription: "",
+        manufacturerInfo: "",
+        dealExpiration: formatDate(new Date()),
+        acceptConditions: false,
+        collectionLocation: "",
+        pictures: [],
+        deliveryCost: 0,
+      });
+    }
+
     const fetchDeal = async () => {
       if (dealId) {
         setLoading(true);
@@ -277,7 +317,7 @@ const CreateDeal = () => {
     };
 
     fetchDeal();
-  }, [dealId, t]);
+  }, [dealId, t, dispatch]);
 
   const handleBack = () => {
     navigate(-1);
@@ -341,6 +381,7 @@ const CreateDeal = () => {
               setForm={setImagesForm}
               images={formData?.pictures}
               isEditMode={false}
+              onPicturesOrderChange={handlePicturesOrderChange}
             />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">

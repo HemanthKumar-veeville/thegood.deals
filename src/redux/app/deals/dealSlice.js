@@ -33,6 +33,18 @@ const initialState = {
   images: [],
 };
 
+const getInitialDealForm = () => ({
+  description: "",
+  collectionDate: formatDate(new Date()),
+  contentDescription: "",
+  manufacturerInfo: "",
+  dealExpiration: formatDate(new Date()),
+  acceptConditions: false,
+  collectionLocation: "",
+  pictures: [],
+  deliveryCost: 0,
+});
+
 // Async thunk for fetching deals
 export const fetchDeals = createAsyncThunk(
   "deals/fetchDeals",
@@ -235,6 +247,12 @@ const dealSlice = createSlice({
     updateImages: (state, action) => {
       state.images = action.payload;
     },
+    resetCreateDealDraft: (state) => {
+      state.dealForm = getInitialDealForm();
+      state.title = "";
+      state.iban = "";
+      state.images = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -393,6 +411,12 @@ const dealSlice = createSlice({
   },
 });
 
-export const { updateDealForm, updateTitle, updateImages, updateIban } =
+export const {
+  updateDealForm,
+  updateTitle,
+  updateImages,
+  updateIban,
+  resetCreateDealDraft,
+} =
   dealSlice.actions;
 export default dealSlice.reducer;

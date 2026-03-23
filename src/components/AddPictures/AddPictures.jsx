@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CirclePlus55 } from "../../icons/CirclePlus55";
-import { FaTrash, FaStar } from "react-icons/fa"; // Import the trash and star icons from react-icons
-import { useTranslation } from "react-i18next"; // Import useTranslation
+import { FaTrash, FaStar } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 import { ShowCustomErrorModal } from "../ErrorAlert/ErrorAlert";
 
 const AddPictures = ({
@@ -11,18 +11,31 @@ const AddPictures = ({
   setExistingImages,
   existingImages,
   isEditMode,
+  onPicturesOrderChange,
 }) => {
-  const { t } = useTranslation(); // Initialize translation hook
-  const [pictures, setPictures] = useState(existingImages || []);
-  const [starredIndex, setStarredIndex] = useState(null); // Keep track of the single starred image
+  const { t } = useTranslation();
+  const [pictures, setPictures] = useState([]);
+  const [starredIndex, setStarredIndex] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  console.log({ pictures, images });
+  const activePreviewUrlsRef = useRef(new Set());
+  const hasInitializedRef = useRef(false);
+
+  const notifyOrderChange = (pics) => {
+    if (!onPicturesOrderChange || !Array.isArray(pics)) return;
+    const orderedPicturesForForm = pics.map((picture) =>
+      picture?.file instanceof File ? picture.file : picture
+    );
+    const orderedExistingImages = pics.filter(
+      (picture) => typeof picture === "string" && !picture?.includes?.("blob")
+    );
+    onPicturesOrderChange(orderedPicturesForForm, orderedExistingImages);
+  };
+
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
-    onChange(files);
     const totalFiles = pictures.length + files.length;
     if (totalFiles > 10) {
       setIsError(true);
@@ -30,118 +43,178 @@ const AddPictures = ({
       return;
     }
 
-    const newPictures = files.map((file) => {
-      return { url: URL.createObjectURL(file), name: file.name };
-    });
-    setPictures((prevPictures) => {
-      const updatedPictures = [...prevPictures, ...newPictures];
-      // Set the first image as starred by default
-      if (updatedPictures.length === newPictures.length) {
+    onChange(files);
+
+    const newPictures = files.map((file) => ({
+      url: URL.createObjectURL(file),
+      name: file.name,
+      file,
+    }));
+
+    setPictures((prev) => {
+      const updated = [...prev, ...newPictures];
+      if (updated.length === newPictures.length) {
         setStarredIndex(0);
       }
-      return updatedPictures;
+      notifyOrderChange(updated);
+      return updated;
     });
-    isEditMode &&
-      setExistingImages((prevPictures) => {
-        const updatedPictures = [...prevPictures, ...newPictures];
-        // Set the first image as starred by default
-        if (updatedPictures.length === newPictures.length) {
-          setStarredIndex(0);
-        }
-        return updatedPictures;
-      });
+
+    if (!onPicturesOrderChange && isEditMode && setExistingImages) {
+      setExistingImages((prev) => [...prev, ...newPictures]);
+    }
   };
 
   const handleDelete = (index, picture, event) => {
-    const name = picture?.name || null;
-    picture = picture?.url || picture;
-    const fileArray = picture?.split("/");
-    const fileIndex = fileArray?.length - 1;
-    const fileName = fileArray[fileIndex];
-
     event.preventDefault();
     event.stopPropagation();
-    const updatedPictures = pictures.filter((_, i) => i !== index);
-    setPictures(updatedPictures);
-    const existing_images = updatedPictures.filter((pic) => !pic?.url);
-    setExistingImages && setExistingImages(existing_images);
+    const name = picture?.name ?? (typeof picture === "string" ? picture : null);
 
-    onDelete(name);
-    if (starredIndex === index) {
-      setStarredIndex(null); // Clear star if the starred image is deleted
-    } else if (starredIndex > index) {
-      setStarredIndex(starredIndex - 1); // Adjust star index if a previous image is deleted
-    }
-    if (index === currentIndex) {
-      setCurrentIndex((prevIndex) => (prevIndex === 0 ? 0 : prevIndex - 1));
-    }
+    setPictures((prev) => {
+      const updated = prev.filter((_, i) => i !== index);
+      if (!onPicturesOrderChange && setExistingImages) {
+        const existingOnly = updated.filter(
+          (pic) => typeof pic === "string" && !pic?.includes?.("blob")
+        );
+        setExistingImages(existingOnly);
+      }
+      notifyOrderChange(updated);
+      return updated;
+    });
+
+    if (!onPicturesOrderChange) onDelete(name);
+
+    setStarredIndex((prev) => {
+      if (prev === index) return null;
+      if (prev > index) return prev - 1;
+      return prev;
+    });
+    setCurrentIndex((prev) => (index === prev ? (prev === 0 ? 0 : prev - 1) : prev));
   };
 
   const toggleStar = (index, event) => {
     event.preventDefault();
     event.stopPropagation();
-    setPictures((prevPictures) => {
-      const updatedPictures = [...prevPictures];
-      const starredPicture = updatedPictures.splice(index, 1)[0];
-      updatedPictures.unshift(starredPicture);
-      return updatedPictures;
+    setPictures((prev) => {
+      const updated = [...prev];
+      const [starred] = updated.splice(index, 1);
+      updated.unshift(starred);
+      notifyOrderChange(updated);
+      return updated;
     });
-    setStarredIndex(0); // Set the starred index to the first position
-    setCurrentIndex(0); // Set the current index to the first position
+    setStarredIndex(0);
+    setCurrentIndex(0);
   };
 
   const prevSlide = (event) => {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? pictures.length - 1 : prevIndex - 1
-    );
+    event?.preventDefault();
+    event?.stopPropagation();
+    setCurrentIndex((prev) => (prev === 0 ? pictures.length - 1 : prev - 1));
   };
 
   const nextSlide = (event) => {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setCurrentIndex((prevIndex) =>
-      prevIndex === pictures.length - 1 ? 0 : prevIndex + 1
-    );
+    event?.preventDefault();
+    event?.stopPropagation();
+    setCurrentIndex((prev) => (prev === pictures.length - 1 ? 0 : prev + 1));
   };
 
   const setCurrentSlide = (index, event) => {
-    event.preventDefault();
-    event.stopPropagation();
+    event?.preventDefault();
+    event?.stopPropagation();
     setCurrentIndex(index);
   };
 
   const togglePlayPause = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setIsPlaying(!isPlaying);
+    event?.preventDefault();
+    event?.stopPropagation();
+    setIsPlaying((prev) => !prev);
   };
 
   useEffect(() => {
-    if (isPlaying) {
-      const interval = setInterval(nextSlide, 2000); // Change slide every 2 seconds
-      return () => clearInterval(interval);
-    }
-  }, [isPlaying, currentIndex]);
+    if (!isPlaying) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev === pictures.length - 1 ? 0 : prev + 1));
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isPlaying, pictures.length]);
 
-  // Sync internal pictures state when existingImages changes (for edit mode and error recovery)
   useEffect(() => {
-    if (existingImages !== undefined) {
-      setPictures((prevPictures) => {
-        // When existingImages changes (e.g., after error clears File objects),
-        // update internal state to reflect only existing images (URL strings)
-        const urlStrings = existingImages.filter((img) => typeof img === 'string' && !img.includes('blob'));
-        // Keep any File preview objects that are currently in state (new uploads with blob URLs)
-        const filePreviews = prevPictures.filter((pic) => pic?.url && pic?.name && typeof pic !== 'string' && pic.url.includes('blob'));
-        return [...urlStrings, ...filePreviews];
+    if (onPicturesOrderChange) {
+      const src = Array.isArray(existingImages) ? existingImages : Array.isArray(images) ? images : [];
+      if (src.length === 0) {
+        if (hasInitializedRef.current) return;
+        return;
+      }
+      if (hasInitializedRef.current) return;
+      hasInitializedRef.current = true;
+      const normalized = src.map((item) => {
+        if (item instanceof File) {
+          return { url: URL.createObjectURL(item), name: item.name, file: item };
+        }
+        if (item?.url && item?.file instanceof File) return item;
+        return item;
+      });
+      setPictures(normalized);
+      setStarredIndex(0);
+      notifyOrderChange(normalized);
+    } else {
+      const src =
+        Array.isArray(images) && images.length > 0
+          ? images
+          : Array.isArray(existingImages)
+          ? existingImages
+          : [];
+      if (src.length === 0) {
+        setPictures([]);
+        return;
+      }
+      setPictures((prev) => {
+        const prevByFile = new Map(
+          prev.filter((p) => p?.file instanceof File && p?.url).map((p) => [p.file, p])
+        );
+        const next = src.map((item) => {
+          if (item instanceof File) {
+            const cached = prevByFile.get(item);
+            if (cached) return cached;
+            return { url: URL.createObjectURL(item), name: item.name, file: item };
+          }
+          if (item?.file instanceof File && item?.url) {
+            const cached = prevByFile.get(item.file);
+            return cached ?? item;
+          }
+          return item;
+        });
+        if (prev.length === next.length && prev.every((p, i) => p === next[i])) return prev;
+        return next;
       });
     }
-  }, [existingImages]);
+  }, [onPicturesOrderChange, images, existingImages]);
+
+  useEffect(() => {
+    const urls = new Set(pictures.filter((p) => p?.url && p?.file instanceof File).map((p) => p.url));
+    activePreviewUrlsRef.current.forEach((url) => {
+      if (!urls.has(url)) {
+        URL.revokeObjectURL(url);
+        activePreviewUrlsRef.current.delete(url);
+      }
+    });
+    urls.forEach((u) => activePreviewUrlsRef.current.add(u));
+  }, [pictures]);
+
+  useEffect(() => {
+    return () => {
+      activePreviewUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+      activePreviewUrlsRef.current.clear();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (pictures.length === 0) {
+      setStarredIndex(null);
+      return;
+    }
+    setStarredIndex((prev) => (prev === null || prev >= pictures.length ? 0 : prev));
+  }, [pictures.length]);
 
   return (
     <div className="flex flex-col h-fit items-start gap-2.5 relative self-stretch w-full">
@@ -150,7 +223,7 @@ const AddPictures = ({
           <ShowCustomErrorModal
             message={errorMessage}
             buttonText={t("waiting_deal.got_it")}
-            onClose={() => setIsError(false)} // Reset modal state on close
+            onClose={() => setIsError(false)}
           />
         )}
         {pictures.length > 0 && (
@@ -160,29 +233,28 @@ const AddPictures = ({
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {pictures.map((picture, index) => (
-                <div key={index} className="w-full flex-shrink-0 relative">
+                <div key={`${index}-${picture?.url || picture}`} className="w-full flex-shrink-0 relative">
                   <img
                     src={picture?.url || picture}
-                    alt={t("add_pictures.image_alt_text", { index })} // Use translation for image alt text
-                    className="object-contain w-full h-auto max-h-64 rounded-md" // Updated styling
+                    alt={t("add_pictures.image_alt_text", { index })}
+                    className="object-contain w-full h-auto max-h-64 rounded-md"
                   />
                   <button
                     type="button"
-                    onClick={(event) => handleDelete(index, picture, event)}
+                    onClick={(e) => handleDelete(index, picture, e)}
                     className="absolute top-2 right-2 bg-white rounded-full p-1"
+                    aria-label={t("add_pictures.delete_aria", { index })}
                   >
                     <FaTrash className="w-4 h-4 text-red-600" />
                   </button>
                   <button
-                    onClick={(event) => toggleStar(index, event)}
+                    type="button"
+                    onClick={(e) => toggleStar(index, e)}
                     className="absolute top-10 right-2 bg-white rounded-full p-1"
+                    aria-label={t("add_pictures.star_aria", { index })}
                   >
                     <FaStar
-                      className={`w-4 h-4 ${
-                        starredIndex === index
-                          ? "text-yellow-500"
-                          : "text-gray-400"
-                      }`}
+                      className={`w-4 h-4 ${starredIndex === index ? "text-yellow-500" : "text-gray-400"}`}
                     />
                   </button>
                 </div>
@@ -190,6 +262,7 @@ const AddPictures = ({
             </div>
             <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center px-4 py-2 bg-black bg-opacity-50">
               <button
+                type="button"
                 onClick={prevSlide}
                 className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 focus:outline-none"
               >
@@ -197,25 +270,23 @@ const AddPictures = ({
               </button>
               <div className="flex space-x-2 items-center">
                 <button
+                  type="button"
                   onClick={togglePlayPause}
                   className="w-8 h-8 bg-white rounded-full focus:outline-none flex items-center justify-center"
                 >
-                  {isPlaying
-                    ? t("add_pictures.pause_icon")
-                    : t("add_pictures.play_icon")}{" "}
-                  {/* Use translation for play/pause */}
+                  {isPlaying ? t("add_pictures.pause_icon") : t("add_pictures.play_icon")}
                 </button>
                 {pictures.map((_, index) => (
                   <button
                     key={index}
-                    onClick={(event) => setCurrentSlide(index, event)}
-                    className={`w-2 h-2 rounded-full ${
-                      index === currentIndex ? "bg-white" : "bg-gray-400"
-                    } focus:outline-none`}
-                  ></button>
+                    type="button"
+                    onClick={(e) => setCurrentSlide(index, e)}
+                    className={`w-2 h-2 rounded-full ${index === currentIndex ? "bg-white" : "bg-gray-400"} focus:outline-none`}
+                  />
                 ))}
               </div>
               <button
+                type="button"
                 onClick={nextSlide}
                 className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-75 focus:outline-none"
               >
@@ -226,14 +297,11 @@ const AddPictures = ({
         )}
         <div className="flex items-center justify-center gap-2.5 py-3 relative flex-1 self-stretch w-full grow bg-white rounded-md border border-solid border-stroke mt-4">
           <label
-            className={`${
-              pictures.length > 0 ? "" : "h-32"
-            }  all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap flex items-center `}
+            className={`${pictures.length > 0 ? "" : "h-32"} all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-[#1b4f4a] text-base text-center tracking-[0] leading-6 whitespace-nowrap flex items-center`}
           >
             <div className="flex items-center justify-center gap-2 px-6 py-2 relative flex-[0_0_auto] rounded-[50px] border border-solid border-[#1b4f4a] cursor-pointer">
-              <CirclePlus55 className="!relative !w-5 !h-5" color="#1B4F4A" />{" "}
-              {t("add_pictures.file_input_label")}{" "}
-              {/* Use translation for file input label */}
+              <CirclePlus55 className="!relative !w-5 !h-5" color="#1B4F4A" />
+              {t("add_pictures.file_input_label")}
             </div>
             <input
               type="file"
