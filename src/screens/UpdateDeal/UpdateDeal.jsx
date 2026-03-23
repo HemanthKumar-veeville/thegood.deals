@@ -65,7 +65,6 @@ const UpdateDeal = () => {
   const queryParams = new URLSearchParams(location.search);
   const is_repostable = queryParams.get("is_repostable");
   const dealId = queryParams.get("deal_id");
-  const [imagesForm, setImagesForm] = useState(new FormData());
   const [existingImages, setExistingImages] = useState([]);
 
   console.log({ errorMessage, isError });
@@ -96,10 +95,35 @@ const UpdateDeal = () => {
   };
 
   const handleDeletePictures = (name) => {
+    if (!name) {
+      return;
+    }
     setFormData((prevState) => ({
       ...prevState,
-      pictures: prevState.pictures.filter((pic) => pic.name !== name),
+      pictures: prevState.pictures.filter((pic) => {
+        if (pic instanceof File) {
+          return pic.name !== name;
+        }
+        if (typeof pic === "string") {
+          const parts = pic.split("/");
+          return parts[parts.length - 1] !== name;
+        }
+        return pic?.name !== name;
+      }),
     }));
+    setExistingImages((prev) =>
+      (prev || []).filter((img) => {
+        if (typeof img !== "string") {
+          return true;
+        }
+        const parts = img.split("/");
+        return parts[parts.length - 1] !== name;
+      })
+    );
+  };
+
+  const handleReorderPictures = (nextPictures) => {
+    setFormData((prev) => ({ ...prev, pictures: nextPictures }));
   };
 
   const handleLocationChange = (collectionLocation, e) => {
@@ -346,19 +370,21 @@ const UpdateDeal = () => {
 
   return (
     <>
-      {loading && <CustomLoader />}
-      {isError && (
-        <ShowCustomErrorModal
-          message={errorMessage}
-          buttonText={t("waiting_deal.got_it")}
-          shouldCloseOnOverlayClick={true}
-          onClose={handleClose}
-        />
-      )}
-      {!loading && (
+      <div className="relative min-h-[100dvh] w-full">
+        {loading && <CustomLoader overlay />}
+        {isError && (
+          <ShowCustomErrorModal
+            message={errorMessage}
+            buttonText={t("waiting_deal.got_it")}
+            shouldCloseOnOverlayClick={true}
+            onClose={handleClose}
+          />
+        )}
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col w-full items-start relative bg-primary-background mx-auto"
+          className={`flex flex-col w-full items-start relative bg-primary-background mx-auto ${
+            loading ? "pointer-events-none" : ""
+          }`}
         >
           <div className="flex flex-col w-full items-start gap-[15px] px-[15px] py-[15px] relative flex-[0_0_auto]">
             <div
@@ -383,11 +409,8 @@ const UpdateDeal = () => {
             <AddPictures
               onChange={handleAddPictures}
               onDelete={handleDeletePictures}
-              setForm={setImagesForm}
+              onReorderPictures={handleReorderPictures}
               images={formData?.pictures}
-              existingImages={existingImages}
-              setExistingImages={setExistingImages}
-              isEditMode={false}
             />
             <TitleInput dealTitle={title} setDealTitle={setTitle} />
             <div className="w-full">
@@ -529,7 +552,8 @@ const UpdateDeal = () => {
             <AcceptConditions formData={formData} handleChange={handleChange} />
             <button
               type="submit"
-              className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer"
+              disabled={loading}
+              className="gap-2.5 bg-[#1b4f4a] flex items-center justify-center px-6 py-3 relative self-stretch w-full flex-[0_0_auto] rounded-md cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <div className="all-[unset] box-border relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-medium text-white text-base text-center tracking-[0] leading-6 whitespace-nowrap">
                 {t("create_deal.next_step_button")}
@@ -538,7 +562,7 @@ const UpdateDeal = () => {
             </button>
           </div>
         </form>
-      )}
+      </div>
     </>
   );
 };
