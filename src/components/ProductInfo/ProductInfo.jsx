@@ -51,6 +51,63 @@ const ProductInfo = ({
     }
   }, [maximumRetailPrice, goodDealPrice]);
 
+  useEffect(() => {
+    if (maxQuantity < minQuantity) {
+      setMaxQuantity(minQuantity);
+    }
+  }, [minQuantity, maxQuantity]);
+
+  useEffect(() => {
+    const mrp = Number(maximumRetailPrice);
+    const gdp = Number(goodDealPrice);
+    if (
+      !Number.isNaN(mrp) &&
+      mrp > 0 &&
+      !Number.isNaN(gdp) &&
+      gdp > mrp
+    ) {
+      setGoodDealPrice(String(mrp));
+    }
+  }, [maximumRetailPrice, goodDealPrice]);
+
+  const handleTotalStockChange = (e) => {
+    const val = e.target.value;
+    if (val === "") {
+      setTotalStock("");
+      return;
+    }
+    if (val.startsWith("-")) return;
+    const num = Number(val);
+    if (Number.isNaN(num) || num < 1 || !Number.isInteger(num)) return;
+    setTotalStock(val);
+  };
+
+  const handlePriceChange = (e, setter) => {
+    const val = e.target.value;
+    if (val === "") {
+      setter("");
+      return;
+    }
+    if (val.startsWith("-")) return;
+    const num = Number(val);
+    if (!Number.isNaN(num) && num < 0) return;
+    setter(val);
+  };
+
+  const handleGoodDealPriceChange = (e) => {
+    const val = e.target.value;
+    if (val === "") {
+      setGoodDealPrice("");
+      return;
+    }
+    if (val.startsWith("-")) return;
+    const num = Number(val);
+    if (!Number.isNaN(num) && num < 0) return;
+    const mrp = Number(maximumRetailPrice);
+    if (!Number.isNaN(mrp) && mrp > 0 && num > mrp) return;
+    setGoodDealPrice(val);
+  };
+
   const productValidations = [
     {
       condition: !productTitle.trim(),
@@ -196,9 +253,12 @@ const ProductInfo = ({
         <Box4 className="!relative !w-4 !h-4" />
         <input
           type="number"
+          min={1}
+          step={1}
           placeholder={t("productInfo.totalStockPlaceholder")}
           value={totalStock}
-          onChange={(e) => setTotalStock(e.target.value)}
+          onChange={handleTotalStockChange}
+          aria-label={t("productInfo.totalStockLabel")}
           className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
         />
       </div>
@@ -206,11 +266,13 @@ const ProductInfo = ({
         label={t("productInfo.minQuantityLabel")}
         value={minQuantity}
         setValue={setMinQuantity}
+        min={1}
       />
       <ProductQuantity
         label={t("productInfo.maxQuantityLabel")}
         value={maxQuantity}
         setValue={setMaxQuantity}
+        min={minQuantity}
       />
       <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
         <div className="relative w-fit mt-[-1.00px] font-family:'Inter',Helvetica font-medium text-[#1b4f4a] text-base tracking-[0] leading-6 whitespace-nowrap">
@@ -221,9 +283,12 @@ const ProductInfo = ({
         <WebsiteMoney className="!relative !w-4 !h-4" color="#6B7280" />
         <input
           type="number"
+          min={0.1}
+          step={0.1}
           placeholder={t("productInfo.maximumRetailPricePlaceholder")}
           value={maximumRetailPrice}
-          onChange={(e) => setMaximumRetailPrice(e.target.value)}
+          onChange={(e) => handlePriceChange(e, setMaximumRetailPrice)}
+          aria-label={t("productInfo.maximumRetailPriceLabel")}
           className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
         />
       </div>
@@ -238,11 +303,13 @@ const ProductInfo = ({
         <WebsiteMoney className="!relative !w-4 !h-4" color="#6B7280" />
         <input
           type="number"
+          min={0.1}
+          step={0.1}
           placeholder={t("productInfo.goodDealPricePlaceholder")}
           value={goodDealPrice}
-          onChange={(e) => setGoodDealPrice(e.target.value)}
+          onChange={handleGoodDealPriceChange}
+          aria-label={t("productInfo.goodDealPriceLabel")}
           className="flex items-center gap-[116px] relative flex-1 grow mt-[-1.00px] mb-[-1.00px] w-fit font-family:'Inter',Helvetica font-normal text-darkdark-6 text-base tracking-[0] leading-6 whitespace-nowrap border-none outline-none"
-          // disabled={product?.product_id}
         />
       </div>
       <div className="flex flex-col w-[260px] items-start relative flex-[0_0_auto]">

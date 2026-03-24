@@ -4,7 +4,7 @@ import { Plus } from "../../icons/Plus";
 import { Line_146_2 } from "../../images";
 import { useTranslation } from "react-i18next";
 
-const ProductQuantity = ({ label, value, setValue }) => {
+const ProductQuantity = ({ label, value, setValue, min = 1 }) => {
   const { t } = useTranslation(); // Use translation hook
 
   const increaseQuantity = () => {
@@ -12,7 +12,9 @@ const ProductQuantity = ({ label, value, setValue }) => {
   };
 
   const decreaseQuantity = () => {
-    setValue((prevValue) => (prevValue > 0 ? prevValue - 1 : 0));
+    setValue((prevValue) =>
+      prevValue > min ? prevValue - 1 : min
+    );
   };
 
   return (
