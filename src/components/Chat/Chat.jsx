@@ -730,18 +730,28 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                       className="px-4 py-2 hover:bg-[#F4F6F8] cursor-pointer flex items-start justify-between gap-2"
                     >
                       <div className="flex items-start gap-2 flex-1 min-w-0">
-                        <div className="w-6 h-6 rounded-full bg-[#E7E7E7] flex items-center justify-center text-sm shrink-0 mt-[2px]">
-                          {participant?.participant_name?.charAt(0)}
-                        </div>
+                        {participant?.profile_picture ? (
+                          <div className="w-6 h-6 shrink-0 mt-[2px] rounded-full overflow-hidden bg-[#E7E7E7]">
+                            <img
+                              src={participant.profile_picture}
+                              alt={participant?.participant_name}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6 rounded-full bg-[#E7E7E7] flex items-center justify-center text-sm shrink-0 mt-[2px]">
+                            {participant?.participant_name?.charAt(0)}
+                          </div>
+                        )}
                         <span className="text-[#212B36] break-words">
                           {participant?.participant_name}
                         </span>
                       </div>
                       <span
-                        className={`px-2 py-1 text-xs rounded-full shrink-0 ${
+                        className={`px-2 py-1 text-xs font-medium rounded-full shrink-0 min-w-[80px] text-center ${
                           participant?.role?.toLowerCase() === "organiser"
-                            ? "bg-[#E8F3F2] text-[#1B4F4A]"
-                            : "bg-[#F4F6F8] text-[#637381]"
+                            ? "bg-[#1B4F4A] text-white"
+                            : "bg-[#fc661a] text-white"
                         }`}
                       >
                         {participant?.role}
