@@ -654,7 +654,7 @@
   "deal": {
     "title": "Wine crates Domaine de Cigaluse",
     "ends_in": "Deal ends in",
-    "time_left": "{{days}} days and {{hours}} hours.",
+    "time_left": "{{days}} days.",
     "end_in": "end in {{days}} days",
     "participants": "{{count}} participants",
     "location": "Domaine de Cigalus 11200 Bizanet",

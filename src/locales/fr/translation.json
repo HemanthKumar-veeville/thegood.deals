@@ -652,7 +652,7 @@
   "deal": {
     "title": "Huîtres de Saint-Malo",
     "ends_in": "Le deal se termine dans",
-    "time_left": "{{days}} jours et {{hours}} h.",
+    "time_left": "{{days}} jours.",
     "end_in": "fin dans {{days}} jours",
     "participants": "{{count}} participants",
     "location": "35000 Saint-Malo",
