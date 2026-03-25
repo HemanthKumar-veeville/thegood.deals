@@ -727,16 +727,18 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                     <div
                       key={participant.id}
                       onClick={() => handleMentionClick(participant)}
-                      className="px-4 py-2 hover:bg-[#F4F6F8] cursor-pointer flex items-center gap-2"
+                      className="px-4 py-2 hover:bg-[#F4F6F8] cursor-pointer flex items-center justify-between gap-2"
                     >
-                      <div className="w-6 h-6 rounded-full bg-[#E7E7E7] flex items-center justify-center text-sm">
-                        {participant?.participant_name?.charAt(0)}
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        <div className="w-6 h-6 rounded-full bg-[#E7E7E7] flex items-center justify-center text-sm shrink-0">
+                          {participant?.participant_name?.charAt(0)}
+                        </div>
+                        <span className="text-[#212B36] truncate">
+                          {participant?.participant_name}
+                        </span>
                       </div>
-                      <span className="text-[#212B36]">
-                        {participant?.participant_name}
-                      </span>
                       <span
-                        className={`px-2 py-1 text-xs rounded-full ${
+                        className={`px-2 py-1 text-xs rounded-full shrink-0 ${
                           participant?.role?.toLowerCase() === "organiser"
                             ? "bg-[#E8F3F2] text-[#1B4F4A]"
                             : "bg-[#F4F6F8] text-[#637381]"
