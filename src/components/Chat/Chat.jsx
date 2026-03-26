@@ -7,9 +7,6 @@ import { fetchParticipantsByDeal } from "../../redux/app/participants/participan
 import { useDispatch, useSelector } from "react-redux";
 
 export const Chat = ({ messages: initialMessages, dealId }) => {
-  const SWIPE_TRIGGER_PX = 44;
-  const SWIPE_MAX_OFFSET_PX = 68;
-  const HORIZONTAL_INTENT_RATIO = 1.2;
   const { t, i18n } = useTranslation();
   const messagesEndRef = useRef(null);
   const [newMessage, setNewMessage] = useState("");
@@ -17,12 +14,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const ws = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
-  const [selectedReplyMessageId, setSelectedReplyMessageId] = useState(null);
-  const touchStartXRef = useRef(null);
-  const touchStartYRef = useRef(null);
-  const canReplyBySwipeRef = useRef(false);
-  const [activeSwipeMessageId, setActiveSwipeMessageId] = useState(null);
-  const [isSwipeReady, setIsSwipeReady] = useState(false);
+  const [slideStartY, setSlideStartY] = useState(null);
+  const [gesture, setGesture] = useState(null); // "scroll" | "swipe" | null
+  const [pressTimer, setPressTimer] = useState(null);
+  const longPressThreshold = 600;
   const messagesContainerRef = useRef(null);
   const [slideOffset, setSlideOffset] = useState(0);
   const dispatch = useDispatch();
@@ -156,7 +151,8 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
   const handleReply = (message) => {
     setReplyTo(message);
-    setSelectedReplyMessageId(message?.id || null);
+    // Focus the textarea
+    document.querySelector("textarea").focus();
   };
 
   const handleSendMessage = useCallback(
@@ -184,7 +180,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         ws.current.send(JSON.stringify(messageData));
         setNewMessage("");
         setReplyTo(null);
-        setSelectedReplyMessageId(null);
         setMentions([]);
       } catch (error) {
         console.error("Error sending message:", error);
@@ -201,73 +196,82 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   };
 
   const handleTouchStart = useCallback((e, message) => {
-    if (e.touches.length !== 1) return; // Handle single touch only
-
+    if (e.touches.length !== 1) return;
+  
     const touch = e.touches[0];
-    touchStartXRef.current = touch.clientX;
-    touchStartYRef.current = touch.clientY;
-    canReplyBySwipeRef.current = false;
-    setActiveSwipeMessageId(message?.id || null);
-    setIsSwipeReady(false);
-  }, []);
+  
+    setSlideStartX(touch.clientX);
+    setSlideStartY(touch.clientY);
+    setGesture(null);
+  
+    const timer = setTimeout(() => {
+      if (!gesture) {
+        handleReply(message);
+      }
+    }, longPressThreshold);
+  
+    setPressTimer(timer);
+  }, [gesture]);
 
   const handleTouchMove = useCallback(
     (e) => {
-      if (
-        touchStartXRef.current === null ||
-        touchStartYRef.current === null ||
-        e.touches.length !== 1
-      ) {
-        return;
-      }
-
+      if (!slideStartX || !slideStartY || e.touches.length !== 1) return;
+  
       const touch = e.touches[0];
-      const deltaX = touch.clientX - touchStartXRef.current;
-      const deltaY = touch.clientY - touchStartYRef.current;
-      const absDeltaX = Math.abs(deltaX);
-      const absDeltaY = Math.abs(deltaY);
-
-      // If gesture is vertical, let scroll win and avoid swipe reply.
-      if (absDeltaY > absDeltaX && absDeltaY > 8) {
-        setSlideOffset(0);
-        canReplyBySwipeRef.current = false;
-        setIsSwipeReady(false);
-        return;
-      }
-
-      // WhatsApp-like behavior: reply only on intentional right swipe.
-      const isHorizontalIntent = absDeltaX > absDeltaY * HORIZONTAL_INTENT_RATIO;
-      const rightSwipe = Math.max(deltaX, 0);
-      const resistedSwipe = rightSwipe * 0.9;
-      const clampedOffset = Math.min(resistedSwipe, SWIPE_MAX_OFFSET_PX);
-      setSlideOffset(clampedOffset);
-      const isReady = isHorizontalIntent && rightSwipe > SWIPE_TRIGGER_PX;
-      canReplyBySwipeRef.current = isReady;
-      setIsSwipeReady(isReady);
-    },
-    []
-  );
-
-  const handleTouchEnd = useCallback((e) => {
-    if (canReplyBySwipeRef.current) {
-      const messageData = e.currentTarget.dataset.message;
-      if (messageData) {
-        try {
-          const parsedMessage = JSON.parse(messageData);
-          handleReply(parsedMessage);
-        } catch (error) {
-          console.error("Error parsing message data:", error);
+  
+      const diffX = touch.clientX - slideStartX;
+      const diffY = touch.clientY - slideStartY;
+  
+      // LOCK GESTURE
+      if (!gesture) {
+        if (Math.abs(diffY) > 8) {
+          setGesture("scroll");
+        } else if (Math.abs(diffX) > 10) {
+          setGesture("swipe");
         }
       }
-    }
+  
+      // SCROLL → cancel everything
+      if (gesture === "scroll") {
+        if (pressTimer) {
+          clearTimeout(pressTimer);
+          setPressTimer(null);
+        }
+        return;
+      }
+  
+      // SWIPE → reply
+      if (gesture === "swipe") {
+        if (pressTimer) {
+          clearTimeout(pressTimer);
+          setPressTimer(null);
+        }
+  
+        const offset = Math.max(diffX, 0);
+        setSlideOffset(Math.min(offset, 80));
+      }
+    },
+    [slideStartX, slideStartY, gesture, pressTimer]
+  );
 
-    touchStartXRef.current = null;
-    touchStartYRef.current = null;
-    canReplyBySwipeRef.current = false;
-    setSlideOffset(0); // Reset offset
-    setActiveSwipeMessageId(null);
-    setIsSwipeReady(false);
-  }, [handleReply]);
+  const handleTouchEnd = useCallback(
+    (e, message) => {
+      if (gesture === "swipe" && slideOffset > 50) {
+        handleReply(message);
+      }
+  
+      setSlideStartX(null);
+      setSlideStartY(null);
+      setSlideOffset(0);
+      setGesture(null);
+  
+      if (pressTimer) {
+        clearTimeout(pressTimer);
+        setPressTimer(null);
+      }
+    },
+    [gesture, slideOffset, pressTimer]
+  );
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
@@ -339,26 +343,14 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             message?.sender?.role === "You"
               ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-          } ${
-            slideOffset > 0 && activeSwipeMessageId === message?.id
-              ? "sliding"
-              : ""
-          } ${
-            isSwipeReady && activeSwipeMessageId === message?.id
-              ? "reply-ready"
-              : ""
-          } ${
-            selectedReplyMessageId === message?.id ? "reply-selected" : ""
-          }`}
+          } ${slideOffset > 0 ? "sliding" : ""}`}
           onTouchStart={(e) => handleTouchStart(e, message)}
           onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          onTouchEnd={(e) => handleTouchEnd(e, message)}
           data-message={JSON.stringify(message)}
           data-message-id={message.id}
           style={{
-            transform: `translateX(${
-              activeSwipeMessageId === message?.id ? slideOffset : 0
-            }px)`,
+            transform: `translateX(${slideOffset}px)`,
           }}
         >
           {/* Add slide indicator */}
@@ -488,7 +480,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       handleTouchEnd,
       messages,
       scrollToMessage,
-      selectedReplyMessageId,
     ]
   );
 
@@ -597,12 +588,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
         .message-container {
           position: relative;
-          transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .reply-selected {
-          box-shadow: 0 0 0 2px #ffb130;
-          transform: scale(1.01);
-          transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+          transition: transform 0.2s ease-out;
         }
 
         .slide-indicator {
@@ -617,10 +603,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
         .sliding .slide-indicator {
           opacity: 1;
-        }
-        .reply-ready .slide-indicator {
-          color: #ffb130;
-          transform: translateY(-50%) scale(1.08);
         }
       `}</style>
 
@@ -728,10 +710,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                 </div>
               </div>
               <button
-                onClick={() => {
-                  setReplyTo(null);
-                  setSelectedReplyMessageId(null);
-                }}
+                onClick={() => setReplyTo(null)}
                 className="ml-2 text-[#637381] hover:text-[#1B4F4A]"
               >
                 <svg
