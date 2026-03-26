@@ -14,6 +14,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const ws = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
+  const [slideStartX, setSlideStartX] = useState(null);
   const [slideStartY, setSlideStartY] = useState(null);
   const [gesture, setGesture] = useState(null); // "scroll" | "swipe" | null
   const [pressTimer, setPressTimer] = useState(null);
