@@ -726,7 +726,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                   {replyTo.sender.name}
                 </div>
                 <div className="text-sm text-[#637381] truncate text-wrap">
-                  {replyTo.message}
+                  {parseMessage(replyTo.message)
+                    ? parseMessage(replyTo.message).message
+                    : replyTo.message}
                 </div>
               </div>
               <button
