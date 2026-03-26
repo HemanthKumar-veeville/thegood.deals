@@ -16,8 +16,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const [replyTo, setReplyTo] = useState(null);
   const [selectedReplyMessageId, setSelectedReplyMessageId] = useState(null);
   const [slideStartX, setSlideStartX] = useState(null);
-  const [pressTimer, setPressTimer] = useState(null);
-  const longPressThreshold = 3000; // 3000ms for long press
   const messagesContainerRef = useRef(null);
   const [slideOffset, setSlideOffset] = useState(0);
   const dispatch = useDispatch();
@@ -202,13 +200,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
     const touch = e.touches[0];
     setSlideStartX(touch.clientX);
-
-    const timer = setTimeout(() => {
-      // Pass the full message object for long press
-      handleReply(message);
-    }, longPressThreshold);
-
-    setPressTimer(timer);
   }, []);
 
   const handleTouchMove = useCallback(
@@ -217,11 +208,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
       const touch = e.touches[0];
       const diff = slideStartX - touch.clientX;
-
-      if (pressTimer) {
-        clearTimeout(pressTimer);
-        setPressTimer(null);
-      }
 
       // Update slide offset for animation
       setSlideOffset(Math.min(Math.max(-diff, 0), 50));
@@ -240,17 +226,13 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         }
       }
     },
-    [slideStartX, pressTimer]
+    [slideStartX]
   );
 
   const handleTouchEnd = useCallback(() => {
     setSlideStartX(null);
     setSlideOffset(0); // Reset offset
-    if (pressTimer) {
-      clearTimeout(pressTimer);
-      setPressTimer(null);
-    }
-  }, [pressTimer]);
+  }, []);
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
