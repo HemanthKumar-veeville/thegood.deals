@@ -19,9 +19,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const swipeGestureRef = useRef({
     startX: 0,
     startY: 0,
+    deltaX: 0,
     intent: null,
     activeMessageId: null,
-    hasTriggeredReply: false,
+    activeMessage: null,
     isTracking: false,
   });
   const swipeIntentThreshold = 10;
@@ -211,9 +212,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     swipeGestureRef.current = {
       startX: touch.clientX,
       startY: touch.clientY,
+      deltaX: 0,
       intent: null,
       activeMessageId: message.id,
-      hasTriggeredReply: false,
+      activeMessage: message,
       isTracking: true,
     };
     setActiveSwipeMessageId(message.id);
@@ -229,6 +231,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       const touch = e.touches[0];
       const dx = touch.clientX - gesture.startX;
       const dy = touch.clientY - gesture.startY;
+      gesture.deltaX = dx;
       const absDx = Math.abs(dx);
       const absDy = Math.abs(dy);
 
@@ -253,29 +256,29 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       const clampedOffset = Math.max(Math.min(dx, maxSwipeOffset), -maxSwipeOffset);
       setSwipeOffset(clampedOffset);
 
-      if (!gesture.hasTriggeredReply && absDx >= swipeReplyThreshold) {
-        const messageData = e.currentTarget.dataset.message;
-        if (messageData) {
-          try {
-            const parsedMessage = JSON.parse(messageData);
-            handleReply(parsedMessage, false);
-          } catch (error) {
-            console.error("Error parsing message data:", error);
-          }
-        }
-        gesture.hasTriggeredReply = true;
-      }
     },
     []
   );
 
   const handleTouchEnd = useCallback(() => {
+    const gesture = swipeGestureRef.current;
+    const shouldReply =
+      gesture.isTracking &&
+      gesture.intent === "horizontal" &&
+      Math.abs(gesture.deltaX) >= swipeReplyThreshold &&
+      gesture.activeMessage;
+
+    if (shouldReply) {
+      handleReply(gesture.activeMessage, false);
+    }
+
     swipeGestureRef.current = {
       startX: 0,
       startY: 0,
+      deltaX: 0,
       intent: null,
       activeMessageId: null,
-      hasTriggeredReply: false,
+      activeMessage: null,
       isTracking: false,
     };
     setActiveSwipeMessageId(null);
@@ -354,7 +357,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
           } ${
             activeSwipeMessageId === message.id && Math.abs(swipeOffset) > 0
-              ? `sliding ${swipeOffset > 0 ? "swiping-right" : "swiping-left"}`
+              ? "sliding"
               : ""
           }`}
           onTouchStart={(e) => handleTouchStart(e, message)}
@@ -370,52 +373,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             touchAction: "pan-y",
           }}
         >
-          {/* Add slide indicator */}
-          <div className="slide-indicator slide-indicator-left">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                d="M10 9l-6 6 6 6"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M4 15h11a4 4 0 004-4v0"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          <div className="slide-indicator slide-indicator-right">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                d="M10 9l-6 6 6 6"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M4 15h11a4 4 0 004-4v0"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-
           <div
             className={`text-sm font-medium mb-1 ${
               message?.sender?.role === "You" ? "text-white" : "text-[#1B4F4A]"
@@ -630,32 +587,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         .message-container {
           position: relative;
           transition: transform 0.2s ease-out;
-        }
-
-        .slide-indicator {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          opacity: 0;
-          transition: opacity 0.2s ease-out;
-          color: #1b4f4a;
-        }
-
-        .slide-indicator-left {
-          left: -40px;
-        }
-
-        .slide-indicator-right {
-          right: -40px;
-          transform: translateY(-50%) scaleX(-1);
-        }
-
-        .sliding.swiping-right .slide-indicator-left {
-          opacity: 1;
-        }
-
-        .sliding.swiping-left .slide-indicator-right {
-          opacity: 1;
         }
       `}</style>
 
