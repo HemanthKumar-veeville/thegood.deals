@@ -17,7 +17,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const longPressThreshold = 600;
   const messagesContainerRef = useRef(null);
   const pressTimerRef = useRef(null);
-  const slideOffsetRef = useRef(0);
   const dispatch = useDispatch();
   const { participants, participantStatus } = useSelector(
     (state) => state.participants
@@ -220,11 +219,22 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     startXRef.current = touch.clientX;
     startYRef.current = touch.clientY;
     gestureRef.current = null;
-    slideOffsetRef.current = 0;
+    
+    // Immediately apply a subtle press effect class
+    const messageNode = document.querySelector(`[data-message-id="${message.id}"]`);
+    if (messageNode) {
+      messageNode.classList.add("pressing");
+    }
   
     const timer = setTimeout(() => {
       if (!gestureRef.current && activeMessageRef.current) {
         handleReply(activeMessageRef.current);
+        // Remove pressing style and optionally trigger a quick flash
+        if (messageNode) {
+          messageNode.classList.remove("pressing");
+          messageNode.classList.add("highlight-message");
+          setTimeout(() => messageNode.classList.remove("highlight-message"), 500);
+        }
       }
     }, longPressThreshold);
   
@@ -236,7 +246,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   
     const touch = e.touches[0];
   
-    const diffX = touch.clientX - startXRef.current;
     const diffY = touch.clientY - startYRef.current;
   
     // 🚨 CRITICAL FIX — cancel instantly on scroll
@@ -248,68 +257,32 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         pressTimerRef.current = null;
       }
   
-      activeMessageRef.current = null; // ✅ prevent reply trigger
-      return;
-    }
-  
-    // 👉 detect swipe
-    if (!gestureRef.current && Math.abs(diffX) > 10) {
-      gestureRef.current = "swipe";
-  
-      if (pressTimerRef.current) {
-        clearTimeout(pressTimerRef.current);
-        pressTimerRef.current = null;
-      }
-    }
-  
-    // 👉 swipe animation
-    if (gestureRef.current === "swipe") {
-      const offset = Math.max(diffX, 0);
-      const finalOffset = Math.min(offset, 80);
-      slideOffsetRef.current = finalOffset;
-
       if (activeMessageRef.current) {
         const messageNode = document.querySelector(`[data-message-id="${activeMessageRef.current.id}"]`);
         if (messageNode) {
-          messageNode.style.transform = `translateX(${finalOffset}px)`;
-          messageNode.classList.add("dragging");
-          if (finalOffset > 0) {
-            messageNode.classList.add("sliding");
-          } else {
-            messageNode.classList.remove("sliding");
-          }
+          messageNode.classList.remove("pressing");
         }
       }
+      activeMessageRef.current = null; // ✅ prevent reply trigger
+      return;
     }
   }, []);
 
   const handleTouchEnd = useCallback(() => {
-    if (
-      gestureRef.current === "swipe" &&
-      slideOffsetRef.current > 50 &&
-      activeMessageRef.current
-    ) {
-      handleReply(activeMessageRef.current);
-    }
-
     if (activeMessageRef.current) {
       const messageNode = document.querySelector(`[data-message-id="${activeMessageRef.current.id}"]`);
       if (messageNode) {
-        messageNode.style.transform = `translateX(0px)`;
-        messageNode.classList.remove("sliding");
-        messageNode.classList.remove("dragging");
+        messageNode.classList.remove("pressing");
       }
     }
-  
     activeMessageRef.current = null; // ✅ reset
     gestureRef.current = null;
-    slideOffsetRef.current = 0;
   
     if (pressTimerRef.current) {
       clearTimeout(pressTimerRef.current);
       pressTimerRef.current = null;
     }
-  }, [handleReply]);
+  }, []);
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
@@ -403,34 +376,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         onTouchEnd={handleTouchEnd}
         data-message={JSON.stringify(message)}
         data-message-id={message.id}
-        style={{
-          transform: `translateX(0px)`,
-        }}
       >
-        {/* Add slide indicator */}
-        <div className="slide-indicator">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-          >
-            <path
-              d="M10 9l-6 6 6 6"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M4 15h11a4 4 0 004-4v0"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-
         <div
           className={`text-sm font-medium mb-1 ${
             message?.sender?.role === "You" ? "text-white" : "text-[#1B4F4A]"
@@ -624,35 +570,22 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             background-color: rgba(27, 79, 74, 0.2);
           }
           100% {
-            background-color: #163f3a;
+            background-color: transparent;
           }
         }
 
         .highlight-message {
           animation: highlight 2s ease-out;
         }
-
+        
         .message-container {
           position: relative;
-          transition: transform 0.2s ease-out;
+          transition: transform 0.2s ease-out, filter 0.2s ease-out;
         }
 
-        .message-container.dragging {
-          transition: none;
-        }
-
-        .slide-indicator {
-          position: absolute;
-          left: -40px;
-          top: 50%;
-          transform: translateY(-50%);
-          opacity: 0;
-          transition: opacity 0.2s ease-out;
-          color: #1b4f4a;
-        }
-
-        .sliding .slide-indicator {
-          opacity: 1;
+        .message-container.pressing {
+          filter: brightness(0.85);
+          transform: scale(0.98);
         }
       `}</style>
 
