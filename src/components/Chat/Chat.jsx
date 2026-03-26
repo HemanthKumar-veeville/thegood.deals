@@ -15,8 +15,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
   const [slideStartX, setSlideStartX] = useState(null);
-  const [pressTimer, setPressTimer] = useState(null);
-  const longPressThreshold = 500; // 500ms for long press
+  const [slideStartY, setSlideStartY] = useState(null);
   const messagesContainerRef = useRef(null);
   const [slideOffset, setSlideOffset] = useState(0);
   const dispatch = useDispatch();
@@ -199,31 +198,33 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
     const touch = e.touches[0];
     setSlideStartX(touch.clientX);
-
-    const timer = setTimeout(() => {
-      // Pass the full message object for long press
-      handleReply(message);
-    }, longPressThreshold);
-
-    setPressTimer(timer);
+    setSlideStartY(touch.clientY);
   }, []);
 
   const handleTouchMove = useCallback(
     (e) => {
-      if (!slideStartX || e.touches.length !== 1) return;
-
-      const touch = e.touches[0];
-      const diff = slideStartX - touch.clientX;
-
-      if (pressTimer) {
-        clearTimeout(pressTimer);
-        setPressTimer(null);
+      if (slideStartX === null || slideStartY === null || e.touches.length !== 1) {
+        return;
       }
 
-      // Update slide offset for animation
-      setSlideOffset(Math.min(Math.max(-diff, 0), 50));
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - slideStartX;
+      const deltaY = touch.clientY - slideStartY;
+      const absoluteDeltaX = Math.abs(deltaX);
+      const absoluteDeltaY = Math.abs(deltaY);
 
-      if (Math.abs(diff) > 50) {
+      // Prioritize vertical movement for page scrolling.
+      if (absoluteDeltaY > absoluteDeltaX && absoluteDeltaY > 8) {
+        setSlideOffset(0);
+        return;
+      }
+
+      // Update slide offset for animation (show indicator in both directions).
+      const boundedOffset = Math.max(Math.min(deltaX, 50), -50);
+      setSlideOffset(boundedOffset);
+
+      // Reply on deliberate horizontal swipe in either direction.
+      if (absoluteDeltaX > 50 && absoluteDeltaX > absoluteDeltaY * 1.2) {
         const messageData = e.currentTarget.dataset.message;
         if (messageData) {
           try {
@@ -233,21 +234,19 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             console.error("Error parsing message data:", error);
           }
           setSlideStartX(null);
+          setSlideStartY(null);
           setSlideOffset(0); // Reset offset after reply
         }
       }
     },
-    [slideStartX, pressTimer]
+    [slideStartX, slideStartY]
   );
 
   const handleTouchEnd = useCallback(() => {
     setSlideStartX(null);
+    setSlideStartY(null);
     setSlideOffset(0); // Reset offset
-    if (pressTimer) {
-      clearTimeout(pressTimer);
-      setPressTimer(null);
-    }
-  }, [pressTimer]);
+  }, []);
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
