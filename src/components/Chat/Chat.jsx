@@ -15,7 +15,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
   const [selectedReplyMessageId, setSelectedReplyMessageId] = useState(null);
-  const [slideStartX, setSlideStartX] = useState(null);
+  const touchStartXRef = useRef(null);
+  const touchStartYRef = useRef(null);
+  const hasTriggeredReplyRef = useRef(false);
+  const [activeSwipeMessageId, setActiveSwipeMessageId] = useState(null);
   const messagesContainerRef = useRef(null);
   const [slideOffset, setSlideOffset] = useState(0);
   const dispatch = useDispatch();
@@ -199,39 +202,68 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     if (e.touches.length !== 1) return; // Handle single touch only
 
     const touch = e.touches[0];
-    setSlideStartX(touch.clientX);
+    touchStartXRef.current = touch.clientX;
+    touchStartYRef.current = touch.clientY;
+    hasTriggeredReplyRef.current = false;
+    setActiveSwipeMessageId(message?.id || null);
   }, []);
 
   const handleTouchMove = useCallback(
     (e) => {
-      if (!slideStartX || e.touches.length !== 1) return;
+      if (
+        touchStartXRef.current === null ||
+        touchStartYRef.current === null ||
+        e.touches.length !== 1
+      ) {
+        return;
+      }
 
       const touch = e.touches[0];
-      const diff = slideStartX - touch.clientX;
+      const deltaX = touch.clientX - touchStartXRef.current;
+      const deltaY = touch.clientY - touchStartYRef.current;
+      const absDeltaX = Math.abs(deltaX);
+      const absDeltaY = Math.abs(deltaY);
+
+      // If gesture is vertical, let scroll win and avoid swipe reply.
+      if (absDeltaY > absDeltaX && absDeltaY > 8) {
+        setSlideOffset(0);
+        return;
+      }
 
       // Update slide offset for animation
-      setSlideOffset(Math.min(Math.max(-diff, 0), 50));
+      setSlideOffset(Math.min(Math.max(deltaX, 0), 60));
 
-      if (Math.abs(diff) > 50) {
+      // Reply only for intentional horizontal right swipe.
+      if (
+        !hasTriggeredReplyRef.current &&
+        deltaX > 50 &&
+        absDeltaX > absDeltaY * 1.2
+      ) {
         const messageData = e.currentTarget.dataset.message;
         if (messageData) {
           try {
             const parsedMessage = JSON.parse(messageData);
             handleReply(parsedMessage);
+            hasTriggeredReplyRef.current = true;
           } catch (error) {
             console.error("Error parsing message data:", error);
           }
-          setSlideStartX(null);
+          touchStartXRef.current = null;
+          touchStartYRef.current = null;
           setSlideOffset(0); // Reset offset after reply
+          setActiveSwipeMessageId(null);
         }
       }
     },
-    [slideStartX]
+    [handleReply]
   );
 
   const handleTouchEnd = useCallback(() => {
-    setSlideStartX(null);
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+    hasTriggeredReplyRef.current = false;
     setSlideOffset(0); // Reset offset
+    setActiveSwipeMessageId(null);
   }, []);
 
   const scrollToMessage = useCallback((messageId) => {
@@ -304,7 +336,11 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             message?.sender?.role === "You"
               ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-          } ${slideOffset > 0 ? "sliding" : ""} ${
+          } ${
+            slideOffset > 0 && activeSwipeMessageId === message?.id
+              ? "sliding"
+              : ""
+          } ${
             selectedReplyMessageId === message?.id ? "reply-selected" : ""
           }`}
           onTouchStart={(e) => handleTouchStart(e, message)}
@@ -313,7 +349,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           data-message={JSON.stringify(message)}
           data-message-id={message.id}
           style={{
-            transform: `translateX(${slideOffset}px)`,
+            transform: `translateX(${
+              activeSwipeMessageId === message?.id ? slideOffset : 0
+            }px)`,
           }}
         >
           {/* Add slide indicator */}
