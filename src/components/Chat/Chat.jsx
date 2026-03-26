@@ -7,6 +7,9 @@ import { fetchParticipantsByDeal } from "../../redux/app/participants/participan
 import { useDispatch, useSelector } from "react-redux";
 
 export const Chat = ({ messages: initialMessages, dealId }) => {
+  const SWIPE_TRIGGER_PX = 44;
+  const SWIPE_MAX_OFFSET_PX = 68;
+  const HORIZONTAL_INTENT_RATIO = 1.2;
   const { t, i18n } = useTranslation();
   const messagesEndRef = useRef(null);
   const [newMessage, setNewMessage] = useState("");
@@ -17,8 +20,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const [selectedReplyMessageId, setSelectedReplyMessageId] = useState(null);
   const touchStartXRef = useRef(null);
   const touchStartYRef = useRef(null);
-  const hasTriggeredReplyRef = useRef(false);
+  const canReplyBySwipeRef = useRef(false);
   const [activeSwipeMessageId, setActiveSwipeMessageId] = useState(null);
+  const [isSwipeReady, setIsSwipeReady] = useState(false);
   const messagesContainerRef = useRef(null);
   const [slideOffset, setSlideOffset] = useState(0);
   const dispatch = useDispatch();
@@ -153,8 +157,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const handleReply = (message) => {
     setReplyTo(message);
     setSelectedReplyMessageId(message?.id || null);
-    // Focus the textarea
-    document.querySelector("textarea").focus();
   };
 
   const handleSendMessage = useCallback(
@@ -204,8 +206,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     const touch = e.touches[0];
     touchStartXRef.current = touch.clientX;
     touchStartYRef.current = touch.clientY;
-    hasTriggeredReplyRef.current = false;
+    canReplyBySwipeRef.current = false;
     setActiveSwipeMessageId(message?.id || null);
+    setIsSwipeReady(false);
   }, []);
 
   const handleTouchMove = useCallback(
@@ -227,44 +230,44 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       // If gesture is vertical, let scroll win and avoid swipe reply.
       if (absDeltaY > absDeltaX && absDeltaY > 8) {
         setSlideOffset(0);
+        canReplyBySwipeRef.current = false;
+        setIsSwipeReady(false);
         return;
       }
 
-      // Update slide offset for animation (both swipe directions).
-      setSlideOffset(Math.min(absDeltaX, 60));
-
-      // Reply for intentional horizontal swipe.
-      if (
-        !hasTriggeredReplyRef.current &&
-        absDeltaX > 50 &&
-        absDeltaX > absDeltaY * 1.2
-      ) {
-        const messageData = e.currentTarget.dataset.message;
-        if (messageData) {
-          try {
-            const parsedMessage = JSON.parse(messageData);
-            handleReply(parsedMessage);
-            hasTriggeredReplyRef.current = true;
-          } catch (error) {
-            console.error("Error parsing message data:", error);
-          }
-          touchStartXRef.current = null;
-          touchStartYRef.current = null;
-          setSlideOffset(0); // Reset offset after reply
-          setActiveSwipeMessageId(null);
-        }
-      }
+      // WhatsApp-like behavior: reply only on intentional right swipe.
+      const isHorizontalIntent = absDeltaX > absDeltaY * HORIZONTAL_INTENT_RATIO;
+      const rightSwipe = Math.max(deltaX, 0);
+      const resistedSwipe = rightSwipe * 0.9;
+      const clampedOffset = Math.min(resistedSwipe, SWIPE_MAX_OFFSET_PX);
+      setSlideOffset(clampedOffset);
+      const isReady = isHorizontalIntent && rightSwipe > SWIPE_TRIGGER_PX;
+      canReplyBySwipeRef.current = isReady;
+      setIsSwipeReady(isReady);
     },
-    [handleReply]
+    []
   );
 
-  const handleTouchEnd = useCallback(() => {
+  const handleTouchEnd = useCallback((e) => {
+    if (canReplyBySwipeRef.current) {
+      const messageData = e.currentTarget.dataset.message;
+      if (messageData) {
+        try {
+          const parsedMessage = JSON.parse(messageData);
+          handleReply(parsedMessage);
+        } catch (error) {
+          console.error("Error parsing message data:", error);
+        }
+      }
+    }
+
     touchStartXRef.current = null;
     touchStartYRef.current = null;
-    hasTriggeredReplyRef.current = false;
+    canReplyBySwipeRef.current = false;
     setSlideOffset(0); // Reset offset
     setActiveSwipeMessageId(null);
-  }, []);
+    setIsSwipeReady(false);
+  }, [handleReply]);
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
@@ -339,6 +342,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           } ${
             slideOffset > 0 && activeSwipeMessageId === message?.id
               ? "sliding"
+              : ""
+          } ${
+            isSwipeReady && activeSwipeMessageId === message?.id
+              ? "reply-ready"
               : ""
           } ${
             selectedReplyMessageId === message?.id ? "reply-selected" : ""
@@ -590,7 +597,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
         .message-container {
           position: relative;
-          transition: transform 0.2s ease-out;
+          transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reply-selected {
           box-shadow: 0 0 0 2px #ffb130;
@@ -610,6 +617,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
         .sliding .slide-indicator {
           opacity: 1;
+        }
+        .reply-ready .slide-indicator {
+          color: #ffb130;
+          transform: translateY(-50%) scale(1.08);
         }
       `}</style>
 
