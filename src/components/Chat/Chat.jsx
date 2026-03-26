@@ -14,11 +14,15 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const ws = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
-  const [slideStartX, setSlideStartX] = useState(null);
-  const [pressTimer, setPressTimer] = useState(null);
-  const longPressThreshold = 500; // 500ms for long press
+  const [touchStartPoint, setTouchStartPoint] = useState(null);
+  const [swipeIntent, setSwipeIntent] = useState(null);
+  const [activeSwipeMessageId, setActiveSwipeMessageId] = useState(null);
+  const [swipeOffset, setSwipeOffset] = useState(0);
+  const [hasTriggeredReply, setHasTriggeredReply] = useState(false);
+  const swipeIntentThreshold = 10;
+  const swipeReplyThreshold = 50;
+  const maxSwipeOffset = 60;
   const messagesContainerRef = useRef(null);
-  const [slideOffset, setSlideOffset] = useState(0);
   const dispatch = useDispatch();
   const { participants, participantStatus } = useSelector(
     (state) => state.participants
@@ -148,10 +152,11 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     return groups;
   };
 
-  const handleReply = (message) => {
+  const handleReply = (message, shouldFocus = false) => {
     setReplyTo(message);
-    // Focus the textarea
-    document.querySelector("textarea").focus();
+    if (shouldFocus) {
+      document.querySelector("textarea")?.focus();
+    }
   };
 
   const handleSendMessage = useCallback(
@@ -198,56 +203,68 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     if (e.touches.length !== 1) return; // Handle single touch only
 
     const touch = e.touches[0];
-    setSlideStartX(touch.clientX);
-
-    const timer = setTimeout(() => {
-      // Pass the full message object for long press
-      handleReply(message);
-    }, longPressThreshold);
-
-    setPressTimer(timer);
+    setTouchStartPoint({ x: touch.clientX, y: touch.clientY });
+    setSwipeIntent(null);
+    setActiveSwipeMessageId(message.id);
+    setSwipeOffset(0);
+    setHasTriggeredReply(false);
   }, []);
 
   const handleTouchMove = useCallback(
     (e) => {
-      if (!slideStartX || e.touches.length !== 1) return;
+      if (!touchStartPoint || e.touches.length !== 1) return;
+      if (String(activeSwipeMessageId) !== e.currentTarget.dataset.messageId) return;
 
       const touch = e.touches[0];
-      const diff = slideStartX - touch.clientX;
+      const dx = touch.clientX - touchStartPoint.x;
+      const dy = touch.clientY - touchStartPoint.y;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
 
-      if (pressTimer) {
-        clearTimeout(pressTimer);
-        setPressTimer(null);
+      if (!swipeIntent) {
+        if (absDy > swipeIntentThreshold && absDy > absDx) {
+          setSwipeIntent("vertical");
+          setSwipeOffset(0);
+          return;
+        }
+
+        if (absDx > swipeIntentThreshold && absDx > absDy) {
+          setSwipeIntent("horizontal");
+        } else {
+          return;
+        }
       }
 
-      // Update slide offset for animation
-      setSlideOffset(Math.min(Math.max(-diff, 0), 50));
+      if (swipeIntent === "vertical") {
+        return;
+      }
 
-      if (Math.abs(diff) > 50) {
+      const clampedOffset = Math.max(Math.min(dx, maxSwipeOffset), -maxSwipeOffset);
+      setSwipeOffset(clampedOffset);
+
+      if (!hasTriggeredReply && absDx >= swipeReplyThreshold) {
         const messageData = e.currentTarget.dataset.message;
         if (messageData) {
           try {
             const parsedMessage = JSON.parse(messageData);
-            handleReply(parsedMessage);
+            handleReply(parsedMessage, false);
           } catch (error) {
             console.error("Error parsing message data:", error);
           }
-          setSlideStartX(null);
-          setSlideOffset(0); // Reset offset after reply
         }
+        setHasTriggeredReply(true);
       }
     },
-    [slideStartX, pressTimer]
+    [touchStartPoint, swipeIntent, activeSwipeMessageId, hasTriggeredReply]
   );
 
   const handleTouchEnd = useCallback(() => {
-    setSlideStartX(null);
-    setSlideOffset(0); // Reset offset
-    if (pressTimer) {
-      clearTimeout(pressTimer);
-      setPressTimer(null);
-    }
-  }, [pressTimer]);
+    setTouchStartPoint(null);
+    setSwipeIntent(null);
+    setActiveSwipeMessageId(null);
+    setSwipeOffset(0);
+    setHasTriggeredReply(false);
+  }, []);
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
@@ -319,18 +336,47 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             message?.sender?.role === "You"
               ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-          } ${slideOffset > 0 ? "sliding" : ""}`}
+          } ${
+            activeSwipeMessageId === message.id && Math.abs(swipeOffset) > 0
+              ? `sliding ${swipeOffset > 0 ? "swiping-right" : "swiping-left"}`
+              : ""
+          }`}
           onTouchStart={(e) => handleTouchStart(e, message)}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
           data-message={JSON.stringify(message)}
           data-message-id={message.id}
           style={{
-            transform: `translateX(${slideOffset}px)`,
+            transform: `translateX(${
+              activeSwipeMessageId === message.id ? swipeOffset : 0
+            }px)`,
           }}
         >
           {/* Add slide indicator */}
-          <div className="slide-indicator">
+          <div className="slide-indicator slide-indicator-left">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M10 9l-6 6 6 6"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M4 15h11a4 4 0 004-4v0"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <div className="slide-indicator slide-indicator-right">
             <svg
               width="24"
               height="24"
@@ -456,6 +502,8 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       handleTouchEnd,
       messages,
       scrollToMessage,
+      activeSwipeMessageId,
+      swipeOffset,
     ]
   );
 
@@ -569,7 +617,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
         .slide-indicator {
           position: absolute;
-          left: -40px;
           top: 50%;
           transform: translateY(-50%);
           opacity: 0;
@@ -577,7 +624,20 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           color: #1b4f4a;
         }
 
-        .sliding .slide-indicator {
+        .slide-indicator-left {
+          left: -40px;
+        }
+
+        .slide-indicator-right {
+          right: -40px;
+          transform: translateY(-50%) scaleX(-1);
+        }
+
+        .sliding.swiping-right .slide-indicator-left {
+          opacity: 1;
+        }
+
+        .sliding.swiping-left .slide-indicator-right {
           opacity: 1;
         }
       `}</style>
