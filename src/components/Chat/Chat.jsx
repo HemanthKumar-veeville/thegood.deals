@@ -14,9 +14,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const ws = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
+  const [selectedReplyMessageId, setSelectedReplyMessageId] = useState(null);
   const [slideStartX, setSlideStartX] = useState(null);
   const [pressTimer, setPressTimer] = useState(null);
-  const longPressThreshold = 500; // 500ms for long press
+  const longPressThreshold = 3000; // 3000ms for long press
   const messagesContainerRef = useRef(null);
   const [slideOffset, setSlideOffset] = useState(0);
   const dispatch = useDispatch();
@@ -150,6 +151,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
   const handleReply = (message) => {
     setReplyTo(message);
+    setSelectedReplyMessageId(message?.id || null);
     // Focus the textarea
     document.querySelector("textarea").focus();
   };
@@ -179,6 +181,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         ws.current.send(JSON.stringify(messageData));
         setNewMessage("");
         setReplyTo(null);
+        setSelectedReplyMessageId(null);
         setMentions([]);
       } catch (error) {
         console.error("Error sending message:", error);
@@ -319,7 +322,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             message?.sender?.role === "You"
               ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
               : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-          } ${slideOffset > 0 ? "sliding" : ""}`}
+          } ${slideOffset > 0 ? "sliding" : ""} ${
+            selectedReplyMessageId === message?.id ? "reply-selected" : ""
+          }`}
           onTouchStart={(e) => handleTouchStart(e, message)}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -456,6 +461,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       handleTouchEnd,
       messages,
       scrollToMessage,
+      selectedReplyMessageId,
     ]
   );
 
@@ -565,6 +571,11 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         .message-container {
           position: relative;
           transition: transform 0.2s ease-out;
+        }
+        .reply-selected {
+          box-shadow: 0 0 0 2px #ffb130;
+          transform: scale(1.01);
+          transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
         }
 
         .slide-indicator {
@@ -686,7 +697,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                 </div>
               </div>
               <button
-                onClick={() => setReplyTo(null)}
+                onClick={() => {
+                  setReplyTo(null);
+                  setSelectedReplyMessageId(null);
+                }}
                 className="ml-2 text-[#637381] hover:text-[#1B4F4A]"
               >
                 <svg
