@@ -230,13 +230,13 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         return;
       }
 
-      // Update slide offset for animation
-      setSlideOffset(Math.min(Math.max(deltaX, 0), 60));
+      // Update slide offset for animation (both swipe directions).
+      setSlideOffset(Math.min(absDeltaX, 60));
 
-      // Reply only for intentional horizontal right swipe.
+      // Reply for intentional horizontal swipe.
       if (
         !hasTriggeredReplyRef.current &&
-        deltaX > 50 &&
+        absDeltaX > 50 &&
         absDeltaX > absDeltaY * 1.2
       ) {
         const messageData = e.currentTarget.dataset.message;
