@@ -338,6 +338,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   };
 
   const findTaggedMessage = (taggedMessageId) => {
+    if (!taggedMessageId) return null;
     return messages.find((msg) => msg.id === taggedMessageId);
   };
 
@@ -359,16 +360,33 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const renderMessage = (message, index) => {
     const actualMessage = message.message;
     const messageJSON = parseMessage(actualMessage);
-    const taggedMessage = message.taged_message
+    const taggedMessage = message.tag_message
+      ? findTaggedMessage(message.tag_message)
+      : message.taged_message
       ? findTaggedMessage(message.taged_message)
       : null;
-    const taggedMessageJSON = taggedMessage
-      ? parseMessage(taggedMessage.message)
-      : null;
+    
+    // Safety check: sometimes the backend returns an object for the tagged message directly,
+    // or sometimes we need to extract from messageJSON if the backend nested it.
+    // If taggedMessage is null, but we have a tag_message ID, it might be in initial messages or not loaded yet.
+    // Let's ensure we safely handle parsing.
+    let taggedMessageContent = "";
+    let taggedMessageSender = "";
+    
+    if (taggedMessage) {
+       const taggedJSON = parseMessage(taggedMessage.message);
+       taggedMessageContent = taggedJSON ? taggedJSON.message : taggedMessage.message;
+       taggedMessageSender = taggedMessage?.sender?.name || "";
+    } else if (messageJSON && (messageJSON.tag_message || messageJSON.taged_message)) {
+       // Fallback if the tagged message is passed inside the JSON structure
+       const nestedTagged = messageJSON.tag_message || messageJSON.taged_message;
+       taggedMessageContent = nestedTagged.message || "";
+       taggedMessageSender = nestedTagged?.sender?.name || "";
+    }
 
     const handleTaggedMessageClick = () => {
-      if (taggedMessage) {
-        scrollToMessage(message.taged_message);
+      if (message.tag_message || message.taged_message) {
+        scrollToMessage(message.tag_message || message.taged_message);
       }
     };
 
@@ -428,7 +446,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           )}
         </div>
 
-        {taggedMessage && (
+        {(message.tag_message || message.taged_message) && (taggedMessage || taggedMessageContent) && (
           <div
             className={`relative mb-2 pl-2 ${
               message?.sender?.role === "You"
@@ -474,7 +492,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  {taggedMessage.sender.name}
+                  {taggedMessageSender || "Unknown"}
                 </div>
                 <div
                   className={`text-[13px] truncate whitespace-pre-line ${
@@ -483,9 +501,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                       : "text-[#E7E7E7]"
                   }`}
                 >
-                  {taggedMessageJSON
-                    ? formatMessageWithMentions(taggedMessageJSON.message)
-                    : formatMessageWithMentions(taggedMessage.message)}
+                  {formatMessageWithMentions(taggedMessageContent)}
                 </div>
               </div>
             </div>
