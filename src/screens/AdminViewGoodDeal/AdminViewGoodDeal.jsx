@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { RatingStar } from "../../components/RatingStar";
 import { Box43 } from "../../icons/Box43";
 import { ClockAlt11 } from "../../icons/ClockAlt11";
+import { CrossCircle3 } from "../../icons/CrossCircle3";
 import { DeliveryTruck4 } from "../../icons/DeliveryTruck4";
 import { Map } from "../../icons/Map";
 import { Users2 } from "../../icons/Users2";
@@ -160,10 +161,17 @@ const AdminViewGoodDeal = () => {
             <div
               className={`relative w-5 h-5 rounded-[10px] ${activeBannerStyles.iconWrapper}`}
             >
-              <ClockAlt11
-                className="!absolute !w-3 !h-3 !top-1 !left-1"
-                color="white"
-              />
+              {isDealExpired ? (
+                <CrossCircle3
+                  className="!absolute !w-3 !h-3 !top-1 !left-1"
+                  color="white"
+                />
+              ) : (
+                <ClockAlt11
+                  className="!absolute !w-3 !h-3 !top-1 !left-1"
+                  color="white"
+                />
+              )}
             </div>
             {isDealExpired ? (
               <p

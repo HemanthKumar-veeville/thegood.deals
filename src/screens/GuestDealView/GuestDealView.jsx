@@ -5,6 +5,7 @@ import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Box43 } from "../../icons/Box43";
 import { Box44 } from "../../icons/Box44";
 import { ClockAlt13 } from "../../icons/ClockAlt13";
+import { CrossCircle3 } from "../../icons/CrossCircle3";
 import { Coins } from "../../icons/Coins";
 import { Map } from "../../icons/Map";
 import { Pencil1 } from "../../icons/Pencil1";
@@ -205,10 +206,17 @@ const GuestDealView = () => {
               <div
                 className={`relative w-5 h-5 rounded-[10px] ${activeBannerStyles.iconWrapper}`}
               >
-                <ClockAlt13
-                  className="!absolute !w-3 !h-3 !top-1 !left-1"
-                  color="white"
-                />
+                {isDealExpired ? (
+                  <CrossCircle3
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                ) : (
+                  <ClockAlt13
+                    className="!absolute !w-3 !h-3 !top-1 !left-1"
+                    color="white"
+                  />
+                )}
               </div>
               {isDealExpired ? (
                 <p
