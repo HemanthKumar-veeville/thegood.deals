@@ -14,13 +14,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const ws = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
-  const [slideStartX, setSlideStartX] = useState(null);
-  const [slideStartY, setSlideStartY] = useState(null);
-  const [gesture, setGesture] = useState(null); // "scroll" | "swipe" | null
-  const [pressTimer, setPressTimer] = useState(null);
   const longPressThreshold = 600;
   const messagesContainerRef = useRef(null);
-  const [slideOffset, setSlideOffset] = useState(0);
+  const pressTimerRef = useRef(null);
+  const slideOffsetRef = useRef(0);
   const dispatch = useDispatch();
   const { participants, participantStatus } = useSelector(
     (state) => state.participants
@@ -30,6 +27,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const [cursorPosition, setCursorPosition] = useState(0);
   const textareaRef = useRef(null);
   const [mentions, setMentions] = useState([]);
+  const gestureRef = useRef(null);
+  const startXRef = useRef(0);
+  const startYRef = useRef(0);
+  const activeMessageRef = useRef(null);
 
   useEffect(() => {
     let reconnectAttempt = 0;
@@ -52,15 +53,18 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
       ws.current.onmessage = (event) => {
         try {
-          const newMessage = JSON.parse(event.data);
-          console.log({ newMessage });
+          const incomingMessage = JSON.parse(event.data);
+          console.log({ incomingMessage });
           setMessages((prevMessages) => {
-            if (Array.isArray(newMessage)) {
-              return [...newMessage].sort(
+            if (Array.isArray(incomingMessage)) {
+              return [...incomingMessage].sort(
                 (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
               );
             }
-            return [...prevMessages, newMessage].sort(
+            if (prevMessages.some((msg) => msg.id === incomingMessage.id)) {
+              return prevMessages;
+            }
+            return [...prevMessages, incomingMessage].sort(
               (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
             );
           });
@@ -152,8 +156,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
   const handleReply = (message) => {
     setReplyTo(message);
-    // Focus the textarea
-    document.querySelector("textarea").focus();
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
   };
 
   const handleSendMessage = useCallback(
@@ -201,78 +206,101 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   
     const touch = e.touches[0];
   
-    setSlideStartX(touch.clientX);
-    setSlideStartY(touch.clientY);
-    setGesture(null);
+    activeMessageRef.current = message; // ✅ track message globally
+  
+    startXRef.current = touch.clientX;
+    startYRef.current = touch.clientY;
+    gestureRef.current = null;
+    slideOffsetRef.current = 0;
   
     const timer = setTimeout(() => {
-      if (!gesture) {
-        handleReply(message);
+      if (!gestureRef.current && activeMessageRef.current) {
+        handleReply(activeMessageRef.current);
       }
     }, longPressThreshold);
   
-    setPressTimer(timer);
-  }, [gesture]);
+    pressTimerRef.current = timer;
+  }, []);
 
-  const handleTouchMove = useCallback(
-    (e) => {
-      if (!slideStartX || !slideStartY || e.touches.length !== 1) return;
+  const handleTouchMove = useCallback((e) => {
+    if (e.touches.length !== 1) return;
   
-      const touch = e.touches[0];
+    const touch = e.touches[0];
   
-      const diffX = touch.clientX - slideStartX;
-      const diffY = touch.clientY - slideStartY;
+    const diffX = touch.clientX - startXRef.current;
+    const diffY = touch.clientY - startYRef.current;
   
-      // LOCK GESTURE
-      if (!gesture) {
-        if (Math.abs(diffY) > 8) {
-          setGesture("scroll");
-        } else if (Math.abs(diffX) > 10) {
-          setGesture("swipe");
-        }
+    // 🚨 CRITICAL FIX — cancel instantly on scroll
+    if (Math.abs(diffY) > 2) {
+      gestureRef.current = "scroll";
+  
+      if (pressTimerRef.current) {
+        clearTimeout(pressTimerRef.current);
+        pressTimerRef.current = null;
       }
   
-      // SCROLL → cancel everything
-      if (gesture === "scroll") {
-        if (pressTimer) {
-          clearTimeout(pressTimer);
-          setPressTimer(null);
-        }
-        return;
-      }
+      activeMessageRef.current = null; // ✅ prevent reply trigger
+      return;
+    }
   
-      // SWIPE → reply
-      if (gesture === "swipe") {
-        if (pressTimer) {
-          clearTimeout(pressTimer);
-          setPressTimer(null);
-        }
+    // 👉 detect swipe
+    if (!gestureRef.current && Math.abs(diffX) > 10) {
+      gestureRef.current = "swipe";
   
-        const offset = Math.max(diffX, 0);
-        setSlideOffset(Math.min(offset, 80));
+      if (pressTimerRef.current) {
+        clearTimeout(pressTimerRef.current);
+        pressTimerRef.current = null;
       }
-    },
-    [slideStartX, slideStartY, gesture, pressTimer]
-  );
+    }
+  
+    // 👉 swipe animation
+    if (gestureRef.current === "swipe") {
+      const offset = Math.max(diffX, 0);
+      const finalOffset = Math.min(offset, 80);
+      slideOffsetRef.current = finalOffset;
 
-  const handleTouchEnd = useCallback(
-    (e, message) => {
-      if (gesture === "swipe" && slideOffset > 50) {
-        handleReply(message);
+      if (activeMessageRef.current) {
+        const messageNode = document.querySelector(`[data-message-id="${activeMessageRef.current.id}"]`);
+        if (messageNode) {
+          messageNode.style.transform = `translateX(${finalOffset}px)`;
+          messageNode.classList.add("dragging");
+          if (finalOffset > 0) {
+            messageNode.classList.add("sliding");
+          } else {
+            messageNode.classList.remove("sliding");
+          }
+        }
       }
-  
-      setSlideStartX(null);
-      setSlideStartY(null);
-      setSlideOffset(0);
-      setGesture(null);
-  
-      if (pressTimer) {
-        clearTimeout(pressTimer);
-        setPressTimer(null);
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (
+      gestureRef.current === "swipe" &&
+      slideOffsetRef.current > 50 &&
+      activeMessageRef.current
+    ) {
+      handleReply(activeMessageRef.current);
+    }
+
+    if (activeMessageRef.current) {
+      const messageNode = document.querySelector(`[data-message-id="${activeMessageRef.current.id}"]`);
+      if (messageNode) {
+        messageNode.style.transform = `translateX(0px)`;
+        messageNode.classList.remove("sliding");
+        messageNode.classList.remove("dragging");
       }
-    },
-    [gesture, slideOffset, pressTimer]
-  );
+    }
+  
+    activeMessageRef.current = null; // ✅ reset
+    gestureRef.current = null;
+    slideOffsetRef.current = 0;
+  
+    if (pressTimerRef.current) {
+      clearTimeout(pressTimerRef.current);
+      pressTimerRef.current = null;
+    }
+  }, []);
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
@@ -291,198 +319,185 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     }
   }, []);
 
-  const MessageContent = useCallback(
-    ({ message, index }) => {
-      const parseMessage = useCallback((msg) => {
-        if (!msg) return null;
-        try {
-          return JSON.parse(msg);
-        } catch {
-          return null;
-        }
-      }, []);
+  const parseMessage = (msg) => {
+    if (!msg) return null;
+    try {
+      return JSON.parse(msg);
+    } catch {
+      return null;
+    }
+  };
 
-      const findTaggedMessage = useCallback(
-        (taggedMessageId) => {
-          return messages.find((msg) => msg.id === taggedMessageId);
-        },
-        [messages]
-      );
+  const findTaggedMessage = (taggedMessageId) => {
+    return messages.find((msg) => msg.id === taggedMessageId);
+  };
 
-      const actualMessage = message.message;
-      const messageJSON = parseMessage(actualMessage);
-      const taggedMessage = message.taged_message
-        ? findTaggedMessage(message.taged_message)
-        : null;
+  const formatMessageWithMentions = (text) => {
+    if (!text) return "";
+    const parts = text.split(/(@[\w]+)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith("@")) {
+        return (
+          <strong key={index} className="text-[#ffb130]">
+            {part}
+          </strong>
+        );
+      }
+      return part;
+    });
+  };
 
-      const handleTaggedMessageClick = useCallback(() => {
-        if (taggedMessage) {
-          scrollToMessage(message.taged_message);
-        }
-      }, [taggedMessage, message.taged_message]);
+  const renderMessage = (message, index) => {
+    const actualMessage = message.message;
+    const messageJSON = parseMessage(actualMessage);
+    const taggedMessage = message.taged_message
+      ? findTaggedMessage(message.taged_message)
+      : null;
 
-      const formatMessageWithMentions = (text) => {
-        if (!text) return "";
-        // Updated regex to match mentions without spaces
-        const parts = text.split(/(@[\w]+)/g);
-        return parts.map((part, index) => {
-          // Check if the part starts with @ and is a mention
-          if (part.startsWith("@")) {
-            return (
-              <strong key={index} className="text-[#ffb130]">
-                {part}
-              </strong>
-            );
-          }
-          return part;
-        });
-      };
+    const handleTaggedMessageClick = () => {
+      if (taggedMessage) {
+        scrollToMessage(message.taged_message);
+      }
+    };
 
-      return (
-        <div
-          className={`message-container relative max-w-[70%] px-4 py-3 ${
-            message?.sender?.role === "You"
-              ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
-              : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
-          } ${slideOffset > 0 ? "sliding" : ""}`}
-          onTouchStart={(e) => handleTouchStart(e, message)}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={(e) => handleTouchEnd(e, message)}
-          data-message={JSON.stringify(message)}
-          data-message-id={message.id}
-          style={{
-            transform: `translateX(${slideOffset}px)`,
-          }}
-        >
-          {/* Add slide indicator */}
-          <div className="slide-indicator">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
-              <path
-                d="M10 9l-6 6 6 6"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M4 15h11a4 4 0 004-4v0"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-
-          <div
-            className={`text-sm font-medium mb-1 ${
-              message?.sender?.role === "You" ? "text-white" : "text-[#1B4F4A]"
-            }`}
+    return (
+      <div
+        key={message.id || index}
+        className={`message-container relative max-w-[70%] px-4 py-3 ${
+          message?.sender?.role === "You"
+            ? "bg-[#1B4F4A] text-white rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]"
+            : "bg-primary-background text-[#212B36] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[10px]"
+        }`}
+        onTouchStart={(e) => handleTouchStart(e, message)}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        data-message={JSON.stringify(message)}
+        data-message-id={message.id}
+        style={{
+          transform: `translateX(0px)`,
+        }}
+      >
+        {/* Add slide indicator */}
+        <div className="slide-indicator">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
           >
-            {message?.sender?.role !== "You" && message?.sender?.name && (
-              <>
-                {message?.sender?.name}
-                {message?.sender?.role !== "You"
-                  ? ` • ${message?.sender?.role}`
-                  : ""}
-              </>
-            )}
-          </div>
+            <path
+              d="M10 9l-6 6 6 6"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M4 15h11a4 4 0 004-4v0"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
 
-          {taggedMessage && (
+        <div
+          className={`text-sm font-medium mb-1 ${
+            message?.sender?.role === "You" ? "text-white" : "text-[#1B4F4A]"
+          }`}
+        >
+          {message?.sender?.role !== "You" && message?.sender?.name && (
+            <>
+              {message?.sender?.name}
+              {message?.sender?.role !== "You"
+                ? ` • ${message?.sender?.role}`
+                : ""}
+            </>
+          )}
+        </div>
+
+        {taggedMessage && (
+          <div
+            className={`relative mb-2 pl-2 ${
+              message?.sender?.role === "You"
+                ? "border-l-2 border-white/40"
+                : "border-l-2 border-[#1B4F4A]"
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleTaggedMessageClick();
+            }}
+          >
             <div
-              className={`relative mb-2 pl-2 ${
+              className={`text-sm rounded-sm p-2 cursor-pointer hover:opacity-90 transition-opacity ${
                 message?.sender?.role === "You"
-                  ? "border-l-2 border-white/40"
-                  : "border-l-2 border-[#1B4F4A]"
+                  ? "bg-[#E7E7E7] text-[#1B4F4A]"
+                  : "bg-[#163f3a] text-[#E7E7E7]"
               }`}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleTaggedMessageClick();
-              }}
             >
-              <div
-                className={`text-sm rounded-sm p-2 cursor-pointer hover:opacity-90 transition-opacity ${
-                  message?.sender?.role === "You"
-                    ? "bg-[#E7E7E7] text-[#1B4F4A]"
-                    : "bg-[#163f3a] text-[#E7E7E7]"
-                }`}
-              >
-                <div className="flex flex-col gap-1">
-                  <div className="font-medium text-[13px] flex items-center gap-1">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      className={
-                        message?.sender?.role === "You"
-                          ? "text-white/70"
-                          : "text-[#637381]"
-                      }
-                    >
-                      <path
-                        d="M9 14l-4-4 4-4"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M5 10h11a4 4 0 014 4v0"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    {taggedMessage.sender.name}
-                  </div>
-                  <div
-                    className={`text-[13px] truncate whitespace-pre-line ${
+              <div className="flex flex-col gap-1">
+                <div className="font-medium text-[13px] flex items-center gap-1">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    className={
                       message?.sender?.role === "You"
                         ? "text-white/70"
-                        : "text-[#E7E7E7]"
-                    }`}
+                        : "text-[#637381]"
+                    }
                   >
-                    {formatMessageWithMentions(taggedMessage.message)}
-                  </div>
+                    <path
+                      d="M9 14l-4-4 4-4"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M5 10h11a4 4 0 014 4v0"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  {taggedMessage.sender.name}
+                </div>
+                <div
+                  className={`text-[13px] truncate whitespace-pre-line ${
+                    message?.sender?.role === "You"
+                      ? "text-white/70"
+                      : "text-[#E7E7E7]"
+                  }`}
+                >
+                  {formatMessageWithMentions(taggedMessage.message)}
                 </div>
               </div>
             </div>
-          )}
-
-          <div className="text-[15px] break-words leading-[22px]  truncate whitespace-pre-line ">
-            {messageJSON
-              ? formatMessageWithMentions(messageJSON.message)
-              : formatMessageWithMentions(message.message)}
           </div>
+        )}
 
-          <div className="text-[13px] mt-1">
-            <span
-              className={
-                message?.sender?.role === "You"
-                  ? "text-white/70"
-                  : "text-[#637381]"
-              }
-            >
-              {formatTime(message.timestamp)}
-            </span>
-          </div>
+        <div className="text-[15px] break-words leading-[22px]  truncate whitespace-pre-line ">
+          {messageJSON
+            ? formatMessageWithMentions(messageJSON.message)
+            : formatMessageWithMentions(message.message)}
         </div>
-      );
-    },
-    [
-      handleTouchStart,
-      handleTouchMove,
-      handleTouchEnd,
-      messages,
-      scrollToMessage,
-    ]
-  );
+
+        <div className="text-[13px] mt-1">
+          <span
+            className={
+              message?.sender?.role === "You"
+                ? "text-white/70"
+                : "text-[#637381]"
+            }
+          >
+            {formatTime(message.timestamp)}
+          </span>
+        </div>
+      </div>
+    );
+  };
 
   const handleInput = (e) => {
     const textarea = e.target;
@@ -592,6 +607,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           transition: transform 0.2s ease-out;
         }
 
+        .message-container.dragging {
+          transition: none;
+        }
+
         .slide-indicator {
           position: absolute;
           left: -40px;
@@ -683,7 +702,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                       </div>
 
                       {/* Message Content */}
-                      <MessageContent message={message} index={index} />
+                      {renderMessage(message, index)}
                     </div>
                   ))}
                 </div>
