@@ -14,11 +14,16 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const ws = useRef(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
-  const [touchStartPoint, setTouchStartPoint] = useState(null);
-  const [swipeIntent, setSwipeIntent] = useState(null);
   const [activeSwipeMessageId, setActiveSwipeMessageId] = useState(null);
   const [swipeOffset, setSwipeOffset] = useState(0);
-  const [hasTriggeredReply, setHasTriggeredReply] = useState(false);
+  const swipeGestureRef = useRef({
+    startX: 0,
+    startY: 0,
+    intent: null,
+    activeMessageId: null,
+    hasTriggeredReply: false,
+    isTracking: false,
+  });
   const swipeIntentThreshold = 10;
   const swipeReplyThreshold = 50;
   const maxSwipeOffset = 60;
@@ -203,46 +208,52 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     if (e.touches.length !== 1) return; // Handle single touch only
 
     const touch = e.touches[0];
-    setTouchStartPoint({ x: touch.clientX, y: touch.clientY });
-    setSwipeIntent(null);
+    swipeGestureRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      intent: null,
+      activeMessageId: message.id,
+      hasTriggeredReply: false,
+      isTracking: true,
+    };
     setActiveSwipeMessageId(message.id);
     setSwipeOffset(0);
-    setHasTriggeredReply(false);
   }, []);
 
   const handleTouchMove = useCallback(
     (e) => {
-      if (!touchStartPoint || e.touches.length !== 1) return;
-      if (String(activeSwipeMessageId) !== e.currentTarget.dataset.messageId) return;
+      const gesture = swipeGestureRef.current;
+      if (!gesture.isTracking || e.touches.length !== 1) return;
+      if (String(gesture.activeMessageId) !== e.currentTarget.dataset.messageId) return;
 
       const touch = e.touches[0];
-      const dx = touch.clientX - touchStartPoint.x;
-      const dy = touch.clientY - touchStartPoint.y;
+      const dx = touch.clientX - gesture.startX;
+      const dy = touch.clientY - gesture.startY;
       const absDx = Math.abs(dx);
       const absDy = Math.abs(dy);
 
-      if (!swipeIntent) {
+      if (!gesture.intent) {
         if (absDy > swipeIntentThreshold && absDy > absDx) {
-          setSwipeIntent("vertical");
+          gesture.intent = "vertical";
           setSwipeOffset(0);
           return;
         }
 
         if (absDx > swipeIntentThreshold && absDx > absDy) {
-          setSwipeIntent("horizontal");
+          gesture.intent = "horizontal";
         } else {
           return;
         }
       }
 
-      if (swipeIntent === "vertical") {
+      if (gesture.intent === "vertical") {
         return;
       }
 
       const clampedOffset = Math.max(Math.min(dx, maxSwipeOffset), -maxSwipeOffset);
       setSwipeOffset(clampedOffset);
 
-      if (!hasTriggeredReply && absDx >= swipeReplyThreshold) {
+      if (!gesture.hasTriggeredReply && absDx >= swipeReplyThreshold) {
         const messageData = e.currentTarget.dataset.message;
         if (messageData) {
           try {
@@ -252,18 +263,23 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             console.error("Error parsing message data:", error);
           }
         }
-        setHasTriggeredReply(true);
+        gesture.hasTriggeredReply = true;
       }
     },
-    [touchStartPoint, swipeIntent, activeSwipeMessageId, hasTriggeredReply]
+    []
   );
 
   const handleTouchEnd = useCallback(() => {
-    setTouchStartPoint(null);
-    setSwipeIntent(null);
+    swipeGestureRef.current = {
+      startX: 0,
+      startY: 0,
+      intent: null,
+      activeMessageId: null,
+      hasTriggeredReply: false,
+      isTracking: false,
+    };
     setActiveSwipeMessageId(null);
     setSwipeOffset(0);
-    setHasTriggeredReply(false);
   }, []);
 
   const scrollToMessage = useCallback((messageId) => {
@@ -351,6 +367,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
             transform: `translateX(${
               activeSwipeMessageId === message.id ? swipeOffset : 0
             }px)`,
+            touchAction: "pan-y",
           }}
         >
           {/* Add slide indicator */}
