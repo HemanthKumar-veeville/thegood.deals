@@ -154,12 +154,21 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     return groups;
   };
 
-  const handleReply = (message) => {
-    setReplyTo(message);
+  const handleReply = useCallback((message) => {
+    setReplyTo((prevReply) => {
+      // If the same message is selected again, toggle it off (cancel reply)
+      if (prevReply && prevReply.id === message.id) {
+        return null;
+      }
+      // Otherwise, replace with the newly selected message
+      return message;
+    });
+    
+    // Focus the textarea
     if (textareaRef.current) {
       textareaRef.current.focus();
     }
-  };
+  }, []);
 
   const handleSendMessage = useCallback(
     (e) => {
@@ -220,7 +229,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     }, longPressThreshold);
   
     pressTimerRef.current = timer;
-  }, []);
+  }, [handleReply]);
 
   const handleTouchMove = useCallback((e) => {
     if (e.touches.length !== 1) return;
@@ -300,7 +309,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       clearTimeout(pressTimerRef.current);
       pressTimerRef.current = null;
     }
-  }, []);
+  }, [handleReply]);
 
   const scrollToMessage = useCallback((messageId) => {
     if (!messageId) return;
@@ -352,6 +361,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     const messageJSON = parseMessage(actualMessage);
     const taggedMessage = message.taged_message
       ? findTaggedMessage(message.taged_message)
+      : null;
+    const taggedMessageJSON = taggedMessage
+      ? parseMessage(taggedMessage.message)
       : null;
 
     const handleTaggedMessageClick = () => {
@@ -471,7 +483,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                       : "text-[#E7E7E7]"
                   }`}
                 >
-                  {formatMessageWithMentions(taggedMessage.message)}
+                  {taggedMessageJSON
+                    ? formatMessageWithMentions(taggedMessageJSON.message)
+                    : formatMessageWithMentions(taggedMessage.message)}
                 </div>
               </div>
             </div>
@@ -727,8 +741,8 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                 </div>
                 <div className="text-sm text-[#637381] truncate text-wrap">
                   {parseMessage(replyTo.message)
-                    ? parseMessage(replyTo.message).message
-                    : replyTo.message}
+                    ? formatMessageWithMentions(parseMessage(replyTo.message).message)
+                    : formatMessageWithMentions(replyTo.message)}
                 </div>
               </div>
               <button
