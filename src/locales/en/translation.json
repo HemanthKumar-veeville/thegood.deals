@@ -656,6 +656,8 @@
     "ends_in": "Deal ends in",
     "time_left": "{{days}} days.",
     "end_in": "end in {{days}} days",
+    "expired_banner_title": "Deal expired",
+    "expired_banner_message": "This deal is no longer open for new orders.",
     "participants": "{{count}} participants",
     "location": "Domaine de Cigalus 11200 Bizanet",
     "my_orders": "My orders",

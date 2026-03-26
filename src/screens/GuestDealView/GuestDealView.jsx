@@ -33,6 +33,34 @@ const GuestDealView = () => {
   const dealState = useSelector((state) => state.deals);
   const { deal, status } = dealState;
   const dealData = deal?.Deal?.deal || {};
+  const parsedDaysRemaining = Number(dealData?.ends_in);
+  const daysRemaining = Number.isNaN(parsedDaysRemaining) ? 0 : parsedDaysRemaining;
+  const isClosedDeal =
+    dealData?.status === "expired" || dealData?.status === "finished";
+  const isDealExpired = isClosedDeal || daysRemaining === 0;
+  const bannerVariant = isDealExpired
+    ? "danger"
+    : daysRemaining <= 2
+      ? "warning"
+      : "success";
+  const bannerStylesByVariant = {
+    success: {
+      container: "bg-greengreen-light-6",
+      iconWrapper: "bg-greengreen",
+      textClass: "text-[#004434]",
+    },
+    warning: {
+      container: "bg-yellowyellow-light-4",
+      iconWrapper: "bg-yellowyellow-dark",
+      textClass: "text-yellowyellow-dark-2",
+    },
+    danger: {
+      container: "bg-redred-light-6",
+      iconWrapper: "bg-redred",
+      textClass: "text-redred-dark",
+    },
+  };
+  const activeBannerStyles = bannerStylesByVariant[bannerVariant];
   const queryParams = new URLSearchParams(location.search);
   const deal_id = queryParams.get("deal_id");
   const is_creator = queryParams.get("is_creator");
@@ -170,25 +198,49 @@ const GuestDealView = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-start gap-[25px] px-[18px] py-[15px] relative self-stretch w-full flex-[0_0_auto] bg-greengreen-light-6 rounded-lg">
+          <div
+            className={`flex items-start gap-[25px] px-[18px] py-[15px] relative self-stretch w-full flex-[0_0_auto] rounded-lg ${activeBannerStyles.container}`}
+          >
             <div className="flex items-center gap-3 relative flex-1 grow">
-              <div className="relative w-5 h-5 bg-greengreen rounded-[10px]">
+              <div
+                className={`relative w-5 h-5 rounded-[10px] ${activeBannerStyles.iconWrapper}`}
+              >
                 <ClockAlt13
                   className="!absolute !w-3 !h-3 !top-1 !left-1"
                   color="white"
                 />
               </div>
-              <p className="relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
-                <span className="[font-family:'Inter',Helvetica] font-normal text-[#004434] text-sm tracking-[0] leading-5">
-                  {t("deal.ends_in")}
-                  <br />
-                </span>
-                <span className="font-bold">
-                  {t("deal.time_left", {
-                    days: dealData?.ends_in || "0",
-                  })}
-                </span>
-              </p>
+              {isDealExpired ? (
+                <p
+                  className={`relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-sm tracking-[0] leading-5 ${activeBannerStyles.textClass}`}
+                >
+                  <span
+                    className={`[font-family:'Inter',Helvetica] font-normal text-sm tracking-[0] leading-5 ${activeBannerStyles.textClass}`}
+                  >
+                    {t("deal.expired_banner_title")}
+                    <br />
+                  </span>
+                  <span className="font-bold">
+                    {t("deal.expired_banner_message")}
+                  </span>
+                </p>
+              ) : (
+                <p
+                  className={`relative flex-1 mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-sm tracking-[0] leading-5 ${activeBannerStyles.textClass}`}
+                >
+                  <span
+                    className={`[font-family:'Inter',Helvetica] font-normal text-sm tracking-[0] leading-5 ${activeBannerStyles.textClass}`}
+                  >
+                    {t("deal.ends_in")}
+                    <br />
+                  </span>
+                  <span className="font-bold">
+                    {t("deal.time_left", {
+                      days: daysRemaining,
+                    })}
+                  </span>
+                </p>
+              )}
             </div>
           </div>
           <div
@@ -222,7 +274,9 @@ const GuestDealView = () => {
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
               <ClockAlt13 className="!relative !w-5 !h-5" color="#1B4F4A" />
               <div className="relative w-fit mt-[-1.00px] [font-family:'Inter',Helvetica] font-normal text-primary-text-color text-sm tracking-[0] leading-[22px] whitespace-nowrap">
-                {t("deal.end_in", { days: dealData?.ends_in || "0" })}
+                {isDealExpired
+                  ? t("deal.expired_banner_title")
+                  : t("deal.end_in", { days: daysRemaining })}
               </div>
             </div>
             <div className="inline-flex items-center gap-2.5 relative flex-[0_0_auto]">
