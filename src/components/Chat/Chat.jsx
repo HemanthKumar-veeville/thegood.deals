@@ -169,6 +169,24 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     }
   }, []);
 
+  const triggerMessageHighlight = useCallback((message) => {
+    if (!message?.id) return;
+
+    const messageNode = document.querySelector(`[data-message-id="${message.id}"]`);
+    if (!messageNode) return;
+
+    const isSentMessage = message?.sender?.role === "You";
+    const highlightClass = isSentMessage
+      ? "highlight-message-sent"
+      : "highlight-message-received";
+
+    messageNode.classList.remove("pressing");
+    messageNode.classList.add(highlightClass);
+    setTimeout(() => {
+      messageNode.classList.remove(highlightClass);
+    }, 650);
+  }, []);
+
   const handleSendMessage = useCallback(
     (e) => {
       e.preventDefault();
@@ -209,6 +227,11 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     }
   };
 
+  const handleDoubleClick = useCallback((message) => {
+    handleReply(message);
+    triggerMessageHighlight(message);
+  }, [handleReply, triggerMessageHighlight]);
+
   const handleTouchStart = useCallback((e, message) => {
     if (e.touches.length !== 1) return;
   
@@ -228,18 +251,15 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   
     const timer = setTimeout(() => {
       if (!gestureRef.current && activeMessageRef.current) {
-        handleReply(activeMessageRef.current);
+        const selectedMessage = activeMessageRef.current;
+        handleReply(selectedMessage);
         // Remove pressing style and optionally trigger a quick flash
-        if (messageNode) {
-          messageNode.classList.remove("pressing");
-          messageNode.classList.add("highlight-message");
-          setTimeout(() => messageNode.classList.remove("highlight-message"), 500);
-        }
+        triggerMessageHighlight(selectedMessage);
       }
     }, longPressThreshold);
   
     pressTimerRef.current = timer;
-  }, [handleReply]);
+  }, [handleReply, triggerMessageHighlight]);
 
   const handleTouchMove = useCallback((e) => {
     if (e.touches.length !== 1) return;
@@ -247,9 +267,28 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     const touch = e.touches[0];
   
     const diffY = touch.clientY - startYRef.current;
+    const diffX = touch.clientX - startXRef.current;
+
+    // Detect horizontal swipe to reply (Threshold: 40px)
+    if (Math.abs(diffX) > 40 && Math.abs(diffY) < 30) {
+      if (gestureRef.current !== "swipe" && activeMessageRef.current) {
+        gestureRef.current = "swipe";
+        
+        if (pressTimerRef.current) {
+          clearTimeout(pressTimerRef.current);
+          pressTimerRef.current = null;
+        }
+
+        const selectedMessage = activeMessageRef.current;
+        handleReply(selectedMessage);
+        triggerMessageHighlight(selectedMessage);
+        activeMessageRef.current = null;
+      }
+      return;
+    }
   
-    // 🚨 CRITICAL FIX — cancel instantly on scroll
-    if (Math.abs(diffY) > 2) {
+    // 🚨 CRITICAL FIX — cancel instantly on vertical scroll
+    if (Math.abs(diffY) > 5) {
       gestureRef.current = "scroll";
   
       if (pressTimerRef.current) {
@@ -266,7 +305,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       activeMessageRef.current = null; // ✅ prevent reply trigger
       return;
     }
-  }, []);
+  }, [handleReply, triggerMessageHighlight]);
 
   const handleTouchEnd = useCallback(() => {
     if (activeMessageRef.current) {
@@ -291,12 +330,17 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       `[data-message-id="${messageId}"]`
     );
     if (messageElement && messagesContainerRef.current) {
-      messageElement.classList.add("highlight-message");
+      const isSentMessage = messageElement.getAttribute("data-message-role") === "sent";
+      const highlightClass = isSentMessage
+        ? "highlight-message-sent"
+        : "highlight-message-received";
+
+      messageElement.classList.add(highlightClass);
       messageElement.scrollIntoView({ behavior: "smooth", block: "center" });
 
       // Remove highlight after animation
       setTimeout(() => {
-        messageElement.classList.remove("highlight-message");
+        messageElement.classList.remove(highlightClass);
       }, 2000);
     }
   }, []);
@@ -374,8 +418,10 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         onTouchStart={(e) => handleTouchStart(e, message)}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onDoubleClick={() => handleDoubleClick(message)}
         data-message={JSON.stringify(message)}
         data-message-id={message.id}
+        data-message-role={message?.sender?.role === "You" ? "sent" : "received"}
       >
         <div
           className={`text-sm font-medium mb-1 ${
@@ -565,17 +611,42 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
           background-color: #d1d1d1;
         }
 
-        @keyframes highlight {
+        @keyframes highlightSent {
           0% {
-            background-color: rgba(27, 79, 74, 0.2);
+            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+            filter: brightness(1);
+          }
+          25% {
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.95);
+            filter: brightness(1.15);
           }
           100% {
-            background-color: transparent;
+            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+            filter: brightness(1);
           }
         }
 
-        .highlight-message {
-          animation: highlight 2s ease-out;
+        @keyframes highlightReceived {
+          0% {
+            box-shadow: 0 0 0 0 rgba(27, 79, 74, 0.65);
+            filter: brightness(1);
+          }
+          25% {
+            box-shadow: 0 0 0 3px rgba(27, 79, 74, 0.95);
+            filter: brightness(0.93);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(27, 79, 74, 0);
+            filter: brightness(1);
+          }
+        }
+
+        .highlight-message-sent {
+          animation: highlightSent 0.65s ease-out;
+        }
+
+        .highlight-message-received {
+          animation: highlightReceived 0.65s ease-out;
         }
         
         .message-container {
@@ -643,7 +714,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                   {dateMessages.map((message, index) => (
                     <div
                       key={index}
-                      className={`flex items-start gap-2 mb-4 ${
+                      className={`flex items-start gap-2 mb-4 group ${
                         message?.sender?.role === "You"
                           ? "flex-row-reverse"
                           : "flex-row"
@@ -666,6 +737,19 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
 
                       {/* Message Content */}
                       {renderMessage(message, index)}
+
+                      {/* Reply Button - Visible on mobile, hover only on desktop */}
+                      <div
+                        className={`flex items-center self-center md:opacity-0 md:group-hover:opacity-100 transition-opacity cursor-pointer text-[#637381] hover:text-[#1B4F4A] p-2 rounded-full hover:bg-gray-100 ${
+                          message?.sender?.role === "You" ? "mr-1" : "ml-1"
+                        }`}
+                        onClick={() => handleDoubleClick(message)}
+                        title={t("chat.reply") || "Reply"}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                          <path d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
                     </div>
                   ))}
                 </div>
