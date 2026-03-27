@@ -27,7 +27,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   const textareaRef = useRef(null);
   const [mentions, setMentions] = useState([]);
   const gestureRef = useRef(null);
-  const startXRef = useRef(0);
   const startYRef = useRef(0);
   const activeMessageRef = useRef(null);
 
@@ -239,7 +238,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
   
     activeMessageRef.current = message; // ✅ track message globally
   
-    startXRef.current = touch.clientX;
     startYRef.current = touch.clientY;
     gestureRef.current = null;
     
@@ -267,26 +265,6 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
     const touch = e.touches[0];
   
     const diffY = touch.clientY - startYRef.current;
-    const diffX = touch.clientX - startXRef.current;
-
-    // Detect horizontal swipe to reply (Threshold: 40px)
-    if (Math.abs(diffX) > 40 && Math.abs(diffY) < 30) {
-      if (gestureRef.current !== "swipe" && activeMessageRef.current) {
-        gestureRef.current = "swipe";
-        
-        if (pressTimerRef.current) {
-          clearTimeout(pressTimerRef.current);
-          pressTimerRef.current = null;
-        }
-
-        const selectedMessage = activeMessageRef.current;
-        handleReply(selectedMessage);
-        triggerMessageHighlight(selectedMessage);
-        activeMessageRef.current = null;
-      }
-      return;
-    }
-  
     // 🚨 CRITICAL FIX — cancel instantly on vertical scroll
     if (Math.abs(diffY) > 5) {
       gestureRef.current = "scroll";
@@ -305,7 +283,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       activeMessageRef.current = null; // ✅ prevent reply trigger
       return;
     }
-  }, [handleReply, triggerMessageHighlight]);
+  }, []);
 
   const handleTouchEnd = useCallback(() => {
     if (activeMessageRef.current) {
@@ -585,6 +563,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
       ?.toLowerCase()
       .includes(mentionFilter.toLowerCase())
   );
+  const sendButtonSizeClasses = "min-w-[40px] h-[40px]";
 
   return (
     <div className="flex flex-col w-full bg-white rounded-lg shadow-sm">
@@ -738,9 +717,9 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
                       {/* Message Content */}
                       {renderMessage(message, index)}
 
-                      {/* Reply Button - Visible on mobile, hover only on desktop */}
+                      {/* Reply Button - visible only on hover */}
                       <div
-                        className={`flex items-center self-center md:opacity-0 md:group-hover:opacity-100 transition-opacity cursor-pointer text-[#637381] hover:text-[#1B4F4A] p-2 rounded-full hover:bg-gray-100 ${
+                        className={`hidden group-hover:flex items-center self-center transition-opacity cursor-pointer text-[#637381] hover:text-[#1B4F4A] p-2 rounded-full hover:bg-gray-100 ${
                           message?.sender?.role === "You" ? "mr-1" : "ml-1"
                         }`}
                         onClick={() => handleDoubleClick(message)}
@@ -767,36 +746,42 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
         {/* Input Container - fixed at bottom */}
         <div className="p-4 border-t border-[#E7E7E7] bg-white">
           {replyTo && (
-            <div className="flex items-center justify-between mb-2 p-2 bg-[#F4F6F8] rounded-[10px]">
-              <div className="flex-1">
-                <div className="text-sm font-medium text-[#1B4F4A]">
-                  {replyTo.sender.name}
+            <div className="mb-2 flex items-center gap-3">
+              <div className="flex flex-1 items-center justify-between rounded-[10px] bg-[#F4F6F8] p-2">
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-[#1B4F4A]">
+                    {replyTo.sender.name}
+                  </div>
+                  <div className="text-sm text-[#637381] truncate text-wrap">
+                    {parseMessage(replyTo.message)
+                      ? formatMessageWithMentions(parseMessage(replyTo.message).message)
+                      : formatMessageWithMentions(replyTo.message)}
+                  </div>
                 </div>
-                <div className="text-sm text-[#637381] truncate text-wrap">
-                  {parseMessage(replyTo.message)
-                    ? formatMessageWithMentions(parseMessage(replyTo.message).message)
-                    : formatMessageWithMentions(replyTo.message)}
-                </div>
-              </div>
-              <button
-                onClick={() => setReplyTo(null)}
-                className="ml-2 text-[#637381] hover:text-[#1B4F4A]"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
+                <button
+                  onClick={() => setReplyTo(null)}
+                  className="ml-2 text-[#637381] hover:text-[#1B4F4A]"
                 >
-                  <path
-                    d="M18 6L6 18M6 6l12 12"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      d="M18 6L6 18M6 6l12 12"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                aria-hidden="true"
+                className={`${sendButtonSizeClasses} shrink-0`}
+              />
             </div>
           )}
           <div className="flex items-center gap-3">
@@ -858,7 +843,7 @@ export const Chat = ({ messages: initialMessages, dealId }) => {
               type="button"
               onClick={handleSendMessage}
               disabled={!newMessage.trim()}
-              className={`min-w-[40px] h-[40px] flex items-center justify-center rounded-full transition-colors bg-[#1B4F4A] hover:bg-[#163f3a]`}
+              className={`${sendButtonSizeClasses} flex items-center justify-center rounded-full transition-colors bg-[#1B4F4A] hover:bg-[#163f3a]`}
             >
               <Send2 className="!w-5 !h-5" color="#FFFFFF" />
             </button>
