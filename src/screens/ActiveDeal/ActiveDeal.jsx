@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { StyleTypePrimary } from "../../components/StyleTypePrimaryUpdate01";
 import { ArrowLeft } from "../../icons/ArrowLeft/ArrowLeft";
 import { Box43 } from "../../icons/Box43";
@@ -46,6 +46,39 @@ import { ShowCustomWarningModal } from "../../components/WarningAlert/WarningAle
 import ReadMore from "../../components/Readmore/Readmore";
 import { MdMoreHoriz, MdOutlineDeleteForever } from "react-icons/md";
 import { deleteDealByDealId } from "../../redux/app/deals/dealSlice";
+
+const BASE_STEPS = [
+  { step: 1, bgColor: "", textColor: "" },
+  { step: 2, bgColor: "", textColor: "" },
+  { step: 3, bgColor: "", textColor: "" },
+  { step: 4, bgColor: "", textColor: "" },
+  { step: 5, bgColor: "", textColor: "" },
+];
+
+function updateSteps(steps, currentStep) {
+  return steps.map((step) => {
+    if (step.step < currentStep) {
+      return {
+        ...step,
+        bgColor: "bg-primary-color",
+        textColor: "text-whitewhite",
+      };
+    } else if (step.step === currentStep) {
+      return {
+        ...step,
+        bgColor: "bg-whitewhite border-2 border-solid border-primary-color",
+        textColor: "text-primary-color",
+      };
+    } else {
+      return {
+        ...step,
+        bgColor: "bg-graygray border-2 border-solid border-stroke",
+        textColor: "text-primary-color",
+      };
+    }
+  });
+}
+
 const ActiveDeal = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,6 +86,16 @@ const ActiveDeal = () => {
   const dealState = useSelector((state) => state.deals);
   const { deal, status, error } = dealState;
   const dealData = (deal?.Deal?.length && deal?.Deal[0]) || {};
+
+  const derivedStep = useMemo(() => {
+    if (dealData?.order_confirmed === true) return 6;
+    if (dealData?.is_email_sent === true) return 5;
+    if (dealData?.deal_progress_percentage >= 100) return 4;
+    return 2;
+  }, [dealData?.order_confirmed, dealData?.is_email_sent, dealData?.deal_progress_percentage]);
+
+  const steps = useMemo(() => updateSteps(BASE_STEPS, derivedStep), [derivedStep]);
+
   const parsedDaysRemaining = Number(dealData?.deal_ends_in);
   const daysRemaining = Number.isNaN(parsedDaysRemaining) ? 0 : parsedDaysRemaining;
   const isClosedDeal =
@@ -103,15 +146,7 @@ const ActiveDeal = () => {
   const [isDeleteInProgress, setIsDeleteInProgress] = useState(false);
   const [autoRetry, setAutoRetry] = useState(false);
   const [paymentAttempts, setPaymentAttempts] = useState(0);
-  const [currentStep, setCurrentStep] = useState(2);
   const menuRef = useRef(null);
-  const [steps, setSteps] = useState([
-    { step: 1, bgColor: "", textColor: "" },
-    { step: 2, bgColor: "", textColor: "" },
-    { step: 3, bgColor: "", textColor: "" },
-    { step: 4, bgColor: "", textColor: "" },
-    { step: 5, bgColor: "", textColor: "" },
-  ]);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -223,7 +258,6 @@ const ActiveDeal = () => {
       );
       setIsDealPaid(res?.payload?.Deal[0]?.is_artisan_paid);
       setIsEmailSent(!!res?.payload?.Deal[0]?.is_email_sent);
-      setSteps(updateSteps(steps, currentStep));
     } catch (err) {
       console.error(err);
       setIsError(true);
@@ -249,22 +283,6 @@ const ActiveDeal = () => {
       navigate(`/deal_details_invite?deal_id=${deal_id}&is_repostable=false`, { replace: true });
     }
   }, [isGuestMode, deal_id, navigate]);
-
-  useEffect(() => {
-    dealData?.deal_progress_percentage >= 100 ? setCurrentStep(4) : null;
-  }, [dealData?.deal_progress_percentage]);
-
-  useEffect(() => {
-    dealData?.is_email_sent === true ? setCurrentStep(5) : null;
-  }, [dealData?.is_email_sent]);
-
-  useEffect(() => {
-    dealData?.order_confirmed === true ? setCurrentStep(6) : null;
-  }, [dealData?.order_confirmed]);
-
-  useEffect(() => {
-    setSteps(updateSteps(steps, currentStep));
-  }, [currentStep]);
 
   const handleInviteLovedOnes = () => {
     navigate(
@@ -343,30 +361,6 @@ const ActiveDeal = () => {
       setIsCollectionInProgress(false);
     }
   };
-
-  function updateSteps(steps, currentStep) {
-    return steps.map((step) => {
-      if (step.step < currentStep) {
-        return {
-          ...step,
-          bgColor: "bg-primary-color",
-          textColor: "text-whitewhite",
-        };
-      } else if (step.step === currentStep) {
-        return {
-          ...step,
-          bgColor: "bg-whitewhite border-2 border-solid border-primary-color",
-          textColor: "text-primary-color",
-        };
-      } else {
-        return {
-          ...step,
-          bgColor: "bg-graygray border-2 border-solid border-stroke",
-          textColor: "text-primary-color",
-        };
-      }
-    });
-  }
 
   if (!deal_id) {
     return <CustomLoader />;
