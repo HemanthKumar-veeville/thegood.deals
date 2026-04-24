@@ -473,6 +473,7 @@
     "amount_target": "sur {{target}} €",
     "relatives_label": "Mes proches",
     "participants_label": "Invités sur le deal",
+    "participants_other_deals_label": "Invités sur d'autres deals",
     "participants_count": "{{count}} participants",
     "step_1": "L’artisan a accepté le deal",
     "step_2": "Le good deal est en cours",

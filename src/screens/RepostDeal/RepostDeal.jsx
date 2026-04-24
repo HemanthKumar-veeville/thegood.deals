@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next"; // Import the useTranslation hook
 import { useNavigate } from "react-router-dom";
 import AppBar from "../../components/AppBar/AppBar";
@@ -30,8 +30,12 @@ import AcceptConditions from "../../components/AcceptConditions";
 import { ShowCustomErrorModal } from "../../components/ErrorAlert/ErrorAlert";
 import { Line } from "../../components/Line/Line";
 import { validate as uuidValidate } from "uuid";
-import { fetchParticipantsByDeal } from "../../redux/app/participants/participantSlice";
+import {
+  fetchParticipantsByDeal,
+  fetchOrganiserParticipantsExcludingDeal,
+} from "../../redux/app/participants/participantSlice";
 import ParticipantsList from "../../components/ParticipantsList/ParticipantsList";
+import OrganiserOtherDealsParticipantsList from "../../components/OrganiserOtherDealsParticipantsList/OrganiserOtherDealsParticipantsList";
 
 const RepostDeal = () => {
   const { t, i18n } = useTranslation(); // Initialize translation hook
@@ -45,9 +49,25 @@ const RepostDeal = () => {
   const [isDraftDeal, setIsDraftDeal] = useState(false);
   const [formErrors, setFormErrors] = useState({}); // Track validation errors
   const [selectedParticipants, setSelectedParticipants] = useState([]);
+  const defaultParticipantSelectionSeededForDealIdRef = useRef(null);
   const { participants, participantStatus } = useSelector(
     (state) => state.participants
   );
+  const {
+    organiserExcludeParticipants,
+    organiserExcludeParticipantsStatus,
+  } = useSelector((state) => state.participants);
+
+  const dealParticipantIdSet = useMemo(
+    () => new Set(participants?.map((p) => p.participant_id) ?? []),
+    [participants]
+  );
+
+  const otherDealsGuestsList = useMemo(() => {
+    return organiserExcludeParticipants.filter(
+      (p) => !dealParticipantIdSet.has(p.id)
+    );
+  }, [organiserExcludeParticipants, dealParticipantIdSet]);
   // Helper function to generate calendar days
   const formatDate = (date) => {
     const year = date.getFullYear();
@@ -71,8 +91,6 @@ const RepostDeal = () => {
   const dealId = queryParams.get("deal_id");
   const [imagesForm, setImagesForm] = useState(new FormData());
   const [existingImages, setExistingImages] = useState([]);
-
-  console.log({ errorMessage, isError });
 
   const addProduct = (product) => {
     setIsProductUpdated(true);
@@ -243,7 +261,8 @@ const RepostDeal = () => {
       form.append("deal_expiration_date", formData.dealExpiration);
       form.append("terms_accepted", formData.acceptConditions);
       form.append("delivery_cost", formData.deliveryCost);
-      form.append("participants", selectedParticipants);
+      const uniqueParticipantIds = [...new Set(selectedParticipants)];
+      form.append("participants", uniqueParticipantIds);
       form.append(
         "existing_images",
         existingImages?.filter((img) => img?.includes("blob") === false)
@@ -368,10 +387,36 @@ const RepostDeal = () => {
   };
 
   useEffect(() => {
-    if (participantStatus === "idle") {
-      dispatch(fetchParticipantsByDeal(dealId));
+    if (!dealId) return;
+    defaultParticipantSelectionSeededForDealIdRef.current = null;
+    setSelectedParticipants([]);
+    dispatch(fetchParticipantsByDeal(dealId));
+    dispatch(fetchOrganiserParticipantsExcludingDeal(dealId));
+  }, [dealId, dispatch]);
+
+  useEffect(() => {
+    if (!dealId) return;
+    if (participantStatus !== "succeeded") return;
+    if (organiserExcludeParticipantsStatus === "loading") return;
+    if (defaultParticipantSelectionSeededForDealIdRef.current === dealId) {
+      return;
     }
-  }, [dealId]);
+    defaultParticipantSelectionSeededForDealIdRef.current = dealId;
+
+    const dealIds = participants?.map((p) => p.participant_id) ?? [];
+    const otherIds =
+      organiserExcludeParticipantsStatus === "succeeded"
+        ? otherDealsGuestsList.map((p) => p.id)
+        : [];
+
+    setSelectedParticipants([...new Set([...dealIds, ...otherIds])]);
+  }, [
+    dealId,
+    participantStatus,
+    organiserExcludeParticipantsStatus,
+    participants,
+    otherDealsGuestsList,
+  ]);
 
   return (
     <div className="relative">
@@ -559,8 +604,20 @@ const RepostDeal = () => {
               <div className="w-full">
                 <ParticipantsList
                   participants={participants}
-                  setSelectedParticipants={setSelectedParticipants}
-                  selectedParticipants={selectedParticipants}
+                  setSelectedParticipantIds={setSelectedParticipants}
+                  selectedParticipantIds={selectedParticipants}
+                />
+              </div>
+            )}
+            {participants?.length > 0 && otherDealsGuestsList?.length > 0 && (
+              <Line />
+            )}
+            {otherDealsGuestsList?.length > 0 && (
+              <div className="w-full">
+                <OrganiserOtherDealsParticipantsList
+                  participants={otherDealsGuestsList}
+                  selectedParticipantIds={selectedParticipants}
+                  setSelectedParticipantIds={setSelectedParticipants}
                 />
               </div>
             )}

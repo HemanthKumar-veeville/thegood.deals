@@ -1,60 +1,51 @@
-import React, { useState, useEffect } from "react";
+import { useMemo } from "react";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Users22 } from "../../icons/Users22";
 import { SizeXlCorner } from "../../components/SizeXlCorner";
 import { Line } from "../../components/Line/Line";
 
-function ParticipantsList({
+const ParticipantsList = ({
   participants,
-  setSelectedParticipants,
-  selectedParticipants,
-}) {
+  selectedParticipantIds,
+  setSelectedParticipantIds,
+}) => {
   const { t } = useTranslation();
-  const [localSelectedParticipants, setLocalSelectedParticipants] = useState(
-    participants?.map((p) => p.participant_id) || []
-  );
-  const [selectAll, setSelectAll] = useState(true);
-  console.log({ selectedParticipants });
-  // Update parent component when selections change
-  useEffect(() => {
-    setSelectedParticipants(localSelectedParticipants);
-  }, [localSelectedParticipants, setSelectedParticipants]);
 
-  // Update selectAll state based on all participants being selected
-  useEffect(() => {
-    const allSelected =
-      participants?.length === localSelectedParticipants.length;
-    setSelectAll(allSelected);
-  }, [localSelectedParticipants, participants]);
+  const dealParticipantIds = useMemo(
+    () => participants?.map((p) => p.participant_id) ?? [],
+    [participants]
+  );
+
+  const selectAll =
+    dealParticipantIds.length > 0 &&
+    dealParticipantIds.every((id) => selectedParticipantIds.includes(id));
 
   if (!participants?.length) {
     return null;
   }
 
   const handleSelectAll = (checked) => {
-    setSelectAll(checked);
-    if (checked) {
-      // Select all participant IDs
-      setLocalSelectedParticipants(participants.map((p) => p.participant_id));
-    } else {
-      // Deselect all
-      setLocalSelectedParticipants([]);
-    }
+    setSelectedParticipantIds((prev) => {
+      const set = new Set(prev);
+      dealParticipantIds.forEach((id) => {
+        if (checked) set.add(id);
+        else set.delete(id);
+      });
+      return Array.from(set);
+    });
   };
 
   const handleParticipantSelect = (participantId) => {
-    setLocalSelectedParticipants((prev) => {
-      if (prev.includes(participantId)) {
-        return prev.filter((id) => id !== participantId);
-      } else {
-        return [...prev, participantId];
-      }
-    });
+    setSelectedParticipantIds((prev) =>
+      prev.includes(participantId)
+        ? prev.filter((id) => id !== participantId)
+        : [...prev, participantId]
+    );
   };
 
   return (
     <div className="flex flex-col items-start gap-[15px] relative self-stretch w-full">
-      {/* Header */}
       <div className="flex flex-col gap-3 relative self-stretch w-full">
         <div className="flex items-center justify-between gap-2.5">
           <div className="flex items-center gap-2.5">
@@ -98,7 +89,6 @@ function ParticipantsList({
 
       <Line />
 
-      {/* Participants List */}
       <div className="flex flex-col gap-4 w-full">
         {participants.map((participant) => (
           <div
@@ -134,12 +124,12 @@ function ParticipantsList({
             >
               <div
                 className={`w-5 h-5 border-2 rounded-md flex items-center justify-center ${
-                  localSelectedParticipants.includes(participant.participant_id)
+                  selectedParticipantIds.includes(participant.participant_id)
                     ? "bg-[#1b4f4a] border-[#1b4f4a]"
                     : "bg-white border-gray-300"
                 }`}
               >
-                {localSelectedParticipants.includes(
+                {selectedParticipantIds.includes(
                   participant.participant_id
                 ) && (
                   <svg
@@ -164,6 +154,17 @@ function ParticipantsList({
       </div>
     </div>
   );
-}
+};
+
+ParticipantsList.propTypes = {
+  participants: PropTypes.arrayOf(
+    PropTypes.shape({
+      participant_id: PropTypes.string.isRequired,
+      participant_name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  selectedParticipantIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setSelectedParticipantIds: PropTypes.func.isRequired,
+};
 
 export default ParticipantsList;

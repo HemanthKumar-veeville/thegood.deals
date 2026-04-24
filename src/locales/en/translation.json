@@ -473,6 +473,7 @@
     "amount_target": "on €{{target}}",
     "relatives_label": "My participants",
     "participants_label": "Guests on the deal",
+    "participants_other_deals_label": "Guests on other deals",
     "participants_count": "{{count}} participants",
     "step_1": "The artisan accepted the deal",
     "step_2": "The good deal in progress",
