@@ -53,10 +53,9 @@ const RepostDeal = () => {
   const { participants, participantStatus } = useSelector(
     (state) => state.participants
   );
-  const {
-    organiserExcludeParticipants,
-    organiserExcludeParticipantsStatus,
-  } = useSelector((state) => state.participants);
+  const { organiserExcludeParticipants } = useSelector(
+    (state) => state.participants
+  );
 
   const dealParticipantIdSet = useMemo(
     () => new Set(participants?.map((p) => p.participant_id) ?? []),
@@ -397,26 +396,14 @@ const RepostDeal = () => {
   useEffect(() => {
     if (!dealId) return;
     if (participantStatus !== "succeeded") return;
-    if (organiserExcludeParticipantsStatus === "loading") return;
     if (defaultParticipantSelectionSeededForDealIdRef.current === dealId) {
       return;
     }
     defaultParticipantSelectionSeededForDealIdRef.current = dealId;
 
     const dealIds = participants?.map((p) => p.participant_id) ?? [];
-    const otherIds =
-      organiserExcludeParticipantsStatus === "succeeded"
-        ? otherDealsGuestsList.map((p) => p.id)
-        : [];
-
-    setSelectedParticipants([...new Set([...dealIds, ...otherIds])]);
-  }, [
-    dealId,
-    participantStatus,
-    organiserExcludeParticipantsStatus,
-    participants,
-    otherDealsGuestsList,
-  ]);
+    setSelectedParticipants([...new Set(dealIds)]);
+  }, [dealId, participantStatus, participants]);
 
   return (
     <div className="relative">
