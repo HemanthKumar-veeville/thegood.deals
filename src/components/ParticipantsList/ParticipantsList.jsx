@@ -2,8 +2,11 @@ import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Users22 } from "../../icons/Users22";
+import { MapMarker1 } from "../../icons/MapMarker1";
 import { SizeXlCorner } from "../../components/SizeXlCorner";
 import { Line } from "../../components/Line/Line";
+
+const CITY_CAPTION_ICON_COLOR = "#637381";
 
 const ParticipantsList = ({
   participants,
@@ -104,7 +107,7 @@ const ParticipantsList = ({
                   .map((n) => n[0])
                   .join(".")}
               />
-              <div className="inline-flex flex-col items-start gap-[5px] relative flex-[0_0_auto]">
+              <div className="inline-flex flex-col items-start gap-0.5 relative flex-[0_0_auto] min-w-0">
                 <div
                   onClick={() =>
                     handleParticipantSelect(participant.participant_id)
@@ -113,6 +116,27 @@ const ParticipantsList = ({
                 >
                   {participant.participant_name}
                 </div>
+                {(participant.city ?? participant.participant_city) && (
+                  <div
+                    className="flex items-center gap-1.5 max-w-[min(100%,240px)] min-w-0 [font-family:'Inter',Helvetica] font-normal text-[rgb(99_115_129)] text-sm tracking-[0] leading-[22px]"
+                    aria-label={
+                      participant.city ?? participant.participant_city
+                    }
+                  >
+                    <span
+                      className="inline-flex shrink-0"
+                      aria-hidden="true"
+                    >
+                      <MapMarker1
+                        className="!relative !block !w-3.5 !h-3.5"
+                        color={CITY_CAPTION_ICON_COLOR}
+                      />
+                    </span>
+                    <span className="min-w-0 break-words">
+                      {participant.city ?? participant.participant_city}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -161,6 +185,8 @@ ParticipantsList.propTypes = {
     PropTypes.shape({
       participant_id: PropTypes.string.isRequired,
       participant_name: PropTypes.string.isRequired,
+      city: PropTypes.string,
+      participant_city: PropTypes.string,
     })
   ).isRequired,
   selectedParticipantIds: PropTypes.arrayOf(PropTypes.string).isRequired,
