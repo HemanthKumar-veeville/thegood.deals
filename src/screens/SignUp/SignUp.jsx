@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Button } from "../../components/Button/Button";
-import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../helpers/helperMethods";
 import { Dropdown } from "../../components/CountryDropDown";
@@ -62,7 +62,11 @@ const InputField = ({
               className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
-              <EyeAlt8 />
+              {showPassword ? (
+                <FiEyeOff className="w-4 h-4 text-[#6B7280]" />
+              ) : (
+                <FiEye className="w-4 h-4 text-[#6B7280]" />
+              )}
             </button>
           )}
         </div>
@@ -121,7 +125,11 @@ const MobileInputField = ({
               className="flex items-center justify-center !relative !w-4 !h-4 hover:text-primary cursor-pointer"
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
-              <EyeAlt8 />
+              {showPassword ? (
+                <FiEyeOff className="w-4 h-4 text-[#6B7280]" />
+              ) : (
+                <FiEye className="w-4 h-4 text-[#6B7280]" />
+              )}
             </button>
           )}
         </div>

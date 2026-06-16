@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Button } from "../../components/Button/Button.jsx";
 import { AppleBrand1 } from "../../icons/AppleBrand1/AppleBrand1.jsx";
-import { EyeAlt8 } from "../../icons/EyeAlt8/EyeAlt8.jsx";
 import { FacebookFill } from "../../icons/FacebookFill/FacebookFill.jsx";
 import { Google } from "../../icons/Google/Google.jsx";
 import { useNavigate } from "react-router-dom";
@@ -180,7 +180,11 @@ const SignIn = ({ setIsLoading }) => {
                     : t("login.show_password")
                 }
               >
-                <EyeAlt8 />
+                {showPassword ? (
+                  <FiEyeOff className="w-4 h-4 text-[#6B7280]" />
+                ) : (
+                  <FiEye className="w-4 h-4 text-[#6B7280]" />
+                )}
               </button>
             </div>
             {formik.touched.password && formik.errors.password && (
