@@ -202,7 +202,7 @@ const SignIn = ({ setIsLoading }) => {
           type="submit"
         />
       </form>
-      <div className="relative self-stretch w-full h-7">
+      <div className="relative self-stretch w-full h-7 flex items-center justify-center">
         <div className="relative w-[290px] h-7">
           <img
             className="absolute w-[290px] h-px top-[13px] left-0 object-cover"
